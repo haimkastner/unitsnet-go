@@ -1,0 +1,226 @@
+package unitsnet_go
+
+import (
+	"encoding/json"
+    "math"
+	"errors"
+	"fmt"
+	"strconv"
+)
+
+{% if unit %}
+
+// {{ unit }}Units enumeration
+type {{ unit }}Units string
+
+const (
+    {% for method in methods %}
+        // {{ method.description }}
+        {{ unit }}{{ method.unit }} {{ unit }}Units = "{{ method.unit }}"{% endfor %}
+)
+
+// {{ unit }}Dto represents an {{ unit }}
+type {{ unit }}Dto struct {
+	Value float64
+	Unit  {{ unit }}Units
+}
+
+// {{ unit }}DtoFactory struct to group related functions
+type {{ unit }}DtoFactory struct{}
+
+func (udf {{ unit }}DtoFactory) FromJSON(data []byte) (*{{ unit }}Dto, error) {
+	a := {{ unit }}Dto{}
+
+	// Parse JSON into the temporary structure
+	if err := json.Unmarshal(data, &a); err != nil {
+		return nil, err
+	}
+
+	return &a, nil
+}
+
+func (a {{ unit }}Dto) ToJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Value float64 `json:"value"`
+		Unit  string  `json:"unit"`
+	}{
+		Value: a.Value,
+		Unit:  string(a.Unit),
+	})
+}
+
+{% endif %}
+
+
+// {{ unit }} struct
+type {{ unit }} struct {
+	value       float64
+    {% for method in methods %}
+    {{ method.name }}Lazy *float64 {% endfor %}
+}
+
+// {{ unit }}Factory struct to group related functions
+type {{ unit }}Factory struct{}
+
+func (uf {{ unit }}Factory) Create{{ unit }}(value float64, unit {{ unit }}Units) (*{{ unit }}, error) {
+	return new{{ unit }}(value, unit)
+}
+
+func (uf {{ unit }}Factory) FromDto(dto {{ unit }}Dto) (*{{ unit }}, error) {
+	return new{{ unit }}(dto.Value, dto.Unit)
+}
+
+func (uf {{ unit }}Factory) FromDtoJSON(data []byte) (*{{ unit }}, error) {
+	unitDto, err := {{ unit }}DtoFactory{}.FromJSON(data)
+	if err != nil {
+		return nil, err
+	}
+	return {{ unit }}Factory{}.FromDto(*unitDto)
+}
+
+{% for method in methods %}
+// From{{ method.unit }} creates a new {{ unit }} instance from {{ method.unit }}.
+func (uf {{ unit }}Factory) From{{ method.plural_name }}(value float64) (*{{ unit }}, error) {
+	return new{{ unit }}(value, {{ unit }}{{ method.unit }})
+}
+{% endfor %}
+
+
+
+// new{{ unit }} creates a new {{ unit }}.
+func new{{ unit }}(value float64, fromUnit {{ unit }}Units) (*{{ unit }}, error) {
+	if math.IsNaN(value) || math.IsInf(value, 0) {
+		return nil, errors.New("invalid unit value number")
+	}
+	a := &{{ unit }}{}
+	a.value = a.convertToBase(value, fromUnit)
+	return a, nil
+}
+
+// BaseValue returns the base value of {{ unit }} in {{ base_unit }}.
+func (a *{{ unit }}) BaseValue() float64 {
+	return a.value
+}
+
+{% for method in methods %}
+// {{ method.unit }} returns the value in {{ method.unit }}.
+func (a *{{ unit }}) {{ method.plural_name }}() float64 {
+	if a.{{ method.name }}Lazy != nil {
+		return *a.{{ method.name }}Lazy
+	}
+	{{ method.name }} := a.convertFromBase({{ unit }}{{ method.unit }})
+	a.{{ method.name }}Lazy = &{{ method.name }}
+	return {{ method.name }}
+}
+{% endfor %}
+
+// ToDto creates an {{ unit }}Dto representation.
+func (a *{{ unit }}) ToDto(holdInUnit *{{ unit }}Units) {{ unit }}Dto {
+	if holdInUnit == nil {
+		defaultUnit := {{ unit }}{{ base_unit }} // Default value
+		holdInUnit = &defaultUnit
+	}
+
+	return {{ unit }}Dto{
+		Value: a.Convert(*holdInUnit),
+		Unit:  *holdInUnit,
+	}
+}
+
+// ToDtoJSON creates an {{ unit }}Dto representation.
+func (a *{{ unit }}) ToDtoJSON(holdInUnit *{{ unit }}Units) ([]byte, error) {
+	return a.ToDto(holdInUnit).ToJSON()
+}
+
+// Convert converts {{ unit }} to a specific unit value.
+func (a *{{ unit }}) Convert(toUnit {{ unit }}Units) float64 {
+	switch toUnit { {% for method in methods %}
+    case {{ unit }}{{ method.unit }}:
+		return a.{{ method.plural_name }}(){% endfor %}
+	default:
+		return 0
+	}
+}
+
+func (a *{{ unit }}) convertFromBase(toUnit {{ unit }}Units) float64 {
+    value := a.value
+	switch toUnit { {% for method in methods %}
+	case {{ unit }}{{ method.unit }}:
+		return {{ method.formula_from_base }} {% endfor %}
+	default:
+		return math.NaN()
+	}
+}
+
+func (a *{{ unit }}) convertToBase(value float64, fromUnit {{ unit }}Units) float64 {
+	switch fromUnit { {% for method in methods %}
+	case {{ unit }}{{ method.unit }}:
+		return {{ method.formula_to_base }} {% endfor %}
+	default:
+		return math.NaN()
+	}
+}
+
+// Implement the String() method for AngleDto
+func (a {{ unit }}) String() string {
+	return a.ToString({{ unit }}{{ base_unit }}, 2)
+}
+
+// ToString formats the {{ unit }} to string.
+// fractionalDigits -1 for not mention
+func (a *{{ unit }}) ToString(unit {{ unit }}Units, fractionalDigits int) string {
+	value := a.Convert(unit)
+	if fractionalDigits < 0 {
+		formatted := strconv.FormatFloat(value, 'g', -1, 64)
+		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
+}
+
+// GetUnitAbbreviation gets the unit abbreviation.
+func (a *{{ unit }}) getUnitAbbreviation(unit {{ unit }}Units) string {
+	switch unit { {% for method in methods %}
+	case {{ unit }}{{ method.unit }}:
+		return "{{ method.abbreviation }}" {% endfor %}
+	default:
+		return ""
+	}
+}
+
+// Check if the given {{ unit }} are equals to the current {{ unit }}
+func (a *{{ unit }}) Equals(other *{{ unit }}) bool {
+	return a.value == other.BaseValue()
+}
+
+// Check if the given {{ unit }} are equals to the current {{ unit }}
+func (a *{{ unit }}) CompareTo(other *{{ unit }}) int {
+	otherValue := other.BaseValue()
+	if a.value < otherValue {
+		return -1
+	} else if a.value > otherValue {
+		return 1
+	}
+
+	// If both are equal
+	return 0
+}
+
+// Add the given {{ unit }} to the current {{ unit }}.
+func (a *{{ unit }}) Add(other *{{ unit }}) *{{ unit }} {
+	return &{{ unit }}{value: a.value + other.BaseValue()}
+}
+
+// Subtract the given {{ unit }} to the current {{ unit }}.
+func (a *{{ unit }}) Subtract(other *{{ unit }}) *{{ unit }} {
+	return &{{ unit }}{value: a.value - other.BaseValue()}
+}
+
+// Multiply the given {{ unit }} to the current {{ unit }}.
+func (a *{{ unit }}) Multiply(other *{{ unit }}) *{{ unit }} {
+	return &{{ unit }}{value: a.value * other.BaseValue()}
+}
+
+// Divide the given {{ unit }} to the current {{ unit }}.
+func (a *{{ unit }}) Divide(other *{{ unit }}) *{{ unit }} {
+	return &{{ unit }}{value: a.value / other.BaseValue()}
+}
