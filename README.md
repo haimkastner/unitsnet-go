@@ -1,6 +1,6 @@
 # unitsnet-go
 
-[![Build & Test Status](https://github.com/haimkastner/unitsnet-go/workflows/unitsnet-go/badge.svg?branch=main)](https://github.com/haimkastner/unitsnet-go/actions)
+[![unitsnet-go](https://github.com/haimkastner/unitsnet-go/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/haimkastner/unitsnet-go/actions/workflows/build.yml)
 
  [![Latest Release](https://img.shields.io/github/v/release/haimkastner/unitsnet-go)](https://github.com/haimkastner/unitsnet-go/releases) 
 
@@ -33,7 +33,7 @@ package main
 
 import (
     "log"
-	"github.com/haimkastner/unitsnet-go/units"
+    "github.com/haimkastner/unitsnet-go/units"
 )
 
 func main() {
