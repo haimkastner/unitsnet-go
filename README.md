@@ -140,12 +140,12 @@ Check out the OpenAPI [unitsnet-openapi-spec](https://haimkastner.github.io/unit
 
 Also, refer to the detailed discussions on GitHub: [haimkastner/unitsnet-js#31](https://github.com/haimkastner/unitsnet-js/issues/31) & [angularsen/UnitsNet#1378](https://github.com/angularsen/UnitsNet/issues/1378).
 
-### Supported units
+## Supported units
 
 [UnitsNet supported Units](Units.md)
 
 
-### Units.NET on other platforms
+## Units.NET on other platforms
 
 Get the same strongly typed units on other platforms, based on the same [unit definitions](/Common/UnitDefinitions).
 
