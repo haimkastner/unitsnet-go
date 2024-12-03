@@ -32,36 +32,36 @@ go get github.com/haimkastner/unitsnet-go
 package main
 
 import (
-	"log"
-	"github.com/haimkastner/unitsnet-go"
+    "log"
+    "github.com/haimkastner/unitsnet-go"
 )
 
 func main() {
 
     // Create a factory instance
-	af := unitsnet_go.AngleFactory{}
-	
+    af := unitsnet_go.AngleFactory{}
+    
     angle, _ := af.FromDegrees(180)
     // equals to
-	angle, _ := af.CreateAngle(180, unitsnet_go.AngleDegree)
+    angle, _ := af.CreateAngle(180, unitsnet_go.AngleDegree)
 
     log.Println(angle.Radians())      // 3.141592653589793
-	log.Println(angle.Microradians()) // 3141592.65358979
-	log.Println(angle.Gradians())     // 200
-	log.Println(angle.Microdegrees()) // 180000000
+    log.Println(angle.Microradians()) // 3141592.65358979
+    log.Println(angle.Gradians())     // 200
+    log.Println(angle.Microdegrees()) // 180000000
 
     // As an alternative, a convert style method are also available
-	log.Println(angle.Convert(unitsnet_go.AngleRadian))      // 3.141592653589793
-	log.Println(angle.Convert(unitsnet_go.AngleMicroradian)) // 3141592.65358979
-	log.Println(angle.Convert(unitsnet_go.AngleGradian))     // 200
-	log.Println(angle.Convert(unitsnet_go.AngleMicrodegree)) // 180000000
+    log.Println(angle.Convert(unitsnet_go.AngleRadian))      // 3.141592653589793
+    log.Println(angle.Convert(unitsnet_go.AngleMicroradian)) // 3141592.65358979
+    log.Println(angle.Convert(unitsnet_go.AngleGradian))     // 200
+    log.Println(angle.Convert(unitsnet_go.AngleMicrodegree)) // 180000000
 
     // Print the default unit to_string (The default for angle is degrees)
-	log.Println(angle)  // 180.00 °
+    log.Println(angle)  // 180.00 °
 
     // Specify unit and fraction digits max length
     log.Println(angle.ToString(unitsnet_go.AngleDegree, 0)) // 180 °
-	log.Println(angle.ToString(unitsnet_go.AngleRadian, 3)) // 3.141 rad
+    log.Println(angle.ToString(unitsnet_go.AngleRadian, 3)) // 3.141 rad
 }
 
 ```
