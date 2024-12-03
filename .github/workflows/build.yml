@@ -1,4 +1,4 @@
-name: unitsnet-py
+name: unitsnet-go
 
 on: [push, workflow_dispatch]
 
