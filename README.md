@@ -1,6 +1,6 @@
 # unitsnet-go
 
-[![Build & Test Status](https://github.com/haimkastner/unitsnet-py/workflows/unitsnet-go/badge.svg?branch=main)](https://github.com/haimkastner/unitsnet-go/actions)
+[![Build & Test Status](https://github.com/haimkastner/unitsnet-go/workflows/unitsnet-go/badge.svg?branch=main)](https://github.com/haimkastner/unitsnet-go/actions)
 
  [![Latest Release](https://img.shields.io/github/v/release/haimkastner/unitsnet-go)](https://github.com/haimkastner/unitsnet-go/releases) 
 
@@ -149,10 +149,10 @@ Also, refer to the detailed discussions on GitHub: [haimkastner/unitsnet-js#31](
 
 Get the same strongly typed units on other platforms, based on the same [unit definitions](/Common/UnitDefinitions).
 
-| Language                   | Name        | Package                                           | Repository                                           | Maintainers  |
-|----------------------------|-------------|---------------------------------------------------|------------------------------------------------------|--------------|
-| C#                         | UnitsNet    | [nuget](https://www.nuget.org/packages/UnitsNet/) | [github](https://github.com/angularsen/UnitsNet)     | @angularsen  |
-| JavaScript /<br>TypeScript | unitsnet-js | [npm](https://www.npmjs.com/package/unitsnet-js)  | [github](https://github.com/haimkastner/unitsnet-js) | @haimkastner |
-| Python                     | unitsnet-py | [pypi](https://pypi.org/project/unitsnet-py)      | [github](https://github.com/haimkastner/unitsnet-py) | @haimkastner |
-| Golang                     | unitsnet-go |                                                   | [github](https://github.com/haimkastner/unitsnet-go) | @haimkastner |
+| Language                   | Name        | Package                                           					 | Repository                                           | Maintainers  |
+|----------------------------|-------------|---------------------------------------------------------------------|------------------------------------------------------|--------------|
+| C#                         | UnitsNet    | [nuget](https://www.nuget.org/packages/UnitsNet/) 					 | [github](https://github.com/angularsen/UnitsNet)     | @angularsen  |
+| JavaScript /<br>TypeScript | unitsnet-js | [npm](https://www.npmjs.com/package/unitsnet-js)  					 | [github](https://github.com/haimkastner/unitsnet-js) | @haimkastner |
+| Python                     | unitsnet-py | [pypi](https://pypi.org/project/unitsnet-py)      					 | [github](https://github.com/haimkastner/unitsnet-py) | @haimkastner |
+| Golang                     | unitsnet-go | [pkg.go.dev](https://pkg.go.dev/github.com/haimkastner/unitsnet-go) | [github](https://github.com/haimkastner/unitsnet-go) | @haimkastner |
 
