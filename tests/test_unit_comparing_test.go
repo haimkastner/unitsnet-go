@@ -3,11 +3,11 @@ package unitsnet_go_test
 import (
 	"testing"
 
-	"github.com/haimkastner/unitsnet-go/unitsnet_go"
+	"github.com/haimkastner/unitsnet-go/units"
 )
 
 func TestUnitComparing(t *testing.T) {
-	lf := unitsnet_go.LengthFactory{}
+	lf := units.LengthFactory{}
 	length1, _ := lf.FromMeters(10)
 	length2, _ := lf.FromDecimeters(100)
 	length3, _ := lf.FromMeters(3)

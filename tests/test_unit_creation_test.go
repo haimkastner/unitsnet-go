@@ -3,14 +3,14 @@ package unitsnet_go_test
 import (
 	"testing"
 
-	"github.com/haimkastner/unitsnet-go/unitsnet_go"
+	"github.com/haimkastner/unitsnet-go/units"
 )
 
 func TestUnitCreation(t *testing.T) {
 	// Create a factory instance
-	af := unitsnet_go.AngleFactory{}
+	af := units.AngleFactory{}
 
-	angleCreateDriven, _ := af.CreateAngle(180, unitsnet_go.AngleDegree)
+	angleCreateDriven, _ := af.CreateAngle(180, units.AngleDegree)
 	angleFromDriven, _ := af.FromDegrees(180)
 
 	if angleCreateDriven.BaseValue() != angleFromDriven.BaseValue() {

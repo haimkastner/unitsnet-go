@@ -14,7 +14,7 @@ It offers support for more than 100 unit types across various unit categories, i
 
 The API is designed to be user-friendly and straightforward to use.
 
-The library is built on top of the [Units.NET](https://github.com/angularsen/UnitsNet) project and leverages their [definitions sources](https://github.com/angularsen/UnitsNet/tree/master/Common/UnitDefinitions) to generate the Python unit classes.
+The library is built on top of the [Units.NET](https://github.com/angularsen/UnitsNet) project and leverages their [definitions sources](https://github.com/angularsen/UnitsNet/tree/master/Common/UnitDefinitions) to generate the Golang units.
 
 ###### The unitsnet-go package does not require any external dependencies or packages to function.
 
@@ -28,22 +28,22 @@ go get github.com/haimkastner/unitsnet-go
 
 ## Example Usage
 
-```go
+```golang
 package main
 
 import (
     "log"
-    "github.com/haimkastner/unitsnet-go"
+	"github.com/haimkastner/unitsnet-go/units"
 )
 
 func main() {
 
     // Create a factory instance
-    af := unitsnet_go.AngleFactory{}
+    af := units.AngleFactory{}
     
     angle, _ := af.FromDegrees(180)
     // equals to
-    angle, _ := af.CreateAngle(180, unitsnet_go.AngleDegree)
+    angle, _ := af.CreateAngle(180, units.AngleDegree)
 
     log.Println(angle.Radians())      // 3.141592653589793
     log.Println(angle.Microradians()) // 3141592.65358979
@@ -51,17 +51,17 @@ func main() {
     log.Println(angle.Microdegrees()) // 180000000
 
     // As an alternative, a convert style method are also available
-    log.Println(angle.Convert(unitsnet_go.AngleRadian))      // 3.141592653589793
-    log.Println(angle.Convert(unitsnet_go.AngleMicroradian)) // 3141592.65358979
-    log.Println(angle.Convert(unitsnet_go.AngleGradian))     // 200
-    log.Println(angle.Convert(unitsnet_go.AngleMicrodegree)) // 180000000
+    log.Println(angle.Convert(units.AngleRadian))      // 3.141592653589793
+    log.Println(angle.Convert(units.AngleMicroradian)) // 3141592.65358979
+    log.Println(angle.Convert(units.AngleGradian))     // 200
+    log.Println(angle.Convert(units.AngleMicrodegree)) // 180000000
 
     // Print the default unit to_string (The default for angle is degrees)
     log.Println(angle)  // 180.00 °
 
     // Specify unit and fraction digits max length
-    log.Println(angle.ToString(unitsnet_go.AngleDegree, 0)) // 180 °
-    log.Println(angle.ToString(unitsnet_go.AngleRadian, 3)) // 3.141 rad
+    log.Println(angle.ToString(units.AngleDegree, 0)) // 180 °
+    log.Println(angle.ToString(units.AngleRadian, 3)) // 3.141 rad
 }
 
 ```
@@ -70,8 +70,8 @@ func main() {
 
 Check, compare, calculate etc. with unitsnet:
 
-```go
-lf := unitsnet_go.LengthFactory{}
+```golang
+lf := units.LengthFactory{}
 
 length1, _ := lf.FromMeters(10)
 length2, _ := lf.FromDecimeters(100)
@@ -103,8 +103,8 @@ log.Println(results4) // 3.33 m
 As UnitsNet provides a convenient way to work within a running service, there are occasions where the data needs to be exposed outside of the service, typically through an API containing the unit value or consumed from an API.
 
 To support this with a clear API schema and make it easy to convert to and from this schema to the specific format, it's recommended to use DTOs and the UnitsNet flavor converters.
-```go
-lf := unitsnet_go.LengthFactory{}
+```golang
+lf := units.LengthFactory{}
 
 length, _ := lf.FromMeters(100.01)
 // Obtain the DTO object as json, represented by the default unit - meter
@@ -112,7 +112,7 @@ lengthDtoJson, _ := length.ToDtoJSON(nil)
 log.Println(string(lengthDtoJson)) // {"value":100.01,"unit":"Meter"}
 
 // Obtain the same value but represent DTO in KM
-lengthKilometer := unitsnet_go.LengthKilometer // Default value
+lengthKilometer := units.LengthKilometer // Default value
 lengthDtoRepresentsInKmJson, _ := length.ToDtoJSON(&lengthKilometer)
 log.Println(string(lengthDtoRepresentsInKmJson)) // {"value":0.10001,"unit":"Kilometer"}
 
@@ -130,7 +130,7 @@ lengthDto := length.ToDto(nil)
 // # Get the json representation of the DTO
 lengthJson, _ := lengthDto.ToJSON() // {"value":100.01,"unit":"Meter"}
 // # Obtain DTO instance from a json representation
-lengthDtoFromJson, _ := unitsnet_go.LengthDtoFactory{}.FromJSON(lengthJson)
+lengthDtoFromJson, _ := units.LengthDtoFactory{}.FromJSON(lengthJson)
 // # Obtain Length unit from a DTO instance
 lengthFromJson, _ := lf.FromDto(*lengthDtoFromJson)
 log.Println(lengthFromJson) // 100.01 m

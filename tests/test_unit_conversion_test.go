@@ -4,11 +4,11 @@ import (
 	"math"
 	"testing"
 
-	"github.com/haimkastner/unitsnet-go/unitsnet_go"
+	"github.com/haimkastner/unitsnet-go/units"
 )
 
-var af = unitsnet_go.AngleFactory{}
-var inf = unitsnet_go.InformationFactory{}
+var af = units.AngleFactory{}
+var inf = units.InformationFactory{}
 var maxDelta = 0.0000001
 
 func TestConvertFromBaseToOtherUnit(t *testing.T) {

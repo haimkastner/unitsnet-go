@@ -3,11 +3,11 @@ package unitsnet_go_test
 import (
 	"testing"
 
-	"github.com/haimkastner/unitsnet-go/unitsnet_go"
+	"github.com/haimkastner/unitsnet-go/units"
 )
 
 func TestUnitDto(t *testing.T) {
-	lf := unitsnet_go.LengthFactory{}
+	lf := units.LengthFactory{}
 
 	// Create a length instance from meters
 	length1, _ := lf.FromMeters(100.01)
@@ -23,7 +23,7 @@ func TestUnitDto(t *testing.T) {
 
 	// Test: Create JSON from a specific unit (Centimeter)
 	t.Run("Test Create JSON From Specific Unit", func(t *testing.T) {
-		lengthInCm := unitsnet_go.LengthCentimeter
+		lengthInCm := units.LengthCentimeter
 		dtoJson, _ := length1.ToDtoJSON(&lengthInCm)
 		expected := `{"value":10001,"unit":"Centimeter"}`
 		if string(dtoJson) != expected {
@@ -42,7 +42,7 @@ func TestUnitDto(t *testing.T) {
 
 	// Test: Directly create JSON from a specific unit
 	t.Run("Test Directly Create JSON From Specific Unit", func(t *testing.T) {
-		lengthInCm := unitsnet_go.LengthCentimeter
+		lengthInCm := units.LengthCentimeter
 		dtoJson, _ := length1.ToDtoJSON(&lengthInCm)
 		expected := `{"value":10001,"unit":"Centimeter"}`
 		if string(dtoJson) != expected {
@@ -60,7 +60,7 @@ func TestUnitDto(t *testing.T) {
 
 	// Test: Create DTO from a specific unit
 	t.Run("Test Create DTO From Specific Unit", func(t *testing.T) {
-		lengthInCm := unitsnet_go.LengthCentimeter
+		lengthInCm := units.LengthCentimeter
 		dto := length1.ToDto(&lengthInCm)
 		if dto.Value != 10001 || dto.Unit != "Centimeter" {
 			t.Errorf("Expected {10001, Centimeter}, got {%f, %s}", dto.Value, dto.Unit)
@@ -78,7 +78,7 @@ func TestUnitDto(t *testing.T) {
 
 	// Test: Load from specific unit JSON
 	t.Run("Test Load From Specific Unit JSON", func(t *testing.T) {
-		lengthInCm := unitsnet_go.LengthCentimeter
+		lengthInCm := units.LengthCentimeter
 		dtoJson, _ := length1.ToDtoJSON(&lengthInCm)
 		lengthFromJson, _ := lf.FromDtoJSON(dtoJson)
 		if lengthFromJson.Decimeters() != 1000.1 {
@@ -97,7 +97,7 @@ func TestUnitDto(t *testing.T) {
 
 	// Test: Load from specific unit DTO
 	t.Run("Test Load From Specific Unit DTO", func(t *testing.T) {
-		lengthInCm := unitsnet_go.LengthCentimeter
+		lengthInCm := units.LengthCentimeter
 		dto := length1.ToDto(&lengthInCm)
 		lengthFromDto, _ := lf.FromDto(dto)
 		if lengthFromDto.Decimeters() != 1000.1 {
@@ -134,13 +134,13 @@ func TestUnitDto(t *testing.T) {
 
 	// Test: Should be similar values from two DTO representations
 	t.Run("Test Should Be Similar Values From Two DTO Representations", func(t *testing.T) {
-		length, _ := unitsnet_go.LengthFactory{}.FromMeters(100.01)
+		length, _ := units.LengthFactory{}.FromMeters(100.01)
 
 		// Obtain DTO object as JSON, represented by default unit (Meter)
 		lengthDtoJson, _ := length.ToDtoJSON(nil)
 
 		// Obtain same value represented in kilometers
-		lengthKilometer := unitsnet_go.LengthKilometer
+		lengthKilometer := units.LengthKilometer
 		lengthDtoRepresentsInKmJson, _ := length.ToDtoJSON(&lengthKilometer)
 
 		// Load JSON to DTO, and load

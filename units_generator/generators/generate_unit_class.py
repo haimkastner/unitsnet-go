@@ -133,7 +133,7 @@ def unit_class_generator(unit_definition):
     code = template.render(template_data)
 
     with open(
-        f"unitsnet_go/{camel_to_snake(unit_name)}.go", "w", encoding="utf-8"
+        f"units/{camel_to_snake(unit_name)}_generated.go", "w", encoding="utf-8"
     ) as f:
         f.write(code)
 
