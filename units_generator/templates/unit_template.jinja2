@@ -12,7 +12,7 @@ import (
 
 {% if unit %}
 
-// {{ unit }}Units enumeration
+// {{ unit }}Units defines various units of {{ unit }}.
 type {{ unit }}Units string
 
 const (
@@ -21,19 +21,24 @@ const (
         {{ unit }}{{ method.unit }} {{ unit }}Units = "{{ method.unit }}"{% endfor %}
 )
 
-// {{ unit }}Dto represents an {{ unit }}
+// {{ unit }}Dto represents a {{ unit }} measurement with a numerical value and its corresponding unit.
 type {{ unit }}Dto struct {
+    // Value is the numerical representation of the {{ unit }}.
 	Value float64
+    // Unit specifies the unit of measurement for the {{ unit }}, as defined in the {{ unit }}Units enumeration.
 	Unit  {{ unit }}Units
 }
 
-// {{ unit }}DtoFactory struct to group related functions
+// {{ unit }}DtoFactory groups methods for creating and serializing {{ unit }}Dto objects.
 type {{ unit }}DtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a {{ unit }}Dto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf {{ unit }}DtoFactory) FromJSON(data []byte) (*{{ unit }}Dto, error) {
 	a := {{ unit }}Dto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into {{ unit }}Dto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -41,6 +46,9 @@ func (udf {{ unit }}DtoFactory) FromJSON(data []byte) (*{{ unit }}Dto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a {{ unit }}Dto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a {{ unit }}Dto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -50,44 +58,46 @@ func (a {{ unit }}Dto) ToJSON() ([]byte, error) {
 		Unit:  string(a.Unit),
 	})
 }
-
 {% endif %}
 
-
-// {{ unit }} struct
+// {{ unit }} represents a measurement in a of {{ unit }}.
+//
+// {{ description }}
 type {{ unit }} struct {
+	// value is the base measurement stored internally.
 	value       float64
     {% for method in methods %}
     {{ method.name }}Lazy *float64 {% endfor %}
 }
 
-// {{ unit }}Factory struct to group related functions
+// {{ unit }}Factory groups methods for creating {{ unit }} instances.
 type {{ unit }}Factory struct{}
 
+// Create{{ unit }} creates a new {{ unit }} instance from the given value and unit.
 func (uf {{ unit }}Factory) Create{{ unit }}(value float64, unit {{ unit }}Units) (*{{ unit }}, error) {
 	return new{{ unit }}(value, unit)
 }
 
+// FromDto converts a {{ unit }}Dto to a {{ unit }} instance.
 func (uf {{ unit }}Factory) FromDto(dto {{ unit }}Dto) (*{{ unit }}, error) {
 	return new{{ unit }}(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a {{ unit }} instance.
 func (uf {{ unit }}Factory) FromDtoJSON(data []byte) (*{{ unit }}, error) {
 	unitDto, err := {{ unit }}DtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse {{ unit }}Dto from JSON: %w", err)
 	}
 	return {{ unit }}Factory{}.FromDto(*unitDto)
 }
 
 {% for method in methods %}
-// From{{ method.unit }} creates a new {{ unit }} instance from {{ method.unit }}.
+// From{{ method.plural_name }} creates a new {{ unit }} instance from a value in {{ method.plural_name }}.
 func (uf {{ unit }}Factory) From{{ method.plural_name }}(value float64) (*{{ unit }}, error) {
 	return new{{ unit }}(value, {{ unit }}{{ method.unit }})
 }
 {% endfor %}
-
-
 
 // new{{ unit }} creates a new {{ unit }}.
 func new{{ unit }}(value float64, fromUnit {{ unit }}Units) (*{{ unit }}, error) {
@@ -99,13 +109,15 @@ func new{{ unit }}(value float64, fromUnit {{ unit }}Units) (*{{ unit }}, error)
 	return a, nil
 }
 
-// BaseValue returns the base value of {{ unit }} in {{ base_unit }}.
+// BaseValue returns the base value of {{ unit }} in {{ base_unit }} unit (the base/default quantity).
 func (a *{{ unit }}) BaseValue() float64 {
 	return a.value
 }
 
 {% for method in methods %}
-// {{ method.unit }} returns the value in {{ method.unit }}.
+// {{ method.plural_name }} returns the {{ unit }} value in {{ method.plural_name }}.
+//
+// {{ method.description }}
 func (a *{{ unit }}) {{ method.plural_name }}() float64 {
 	if a.{{ method.name }}Lazy != nil {
 		return *a.{{ method.name }}Lazy
@@ -116,7 +128,9 @@ func (a *{{ unit }}) {{ method.plural_name }}() float64 {
 }
 {% endfor %}
 
-// ToDto creates an {{ unit }}Dto representation.
+// ToDto creates a {{ unit }}Dto representation from the {{ unit }} instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by {{ base_unit }} by default.
 func (a *{{ unit }}) ToDto(holdInUnit *{{ unit }}Units) {{ unit }}Dto {
 	if holdInUnit == nil {
 		defaultUnit := {{ unit }}{{ base_unit }} // Default value
@@ -129,18 +143,25 @@ func (a *{{ unit }}) ToDto(holdInUnit *{{ unit }}Units) {{ unit }}Dto {
 	}
 }
 
-// ToDtoJSON creates an {{ unit }}Dto representation.
+// ToDtoJSON creates a JSON representation of the {{ unit }} instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by {{ base_unit }} by default.
 func (a *{{ unit }}) ToDtoJSON(holdInUnit *{{ unit }}Units) ([]byte, error) {
+	// Convert to {{ unit }}Dto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts {{ unit }} to a specific unit value.
+// Convert converts a {{ unit }} to a specific unit value.
+// The function uses the provided unit type ({{ unit }}Units) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *{{ unit }}) Convert(toUnit {{ unit }}Units) float64 {
 	switch toUnit { {% for method in methods %}
     case {{ unit }}{{ method.unit }}:
 		return a.{{ method.plural_name }}(){% endfor %}
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -163,13 +184,22 @@ func (a *{{ unit }}) convertToBase(value float64, fromUnit {{ unit }}Units) floa
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the {{ unit }} in the default unit ({{ base_unit }}),
+// formatted to two decimal places.
 func (a {{ unit }}) String() string {
 	return a.ToString({{ unit }}{{ base_unit }}, 2)
 }
 
-// ToString formats the {{ unit }} to string.
-// fractionalDigits -1 for not mention
+// ToString formats the {{ unit }} value as a string with the specified unit and fractional digits.
+// It converts the {{ unit }} to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the {{ unit }} value will be converted (e.g., {{ base_unit }}))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the {{ unit }} with the unit abbreviation.
 func (a *{{ unit }}) ToString(unit {{ unit }}Units, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -189,12 +219,26 @@ func (a *{{ unit }}) getUnitAbbreviation(unit {{ unit }}Units) string {
 	}
 }
 
-// Check if the given {{ unit }} are equals to the current {{ unit }}
+// Equals checks if the given {{ unit }} is equal to the current {{ unit }}.
+//
+// Parameters:
+//    other: The {{ unit }} to compare against.
+//
+// Returns:
+//    bool: Returns true if both {{ unit }} are equal, false otherwise.
 func (a *{{ unit }}) Equals(other *{{ unit }}) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given {{ unit }} are equals to the current {{ unit }}
+// CompareTo compares the current {{ unit }} with another {{ unit }}.
+// It returns -1 if the current {{ unit }} is less than the other {{ unit }}, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The {{ unit }} to compare against.
+//
+// Returns:
+//    int: -1 if the current {{ unit }} is less, 1 if greater, and 0 if equal.
 func (a *{{ unit }}) CompareTo(other *{{ unit }}) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -207,22 +251,50 @@ func (a *{{ unit }}) CompareTo(other *{{ unit }}) int {
 	return 0
 }
 
-// Add the given {{ unit }} to the current {{ unit }}.
+// Add adds the given {{ unit }} to the current {{ unit }} and returns the result.
+// The result is a new {{ unit }} instance with the sum of the values.
+//
+// Parameters:
+//    other: The {{ unit }} to add to the current {{ unit }}.
+//
+// Returns:
+//    *{{ unit }}: A new {{ unit }} instance representing the sum of both {{ unit }}.
 func (a *{{ unit }}) Add(other *{{ unit }}) *{{ unit }} {
 	return &{{ unit }}{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given {{ unit }} to the current {{ unit }}.
+// Subtract subtracts the given {{ unit }} from the current {{ unit }} and returns the result.
+// The result is a new {{ unit }} instance with the difference of the values.
+//
+// Parameters:
+//    other: The {{ unit }} to subtract from the current {{ unit }}.
+//
+// Returns:
+//    *{{ unit }}: A new {{ unit }} instance representing the difference of both {{ unit }}.
 func (a *{{ unit }}) Subtract(other *{{ unit }}) *{{ unit }} {
 	return &{{ unit }}{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given {{ unit }} to the current {{ unit }}.
+// Multiply multiplies the current {{ unit }} by the given {{ unit }} and returns the result.
+// The result is a new {{ unit }} instance with the product of the values.
+//
+// Parameters:
+//    other: The {{ unit }} to multiply with the current {{ unit }}.
+//
+// Returns:
+//    *{{ unit }}: A new {{ unit }} instance representing the product of both {{ unit }}.
 func (a *{{ unit }}) Multiply(other *{{ unit }}) *{{ unit }} {
 	return &{{ unit }}{value: a.value * other.BaseValue()}
 }
 
-// Divide the given {{ unit }} to the current {{ unit }}.
+// Divide divides the current {{ unit }} by the given {{ unit }} and returns the result.
+// The result is a new {{ unit }} instance with the quotient of the values.
+//
+// Parameters:
+//    other: The {{ unit }} to divide the current {{ unit }} by.
+//
+// Returns:
+//    *{{ unit }}: A new {{ unit }} instance representing the quotient of both {{ unit }}.
 func (a *{{ unit }}) Divide(other *{{ unit }}) *{{ unit }} {
 	return &{{ unit }}{value: a.value / other.BaseValue()}
 }
