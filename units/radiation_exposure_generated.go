@@ -12,7 +12,7 @@ import (
 
 
 
-// RadiationExposureUnits enumeration
+// RadiationExposureUnits defines various units of RadiationExposure.
 type RadiationExposureUnits string
 
 const (
@@ -35,19 +35,24 @@ const (
         RadiationExposureMilliroentgen RadiationExposureUnits = "Milliroentgen"
 )
 
-// RadiationExposureDto represents an RadiationExposure
+// RadiationExposureDto represents a RadiationExposure measurement with a numerical value and its corresponding unit.
 type RadiationExposureDto struct {
+    // Value is the numerical representation of the RadiationExposure.
 	Value float64
+    // Unit specifies the unit of measurement for the RadiationExposure, as defined in the RadiationExposureUnits enumeration.
 	Unit  RadiationExposureUnits
 }
 
-// RadiationExposureDtoFactory struct to group related functions
+// RadiationExposureDtoFactory groups methods for creating and serializing RadiationExposureDto objects.
 type RadiationExposureDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a RadiationExposureDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf RadiationExposureDtoFactory) FromJSON(data []byte) (*RadiationExposureDto, error) {
 	a := RadiationExposureDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into RadiationExposureDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -55,6 +60,9 @@ func (udf RadiationExposureDtoFactory) FromJSON(data []byte) (*RadiationExposure
 	return &a, nil
 }
 
+// ToJSON serializes a RadiationExposureDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a RadiationExposureDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -66,10 +74,11 @@ func (a RadiationExposureDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// RadiationExposure struct
+// RadiationExposure represents a measurement in a of RadiationExposure.
+//
+// Radiation exposure is a measure of the ionization of air due to ionizing radiation from photons.
 type RadiationExposure struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     coulombs_per_kilogramLazy *float64 
@@ -82,67 +91,68 @@ type RadiationExposure struct {
     milliroentgensLazy *float64 
 }
 
-// RadiationExposureFactory struct to group related functions
+// RadiationExposureFactory groups methods for creating RadiationExposure instances.
 type RadiationExposureFactory struct{}
 
+// CreateRadiationExposure creates a new RadiationExposure instance from the given value and unit.
 func (uf RadiationExposureFactory) CreateRadiationExposure(value float64, unit RadiationExposureUnits) (*RadiationExposure, error) {
 	return newRadiationExposure(value, unit)
 }
 
+// FromDto converts a RadiationExposureDto to a RadiationExposure instance.
 func (uf RadiationExposureFactory) FromDto(dto RadiationExposureDto) (*RadiationExposure, error) {
 	return newRadiationExposure(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a RadiationExposure instance.
 func (uf RadiationExposureFactory) FromDtoJSON(data []byte) (*RadiationExposure, error) {
 	unitDto, err := RadiationExposureDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse RadiationExposureDto from JSON: %w", err)
 	}
 	return RadiationExposureFactory{}.FromDto(*unitDto)
 }
 
 
-// FromCoulombPerKilogram creates a new RadiationExposure instance from CoulombPerKilogram.
+// FromCoulombsPerKilogram creates a new RadiationExposure instance from a value in CoulombsPerKilogram.
 func (uf RadiationExposureFactory) FromCoulombsPerKilogram(value float64) (*RadiationExposure, error) {
 	return newRadiationExposure(value, RadiationExposureCoulombPerKilogram)
 }
 
-// FromRoentgen creates a new RadiationExposure instance from Roentgen.
+// FromRoentgens creates a new RadiationExposure instance from a value in Roentgens.
 func (uf RadiationExposureFactory) FromRoentgens(value float64) (*RadiationExposure, error) {
 	return newRadiationExposure(value, RadiationExposureRoentgen)
 }
 
-// FromPicocoulombPerKilogram creates a new RadiationExposure instance from PicocoulombPerKilogram.
+// FromPicocoulombsPerKilogram creates a new RadiationExposure instance from a value in PicocoulombsPerKilogram.
 func (uf RadiationExposureFactory) FromPicocoulombsPerKilogram(value float64) (*RadiationExposure, error) {
 	return newRadiationExposure(value, RadiationExposurePicocoulombPerKilogram)
 }
 
-// FromNanocoulombPerKilogram creates a new RadiationExposure instance from NanocoulombPerKilogram.
+// FromNanocoulombsPerKilogram creates a new RadiationExposure instance from a value in NanocoulombsPerKilogram.
 func (uf RadiationExposureFactory) FromNanocoulombsPerKilogram(value float64) (*RadiationExposure, error) {
 	return newRadiationExposure(value, RadiationExposureNanocoulombPerKilogram)
 }
 
-// FromMicrocoulombPerKilogram creates a new RadiationExposure instance from MicrocoulombPerKilogram.
+// FromMicrocoulombsPerKilogram creates a new RadiationExposure instance from a value in MicrocoulombsPerKilogram.
 func (uf RadiationExposureFactory) FromMicrocoulombsPerKilogram(value float64) (*RadiationExposure, error) {
 	return newRadiationExposure(value, RadiationExposureMicrocoulombPerKilogram)
 }
 
-// FromMillicoulombPerKilogram creates a new RadiationExposure instance from MillicoulombPerKilogram.
+// FromMillicoulombsPerKilogram creates a new RadiationExposure instance from a value in MillicoulombsPerKilogram.
 func (uf RadiationExposureFactory) FromMillicoulombsPerKilogram(value float64) (*RadiationExposure, error) {
 	return newRadiationExposure(value, RadiationExposureMillicoulombPerKilogram)
 }
 
-// FromMicroroentgen creates a new RadiationExposure instance from Microroentgen.
+// FromMicroroentgens creates a new RadiationExposure instance from a value in Microroentgens.
 func (uf RadiationExposureFactory) FromMicroroentgens(value float64) (*RadiationExposure, error) {
 	return newRadiationExposure(value, RadiationExposureMicroroentgen)
 }
 
-// FromMilliroentgen creates a new RadiationExposure instance from Milliroentgen.
+// FromMilliroentgens creates a new RadiationExposure instance from a value in Milliroentgens.
 func (uf RadiationExposureFactory) FromMilliroentgens(value float64) (*RadiationExposure, error) {
 	return newRadiationExposure(value, RadiationExposureMilliroentgen)
 }
-
-
 
 
 // newRadiationExposure creates a new RadiationExposure.
@@ -155,13 +165,15 @@ func newRadiationExposure(value float64, fromUnit RadiationExposureUnits) (*Radi
 	return a, nil
 }
 
-// BaseValue returns the base value of RadiationExposure in CoulombPerKilogram.
+// BaseValue returns the base value of RadiationExposure in CoulombPerKilogram unit (the base/default quantity).
 func (a *RadiationExposure) BaseValue() float64 {
 	return a.value
 }
 
 
-// CoulombPerKilogram returns the value in CoulombPerKilogram.
+// CoulombsPerKilogram returns the RadiationExposure value in CoulombsPerKilogram.
+//
+// 
 func (a *RadiationExposure) CoulombsPerKilogram() float64 {
 	if a.coulombs_per_kilogramLazy != nil {
 		return *a.coulombs_per_kilogramLazy
@@ -171,7 +183,9 @@ func (a *RadiationExposure) CoulombsPerKilogram() float64 {
 	return coulombs_per_kilogram
 }
 
-// Roentgen returns the value in Roentgen.
+// Roentgens returns the RadiationExposure value in Roentgens.
+//
+// 
 func (a *RadiationExposure) Roentgens() float64 {
 	if a.roentgensLazy != nil {
 		return *a.roentgensLazy
@@ -181,7 +195,9 @@ func (a *RadiationExposure) Roentgens() float64 {
 	return roentgens
 }
 
-// PicocoulombPerKilogram returns the value in PicocoulombPerKilogram.
+// PicocoulombsPerKilogram returns the RadiationExposure value in PicocoulombsPerKilogram.
+//
+// 
 func (a *RadiationExposure) PicocoulombsPerKilogram() float64 {
 	if a.picocoulombs_per_kilogramLazy != nil {
 		return *a.picocoulombs_per_kilogramLazy
@@ -191,7 +207,9 @@ func (a *RadiationExposure) PicocoulombsPerKilogram() float64 {
 	return picocoulombs_per_kilogram
 }
 
-// NanocoulombPerKilogram returns the value in NanocoulombPerKilogram.
+// NanocoulombsPerKilogram returns the RadiationExposure value in NanocoulombsPerKilogram.
+//
+// 
 func (a *RadiationExposure) NanocoulombsPerKilogram() float64 {
 	if a.nanocoulombs_per_kilogramLazy != nil {
 		return *a.nanocoulombs_per_kilogramLazy
@@ -201,7 +219,9 @@ func (a *RadiationExposure) NanocoulombsPerKilogram() float64 {
 	return nanocoulombs_per_kilogram
 }
 
-// MicrocoulombPerKilogram returns the value in MicrocoulombPerKilogram.
+// MicrocoulombsPerKilogram returns the RadiationExposure value in MicrocoulombsPerKilogram.
+//
+// 
 func (a *RadiationExposure) MicrocoulombsPerKilogram() float64 {
 	if a.microcoulombs_per_kilogramLazy != nil {
 		return *a.microcoulombs_per_kilogramLazy
@@ -211,7 +231,9 @@ func (a *RadiationExposure) MicrocoulombsPerKilogram() float64 {
 	return microcoulombs_per_kilogram
 }
 
-// MillicoulombPerKilogram returns the value in MillicoulombPerKilogram.
+// MillicoulombsPerKilogram returns the RadiationExposure value in MillicoulombsPerKilogram.
+//
+// 
 func (a *RadiationExposure) MillicoulombsPerKilogram() float64 {
 	if a.millicoulombs_per_kilogramLazy != nil {
 		return *a.millicoulombs_per_kilogramLazy
@@ -221,7 +243,9 @@ func (a *RadiationExposure) MillicoulombsPerKilogram() float64 {
 	return millicoulombs_per_kilogram
 }
 
-// Microroentgen returns the value in Microroentgen.
+// Microroentgens returns the RadiationExposure value in Microroentgens.
+//
+// 
 func (a *RadiationExposure) Microroentgens() float64 {
 	if a.microroentgensLazy != nil {
 		return *a.microroentgensLazy
@@ -231,7 +255,9 @@ func (a *RadiationExposure) Microroentgens() float64 {
 	return microroentgens
 }
 
-// Milliroentgen returns the value in Milliroentgen.
+// Milliroentgens returns the RadiationExposure value in Milliroentgens.
+//
+// 
 func (a *RadiationExposure) Milliroentgens() float64 {
 	if a.milliroentgensLazy != nil {
 		return *a.milliroentgensLazy
@@ -242,7 +268,9 @@ func (a *RadiationExposure) Milliroentgens() float64 {
 }
 
 
-// ToDto creates an RadiationExposureDto representation.
+// ToDto creates a RadiationExposureDto representation from the RadiationExposure instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CoulombPerKilogram by default.
 func (a *RadiationExposure) ToDto(holdInUnit *RadiationExposureUnits) RadiationExposureDto {
 	if holdInUnit == nil {
 		defaultUnit := RadiationExposureCoulombPerKilogram // Default value
@@ -255,12 +283,19 @@ func (a *RadiationExposure) ToDto(holdInUnit *RadiationExposureUnits) RadiationE
 	}
 }
 
-// ToDtoJSON creates an RadiationExposureDto representation.
+// ToDtoJSON creates a JSON representation of the RadiationExposure instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CoulombPerKilogram by default.
 func (a *RadiationExposure) ToDtoJSON(holdInUnit *RadiationExposureUnits) ([]byte, error) {
+	// Convert to RadiationExposureDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts RadiationExposure to a specific unit value.
+// Convert converts a RadiationExposure to a specific unit value.
+// The function uses the provided unit type (RadiationExposureUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *RadiationExposure) Convert(toUnit RadiationExposureUnits) float64 {
 	switch toUnit { 
     case RadiationExposureCoulombPerKilogram:
@@ -280,7 +315,7 @@ func (a *RadiationExposure) Convert(toUnit RadiationExposureUnits) float64 {
     case RadiationExposureMilliroentgen:
 		return a.Milliroentgens()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -331,13 +366,22 @@ func (a *RadiationExposure) convertToBase(value float64, fromUnit RadiationExpos
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the RadiationExposure in the default unit (CoulombPerKilogram),
+// formatted to two decimal places.
 func (a RadiationExposure) String() string {
 	return a.ToString(RadiationExposureCoulombPerKilogram, 2)
 }
 
-// ToString formats the RadiationExposure to string.
-// fractionalDigits -1 for not mention
+// ToString formats the RadiationExposure value as a string with the specified unit and fractional digits.
+// It converts the RadiationExposure to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the RadiationExposure value will be converted (e.g., CoulombPerKilogram))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the RadiationExposure with the unit abbreviation.
 func (a *RadiationExposure) ToString(unit RadiationExposureUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -371,12 +415,26 @@ func (a *RadiationExposure) getUnitAbbreviation(unit RadiationExposureUnits) str
 	}
 }
 
-// Check if the given RadiationExposure are equals to the current RadiationExposure
+// Equals checks if the given RadiationExposure is equal to the current RadiationExposure.
+//
+// Parameters:
+//    other: The RadiationExposure to compare against.
+//
+// Returns:
+//    bool: Returns true if both RadiationExposure are equal, false otherwise.
 func (a *RadiationExposure) Equals(other *RadiationExposure) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given RadiationExposure are equals to the current RadiationExposure
+// CompareTo compares the current RadiationExposure with another RadiationExposure.
+// It returns -1 if the current RadiationExposure is less than the other RadiationExposure, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The RadiationExposure to compare against.
+//
+// Returns:
+//    int: -1 if the current RadiationExposure is less, 1 if greater, and 0 if equal.
 func (a *RadiationExposure) CompareTo(other *RadiationExposure) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -389,22 +447,50 @@ func (a *RadiationExposure) CompareTo(other *RadiationExposure) int {
 	return 0
 }
 
-// Add the given RadiationExposure to the current RadiationExposure.
+// Add adds the given RadiationExposure to the current RadiationExposure and returns the result.
+// The result is a new RadiationExposure instance with the sum of the values.
+//
+// Parameters:
+//    other: The RadiationExposure to add to the current RadiationExposure.
+//
+// Returns:
+//    *RadiationExposure: A new RadiationExposure instance representing the sum of both RadiationExposure.
 func (a *RadiationExposure) Add(other *RadiationExposure) *RadiationExposure {
 	return &RadiationExposure{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given RadiationExposure to the current RadiationExposure.
+// Subtract subtracts the given RadiationExposure from the current RadiationExposure and returns the result.
+// The result is a new RadiationExposure instance with the difference of the values.
+//
+// Parameters:
+//    other: The RadiationExposure to subtract from the current RadiationExposure.
+//
+// Returns:
+//    *RadiationExposure: A new RadiationExposure instance representing the difference of both RadiationExposure.
 func (a *RadiationExposure) Subtract(other *RadiationExposure) *RadiationExposure {
 	return &RadiationExposure{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given RadiationExposure to the current RadiationExposure.
+// Multiply multiplies the current RadiationExposure by the given RadiationExposure and returns the result.
+// The result is a new RadiationExposure instance with the product of the values.
+//
+// Parameters:
+//    other: The RadiationExposure to multiply with the current RadiationExposure.
+//
+// Returns:
+//    *RadiationExposure: A new RadiationExposure instance representing the product of both RadiationExposure.
 func (a *RadiationExposure) Multiply(other *RadiationExposure) *RadiationExposure {
 	return &RadiationExposure{value: a.value * other.BaseValue()}
 }
 
-// Divide the given RadiationExposure to the current RadiationExposure.
+// Divide divides the current RadiationExposure by the given RadiationExposure and returns the result.
+// The result is a new RadiationExposure instance with the quotient of the values.
+//
+// Parameters:
+//    other: The RadiationExposure to divide the current RadiationExposure by.
+//
+// Returns:
+//    *RadiationExposure: A new RadiationExposure instance representing the quotient of both RadiationExposure.
 func (a *RadiationExposure) Divide(other *RadiationExposure) *RadiationExposure {
 	return &RadiationExposure{value: a.value / other.BaseValue()}
 }

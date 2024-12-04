@@ -12,7 +12,7 @@ import (
 
 
 
-// CapacitanceUnits enumeration
+// CapacitanceUnits defines various units of Capacitance.
 type CapacitanceUnits string
 
 const (
@@ -33,19 +33,24 @@ const (
         CapacitanceMegafarad CapacitanceUnits = "Megafarad"
 )
 
-// CapacitanceDto represents an Capacitance
+// CapacitanceDto represents a Capacitance measurement with a numerical value and its corresponding unit.
 type CapacitanceDto struct {
+    // Value is the numerical representation of the Capacitance.
 	Value float64
+    // Unit specifies the unit of measurement for the Capacitance, as defined in the CapacitanceUnits enumeration.
 	Unit  CapacitanceUnits
 }
 
-// CapacitanceDtoFactory struct to group related functions
+// CapacitanceDtoFactory groups methods for creating and serializing CapacitanceDto objects.
 type CapacitanceDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a CapacitanceDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf CapacitanceDtoFactory) FromJSON(data []byte) (*CapacitanceDto, error) {
 	a := CapacitanceDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into CapacitanceDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -53,6 +58,9 @@ func (udf CapacitanceDtoFactory) FromJSON(data []byte) (*CapacitanceDto, error) 
 	return &a, nil
 }
 
+// ToJSON serializes a CapacitanceDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a CapacitanceDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -64,10 +72,11 @@ func (a CapacitanceDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Capacitance struct
+// Capacitance represents a measurement in a of Capacitance.
+//
+// Capacitance is the ability of a body to store an electric charge.
 type Capacitance struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     faradsLazy *float64 
@@ -79,62 +88,63 @@ type Capacitance struct {
     megafaradsLazy *float64 
 }
 
-// CapacitanceFactory struct to group related functions
+// CapacitanceFactory groups methods for creating Capacitance instances.
 type CapacitanceFactory struct{}
 
+// CreateCapacitance creates a new Capacitance instance from the given value and unit.
 func (uf CapacitanceFactory) CreateCapacitance(value float64, unit CapacitanceUnits) (*Capacitance, error) {
 	return newCapacitance(value, unit)
 }
 
+// FromDto converts a CapacitanceDto to a Capacitance instance.
 func (uf CapacitanceFactory) FromDto(dto CapacitanceDto) (*Capacitance, error) {
 	return newCapacitance(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Capacitance instance.
 func (uf CapacitanceFactory) FromDtoJSON(data []byte) (*Capacitance, error) {
 	unitDto, err := CapacitanceDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse CapacitanceDto from JSON: %w", err)
 	}
 	return CapacitanceFactory{}.FromDto(*unitDto)
 }
 
 
-// FromFarad creates a new Capacitance instance from Farad.
+// FromFarads creates a new Capacitance instance from a value in Farads.
 func (uf CapacitanceFactory) FromFarads(value float64) (*Capacitance, error) {
 	return newCapacitance(value, CapacitanceFarad)
 }
 
-// FromPicofarad creates a new Capacitance instance from Picofarad.
+// FromPicofarads creates a new Capacitance instance from a value in Picofarads.
 func (uf CapacitanceFactory) FromPicofarads(value float64) (*Capacitance, error) {
 	return newCapacitance(value, CapacitancePicofarad)
 }
 
-// FromNanofarad creates a new Capacitance instance from Nanofarad.
+// FromNanofarads creates a new Capacitance instance from a value in Nanofarads.
 func (uf CapacitanceFactory) FromNanofarads(value float64) (*Capacitance, error) {
 	return newCapacitance(value, CapacitanceNanofarad)
 }
 
-// FromMicrofarad creates a new Capacitance instance from Microfarad.
+// FromMicrofarads creates a new Capacitance instance from a value in Microfarads.
 func (uf CapacitanceFactory) FromMicrofarads(value float64) (*Capacitance, error) {
 	return newCapacitance(value, CapacitanceMicrofarad)
 }
 
-// FromMillifarad creates a new Capacitance instance from Millifarad.
+// FromMillifarads creates a new Capacitance instance from a value in Millifarads.
 func (uf CapacitanceFactory) FromMillifarads(value float64) (*Capacitance, error) {
 	return newCapacitance(value, CapacitanceMillifarad)
 }
 
-// FromKilofarad creates a new Capacitance instance from Kilofarad.
+// FromKilofarads creates a new Capacitance instance from a value in Kilofarads.
 func (uf CapacitanceFactory) FromKilofarads(value float64) (*Capacitance, error) {
 	return newCapacitance(value, CapacitanceKilofarad)
 }
 
-// FromMegafarad creates a new Capacitance instance from Megafarad.
+// FromMegafarads creates a new Capacitance instance from a value in Megafarads.
 func (uf CapacitanceFactory) FromMegafarads(value float64) (*Capacitance, error) {
 	return newCapacitance(value, CapacitanceMegafarad)
 }
-
-
 
 
 // newCapacitance creates a new Capacitance.
@@ -147,13 +157,15 @@ func newCapacitance(value float64, fromUnit CapacitanceUnits) (*Capacitance, err
 	return a, nil
 }
 
-// BaseValue returns the base value of Capacitance in Farad.
+// BaseValue returns the base value of Capacitance in Farad unit (the base/default quantity).
 func (a *Capacitance) BaseValue() float64 {
 	return a.value
 }
 
 
-// Farad returns the value in Farad.
+// Farads returns the Capacitance value in Farads.
+//
+// 
 func (a *Capacitance) Farads() float64 {
 	if a.faradsLazy != nil {
 		return *a.faradsLazy
@@ -163,7 +175,9 @@ func (a *Capacitance) Farads() float64 {
 	return farads
 }
 
-// Picofarad returns the value in Picofarad.
+// Picofarads returns the Capacitance value in Picofarads.
+//
+// 
 func (a *Capacitance) Picofarads() float64 {
 	if a.picofaradsLazy != nil {
 		return *a.picofaradsLazy
@@ -173,7 +187,9 @@ func (a *Capacitance) Picofarads() float64 {
 	return picofarads
 }
 
-// Nanofarad returns the value in Nanofarad.
+// Nanofarads returns the Capacitance value in Nanofarads.
+//
+// 
 func (a *Capacitance) Nanofarads() float64 {
 	if a.nanofaradsLazy != nil {
 		return *a.nanofaradsLazy
@@ -183,7 +199,9 @@ func (a *Capacitance) Nanofarads() float64 {
 	return nanofarads
 }
 
-// Microfarad returns the value in Microfarad.
+// Microfarads returns the Capacitance value in Microfarads.
+//
+// 
 func (a *Capacitance) Microfarads() float64 {
 	if a.microfaradsLazy != nil {
 		return *a.microfaradsLazy
@@ -193,7 +211,9 @@ func (a *Capacitance) Microfarads() float64 {
 	return microfarads
 }
 
-// Millifarad returns the value in Millifarad.
+// Millifarads returns the Capacitance value in Millifarads.
+//
+// 
 func (a *Capacitance) Millifarads() float64 {
 	if a.millifaradsLazy != nil {
 		return *a.millifaradsLazy
@@ -203,7 +223,9 @@ func (a *Capacitance) Millifarads() float64 {
 	return millifarads
 }
 
-// Kilofarad returns the value in Kilofarad.
+// Kilofarads returns the Capacitance value in Kilofarads.
+//
+// 
 func (a *Capacitance) Kilofarads() float64 {
 	if a.kilofaradsLazy != nil {
 		return *a.kilofaradsLazy
@@ -213,7 +235,9 @@ func (a *Capacitance) Kilofarads() float64 {
 	return kilofarads
 }
 
-// Megafarad returns the value in Megafarad.
+// Megafarads returns the Capacitance value in Megafarads.
+//
+// 
 func (a *Capacitance) Megafarads() float64 {
 	if a.megafaradsLazy != nil {
 		return *a.megafaradsLazy
@@ -224,7 +248,9 @@ func (a *Capacitance) Megafarads() float64 {
 }
 
 
-// ToDto creates an CapacitanceDto representation.
+// ToDto creates a CapacitanceDto representation from the Capacitance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Farad by default.
 func (a *Capacitance) ToDto(holdInUnit *CapacitanceUnits) CapacitanceDto {
 	if holdInUnit == nil {
 		defaultUnit := CapacitanceFarad // Default value
@@ -237,12 +263,19 @@ func (a *Capacitance) ToDto(holdInUnit *CapacitanceUnits) CapacitanceDto {
 	}
 }
 
-// ToDtoJSON creates an CapacitanceDto representation.
+// ToDtoJSON creates a JSON representation of the Capacitance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Farad by default.
 func (a *Capacitance) ToDtoJSON(holdInUnit *CapacitanceUnits) ([]byte, error) {
+	// Convert to CapacitanceDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Capacitance to a specific unit value.
+// Convert converts a Capacitance to a specific unit value.
+// The function uses the provided unit type (CapacitanceUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Capacitance) Convert(toUnit CapacitanceUnits) float64 {
 	switch toUnit { 
     case CapacitanceFarad:
@@ -260,7 +293,7 @@ func (a *Capacitance) Convert(toUnit CapacitanceUnits) float64 {
     case CapacitanceMegafarad:
 		return a.Megafarads()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -307,13 +340,22 @@ func (a *Capacitance) convertToBase(value float64, fromUnit CapacitanceUnits) fl
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Capacitance in the default unit (Farad),
+// formatted to two decimal places.
 func (a Capacitance) String() string {
 	return a.ToString(CapacitanceFarad, 2)
 }
 
-// ToString formats the Capacitance to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Capacitance value as a string with the specified unit and fractional digits.
+// It converts the Capacitance to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Capacitance value will be converted (e.g., Farad))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Capacitance with the unit abbreviation.
 func (a *Capacitance) ToString(unit CapacitanceUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -345,12 +387,26 @@ func (a *Capacitance) getUnitAbbreviation(unit CapacitanceUnits) string {
 	}
 }
 
-// Check if the given Capacitance are equals to the current Capacitance
+// Equals checks if the given Capacitance is equal to the current Capacitance.
+//
+// Parameters:
+//    other: The Capacitance to compare against.
+//
+// Returns:
+//    bool: Returns true if both Capacitance are equal, false otherwise.
 func (a *Capacitance) Equals(other *Capacitance) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Capacitance are equals to the current Capacitance
+// CompareTo compares the current Capacitance with another Capacitance.
+// It returns -1 if the current Capacitance is less than the other Capacitance, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Capacitance to compare against.
+//
+// Returns:
+//    int: -1 if the current Capacitance is less, 1 if greater, and 0 if equal.
 func (a *Capacitance) CompareTo(other *Capacitance) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -363,22 +419,50 @@ func (a *Capacitance) CompareTo(other *Capacitance) int {
 	return 0
 }
 
-// Add the given Capacitance to the current Capacitance.
+// Add adds the given Capacitance to the current Capacitance and returns the result.
+// The result is a new Capacitance instance with the sum of the values.
+//
+// Parameters:
+//    other: The Capacitance to add to the current Capacitance.
+//
+// Returns:
+//    *Capacitance: A new Capacitance instance representing the sum of both Capacitance.
 func (a *Capacitance) Add(other *Capacitance) *Capacitance {
 	return &Capacitance{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Capacitance to the current Capacitance.
+// Subtract subtracts the given Capacitance from the current Capacitance and returns the result.
+// The result is a new Capacitance instance with the difference of the values.
+//
+// Parameters:
+//    other: The Capacitance to subtract from the current Capacitance.
+//
+// Returns:
+//    *Capacitance: A new Capacitance instance representing the difference of both Capacitance.
 func (a *Capacitance) Subtract(other *Capacitance) *Capacitance {
 	return &Capacitance{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Capacitance to the current Capacitance.
+// Multiply multiplies the current Capacitance by the given Capacitance and returns the result.
+// The result is a new Capacitance instance with the product of the values.
+//
+// Parameters:
+//    other: The Capacitance to multiply with the current Capacitance.
+//
+// Returns:
+//    *Capacitance: A new Capacitance instance representing the product of both Capacitance.
 func (a *Capacitance) Multiply(other *Capacitance) *Capacitance {
 	return &Capacitance{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Capacitance to the current Capacitance.
+// Divide divides the current Capacitance by the given Capacitance and returns the result.
+// The result is a new Capacitance instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Capacitance to divide the current Capacitance by.
+//
+// Returns:
+//    *Capacitance: A new Capacitance instance representing the quotient of both Capacitance.
 func (a *Capacitance) Divide(other *Capacitance) *Capacitance {
 	return &Capacitance{value: a.value / other.BaseValue()}
 }

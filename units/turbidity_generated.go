@@ -12,7 +12,7 @@ import (
 
 
 
-// TurbidityUnits enumeration
+// TurbidityUnits defines various units of Turbidity.
 type TurbidityUnits string
 
 const (
@@ -21,19 +21,24 @@ const (
         TurbidityNTU TurbidityUnits = "NTU"
 )
 
-// TurbidityDto represents an Turbidity
+// TurbidityDto represents a Turbidity measurement with a numerical value and its corresponding unit.
 type TurbidityDto struct {
+    // Value is the numerical representation of the Turbidity.
 	Value float64
+    // Unit specifies the unit of measurement for the Turbidity, as defined in the TurbidityUnits enumeration.
 	Unit  TurbidityUnits
 }
 
-// TurbidityDtoFactory struct to group related functions
+// TurbidityDtoFactory groups methods for creating and serializing TurbidityDto objects.
 type TurbidityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a TurbidityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf TurbidityDtoFactory) FromJSON(data []byte) (*TurbidityDto, error) {
 	a := TurbidityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into TurbidityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -41,6 +46,9 @@ func (udf TurbidityDtoFactory) FromJSON(data []byte) (*TurbidityDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a TurbidityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a TurbidityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -52,41 +60,43 @@ func (a TurbidityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Turbidity struct
+// Turbidity represents a measurement in a of Turbidity.
+//
+// Turbidity is the cloudiness or haziness of a fluid caused by large numbers of individual particles that are generally invisible to the naked eye, similar to smoke in air. The measurement of turbidity is a key test of water quality.
 type Turbidity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     ntuLazy *float64 
 }
 
-// TurbidityFactory struct to group related functions
+// TurbidityFactory groups methods for creating Turbidity instances.
 type TurbidityFactory struct{}
 
+// CreateTurbidity creates a new Turbidity instance from the given value and unit.
 func (uf TurbidityFactory) CreateTurbidity(value float64, unit TurbidityUnits) (*Turbidity, error) {
 	return newTurbidity(value, unit)
 }
 
+// FromDto converts a TurbidityDto to a Turbidity instance.
 func (uf TurbidityFactory) FromDto(dto TurbidityDto) (*Turbidity, error) {
 	return newTurbidity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Turbidity instance.
 func (uf TurbidityFactory) FromDtoJSON(data []byte) (*Turbidity, error) {
 	unitDto, err := TurbidityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse TurbidityDto from JSON: %w", err)
 	}
 	return TurbidityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromNTU creates a new Turbidity instance from NTU.
+// FromNTU creates a new Turbidity instance from a value in NTU.
 func (uf TurbidityFactory) FromNTU(value float64) (*Turbidity, error) {
 	return newTurbidity(value, TurbidityNTU)
 }
-
-
 
 
 // newTurbidity creates a new Turbidity.
@@ -99,13 +109,15 @@ func newTurbidity(value float64, fromUnit TurbidityUnits) (*Turbidity, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Turbidity in NTU.
+// BaseValue returns the base value of Turbidity in NTU unit (the base/default quantity).
 func (a *Turbidity) BaseValue() float64 {
 	return a.value
 }
 
 
-// NTU returns the value in NTU.
+// NTU returns the Turbidity value in NTU.
+//
+// 
 func (a *Turbidity) NTU() float64 {
 	if a.ntuLazy != nil {
 		return *a.ntuLazy
@@ -116,7 +128,9 @@ func (a *Turbidity) NTU() float64 {
 }
 
 
-// ToDto creates an TurbidityDto representation.
+// ToDto creates a TurbidityDto representation from the Turbidity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NTU by default.
 func (a *Turbidity) ToDto(holdInUnit *TurbidityUnits) TurbidityDto {
 	if holdInUnit == nil {
 		defaultUnit := TurbidityNTU // Default value
@@ -129,18 +143,25 @@ func (a *Turbidity) ToDto(holdInUnit *TurbidityUnits) TurbidityDto {
 	}
 }
 
-// ToDtoJSON creates an TurbidityDto representation.
+// ToDtoJSON creates a JSON representation of the Turbidity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NTU by default.
 func (a *Turbidity) ToDtoJSON(holdInUnit *TurbidityUnits) ([]byte, error) {
+	// Convert to TurbidityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Turbidity to a specific unit value.
+// Convert converts a Turbidity to a specific unit value.
+// The function uses the provided unit type (TurbidityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Turbidity) Convert(toUnit TurbidityUnits) float64 {
 	switch toUnit { 
     case TurbidityNTU:
 		return a.NTU()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -163,13 +184,22 @@ func (a *Turbidity) convertToBase(value float64, fromUnit TurbidityUnits) float6
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Turbidity in the default unit (NTU),
+// formatted to two decimal places.
 func (a Turbidity) String() string {
 	return a.ToString(TurbidityNTU, 2)
 }
 
-// ToString formats the Turbidity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Turbidity value as a string with the specified unit and fractional digits.
+// It converts the Turbidity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Turbidity value will be converted (e.g., NTU))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Turbidity with the unit abbreviation.
 func (a *Turbidity) ToString(unit TurbidityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -189,12 +219,26 @@ func (a *Turbidity) getUnitAbbreviation(unit TurbidityUnits) string {
 	}
 }
 
-// Check if the given Turbidity are equals to the current Turbidity
+// Equals checks if the given Turbidity is equal to the current Turbidity.
+//
+// Parameters:
+//    other: The Turbidity to compare against.
+//
+// Returns:
+//    bool: Returns true if both Turbidity are equal, false otherwise.
 func (a *Turbidity) Equals(other *Turbidity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Turbidity are equals to the current Turbidity
+// CompareTo compares the current Turbidity with another Turbidity.
+// It returns -1 if the current Turbidity is less than the other Turbidity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Turbidity to compare against.
+//
+// Returns:
+//    int: -1 if the current Turbidity is less, 1 if greater, and 0 if equal.
 func (a *Turbidity) CompareTo(other *Turbidity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -207,22 +251,50 @@ func (a *Turbidity) CompareTo(other *Turbidity) int {
 	return 0
 }
 
-// Add the given Turbidity to the current Turbidity.
+// Add adds the given Turbidity to the current Turbidity and returns the result.
+// The result is a new Turbidity instance with the sum of the values.
+//
+// Parameters:
+//    other: The Turbidity to add to the current Turbidity.
+//
+// Returns:
+//    *Turbidity: A new Turbidity instance representing the sum of both Turbidity.
 func (a *Turbidity) Add(other *Turbidity) *Turbidity {
 	return &Turbidity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Turbidity to the current Turbidity.
+// Subtract subtracts the given Turbidity from the current Turbidity and returns the result.
+// The result is a new Turbidity instance with the difference of the values.
+//
+// Parameters:
+//    other: The Turbidity to subtract from the current Turbidity.
+//
+// Returns:
+//    *Turbidity: A new Turbidity instance representing the difference of both Turbidity.
 func (a *Turbidity) Subtract(other *Turbidity) *Turbidity {
 	return &Turbidity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Turbidity to the current Turbidity.
+// Multiply multiplies the current Turbidity by the given Turbidity and returns the result.
+// The result is a new Turbidity instance with the product of the values.
+//
+// Parameters:
+//    other: The Turbidity to multiply with the current Turbidity.
+//
+// Returns:
+//    *Turbidity: A new Turbidity instance representing the product of both Turbidity.
 func (a *Turbidity) Multiply(other *Turbidity) *Turbidity {
 	return &Turbidity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Turbidity to the current Turbidity.
+// Divide divides the current Turbidity by the given Turbidity and returns the result.
+// The result is a new Turbidity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Turbidity to divide the current Turbidity by.
+//
+// Returns:
+//    *Turbidity: A new Turbidity instance representing the quotient of both Turbidity.
 func (a *Turbidity) Divide(other *Turbidity) *Turbidity {
 	return &Turbidity{value: a.value / other.BaseValue()}
 }

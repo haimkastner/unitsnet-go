@@ -12,7 +12,7 @@ import (
 
 
 
-// SpecificFuelConsumptionUnits enumeration
+// SpecificFuelConsumptionUnits defines various units of SpecificFuelConsumption.
 type SpecificFuelConsumptionUnits string
 
 const (
@@ -27,19 +27,24 @@ const (
         SpecificFuelConsumptionKilogramPerKiloNewtonSecond SpecificFuelConsumptionUnits = "KilogramPerKiloNewtonSecond"
 )
 
-// SpecificFuelConsumptionDto represents an SpecificFuelConsumption
+// SpecificFuelConsumptionDto represents a SpecificFuelConsumption measurement with a numerical value and its corresponding unit.
 type SpecificFuelConsumptionDto struct {
+    // Value is the numerical representation of the SpecificFuelConsumption.
 	Value float64
+    // Unit specifies the unit of measurement for the SpecificFuelConsumption, as defined in the SpecificFuelConsumptionUnits enumeration.
 	Unit  SpecificFuelConsumptionUnits
 }
 
-// SpecificFuelConsumptionDtoFactory struct to group related functions
+// SpecificFuelConsumptionDtoFactory groups methods for creating and serializing SpecificFuelConsumptionDto objects.
 type SpecificFuelConsumptionDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a SpecificFuelConsumptionDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf SpecificFuelConsumptionDtoFactory) FromJSON(data []byte) (*SpecificFuelConsumptionDto, error) {
 	a := SpecificFuelConsumptionDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into SpecificFuelConsumptionDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -47,6 +52,9 @@ func (udf SpecificFuelConsumptionDtoFactory) FromJSON(data []byte) (*SpecificFue
 	return &a, nil
 }
 
+// ToJSON serializes a SpecificFuelConsumptionDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a SpecificFuelConsumptionDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -58,10 +66,11 @@ func (a SpecificFuelConsumptionDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// SpecificFuelConsumption struct
+// SpecificFuelConsumption represents a measurement in a of SpecificFuelConsumption.
+//
+// SFC is the fuel efficiency of an engine design with respect to thrust output
 type SpecificFuelConsumption struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     pounds_mass_per_pound_force_hourLazy *float64 
@@ -70,47 +79,48 @@ type SpecificFuelConsumption struct {
     kilograms_per_kilo_newton_secondLazy *float64 
 }
 
-// SpecificFuelConsumptionFactory struct to group related functions
+// SpecificFuelConsumptionFactory groups methods for creating SpecificFuelConsumption instances.
 type SpecificFuelConsumptionFactory struct{}
 
+// CreateSpecificFuelConsumption creates a new SpecificFuelConsumption instance from the given value and unit.
 func (uf SpecificFuelConsumptionFactory) CreateSpecificFuelConsumption(value float64, unit SpecificFuelConsumptionUnits) (*SpecificFuelConsumption, error) {
 	return newSpecificFuelConsumption(value, unit)
 }
 
+// FromDto converts a SpecificFuelConsumptionDto to a SpecificFuelConsumption instance.
 func (uf SpecificFuelConsumptionFactory) FromDto(dto SpecificFuelConsumptionDto) (*SpecificFuelConsumption, error) {
 	return newSpecificFuelConsumption(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a SpecificFuelConsumption instance.
 func (uf SpecificFuelConsumptionFactory) FromDtoJSON(data []byte) (*SpecificFuelConsumption, error) {
 	unitDto, err := SpecificFuelConsumptionDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse SpecificFuelConsumptionDto from JSON: %w", err)
 	}
 	return SpecificFuelConsumptionFactory{}.FromDto(*unitDto)
 }
 
 
-// FromPoundMassPerPoundForceHour creates a new SpecificFuelConsumption instance from PoundMassPerPoundForceHour.
+// FromPoundsMassPerPoundForceHour creates a new SpecificFuelConsumption instance from a value in PoundsMassPerPoundForceHour.
 func (uf SpecificFuelConsumptionFactory) FromPoundsMassPerPoundForceHour(value float64) (*SpecificFuelConsumption, error) {
 	return newSpecificFuelConsumption(value, SpecificFuelConsumptionPoundMassPerPoundForceHour)
 }
 
-// FromKilogramPerKilogramForceHour creates a new SpecificFuelConsumption instance from KilogramPerKilogramForceHour.
+// FromKilogramsPerKilogramForceHour creates a new SpecificFuelConsumption instance from a value in KilogramsPerKilogramForceHour.
 func (uf SpecificFuelConsumptionFactory) FromKilogramsPerKilogramForceHour(value float64) (*SpecificFuelConsumption, error) {
 	return newSpecificFuelConsumption(value, SpecificFuelConsumptionKilogramPerKilogramForceHour)
 }
 
-// FromGramPerKiloNewtonSecond creates a new SpecificFuelConsumption instance from GramPerKiloNewtonSecond.
+// FromGramsPerKiloNewtonSecond creates a new SpecificFuelConsumption instance from a value in GramsPerKiloNewtonSecond.
 func (uf SpecificFuelConsumptionFactory) FromGramsPerKiloNewtonSecond(value float64) (*SpecificFuelConsumption, error) {
 	return newSpecificFuelConsumption(value, SpecificFuelConsumptionGramPerKiloNewtonSecond)
 }
 
-// FromKilogramPerKiloNewtonSecond creates a new SpecificFuelConsumption instance from KilogramPerKiloNewtonSecond.
+// FromKilogramsPerKiloNewtonSecond creates a new SpecificFuelConsumption instance from a value in KilogramsPerKiloNewtonSecond.
 func (uf SpecificFuelConsumptionFactory) FromKilogramsPerKiloNewtonSecond(value float64) (*SpecificFuelConsumption, error) {
 	return newSpecificFuelConsumption(value, SpecificFuelConsumptionKilogramPerKiloNewtonSecond)
 }
-
-
 
 
 // newSpecificFuelConsumption creates a new SpecificFuelConsumption.
@@ -123,13 +133,15 @@ func newSpecificFuelConsumption(value float64, fromUnit SpecificFuelConsumptionU
 	return a, nil
 }
 
-// BaseValue returns the base value of SpecificFuelConsumption in GramPerKiloNewtonSecond.
+// BaseValue returns the base value of SpecificFuelConsumption in GramPerKiloNewtonSecond unit (the base/default quantity).
 func (a *SpecificFuelConsumption) BaseValue() float64 {
 	return a.value
 }
 
 
-// PoundMassPerPoundForceHour returns the value in PoundMassPerPoundForceHour.
+// PoundsMassPerPoundForceHour returns the SpecificFuelConsumption value in PoundsMassPerPoundForceHour.
+//
+// 
 func (a *SpecificFuelConsumption) PoundsMassPerPoundForceHour() float64 {
 	if a.pounds_mass_per_pound_force_hourLazy != nil {
 		return *a.pounds_mass_per_pound_force_hourLazy
@@ -139,7 +151,9 @@ func (a *SpecificFuelConsumption) PoundsMassPerPoundForceHour() float64 {
 	return pounds_mass_per_pound_force_hour
 }
 
-// KilogramPerKilogramForceHour returns the value in KilogramPerKilogramForceHour.
+// KilogramsPerKilogramForceHour returns the SpecificFuelConsumption value in KilogramsPerKilogramForceHour.
+//
+// 
 func (a *SpecificFuelConsumption) KilogramsPerKilogramForceHour() float64 {
 	if a.kilograms_per_kilogram_force_hourLazy != nil {
 		return *a.kilograms_per_kilogram_force_hourLazy
@@ -149,7 +163,9 @@ func (a *SpecificFuelConsumption) KilogramsPerKilogramForceHour() float64 {
 	return kilograms_per_kilogram_force_hour
 }
 
-// GramPerKiloNewtonSecond returns the value in GramPerKiloNewtonSecond.
+// GramsPerKiloNewtonSecond returns the SpecificFuelConsumption value in GramsPerKiloNewtonSecond.
+//
+// 
 func (a *SpecificFuelConsumption) GramsPerKiloNewtonSecond() float64 {
 	if a.grams_per_kilo_newton_secondLazy != nil {
 		return *a.grams_per_kilo_newton_secondLazy
@@ -159,7 +175,9 @@ func (a *SpecificFuelConsumption) GramsPerKiloNewtonSecond() float64 {
 	return grams_per_kilo_newton_second
 }
 
-// KilogramPerKiloNewtonSecond returns the value in KilogramPerKiloNewtonSecond.
+// KilogramsPerKiloNewtonSecond returns the SpecificFuelConsumption value in KilogramsPerKiloNewtonSecond.
+//
+// 
 func (a *SpecificFuelConsumption) KilogramsPerKiloNewtonSecond() float64 {
 	if a.kilograms_per_kilo_newton_secondLazy != nil {
 		return *a.kilograms_per_kilo_newton_secondLazy
@@ -170,7 +188,9 @@ func (a *SpecificFuelConsumption) KilogramsPerKiloNewtonSecond() float64 {
 }
 
 
-// ToDto creates an SpecificFuelConsumptionDto representation.
+// ToDto creates a SpecificFuelConsumptionDto representation from the SpecificFuelConsumption instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by GramPerKiloNewtonSecond by default.
 func (a *SpecificFuelConsumption) ToDto(holdInUnit *SpecificFuelConsumptionUnits) SpecificFuelConsumptionDto {
 	if holdInUnit == nil {
 		defaultUnit := SpecificFuelConsumptionGramPerKiloNewtonSecond // Default value
@@ -183,12 +203,19 @@ func (a *SpecificFuelConsumption) ToDto(holdInUnit *SpecificFuelConsumptionUnits
 	}
 }
 
-// ToDtoJSON creates an SpecificFuelConsumptionDto representation.
+// ToDtoJSON creates a JSON representation of the SpecificFuelConsumption instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by GramPerKiloNewtonSecond by default.
 func (a *SpecificFuelConsumption) ToDtoJSON(holdInUnit *SpecificFuelConsumptionUnits) ([]byte, error) {
+	// Convert to SpecificFuelConsumptionDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts SpecificFuelConsumption to a specific unit value.
+// Convert converts a SpecificFuelConsumption to a specific unit value.
+// The function uses the provided unit type (SpecificFuelConsumptionUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *SpecificFuelConsumption) Convert(toUnit SpecificFuelConsumptionUnits) float64 {
 	switch toUnit { 
     case SpecificFuelConsumptionPoundMassPerPoundForceHour:
@@ -200,7 +227,7 @@ func (a *SpecificFuelConsumption) Convert(toUnit SpecificFuelConsumptionUnits) f
     case SpecificFuelConsumptionKilogramPerKiloNewtonSecond:
 		return a.KilogramsPerKiloNewtonSecond()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -235,13 +262,22 @@ func (a *SpecificFuelConsumption) convertToBase(value float64, fromUnit Specific
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the SpecificFuelConsumption in the default unit (GramPerKiloNewtonSecond),
+// formatted to two decimal places.
 func (a SpecificFuelConsumption) String() string {
 	return a.ToString(SpecificFuelConsumptionGramPerKiloNewtonSecond, 2)
 }
 
-// ToString formats the SpecificFuelConsumption to string.
-// fractionalDigits -1 for not mention
+// ToString formats the SpecificFuelConsumption value as a string with the specified unit and fractional digits.
+// It converts the SpecificFuelConsumption to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the SpecificFuelConsumption value will be converted (e.g., GramPerKiloNewtonSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the SpecificFuelConsumption with the unit abbreviation.
 func (a *SpecificFuelConsumption) ToString(unit SpecificFuelConsumptionUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -267,12 +303,26 @@ func (a *SpecificFuelConsumption) getUnitAbbreviation(unit SpecificFuelConsumpti
 	}
 }
 
-// Check if the given SpecificFuelConsumption are equals to the current SpecificFuelConsumption
+// Equals checks if the given SpecificFuelConsumption is equal to the current SpecificFuelConsumption.
+//
+// Parameters:
+//    other: The SpecificFuelConsumption to compare against.
+//
+// Returns:
+//    bool: Returns true if both SpecificFuelConsumption are equal, false otherwise.
 func (a *SpecificFuelConsumption) Equals(other *SpecificFuelConsumption) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given SpecificFuelConsumption are equals to the current SpecificFuelConsumption
+// CompareTo compares the current SpecificFuelConsumption with another SpecificFuelConsumption.
+// It returns -1 if the current SpecificFuelConsumption is less than the other SpecificFuelConsumption, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The SpecificFuelConsumption to compare against.
+//
+// Returns:
+//    int: -1 if the current SpecificFuelConsumption is less, 1 if greater, and 0 if equal.
 func (a *SpecificFuelConsumption) CompareTo(other *SpecificFuelConsumption) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -285,22 +335,50 @@ func (a *SpecificFuelConsumption) CompareTo(other *SpecificFuelConsumption) int 
 	return 0
 }
 
-// Add the given SpecificFuelConsumption to the current SpecificFuelConsumption.
+// Add adds the given SpecificFuelConsumption to the current SpecificFuelConsumption and returns the result.
+// The result is a new SpecificFuelConsumption instance with the sum of the values.
+//
+// Parameters:
+//    other: The SpecificFuelConsumption to add to the current SpecificFuelConsumption.
+//
+// Returns:
+//    *SpecificFuelConsumption: A new SpecificFuelConsumption instance representing the sum of both SpecificFuelConsumption.
 func (a *SpecificFuelConsumption) Add(other *SpecificFuelConsumption) *SpecificFuelConsumption {
 	return &SpecificFuelConsumption{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given SpecificFuelConsumption to the current SpecificFuelConsumption.
+// Subtract subtracts the given SpecificFuelConsumption from the current SpecificFuelConsumption and returns the result.
+// The result is a new SpecificFuelConsumption instance with the difference of the values.
+//
+// Parameters:
+//    other: The SpecificFuelConsumption to subtract from the current SpecificFuelConsumption.
+//
+// Returns:
+//    *SpecificFuelConsumption: A new SpecificFuelConsumption instance representing the difference of both SpecificFuelConsumption.
 func (a *SpecificFuelConsumption) Subtract(other *SpecificFuelConsumption) *SpecificFuelConsumption {
 	return &SpecificFuelConsumption{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given SpecificFuelConsumption to the current SpecificFuelConsumption.
+// Multiply multiplies the current SpecificFuelConsumption by the given SpecificFuelConsumption and returns the result.
+// The result is a new SpecificFuelConsumption instance with the product of the values.
+//
+// Parameters:
+//    other: The SpecificFuelConsumption to multiply with the current SpecificFuelConsumption.
+//
+// Returns:
+//    *SpecificFuelConsumption: A new SpecificFuelConsumption instance representing the product of both SpecificFuelConsumption.
 func (a *SpecificFuelConsumption) Multiply(other *SpecificFuelConsumption) *SpecificFuelConsumption {
 	return &SpecificFuelConsumption{value: a.value * other.BaseValue()}
 }
 
-// Divide the given SpecificFuelConsumption to the current SpecificFuelConsumption.
+// Divide divides the current SpecificFuelConsumption by the given SpecificFuelConsumption and returns the result.
+// The result is a new SpecificFuelConsumption instance with the quotient of the values.
+//
+// Parameters:
+//    other: The SpecificFuelConsumption to divide the current SpecificFuelConsumption by.
+//
+// Returns:
+//    *SpecificFuelConsumption: A new SpecificFuelConsumption instance representing the quotient of both SpecificFuelConsumption.
 func (a *SpecificFuelConsumption) Divide(other *SpecificFuelConsumption) *SpecificFuelConsumption {
 	return &SpecificFuelConsumption{value: a.value / other.BaseValue()}
 }

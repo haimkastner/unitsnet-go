@@ -12,7 +12,7 @@ import (
 
 
 
-// MassMomentOfInertiaUnits enumeration
+// MassMomentOfInertiaUnits defines various units of MassMomentOfInertia.
 type MassMomentOfInertiaUnits string
 
 const (
@@ -75,19 +75,24 @@ const (
         MassMomentOfInertiaMegatonneSquareMilimeter MassMomentOfInertiaUnits = "MegatonneSquareMilimeter"
 )
 
-// MassMomentOfInertiaDto represents an MassMomentOfInertia
+// MassMomentOfInertiaDto represents a MassMomentOfInertia measurement with a numerical value and its corresponding unit.
 type MassMomentOfInertiaDto struct {
+    // Value is the numerical representation of the MassMomentOfInertia.
 	Value float64
+    // Unit specifies the unit of measurement for the MassMomentOfInertia, as defined in the MassMomentOfInertiaUnits enumeration.
 	Unit  MassMomentOfInertiaUnits
 }
 
-// MassMomentOfInertiaDtoFactory struct to group related functions
+// MassMomentOfInertiaDtoFactory groups methods for creating and serializing MassMomentOfInertiaDto objects.
 type MassMomentOfInertiaDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MassMomentOfInertiaDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MassMomentOfInertiaDtoFactory) FromJSON(data []byte) (*MassMomentOfInertiaDto, error) {
 	a := MassMomentOfInertiaDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MassMomentOfInertiaDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -95,6 +100,9 @@ func (udf MassMomentOfInertiaDtoFactory) FromJSON(data []byte) (*MassMomentOfIne
 	return &a, nil
 }
 
+// ToJSON serializes a MassMomentOfInertiaDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MassMomentOfInertiaDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -106,10 +114,11 @@ func (a MassMomentOfInertiaDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// MassMomentOfInertia struct
+// MassMomentOfInertia represents a measurement in a of MassMomentOfInertia.
+//
+// A property of body reflects how its mass is distributed with regard to an axis.
 type MassMomentOfInertia struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     gram_square_metersLazy *float64 
@@ -142,167 +151,168 @@ type MassMomentOfInertia struct {
     megatonne_square_milimetersLazy *float64 
 }
 
-// MassMomentOfInertiaFactory struct to group related functions
+// MassMomentOfInertiaFactory groups methods for creating MassMomentOfInertia instances.
 type MassMomentOfInertiaFactory struct{}
 
+// CreateMassMomentOfInertia creates a new MassMomentOfInertia instance from the given value and unit.
 func (uf MassMomentOfInertiaFactory) CreateMassMomentOfInertia(value float64, unit MassMomentOfInertiaUnits) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, unit)
 }
 
+// FromDto converts a MassMomentOfInertiaDto to a MassMomentOfInertia instance.
 func (uf MassMomentOfInertiaFactory) FromDto(dto MassMomentOfInertiaDto) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a MassMomentOfInertia instance.
 func (uf MassMomentOfInertiaFactory) FromDtoJSON(data []byte) (*MassMomentOfInertia, error) {
 	unitDto, err := MassMomentOfInertiaDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MassMomentOfInertiaDto from JSON: %w", err)
 	}
 	return MassMomentOfInertiaFactory{}.FromDto(*unitDto)
 }
 
 
-// FromGramSquareMeter creates a new MassMomentOfInertia instance from GramSquareMeter.
+// FromGramSquareMeters creates a new MassMomentOfInertia instance from a value in GramSquareMeters.
 func (uf MassMomentOfInertiaFactory) FromGramSquareMeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaGramSquareMeter)
 }
 
-// FromGramSquareDecimeter creates a new MassMomentOfInertia instance from GramSquareDecimeter.
+// FromGramSquareDecimeters creates a new MassMomentOfInertia instance from a value in GramSquareDecimeters.
 func (uf MassMomentOfInertiaFactory) FromGramSquareDecimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaGramSquareDecimeter)
 }
 
-// FromGramSquareCentimeter creates a new MassMomentOfInertia instance from GramSquareCentimeter.
+// FromGramSquareCentimeters creates a new MassMomentOfInertia instance from a value in GramSquareCentimeters.
 func (uf MassMomentOfInertiaFactory) FromGramSquareCentimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaGramSquareCentimeter)
 }
 
-// FromGramSquareMillimeter creates a new MassMomentOfInertia instance from GramSquareMillimeter.
+// FromGramSquareMillimeters creates a new MassMomentOfInertia instance from a value in GramSquareMillimeters.
 func (uf MassMomentOfInertiaFactory) FromGramSquareMillimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaGramSquareMillimeter)
 }
 
-// FromTonneSquareMeter creates a new MassMomentOfInertia instance from TonneSquareMeter.
+// FromTonneSquareMeters creates a new MassMomentOfInertia instance from a value in TonneSquareMeters.
 func (uf MassMomentOfInertiaFactory) FromTonneSquareMeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaTonneSquareMeter)
 }
 
-// FromTonneSquareDecimeter creates a new MassMomentOfInertia instance from TonneSquareDecimeter.
+// FromTonneSquareDecimeters creates a new MassMomentOfInertia instance from a value in TonneSquareDecimeters.
 func (uf MassMomentOfInertiaFactory) FromTonneSquareDecimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaTonneSquareDecimeter)
 }
 
-// FromTonneSquareCentimeter creates a new MassMomentOfInertia instance from TonneSquareCentimeter.
+// FromTonneSquareCentimeters creates a new MassMomentOfInertia instance from a value in TonneSquareCentimeters.
 func (uf MassMomentOfInertiaFactory) FromTonneSquareCentimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaTonneSquareCentimeter)
 }
 
-// FromTonneSquareMilimeter creates a new MassMomentOfInertia instance from TonneSquareMilimeter.
+// FromTonneSquareMilimeters creates a new MassMomentOfInertia instance from a value in TonneSquareMilimeters.
 func (uf MassMomentOfInertiaFactory) FromTonneSquareMilimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaTonneSquareMilimeter)
 }
 
-// FromPoundSquareFoot creates a new MassMomentOfInertia instance from PoundSquareFoot.
+// FromPoundSquareFeet creates a new MassMomentOfInertia instance from a value in PoundSquareFeet.
 func (uf MassMomentOfInertiaFactory) FromPoundSquareFeet(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaPoundSquareFoot)
 }
 
-// FromPoundSquareInch creates a new MassMomentOfInertia instance from PoundSquareInch.
+// FromPoundSquareInches creates a new MassMomentOfInertia instance from a value in PoundSquareInches.
 func (uf MassMomentOfInertiaFactory) FromPoundSquareInches(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaPoundSquareInch)
 }
 
-// FromSlugSquareFoot creates a new MassMomentOfInertia instance from SlugSquareFoot.
+// FromSlugSquareFeet creates a new MassMomentOfInertia instance from a value in SlugSquareFeet.
 func (uf MassMomentOfInertiaFactory) FromSlugSquareFeet(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaSlugSquareFoot)
 }
 
-// FromSlugSquareInch creates a new MassMomentOfInertia instance from SlugSquareInch.
+// FromSlugSquareInches creates a new MassMomentOfInertia instance from a value in SlugSquareInches.
 func (uf MassMomentOfInertiaFactory) FromSlugSquareInches(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaSlugSquareInch)
 }
 
-// FromMilligramSquareMeter creates a new MassMomentOfInertia instance from MilligramSquareMeter.
+// FromMilligramSquareMeters creates a new MassMomentOfInertia instance from a value in MilligramSquareMeters.
 func (uf MassMomentOfInertiaFactory) FromMilligramSquareMeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaMilligramSquareMeter)
 }
 
-// FromKilogramSquareMeter creates a new MassMomentOfInertia instance from KilogramSquareMeter.
+// FromKilogramSquareMeters creates a new MassMomentOfInertia instance from a value in KilogramSquareMeters.
 func (uf MassMomentOfInertiaFactory) FromKilogramSquareMeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaKilogramSquareMeter)
 }
 
-// FromMilligramSquareDecimeter creates a new MassMomentOfInertia instance from MilligramSquareDecimeter.
+// FromMilligramSquareDecimeters creates a new MassMomentOfInertia instance from a value in MilligramSquareDecimeters.
 func (uf MassMomentOfInertiaFactory) FromMilligramSquareDecimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaMilligramSquareDecimeter)
 }
 
-// FromKilogramSquareDecimeter creates a new MassMomentOfInertia instance from KilogramSquareDecimeter.
+// FromKilogramSquareDecimeters creates a new MassMomentOfInertia instance from a value in KilogramSquareDecimeters.
 func (uf MassMomentOfInertiaFactory) FromKilogramSquareDecimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaKilogramSquareDecimeter)
 }
 
-// FromMilligramSquareCentimeter creates a new MassMomentOfInertia instance from MilligramSquareCentimeter.
+// FromMilligramSquareCentimeters creates a new MassMomentOfInertia instance from a value in MilligramSquareCentimeters.
 func (uf MassMomentOfInertiaFactory) FromMilligramSquareCentimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaMilligramSquareCentimeter)
 }
 
-// FromKilogramSquareCentimeter creates a new MassMomentOfInertia instance from KilogramSquareCentimeter.
+// FromKilogramSquareCentimeters creates a new MassMomentOfInertia instance from a value in KilogramSquareCentimeters.
 func (uf MassMomentOfInertiaFactory) FromKilogramSquareCentimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaKilogramSquareCentimeter)
 }
 
-// FromMilligramSquareMillimeter creates a new MassMomentOfInertia instance from MilligramSquareMillimeter.
+// FromMilligramSquareMillimeters creates a new MassMomentOfInertia instance from a value in MilligramSquareMillimeters.
 func (uf MassMomentOfInertiaFactory) FromMilligramSquareMillimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaMilligramSquareMillimeter)
 }
 
-// FromKilogramSquareMillimeter creates a new MassMomentOfInertia instance from KilogramSquareMillimeter.
+// FromKilogramSquareMillimeters creates a new MassMomentOfInertia instance from a value in KilogramSquareMillimeters.
 func (uf MassMomentOfInertiaFactory) FromKilogramSquareMillimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaKilogramSquareMillimeter)
 }
 
-// FromKilotonneSquareMeter creates a new MassMomentOfInertia instance from KilotonneSquareMeter.
+// FromKilotonneSquareMeters creates a new MassMomentOfInertia instance from a value in KilotonneSquareMeters.
 func (uf MassMomentOfInertiaFactory) FromKilotonneSquareMeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaKilotonneSquareMeter)
 }
 
-// FromMegatonneSquareMeter creates a new MassMomentOfInertia instance from MegatonneSquareMeter.
+// FromMegatonneSquareMeters creates a new MassMomentOfInertia instance from a value in MegatonneSquareMeters.
 func (uf MassMomentOfInertiaFactory) FromMegatonneSquareMeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaMegatonneSquareMeter)
 }
 
-// FromKilotonneSquareDecimeter creates a new MassMomentOfInertia instance from KilotonneSquareDecimeter.
+// FromKilotonneSquareDecimeters creates a new MassMomentOfInertia instance from a value in KilotonneSquareDecimeters.
 func (uf MassMomentOfInertiaFactory) FromKilotonneSquareDecimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaKilotonneSquareDecimeter)
 }
 
-// FromMegatonneSquareDecimeter creates a new MassMomentOfInertia instance from MegatonneSquareDecimeter.
+// FromMegatonneSquareDecimeters creates a new MassMomentOfInertia instance from a value in MegatonneSquareDecimeters.
 func (uf MassMomentOfInertiaFactory) FromMegatonneSquareDecimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaMegatonneSquareDecimeter)
 }
 
-// FromKilotonneSquareCentimeter creates a new MassMomentOfInertia instance from KilotonneSquareCentimeter.
+// FromKilotonneSquareCentimeters creates a new MassMomentOfInertia instance from a value in KilotonneSquareCentimeters.
 func (uf MassMomentOfInertiaFactory) FromKilotonneSquareCentimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaKilotonneSquareCentimeter)
 }
 
-// FromMegatonneSquareCentimeter creates a new MassMomentOfInertia instance from MegatonneSquareCentimeter.
+// FromMegatonneSquareCentimeters creates a new MassMomentOfInertia instance from a value in MegatonneSquareCentimeters.
 func (uf MassMomentOfInertiaFactory) FromMegatonneSquareCentimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaMegatonneSquareCentimeter)
 }
 
-// FromKilotonneSquareMilimeter creates a new MassMomentOfInertia instance from KilotonneSquareMilimeter.
+// FromKilotonneSquareMilimeters creates a new MassMomentOfInertia instance from a value in KilotonneSquareMilimeters.
 func (uf MassMomentOfInertiaFactory) FromKilotonneSquareMilimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaKilotonneSquareMilimeter)
 }
 
-// FromMegatonneSquareMilimeter creates a new MassMomentOfInertia instance from MegatonneSquareMilimeter.
+// FromMegatonneSquareMilimeters creates a new MassMomentOfInertia instance from a value in MegatonneSquareMilimeters.
 func (uf MassMomentOfInertiaFactory) FromMegatonneSquareMilimeters(value float64) (*MassMomentOfInertia, error) {
 	return newMassMomentOfInertia(value, MassMomentOfInertiaMegatonneSquareMilimeter)
 }
-
-
 
 
 // newMassMomentOfInertia creates a new MassMomentOfInertia.
@@ -315,13 +325,15 @@ func newMassMomentOfInertia(value float64, fromUnit MassMomentOfInertiaUnits) (*
 	return a, nil
 }
 
-// BaseValue returns the base value of MassMomentOfInertia in KilogramSquareMeter.
+// BaseValue returns the base value of MassMomentOfInertia in KilogramSquareMeter unit (the base/default quantity).
 func (a *MassMomentOfInertia) BaseValue() float64 {
 	return a.value
 }
 
 
-// GramSquareMeter returns the value in GramSquareMeter.
+// GramSquareMeters returns the MassMomentOfInertia value in GramSquareMeters.
+//
+// 
 func (a *MassMomentOfInertia) GramSquareMeters() float64 {
 	if a.gram_square_metersLazy != nil {
 		return *a.gram_square_metersLazy
@@ -331,7 +343,9 @@ func (a *MassMomentOfInertia) GramSquareMeters() float64 {
 	return gram_square_meters
 }
 
-// GramSquareDecimeter returns the value in GramSquareDecimeter.
+// GramSquareDecimeters returns the MassMomentOfInertia value in GramSquareDecimeters.
+//
+// 
 func (a *MassMomentOfInertia) GramSquareDecimeters() float64 {
 	if a.gram_square_decimetersLazy != nil {
 		return *a.gram_square_decimetersLazy
@@ -341,7 +355,9 @@ func (a *MassMomentOfInertia) GramSquareDecimeters() float64 {
 	return gram_square_decimeters
 }
 
-// GramSquareCentimeter returns the value in GramSquareCentimeter.
+// GramSquareCentimeters returns the MassMomentOfInertia value in GramSquareCentimeters.
+//
+// 
 func (a *MassMomentOfInertia) GramSquareCentimeters() float64 {
 	if a.gram_square_centimetersLazy != nil {
 		return *a.gram_square_centimetersLazy
@@ -351,7 +367,9 @@ func (a *MassMomentOfInertia) GramSquareCentimeters() float64 {
 	return gram_square_centimeters
 }
 
-// GramSquareMillimeter returns the value in GramSquareMillimeter.
+// GramSquareMillimeters returns the MassMomentOfInertia value in GramSquareMillimeters.
+//
+// 
 func (a *MassMomentOfInertia) GramSquareMillimeters() float64 {
 	if a.gram_square_millimetersLazy != nil {
 		return *a.gram_square_millimetersLazy
@@ -361,7 +379,9 @@ func (a *MassMomentOfInertia) GramSquareMillimeters() float64 {
 	return gram_square_millimeters
 }
 
-// TonneSquareMeter returns the value in TonneSquareMeter.
+// TonneSquareMeters returns the MassMomentOfInertia value in TonneSquareMeters.
+//
+// 
 func (a *MassMomentOfInertia) TonneSquareMeters() float64 {
 	if a.tonne_square_metersLazy != nil {
 		return *a.tonne_square_metersLazy
@@ -371,7 +391,9 @@ func (a *MassMomentOfInertia) TonneSquareMeters() float64 {
 	return tonne_square_meters
 }
 
-// TonneSquareDecimeter returns the value in TonneSquareDecimeter.
+// TonneSquareDecimeters returns the MassMomentOfInertia value in TonneSquareDecimeters.
+//
+// 
 func (a *MassMomentOfInertia) TonneSquareDecimeters() float64 {
 	if a.tonne_square_decimetersLazy != nil {
 		return *a.tonne_square_decimetersLazy
@@ -381,7 +403,9 @@ func (a *MassMomentOfInertia) TonneSquareDecimeters() float64 {
 	return tonne_square_decimeters
 }
 
-// TonneSquareCentimeter returns the value in TonneSquareCentimeter.
+// TonneSquareCentimeters returns the MassMomentOfInertia value in TonneSquareCentimeters.
+//
+// 
 func (a *MassMomentOfInertia) TonneSquareCentimeters() float64 {
 	if a.tonne_square_centimetersLazy != nil {
 		return *a.tonne_square_centimetersLazy
@@ -391,7 +415,9 @@ func (a *MassMomentOfInertia) TonneSquareCentimeters() float64 {
 	return tonne_square_centimeters
 }
 
-// TonneSquareMilimeter returns the value in TonneSquareMilimeter.
+// TonneSquareMilimeters returns the MassMomentOfInertia value in TonneSquareMilimeters.
+//
+// 
 func (a *MassMomentOfInertia) TonneSquareMilimeters() float64 {
 	if a.tonne_square_milimetersLazy != nil {
 		return *a.tonne_square_milimetersLazy
@@ -401,7 +427,9 @@ func (a *MassMomentOfInertia) TonneSquareMilimeters() float64 {
 	return tonne_square_milimeters
 }
 
-// PoundSquareFoot returns the value in PoundSquareFoot.
+// PoundSquareFeet returns the MassMomentOfInertia value in PoundSquareFeet.
+//
+// 
 func (a *MassMomentOfInertia) PoundSquareFeet() float64 {
 	if a.pound_square_feetLazy != nil {
 		return *a.pound_square_feetLazy
@@ -411,7 +439,9 @@ func (a *MassMomentOfInertia) PoundSquareFeet() float64 {
 	return pound_square_feet
 }
 
-// PoundSquareInch returns the value in PoundSquareInch.
+// PoundSquareInches returns the MassMomentOfInertia value in PoundSquareInches.
+//
+// 
 func (a *MassMomentOfInertia) PoundSquareInches() float64 {
 	if a.pound_square_inchesLazy != nil {
 		return *a.pound_square_inchesLazy
@@ -421,7 +451,9 @@ func (a *MassMomentOfInertia) PoundSquareInches() float64 {
 	return pound_square_inches
 }
 
-// SlugSquareFoot returns the value in SlugSquareFoot.
+// SlugSquareFeet returns the MassMomentOfInertia value in SlugSquareFeet.
+//
+// 
 func (a *MassMomentOfInertia) SlugSquareFeet() float64 {
 	if a.slug_square_feetLazy != nil {
 		return *a.slug_square_feetLazy
@@ -431,7 +463,9 @@ func (a *MassMomentOfInertia) SlugSquareFeet() float64 {
 	return slug_square_feet
 }
 
-// SlugSquareInch returns the value in SlugSquareInch.
+// SlugSquareInches returns the MassMomentOfInertia value in SlugSquareInches.
+//
+// 
 func (a *MassMomentOfInertia) SlugSquareInches() float64 {
 	if a.slug_square_inchesLazy != nil {
 		return *a.slug_square_inchesLazy
@@ -441,7 +475,9 @@ func (a *MassMomentOfInertia) SlugSquareInches() float64 {
 	return slug_square_inches
 }
 
-// MilligramSquareMeter returns the value in MilligramSquareMeter.
+// MilligramSquareMeters returns the MassMomentOfInertia value in MilligramSquareMeters.
+//
+// 
 func (a *MassMomentOfInertia) MilligramSquareMeters() float64 {
 	if a.milligram_square_metersLazy != nil {
 		return *a.milligram_square_metersLazy
@@ -451,7 +487,9 @@ func (a *MassMomentOfInertia) MilligramSquareMeters() float64 {
 	return milligram_square_meters
 }
 
-// KilogramSquareMeter returns the value in KilogramSquareMeter.
+// KilogramSquareMeters returns the MassMomentOfInertia value in KilogramSquareMeters.
+//
+// 
 func (a *MassMomentOfInertia) KilogramSquareMeters() float64 {
 	if a.kilogram_square_metersLazy != nil {
 		return *a.kilogram_square_metersLazy
@@ -461,7 +499,9 @@ func (a *MassMomentOfInertia) KilogramSquareMeters() float64 {
 	return kilogram_square_meters
 }
 
-// MilligramSquareDecimeter returns the value in MilligramSquareDecimeter.
+// MilligramSquareDecimeters returns the MassMomentOfInertia value in MilligramSquareDecimeters.
+//
+// 
 func (a *MassMomentOfInertia) MilligramSquareDecimeters() float64 {
 	if a.milligram_square_decimetersLazy != nil {
 		return *a.milligram_square_decimetersLazy
@@ -471,7 +511,9 @@ func (a *MassMomentOfInertia) MilligramSquareDecimeters() float64 {
 	return milligram_square_decimeters
 }
 
-// KilogramSquareDecimeter returns the value in KilogramSquareDecimeter.
+// KilogramSquareDecimeters returns the MassMomentOfInertia value in KilogramSquareDecimeters.
+//
+// 
 func (a *MassMomentOfInertia) KilogramSquareDecimeters() float64 {
 	if a.kilogram_square_decimetersLazy != nil {
 		return *a.kilogram_square_decimetersLazy
@@ -481,7 +523,9 @@ func (a *MassMomentOfInertia) KilogramSquareDecimeters() float64 {
 	return kilogram_square_decimeters
 }
 
-// MilligramSquareCentimeter returns the value in MilligramSquareCentimeter.
+// MilligramSquareCentimeters returns the MassMomentOfInertia value in MilligramSquareCentimeters.
+//
+// 
 func (a *MassMomentOfInertia) MilligramSquareCentimeters() float64 {
 	if a.milligram_square_centimetersLazy != nil {
 		return *a.milligram_square_centimetersLazy
@@ -491,7 +535,9 @@ func (a *MassMomentOfInertia) MilligramSquareCentimeters() float64 {
 	return milligram_square_centimeters
 }
 
-// KilogramSquareCentimeter returns the value in KilogramSquareCentimeter.
+// KilogramSquareCentimeters returns the MassMomentOfInertia value in KilogramSquareCentimeters.
+//
+// 
 func (a *MassMomentOfInertia) KilogramSquareCentimeters() float64 {
 	if a.kilogram_square_centimetersLazy != nil {
 		return *a.kilogram_square_centimetersLazy
@@ -501,7 +547,9 @@ func (a *MassMomentOfInertia) KilogramSquareCentimeters() float64 {
 	return kilogram_square_centimeters
 }
 
-// MilligramSquareMillimeter returns the value in MilligramSquareMillimeter.
+// MilligramSquareMillimeters returns the MassMomentOfInertia value in MilligramSquareMillimeters.
+//
+// 
 func (a *MassMomentOfInertia) MilligramSquareMillimeters() float64 {
 	if a.milligram_square_millimetersLazy != nil {
 		return *a.milligram_square_millimetersLazy
@@ -511,7 +559,9 @@ func (a *MassMomentOfInertia) MilligramSquareMillimeters() float64 {
 	return milligram_square_millimeters
 }
 
-// KilogramSquareMillimeter returns the value in KilogramSquareMillimeter.
+// KilogramSquareMillimeters returns the MassMomentOfInertia value in KilogramSquareMillimeters.
+//
+// 
 func (a *MassMomentOfInertia) KilogramSquareMillimeters() float64 {
 	if a.kilogram_square_millimetersLazy != nil {
 		return *a.kilogram_square_millimetersLazy
@@ -521,7 +571,9 @@ func (a *MassMomentOfInertia) KilogramSquareMillimeters() float64 {
 	return kilogram_square_millimeters
 }
 
-// KilotonneSquareMeter returns the value in KilotonneSquareMeter.
+// KilotonneSquareMeters returns the MassMomentOfInertia value in KilotonneSquareMeters.
+//
+// 
 func (a *MassMomentOfInertia) KilotonneSquareMeters() float64 {
 	if a.kilotonne_square_metersLazy != nil {
 		return *a.kilotonne_square_metersLazy
@@ -531,7 +583,9 @@ func (a *MassMomentOfInertia) KilotonneSquareMeters() float64 {
 	return kilotonne_square_meters
 }
 
-// MegatonneSquareMeter returns the value in MegatonneSquareMeter.
+// MegatonneSquareMeters returns the MassMomentOfInertia value in MegatonneSquareMeters.
+//
+// 
 func (a *MassMomentOfInertia) MegatonneSquareMeters() float64 {
 	if a.megatonne_square_metersLazy != nil {
 		return *a.megatonne_square_metersLazy
@@ -541,7 +595,9 @@ func (a *MassMomentOfInertia) MegatonneSquareMeters() float64 {
 	return megatonne_square_meters
 }
 
-// KilotonneSquareDecimeter returns the value in KilotonneSquareDecimeter.
+// KilotonneSquareDecimeters returns the MassMomentOfInertia value in KilotonneSquareDecimeters.
+//
+// 
 func (a *MassMomentOfInertia) KilotonneSquareDecimeters() float64 {
 	if a.kilotonne_square_decimetersLazy != nil {
 		return *a.kilotonne_square_decimetersLazy
@@ -551,7 +607,9 @@ func (a *MassMomentOfInertia) KilotonneSquareDecimeters() float64 {
 	return kilotonne_square_decimeters
 }
 
-// MegatonneSquareDecimeter returns the value in MegatonneSquareDecimeter.
+// MegatonneSquareDecimeters returns the MassMomentOfInertia value in MegatonneSquareDecimeters.
+//
+// 
 func (a *MassMomentOfInertia) MegatonneSquareDecimeters() float64 {
 	if a.megatonne_square_decimetersLazy != nil {
 		return *a.megatonne_square_decimetersLazy
@@ -561,7 +619,9 @@ func (a *MassMomentOfInertia) MegatonneSquareDecimeters() float64 {
 	return megatonne_square_decimeters
 }
 
-// KilotonneSquareCentimeter returns the value in KilotonneSquareCentimeter.
+// KilotonneSquareCentimeters returns the MassMomentOfInertia value in KilotonneSquareCentimeters.
+//
+// 
 func (a *MassMomentOfInertia) KilotonneSquareCentimeters() float64 {
 	if a.kilotonne_square_centimetersLazy != nil {
 		return *a.kilotonne_square_centimetersLazy
@@ -571,7 +631,9 @@ func (a *MassMomentOfInertia) KilotonneSquareCentimeters() float64 {
 	return kilotonne_square_centimeters
 }
 
-// MegatonneSquareCentimeter returns the value in MegatonneSquareCentimeter.
+// MegatonneSquareCentimeters returns the MassMomentOfInertia value in MegatonneSquareCentimeters.
+//
+// 
 func (a *MassMomentOfInertia) MegatonneSquareCentimeters() float64 {
 	if a.megatonne_square_centimetersLazy != nil {
 		return *a.megatonne_square_centimetersLazy
@@ -581,7 +643,9 @@ func (a *MassMomentOfInertia) MegatonneSquareCentimeters() float64 {
 	return megatonne_square_centimeters
 }
 
-// KilotonneSquareMilimeter returns the value in KilotonneSquareMilimeter.
+// KilotonneSquareMilimeters returns the MassMomentOfInertia value in KilotonneSquareMilimeters.
+//
+// 
 func (a *MassMomentOfInertia) KilotonneSquareMilimeters() float64 {
 	if a.kilotonne_square_milimetersLazy != nil {
 		return *a.kilotonne_square_milimetersLazy
@@ -591,7 +655,9 @@ func (a *MassMomentOfInertia) KilotonneSquareMilimeters() float64 {
 	return kilotonne_square_milimeters
 }
 
-// MegatonneSquareMilimeter returns the value in MegatonneSquareMilimeter.
+// MegatonneSquareMilimeters returns the MassMomentOfInertia value in MegatonneSquareMilimeters.
+//
+// 
 func (a *MassMomentOfInertia) MegatonneSquareMilimeters() float64 {
 	if a.megatonne_square_milimetersLazy != nil {
 		return *a.megatonne_square_milimetersLazy
@@ -602,7 +668,9 @@ func (a *MassMomentOfInertia) MegatonneSquareMilimeters() float64 {
 }
 
 
-// ToDto creates an MassMomentOfInertiaDto representation.
+// ToDto creates a MassMomentOfInertiaDto representation from the MassMomentOfInertia instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramSquareMeter by default.
 func (a *MassMomentOfInertia) ToDto(holdInUnit *MassMomentOfInertiaUnits) MassMomentOfInertiaDto {
 	if holdInUnit == nil {
 		defaultUnit := MassMomentOfInertiaKilogramSquareMeter // Default value
@@ -615,12 +683,19 @@ func (a *MassMomentOfInertia) ToDto(holdInUnit *MassMomentOfInertiaUnits) MassMo
 	}
 }
 
-// ToDtoJSON creates an MassMomentOfInertiaDto representation.
+// ToDtoJSON creates a JSON representation of the MassMomentOfInertia instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramSquareMeter by default.
 func (a *MassMomentOfInertia) ToDtoJSON(holdInUnit *MassMomentOfInertiaUnits) ([]byte, error) {
+	// Convert to MassMomentOfInertiaDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts MassMomentOfInertia to a specific unit value.
+// Convert converts a MassMomentOfInertia to a specific unit value.
+// The function uses the provided unit type (MassMomentOfInertiaUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *MassMomentOfInertia) Convert(toUnit MassMomentOfInertiaUnits) float64 {
 	switch toUnit { 
     case MassMomentOfInertiaGramSquareMeter:
@@ -680,7 +755,7 @@ func (a *MassMomentOfInertia) Convert(toUnit MassMomentOfInertiaUnits) float64 {
     case MassMomentOfInertiaMegatonneSquareMilimeter:
 		return a.MegatonneSquareMilimeters()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -811,13 +886,22 @@ func (a *MassMomentOfInertia) convertToBase(value float64, fromUnit MassMomentOf
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the MassMomentOfInertia in the default unit (KilogramSquareMeter),
+// formatted to two decimal places.
 func (a MassMomentOfInertia) String() string {
 	return a.ToString(MassMomentOfInertiaKilogramSquareMeter, 2)
 }
 
-// ToString formats the MassMomentOfInertia to string.
-// fractionalDigits -1 for not mention
+// ToString formats the MassMomentOfInertia value as a string with the specified unit and fractional digits.
+// It converts the MassMomentOfInertia to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the MassMomentOfInertia value will be converted (e.g., KilogramSquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the MassMomentOfInertia with the unit abbreviation.
 func (a *MassMomentOfInertia) ToString(unit MassMomentOfInertiaUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -891,12 +975,26 @@ func (a *MassMomentOfInertia) getUnitAbbreviation(unit MassMomentOfInertiaUnits)
 	}
 }
 
-// Check if the given MassMomentOfInertia are equals to the current MassMomentOfInertia
+// Equals checks if the given MassMomentOfInertia is equal to the current MassMomentOfInertia.
+//
+// Parameters:
+//    other: The MassMomentOfInertia to compare against.
+//
+// Returns:
+//    bool: Returns true if both MassMomentOfInertia are equal, false otherwise.
 func (a *MassMomentOfInertia) Equals(other *MassMomentOfInertia) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given MassMomentOfInertia are equals to the current MassMomentOfInertia
+// CompareTo compares the current MassMomentOfInertia with another MassMomentOfInertia.
+// It returns -1 if the current MassMomentOfInertia is less than the other MassMomentOfInertia, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MassMomentOfInertia to compare against.
+//
+// Returns:
+//    int: -1 if the current MassMomentOfInertia is less, 1 if greater, and 0 if equal.
 func (a *MassMomentOfInertia) CompareTo(other *MassMomentOfInertia) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -909,22 +1007,50 @@ func (a *MassMomentOfInertia) CompareTo(other *MassMomentOfInertia) int {
 	return 0
 }
 
-// Add the given MassMomentOfInertia to the current MassMomentOfInertia.
+// Add adds the given MassMomentOfInertia to the current MassMomentOfInertia and returns the result.
+// The result is a new MassMomentOfInertia instance with the sum of the values.
+//
+// Parameters:
+//    other: The MassMomentOfInertia to add to the current MassMomentOfInertia.
+//
+// Returns:
+//    *MassMomentOfInertia: A new MassMomentOfInertia instance representing the sum of both MassMomentOfInertia.
 func (a *MassMomentOfInertia) Add(other *MassMomentOfInertia) *MassMomentOfInertia {
 	return &MassMomentOfInertia{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given MassMomentOfInertia to the current MassMomentOfInertia.
+// Subtract subtracts the given MassMomentOfInertia from the current MassMomentOfInertia and returns the result.
+// The result is a new MassMomentOfInertia instance with the difference of the values.
+//
+// Parameters:
+//    other: The MassMomentOfInertia to subtract from the current MassMomentOfInertia.
+//
+// Returns:
+//    *MassMomentOfInertia: A new MassMomentOfInertia instance representing the difference of both MassMomentOfInertia.
 func (a *MassMomentOfInertia) Subtract(other *MassMomentOfInertia) *MassMomentOfInertia {
 	return &MassMomentOfInertia{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given MassMomentOfInertia to the current MassMomentOfInertia.
+// Multiply multiplies the current MassMomentOfInertia by the given MassMomentOfInertia and returns the result.
+// The result is a new MassMomentOfInertia instance with the product of the values.
+//
+// Parameters:
+//    other: The MassMomentOfInertia to multiply with the current MassMomentOfInertia.
+//
+// Returns:
+//    *MassMomentOfInertia: A new MassMomentOfInertia instance representing the product of both MassMomentOfInertia.
 func (a *MassMomentOfInertia) Multiply(other *MassMomentOfInertia) *MassMomentOfInertia {
 	return &MassMomentOfInertia{value: a.value * other.BaseValue()}
 }
 
-// Divide the given MassMomentOfInertia to the current MassMomentOfInertia.
+// Divide divides the current MassMomentOfInertia by the given MassMomentOfInertia and returns the result.
+// The result is a new MassMomentOfInertia instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MassMomentOfInertia to divide the current MassMomentOfInertia by.
+//
+// Returns:
+//    *MassMomentOfInertia: A new MassMomentOfInertia instance representing the quotient of both MassMomentOfInertia.
 func (a *MassMomentOfInertia) Divide(other *MassMomentOfInertia) *MassMomentOfInertia {
 	return &MassMomentOfInertia{value: a.value / other.BaseValue()}
 }

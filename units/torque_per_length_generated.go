@@ -12,7 +12,7 @@ import (
 
 
 
-// TorquePerLengthUnits enumeration
+// TorquePerLengthUnits defines various units of TorquePerLength.
 type TorquePerLengthUnits string
 
 const (
@@ -61,19 +61,24 @@ const (
         TorquePerLengthMegapoundForceFootPerFoot TorquePerLengthUnits = "MegapoundForceFootPerFoot"
 )
 
-// TorquePerLengthDto represents an TorquePerLength
+// TorquePerLengthDto represents a TorquePerLength measurement with a numerical value and its corresponding unit.
 type TorquePerLengthDto struct {
+    // Value is the numerical representation of the TorquePerLength.
 	Value float64
+    // Unit specifies the unit of measurement for the TorquePerLength, as defined in the TorquePerLengthUnits enumeration.
 	Unit  TorquePerLengthUnits
 }
 
-// TorquePerLengthDtoFactory struct to group related functions
+// TorquePerLengthDtoFactory groups methods for creating and serializing TorquePerLengthDto objects.
 type TorquePerLengthDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a TorquePerLengthDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf TorquePerLengthDtoFactory) FromJSON(data []byte) (*TorquePerLengthDto, error) {
 	a := TorquePerLengthDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into TorquePerLengthDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -81,6 +86,9 @@ func (udf TorquePerLengthDtoFactory) FromJSON(data []byte) (*TorquePerLengthDto,
 	return &a, nil
 }
 
+// ToJSON serializes a TorquePerLengthDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a TorquePerLengthDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -92,10 +100,11 @@ func (a TorquePerLengthDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// TorquePerLength struct
+// TorquePerLength represents a measurement in a of TorquePerLength.
+//
+// The magnitude of torque per unit length.
 type TorquePerLength struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     newton_millimeters_per_meterLazy *float64 
@@ -121,132 +130,133 @@ type TorquePerLength struct {
     megapound_force_feet_per_footLazy *float64 
 }
 
-// TorquePerLengthFactory struct to group related functions
+// TorquePerLengthFactory groups methods for creating TorquePerLength instances.
 type TorquePerLengthFactory struct{}
 
+// CreateTorquePerLength creates a new TorquePerLength instance from the given value and unit.
 func (uf TorquePerLengthFactory) CreateTorquePerLength(value float64, unit TorquePerLengthUnits) (*TorquePerLength, error) {
 	return newTorquePerLength(value, unit)
 }
 
+// FromDto converts a TorquePerLengthDto to a TorquePerLength instance.
 func (uf TorquePerLengthFactory) FromDto(dto TorquePerLengthDto) (*TorquePerLength, error) {
 	return newTorquePerLength(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a TorquePerLength instance.
 func (uf TorquePerLengthFactory) FromDtoJSON(data []byte) (*TorquePerLength, error) {
 	unitDto, err := TorquePerLengthDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse TorquePerLengthDto from JSON: %w", err)
 	}
 	return TorquePerLengthFactory{}.FromDto(*unitDto)
 }
 
 
-// FromNewtonMillimeterPerMeter creates a new TorquePerLength instance from NewtonMillimeterPerMeter.
+// FromNewtonMillimetersPerMeter creates a new TorquePerLength instance from a value in NewtonMillimetersPerMeter.
 func (uf TorquePerLengthFactory) FromNewtonMillimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthNewtonMillimeterPerMeter)
 }
 
-// FromNewtonCentimeterPerMeter creates a new TorquePerLength instance from NewtonCentimeterPerMeter.
+// FromNewtonCentimetersPerMeter creates a new TorquePerLength instance from a value in NewtonCentimetersPerMeter.
 func (uf TorquePerLengthFactory) FromNewtonCentimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthNewtonCentimeterPerMeter)
 }
 
-// FromNewtonMeterPerMeter creates a new TorquePerLength instance from NewtonMeterPerMeter.
+// FromNewtonMetersPerMeter creates a new TorquePerLength instance from a value in NewtonMetersPerMeter.
 func (uf TorquePerLengthFactory) FromNewtonMetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthNewtonMeterPerMeter)
 }
 
-// FromPoundForceInchPerFoot creates a new TorquePerLength instance from PoundForceInchPerFoot.
+// FromPoundForceInchesPerFoot creates a new TorquePerLength instance from a value in PoundForceInchesPerFoot.
 func (uf TorquePerLengthFactory) FromPoundForceInchesPerFoot(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthPoundForceInchPerFoot)
 }
 
-// FromPoundForceFootPerFoot creates a new TorquePerLength instance from PoundForceFootPerFoot.
+// FromPoundForceFeetPerFoot creates a new TorquePerLength instance from a value in PoundForceFeetPerFoot.
 func (uf TorquePerLengthFactory) FromPoundForceFeetPerFoot(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthPoundForceFootPerFoot)
 }
 
-// FromKilogramForceMillimeterPerMeter creates a new TorquePerLength instance from KilogramForceMillimeterPerMeter.
+// FromKilogramForceMillimetersPerMeter creates a new TorquePerLength instance from a value in KilogramForceMillimetersPerMeter.
 func (uf TorquePerLengthFactory) FromKilogramForceMillimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthKilogramForceMillimeterPerMeter)
 }
 
-// FromKilogramForceCentimeterPerMeter creates a new TorquePerLength instance from KilogramForceCentimeterPerMeter.
+// FromKilogramForceCentimetersPerMeter creates a new TorquePerLength instance from a value in KilogramForceCentimetersPerMeter.
 func (uf TorquePerLengthFactory) FromKilogramForceCentimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthKilogramForceCentimeterPerMeter)
 }
 
-// FromKilogramForceMeterPerMeter creates a new TorquePerLength instance from KilogramForceMeterPerMeter.
+// FromKilogramForceMetersPerMeter creates a new TorquePerLength instance from a value in KilogramForceMetersPerMeter.
 func (uf TorquePerLengthFactory) FromKilogramForceMetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthKilogramForceMeterPerMeter)
 }
 
-// FromTonneForceMillimeterPerMeter creates a new TorquePerLength instance from TonneForceMillimeterPerMeter.
+// FromTonneForceMillimetersPerMeter creates a new TorquePerLength instance from a value in TonneForceMillimetersPerMeter.
 func (uf TorquePerLengthFactory) FromTonneForceMillimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthTonneForceMillimeterPerMeter)
 }
 
-// FromTonneForceCentimeterPerMeter creates a new TorquePerLength instance from TonneForceCentimeterPerMeter.
+// FromTonneForceCentimetersPerMeter creates a new TorquePerLength instance from a value in TonneForceCentimetersPerMeter.
 func (uf TorquePerLengthFactory) FromTonneForceCentimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthTonneForceCentimeterPerMeter)
 }
 
-// FromTonneForceMeterPerMeter creates a new TorquePerLength instance from TonneForceMeterPerMeter.
+// FromTonneForceMetersPerMeter creates a new TorquePerLength instance from a value in TonneForceMetersPerMeter.
 func (uf TorquePerLengthFactory) FromTonneForceMetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthTonneForceMeterPerMeter)
 }
 
-// FromKilonewtonMillimeterPerMeter creates a new TorquePerLength instance from KilonewtonMillimeterPerMeter.
+// FromKilonewtonMillimetersPerMeter creates a new TorquePerLength instance from a value in KilonewtonMillimetersPerMeter.
 func (uf TorquePerLengthFactory) FromKilonewtonMillimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthKilonewtonMillimeterPerMeter)
 }
 
-// FromMeganewtonMillimeterPerMeter creates a new TorquePerLength instance from MeganewtonMillimeterPerMeter.
+// FromMeganewtonMillimetersPerMeter creates a new TorquePerLength instance from a value in MeganewtonMillimetersPerMeter.
 func (uf TorquePerLengthFactory) FromMeganewtonMillimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthMeganewtonMillimeterPerMeter)
 }
 
-// FromKilonewtonCentimeterPerMeter creates a new TorquePerLength instance from KilonewtonCentimeterPerMeter.
+// FromKilonewtonCentimetersPerMeter creates a new TorquePerLength instance from a value in KilonewtonCentimetersPerMeter.
 func (uf TorquePerLengthFactory) FromKilonewtonCentimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthKilonewtonCentimeterPerMeter)
 }
 
-// FromMeganewtonCentimeterPerMeter creates a new TorquePerLength instance from MeganewtonCentimeterPerMeter.
+// FromMeganewtonCentimetersPerMeter creates a new TorquePerLength instance from a value in MeganewtonCentimetersPerMeter.
 func (uf TorquePerLengthFactory) FromMeganewtonCentimetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthMeganewtonCentimeterPerMeter)
 }
 
-// FromKilonewtonMeterPerMeter creates a new TorquePerLength instance from KilonewtonMeterPerMeter.
+// FromKilonewtonMetersPerMeter creates a new TorquePerLength instance from a value in KilonewtonMetersPerMeter.
 func (uf TorquePerLengthFactory) FromKilonewtonMetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthKilonewtonMeterPerMeter)
 }
 
-// FromMeganewtonMeterPerMeter creates a new TorquePerLength instance from MeganewtonMeterPerMeter.
+// FromMeganewtonMetersPerMeter creates a new TorquePerLength instance from a value in MeganewtonMetersPerMeter.
 func (uf TorquePerLengthFactory) FromMeganewtonMetersPerMeter(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthMeganewtonMeterPerMeter)
 }
 
-// FromKilopoundForceInchPerFoot creates a new TorquePerLength instance from KilopoundForceInchPerFoot.
+// FromKilopoundForceInchesPerFoot creates a new TorquePerLength instance from a value in KilopoundForceInchesPerFoot.
 func (uf TorquePerLengthFactory) FromKilopoundForceInchesPerFoot(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthKilopoundForceInchPerFoot)
 }
 
-// FromMegapoundForceInchPerFoot creates a new TorquePerLength instance from MegapoundForceInchPerFoot.
+// FromMegapoundForceInchesPerFoot creates a new TorquePerLength instance from a value in MegapoundForceInchesPerFoot.
 func (uf TorquePerLengthFactory) FromMegapoundForceInchesPerFoot(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthMegapoundForceInchPerFoot)
 }
 
-// FromKilopoundForceFootPerFoot creates a new TorquePerLength instance from KilopoundForceFootPerFoot.
+// FromKilopoundForceFeetPerFoot creates a new TorquePerLength instance from a value in KilopoundForceFeetPerFoot.
 func (uf TorquePerLengthFactory) FromKilopoundForceFeetPerFoot(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthKilopoundForceFootPerFoot)
 }
 
-// FromMegapoundForceFootPerFoot creates a new TorquePerLength instance from MegapoundForceFootPerFoot.
+// FromMegapoundForceFeetPerFoot creates a new TorquePerLength instance from a value in MegapoundForceFeetPerFoot.
 func (uf TorquePerLengthFactory) FromMegapoundForceFeetPerFoot(value float64) (*TorquePerLength, error) {
 	return newTorquePerLength(value, TorquePerLengthMegapoundForceFootPerFoot)
 }
-
-
 
 
 // newTorquePerLength creates a new TorquePerLength.
@@ -259,13 +269,15 @@ func newTorquePerLength(value float64, fromUnit TorquePerLengthUnits) (*TorquePe
 	return a, nil
 }
 
-// BaseValue returns the base value of TorquePerLength in NewtonMeterPerMeter.
+// BaseValue returns the base value of TorquePerLength in NewtonMeterPerMeter unit (the base/default quantity).
 func (a *TorquePerLength) BaseValue() float64 {
 	return a.value
 }
 
 
-// NewtonMillimeterPerMeter returns the value in NewtonMillimeterPerMeter.
+// NewtonMillimetersPerMeter returns the TorquePerLength value in NewtonMillimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) NewtonMillimetersPerMeter() float64 {
 	if a.newton_millimeters_per_meterLazy != nil {
 		return *a.newton_millimeters_per_meterLazy
@@ -275,7 +287,9 @@ func (a *TorquePerLength) NewtonMillimetersPerMeter() float64 {
 	return newton_millimeters_per_meter
 }
 
-// NewtonCentimeterPerMeter returns the value in NewtonCentimeterPerMeter.
+// NewtonCentimetersPerMeter returns the TorquePerLength value in NewtonCentimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) NewtonCentimetersPerMeter() float64 {
 	if a.newton_centimeters_per_meterLazy != nil {
 		return *a.newton_centimeters_per_meterLazy
@@ -285,7 +299,9 @@ func (a *TorquePerLength) NewtonCentimetersPerMeter() float64 {
 	return newton_centimeters_per_meter
 }
 
-// NewtonMeterPerMeter returns the value in NewtonMeterPerMeter.
+// NewtonMetersPerMeter returns the TorquePerLength value in NewtonMetersPerMeter.
+//
+// 
 func (a *TorquePerLength) NewtonMetersPerMeter() float64 {
 	if a.newton_meters_per_meterLazy != nil {
 		return *a.newton_meters_per_meterLazy
@@ -295,7 +311,9 @@ func (a *TorquePerLength) NewtonMetersPerMeter() float64 {
 	return newton_meters_per_meter
 }
 
-// PoundForceInchPerFoot returns the value in PoundForceInchPerFoot.
+// PoundForceInchesPerFoot returns the TorquePerLength value in PoundForceInchesPerFoot.
+//
+// 
 func (a *TorquePerLength) PoundForceInchesPerFoot() float64 {
 	if a.pound_force_inches_per_footLazy != nil {
 		return *a.pound_force_inches_per_footLazy
@@ -305,7 +323,9 @@ func (a *TorquePerLength) PoundForceInchesPerFoot() float64 {
 	return pound_force_inches_per_foot
 }
 
-// PoundForceFootPerFoot returns the value in PoundForceFootPerFoot.
+// PoundForceFeetPerFoot returns the TorquePerLength value in PoundForceFeetPerFoot.
+//
+// 
 func (a *TorquePerLength) PoundForceFeetPerFoot() float64 {
 	if a.pound_force_feet_per_footLazy != nil {
 		return *a.pound_force_feet_per_footLazy
@@ -315,7 +335,9 @@ func (a *TorquePerLength) PoundForceFeetPerFoot() float64 {
 	return pound_force_feet_per_foot
 }
 
-// KilogramForceMillimeterPerMeter returns the value in KilogramForceMillimeterPerMeter.
+// KilogramForceMillimetersPerMeter returns the TorquePerLength value in KilogramForceMillimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) KilogramForceMillimetersPerMeter() float64 {
 	if a.kilogram_force_millimeters_per_meterLazy != nil {
 		return *a.kilogram_force_millimeters_per_meterLazy
@@ -325,7 +347,9 @@ func (a *TorquePerLength) KilogramForceMillimetersPerMeter() float64 {
 	return kilogram_force_millimeters_per_meter
 }
 
-// KilogramForceCentimeterPerMeter returns the value in KilogramForceCentimeterPerMeter.
+// KilogramForceCentimetersPerMeter returns the TorquePerLength value in KilogramForceCentimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) KilogramForceCentimetersPerMeter() float64 {
 	if a.kilogram_force_centimeters_per_meterLazy != nil {
 		return *a.kilogram_force_centimeters_per_meterLazy
@@ -335,7 +359,9 @@ func (a *TorquePerLength) KilogramForceCentimetersPerMeter() float64 {
 	return kilogram_force_centimeters_per_meter
 }
 
-// KilogramForceMeterPerMeter returns the value in KilogramForceMeterPerMeter.
+// KilogramForceMetersPerMeter returns the TorquePerLength value in KilogramForceMetersPerMeter.
+//
+// 
 func (a *TorquePerLength) KilogramForceMetersPerMeter() float64 {
 	if a.kilogram_force_meters_per_meterLazy != nil {
 		return *a.kilogram_force_meters_per_meterLazy
@@ -345,7 +371,9 @@ func (a *TorquePerLength) KilogramForceMetersPerMeter() float64 {
 	return kilogram_force_meters_per_meter
 }
 
-// TonneForceMillimeterPerMeter returns the value in TonneForceMillimeterPerMeter.
+// TonneForceMillimetersPerMeter returns the TorquePerLength value in TonneForceMillimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) TonneForceMillimetersPerMeter() float64 {
 	if a.tonne_force_millimeters_per_meterLazy != nil {
 		return *a.tonne_force_millimeters_per_meterLazy
@@ -355,7 +383,9 @@ func (a *TorquePerLength) TonneForceMillimetersPerMeter() float64 {
 	return tonne_force_millimeters_per_meter
 }
 
-// TonneForceCentimeterPerMeter returns the value in TonneForceCentimeterPerMeter.
+// TonneForceCentimetersPerMeter returns the TorquePerLength value in TonneForceCentimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) TonneForceCentimetersPerMeter() float64 {
 	if a.tonne_force_centimeters_per_meterLazy != nil {
 		return *a.tonne_force_centimeters_per_meterLazy
@@ -365,7 +395,9 @@ func (a *TorquePerLength) TonneForceCentimetersPerMeter() float64 {
 	return tonne_force_centimeters_per_meter
 }
 
-// TonneForceMeterPerMeter returns the value in TonneForceMeterPerMeter.
+// TonneForceMetersPerMeter returns the TorquePerLength value in TonneForceMetersPerMeter.
+//
+// 
 func (a *TorquePerLength) TonneForceMetersPerMeter() float64 {
 	if a.tonne_force_meters_per_meterLazy != nil {
 		return *a.tonne_force_meters_per_meterLazy
@@ -375,7 +407,9 @@ func (a *TorquePerLength) TonneForceMetersPerMeter() float64 {
 	return tonne_force_meters_per_meter
 }
 
-// KilonewtonMillimeterPerMeter returns the value in KilonewtonMillimeterPerMeter.
+// KilonewtonMillimetersPerMeter returns the TorquePerLength value in KilonewtonMillimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) KilonewtonMillimetersPerMeter() float64 {
 	if a.kilonewton_millimeters_per_meterLazy != nil {
 		return *a.kilonewton_millimeters_per_meterLazy
@@ -385,7 +419,9 @@ func (a *TorquePerLength) KilonewtonMillimetersPerMeter() float64 {
 	return kilonewton_millimeters_per_meter
 }
 
-// MeganewtonMillimeterPerMeter returns the value in MeganewtonMillimeterPerMeter.
+// MeganewtonMillimetersPerMeter returns the TorquePerLength value in MeganewtonMillimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) MeganewtonMillimetersPerMeter() float64 {
 	if a.meganewton_millimeters_per_meterLazy != nil {
 		return *a.meganewton_millimeters_per_meterLazy
@@ -395,7 +431,9 @@ func (a *TorquePerLength) MeganewtonMillimetersPerMeter() float64 {
 	return meganewton_millimeters_per_meter
 }
 
-// KilonewtonCentimeterPerMeter returns the value in KilonewtonCentimeterPerMeter.
+// KilonewtonCentimetersPerMeter returns the TorquePerLength value in KilonewtonCentimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) KilonewtonCentimetersPerMeter() float64 {
 	if a.kilonewton_centimeters_per_meterLazy != nil {
 		return *a.kilonewton_centimeters_per_meterLazy
@@ -405,7 +443,9 @@ func (a *TorquePerLength) KilonewtonCentimetersPerMeter() float64 {
 	return kilonewton_centimeters_per_meter
 }
 
-// MeganewtonCentimeterPerMeter returns the value in MeganewtonCentimeterPerMeter.
+// MeganewtonCentimetersPerMeter returns the TorquePerLength value in MeganewtonCentimetersPerMeter.
+//
+// 
 func (a *TorquePerLength) MeganewtonCentimetersPerMeter() float64 {
 	if a.meganewton_centimeters_per_meterLazy != nil {
 		return *a.meganewton_centimeters_per_meterLazy
@@ -415,7 +455,9 @@ func (a *TorquePerLength) MeganewtonCentimetersPerMeter() float64 {
 	return meganewton_centimeters_per_meter
 }
 
-// KilonewtonMeterPerMeter returns the value in KilonewtonMeterPerMeter.
+// KilonewtonMetersPerMeter returns the TorquePerLength value in KilonewtonMetersPerMeter.
+//
+// 
 func (a *TorquePerLength) KilonewtonMetersPerMeter() float64 {
 	if a.kilonewton_meters_per_meterLazy != nil {
 		return *a.kilonewton_meters_per_meterLazy
@@ -425,7 +467,9 @@ func (a *TorquePerLength) KilonewtonMetersPerMeter() float64 {
 	return kilonewton_meters_per_meter
 }
 
-// MeganewtonMeterPerMeter returns the value in MeganewtonMeterPerMeter.
+// MeganewtonMetersPerMeter returns the TorquePerLength value in MeganewtonMetersPerMeter.
+//
+// 
 func (a *TorquePerLength) MeganewtonMetersPerMeter() float64 {
 	if a.meganewton_meters_per_meterLazy != nil {
 		return *a.meganewton_meters_per_meterLazy
@@ -435,7 +479,9 @@ func (a *TorquePerLength) MeganewtonMetersPerMeter() float64 {
 	return meganewton_meters_per_meter
 }
 
-// KilopoundForceInchPerFoot returns the value in KilopoundForceInchPerFoot.
+// KilopoundForceInchesPerFoot returns the TorquePerLength value in KilopoundForceInchesPerFoot.
+//
+// 
 func (a *TorquePerLength) KilopoundForceInchesPerFoot() float64 {
 	if a.kilopound_force_inches_per_footLazy != nil {
 		return *a.kilopound_force_inches_per_footLazy
@@ -445,7 +491,9 @@ func (a *TorquePerLength) KilopoundForceInchesPerFoot() float64 {
 	return kilopound_force_inches_per_foot
 }
 
-// MegapoundForceInchPerFoot returns the value in MegapoundForceInchPerFoot.
+// MegapoundForceInchesPerFoot returns the TorquePerLength value in MegapoundForceInchesPerFoot.
+//
+// 
 func (a *TorquePerLength) MegapoundForceInchesPerFoot() float64 {
 	if a.megapound_force_inches_per_footLazy != nil {
 		return *a.megapound_force_inches_per_footLazy
@@ -455,7 +503,9 @@ func (a *TorquePerLength) MegapoundForceInchesPerFoot() float64 {
 	return megapound_force_inches_per_foot
 }
 
-// KilopoundForceFootPerFoot returns the value in KilopoundForceFootPerFoot.
+// KilopoundForceFeetPerFoot returns the TorquePerLength value in KilopoundForceFeetPerFoot.
+//
+// 
 func (a *TorquePerLength) KilopoundForceFeetPerFoot() float64 {
 	if a.kilopound_force_feet_per_footLazy != nil {
 		return *a.kilopound_force_feet_per_footLazy
@@ -465,7 +515,9 @@ func (a *TorquePerLength) KilopoundForceFeetPerFoot() float64 {
 	return kilopound_force_feet_per_foot
 }
 
-// MegapoundForceFootPerFoot returns the value in MegapoundForceFootPerFoot.
+// MegapoundForceFeetPerFoot returns the TorquePerLength value in MegapoundForceFeetPerFoot.
+//
+// 
 func (a *TorquePerLength) MegapoundForceFeetPerFoot() float64 {
 	if a.megapound_force_feet_per_footLazy != nil {
 		return *a.megapound_force_feet_per_footLazy
@@ -476,7 +528,9 @@ func (a *TorquePerLength) MegapoundForceFeetPerFoot() float64 {
 }
 
 
-// ToDto creates an TorquePerLengthDto representation.
+// ToDto creates a TorquePerLengthDto representation from the TorquePerLength instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonMeterPerMeter by default.
 func (a *TorquePerLength) ToDto(holdInUnit *TorquePerLengthUnits) TorquePerLengthDto {
 	if holdInUnit == nil {
 		defaultUnit := TorquePerLengthNewtonMeterPerMeter // Default value
@@ -489,12 +543,19 @@ func (a *TorquePerLength) ToDto(holdInUnit *TorquePerLengthUnits) TorquePerLengt
 	}
 }
 
-// ToDtoJSON creates an TorquePerLengthDto representation.
+// ToDtoJSON creates a JSON representation of the TorquePerLength instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonMeterPerMeter by default.
 func (a *TorquePerLength) ToDtoJSON(holdInUnit *TorquePerLengthUnits) ([]byte, error) {
+	// Convert to TorquePerLengthDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts TorquePerLength to a specific unit value.
+// Convert converts a TorquePerLength to a specific unit value.
+// The function uses the provided unit type (TorquePerLengthUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *TorquePerLength) Convert(toUnit TorquePerLengthUnits) float64 {
 	switch toUnit { 
     case TorquePerLengthNewtonMillimeterPerMeter:
@@ -540,7 +601,7 @@ func (a *TorquePerLength) Convert(toUnit TorquePerLengthUnits) float64 {
     case TorquePerLengthMegapoundForceFootPerFoot:
 		return a.MegapoundForceFeetPerFoot()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -643,13 +704,22 @@ func (a *TorquePerLength) convertToBase(value float64, fromUnit TorquePerLengthU
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the TorquePerLength in the default unit (NewtonMeterPerMeter),
+// formatted to two decimal places.
 func (a TorquePerLength) String() string {
 	return a.ToString(TorquePerLengthNewtonMeterPerMeter, 2)
 }
 
-// ToString formats the TorquePerLength to string.
-// fractionalDigits -1 for not mention
+// ToString formats the TorquePerLength value as a string with the specified unit and fractional digits.
+// It converts the TorquePerLength to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the TorquePerLength value will be converted (e.g., NewtonMeterPerMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the TorquePerLength with the unit abbreviation.
 func (a *TorquePerLength) ToString(unit TorquePerLengthUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -709,12 +779,26 @@ func (a *TorquePerLength) getUnitAbbreviation(unit TorquePerLengthUnits) string 
 	}
 }
 
-// Check if the given TorquePerLength are equals to the current TorquePerLength
+// Equals checks if the given TorquePerLength is equal to the current TorquePerLength.
+//
+// Parameters:
+//    other: The TorquePerLength to compare against.
+//
+// Returns:
+//    bool: Returns true if both TorquePerLength are equal, false otherwise.
 func (a *TorquePerLength) Equals(other *TorquePerLength) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given TorquePerLength are equals to the current TorquePerLength
+// CompareTo compares the current TorquePerLength with another TorquePerLength.
+// It returns -1 if the current TorquePerLength is less than the other TorquePerLength, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The TorquePerLength to compare against.
+//
+// Returns:
+//    int: -1 if the current TorquePerLength is less, 1 if greater, and 0 if equal.
 func (a *TorquePerLength) CompareTo(other *TorquePerLength) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -727,22 +811,50 @@ func (a *TorquePerLength) CompareTo(other *TorquePerLength) int {
 	return 0
 }
 
-// Add the given TorquePerLength to the current TorquePerLength.
+// Add adds the given TorquePerLength to the current TorquePerLength and returns the result.
+// The result is a new TorquePerLength instance with the sum of the values.
+//
+// Parameters:
+//    other: The TorquePerLength to add to the current TorquePerLength.
+//
+// Returns:
+//    *TorquePerLength: A new TorquePerLength instance representing the sum of both TorquePerLength.
 func (a *TorquePerLength) Add(other *TorquePerLength) *TorquePerLength {
 	return &TorquePerLength{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given TorquePerLength to the current TorquePerLength.
+// Subtract subtracts the given TorquePerLength from the current TorquePerLength and returns the result.
+// The result is a new TorquePerLength instance with the difference of the values.
+//
+// Parameters:
+//    other: The TorquePerLength to subtract from the current TorquePerLength.
+//
+// Returns:
+//    *TorquePerLength: A new TorquePerLength instance representing the difference of both TorquePerLength.
 func (a *TorquePerLength) Subtract(other *TorquePerLength) *TorquePerLength {
 	return &TorquePerLength{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given TorquePerLength to the current TorquePerLength.
+// Multiply multiplies the current TorquePerLength by the given TorquePerLength and returns the result.
+// The result is a new TorquePerLength instance with the product of the values.
+//
+// Parameters:
+//    other: The TorquePerLength to multiply with the current TorquePerLength.
+//
+// Returns:
+//    *TorquePerLength: A new TorquePerLength instance representing the product of both TorquePerLength.
 func (a *TorquePerLength) Multiply(other *TorquePerLength) *TorquePerLength {
 	return &TorquePerLength{value: a.value * other.BaseValue()}
 }
 
-// Divide the given TorquePerLength to the current TorquePerLength.
+// Divide divides the current TorquePerLength by the given TorquePerLength and returns the result.
+// The result is a new TorquePerLength instance with the quotient of the values.
+//
+// Parameters:
+//    other: The TorquePerLength to divide the current TorquePerLength by.
+//
+// Returns:
+//    *TorquePerLength: A new TorquePerLength instance representing the quotient of both TorquePerLength.
 func (a *TorquePerLength) Divide(other *TorquePerLength) *TorquePerLength {
 	return &TorquePerLength{value: a.value / other.BaseValue()}
 }

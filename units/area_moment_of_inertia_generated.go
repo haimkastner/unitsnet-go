@@ -12,7 +12,7 @@ import (
 
 
 
-// AreaMomentOfInertiaUnits enumeration
+// AreaMomentOfInertiaUnits defines various units of AreaMomentOfInertia.
 type AreaMomentOfInertiaUnits string
 
 const (
@@ -31,19 +31,24 @@ const (
         AreaMomentOfInertiaInchToTheFourth AreaMomentOfInertiaUnits = "InchToTheFourth"
 )
 
-// AreaMomentOfInertiaDto represents an AreaMomentOfInertia
+// AreaMomentOfInertiaDto represents a AreaMomentOfInertia measurement with a numerical value and its corresponding unit.
 type AreaMomentOfInertiaDto struct {
+    // Value is the numerical representation of the AreaMomentOfInertia.
 	Value float64
+    // Unit specifies the unit of measurement for the AreaMomentOfInertia, as defined in the AreaMomentOfInertiaUnits enumeration.
 	Unit  AreaMomentOfInertiaUnits
 }
 
-// AreaMomentOfInertiaDtoFactory struct to group related functions
+// AreaMomentOfInertiaDtoFactory groups methods for creating and serializing AreaMomentOfInertiaDto objects.
 type AreaMomentOfInertiaDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a AreaMomentOfInertiaDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf AreaMomentOfInertiaDtoFactory) FromJSON(data []byte) (*AreaMomentOfInertiaDto, error) {
 	a := AreaMomentOfInertiaDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into AreaMomentOfInertiaDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -51,6 +56,9 @@ func (udf AreaMomentOfInertiaDtoFactory) FromJSON(data []byte) (*AreaMomentOfIne
 	return &a, nil
 }
 
+// ToJSON serializes a AreaMomentOfInertiaDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a AreaMomentOfInertiaDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -62,10 +70,11 @@ func (a AreaMomentOfInertiaDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// AreaMomentOfInertia struct
+// AreaMomentOfInertia represents a measurement in a of AreaMomentOfInertia.
+//
+// A geometric property of an area that reflects how its points are distributed with regard to an axis.
 type AreaMomentOfInertia struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     meters_to_the_fourthLazy *float64 
@@ -76,57 +85,58 @@ type AreaMomentOfInertia struct {
     inches_to_the_fourthLazy *float64 
 }
 
-// AreaMomentOfInertiaFactory struct to group related functions
+// AreaMomentOfInertiaFactory groups methods for creating AreaMomentOfInertia instances.
 type AreaMomentOfInertiaFactory struct{}
 
+// CreateAreaMomentOfInertia creates a new AreaMomentOfInertia instance from the given value and unit.
 func (uf AreaMomentOfInertiaFactory) CreateAreaMomentOfInertia(value float64, unit AreaMomentOfInertiaUnits) (*AreaMomentOfInertia, error) {
 	return newAreaMomentOfInertia(value, unit)
 }
 
+// FromDto converts a AreaMomentOfInertiaDto to a AreaMomentOfInertia instance.
 func (uf AreaMomentOfInertiaFactory) FromDto(dto AreaMomentOfInertiaDto) (*AreaMomentOfInertia, error) {
 	return newAreaMomentOfInertia(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a AreaMomentOfInertia instance.
 func (uf AreaMomentOfInertiaFactory) FromDtoJSON(data []byte) (*AreaMomentOfInertia, error) {
 	unitDto, err := AreaMomentOfInertiaDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse AreaMomentOfInertiaDto from JSON: %w", err)
 	}
 	return AreaMomentOfInertiaFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMeterToTheFourth creates a new AreaMomentOfInertia instance from MeterToTheFourth.
+// FromMetersToTheFourth creates a new AreaMomentOfInertia instance from a value in MetersToTheFourth.
 func (uf AreaMomentOfInertiaFactory) FromMetersToTheFourth(value float64) (*AreaMomentOfInertia, error) {
 	return newAreaMomentOfInertia(value, AreaMomentOfInertiaMeterToTheFourth)
 }
 
-// FromDecimeterToTheFourth creates a new AreaMomentOfInertia instance from DecimeterToTheFourth.
+// FromDecimetersToTheFourth creates a new AreaMomentOfInertia instance from a value in DecimetersToTheFourth.
 func (uf AreaMomentOfInertiaFactory) FromDecimetersToTheFourth(value float64) (*AreaMomentOfInertia, error) {
 	return newAreaMomentOfInertia(value, AreaMomentOfInertiaDecimeterToTheFourth)
 }
 
-// FromCentimeterToTheFourth creates a new AreaMomentOfInertia instance from CentimeterToTheFourth.
+// FromCentimetersToTheFourth creates a new AreaMomentOfInertia instance from a value in CentimetersToTheFourth.
 func (uf AreaMomentOfInertiaFactory) FromCentimetersToTheFourth(value float64) (*AreaMomentOfInertia, error) {
 	return newAreaMomentOfInertia(value, AreaMomentOfInertiaCentimeterToTheFourth)
 }
 
-// FromMillimeterToTheFourth creates a new AreaMomentOfInertia instance from MillimeterToTheFourth.
+// FromMillimetersToTheFourth creates a new AreaMomentOfInertia instance from a value in MillimetersToTheFourth.
 func (uf AreaMomentOfInertiaFactory) FromMillimetersToTheFourth(value float64) (*AreaMomentOfInertia, error) {
 	return newAreaMomentOfInertia(value, AreaMomentOfInertiaMillimeterToTheFourth)
 }
 
-// FromFootToTheFourth creates a new AreaMomentOfInertia instance from FootToTheFourth.
+// FromFeetToTheFourth creates a new AreaMomentOfInertia instance from a value in FeetToTheFourth.
 func (uf AreaMomentOfInertiaFactory) FromFeetToTheFourth(value float64) (*AreaMomentOfInertia, error) {
 	return newAreaMomentOfInertia(value, AreaMomentOfInertiaFootToTheFourth)
 }
 
-// FromInchToTheFourth creates a new AreaMomentOfInertia instance from InchToTheFourth.
+// FromInchesToTheFourth creates a new AreaMomentOfInertia instance from a value in InchesToTheFourth.
 func (uf AreaMomentOfInertiaFactory) FromInchesToTheFourth(value float64) (*AreaMomentOfInertia, error) {
 	return newAreaMomentOfInertia(value, AreaMomentOfInertiaInchToTheFourth)
 }
-
-
 
 
 // newAreaMomentOfInertia creates a new AreaMomentOfInertia.
@@ -139,13 +149,15 @@ func newAreaMomentOfInertia(value float64, fromUnit AreaMomentOfInertiaUnits) (*
 	return a, nil
 }
 
-// BaseValue returns the base value of AreaMomentOfInertia in MeterToTheFourth.
+// BaseValue returns the base value of AreaMomentOfInertia in MeterToTheFourth unit (the base/default quantity).
 func (a *AreaMomentOfInertia) BaseValue() float64 {
 	return a.value
 }
 
 
-// MeterToTheFourth returns the value in MeterToTheFourth.
+// MetersToTheFourth returns the AreaMomentOfInertia value in MetersToTheFourth.
+//
+// 
 func (a *AreaMomentOfInertia) MetersToTheFourth() float64 {
 	if a.meters_to_the_fourthLazy != nil {
 		return *a.meters_to_the_fourthLazy
@@ -155,7 +167,9 @@ func (a *AreaMomentOfInertia) MetersToTheFourth() float64 {
 	return meters_to_the_fourth
 }
 
-// DecimeterToTheFourth returns the value in DecimeterToTheFourth.
+// DecimetersToTheFourth returns the AreaMomentOfInertia value in DecimetersToTheFourth.
+//
+// 
 func (a *AreaMomentOfInertia) DecimetersToTheFourth() float64 {
 	if a.decimeters_to_the_fourthLazy != nil {
 		return *a.decimeters_to_the_fourthLazy
@@ -165,7 +179,9 @@ func (a *AreaMomentOfInertia) DecimetersToTheFourth() float64 {
 	return decimeters_to_the_fourth
 }
 
-// CentimeterToTheFourth returns the value in CentimeterToTheFourth.
+// CentimetersToTheFourth returns the AreaMomentOfInertia value in CentimetersToTheFourth.
+//
+// 
 func (a *AreaMomentOfInertia) CentimetersToTheFourth() float64 {
 	if a.centimeters_to_the_fourthLazy != nil {
 		return *a.centimeters_to_the_fourthLazy
@@ -175,7 +191,9 @@ func (a *AreaMomentOfInertia) CentimetersToTheFourth() float64 {
 	return centimeters_to_the_fourth
 }
 
-// MillimeterToTheFourth returns the value in MillimeterToTheFourth.
+// MillimetersToTheFourth returns the AreaMomentOfInertia value in MillimetersToTheFourth.
+//
+// 
 func (a *AreaMomentOfInertia) MillimetersToTheFourth() float64 {
 	if a.millimeters_to_the_fourthLazy != nil {
 		return *a.millimeters_to_the_fourthLazy
@@ -185,7 +203,9 @@ func (a *AreaMomentOfInertia) MillimetersToTheFourth() float64 {
 	return millimeters_to_the_fourth
 }
 
-// FootToTheFourth returns the value in FootToTheFourth.
+// FeetToTheFourth returns the AreaMomentOfInertia value in FeetToTheFourth.
+//
+// 
 func (a *AreaMomentOfInertia) FeetToTheFourth() float64 {
 	if a.feet_to_the_fourthLazy != nil {
 		return *a.feet_to_the_fourthLazy
@@ -195,7 +215,9 @@ func (a *AreaMomentOfInertia) FeetToTheFourth() float64 {
 	return feet_to_the_fourth
 }
 
-// InchToTheFourth returns the value in InchToTheFourth.
+// InchesToTheFourth returns the AreaMomentOfInertia value in InchesToTheFourth.
+//
+// 
 func (a *AreaMomentOfInertia) InchesToTheFourth() float64 {
 	if a.inches_to_the_fourthLazy != nil {
 		return *a.inches_to_the_fourthLazy
@@ -206,7 +228,9 @@ func (a *AreaMomentOfInertia) InchesToTheFourth() float64 {
 }
 
 
-// ToDto creates an AreaMomentOfInertiaDto representation.
+// ToDto creates a AreaMomentOfInertiaDto representation from the AreaMomentOfInertia instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterToTheFourth by default.
 func (a *AreaMomentOfInertia) ToDto(holdInUnit *AreaMomentOfInertiaUnits) AreaMomentOfInertiaDto {
 	if holdInUnit == nil {
 		defaultUnit := AreaMomentOfInertiaMeterToTheFourth // Default value
@@ -219,12 +243,19 @@ func (a *AreaMomentOfInertia) ToDto(holdInUnit *AreaMomentOfInertiaUnits) AreaMo
 	}
 }
 
-// ToDtoJSON creates an AreaMomentOfInertiaDto representation.
+// ToDtoJSON creates a JSON representation of the AreaMomentOfInertia instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterToTheFourth by default.
 func (a *AreaMomentOfInertia) ToDtoJSON(holdInUnit *AreaMomentOfInertiaUnits) ([]byte, error) {
+	// Convert to AreaMomentOfInertiaDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts AreaMomentOfInertia to a specific unit value.
+// Convert converts a AreaMomentOfInertia to a specific unit value.
+// The function uses the provided unit type (AreaMomentOfInertiaUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *AreaMomentOfInertia) Convert(toUnit AreaMomentOfInertiaUnits) float64 {
 	switch toUnit { 
     case AreaMomentOfInertiaMeterToTheFourth:
@@ -240,7 +271,7 @@ func (a *AreaMomentOfInertia) Convert(toUnit AreaMomentOfInertiaUnits) float64 {
     case AreaMomentOfInertiaInchToTheFourth:
 		return a.InchesToTheFourth()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -283,13 +314,22 @@ func (a *AreaMomentOfInertia) convertToBase(value float64, fromUnit AreaMomentOf
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the AreaMomentOfInertia in the default unit (MeterToTheFourth),
+// formatted to two decimal places.
 func (a AreaMomentOfInertia) String() string {
 	return a.ToString(AreaMomentOfInertiaMeterToTheFourth, 2)
 }
 
-// ToString formats the AreaMomentOfInertia to string.
-// fractionalDigits -1 for not mention
+// ToString formats the AreaMomentOfInertia value as a string with the specified unit and fractional digits.
+// It converts the AreaMomentOfInertia to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the AreaMomentOfInertia value will be converted (e.g., MeterToTheFourth))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the AreaMomentOfInertia with the unit abbreviation.
 func (a *AreaMomentOfInertia) ToString(unit AreaMomentOfInertiaUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -319,12 +359,26 @@ func (a *AreaMomentOfInertia) getUnitAbbreviation(unit AreaMomentOfInertiaUnits)
 	}
 }
 
-// Check if the given AreaMomentOfInertia are equals to the current AreaMomentOfInertia
+// Equals checks if the given AreaMomentOfInertia is equal to the current AreaMomentOfInertia.
+//
+// Parameters:
+//    other: The AreaMomentOfInertia to compare against.
+//
+// Returns:
+//    bool: Returns true if both AreaMomentOfInertia are equal, false otherwise.
 func (a *AreaMomentOfInertia) Equals(other *AreaMomentOfInertia) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given AreaMomentOfInertia are equals to the current AreaMomentOfInertia
+// CompareTo compares the current AreaMomentOfInertia with another AreaMomentOfInertia.
+// It returns -1 if the current AreaMomentOfInertia is less than the other AreaMomentOfInertia, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The AreaMomentOfInertia to compare against.
+//
+// Returns:
+//    int: -1 if the current AreaMomentOfInertia is less, 1 if greater, and 0 if equal.
 func (a *AreaMomentOfInertia) CompareTo(other *AreaMomentOfInertia) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -337,22 +391,50 @@ func (a *AreaMomentOfInertia) CompareTo(other *AreaMomentOfInertia) int {
 	return 0
 }
 
-// Add the given AreaMomentOfInertia to the current AreaMomentOfInertia.
+// Add adds the given AreaMomentOfInertia to the current AreaMomentOfInertia and returns the result.
+// The result is a new AreaMomentOfInertia instance with the sum of the values.
+//
+// Parameters:
+//    other: The AreaMomentOfInertia to add to the current AreaMomentOfInertia.
+//
+// Returns:
+//    *AreaMomentOfInertia: A new AreaMomentOfInertia instance representing the sum of both AreaMomentOfInertia.
 func (a *AreaMomentOfInertia) Add(other *AreaMomentOfInertia) *AreaMomentOfInertia {
 	return &AreaMomentOfInertia{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given AreaMomentOfInertia to the current AreaMomentOfInertia.
+// Subtract subtracts the given AreaMomentOfInertia from the current AreaMomentOfInertia and returns the result.
+// The result is a new AreaMomentOfInertia instance with the difference of the values.
+//
+// Parameters:
+//    other: The AreaMomentOfInertia to subtract from the current AreaMomentOfInertia.
+//
+// Returns:
+//    *AreaMomentOfInertia: A new AreaMomentOfInertia instance representing the difference of both AreaMomentOfInertia.
 func (a *AreaMomentOfInertia) Subtract(other *AreaMomentOfInertia) *AreaMomentOfInertia {
 	return &AreaMomentOfInertia{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given AreaMomentOfInertia to the current AreaMomentOfInertia.
+// Multiply multiplies the current AreaMomentOfInertia by the given AreaMomentOfInertia and returns the result.
+// The result is a new AreaMomentOfInertia instance with the product of the values.
+//
+// Parameters:
+//    other: The AreaMomentOfInertia to multiply with the current AreaMomentOfInertia.
+//
+// Returns:
+//    *AreaMomentOfInertia: A new AreaMomentOfInertia instance representing the product of both AreaMomentOfInertia.
 func (a *AreaMomentOfInertia) Multiply(other *AreaMomentOfInertia) *AreaMomentOfInertia {
 	return &AreaMomentOfInertia{value: a.value * other.BaseValue()}
 }
 
-// Divide the given AreaMomentOfInertia to the current AreaMomentOfInertia.
+// Divide divides the current AreaMomentOfInertia by the given AreaMomentOfInertia and returns the result.
+// The result is a new AreaMomentOfInertia instance with the quotient of the values.
+//
+// Parameters:
+//    other: The AreaMomentOfInertia to divide the current AreaMomentOfInertia by.
+//
+// Returns:
+//    *AreaMomentOfInertia: A new AreaMomentOfInertia instance representing the quotient of both AreaMomentOfInertia.
 func (a *AreaMomentOfInertia) Divide(other *AreaMomentOfInertia) *AreaMomentOfInertia {
 	return &AreaMomentOfInertia{value: a.value / other.BaseValue()}
 }

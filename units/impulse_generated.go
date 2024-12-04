@@ -12,7 +12,7 @@ import (
 
 
 
-// ImpulseUnits enumeration
+// ImpulseUnits defines various units of Impulse.
 type ImpulseUnits string
 
 const (
@@ -45,19 +45,24 @@ const (
         ImpulseMeganewtonSecond ImpulseUnits = "MeganewtonSecond"
 )
 
-// ImpulseDto represents an Impulse
+// ImpulseDto represents a Impulse measurement with a numerical value and its corresponding unit.
 type ImpulseDto struct {
+    // Value is the numerical representation of the Impulse.
 	Value float64
+    // Unit specifies the unit of measurement for the Impulse, as defined in the ImpulseUnits enumeration.
 	Unit  ImpulseUnits
 }
 
-// ImpulseDtoFactory struct to group related functions
+// ImpulseDtoFactory groups methods for creating and serializing ImpulseDto objects.
 type ImpulseDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ImpulseDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ImpulseDtoFactory) FromJSON(data []byte) (*ImpulseDto, error) {
 	a := ImpulseDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ImpulseDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -65,6 +70,9 @@ func (udf ImpulseDtoFactory) FromJSON(data []byte) (*ImpulseDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a ImpulseDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ImpulseDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -76,10 +84,11 @@ func (a ImpulseDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Impulse struct
+// Impulse represents a measurement in a of Impulse.
+//
+// In classical mechanics, impulse is the integral of a force, F, over the time interval, t, for which it acts. Impulse applied to an object produces an equivalent vector change in its linear momentum, also in the resultant direction.
 type Impulse struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     kilogram_meters_per_secondLazy *float64 
@@ -97,92 +106,93 @@ type Impulse struct {
     meganewton_secondsLazy *float64 
 }
 
-// ImpulseFactory struct to group related functions
+// ImpulseFactory groups methods for creating Impulse instances.
 type ImpulseFactory struct{}
 
+// CreateImpulse creates a new Impulse instance from the given value and unit.
 func (uf ImpulseFactory) CreateImpulse(value float64, unit ImpulseUnits) (*Impulse, error) {
 	return newImpulse(value, unit)
 }
 
+// FromDto converts a ImpulseDto to a Impulse instance.
 func (uf ImpulseFactory) FromDto(dto ImpulseDto) (*Impulse, error) {
 	return newImpulse(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Impulse instance.
 func (uf ImpulseFactory) FromDtoJSON(data []byte) (*Impulse, error) {
 	unitDto, err := ImpulseDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ImpulseDto from JSON: %w", err)
 	}
 	return ImpulseFactory{}.FromDto(*unitDto)
 }
 
 
-// FromKilogramMeterPerSecond creates a new Impulse instance from KilogramMeterPerSecond.
+// FromKilogramMetersPerSecond creates a new Impulse instance from a value in KilogramMetersPerSecond.
 func (uf ImpulseFactory) FromKilogramMetersPerSecond(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseKilogramMeterPerSecond)
 }
 
-// FromNewtonSecond creates a new Impulse instance from NewtonSecond.
+// FromNewtonSeconds creates a new Impulse instance from a value in NewtonSeconds.
 func (uf ImpulseFactory) FromNewtonSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseNewtonSecond)
 }
 
-// FromPoundFootPerSecond creates a new Impulse instance from PoundFootPerSecond.
+// FromPoundFeetPerSecond creates a new Impulse instance from a value in PoundFeetPerSecond.
 func (uf ImpulseFactory) FromPoundFeetPerSecond(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulsePoundFootPerSecond)
 }
 
-// FromPoundForceSecond creates a new Impulse instance from PoundForceSecond.
+// FromPoundForceSeconds creates a new Impulse instance from a value in PoundForceSeconds.
 func (uf ImpulseFactory) FromPoundForceSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulsePoundForceSecond)
 }
 
-// FromSlugFootPerSecond creates a new Impulse instance from SlugFootPerSecond.
+// FromSlugFeetPerSecond creates a new Impulse instance from a value in SlugFeetPerSecond.
 func (uf ImpulseFactory) FromSlugFeetPerSecond(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseSlugFootPerSecond)
 }
 
-// FromNanonewtonSecond creates a new Impulse instance from NanonewtonSecond.
+// FromNanonewtonSeconds creates a new Impulse instance from a value in NanonewtonSeconds.
 func (uf ImpulseFactory) FromNanonewtonSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseNanonewtonSecond)
 }
 
-// FromMicronewtonSecond creates a new Impulse instance from MicronewtonSecond.
+// FromMicronewtonSeconds creates a new Impulse instance from a value in MicronewtonSeconds.
 func (uf ImpulseFactory) FromMicronewtonSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseMicronewtonSecond)
 }
 
-// FromMillinewtonSecond creates a new Impulse instance from MillinewtonSecond.
+// FromMillinewtonSeconds creates a new Impulse instance from a value in MillinewtonSeconds.
 func (uf ImpulseFactory) FromMillinewtonSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseMillinewtonSecond)
 }
 
-// FromCentinewtonSecond creates a new Impulse instance from CentinewtonSecond.
+// FromCentinewtonSeconds creates a new Impulse instance from a value in CentinewtonSeconds.
 func (uf ImpulseFactory) FromCentinewtonSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseCentinewtonSecond)
 }
 
-// FromDecinewtonSecond creates a new Impulse instance from DecinewtonSecond.
+// FromDecinewtonSeconds creates a new Impulse instance from a value in DecinewtonSeconds.
 func (uf ImpulseFactory) FromDecinewtonSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseDecinewtonSecond)
 }
 
-// FromDecanewtonSecond creates a new Impulse instance from DecanewtonSecond.
+// FromDecanewtonSeconds creates a new Impulse instance from a value in DecanewtonSeconds.
 func (uf ImpulseFactory) FromDecanewtonSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseDecanewtonSecond)
 }
 
-// FromKilonewtonSecond creates a new Impulse instance from KilonewtonSecond.
+// FromKilonewtonSeconds creates a new Impulse instance from a value in KilonewtonSeconds.
 func (uf ImpulseFactory) FromKilonewtonSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseKilonewtonSecond)
 }
 
-// FromMeganewtonSecond creates a new Impulse instance from MeganewtonSecond.
+// FromMeganewtonSeconds creates a new Impulse instance from a value in MeganewtonSeconds.
 func (uf ImpulseFactory) FromMeganewtonSeconds(value float64) (*Impulse, error) {
 	return newImpulse(value, ImpulseMeganewtonSecond)
 }
-
-
 
 
 // newImpulse creates a new Impulse.
@@ -195,13 +205,15 @@ func newImpulse(value float64, fromUnit ImpulseUnits) (*Impulse, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Impulse in NewtonSecond.
+// BaseValue returns the base value of Impulse in NewtonSecond unit (the base/default quantity).
 func (a *Impulse) BaseValue() float64 {
 	return a.value
 }
 
 
-// KilogramMeterPerSecond returns the value in KilogramMeterPerSecond.
+// KilogramMetersPerSecond returns the Impulse value in KilogramMetersPerSecond.
+//
+// 
 func (a *Impulse) KilogramMetersPerSecond() float64 {
 	if a.kilogram_meters_per_secondLazy != nil {
 		return *a.kilogram_meters_per_secondLazy
@@ -211,7 +223,9 @@ func (a *Impulse) KilogramMetersPerSecond() float64 {
 	return kilogram_meters_per_second
 }
 
-// NewtonSecond returns the value in NewtonSecond.
+// NewtonSeconds returns the Impulse value in NewtonSeconds.
+//
+// 
 func (a *Impulse) NewtonSeconds() float64 {
 	if a.newton_secondsLazy != nil {
 		return *a.newton_secondsLazy
@@ -221,7 +235,9 @@ func (a *Impulse) NewtonSeconds() float64 {
 	return newton_seconds
 }
 
-// PoundFootPerSecond returns the value in PoundFootPerSecond.
+// PoundFeetPerSecond returns the Impulse value in PoundFeetPerSecond.
+//
+// 
 func (a *Impulse) PoundFeetPerSecond() float64 {
 	if a.pound_feet_per_secondLazy != nil {
 		return *a.pound_feet_per_secondLazy
@@ -231,7 +247,9 @@ func (a *Impulse) PoundFeetPerSecond() float64 {
 	return pound_feet_per_second
 }
 
-// PoundForceSecond returns the value in PoundForceSecond.
+// PoundForceSeconds returns the Impulse value in PoundForceSeconds.
+//
+// 
 func (a *Impulse) PoundForceSeconds() float64 {
 	if a.pound_force_secondsLazy != nil {
 		return *a.pound_force_secondsLazy
@@ -241,7 +259,9 @@ func (a *Impulse) PoundForceSeconds() float64 {
 	return pound_force_seconds
 }
 
-// SlugFootPerSecond returns the value in SlugFootPerSecond.
+// SlugFeetPerSecond returns the Impulse value in SlugFeetPerSecond.
+//
+// 
 func (a *Impulse) SlugFeetPerSecond() float64 {
 	if a.slug_feet_per_secondLazy != nil {
 		return *a.slug_feet_per_secondLazy
@@ -251,7 +271,9 @@ func (a *Impulse) SlugFeetPerSecond() float64 {
 	return slug_feet_per_second
 }
 
-// NanonewtonSecond returns the value in NanonewtonSecond.
+// NanonewtonSeconds returns the Impulse value in NanonewtonSeconds.
+//
+// 
 func (a *Impulse) NanonewtonSeconds() float64 {
 	if a.nanonewton_secondsLazy != nil {
 		return *a.nanonewton_secondsLazy
@@ -261,7 +283,9 @@ func (a *Impulse) NanonewtonSeconds() float64 {
 	return nanonewton_seconds
 }
 
-// MicronewtonSecond returns the value in MicronewtonSecond.
+// MicronewtonSeconds returns the Impulse value in MicronewtonSeconds.
+//
+// 
 func (a *Impulse) MicronewtonSeconds() float64 {
 	if a.micronewton_secondsLazy != nil {
 		return *a.micronewton_secondsLazy
@@ -271,7 +295,9 @@ func (a *Impulse) MicronewtonSeconds() float64 {
 	return micronewton_seconds
 }
 
-// MillinewtonSecond returns the value in MillinewtonSecond.
+// MillinewtonSeconds returns the Impulse value in MillinewtonSeconds.
+//
+// 
 func (a *Impulse) MillinewtonSeconds() float64 {
 	if a.millinewton_secondsLazy != nil {
 		return *a.millinewton_secondsLazy
@@ -281,7 +307,9 @@ func (a *Impulse) MillinewtonSeconds() float64 {
 	return millinewton_seconds
 }
 
-// CentinewtonSecond returns the value in CentinewtonSecond.
+// CentinewtonSeconds returns the Impulse value in CentinewtonSeconds.
+//
+// 
 func (a *Impulse) CentinewtonSeconds() float64 {
 	if a.centinewton_secondsLazy != nil {
 		return *a.centinewton_secondsLazy
@@ -291,7 +319,9 @@ func (a *Impulse) CentinewtonSeconds() float64 {
 	return centinewton_seconds
 }
 
-// DecinewtonSecond returns the value in DecinewtonSecond.
+// DecinewtonSeconds returns the Impulse value in DecinewtonSeconds.
+//
+// 
 func (a *Impulse) DecinewtonSeconds() float64 {
 	if a.decinewton_secondsLazy != nil {
 		return *a.decinewton_secondsLazy
@@ -301,7 +331,9 @@ func (a *Impulse) DecinewtonSeconds() float64 {
 	return decinewton_seconds
 }
 
-// DecanewtonSecond returns the value in DecanewtonSecond.
+// DecanewtonSeconds returns the Impulse value in DecanewtonSeconds.
+//
+// 
 func (a *Impulse) DecanewtonSeconds() float64 {
 	if a.decanewton_secondsLazy != nil {
 		return *a.decanewton_secondsLazy
@@ -311,7 +343,9 @@ func (a *Impulse) DecanewtonSeconds() float64 {
 	return decanewton_seconds
 }
 
-// KilonewtonSecond returns the value in KilonewtonSecond.
+// KilonewtonSeconds returns the Impulse value in KilonewtonSeconds.
+//
+// 
 func (a *Impulse) KilonewtonSeconds() float64 {
 	if a.kilonewton_secondsLazy != nil {
 		return *a.kilonewton_secondsLazy
@@ -321,7 +355,9 @@ func (a *Impulse) KilonewtonSeconds() float64 {
 	return kilonewton_seconds
 }
 
-// MeganewtonSecond returns the value in MeganewtonSecond.
+// MeganewtonSeconds returns the Impulse value in MeganewtonSeconds.
+//
+// 
 func (a *Impulse) MeganewtonSeconds() float64 {
 	if a.meganewton_secondsLazy != nil {
 		return *a.meganewton_secondsLazy
@@ -332,7 +368,9 @@ func (a *Impulse) MeganewtonSeconds() float64 {
 }
 
 
-// ToDto creates an ImpulseDto representation.
+// ToDto creates a ImpulseDto representation from the Impulse instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonSecond by default.
 func (a *Impulse) ToDto(holdInUnit *ImpulseUnits) ImpulseDto {
 	if holdInUnit == nil {
 		defaultUnit := ImpulseNewtonSecond // Default value
@@ -345,12 +383,19 @@ func (a *Impulse) ToDto(holdInUnit *ImpulseUnits) ImpulseDto {
 	}
 }
 
-// ToDtoJSON creates an ImpulseDto representation.
+// ToDtoJSON creates a JSON representation of the Impulse instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonSecond by default.
 func (a *Impulse) ToDtoJSON(holdInUnit *ImpulseUnits) ([]byte, error) {
+	// Convert to ImpulseDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Impulse to a specific unit value.
+// Convert converts a Impulse to a specific unit value.
+// The function uses the provided unit type (ImpulseUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Impulse) Convert(toUnit ImpulseUnits) float64 {
 	switch toUnit { 
     case ImpulseKilogramMeterPerSecond:
@@ -380,7 +425,7 @@ func (a *Impulse) Convert(toUnit ImpulseUnits) float64 {
     case ImpulseMeganewtonSecond:
 		return a.MeganewtonSeconds()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -451,13 +496,22 @@ func (a *Impulse) convertToBase(value float64, fromUnit ImpulseUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Impulse in the default unit (NewtonSecond),
+// formatted to two decimal places.
 func (a Impulse) String() string {
 	return a.ToString(ImpulseNewtonSecond, 2)
 }
 
-// ToString formats the Impulse to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Impulse value as a string with the specified unit and fractional digits.
+// It converts the Impulse to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Impulse value will be converted (e.g., NewtonSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Impulse with the unit abbreviation.
 func (a *Impulse) ToString(unit ImpulseUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -501,12 +555,26 @@ func (a *Impulse) getUnitAbbreviation(unit ImpulseUnits) string {
 	}
 }
 
-// Check if the given Impulse are equals to the current Impulse
+// Equals checks if the given Impulse is equal to the current Impulse.
+//
+// Parameters:
+//    other: The Impulse to compare against.
+//
+// Returns:
+//    bool: Returns true if both Impulse are equal, false otherwise.
 func (a *Impulse) Equals(other *Impulse) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Impulse are equals to the current Impulse
+// CompareTo compares the current Impulse with another Impulse.
+// It returns -1 if the current Impulse is less than the other Impulse, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Impulse to compare against.
+//
+// Returns:
+//    int: -1 if the current Impulse is less, 1 if greater, and 0 if equal.
 func (a *Impulse) CompareTo(other *Impulse) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -519,22 +587,50 @@ func (a *Impulse) CompareTo(other *Impulse) int {
 	return 0
 }
 
-// Add the given Impulse to the current Impulse.
+// Add adds the given Impulse to the current Impulse and returns the result.
+// The result is a new Impulse instance with the sum of the values.
+//
+// Parameters:
+//    other: The Impulse to add to the current Impulse.
+//
+// Returns:
+//    *Impulse: A new Impulse instance representing the sum of both Impulse.
 func (a *Impulse) Add(other *Impulse) *Impulse {
 	return &Impulse{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Impulse to the current Impulse.
+// Subtract subtracts the given Impulse from the current Impulse and returns the result.
+// The result is a new Impulse instance with the difference of the values.
+//
+// Parameters:
+//    other: The Impulse to subtract from the current Impulse.
+//
+// Returns:
+//    *Impulse: A new Impulse instance representing the difference of both Impulse.
 func (a *Impulse) Subtract(other *Impulse) *Impulse {
 	return &Impulse{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Impulse to the current Impulse.
+// Multiply multiplies the current Impulse by the given Impulse and returns the result.
+// The result is a new Impulse instance with the product of the values.
+//
+// Parameters:
+//    other: The Impulse to multiply with the current Impulse.
+//
+// Returns:
+//    *Impulse: A new Impulse instance representing the product of both Impulse.
 func (a *Impulse) Multiply(other *Impulse) *Impulse {
 	return &Impulse{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Impulse to the current Impulse.
+// Divide divides the current Impulse by the given Impulse and returns the result.
+// The result is a new Impulse instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Impulse to divide the current Impulse by.
+//
+// Returns:
+//    *Impulse: A new Impulse instance representing the quotient of both Impulse.
 func (a *Impulse) Divide(other *Impulse) *Impulse {
 	return &Impulse{value: a.value / other.BaseValue()}
 }

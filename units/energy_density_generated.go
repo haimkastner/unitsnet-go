@@ -12,7 +12,7 @@ import (
 
 
 
-// EnergyDensityUnits enumeration
+// EnergyDensityUnits defines various units of EnergyDensity.
 type EnergyDensityUnits string
 
 const (
@@ -43,19 +43,24 @@ const (
         EnergyDensityPetawattHourPerCubicMeter EnergyDensityUnits = "PetawattHourPerCubicMeter"
 )
 
-// EnergyDensityDto represents an EnergyDensity
+// EnergyDensityDto represents a EnergyDensity measurement with a numerical value and its corresponding unit.
 type EnergyDensityDto struct {
+    // Value is the numerical representation of the EnergyDensity.
 	Value float64
+    // Unit specifies the unit of measurement for the EnergyDensity, as defined in the EnergyDensityUnits enumeration.
 	Unit  EnergyDensityUnits
 }
 
-// EnergyDensityDtoFactory struct to group related functions
+// EnergyDensityDtoFactory groups methods for creating and serializing EnergyDensityDto objects.
 type EnergyDensityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a EnergyDensityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf EnergyDensityDtoFactory) FromJSON(data []byte) (*EnergyDensityDto, error) {
 	a := EnergyDensityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into EnergyDensityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -63,6 +68,9 @@ func (udf EnergyDensityDtoFactory) FromJSON(data []byte) (*EnergyDensityDto, err
 	return &a, nil
 }
 
+// ToJSON serializes a EnergyDensityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a EnergyDensityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -74,10 +82,11 @@ func (a EnergyDensityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// EnergyDensity struct
+// EnergyDensity represents a measurement in a of EnergyDensity.
+//
+// None
 type EnergyDensity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     joules_per_cubic_meterLazy *float64 
@@ -94,87 +103,88 @@ type EnergyDensity struct {
     petawatt_hours_per_cubic_meterLazy *float64 
 }
 
-// EnergyDensityFactory struct to group related functions
+// EnergyDensityFactory groups methods for creating EnergyDensity instances.
 type EnergyDensityFactory struct{}
 
+// CreateEnergyDensity creates a new EnergyDensity instance from the given value and unit.
 func (uf EnergyDensityFactory) CreateEnergyDensity(value float64, unit EnergyDensityUnits) (*EnergyDensity, error) {
 	return newEnergyDensity(value, unit)
 }
 
+// FromDto converts a EnergyDensityDto to a EnergyDensity instance.
 func (uf EnergyDensityFactory) FromDto(dto EnergyDensityDto) (*EnergyDensity, error) {
 	return newEnergyDensity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a EnergyDensity instance.
 func (uf EnergyDensityFactory) FromDtoJSON(data []byte) (*EnergyDensity, error) {
 	unitDto, err := EnergyDensityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse EnergyDensityDto from JSON: %w", err)
 	}
 	return EnergyDensityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromJoulePerCubicMeter creates a new EnergyDensity instance from JoulePerCubicMeter.
+// FromJoulesPerCubicMeter creates a new EnergyDensity instance from a value in JoulesPerCubicMeter.
 func (uf EnergyDensityFactory) FromJoulesPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityJoulePerCubicMeter)
 }
 
-// FromWattHourPerCubicMeter creates a new EnergyDensity instance from WattHourPerCubicMeter.
+// FromWattHoursPerCubicMeter creates a new EnergyDensity instance from a value in WattHoursPerCubicMeter.
 func (uf EnergyDensityFactory) FromWattHoursPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityWattHourPerCubicMeter)
 }
 
-// FromKilojoulePerCubicMeter creates a new EnergyDensity instance from KilojoulePerCubicMeter.
+// FromKilojoulesPerCubicMeter creates a new EnergyDensity instance from a value in KilojoulesPerCubicMeter.
 func (uf EnergyDensityFactory) FromKilojoulesPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityKilojoulePerCubicMeter)
 }
 
-// FromMegajoulePerCubicMeter creates a new EnergyDensity instance from MegajoulePerCubicMeter.
+// FromMegajoulesPerCubicMeter creates a new EnergyDensity instance from a value in MegajoulesPerCubicMeter.
 func (uf EnergyDensityFactory) FromMegajoulesPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityMegajoulePerCubicMeter)
 }
 
-// FromGigajoulePerCubicMeter creates a new EnergyDensity instance from GigajoulePerCubicMeter.
+// FromGigajoulesPerCubicMeter creates a new EnergyDensity instance from a value in GigajoulesPerCubicMeter.
 func (uf EnergyDensityFactory) FromGigajoulesPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityGigajoulePerCubicMeter)
 }
 
-// FromTerajoulePerCubicMeter creates a new EnergyDensity instance from TerajoulePerCubicMeter.
+// FromTerajoulesPerCubicMeter creates a new EnergyDensity instance from a value in TerajoulesPerCubicMeter.
 func (uf EnergyDensityFactory) FromTerajoulesPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityTerajoulePerCubicMeter)
 }
 
-// FromPetajoulePerCubicMeter creates a new EnergyDensity instance from PetajoulePerCubicMeter.
+// FromPetajoulesPerCubicMeter creates a new EnergyDensity instance from a value in PetajoulesPerCubicMeter.
 func (uf EnergyDensityFactory) FromPetajoulesPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityPetajoulePerCubicMeter)
 }
 
-// FromKilowattHourPerCubicMeter creates a new EnergyDensity instance from KilowattHourPerCubicMeter.
+// FromKilowattHoursPerCubicMeter creates a new EnergyDensity instance from a value in KilowattHoursPerCubicMeter.
 func (uf EnergyDensityFactory) FromKilowattHoursPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityKilowattHourPerCubicMeter)
 }
 
-// FromMegawattHourPerCubicMeter creates a new EnergyDensity instance from MegawattHourPerCubicMeter.
+// FromMegawattHoursPerCubicMeter creates a new EnergyDensity instance from a value in MegawattHoursPerCubicMeter.
 func (uf EnergyDensityFactory) FromMegawattHoursPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityMegawattHourPerCubicMeter)
 }
 
-// FromGigawattHourPerCubicMeter creates a new EnergyDensity instance from GigawattHourPerCubicMeter.
+// FromGigawattHoursPerCubicMeter creates a new EnergyDensity instance from a value in GigawattHoursPerCubicMeter.
 func (uf EnergyDensityFactory) FromGigawattHoursPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityGigawattHourPerCubicMeter)
 }
 
-// FromTerawattHourPerCubicMeter creates a new EnergyDensity instance from TerawattHourPerCubicMeter.
+// FromTerawattHoursPerCubicMeter creates a new EnergyDensity instance from a value in TerawattHoursPerCubicMeter.
 func (uf EnergyDensityFactory) FromTerawattHoursPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityTerawattHourPerCubicMeter)
 }
 
-// FromPetawattHourPerCubicMeter creates a new EnergyDensity instance from PetawattHourPerCubicMeter.
+// FromPetawattHoursPerCubicMeter creates a new EnergyDensity instance from a value in PetawattHoursPerCubicMeter.
 func (uf EnergyDensityFactory) FromPetawattHoursPerCubicMeter(value float64) (*EnergyDensity, error) {
 	return newEnergyDensity(value, EnergyDensityPetawattHourPerCubicMeter)
 }
-
-
 
 
 // newEnergyDensity creates a new EnergyDensity.
@@ -187,13 +197,15 @@ func newEnergyDensity(value float64, fromUnit EnergyDensityUnits) (*EnergyDensit
 	return a, nil
 }
 
-// BaseValue returns the base value of EnergyDensity in JoulePerCubicMeter.
+// BaseValue returns the base value of EnergyDensity in JoulePerCubicMeter unit (the base/default quantity).
 func (a *EnergyDensity) BaseValue() float64 {
 	return a.value
 }
 
 
-// JoulePerCubicMeter returns the value in JoulePerCubicMeter.
+// JoulesPerCubicMeter returns the EnergyDensity value in JoulesPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) JoulesPerCubicMeter() float64 {
 	if a.joules_per_cubic_meterLazy != nil {
 		return *a.joules_per_cubic_meterLazy
@@ -203,7 +215,9 @@ func (a *EnergyDensity) JoulesPerCubicMeter() float64 {
 	return joules_per_cubic_meter
 }
 
-// WattHourPerCubicMeter returns the value in WattHourPerCubicMeter.
+// WattHoursPerCubicMeter returns the EnergyDensity value in WattHoursPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) WattHoursPerCubicMeter() float64 {
 	if a.watt_hours_per_cubic_meterLazy != nil {
 		return *a.watt_hours_per_cubic_meterLazy
@@ -213,7 +227,9 @@ func (a *EnergyDensity) WattHoursPerCubicMeter() float64 {
 	return watt_hours_per_cubic_meter
 }
 
-// KilojoulePerCubicMeter returns the value in KilojoulePerCubicMeter.
+// KilojoulesPerCubicMeter returns the EnergyDensity value in KilojoulesPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) KilojoulesPerCubicMeter() float64 {
 	if a.kilojoules_per_cubic_meterLazy != nil {
 		return *a.kilojoules_per_cubic_meterLazy
@@ -223,7 +239,9 @@ func (a *EnergyDensity) KilojoulesPerCubicMeter() float64 {
 	return kilojoules_per_cubic_meter
 }
 
-// MegajoulePerCubicMeter returns the value in MegajoulePerCubicMeter.
+// MegajoulesPerCubicMeter returns the EnergyDensity value in MegajoulesPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) MegajoulesPerCubicMeter() float64 {
 	if a.megajoules_per_cubic_meterLazy != nil {
 		return *a.megajoules_per_cubic_meterLazy
@@ -233,7 +251,9 @@ func (a *EnergyDensity) MegajoulesPerCubicMeter() float64 {
 	return megajoules_per_cubic_meter
 }
 
-// GigajoulePerCubicMeter returns the value in GigajoulePerCubicMeter.
+// GigajoulesPerCubicMeter returns the EnergyDensity value in GigajoulesPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) GigajoulesPerCubicMeter() float64 {
 	if a.gigajoules_per_cubic_meterLazy != nil {
 		return *a.gigajoules_per_cubic_meterLazy
@@ -243,7 +263,9 @@ func (a *EnergyDensity) GigajoulesPerCubicMeter() float64 {
 	return gigajoules_per_cubic_meter
 }
 
-// TerajoulePerCubicMeter returns the value in TerajoulePerCubicMeter.
+// TerajoulesPerCubicMeter returns the EnergyDensity value in TerajoulesPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) TerajoulesPerCubicMeter() float64 {
 	if a.terajoules_per_cubic_meterLazy != nil {
 		return *a.terajoules_per_cubic_meterLazy
@@ -253,7 +275,9 @@ func (a *EnergyDensity) TerajoulesPerCubicMeter() float64 {
 	return terajoules_per_cubic_meter
 }
 
-// PetajoulePerCubicMeter returns the value in PetajoulePerCubicMeter.
+// PetajoulesPerCubicMeter returns the EnergyDensity value in PetajoulesPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) PetajoulesPerCubicMeter() float64 {
 	if a.petajoules_per_cubic_meterLazy != nil {
 		return *a.petajoules_per_cubic_meterLazy
@@ -263,7 +287,9 @@ func (a *EnergyDensity) PetajoulesPerCubicMeter() float64 {
 	return petajoules_per_cubic_meter
 }
 
-// KilowattHourPerCubicMeter returns the value in KilowattHourPerCubicMeter.
+// KilowattHoursPerCubicMeter returns the EnergyDensity value in KilowattHoursPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) KilowattHoursPerCubicMeter() float64 {
 	if a.kilowatt_hours_per_cubic_meterLazy != nil {
 		return *a.kilowatt_hours_per_cubic_meterLazy
@@ -273,7 +299,9 @@ func (a *EnergyDensity) KilowattHoursPerCubicMeter() float64 {
 	return kilowatt_hours_per_cubic_meter
 }
 
-// MegawattHourPerCubicMeter returns the value in MegawattHourPerCubicMeter.
+// MegawattHoursPerCubicMeter returns the EnergyDensity value in MegawattHoursPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) MegawattHoursPerCubicMeter() float64 {
 	if a.megawatt_hours_per_cubic_meterLazy != nil {
 		return *a.megawatt_hours_per_cubic_meterLazy
@@ -283,7 +311,9 @@ func (a *EnergyDensity) MegawattHoursPerCubicMeter() float64 {
 	return megawatt_hours_per_cubic_meter
 }
 
-// GigawattHourPerCubicMeter returns the value in GigawattHourPerCubicMeter.
+// GigawattHoursPerCubicMeter returns the EnergyDensity value in GigawattHoursPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) GigawattHoursPerCubicMeter() float64 {
 	if a.gigawatt_hours_per_cubic_meterLazy != nil {
 		return *a.gigawatt_hours_per_cubic_meterLazy
@@ -293,7 +323,9 @@ func (a *EnergyDensity) GigawattHoursPerCubicMeter() float64 {
 	return gigawatt_hours_per_cubic_meter
 }
 
-// TerawattHourPerCubicMeter returns the value in TerawattHourPerCubicMeter.
+// TerawattHoursPerCubicMeter returns the EnergyDensity value in TerawattHoursPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) TerawattHoursPerCubicMeter() float64 {
 	if a.terawatt_hours_per_cubic_meterLazy != nil {
 		return *a.terawatt_hours_per_cubic_meterLazy
@@ -303,7 +335,9 @@ func (a *EnergyDensity) TerawattHoursPerCubicMeter() float64 {
 	return terawatt_hours_per_cubic_meter
 }
 
-// PetawattHourPerCubicMeter returns the value in PetawattHourPerCubicMeter.
+// PetawattHoursPerCubicMeter returns the EnergyDensity value in PetawattHoursPerCubicMeter.
+//
+// 
 func (a *EnergyDensity) PetawattHoursPerCubicMeter() float64 {
 	if a.petawatt_hours_per_cubic_meterLazy != nil {
 		return *a.petawatt_hours_per_cubic_meterLazy
@@ -314,7 +348,9 @@ func (a *EnergyDensity) PetawattHoursPerCubicMeter() float64 {
 }
 
 
-// ToDto creates an EnergyDensityDto representation.
+// ToDto creates a EnergyDensityDto representation from the EnergyDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerCubicMeter by default.
 func (a *EnergyDensity) ToDto(holdInUnit *EnergyDensityUnits) EnergyDensityDto {
 	if holdInUnit == nil {
 		defaultUnit := EnergyDensityJoulePerCubicMeter // Default value
@@ -327,12 +363,19 @@ func (a *EnergyDensity) ToDto(holdInUnit *EnergyDensityUnits) EnergyDensityDto {
 	}
 }
 
-// ToDtoJSON creates an EnergyDensityDto representation.
+// ToDtoJSON creates a JSON representation of the EnergyDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerCubicMeter by default.
 func (a *EnergyDensity) ToDtoJSON(holdInUnit *EnergyDensityUnits) ([]byte, error) {
+	// Convert to EnergyDensityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts EnergyDensity to a specific unit value.
+// Convert converts a EnergyDensity to a specific unit value.
+// The function uses the provided unit type (EnergyDensityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *EnergyDensity) Convert(toUnit EnergyDensityUnits) float64 {
 	switch toUnit { 
     case EnergyDensityJoulePerCubicMeter:
@@ -360,7 +403,7 @@ func (a *EnergyDensity) Convert(toUnit EnergyDensityUnits) float64 {
     case EnergyDensityPetawattHourPerCubicMeter:
 		return a.PetawattHoursPerCubicMeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -427,13 +470,22 @@ func (a *EnergyDensity) convertToBase(value float64, fromUnit EnergyDensityUnits
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the EnergyDensity in the default unit (JoulePerCubicMeter),
+// formatted to two decimal places.
 func (a EnergyDensity) String() string {
 	return a.ToString(EnergyDensityJoulePerCubicMeter, 2)
 }
 
-// ToString formats the EnergyDensity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the EnergyDensity value as a string with the specified unit and fractional digits.
+// It converts the EnergyDensity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the EnergyDensity value will be converted (e.g., JoulePerCubicMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the EnergyDensity with the unit abbreviation.
 func (a *EnergyDensity) ToString(unit EnergyDensityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -475,12 +527,26 @@ func (a *EnergyDensity) getUnitAbbreviation(unit EnergyDensityUnits) string {
 	}
 }
 
-// Check if the given EnergyDensity are equals to the current EnergyDensity
+// Equals checks if the given EnergyDensity is equal to the current EnergyDensity.
+//
+// Parameters:
+//    other: The EnergyDensity to compare against.
+//
+// Returns:
+//    bool: Returns true if both EnergyDensity are equal, false otherwise.
 func (a *EnergyDensity) Equals(other *EnergyDensity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given EnergyDensity are equals to the current EnergyDensity
+// CompareTo compares the current EnergyDensity with another EnergyDensity.
+// It returns -1 if the current EnergyDensity is less than the other EnergyDensity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The EnergyDensity to compare against.
+//
+// Returns:
+//    int: -1 if the current EnergyDensity is less, 1 if greater, and 0 if equal.
 func (a *EnergyDensity) CompareTo(other *EnergyDensity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -493,22 +559,50 @@ func (a *EnergyDensity) CompareTo(other *EnergyDensity) int {
 	return 0
 }
 
-// Add the given EnergyDensity to the current EnergyDensity.
+// Add adds the given EnergyDensity to the current EnergyDensity and returns the result.
+// The result is a new EnergyDensity instance with the sum of the values.
+//
+// Parameters:
+//    other: The EnergyDensity to add to the current EnergyDensity.
+//
+// Returns:
+//    *EnergyDensity: A new EnergyDensity instance representing the sum of both EnergyDensity.
 func (a *EnergyDensity) Add(other *EnergyDensity) *EnergyDensity {
 	return &EnergyDensity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given EnergyDensity to the current EnergyDensity.
+// Subtract subtracts the given EnergyDensity from the current EnergyDensity and returns the result.
+// The result is a new EnergyDensity instance with the difference of the values.
+//
+// Parameters:
+//    other: The EnergyDensity to subtract from the current EnergyDensity.
+//
+// Returns:
+//    *EnergyDensity: A new EnergyDensity instance representing the difference of both EnergyDensity.
 func (a *EnergyDensity) Subtract(other *EnergyDensity) *EnergyDensity {
 	return &EnergyDensity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given EnergyDensity to the current EnergyDensity.
+// Multiply multiplies the current EnergyDensity by the given EnergyDensity and returns the result.
+// The result is a new EnergyDensity instance with the product of the values.
+//
+// Parameters:
+//    other: The EnergyDensity to multiply with the current EnergyDensity.
+//
+// Returns:
+//    *EnergyDensity: A new EnergyDensity instance representing the product of both EnergyDensity.
 func (a *EnergyDensity) Multiply(other *EnergyDensity) *EnergyDensity {
 	return &EnergyDensity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given EnergyDensity to the current EnergyDensity.
+// Divide divides the current EnergyDensity by the given EnergyDensity and returns the result.
+// The result is a new EnergyDensity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The EnergyDensity to divide the current EnergyDensity by.
+//
+// Returns:
+//    *EnergyDensity: A new EnergyDensity instance representing the quotient of both EnergyDensity.
 func (a *EnergyDensity) Divide(other *EnergyDensity) *EnergyDensity {
 	return &EnergyDensity{value: a.value / other.BaseValue()}
 }

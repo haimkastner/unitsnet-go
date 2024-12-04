@@ -12,7 +12,7 @@ import (
 
 
 
-// RadioactivityUnits enumeration
+// RadioactivityUnits defines various units of Radioactivity.
 type RadioactivityUnits string
 
 const (
@@ -77,19 +77,24 @@ const (
         RadioactivityTerarutherford RadioactivityUnits = "Terarutherford"
 )
 
-// RadioactivityDto represents an Radioactivity
+// RadioactivityDto represents a Radioactivity measurement with a numerical value and its corresponding unit.
 type RadioactivityDto struct {
+    // Value is the numerical representation of the Radioactivity.
 	Value float64
+    // Unit specifies the unit of measurement for the Radioactivity, as defined in the RadioactivityUnits enumeration.
 	Unit  RadioactivityUnits
 }
 
-// RadioactivityDtoFactory struct to group related functions
+// RadioactivityDtoFactory groups methods for creating and serializing RadioactivityDto objects.
 type RadioactivityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a RadioactivityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf RadioactivityDtoFactory) FromJSON(data []byte) (*RadioactivityDto, error) {
 	a := RadioactivityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into RadioactivityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -97,6 +102,9 @@ func (udf RadioactivityDtoFactory) FromJSON(data []byte) (*RadioactivityDto, err
 	return &a, nil
 }
 
+// ToJSON serializes a RadioactivityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a RadioactivityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -108,10 +116,11 @@ func (a RadioactivityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Radioactivity struct
+// Radioactivity represents a measurement in a of Radioactivity.
+//
+// Amount of ionizing radiation released when an element spontaneously emits energy as a result of the radioactive decay of an unstable atom per unit time.
 type Radioactivity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     becquerelsLazy *float64 
@@ -145,172 +154,173 @@ type Radioactivity struct {
     terarutherfordsLazy *float64 
 }
 
-// RadioactivityFactory struct to group related functions
+// RadioactivityFactory groups methods for creating Radioactivity instances.
 type RadioactivityFactory struct{}
 
+// CreateRadioactivity creates a new Radioactivity instance from the given value and unit.
 func (uf RadioactivityFactory) CreateRadioactivity(value float64, unit RadioactivityUnits) (*Radioactivity, error) {
 	return newRadioactivity(value, unit)
 }
 
+// FromDto converts a RadioactivityDto to a Radioactivity instance.
 func (uf RadioactivityFactory) FromDto(dto RadioactivityDto) (*Radioactivity, error) {
 	return newRadioactivity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Radioactivity instance.
 func (uf RadioactivityFactory) FromDtoJSON(data []byte) (*Radioactivity, error) {
 	unitDto, err := RadioactivityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse RadioactivityDto from JSON: %w", err)
 	}
 	return RadioactivityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromBecquerel creates a new Radioactivity instance from Becquerel.
+// FromBecquerels creates a new Radioactivity instance from a value in Becquerels.
 func (uf RadioactivityFactory) FromBecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityBecquerel)
 }
 
-// FromCurie creates a new Radioactivity instance from Curie.
+// FromCuries creates a new Radioactivity instance from a value in Curies.
 func (uf RadioactivityFactory) FromCuries(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityCurie)
 }
 
-// FromRutherford creates a new Radioactivity instance from Rutherford.
+// FromRutherfords creates a new Radioactivity instance from a value in Rutherfords.
 func (uf RadioactivityFactory) FromRutherfords(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityRutherford)
 }
 
-// FromPicobecquerel creates a new Radioactivity instance from Picobecquerel.
+// FromPicobecquerels creates a new Radioactivity instance from a value in Picobecquerels.
 func (uf RadioactivityFactory) FromPicobecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityPicobecquerel)
 }
 
-// FromNanobecquerel creates a new Radioactivity instance from Nanobecquerel.
+// FromNanobecquerels creates a new Radioactivity instance from a value in Nanobecquerels.
 func (uf RadioactivityFactory) FromNanobecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityNanobecquerel)
 }
 
-// FromMicrobecquerel creates a new Radioactivity instance from Microbecquerel.
+// FromMicrobecquerels creates a new Radioactivity instance from a value in Microbecquerels.
 func (uf RadioactivityFactory) FromMicrobecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityMicrobecquerel)
 }
 
-// FromMillibecquerel creates a new Radioactivity instance from Millibecquerel.
+// FromMillibecquerels creates a new Radioactivity instance from a value in Millibecquerels.
 func (uf RadioactivityFactory) FromMillibecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityMillibecquerel)
 }
 
-// FromKilobecquerel creates a new Radioactivity instance from Kilobecquerel.
+// FromKilobecquerels creates a new Radioactivity instance from a value in Kilobecquerels.
 func (uf RadioactivityFactory) FromKilobecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityKilobecquerel)
 }
 
-// FromMegabecquerel creates a new Radioactivity instance from Megabecquerel.
+// FromMegabecquerels creates a new Radioactivity instance from a value in Megabecquerels.
 func (uf RadioactivityFactory) FromMegabecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityMegabecquerel)
 }
 
-// FromGigabecquerel creates a new Radioactivity instance from Gigabecquerel.
+// FromGigabecquerels creates a new Radioactivity instance from a value in Gigabecquerels.
 func (uf RadioactivityFactory) FromGigabecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityGigabecquerel)
 }
 
-// FromTerabecquerel creates a new Radioactivity instance from Terabecquerel.
+// FromTerabecquerels creates a new Radioactivity instance from a value in Terabecquerels.
 func (uf RadioactivityFactory) FromTerabecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityTerabecquerel)
 }
 
-// FromPetabecquerel creates a new Radioactivity instance from Petabecquerel.
+// FromPetabecquerels creates a new Radioactivity instance from a value in Petabecquerels.
 func (uf RadioactivityFactory) FromPetabecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityPetabecquerel)
 }
 
-// FromExabecquerel creates a new Radioactivity instance from Exabecquerel.
+// FromExabecquerels creates a new Radioactivity instance from a value in Exabecquerels.
 func (uf RadioactivityFactory) FromExabecquerels(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityExabecquerel)
 }
 
-// FromPicocurie creates a new Radioactivity instance from Picocurie.
+// FromPicocuries creates a new Radioactivity instance from a value in Picocuries.
 func (uf RadioactivityFactory) FromPicocuries(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityPicocurie)
 }
 
-// FromNanocurie creates a new Radioactivity instance from Nanocurie.
+// FromNanocuries creates a new Radioactivity instance from a value in Nanocuries.
 func (uf RadioactivityFactory) FromNanocuries(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityNanocurie)
 }
 
-// FromMicrocurie creates a new Radioactivity instance from Microcurie.
+// FromMicrocuries creates a new Radioactivity instance from a value in Microcuries.
 func (uf RadioactivityFactory) FromMicrocuries(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityMicrocurie)
 }
 
-// FromMillicurie creates a new Radioactivity instance from Millicurie.
+// FromMillicuries creates a new Radioactivity instance from a value in Millicuries.
 func (uf RadioactivityFactory) FromMillicuries(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityMillicurie)
 }
 
-// FromKilocurie creates a new Radioactivity instance from Kilocurie.
+// FromKilocuries creates a new Radioactivity instance from a value in Kilocuries.
 func (uf RadioactivityFactory) FromKilocuries(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityKilocurie)
 }
 
-// FromMegacurie creates a new Radioactivity instance from Megacurie.
+// FromMegacuries creates a new Radioactivity instance from a value in Megacuries.
 func (uf RadioactivityFactory) FromMegacuries(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityMegacurie)
 }
 
-// FromGigacurie creates a new Radioactivity instance from Gigacurie.
+// FromGigacuries creates a new Radioactivity instance from a value in Gigacuries.
 func (uf RadioactivityFactory) FromGigacuries(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityGigacurie)
 }
 
-// FromTeracurie creates a new Radioactivity instance from Teracurie.
+// FromTeracuries creates a new Radioactivity instance from a value in Teracuries.
 func (uf RadioactivityFactory) FromTeracuries(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityTeracurie)
 }
 
-// FromPicorutherford creates a new Radioactivity instance from Picorutherford.
+// FromPicorutherfords creates a new Radioactivity instance from a value in Picorutherfords.
 func (uf RadioactivityFactory) FromPicorutherfords(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityPicorutherford)
 }
 
-// FromNanorutherford creates a new Radioactivity instance from Nanorutherford.
+// FromNanorutherfords creates a new Radioactivity instance from a value in Nanorutherfords.
 func (uf RadioactivityFactory) FromNanorutherfords(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityNanorutherford)
 }
 
-// FromMicrorutherford creates a new Radioactivity instance from Microrutherford.
+// FromMicrorutherfords creates a new Radioactivity instance from a value in Microrutherfords.
 func (uf RadioactivityFactory) FromMicrorutherfords(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityMicrorutherford)
 }
 
-// FromMillirutherford creates a new Radioactivity instance from Millirutherford.
+// FromMillirutherfords creates a new Radioactivity instance from a value in Millirutherfords.
 func (uf RadioactivityFactory) FromMillirutherfords(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityMillirutherford)
 }
 
-// FromKilorutherford creates a new Radioactivity instance from Kilorutherford.
+// FromKilorutherfords creates a new Radioactivity instance from a value in Kilorutherfords.
 func (uf RadioactivityFactory) FromKilorutherfords(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityKilorutherford)
 }
 
-// FromMegarutherford creates a new Radioactivity instance from Megarutherford.
+// FromMegarutherfords creates a new Radioactivity instance from a value in Megarutherfords.
 func (uf RadioactivityFactory) FromMegarutherfords(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityMegarutherford)
 }
 
-// FromGigarutherford creates a new Radioactivity instance from Gigarutherford.
+// FromGigarutherfords creates a new Radioactivity instance from a value in Gigarutherfords.
 func (uf RadioactivityFactory) FromGigarutherfords(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityGigarutherford)
 }
 
-// FromTerarutherford creates a new Radioactivity instance from Terarutherford.
+// FromTerarutherfords creates a new Radioactivity instance from a value in Terarutherfords.
 func (uf RadioactivityFactory) FromTerarutherfords(value float64) (*Radioactivity, error) {
 	return newRadioactivity(value, RadioactivityTerarutherford)
 }
-
-
 
 
 // newRadioactivity creates a new Radioactivity.
@@ -323,13 +333,15 @@ func newRadioactivity(value float64, fromUnit RadioactivityUnits) (*Radioactivit
 	return a, nil
 }
 
-// BaseValue returns the base value of Radioactivity in Becquerel.
+// BaseValue returns the base value of Radioactivity in Becquerel unit (the base/default quantity).
 func (a *Radioactivity) BaseValue() float64 {
 	return a.value
 }
 
 
-// Becquerel returns the value in Becquerel.
+// Becquerels returns the Radioactivity value in Becquerels.
+//
+// Activity of a quantity of radioactive material in which one nucleus decays per second.
 func (a *Radioactivity) Becquerels() float64 {
 	if a.becquerelsLazy != nil {
 		return *a.becquerelsLazy
@@ -339,7 +351,9 @@ func (a *Radioactivity) Becquerels() float64 {
 	return becquerels
 }
 
-// Curie returns the value in Curie.
+// Curies returns the Radioactivity value in Curies.
+//
+// 
 func (a *Radioactivity) Curies() float64 {
 	if a.curiesLazy != nil {
 		return *a.curiesLazy
@@ -349,7 +363,9 @@ func (a *Radioactivity) Curies() float64 {
 	return curies
 }
 
-// Rutherford returns the value in Rutherford.
+// Rutherfords returns the Radioactivity value in Rutherfords.
+//
+// Activity of a quantity of radioactive material in which one million nuclei decay per second.
 func (a *Radioactivity) Rutherfords() float64 {
 	if a.rutherfordsLazy != nil {
 		return *a.rutherfordsLazy
@@ -359,7 +375,9 @@ func (a *Radioactivity) Rutherfords() float64 {
 	return rutherfords
 }
 
-// Picobecquerel returns the value in Picobecquerel.
+// Picobecquerels returns the Radioactivity value in Picobecquerels.
+//
+// 
 func (a *Radioactivity) Picobecquerels() float64 {
 	if a.picobecquerelsLazy != nil {
 		return *a.picobecquerelsLazy
@@ -369,7 +387,9 @@ func (a *Radioactivity) Picobecquerels() float64 {
 	return picobecquerels
 }
 
-// Nanobecquerel returns the value in Nanobecquerel.
+// Nanobecquerels returns the Radioactivity value in Nanobecquerels.
+//
+// 
 func (a *Radioactivity) Nanobecquerels() float64 {
 	if a.nanobecquerelsLazy != nil {
 		return *a.nanobecquerelsLazy
@@ -379,7 +399,9 @@ func (a *Radioactivity) Nanobecquerels() float64 {
 	return nanobecquerels
 }
 
-// Microbecquerel returns the value in Microbecquerel.
+// Microbecquerels returns the Radioactivity value in Microbecquerels.
+//
+// 
 func (a *Radioactivity) Microbecquerels() float64 {
 	if a.microbecquerelsLazy != nil {
 		return *a.microbecquerelsLazy
@@ -389,7 +411,9 @@ func (a *Radioactivity) Microbecquerels() float64 {
 	return microbecquerels
 }
 
-// Millibecquerel returns the value in Millibecquerel.
+// Millibecquerels returns the Radioactivity value in Millibecquerels.
+//
+// 
 func (a *Radioactivity) Millibecquerels() float64 {
 	if a.millibecquerelsLazy != nil {
 		return *a.millibecquerelsLazy
@@ -399,7 +423,9 @@ func (a *Radioactivity) Millibecquerels() float64 {
 	return millibecquerels
 }
 
-// Kilobecquerel returns the value in Kilobecquerel.
+// Kilobecquerels returns the Radioactivity value in Kilobecquerels.
+//
+// 
 func (a *Radioactivity) Kilobecquerels() float64 {
 	if a.kilobecquerelsLazy != nil {
 		return *a.kilobecquerelsLazy
@@ -409,7 +435,9 @@ func (a *Radioactivity) Kilobecquerels() float64 {
 	return kilobecquerels
 }
 
-// Megabecquerel returns the value in Megabecquerel.
+// Megabecquerels returns the Radioactivity value in Megabecquerels.
+//
+// 
 func (a *Radioactivity) Megabecquerels() float64 {
 	if a.megabecquerelsLazy != nil {
 		return *a.megabecquerelsLazy
@@ -419,7 +447,9 @@ func (a *Radioactivity) Megabecquerels() float64 {
 	return megabecquerels
 }
 
-// Gigabecquerel returns the value in Gigabecquerel.
+// Gigabecquerels returns the Radioactivity value in Gigabecquerels.
+//
+// 
 func (a *Radioactivity) Gigabecquerels() float64 {
 	if a.gigabecquerelsLazy != nil {
 		return *a.gigabecquerelsLazy
@@ -429,7 +459,9 @@ func (a *Radioactivity) Gigabecquerels() float64 {
 	return gigabecquerels
 }
 
-// Terabecquerel returns the value in Terabecquerel.
+// Terabecquerels returns the Radioactivity value in Terabecquerels.
+//
+// 
 func (a *Radioactivity) Terabecquerels() float64 {
 	if a.terabecquerelsLazy != nil {
 		return *a.terabecquerelsLazy
@@ -439,7 +471,9 @@ func (a *Radioactivity) Terabecquerels() float64 {
 	return terabecquerels
 }
 
-// Petabecquerel returns the value in Petabecquerel.
+// Petabecquerels returns the Radioactivity value in Petabecquerels.
+//
+// 
 func (a *Radioactivity) Petabecquerels() float64 {
 	if a.petabecquerelsLazy != nil {
 		return *a.petabecquerelsLazy
@@ -449,7 +483,9 @@ func (a *Radioactivity) Petabecquerels() float64 {
 	return petabecquerels
 }
 
-// Exabecquerel returns the value in Exabecquerel.
+// Exabecquerels returns the Radioactivity value in Exabecquerels.
+//
+// 
 func (a *Radioactivity) Exabecquerels() float64 {
 	if a.exabecquerelsLazy != nil {
 		return *a.exabecquerelsLazy
@@ -459,7 +495,9 @@ func (a *Radioactivity) Exabecquerels() float64 {
 	return exabecquerels
 }
 
-// Picocurie returns the value in Picocurie.
+// Picocuries returns the Radioactivity value in Picocuries.
+//
+// 
 func (a *Radioactivity) Picocuries() float64 {
 	if a.picocuriesLazy != nil {
 		return *a.picocuriesLazy
@@ -469,7 +507,9 @@ func (a *Radioactivity) Picocuries() float64 {
 	return picocuries
 }
 
-// Nanocurie returns the value in Nanocurie.
+// Nanocuries returns the Radioactivity value in Nanocuries.
+//
+// 
 func (a *Radioactivity) Nanocuries() float64 {
 	if a.nanocuriesLazy != nil {
 		return *a.nanocuriesLazy
@@ -479,7 +519,9 @@ func (a *Radioactivity) Nanocuries() float64 {
 	return nanocuries
 }
 
-// Microcurie returns the value in Microcurie.
+// Microcuries returns the Radioactivity value in Microcuries.
+//
+// 
 func (a *Radioactivity) Microcuries() float64 {
 	if a.microcuriesLazy != nil {
 		return *a.microcuriesLazy
@@ -489,7 +531,9 @@ func (a *Radioactivity) Microcuries() float64 {
 	return microcuries
 }
 
-// Millicurie returns the value in Millicurie.
+// Millicuries returns the Radioactivity value in Millicuries.
+//
+// 
 func (a *Radioactivity) Millicuries() float64 {
 	if a.millicuriesLazy != nil {
 		return *a.millicuriesLazy
@@ -499,7 +543,9 @@ func (a *Radioactivity) Millicuries() float64 {
 	return millicuries
 }
 
-// Kilocurie returns the value in Kilocurie.
+// Kilocuries returns the Radioactivity value in Kilocuries.
+//
+// 
 func (a *Radioactivity) Kilocuries() float64 {
 	if a.kilocuriesLazy != nil {
 		return *a.kilocuriesLazy
@@ -509,7 +555,9 @@ func (a *Radioactivity) Kilocuries() float64 {
 	return kilocuries
 }
 
-// Megacurie returns the value in Megacurie.
+// Megacuries returns the Radioactivity value in Megacuries.
+//
+// 
 func (a *Radioactivity) Megacuries() float64 {
 	if a.megacuriesLazy != nil {
 		return *a.megacuriesLazy
@@ -519,7 +567,9 @@ func (a *Radioactivity) Megacuries() float64 {
 	return megacuries
 }
 
-// Gigacurie returns the value in Gigacurie.
+// Gigacuries returns the Radioactivity value in Gigacuries.
+//
+// 
 func (a *Radioactivity) Gigacuries() float64 {
 	if a.gigacuriesLazy != nil {
 		return *a.gigacuriesLazy
@@ -529,7 +579,9 @@ func (a *Radioactivity) Gigacuries() float64 {
 	return gigacuries
 }
 
-// Teracurie returns the value in Teracurie.
+// Teracuries returns the Radioactivity value in Teracuries.
+//
+// 
 func (a *Radioactivity) Teracuries() float64 {
 	if a.teracuriesLazy != nil {
 		return *a.teracuriesLazy
@@ -539,7 +591,9 @@ func (a *Radioactivity) Teracuries() float64 {
 	return teracuries
 }
 
-// Picorutherford returns the value in Picorutherford.
+// Picorutherfords returns the Radioactivity value in Picorutherfords.
+//
+// 
 func (a *Radioactivity) Picorutherfords() float64 {
 	if a.picorutherfordsLazy != nil {
 		return *a.picorutherfordsLazy
@@ -549,7 +603,9 @@ func (a *Radioactivity) Picorutherfords() float64 {
 	return picorutherfords
 }
 
-// Nanorutherford returns the value in Nanorutherford.
+// Nanorutherfords returns the Radioactivity value in Nanorutherfords.
+//
+// 
 func (a *Radioactivity) Nanorutherfords() float64 {
 	if a.nanorutherfordsLazy != nil {
 		return *a.nanorutherfordsLazy
@@ -559,7 +615,9 @@ func (a *Radioactivity) Nanorutherfords() float64 {
 	return nanorutherfords
 }
 
-// Microrutherford returns the value in Microrutherford.
+// Microrutherfords returns the Radioactivity value in Microrutherfords.
+//
+// 
 func (a *Radioactivity) Microrutherfords() float64 {
 	if a.microrutherfordsLazy != nil {
 		return *a.microrutherfordsLazy
@@ -569,7 +627,9 @@ func (a *Radioactivity) Microrutherfords() float64 {
 	return microrutherfords
 }
 
-// Millirutherford returns the value in Millirutherford.
+// Millirutherfords returns the Radioactivity value in Millirutherfords.
+//
+// 
 func (a *Radioactivity) Millirutherfords() float64 {
 	if a.millirutherfordsLazy != nil {
 		return *a.millirutherfordsLazy
@@ -579,7 +639,9 @@ func (a *Radioactivity) Millirutherfords() float64 {
 	return millirutherfords
 }
 
-// Kilorutherford returns the value in Kilorutherford.
+// Kilorutherfords returns the Radioactivity value in Kilorutherfords.
+//
+// 
 func (a *Radioactivity) Kilorutherfords() float64 {
 	if a.kilorutherfordsLazy != nil {
 		return *a.kilorutherfordsLazy
@@ -589,7 +651,9 @@ func (a *Radioactivity) Kilorutherfords() float64 {
 	return kilorutherfords
 }
 
-// Megarutherford returns the value in Megarutherford.
+// Megarutherfords returns the Radioactivity value in Megarutherfords.
+//
+// 
 func (a *Radioactivity) Megarutherfords() float64 {
 	if a.megarutherfordsLazy != nil {
 		return *a.megarutherfordsLazy
@@ -599,7 +663,9 @@ func (a *Radioactivity) Megarutherfords() float64 {
 	return megarutherfords
 }
 
-// Gigarutherford returns the value in Gigarutherford.
+// Gigarutherfords returns the Radioactivity value in Gigarutherfords.
+//
+// 
 func (a *Radioactivity) Gigarutherfords() float64 {
 	if a.gigarutherfordsLazy != nil {
 		return *a.gigarutherfordsLazy
@@ -609,7 +675,9 @@ func (a *Radioactivity) Gigarutherfords() float64 {
 	return gigarutherfords
 }
 
-// Terarutherford returns the value in Terarutherford.
+// Terarutherfords returns the Radioactivity value in Terarutherfords.
+//
+// 
 func (a *Radioactivity) Terarutherfords() float64 {
 	if a.terarutherfordsLazy != nil {
 		return *a.terarutherfordsLazy
@@ -620,7 +688,9 @@ func (a *Radioactivity) Terarutherfords() float64 {
 }
 
 
-// ToDto creates an RadioactivityDto representation.
+// ToDto creates a RadioactivityDto representation from the Radioactivity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Becquerel by default.
 func (a *Radioactivity) ToDto(holdInUnit *RadioactivityUnits) RadioactivityDto {
 	if holdInUnit == nil {
 		defaultUnit := RadioactivityBecquerel // Default value
@@ -633,12 +703,19 @@ func (a *Radioactivity) ToDto(holdInUnit *RadioactivityUnits) RadioactivityDto {
 	}
 }
 
-// ToDtoJSON creates an RadioactivityDto representation.
+// ToDtoJSON creates a JSON representation of the Radioactivity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Becquerel by default.
 func (a *Radioactivity) ToDtoJSON(holdInUnit *RadioactivityUnits) ([]byte, error) {
+	// Convert to RadioactivityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Radioactivity to a specific unit value.
+// Convert converts a Radioactivity to a specific unit value.
+// The function uses the provided unit type (RadioactivityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Radioactivity) Convert(toUnit RadioactivityUnits) float64 {
 	switch toUnit { 
     case RadioactivityBecquerel:
@@ -700,7 +777,7 @@ func (a *Radioactivity) Convert(toUnit RadioactivityUnits) float64 {
     case RadioactivityTerarutherford:
 		return a.Terarutherfords()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -835,13 +912,22 @@ func (a *Radioactivity) convertToBase(value float64, fromUnit RadioactivityUnits
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Radioactivity in the default unit (Becquerel),
+// formatted to two decimal places.
 func (a Radioactivity) String() string {
 	return a.ToString(RadioactivityBecquerel, 2)
 }
 
-// ToString formats the Radioactivity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Radioactivity value as a string with the specified unit and fractional digits.
+// It converts the Radioactivity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Radioactivity value will be converted (e.g., Becquerel))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Radioactivity with the unit abbreviation.
 func (a *Radioactivity) ToString(unit RadioactivityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -917,12 +1003,26 @@ func (a *Radioactivity) getUnitAbbreviation(unit RadioactivityUnits) string {
 	}
 }
 
-// Check if the given Radioactivity are equals to the current Radioactivity
+// Equals checks if the given Radioactivity is equal to the current Radioactivity.
+//
+// Parameters:
+//    other: The Radioactivity to compare against.
+//
+// Returns:
+//    bool: Returns true if both Radioactivity are equal, false otherwise.
 func (a *Radioactivity) Equals(other *Radioactivity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Radioactivity are equals to the current Radioactivity
+// CompareTo compares the current Radioactivity with another Radioactivity.
+// It returns -1 if the current Radioactivity is less than the other Radioactivity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Radioactivity to compare against.
+//
+// Returns:
+//    int: -1 if the current Radioactivity is less, 1 if greater, and 0 if equal.
 func (a *Radioactivity) CompareTo(other *Radioactivity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -935,22 +1035,50 @@ func (a *Radioactivity) CompareTo(other *Radioactivity) int {
 	return 0
 }
 
-// Add the given Radioactivity to the current Radioactivity.
+// Add adds the given Radioactivity to the current Radioactivity and returns the result.
+// The result is a new Radioactivity instance with the sum of the values.
+//
+// Parameters:
+//    other: The Radioactivity to add to the current Radioactivity.
+//
+// Returns:
+//    *Radioactivity: A new Radioactivity instance representing the sum of both Radioactivity.
 func (a *Radioactivity) Add(other *Radioactivity) *Radioactivity {
 	return &Radioactivity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Radioactivity to the current Radioactivity.
+// Subtract subtracts the given Radioactivity from the current Radioactivity and returns the result.
+// The result is a new Radioactivity instance with the difference of the values.
+//
+// Parameters:
+//    other: The Radioactivity to subtract from the current Radioactivity.
+//
+// Returns:
+//    *Radioactivity: A new Radioactivity instance representing the difference of both Radioactivity.
 func (a *Radioactivity) Subtract(other *Radioactivity) *Radioactivity {
 	return &Radioactivity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Radioactivity to the current Radioactivity.
+// Multiply multiplies the current Radioactivity by the given Radioactivity and returns the result.
+// The result is a new Radioactivity instance with the product of the values.
+//
+// Parameters:
+//    other: The Radioactivity to multiply with the current Radioactivity.
+//
+// Returns:
+//    *Radioactivity: A new Radioactivity instance representing the product of both Radioactivity.
 func (a *Radioactivity) Multiply(other *Radioactivity) *Radioactivity {
 	return &Radioactivity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Radioactivity to the current Radioactivity.
+// Divide divides the current Radioactivity by the given Radioactivity and returns the result.
+// The result is a new Radioactivity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Radioactivity to divide the current Radioactivity by.
+//
+// Returns:
+//    *Radioactivity: A new Radioactivity instance representing the quotient of both Radioactivity.
 func (a *Radioactivity) Divide(other *Radioactivity) *Radioactivity {
 	return &Radioactivity{value: a.value / other.BaseValue()}
 }

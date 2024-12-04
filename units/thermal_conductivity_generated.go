@@ -12,7 +12,7 @@ import (
 
 
 
-// ThermalConductivityUnits enumeration
+// ThermalConductivityUnits defines various units of ThermalConductivity.
 type ThermalConductivityUnits string
 
 const (
@@ -23,19 +23,24 @@ const (
         ThermalConductivityBtuPerHourFootFahrenheit ThermalConductivityUnits = "BtuPerHourFootFahrenheit"
 )
 
-// ThermalConductivityDto represents an ThermalConductivity
+// ThermalConductivityDto represents a ThermalConductivity measurement with a numerical value and its corresponding unit.
 type ThermalConductivityDto struct {
+    // Value is the numerical representation of the ThermalConductivity.
 	Value float64
+    // Unit specifies the unit of measurement for the ThermalConductivity, as defined in the ThermalConductivityUnits enumeration.
 	Unit  ThermalConductivityUnits
 }
 
-// ThermalConductivityDtoFactory struct to group related functions
+// ThermalConductivityDtoFactory groups methods for creating and serializing ThermalConductivityDto objects.
 type ThermalConductivityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ThermalConductivityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ThermalConductivityDtoFactory) FromJSON(data []byte) (*ThermalConductivityDto, error) {
 	a := ThermalConductivityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ThermalConductivityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -43,6 +48,9 @@ func (udf ThermalConductivityDtoFactory) FromJSON(data []byte) (*ThermalConducti
 	return &a, nil
 }
 
+// ToJSON serializes a ThermalConductivityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ThermalConductivityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -54,47 +62,49 @@ func (a ThermalConductivityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ThermalConductivity struct
+// ThermalConductivity represents a measurement in a of ThermalConductivity.
+//
+// Thermal conductivity is the property of a material to conduct heat.
 type ThermalConductivity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     watts_per_meter_kelvinLazy *float64 
     btus_per_hour_foot_fahrenheitLazy *float64 
 }
 
-// ThermalConductivityFactory struct to group related functions
+// ThermalConductivityFactory groups methods for creating ThermalConductivity instances.
 type ThermalConductivityFactory struct{}
 
+// CreateThermalConductivity creates a new ThermalConductivity instance from the given value and unit.
 func (uf ThermalConductivityFactory) CreateThermalConductivity(value float64, unit ThermalConductivityUnits) (*ThermalConductivity, error) {
 	return newThermalConductivity(value, unit)
 }
 
+// FromDto converts a ThermalConductivityDto to a ThermalConductivity instance.
 func (uf ThermalConductivityFactory) FromDto(dto ThermalConductivityDto) (*ThermalConductivity, error) {
 	return newThermalConductivity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ThermalConductivity instance.
 func (uf ThermalConductivityFactory) FromDtoJSON(data []byte) (*ThermalConductivity, error) {
 	unitDto, err := ThermalConductivityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ThermalConductivityDto from JSON: %w", err)
 	}
 	return ThermalConductivityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromWattPerMeterKelvin creates a new ThermalConductivity instance from WattPerMeterKelvin.
+// FromWattsPerMeterKelvin creates a new ThermalConductivity instance from a value in WattsPerMeterKelvin.
 func (uf ThermalConductivityFactory) FromWattsPerMeterKelvin(value float64) (*ThermalConductivity, error) {
 	return newThermalConductivity(value, ThermalConductivityWattPerMeterKelvin)
 }
 
-// FromBtuPerHourFootFahrenheit creates a new ThermalConductivity instance from BtuPerHourFootFahrenheit.
+// FromBtusPerHourFootFahrenheit creates a new ThermalConductivity instance from a value in BtusPerHourFootFahrenheit.
 func (uf ThermalConductivityFactory) FromBtusPerHourFootFahrenheit(value float64) (*ThermalConductivity, error) {
 	return newThermalConductivity(value, ThermalConductivityBtuPerHourFootFahrenheit)
 }
-
-
 
 
 // newThermalConductivity creates a new ThermalConductivity.
@@ -107,13 +117,15 @@ func newThermalConductivity(value float64, fromUnit ThermalConductivityUnits) (*
 	return a, nil
 }
 
-// BaseValue returns the base value of ThermalConductivity in WattPerMeterKelvin.
+// BaseValue returns the base value of ThermalConductivity in WattPerMeterKelvin unit (the base/default quantity).
 func (a *ThermalConductivity) BaseValue() float64 {
 	return a.value
 }
 
 
-// WattPerMeterKelvin returns the value in WattPerMeterKelvin.
+// WattsPerMeterKelvin returns the ThermalConductivity value in WattsPerMeterKelvin.
+//
+// 
 func (a *ThermalConductivity) WattsPerMeterKelvin() float64 {
 	if a.watts_per_meter_kelvinLazy != nil {
 		return *a.watts_per_meter_kelvinLazy
@@ -123,7 +135,9 @@ func (a *ThermalConductivity) WattsPerMeterKelvin() float64 {
 	return watts_per_meter_kelvin
 }
 
-// BtuPerHourFootFahrenheit returns the value in BtuPerHourFootFahrenheit.
+// BtusPerHourFootFahrenheit returns the ThermalConductivity value in BtusPerHourFootFahrenheit.
+//
+// 
 func (a *ThermalConductivity) BtusPerHourFootFahrenheit() float64 {
 	if a.btus_per_hour_foot_fahrenheitLazy != nil {
 		return *a.btus_per_hour_foot_fahrenheitLazy
@@ -134,7 +148,9 @@ func (a *ThermalConductivity) BtusPerHourFootFahrenheit() float64 {
 }
 
 
-// ToDto creates an ThermalConductivityDto representation.
+// ToDto creates a ThermalConductivityDto representation from the ThermalConductivity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerMeterKelvin by default.
 func (a *ThermalConductivity) ToDto(holdInUnit *ThermalConductivityUnits) ThermalConductivityDto {
 	if holdInUnit == nil {
 		defaultUnit := ThermalConductivityWattPerMeterKelvin // Default value
@@ -147,12 +163,19 @@ func (a *ThermalConductivity) ToDto(holdInUnit *ThermalConductivityUnits) Therma
 	}
 }
 
-// ToDtoJSON creates an ThermalConductivityDto representation.
+// ToDtoJSON creates a JSON representation of the ThermalConductivity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerMeterKelvin by default.
 func (a *ThermalConductivity) ToDtoJSON(holdInUnit *ThermalConductivityUnits) ([]byte, error) {
+	// Convert to ThermalConductivityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ThermalConductivity to a specific unit value.
+// Convert converts a ThermalConductivity to a specific unit value.
+// The function uses the provided unit type (ThermalConductivityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ThermalConductivity) Convert(toUnit ThermalConductivityUnits) float64 {
 	switch toUnit { 
     case ThermalConductivityWattPerMeterKelvin:
@@ -160,7 +183,7 @@ func (a *ThermalConductivity) Convert(toUnit ThermalConductivityUnits) float64 {
     case ThermalConductivityBtuPerHourFootFahrenheit:
 		return a.BtusPerHourFootFahrenheit()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -187,13 +210,22 @@ func (a *ThermalConductivity) convertToBase(value float64, fromUnit ThermalCondu
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ThermalConductivity in the default unit (WattPerMeterKelvin),
+// formatted to two decimal places.
 func (a ThermalConductivity) String() string {
 	return a.ToString(ThermalConductivityWattPerMeterKelvin, 2)
 }
 
-// ToString formats the ThermalConductivity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ThermalConductivity value as a string with the specified unit and fractional digits.
+// It converts the ThermalConductivity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ThermalConductivity value will be converted (e.g., WattPerMeterKelvin))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ThermalConductivity with the unit abbreviation.
 func (a *ThermalConductivity) ToString(unit ThermalConductivityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -215,12 +247,26 @@ func (a *ThermalConductivity) getUnitAbbreviation(unit ThermalConductivityUnits)
 	}
 }
 
-// Check if the given ThermalConductivity are equals to the current ThermalConductivity
+// Equals checks if the given ThermalConductivity is equal to the current ThermalConductivity.
+//
+// Parameters:
+//    other: The ThermalConductivity to compare against.
+//
+// Returns:
+//    bool: Returns true if both ThermalConductivity are equal, false otherwise.
 func (a *ThermalConductivity) Equals(other *ThermalConductivity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ThermalConductivity are equals to the current ThermalConductivity
+// CompareTo compares the current ThermalConductivity with another ThermalConductivity.
+// It returns -1 if the current ThermalConductivity is less than the other ThermalConductivity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ThermalConductivity to compare against.
+//
+// Returns:
+//    int: -1 if the current ThermalConductivity is less, 1 if greater, and 0 if equal.
 func (a *ThermalConductivity) CompareTo(other *ThermalConductivity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -233,22 +279,50 @@ func (a *ThermalConductivity) CompareTo(other *ThermalConductivity) int {
 	return 0
 }
 
-// Add the given ThermalConductivity to the current ThermalConductivity.
+// Add adds the given ThermalConductivity to the current ThermalConductivity and returns the result.
+// The result is a new ThermalConductivity instance with the sum of the values.
+//
+// Parameters:
+//    other: The ThermalConductivity to add to the current ThermalConductivity.
+//
+// Returns:
+//    *ThermalConductivity: A new ThermalConductivity instance representing the sum of both ThermalConductivity.
 func (a *ThermalConductivity) Add(other *ThermalConductivity) *ThermalConductivity {
 	return &ThermalConductivity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ThermalConductivity to the current ThermalConductivity.
+// Subtract subtracts the given ThermalConductivity from the current ThermalConductivity and returns the result.
+// The result is a new ThermalConductivity instance with the difference of the values.
+//
+// Parameters:
+//    other: The ThermalConductivity to subtract from the current ThermalConductivity.
+//
+// Returns:
+//    *ThermalConductivity: A new ThermalConductivity instance representing the difference of both ThermalConductivity.
 func (a *ThermalConductivity) Subtract(other *ThermalConductivity) *ThermalConductivity {
 	return &ThermalConductivity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ThermalConductivity to the current ThermalConductivity.
+// Multiply multiplies the current ThermalConductivity by the given ThermalConductivity and returns the result.
+// The result is a new ThermalConductivity instance with the product of the values.
+//
+// Parameters:
+//    other: The ThermalConductivity to multiply with the current ThermalConductivity.
+//
+// Returns:
+//    *ThermalConductivity: A new ThermalConductivity instance representing the product of both ThermalConductivity.
 func (a *ThermalConductivity) Multiply(other *ThermalConductivity) *ThermalConductivity {
 	return &ThermalConductivity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ThermalConductivity to the current ThermalConductivity.
+// Divide divides the current ThermalConductivity by the given ThermalConductivity and returns the result.
+// The result is a new ThermalConductivity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ThermalConductivity to divide the current ThermalConductivity by.
+//
+// Returns:
+//    *ThermalConductivity: A new ThermalConductivity instance representing the quotient of both ThermalConductivity.
 func (a *ThermalConductivity) Divide(other *ThermalConductivity) *ThermalConductivity {
 	return &ThermalConductivity{value: a.value / other.BaseValue()}
 }

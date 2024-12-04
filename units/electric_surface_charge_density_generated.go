@@ -12,7 +12,7 @@ import (
 
 
 
-// ElectricSurfaceChargeDensityUnits enumeration
+// ElectricSurfaceChargeDensityUnits defines various units of ElectricSurfaceChargeDensity.
 type ElectricSurfaceChargeDensityUnits string
 
 const (
@@ -25,19 +25,24 @@ const (
         ElectricSurfaceChargeDensityCoulombPerSquareInch ElectricSurfaceChargeDensityUnits = "CoulombPerSquareInch"
 )
 
-// ElectricSurfaceChargeDensityDto represents an ElectricSurfaceChargeDensity
+// ElectricSurfaceChargeDensityDto represents a ElectricSurfaceChargeDensity measurement with a numerical value and its corresponding unit.
 type ElectricSurfaceChargeDensityDto struct {
+    // Value is the numerical representation of the ElectricSurfaceChargeDensity.
 	Value float64
+    // Unit specifies the unit of measurement for the ElectricSurfaceChargeDensity, as defined in the ElectricSurfaceChargeDensityUnits enumeration.
 	Unit  ElectricSurfaceChargeDensityUnits
 }
 
-// ElectricSurfaceChargeDensityDtoFactory struct to group related functions
+// ElectricSurfaceChargeDensityDtoFactory groups methods for creating and serializing ElectricSurfaceChargeDensityDto objects.
 type ElectricSurfaceChargeDensityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricSurfaceChargeDensityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ElectricSurfaceChargeDensityDtoFactory) FromJSON(data []byte) (*ElectricSurfaceChargeDensityDto, error) {
 	a := ElectricSurfaceChargeDensityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ElectricSurfaceChargeDensityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -45,6 +50,9 @@ func (udf ElectricSurfaceChargeDensityDtoFactory) FromJSON(data []byte) (*Electr
 	return &a, nil
 }
 
+// ToJSON serializes a ElectricSurfaceChargeDensityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ElectricSurfaceChargeDensityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -56,10 +64,11 @@ func (a ElectricSurfaceChargeDensityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ElectricSurfaceChargeDensity struct
+// ElectricSurfaceChargeDensity represents a measurement in a of ElectricSurfaceChargeDensity.
+//
+// In electromagnetism, surface charge density is a measure of the amount of electric charge per surface area.
 type ElectricSurfaceChargeDensity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     coulombs_per_square_meterLazy *float64 
@@ -67,42 +76,43 @@ type ElectricSurfaceChargeDensity struct {
     coulombs_per_square_inchLazy *float64 
 }
 
-// ElectricSurfaceChargeDensityFactory struct to group related functions
+// ElectricSurfaceChargeDensityFactory groups methods for creating ElectricSurfaceChargeDensity instances.
 type ElectricSurfaceChargeDensityFactory struct{}
 
+// CreateElectricSurfaceChargeDensity creates a new ElectricSurfaceChargeDensity instance from the given value and unit.
 func (uf ElectricSurfaceChargeDensityFactory) CreateElectricSurfaceChargeDensity(value float64, unit ElectricSurfaceChargeDensityUnits) (*ElectricSurfaceChargeDensity, error) {
 	return newElectricSurfaceChargeDensity(value, unit)
 }
 
+// FromDto converts a ElectricSurfaceChargeDensityDto to a ElectricSurfaceChargeDensity instance.
 func (uf ElectricSurfaceChargeDensityFactory) FromDto(dto ElectricSurfaceChargeDensityDto) (*ElectricSurfaceChargeDensity, error) {
 	return newElectricSurfaceChargeDensity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricSurfaceChargeDensity instance.
 func (uf ElectricSurfaceChargeDensityFactory) FromDtoJSON(data []byte) (*ElectricSurfaceChargeDensity, error) {
 	unitDto, err := ElectricSurfaceChargeDensityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ElectricSurfaceChargeDensityDto from JSON: %w", err)
 	}
 	return ElectricSurfaceChargeDensityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromCoulombPerSquareMeter creates a new ElectricSurfaceChargeDensity instance from CoulombPerSquareMeter.
+// FromCoulombsPerSquareMeter creates a new ElectricSurfaceChargeDensity instance from a value in CoulombsPerSquareMeter.
 func (uf ElectricSurfaceChargeDensityFactory) FromCoulombsPerSquareMeter(value float64) (*ElectricSurfaceChargeDensity, error) {
 	return newElectricSurfaceChargeDensity(value, ElectricSurfaceChargeDensityCoulombPerSquareMeter)
 }
 
-// FromCoulombPerSquareCentimeter creates a new ElectricSurfaceChargeDensity instance from CoulombPerSquareCentimeter.
+// FromCoulombsPerSquareCentimeter creates a new ElectricSurfaceChargeDensity instance from a value in CoulombsPerSquareCentimeter.
 func (uf ElectricSurfaceChargeDensityFactory) FromCoulombsPerSquareCentimeter(value float64) (*ElectricSurfaceChargeDensity, error) {
 	return newElectricSurfaceChargeDensity(value, ElectricSurfaceChargeDensityCoulombPerSquareCentimeter)
 }
 
-// FromCoulombPerSquareInch creates a new ElectricSurfaceChargeDensity instance from CoulombPerSquareInch.
+// FromCoulombsPerSquareInch creates a new ElectricSurfaceChargeDensity instance from a value in CoulombsPerSquareInch.
 func (uf ElectricSurfaceChargeDensityFactory) FromCoulombsPerSquareInch(value float64) (*ElectricSurfaceChargeDensity, error) {
 	return newElectricSurfaceChargeDensity(value, ElectricSurfaceChargeDensityCoulombPerSquareInch)
 }
-
-
 
 
 // newElectricSurfaceChargeDensity creates a new ElectricSurfaceChargeDensity.
@@ -115,13 +125,15 @@ func newElectricSurfaceChargeDensity(value float64, fromUnit ElectricSurfaceChar
 	return a, nil
 }
 
-// BaseValue returns the base value of ElectricSurfaceChargeDensity in CoulombPerSquareMeter.
+// BaseValue returns the base value of ElectricSurfaceChargeDensity in CoulombPerSquareMeter unit (the base/default quantity).
 func (a *ElectricSurfaceChargeDensity) BaseValue() float64 {
 	return a.value
 }
 
 
-// CoulombPerSquareMeter returns the value in CoulombPerSquareMeter.
+// CoulombsPerSquareMeter returns the ElectricSurfaceChargeDensity value in CoulombsPerSquareMeter.
+//
+// 
 func (a *ElectricSurfaceChargeDensity) CoulombsPerSquareMeter() float64 {
 	if a.coulombs_per_square_meterLazy != nil {
 		return *a.coulombs_per_square_meterLazy
@@ -131,7 +143,9 @@ func (a *ElectricSurfaceChargeDensity) CoulombsPerSquareMeter() float64 {
 	return coulombs_per_square_meter
 }
 
-// CoulombPerSquareCentimeter returns the value in CoulombPerSquareCentimeter.
+// CoulombsPerSquareCentimeter returns the ElectricSurfaceChargeDensity value in CoulombsPerSquareCentimeter.
+//
+// 
 func (a *ElectricSurfaceChargeDensity) CoulombsPerSquareCentimeter() float64 {
 	if a.coulombs_per_square_centimeterLazy != nil {
 		return *a.coulombs_per_square_centimeterLazy
@@ -141,7 +155,9 @@ func (a *ElectricSurfaceChargeDensity) CoulombsPerSquareCentimeter() float64 {
 	return coulombs_per_square_centimeter
 }
 
-// CoulombPerSquareInch returns the value in CoulombPerSquareInch.
+// CoulombsPerSquareInch returns the ElectricSurfaceChargeDensity value in CoulombsPerSquareInch.
+//
+// 
 func (a *ElectricSurfaceChargeDensity) CoulombsPerSquareInch() float64 {
 	if a.coulombs_per_square_inchLazy != nil {
 		return *a.coulombs_per_square_inchLazy
@@ -152,7 +168,9 @@ func (a *ElectricSurfaceChargeDensity) CoulombsPerSquareInch() float64 {
 }
 
 
-// ToDto creates an ElectricSurfaceChargeDensityDto representation.
+// ToDto creates a ElectricSurfaceChargeDensityDto representation from the ElectricSurfaceChargeDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CoulombPerSquareMeter by default.
 func (a *ElectricSurfaceChargeDensity) ToDto(holdInUnit *ElectricSurfaceChargeDensityUnits) ElectricSurfaceChargeDensityDto {
 	if holdInUnit == nil {
 		defaultUnit := ElectricSurfaceChargeDensityCoulombPerSquareMeter // Default value
@@ -165,12 +183,19 @@ func (a *ElectricSurfaceChargeDensity) ToDto(holdInUnit *ElectricSurfaceChargeDe
 	}
 }
 
-// ToDtoJSON creates an ElectricSurfaceChargeDensityDto representation.
+// ToDtoJSON creates a JSON representation of the ElectricSurfaceChargeDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CoulombPerSquareMeter by default.
 func (a *ElectricSurfaceChargeDensity) ToDtoJSON(holdInUnit *ElectricSurfaceChargeDensityUnits) ([]byte, error) {
+	// Convert to ElectricSurfaceChargeDensityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ElectricSurfaceChargeDensity to a specific unit value.
+// Convert converts a ElectricSurfaceChargeDensity to a specific unit value.
+// The function uses the provided unit type (ElectricSurfaceChargeDensityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ElectricSurfaceChargeDensity) Convert(toUnit ElectricSurfaceChargeDensityUnits) float64 {
 	switch toUnit { 
     case ElectricSurfaceChargeDensityCoulombPerSquareMeter:
@@ -180,7 +205,7 @@ func (a *ElectricSurfaceChargeDensity) Convert(toUnit ElectricSurfaceChargeDensi
     case ElectricSurfaceChargeDensityCoulombPerSquareInch:
 		return a.CoulombsPerSquareInch()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -211,13 +236,22 @@ func (a *ElectricSurfaceChargeDensity) convertToBase(value float64, fromUnit Ele
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ElectricSurfaceChargeDensity in the default unit (CoulombPerSquareMeter),
+// formatted to two decimal places.
 func (a ElectricSurfaceChargeDensity) String() string {
 	return a.ToString(ElectricSurfaceChargeDensityCoulombPerSquareMeter, 2)
 }
 
-// ToString formats the ElectricSurfaceChargeDensity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ElectricSurfaceChargeDensity value as a string with the specified unit and fractional digits.
+// It converts the ElectricSurfaceChargeDensity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ElectricSurfaceChargeDensity value will be converted (e.g., CoulombPerSquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ElectricSurfaceChargeDensity with the unit abbreviation.
 func (a *ElectricSurfaceChargeDensity) ToString(unit ElectricSurfaceChargeDensityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -241,12 +275,26 @@ func (a *ElectricSurfaceChargeDensity) getUnitAbbreviation(unit ElectricSurfaceC
 	}
 }
 
-// Check if the given ElectricSurfaceChargeDensity are equals to the current ElectricSurfaceChargeDensity
+// Equals checks if the given ElectricSurfaceChargeDensity is equal to the current ElectricSurfaceChargeDensity.
+//
+// Parameters:
+//    other: The ElectricSurfaceChargeDensity to compare against.
+//
+// Returns:
+//    bool: Returns true if both ElectricSurfaceChargeDensity are equal, false otherwise.
 func (a *ElectricSurfaceChargeDensity) Equals(other *ElectricSurfaceChargeDensity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ElectricSurfaceChargeDensity are equals to the current ElectricSurfaceChargeDensity
+// CompareTo compares the current ElectricSurfaceChargeDensity with another ElectricSurfaceChargeDensity.
+// It returns -1 if the current ElectricSurfaceChargeDensity is less than the other ElectricSurfaceChargeDensity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ElectricSurfaceChargeDensity to compare against.
+//
+// Returns:
+//    int: -1 if the current ElectricSurfaceChargeDensity is less, 1 if greater, and 0 if equal.
 func (a *ElectricSurfaceChargeDensity) CompareTo(other *ElectricSurfaceChargeDensity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -259,22 +307,50 @@ func (a *ElectricSurfaceChargeDensity) CompareTo(other *ElectricSurfaceChargeDen
 	return 0
 }
 
-// Add the given ElectricSurfaceChargeDensity to the current ElectricSurfaceChargeDensity.
+// Add adds the given ElectricSurfaceChargeDensity to the current ElectricSurfaceChargeDensity and returns the result.
+// The result is a new ElectricSurfaceChargeDensity instance with the sum of the values.
+//
+// Parameters:
+//    other: The ElectricSurfaceChargeDensity to add to the current ElectricSurfaceChargeDensity.
+//
+// Returns:
+//    *ElectricSurfaceChargeDensity: A new ElectricSurfaceChargeDensity instance representing the sum of both ElectricSurfaceChargeDensity.
 func (a *ElectricSurfaceChargeDensity) Add(other *ElectricSurfaceChargeDensity) *ElectricSurfaceChargeDensity {
 	return &ElectricSurfaceChargeDensity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ElectricSurfaceChargeDensity to the current ElectricSurfaceChargeDensity.
+// Subtract subtracts the given ElectricSurfaceChargeDensity from the current ElectricSurfaceChargeDensity and returns the result.
+// The result is a new ElectricSurfaceChargeDensity instance with the difference of the values.
+//
+// Parameters:
+//    other: The ElectricSurfaceChargeDensity to subtract from the current ElectricSurfaceChargeDensity.
+//
+// Returns:
+//    *ElectricSurfaceChargeDensity: A new ElectricSurfaceChargeDensity instance representing the difference of both ElectricSurfaceChargeDensity.
 func (a *ElectricSurfaceChargeDensity) Subtract(other *ElectricSurfaceChargeDensity) *ElectricSurfaceChargeDensity {
 	return &ElectricSurfaceChargeDensity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ElectricSurfaceChargeDensity to the current ElectricSurfaceChargeDensity.
+// Multiply multiplies the current ElectricSurfaceChargeDensity by the given ElectricSurfaceChargeDensity and returns the result.
+// The result is a new ElectricSurfaceChargeDensity instance with the product of the values.
+//
+// Parameters:
+//    other: The ElectricSurfaceChargeDensity to multiply with the current ElectricSurfaceChargeDensity.
+//
+// Returns:
+//    *ElectricSurfaceChargeDensity: A new ElectricSurfaceChargeDensity instance representing the product of both ElectricSurfaceChargeDensity.
 func (a *ElectricSurfaceChargeDensity) Multiply(other *ElectricSurfaceChargeDensity) *ElectricSurfaceChargeDensity {
 	return &ElectricSurfaceChargeDensity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ElectricSurfaceChargeDensity to the current ElectricSurfaceChargeDensity.
+// Divide divides the current ElectricSurfaceChargeDensity by the given ElectricSurfaceChargeDensity and returns the result.
+// The result is a new ElectricSurfaceChargeDensity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ElectricSurfaceChargeDensity to divide the current ElectricSurfaceChargeDensity by.
+//
+// Returns:
+//    *ElectricSurfaceChargeDensity: A new ElectricSurfaceChargeDensity instance representing the quotient of both ElectricSurfaceChargeDensity.
 func (a *ElectricSurfaceChargeDensity) Divide(other *ElectricSurfaceChargeDensity) *ElectricSurfaceChargeDensity {
 	return &ElectricSurfaceChargeDensity{value: a.value / other.BaseValue()}
 }

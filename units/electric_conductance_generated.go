@@ -12,7 +12,7 @@ import (
 
 
 
-// ElectricConductanceUnits enumeration
+// ElectricConductanceUnits defines various units of ElectricConductance.
 type ElectricConductanceUnits string
 
 const (
@@ -29,19 +29,24 @@ const (
         ElectricConductanceKilosiemens ElectricConductanceUnits = "Kilosiemens"
 )
 
-// ElectricConductanceDto represents an ElectricConductance
+// ElectricConductanceDto represents a ElectricConductance measurement with a numerical value and its corresponding unit.
 type ElectricConductanceDto struct {
+    // Value is the numerical representation of the ElectricConductance.
 	Value float64
+    // Unit specifies the unit of measurement for the ElectricConductance, as defined in the ElectricConductanceUnits enumeration.
 	Unit  ElectricConductanceUnits
 }
 
-// ElectricConductanceDtoFactory struct to group related functions
+// ElectricConductanceDtoFactory groups methods for creating and serializing ElectricConductanceDto objects.
 type ElectricConductanceDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricConductanceDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ElectricConductanceDtoFactory) FromJSON(data []byte) (*ElectricConductanceDto, error) {
 	a := ElectricConductanceDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ElectricConductanceDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -49,6 +54,9 @@ func (udf ElectricConductanceDtoFactory) FromJSON(data []byte) (*ElectricConduct
 	return &a, nil
 }
 
+// ToJSON serializes a ElectricConductanceDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ElectricConductanceDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -60,10 +68,11 @@ func (a ElectricConductanceDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ElectricConductance struct
+// ElectricConductance represents a measurement in a of ElectricConductance.
+//
+// The electrical conductance of an electrical conductor is a measure of the easeness to pass an electric current through that conductor.
 type ElectricConductance struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     siemensLazy *float64 
@@ -73,52 +82,53 @@ type ElectricConductance struct {
     kilosiemensLazy *float64 
 }
 
-// ElectricConductanceFactory struct to group related functions
+// ElectricConductanceFactory groups methods for creating ElectricConductance instances.
 type ElectricConductanceFactory struct{}
 
+// CreateElectricConductance creates a new ElectricConductance instance from the given value and unit.
 func (uf ElectricConductanceFactory) CreateElectricConductance(value float64, unit ElectricConductanceUnits) (*ElectricConductance, error) {
 	return newElectricConductance(value, unit)
 }
 
+// FromDto converts a ElectricConductanceDto to a ElectricConductance instance.
 func (uf ElectricConductanceFactory) FromDto(dto ElectricConductanceDto) (*ElectricConductance, error) {
 	return newElectricConductance(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricConductance instance.
 func (uf ElectricConductanceFactory) FromDtoJSON(data []byte) (*ElectricConductance, error) {
 	unitDto, err := ElectricConductanceDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ElectricConductanceDto from JSON: %w", err)
 	}
 	return ElectricConductanceFactory{}.FromDto(*unitDto)
 }
 
 
-// FromSiemens creates a new ElectricConductance instance from Siemens.
+// FromSiemens creates a new ElectricConductance instance from a value in Siemens.
 func (uf ElectricConductanceFactory) FromSiemens(value float64) (*ElectricConductance, error) {
 	return newElectricConductance(value, ElectricConductanceSiemens)
 }
 
-// FromNanosiemens creates a new ElectricConductance instance from Nanosiemens.
+// FromNanosiemens creates a new ElectricConductance instance from a value in Nanosiemens.
 func (uf ElectricConductanceFactory) FromNanosiemens(value float64) (*ElectricConductance, error) {
 	return newElectricConductance(value, ElectricConductanceNanosiemens)
 }
 
-// FromMicrosiemens creates a new ElectricConductance instance from Microsiemens.
+// FromMicrosiemens creates a new ElectricConductance instance from a value in Microsiemens.
 func (uf ElectricConductanceFactory) FromMicrosiemens(value float64) (*ElectricConductance, error) {
 	return newElectricConductance(value, ElectricConductanceMicrosiemens)
 }
 
-// FromMillisiemens creates a new ElectricConductance instance from Millisiemens.
+// FromMillisiemens creates a new ElectricConductance instance from a value in Millisiemens.
 func (uf ElectricConductanceFactory) FromMillisiemens(value float64) (*ElectricConductance, error) {
 	return newElectricConductance(value, ElectricConductanceMillisiemens)
 }
 
-// FromKilosiemens creates a new ElectricConductance instance from Kilosiemens.
+// FromKilosiemens creates a new ElectricConductance instance from a value in Kilosiemens.
 func (uf ElectricConductanceFactory) FromKilosiemens(value float64) (*ElectricConductance, error) {
 	return newElectricConductance(value, ElectricConductanceKilosiemens)
 }
-
-
 
 
 // newElectricConductance creates a new ElectricConductance.
@@ -131,13 +141,15 @@ func newElectricConductance(value float64, fromUnit ElectricConductanceUnits) (*
 	return a, nil
 }
 
-// BaseValue returns the base value of ElectricConductance in Siemens.
+// BaseValue returns the base value of ElectricConductance in Siemens unit (the base/default quantity).
 func (a *ElectricConductance) BaseValue() float64 {
 	return a.value
 }
 
 
-// Siemens returns the value in Siemens.
+// Siemens returns the ElectricConductance value in Siemens.
+//
+// 
 func (a *ElectricConductance) Siemens() float64 {
 	if a.siemensLazy != nil {
 		return *a.siemensLazy
@@ -147,7 +159,9 @@ func (a *ElectricConductance) Siemens() float64 {
 	return siemens
 }
 
-// Nanosiemens returns the value in Nanosiemens.
+// Nanosiemens returns the ElectricConductance value in Nanosiemens.
+//
+// 
 func (a *ElectricConductance) Nanosiemens() float64 {
 	if a.nanosiemensLazy != nil {
 		return *a.nanosiemensLazy
@@ -157,7 +171,9 @@ func (a *ElectricConductance) Nanosiemens() float64 {
 	return nanosiemens
 }
 
-// Microsiemens returns the value in Microsiemens.
+// Microsiemens returns the ElectricConductance value in Microsiemens.
+//
+// 
 func (a *ElectricConductance) Microsiemens() float64 {
 	if a.microsiemensLazy != nil {
 		return *a.microsiemensLazy
@@ -167,7 +183,9 @@ func (a *ElectricConductance) Microsiemens() float64 {
 	return microsiemens
 }
 
-// Millisiemens returns the value in Millisiemens.
+// Millisiemens returns the ElectricConductance value in Millisiemens.
+//
+// 
 func (a *ElectricConductance) Millisiemens() float64 {
 	if a.millisiemensLazy != nil {
 		return *a.millisiemensLazy
@@ -177,7 +195,9 @@ func (a *ElectricConductance) Millisiemens() float64 {
 	return millisiemens
 }
 
-// Kilosiemens returns the value in Kilosiemens.
+// Kilosiemens returns the ElectricConductance value in Kilosiemens.
+//
+// 
 func (a *ElectricConductance) Kilosiemens() float64 {
 	if a.kilosiemensLazy != nil {
 		return *a.kilosiemensLazy
@@ -188,7 +208,9 @@ func (a *ElectricConductance) Kilosiemens() float64 {
 }
 
 
-// ToDto creates an ElectricConductanceDto representation.
+// ToDto creates a ElectricConductanceDto representation from the ElectricConductance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Siemens by default.
 func (a *ElectricConductance) ToDto(holdInUnit *ElectricConductanceUnits) ElectricConductanceDto {
 	if holdInUnit == nil {
 		defaultUnit := ElectricConductanceSiemens // Default value
@@ -201,12 +223,19 @@ func (a *ElectricConductance) ToDto(holdInUnit *ElectricConductanceUnits) Electr
 	}
 }
 
-// ToDtoJSON creates an ElectricConductanceDto representation.
+// ToDtoJSON creates a JSON representation of the ElectricConductance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Siemens by default.
 func (a *ElectricConductance) ToDtoJSON(holdInUnit *ElectricConductanceUnits) ([]byte, error) {
+	// Convert to ElectricConductanceDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ElectricConductance to a specific unit value.
+// Convert converts a ElectricConductance to a specific unit value.
+// The function uses the provided unit type (ElectricConductanceUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ElectricConductance) Convert(toUnit ElectricConductanceUnits) float64 {
 	switch toUnit { 
     case ElectricConductanceSiemens:
@@ -220,7 +249,7 @@ func (a *ElectricConductance) Convert(toUnit ElectricConductanceUnits) float64 {
     case ElectricConductanceKilosiemens:
 		return a.Kilosiemens()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -259,13 +288,22 @@ func (a *ElectricConductance) convertToBase(value float64, fromUnit ElectricCond
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ElectricConductance in the default unit (Siemens),
+// formatted to two decimal places.
 func (a ElectricConductance) String() string {
 	return a.ToString(ElectricConductanceSiemens, 2)
 }
 
-// ToString formats the ElectricConductance to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ElectricConductance value as a string with the specified unit and fractional digits.
+// It converts the ElectricConductance to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ElectricConductance value will be converted (e.g., Siemens))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ElectricConductance with the unit abbreviation.
 func (a *ElectricConductance) ToString(unit ElectricConductanceUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -293,12 +331,26 @@ func (a *ElectricConductance) getUnitAbbreviation(unit ElectricConductanceUnits)
 	}
 }
 
-// Check if the given ElectricConductance are equals to the current ElectricConductance
+// Equals checks if the given ElectricConductance is equal to the current ElectricConductance.
+//
+// Parameters:
+//    other: The ElectricConductance to compare against.
+//
+// Returns:
+//    bool: Returns true if both ElectricConductance are equal, false otherwise.
 func (a *ElectricConductance) Equals(other *ElectricConductance) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ElectricConductance are equals to the current ElectricConductance
+// CompareTo compares the current ElectricConductance with another ElectricConductance.
+// It returns -1 if the current ElectricConductance is less than the other ElectricConductance, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ElectricConductance to compare against.
+//
+// Returns:
+//    int: -1 if the current ElectricConductance is less, 1 if greater, and 0 if equal.
 func (a *ElectricConductance) CompareTo(other *ElectricConductance) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -311,22 +363,50 @@ func (a *ElectricConductance) CompareTo(other *ElectricConductance) int {
 	return 0
 }
 
-// Add the given ElectricConductance to the current ElectricConductance.
+// Add adds the given ElectricConductance to the current ElectricConductance and returns the result.
+// The result is a new ElectricConductance instance with the sum of the values.
+//
+// Parameters:
+//    other: The ElectricConductance to add to the current ElectricConductance.
+//
+// Returns:
+//    *ElectricConductance: A new ElectricConductance instance representing the sum of both ElectricConductance.
 func (a *ElectricConductance) Add(other *ElectricConductance) *ElectricConductance {
 	return &ElectricConductance{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ElectricConductance to the current ElectricConductance.
+// Subtract subtracts the given ElectricConductance from the current ElectricConductance and returns the result.
+// The result is a new ElectricConductance instance with the difference of the values.
+//
+// Parameters:
+//    other: The ElectricConductance to subtract from the current ElectricConductance.
+//
+// Returns:
+//    *ElectricConductance: A new ElectricConductance instance representing the difference of both ElectricConductance.
 func (a *ElectricConductance) Subtract(other *ElectricConductance) *ElectricConductance {
 	return &ElectricConductance{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ElectricConductance to the current ElectricConductance.
+// Multiply multiplies the current ElectricConductance by the given ElectricConductance and returns the result.
+// The result is a new ElectricConductance instance with the product of the values.
+//
+// Parameters:
+//    other: The ElectricConductance to multiply with the current ElectricConductance.
+//
+// Returns:
+//    *ElectricConductance: A new ElectricConductance instance representing the product of both ElectricConductance.
 func (a *ElectricConductance) Multiply(other *ElectricConductance) *ElectricConductance {
 	return &ElectricConductance{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ElectricConductance to the current ElectricConductance.
+// Divide divides the current ElectricConductance by the given ElectricConductance and returns the result.
+// The result is a new ElectricConductance instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ElectricConductance to divide the current ElectricConductance by.
+//
+// Returns:
+//    *ElectricConductance: A new ElectricConductance instance representing the quotient of both ElectricConductance.
 func (a *ElectricConductance) Divide(other *ElectricConductance) *ElectricConductance {
 	return &ElectricConductance{value: a.value / other.BaseValue()}
 }

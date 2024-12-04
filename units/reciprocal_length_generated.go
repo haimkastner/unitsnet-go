@@ -12,7 +12,7 @@ import (
 
 
 
-// ReciprocalLengthUnits enumeration
+// ReciprocalLengthUnits defines various units of ReciprocalLength.
 type ReciprocalLengthUnits string
 
 const (
@@ -39,19 +39,24 @@ const (
         ReciprocalLengthInverseMicroinch ReciprocalLengthUnits = "InverseMicroinch"
 )
 
-// ReciprocalLengthDto represents an ReciprocalLength
+// ReciprocalLengthDto represents a ReciprocalLength measurement with a numerical value and its corresponding unit.
 type ReciprocalLengthDto struct {
+    // Value is the numerical representation of the ReciprocalLength.
 	Value float64
+    // Unit specifies the unit of measurement for the ReciprocalLength, as defined in the ReciprocalLengthUnits enumeration.
 	Unit  ReciprocalLengthUnits
 }
 
-// ReciprocalLengthDtoFactory struct to group related functions
+// ReciprocalLengthDtoFactory groups methods for creating and serializing ReciprocalLengthDto objects.
 type ReciprocalLengthDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ReciprocalLengthDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ReciprocalLengthDtoFactory) FromJSON(data []byte) (*ReciprocalLengthDto, error) {
 	a := ReciprocalLengthDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ReciprocalLengthDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -59,6 +64,9 @@ func (udf ReciprocalLengthDtoFactory) FromJSON(data []byte) (*ReciprocalLengthDt
 	return &a, nil
 }
 
+// ToJSON serializes a ReciprocalLengthDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ReciprocalLengthDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -70,10 +78,11 @@ func (a ReciprocalLengthDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ReciprocalLength struct
+// ReciprocalLength represents a measurement in a of ReciprocalLength.
+//
+// Reciprocal (Inverse) Length is used in various fields of science and mathematics. It is defined as the inverse value of a length unit.
 type ReciprocalLength struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     inverse_metersLazy *float64 
@@ -88,77 +97,78 @@ type ReciprocalLength struct {
     inverse_microinchesLazy *float64 
 }
 
-// ReciprocalLengthFactory struct to group related functions
+// ReciprocalLengthFactory groups methods for creating ReciprocalLength instances.
 type ReciprocalLengthFactory struct{}
 
+// CreateReciprocalLength creates a new ReciprocalLength instance from the given value and unit.
 func (uf ReciprocalLengthFactory) CreateReciprocalLength(value float64, unit ReciprocalLengthUnits) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, unit)
 }
 
+// FromDto converts a ReciprocalLengthDto to a ReciprocalLength instance.
 func (uf ReciprocalLengthFactory) FromDto(dto ReciprocalLengthDto) (*ReciprocalLength, error) {
 	return newReciprocalLength(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ReciprocalLength instance.
 func (uf ReciprocalLengthFactory) FromDtoJSON(data []byte) (*ReciprocalLength, error) {
 	unitDto, err := ReciprocalLengthDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ReciprocalLengthDto from JSON: %w", err)
 	}
 	return ReciprocalLengthFactory{}.FromDto(*unitDto)
 }
 
 
-// FromInverseMeter creates a new ReciprocalLength instance from InverseMeter.
+// FromInverseMeters creates a new ReciprocalLength instance from a value in InverseMeters.
 func (uf ReciprocalLengthFactory) FromInverseMeters(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseMeter)
 }
 
-// FromInverseCentimeter creates a new ReciprocalLength instance from InverseCentimeter.
+// FromInverseCentimeters creates a new ReciprocalLength instance from a value in InverseCentimeters.
 func (uf ReciprocalLengthFactory) FromInverseCentimeters(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseCentimeter)
 }
 
-// FromInverseMillimeter creates a new ReciprocalLength instance from InverseMillimeter.
+// FromInverseMillimeters creates a new ReciprocalLength instance from a value in InverseMillimeters.
 func (uf ReciprocalLengthFactory) FromInverseMillimeters(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseMillimeter)
 }
 
-// FromInverseMile creates a new ReciprocalLength instance from InverseMile.
+// FromInverseMiles creates a new ReciprocalLength instance from a value in InverseMiles.
 func (uf ReciprocalLengthFactory) FromInverseMiles(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseMile)
 }
 
-// FromInverseYard creates a new ReciprocalLength instance from InverseYard.
+// FromInverseYards creates a new ReciprocalLength instance from a value in InverseYards.
 func (uf ReciprocalLengthFactory) FromInverseYards(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseYard)
 }
 
-// FromInverseFoot creates a new ReciprocalLength instance from InverseFoot.
+// FromInverseFeet creates a new ReciprocalLength instance from a value in InverseFeet.
 func (uf ReciprocalLengthFactory) FromInverseFeet(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseFoot)
 }
 
-// FromInverseUsSurveyFoot creates a new ReciprocalLength instance from InverseUsSurveyFoot.
+// FromInverseUsSurveyFeet creates a new ReciprocalLength instance from a value in InverseUsSurveyFeet.
 func (uf ReciprocalLengthFactory) FromInverseUsSurveyFeet(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseUsSurveyFoot)
 }
 
-// FromInverseInch creates a new ReciprocalLength instance from InverseInch.
+// FromInverseInches creates a new ReciprocalLength instance from a value in InverseInches.
 func (uf ReciprocalLengthFactory) FromInverseInches(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseInch)
 }
 
-// FromInverseMil creates a new ReciprocalLength instance from InverseMil.
+// FromInverseMils creates a new ReciprocalLength instance from a value in InverseMils.
 func (uf ReciprocalLengthFactory) FromInverseMils(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseMil)
 }
 
-// FromInverseMicroinch creates a new ReciprocalLength instance from InverseMicroinch.
+// FromInverseMicroinches creates a new ReciprocalLength instance from a value in InverseMicroinches.
 func (uf ReciprocalLengthFactory) FromInverseMicroinches(value float64) (*ReciprocalLength, error) {
 	return newReciprocalLength(value, ReciprocalLengthInverseMicroinch)
 }
-
-
 
 
 // newReciprocalLength creates a new ReciprocalLength.
@@ -171,13 +181,15 @@ func newReciprocalLength(value float64, fromUnit ReciprocalLengthUnits) (*Recipr
 	return a, nil
 }
 
-// BaseValue returns the base value of ReciprocalLength in InverseMeter.
+// BaseValue returns the base value of ReciprocalLength in InverseMeter unit (the base/default quantity).
 func (a *ReciprocalLength) BaseValue() float64 {
 	return a.value
 }
 
 
-// InverseMeter returns the value in InverseMeter.
+// InverseMeters returns the ReciprocalLength value in InverseMeters.
+//
+// 
 func (a *ReciprocalLength) InverseMeters() float64 {
 	if a.inverse_metersLazy != nil {
 		return *a.inverse_metersLazy
@@ -187,7 +199,9 @@ func (a *ReciprocalLength) InverseMeters() float64 {
 	return inverse_meters
 }
 
-// InverseCentimeter returns the value in InverseCentimeter.
+// InverseCentimeters returns the ReciprocalLength value in InverseCentimeters.
+//
+// 
 func (a *ReciprocalLength) InverseCentimeters() float64 {
 	if a.inverse_centimetersLazy != nil {
 		return *a.inverse_centimetersLazy
@@ -197,7 +211,9 @@ func (a *ReciprocalLength) InverseCentimeters() float64 {
 	return inverse_centimeters
 }
 
-// InverseMillimeter returns the value in InverseMillimeter.
+// InverseMillimeters returns the ReciprocalLength value in InverseMillimeters.
+//
+// 
 func (a *ReciprocalLength) InverseMillimeters() float64 {
 	if a.inverse_millimetersLazy != nil {
 		return *a.inverse_millimetersLazy
@@ -207,7 +223,9 @@ func (a *ReciprocalLength) InverseMillimeters() float64 {
 	return inverse_millimeters
 }
 
-// InverseMile returns the value in InverseMile.
+// InverseMiles returns the ReciprocalLength value in InverseMiles.
+//
+// 
 func (a *ReciprocalLength) InverseMiles() float64 {
 	if a.inverse_milesLazy != nil {
 		return *a.inverse_milesLazy
@@ -217,7 +235,9 @@ func (a *ReciprocalLength) InverseMiles() float64 {
 	return inverse_miles
 }
 
-// InverseYard returns the value in InverseYard.
+// InverseYards returns the ReciprocalLength value in InverseYards.
+//
+// 
 func (a *ReciprocalLength) InverseYards() float64 {
 	if a.inverse_yardsLazy != nil {
 		return *a.inverse_yardsLazy
@@ -227,7 +247,9 @@ func (a *ReciprocalLength) InverseYards() float64 {
 	return inverse_yards
 }
 
-// InverseFoot returns the value in InverseFoot.
+// InverseFeet returns the ReciprocalLength value in InverseFeet.
+//
+// 
 func (a *ReciprocalLength) InverseFeet() float64 {
 	if a.inverse_feetLazy != nil {
 		return *a.inverse_feetLazy
@@ -237,7 +259,9 @@ func (a *ReciprocalLength) InverseFeet() float64 {
 	return inverse_feet
 }
 
-// InverseUsSurveyFoot returns the value in InverseUsSurveyFoot.
+// InverseUsSurveyFeet returns the ReciprocalLength value in InverseUsSurveyFeet.
+//
+// 
 func (a *ReciprocalLength) InverseUsSurveyFeet() float64 {
 	if a.inverse_us_survey_feetLazy != nil {
 		return *a.inverse_us_survey_feetLazy
@@ -247,7 +271,9 @@ func (a *ReciprocalLength) InverseUsSurveyFeet() float64 {
 	return inverse_us_survey_feet
 }
 
-// InverseInch returns the value in InverseInch.
+// InverseInches returns the ReciprocalLength value in InverseInches.
+//
+// 
 func (a *ReciprocalLength) InverseInches() float64 {
 	if a.inverse_inchesLazy != nil {
 		return *a.inverse_inchesLazy
@@ -257,7 +283,9 @@ func (a *ReciprocalLength) InverseInches() float64 {
 	return inverse_inches
 }
 
-// InverseMil returns the value in InverseMil.
+// InverseMils returns the ReciprocalLength value in InverseMils.
+//
+// 
 func (a *ReciprocalLength) InverseMils() float64 {
 	if a.inverse_milsLazy != nil {
 		return *a.inverse_milsLazy
@@ -267,7 +295,9 @@ func (a *ReciprocalLength) InverseMils() float64 {
 	return inverse_mils
 }
 
-// InverseMicroinch returns the value in InverseMicroinch.
+// InverseMicroinches returns the ReciprocalLength value in InverseMicroinches.
+//
+// 
 func (a *ReciprocalLength) InverseMicroinches() float64 {
 	if a.inverse_microinchesLazy != nil {
 		return *a.inverse_microinchesLazy
@@ -278,7 +308,9 @@ func (a *ReciprocalLength) InverseMicroinches() float64 {
 }
 
 
-// ToDto creates an ReciprocalLengthDto representation.
+// ToDto creates a ReciprocalLengthDto representation from the ReciprocalLength instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by InverseMeter by default.
 func (a *ReciprocalLength) ToDto(holdInUnit *ReciprocalLengthUnits) ReciprocalLengthDto {
 	if holdInUnit == nil {
 		defaultUnit := ReciprocalLengthInverseMeter // Default value
@@ -291,12 +323,19 @@ func (a *ReciprocalLength) ToDto(holdInUnit *ReciprocalLengthUnits) ReciprocalLe
 	}
 }
 
-// ToDtoJSON creates an ReciprocalLengthDto representation.
+// ToDtoJSON creates a JSON representation of the ReciprocalLength instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by InverseMeter by default.
 func (a *ReciprocalLength) ToDtoJSON(holdInUnit *ReciprocalLengthUnits) ([]byte, error) {
+	// Convert to ReciprocalLengthDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ReciprocalLength to a specific unit value.
+// Convert converts a ReciprocalLength to a specific unit value.
+// The function uses the provided unit type (ReciprocalLengthUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ReciprocalLength) Convert(toUnit ReciprocalLengthUnits) float64 {
 	switch toUnit { 
     case ReciprocalLengthInverseMeter:
@@ -320,7 +359,7 @@ func (a *ReciprocalLength) Convert(toUnit ReciprocalLengthUnits) float64 {
     case ReciprocalLengthInverseMicroinch:
 		return a.InverseMicroinches()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -379,13 +418,22 @@ func (a *ReciprocalLength) convertToBase(value float64, fromUnit ReciprocalLengt
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ReciprocalLength in the default unit (InverseMeter),
+// formatted to two decimal places.
 func (a ReciprocalLength) String() string {
 	return a.ToString(ReciprocalLengthInverseMeter, 2)
 }
 
-// ToString formats the ReciprocalLength to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ReciprocalLength value as a string with the specified unit and fractional digits.
+// It converts the ReciprocalLength to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ReciprocalLength value will be converted (e.g., InverseMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ReciprocalLength with the unit abbreviation.
 func (a *ReciprocalLength) ToString(unit ReciprocalLengthUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -423,12 +471,26 @@ func (a *ReciprocalLength) getUnitAbbreviation(unit ReciprocalLengthUnits) strin
 	}
 }
 
-// Check if the given ReciprocalLength are equals to the current ReciprocalLength
+// Equals checks if the given ReciprocalLength is equal to the current ReciprocalLength.
+//
+// Parameters:
+//    other: The ReciprocalLength to compare against.
+//
+// Returns:
+//    bool: Returns true if both ReciprocalLength are equal, false otherwise.
 func (a *ReciprocalLength) Equals(other *ReciprocalLength) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ReciprocalLength are equals to the current ReciprocalLength
+// CompareTo compares the current ReciprocalLength with another ReciprocalLength.
+// It returns -1 if the current ReciprocalLength is less than the other ReciprocalLength, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ReciprocalLength to compare against.
+//
+// Returns:
+//    int: -1 if the current ReciprocalLength is less, 1 if greater, and 0 if equal.
 func (a *ReciprocalLength) CompareTo(other *ReciprocalLength) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -441,22 +503,50 @@ func (a *ReciprocalLength) CompareTo(other *ReciprocalLength) int {
 	return 0
 }
 
-// Add the given ReciprocalLength to the current ReciprocalLength.
+// Add adds the given ReciprocalLength to the current ReciprocalLength and returns the result.
+// The result is a new ReciprocalLength instance with the sum of the values.
+//
+// Parameters:
+//    other: The ReciprocalLength to add to the current ReciprocalLength.
+//
+// Returns:
+//    *ReciprocalLength: A new ReciprocalLength instance representing the sum of both ReciprocalLength.
 func (a *ReciprocalLength) Add(other *ReciprocalLength) *ReciprocalLength {
 	return &ReciprocalLength{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ReciprocalLength to the current ReciprocalLength.
+// Subtract subtracts the given ReciprocalLength from the current ReciprocalLength and returns the result.
+// The result is a new ReciprocalLength instance with the difference of the values.
+//
+// Parameters:
+//    other: The ReciprocalLength to subtract from the current ReciprocalLength.
+//
+// Returns:
+//    *ReciprocalLength: A new ReciprocalLength instance representing the difference of both ReciprocalLength.
 func (a *ReciprocalLength) Subtract(other *ReciprocalLength) *ReciprocalLength {
 	return &ReciprocalLength{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ReciprocalLength to the current ReciprocalLength.
+// Multiply multiplies the current ReciprocalLength by the given ReciprocalLength and returns the result.
+// The result is a new ReciprocalLength instance with the product of the values.
+//
+// Parameters:
+//    other: The ReciprocalLength to multiply with the current ReciprocalLength.
+//
+// Returns:
+//    *ReciprocalLength: A new ReciprocalLength instance representing the product of both ReciprocalLength.
 func (a *ReciprocalLength) Multiply(other *ReciprocalLength) *ReciprocalLength {
 	return &ReciprocalLength{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ReciprocalLength to the current ReciprocalLength.
+// Divide divides the current ReciprocalLength by the given ReciprocalLength and returns the result.
+// The result is a new ReciprocalLength instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ReciprocalLength to divide the current ReciprocalLength by.
+//
+// Returns:
+//    *ReciprocalLength: A new ReciprocalLength instance representing the quotient of both ReciprocalLength.
 func (a *ReciprocalLength) Divide(other *ReciprocalLength) *ReciprocalLength {
 	return &ReciprocalLength{value: a.value / other.BaseValue()}
 }

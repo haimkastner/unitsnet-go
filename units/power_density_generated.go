@@ -12,7 +12,7 @@ import (
 
 
 
-// PowerDensityUnits enumeration
+// PowerDensityUnits defines various units of PowerDensity.
 type PowerDensityUnits string
 
 const (
@@ -107,19 +107,24 @@ const (
         PowerDensityTerawattPerLiter PowerDensityUnits = "TerawattPerLiter"
 )
 
-// PowerDensityDto represents an PowerDensity
+// PowerDensityDto represents a PowerDensity measurement with a numerical value and its corresponding unit.
 type PowerDensityDto struct {
+    // Value is the numerical representation of the PowerDensity.
 	Value float64
+    // Unit specifies the unit of measurement for the PowerDensity, as defined in the PowerDensityUnits enumeration.
 	Unit  PowerDensityUnits
 }
 
-// PowerDensityDtoFactory struct to group related functions
+// PowerDensityDtoFactory groups methods for creating and serializing PowerDensityDto objects.
 type PowerDensityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a PowerDensityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf PowerDensityDtoFactory) FromJSON(data []byte) (*PowerDensityDto, error) {
 	a := PowerDensityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into PowerDensityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -127,6 +132,9 @@ func (udf PowerDensityDtoFactory) FromJSON(data []byte) (*PowerDensityDto, error
 	return &a, nil
 }
 
+// ToJSON serializes a PowerDensityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a PowerDensityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -138,10 +146,11 @@ func (a PowerDensityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// PowerDensity struct
+// PowerDensity represents a measurement in a of PowerDensity.
+//
+// The amount of power in a volume.
 type PowerDensity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     watts_per_cubic_meterLazy *float64 
@@ -190,247 +199,248 @@ type PowerDensity struct {
     terawatts_per_literLazy *float64 
 }
 
-// PowerDensityFactory struct to group related functions
+// PowerDensityFactory groups methods for creating PowerDensity instances.
 type PowerDensityFactory struct{}
 
+// CreatePowerDensity creates a new PowerDensity instance from the given value and unit.
 func (uf PowerDensityFactory) CreatePowerDensity(value float64, unit PowerDensityUnits) (*PowerDensity, error) {
 	return newPowerDensity(value, unit)
 }
 
+// FromDto converts a PowerDensityDto to a PowerDensity instance.
 func (uf PowerDensityFactory) FromDto(dto PowerDensityDto) (*PowerDensity, error) {
 	return newPowerDensity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a PowerDensity instance.
 func (uf PowerDensityFactory) FromDtoJSON(data []byte) (*PowerDensity, error) {
 	unitDto, err := PowerDensityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse PowerDensityDto from JSON: %w", err)
 	}
 	return PowerDensityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromWattPerCubicMeter creates a new PowerDensity instance from WattPerCubicMeter.
+// FromWattsPerCubicMeter creates a new PowerDensity instance from a value in WattsPerCubicMeter.
 func (uf PowerDensityFactory) FromWattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityWattPerCubicMeter)
 }
 
-// FromWattPerCubicInch creates a new PowerDensity instance from WattPerCubicInch.
+// FromWattsPerCubicInch creates a new PowerDensity instance from a value in WattsPerCubicInch.
 func (uf PowerDensityFactory) FromWattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityWattPerCubicInch)
 }
 
-// FromWattPerCubicFoot creates a new PowerDensity instance from WattPerCubicFoot.
+// FromWattsPerCubicFoot creates a new PowerDensity instance from a value in WattsPerCubicFoot.
 func (uf PowerDensityFactory) FromWattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityWattPerCubicFoot)
 }
 
-// FromWattPerLiter creates a new PowerDensity instance from WattPerLiter.
+// FromWattsPerLiter creates a new PowerDensity instance from a value in WattsPerLiter.
 func (uf PowerDensityFactory) FromWattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityWattPerLiter)
 }
 
-// FromPicowattPerCubicMeter creates a new PowerDensity instance from PicowattPerCubicMeter.
+// FromPicowattsPerCubicMeter creates a new PowerDensity instance from a value in PicowattsPerCubicMeter.
 func (uf PowerDensityFactory) FromPicowattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityPicowattPerCubicMeter)
 }
 
-// FromNanowattPerCubicMeter creates a new PowerDensity instance from NanowattPerCubicMeter.
+// FromNanowattsPerCubicMeter creates a new PowerDensity instance from a value in NanowattsPerCubicMeter.
 func (uf PowerDensityFactory) FromNanowattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityNanowattPerCubicMeter)
 }
 
-// FromMicrowattPerCubicMeter creates a new PowerDensity instance from MicrowattPerCubicMeter.
+// FromMicrowattsPerCubicMeter creates a new PowerDensity instance from a value in MicrowattsPerCubicMeter.
 func (uf PowerDensityFactory) FromMicrowattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMicrowattPerCubicMeter)
 }
 
-// FromMilliwattPerCubicMeter creates a new PowerDensity instance from MilliwattPerCubicMeter.
+// FromMilliwattsPerCubicMeter creates a new PowerDensity instance from a value in MilliwattsPerCubicMeter.
 func (uf PowerDensityFactory) FromMilliwattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMilliwattPerCubicMeter)
 }
 
-// FromDeciwattPerCubicMeter creates a new PowerDensity instance from DeciwattPerCubicMeter.
+// FromDeciwattsPerCubicMeter creates a new PowerDensity instance from a value in DeciwattsPerCubicMeter.
 func (uf PowerDensityFactory) FromDeciwattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityDeciwattPerCubicMeter)
 }
 
-// FromDecawattPerCubicMeter creates a new PowerDensity instance from DecawattPerCubicMeter.
+// FromDecawattsPerCubicMeter creates a new PowerDensity instance from a value in DecawattsPerCubicMeter.
 func (uf PowerDensityFactory) FromDecawattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityDecawattPerCubicMeter)
 }
 
-// FromKilowattPerCubicMeter creates a new PowerDensity instance from KilowattPerCubicMeter.
+// FromKilowattsPerCubicMeter creates a new PowerDensity instance from a value in KilowattsPerCubicMeter.
 func (uf PowerDensityFactory) FromKilowattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityKilowattPerCubicMeter)
 }
 
-// FromMegawattPerCubicMeter creates a new PowerDensity instance from MegawattPerCubicMeter.
+// FromMegawattsPerCubicMeter creates a new PowerDensity instance from a value in MegawattsPerCubicMeter.
 func (uf PowerDensityFactory) FromMegawattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMegawattPerCubicMeter)
 }
 
-// FromGigawattPerCubicMeter creates a new PowerDensity instance from GigawattPerCubicMeter.
+// FromGigawattsPerCubicMeter creates a new PowerDensity instance from a value in GigawattsPerCubicMeter.
 func (uf PowerDensityFactory) FromGigawattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityGigawattPerCubicMeter)
 }
 
-// FromTerawattPerCubicMeter creates a new PowerDensity instance from TerawattPerCubicMeter.
+// FromTerawattsPerCubicMeter creates a new PowerDensity instance from a value in TerawattsPerCubicMeter.
 func (uf PowerDensityFactory) FromTerawattsPerCubicMeter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityTerawattPerCubicMeter)
 }
 
-// FromPicowattPerCubicInch creates a new PowerDensity instance from PicowattPerCubicInch.
+// FromPicowattsPerCubicInch creates a new PowerDensity instance from a value in PicowattsPerCubicInch.
 func (uf PowerDensityFactory) FromPicowattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityPicowattPerCubicInch)
 }
 
-// FromNanowattPerCubicInch creates a new PowerDensity instance from NanowattPerCubicInch.
+// FromNanowattsPerCubicInch creates a new PowerDensity instance from a value in NanowattsPerCubicInch.
 func (uf PowerDensityFactory) FromNanowattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityNanowattPerCubicInch)
 }
 
-// FromMicrowattPerCubicInch creates a new PowerDensity instance from MicrowattPerCubicInch.
+// FromMicrowattsPerCubicInch creates a new PowerDensity instance from a value in MicrowattsPerCubicInch.
 func (uf PowerDensityFactory) FromMicrowattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMicrowattPerCubicInch)
 }
 
-// FromMilliwattPerCubicInch creates a new PowerDensity instance from MilliwattPerCubicInch.
+// FromMilliwattsPerCubicInch creates a new PowerDensity instance from a value in MilliwattsPerCubicInch.
 func (uf PowerDensityFactory) FromMilliwattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMilliwattPerCubicInch)
 }
 
-// FromDeciwattPerCubicInch creates a new PowerDensity instance from DeciwattPerCubicInch.
+// FromDeciwattsPerCubicInch creates a new PowerDensity instance from a value in DeciwattsPerCubicInch.
 func (uf PowerDensityFactory) FromDeciwattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityDeciwattPerCubicInch)
 }
 
-// FromDecawattPerCubicInch creates a new PowerDensity instance from DecawattPerCubicInch.
+// FromDecawattsPerCubicInch creates a new PowerDensity instance from a value in DecawattsPerCubicInch.
 func (uf PowerDensityFactory) FromDecawattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityDecawattPerCubicInch)
 }
 
-// FromKilowattPerCubicInch creates a new PowerDensity instance from KilowattPerCubicInch.
+// FromKilowattsPerCubicInch creates a new PowerDensity instance from a value in KilowattsPerCubicInch.
 func (uf PowerDensityFactory) FromKilowattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityKilowattPerCubicInch)
 }
 
-// FromMegawattPerCubicInch creates a new PowerDensity instance from MegawattPerCubicInch.
+// FromMegawattsPerCubicInch creates a new PowerDensity instance from a value in MegawattsPerCubicInch.
 func (uf PowerDensityFactory) FromMegawattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMegawattPerCubicInch)
 }
 
-// FromGigawattPerCubicInch creates a new PowerDensity instance from GigawattPerCubicInch.
+// FromGigawattsPerCubicInch creates a new PowerDensity instance from a value in GigawattsPerCubicInch.
 func (uf PowerDensityFactory) FromGigawattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityGigawattPerCubicInch)
 }
 
-// FromTerawattPerCubicInch creates a new PowerDensity instance from TerawattPerCubicInch.
+// FromTerawattsPerCubicInch creates a new PowerDensity instance from a value in TerawattsPerCubicInch.
 func (uf PowerDensityFactory) FromTerawattsPerCubicInch(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityTerawattPerCubicInch)
 }
 
-// FromPicowattPerCubicFoot creates a new PowerDensity instance from PicowattPerCubicFoot.
+// FromPicowattsPerCubicFoot creates a new PowerDensity instance from a value in PicowattsPerCubicFoot.
 func (uf PowerDensityFactory) FromPicowattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityPicowattPerCubicFoot)
 }
 
-// FromNanowattPerCubicFoot creates a new PowerDensity instance from NanowattPerCubicFoot.
+// FromNanowattsPerCubicFoot creates a new PowerDensity instance from a value in NanowattsPerCubicFoot.
 func (uf PowerDensityFactory) FromNanowattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityNanowattPerCubicFoot)
 }
 
-// FromMicrowattPerCubicFoot creates a new PowerDensity instance from MicrowattPerCubicFoot.
+// FromMicrowattsPerCubicFoot creates a new PowerDensity instance from a value in MicrowattsPerCubicFoot.
 func (uf PowerDensityFactory) FromMicrowattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMicrowattPerCubicFoot)
 }
 
-// FromMilliwattPerCubicFoot creates a new PowerDensity instance from MilliwattPerCubicFoot.
+// FromMilliwattsPerCubicFoot creates a new PowerDensity instance from a value in MilliwattsPerCubicFoot.
 func (uf PowerDensityFactory) FromMilliwattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMilliwattPerCubicFoot)
 }
 
-// FromDeciwattPerCubicFoot creates a new PowerDensity instance from DeciwattPerCubicFoot.
+// FromDeciwattsPerCubicFoot creates a new PowerDensity instance from a value in DeciwattsPerCubicFoot.
 func (uf PowerDensityFactory) FromDeciwattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityDeciwattPerCubicFoot)
 }
 
-// FromDecawattPerCubicFoot creates a new PowerDensity instance from DecawattPerCubicFoot.
+// FromDecawattsPerCubicFoot creates a new PowerDensity instance from a value in DecawattsPerCubicFoot.
 func (uf PowerDensityFactory) FromDecawattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityDecawattPerCubicFoot)
 }
 
-// FromKilowattPerCubicFoot creates a new PowerDensity instance from KilowattPerCubicFoot.
+// FromKilowattsPerCubicFoot creates a new PowerDensity instance from a value in KilowattsPerCubicFoot.
 func (uf PowerDensityFactory) FromKilowattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityKilowattPerCubicFoot)
 }
 
-// FromMegawattPerCubicFoot creates a new PowerDensity instance from MegawattPerCubicFoot.
+// FromMegawattsPerCubicFoot creates a new PowerDensity instance from a value in MegawattsPerCubicFoot.
 func (uf PowerDensityFactory) FromMegawattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMegawattPerCubicFoot)
 }
 
-// FromGigawattPerCubicFoot creates a new PowerDensity instance from GigawattPerCubicFoot.
+// FromGigawattsPerCubicFoot creates a new PowerDensity instance from a value in GigawattsPerCubicFoot.
 func (uf PowerDensityFactory) FromGigawattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityGigawattPerCubicFoot)
 }
 
-// FromTerawattPerCubicFoot creates a new PowerDensity instance from TerawattPerCubicFoot.
+// FromTerawattsPerCubicFoot creates a new PowerDensity instance from a value in TerawattsPerCubicFoot.
 func (uf PowerDensityFactory) FromTerawattsPerCubicFoot(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityTerawattPerCubicFoot)
 }
 
-// FromPicowattPerLiter creates a new PowerDensity instance from PicowattPerLiter.
+// FromPicowattsPerLiter creates a new PowerDensity instance from a value in PicowattsPerLiter.
 func (uf PowerDensityFactory) FromPicowattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityPicowattPerLiter)
 }
 
-// FromNanowattPerLiter creates a new PowerDensity instance from NanowattPerLiter.
+// FromNanowattsPerLiter creates a new PowerDensity instance from a value in NanowattsPerLiter.
 func (uf PowerDensityFactory) FromNanowattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityNanowattPerLiter)
 }
 
-// FromMicrowattPerLiter creates a new PowerDensity instance from MicrowattPerLiter.
+// FromMicrowattsPerLiter creates a new PowerDensity instance from a value in MicrowattsPerLiter.
 func (uf PowerDensityFactory) FromMicrowattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMicrowattPerLiter)
 }
 
-// FromMilliwattPerLiter creates a new PowerDensity instance from MilliwattPerLiter.
+// FromMilliwattsPerLiter creates a new PowerDensity instance from a value in MilliwattsPerLiter.
 func (uf PowerDensityFactory) FromMilliwattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMilliwattPerLiter)
 }
 
-// FromDeciwattPerLiter creates a new PowerDensity instance from DeciwattPerLiter.
+// FromDeciwattsPerLiter creates a new PowerDensity instance from a value in DeciwattsPerLiter.
 func (uf PowerDensityFactory) FromDeciwattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityDeciwattPerLiter)
 }
 
-// FromDecawattPerLiter creates a new PowerDensity instance from DecawattPerLiter.
+// FromDecawattsPerLiter creates a new PowerDensity instance from a value in DecawattsPerLiter.
 func (uf PowerDensityFactory) FromDecawattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityDecawattPerLiter)
 }
 
-// FromKilowattPerLiter creates a new PowerDensity instance from KilowattPerLiter.
+// FromKilowattsPerLiter creates a new PowerDensity instance from a value in KilowattsPerLiter.
 func (uf PowerDensityFactory) FromKilowattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityKilowattPerLiter)
 }
 
-// FromMegawattPerLiter creates a new PowerDensity instance from MegawattPerLiter.
+// FromMegawattsPerLiter creates a new PowerDensity instance from a value in MegawattsPerLiter.
 func (uf PowerDensityFactory) FromMegawattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityMegawattPerLiter)
 }
 
-// FromGigawattPerLiter creates a new PowerDensity instance from GigawattPerLiter.
+// FromGigawattsPerLiter creates a new PowerDensity instance from a value in GigawattsPerLiter.
 func (uf PowerDensityFactory) FromGigawattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityGigawattPerLiter)
 }
 
-// FromTerawattPerLiter creates a new PowerDensity instance from TerawattPerLiter.
+// FromTerawattsPerLiter creates a new PowerDensity instance from a value in TerawattsPerLiter.
 func (uf PowerDensityFactory) FromTerawattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityTerawattPerLiter)
 }
-
-
 
 
 // newPowerDensity creates a new PowerDensity.
@@ -443,13 +453,15 @@ func newPowerDensity(value float64, fromUnit PowerDensityUnits) (*PowerDensity, 
 	return a, nil
 }
 
-// BaseValue returns the base value of PowerDensity in WattPerCubicMeter.
+// BaseValue returns the base value of PowerDensity in WattPerCubicMeter unit (the base/default quantity).
 func (a *PowerDensity) BaseValue() float64 {
 	return a.value
 }
 
 
-// WattPerCubicMeter returns the value in WattPerCubicMeter.
+// WattsPerCubicMeter returns the PowerDensity value in WattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) WattsPerCubicMeter() float64 {
 	if a.watts_per_cubic_meterLazy != nil {
 		return *a.watts_per_cubic_meterLazy
@@ -459,7 +471,9 @@ func (a *PowerDensity) WattsPerCubicMeter() float64 {
 	return watts_per_cubic_meter
 }
 
-// WattPerCubicInch returns the value in WattPerCubicInch.
+// WattsPerCubicInch returns the PowerDensity value in WattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) WattsPerCubicInch() float64 {
 	if a.watts_per_cubic_inchLazy != nil {
 		return *a.watts_per_cubic_inchLazy
@@ -469,7 +483,9 @@ func (a *PowerDensity) WattsPerCubicInch() float64 {
 	return watts_per_cubic_inch
 }
 
-// WattPerCubicFoot returns the value in WattPerCubicFoot.
+// WattsPerCubicFoot returns the PowerDensity value in WattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) WattsPerCubicFoot() float64 {
 	if a.watts_per_cubic_footLazy != nil {
 		return *a.watts_per_cubic_footLazy
@@ -479,7 +495,9 @@ func (a *PowerDensity) WattsPerCubicFoot() float64 {
 	return watts_per_cubic_foot
 }
 
-// WattPerLiter returns the value in WattPerLiter.
+// WattsPerLiter returns the PowerDensity value in WattsPerLiter.
+//
+// 
 func (a *PowerDensity) WattsPerLiter() float64 {
 	if a.watts_per_literLazy != nil {
 		return *a.watts_per_literLazy
@@ -489,7 +507,9 @@ func (a *PowerDensity) WattsPerLiter() float64 {
 	return watts_per_liter
 }
 
-// PicowattPerCubicMeter returns the value in PicowattPerCubicMeter.
+// PicowattsPerCubicMeter returns the PowerDensity value in PicowattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) PicowattsPerCubicMeter() float64 {
 	if a.picowatts_per_cubic_meterLazy != nil {
 		return *a.picowatts_per_cubic_meterLazy
@@ -499,7 +519,9 @@ func (a *PowerDensity) PicowattsPerCubicMeter() float64 {
 	return picowatts_per_cubic_meter
 }
 
-// NanowattPerCubicMeter returns the value in NanowattPerCubicMeter.
+// NanowattsPerCubicMeter returns the PowerDensity value in NanowattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) NanowattsPerCubicMeter() float64 {
 	if a.nanowatts_per_cubic_meterLazy != nil {
 		return *a.nanowatts_per_cubic_meterLazy
@@ -509,7 +531,9 @@ func (a *PowerDensity) NanowattsPerCubicMeter() float64 {
 	return nanowatts_per_cubic_meter
 }
 
-// MicrowattPerCubicMeter returns the value in MicrowattPerCubicMeter.
+// MicrowattsPerCubicMeter returns the PowerDensity value in MicrowattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) MicrowattsPerCubicMeter() float64 {
 	if a.microwatts_per_cubic_meterLazy != nil {
 		return *a.microwatts_per_cubic_meterLazy
@@ -519,7 +543,9 @@ func (a *PowerDensity) MicrowattsPerCubicMeter() float64 {
 	return microwatts_per_cubic_meter
 }
 
-// MilliwattPerCubicMeter returns the value in MilliwattPerCubicMeter.
+// MilliwattsPerCubicMeter returns the PowerDensity value in MilliwattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) MilliwattsPerCubicMeter() float64 {
 	if a.milliwatts_per_cubic_meterLazy != nil {
 		return *a.milliwatts_per_cubic_meterLazy
@@ -529,7 +555,9 @@ func (a *PowerDensity) MilliwattsPerCubicMeter() float64 {
 	return milliwatts_per_cubic_meter
 }
 
-// DeciwattPerCubicMeter returns the value in DeciwattPerCubicMeter.
+// DeciwattsPerCubicMeter returns the PowerDensity value in DeciwattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) DeciwattsPerCubicMeter() float64 {
 	if a.deciwatts_per_cubic_meterLazy != nil {
 		return *a.deciwatts_per_cubic_meterLazy
@@ -539,7 +567,9 @@ func (a *PowerDensity) DeciwattsPerCubicMeter() float64 {
 	return deciwatts_per_cubic_meter
 }
 
-// DecawattPerCubicMeter returns the value in DecawattPerCubicMeter.
+// DecawattsPerCubicMeter returns the PowerDensity value in DecawattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) DecawattsPerCubicMeter() float64 {
 	if a.decawatts_per_cubic_meterLazy != nil {
 		return *a.decawatts_per_cubic_meterLazy
@@ -549,7 +579,9 @@ func (a *PowerDensity) DecawattsPerCubicMeter() float64 {
 	return decawatts_per_cubic_meter
 }
 
-// KilowattPerCubicMeter returns the value in KilowattPerCubicMeter.
+// KilowattsPerCubicMeter returns the PowerDensity value in KilowattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) KilowattsPerCubicMeter() float64 {
 	if a.kilowatts_per_cubic_meterLazy != nil {
 		return *a.kilowatts_per_cubic_meterLazy
@@ -559,7 +591,9 @@ func (a *PowerDensity) KilowattsPerCubicMeter() float64 {
 	return kilowatts_per_cubic_meter
 }
 
-// MegawattPerCubicMeter returns the value in MegawattPerCubicMeter.
+// MegawattsPerCubicMeter returns the PowerDensity value in MegawattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) MegawattsPerCubicMeter() float64 {
 	if a.megawatts_per_cubic_meterLazy != nil {
 		return *a.megawatts_per_cubic_meterLazy
@@ -569,7 +603,9 @@ func (a *PowerDensity) MegawattsPerCubicMeter() float64 {
 	return megawatts_per_cubic_meter
 }
 
-// GigawattPerCubicMeter returns the value in GigawattPerCubicMeter.
+// GigawattsPerCubicMeter returns the PowerDensity value in GigawattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) GigawattsPerCubicMeter() float64 {
 	if a.gigawatts_per_cubic_meterLazy != nil {
 		return *a.gigawatts_per_cubic_meterLazy
@@ -579,7 +615,9 @@ func (a *PowerDensity) GigawattsPerCubicMeter() float64 {
 	return gigawatts_per_cubic_meter
 }
 
-// TerawattPerCubicMeter returns the value in TerawattPerCubicMeter.
+// TerawattsPerCubicMeter returns the PowerDensity value in TerawattsPerCubicMeter.
+//
+// 
 func (a *PowerDensity) TerawattsPerCubicMeter() float64 {
 	if a.terawatts_per_cubic_meterLazy != nil {
 		return *a.terawatts_per_cubic_meterLazy
@@ -589,7 +627,9 @@ func (a *PowerDensity) TerawattsPerCubicMeter() float64 {
 	return terawatts_per_cubic_meter
 }
 
-// PicowattPerCubicInch returns the value in PicowattPerCubicInch.
+// PicowattsPerCubicInch returns the PowerDensity value in PicowattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) PicowattsPerCubicInch() float64 {
 	if a.picowatts_per_cubic_inchLazy != nil {
 		return *a.picowatts_per_cubic_inchLazy
@@ -599,7 +639,9 @@ func (a *PowerDensity) PicowattsPerCubicInch() float64 {
 	return picowatts_per_cubic_inch
 }
 
-// NanowattPerCubicInch returns the value in NanowattPerCubicInch.
+// NanowattsPerCubicInch returns the PowerDensity value in NanowattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) NanowattsPerCubicInch() float64 {
 	if a.nanowatts_per_cubic_inchLazy != nil {
 		return *a.nanowatts_per_cubic_inchLazy
@@ -609,7 +651,9 @@ func (a *PowerDensity) NanowattsPerCubicInch() float64 {
 	return nanowatts_per_cubic_inch
 }
 
-// MicrowattPerCubicInch returns the value in MicrowattPerCubicInch.
+// MicrowattsPerCubicInch returns the PowerDensity value in MicrowattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) MicrowattsPerCubicInch() float64 {
 	if a.microwatts_per_cubic_inchLazy != nil {
 		return *a.microwatts_per_cubic_inchLazy
@@ -619,7 +663,9 @@ func (a *PowerDensity) MicrowattsPerCubicInch() float64 {
 	return microwatts_per_cubic_inch
 }
 
-// MilliwattPerCubicInch returns the value in MilliwattPerCubicInch.
+// MilliwattsPerCubicInch returns the PowerDensity value in MilliwattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) MilliwattsPerCubicInch() float64 {
 	if a.milliwatts_per_cubic_inchLazy != nil {
 		return *a.milliwatts_per_cubic_inchLazy
@@ -629,7 +675,9 @@ func (a *PowerDensity) MilliwattsPerCubicInch() float64 {
 	return milliwatts_per_cubic_inch
 }
 
-// DeciwattPerCubicInch returns the value in DeciwattPerCubicInch.
+// DeciwattsPerCubicInch returns the PowerDensity value in DeciwattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) DeciwattsPerCubicInch() float64 {
 	if a.deciwatts_per_cubic_inchLazy != nil {
 		return *a.deciwatts_per_cubic_inchLazy
@@ -639,7 +687,9 @@ func (a *PowerDensity) DeciwattsPerCubicInch() float64 {
 	return deciwatts_per_cubic_inch
 }
 
-// DecawattPerCubicInch returns the value in DecawattPerCubicInch.
+// DecawattsPerCubicInch returns the PowerDensity value in DecawattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) DecawattsPerCubicInch() float64 {
 	if a.decawatts_per_cubic_inchLazy != nil {
 		return *a.decawatts_per_cubic_inchLazy
@@ -649,7 +699,9 @@ func (a *PowerDensity) DecawattsPerCubicInch() float64 {
 	return decawatts_per_cubic_inch
 }
 
-// KilowattPerCubicInch returns the value in KilowattPerCubicInch.
+// KilowattsPerCubicInch returns the PowerDensity value in KilowattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) KilowattsPerCubicInch() float64 {
 	if a.kilowatts_per_cubic_inchLazy != nil {
 		return *a.kilowatts_per_cubic_inchLazy
@@ -659,7 +711,9 @@ func (a *PowerDensity) KilowattsPerCubicInch() float64 {
 	return kilowatts_per_cubic_inch
 }
 
-// MegawattPerCubicInch returns the value in MegawattPerCubicInch.
+// MegawattsPerCubicInch returns the PowerDensity value in MegawattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) MegawattsPerCubicInch() float64 {
 	if a.megawatts_per_cubic_inchLazy != nil {
 		return *a.megawatts_per_cubic_inchLazy
@@ -669,7 +723,9 @@ func (a *PowerDensity) MegawattsPerCubicInch() float64 {
 	return megawatts_per_cubic_inch
 }
 
-// GigawattPerCubicInch returns the value in GigawattPerCubicInch.
+// GigawattsPerCubicInch returns the PowerDensity value in GigawattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) GigawattsPerCubicInch() float64 {
 	if a.gigawatts_per_cubic_inchLazy != nil {
 		return *a.gigawatts_per_cubic_inchLazy
@@ -679,7 +735,9 @@ func (a *PowerDensity) GigawattsPerCubicInch() float64 {
 	return gigawatts_per_cubic_inch
 }
 
-// TerawattPerCubicInch returns the value in TerawattPerCubicInch.
+// TerawattsPerCubicInch returns the PowerDensity value in TerawattsPerCubicInch.
+//
+// 
 func (a *PowerDensity) TerawattsPerCubicInch() float64 {
 	if a.terawatts_per_cubic_inchLazy != nil {
 		return *a.terawatts_per_cubic_inchLazy
@@ -689,7 +747,9 @@ func (a *PowerDensity) TerawattsPerCubicInch() float64 {
 	return terawatts_per_cubic_inch
 }
 
-// PicowattPerCubicFoot returns the value in PicowattPerCubicFoot.
+// PicowattsPerCubicFoot returns the PowerDensity value in PicowattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) PicowattsPerCubicFoot() float64 {
 	if a.picowatts_per_cubic_footLazy != nil {
 		return *a.picowatts_per_cubic_footLazy
@@ -699,7 +759,9 @@ func (a *PowerDensity) PicowattsPerCubicFoot() float64 {
 	return picowatts_per_cubic_foot
 }
 
-// NanowattPerCubicFoot returns the value in NanowattPerCubicFoot.
+// NanowattsPerCubicFoot returns the PowerDensity value in NanowattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) NanowattsPerCubicFoot() float64 {
 	if a.nanowatts_per_cubic_footLazy != nil {
 		return *a.nanowatts_per_cubic_footLazy
@@ -709,7 +771,9 @@ func (a *PowerDensity) NanowattsPerCubicFoot() float64 {
 	return nanowatts_per_cubic_foot
 }
 
-// MicrowattPerCubicFoot returns the value in MicrowattPerCubicFoot.
+// MicrowattsPerCubicFoot returns the PowerDensity value in MicrowattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) MicrowattsPerCubicFoot() float64 {
 	if a.microwatts_per_cubic_footLazy != nil {
 		return *a.microwatts_per_cubic_footLazy
@@ -719,7 +783,9 @@ func (a *PowerDensity) MicrowattsPerCubicFoot() float64 {
 	return microwatts_per_cubic_foot
 }
 
-// MilliwattPerCubicFoot returns the value in MilliwattPerCubicFoot.
+// MilliwattsPerCubicFoot returns the PowerDensity value in MilliwattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) MilliwattsPerCubicFoot() float64 {
 	if a.milliwatts_per_cubic_footLazy != nil {
 		return *a.milliwatts_per_cubic_footLazy
@@ -729,7 +795,9 @@ func (a *PowerDensity) MilliwattsPerCubicFoot() float64 {
 	return milliwatts_per_cubic_foot
 }
 
-// DeciwattPerCubicFoot returns the value in DeciwattPerCubicFoot.
+// DeciwattsPerCubicFoot returns the PowerDensity value in DeciwattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) DeciwattsPerCubicFoot() float64 {
 	if a.deciwatts_per_cubic_footLazy != nil {
 		return *a.deciwatts_per_cubic_footLazy
@@ -739,7 +807,9 @@ func (a *PowerDensity) DeciwattsPerCubicFoot() float64 {
 	return deciwatts_per_cubic_foot
 }
 
-// DecawattPerCubicFoot returns the value in DecawattPerCubicFoot.
+// DecawattsPerCubicFoot returns the PowerDensity value in DecawattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) DecawattsPerCubicFoot() float64 {
 	if a.decawatts_per_cubic_footLazy != nil {
 		return *a.decawatts_per_cubic_footLazy
@@ -749,7 +819,9 @@ func (a *PowerDensity) DecawattsPerCubicFoot() float64 {
 	return decawatts_per_cubic_foot
 }
 
-// KilowattPerCubicFoot returns the value in KilowattPerCubicFoot.
+// KilowattsPerCubicFoot returns the PowerDensity value in KilowattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) KilowattsPerCubicFoot() float64 {
 	if a.kilowatts_per_cubic_footLazy != nil {
 		return *a.kilowatts_per_cubic_footLazy
@@ -759,7 +831,9 @@ func (a *PowerDensity) KilowattsPerCubicFoot() float64 {
 	return kilowatts_per_cubic_foot
 }
 
-// MegawattPerCubicFoot returns the value in MegawattPerCubicFoot.
+// MegawattsPerCubicFoot returns the PowerDensity value in MegawattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) MegawattsPerCubicFoot() float64 {
 	if a.megawatts_per_cubic_footLazy != nil {
 		return *a.megawatts_per_cubic_footLazy
@@ -769,7 +843,9 @@ func (a *PowerDensity) MegawattsPerCubicFoot() float64 {
 	return megawatts_per_cubic_foot
 }
 
-// GigawattPerCubicFoot returns the value in GigawattPerCubicFoot.
+// GigawattsPerCubicFoot returns the PowerDensity value in GigawattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) GigawattsPerCubicFoot() float64 {
 	if a.gigawatts_per_cubic_footLazy != nil {
 		return *a.gigawatts_per_cubic_footLazy
@@ -779,7 +855,9 @@ func (a *PowerDensity) GigawattsPerCubicFoot() float64 {
 	return gigawatts_per_cubic_foot
 }
 
-// TerawattPerCubicFoot returns the value in TerawattPerCubicFoot.
+// TerawattsPerCubicFoot returns the PowerDensity value in TerawattsPerCubicFoot.
+//
+// 
 func (a *PowerDensity) TerawattsPerCubicFoot() float64 {
 	if a.terawatts_per_cubic_footLazy != nil {
 		return *a.terawatts_per_cubic_footLazy
@@ -789,7 +867,9 @@ func (a *PowerDensity) TerawattsPerCubicFoot() float64 {
 	return terawatts_per_cubic_foot
 }
 
-// PicowattPerLiter returns the value in PicowattPerLiter.
+// PicowattsPerLiter returns the PowerDensity value in PicowattsPerLiter.
+//
+// 
 func (a *PowerDensity) PicowattsPerLiter() float64 {
 	if a.picowatts_per_literLazy != nil {
 		return *a.picowatts_per_literLazy
@@ -799,7 +879,9 @@ func (a *PowerDensity) PicowattsPerLiter() float64 {
 	return picowatts_per_liter
 }
 
-// NanowattPerLiter returns the value in NanowattPerLiter.
+// NanowattsPerLiter returns the PowerDensity value in NanowattsPerLiter.
+//
+// 
 func (a *PowerDensity) NanowattsPerLiter() float64 {
 	if a.nanowatts_per_literLazy != nil {
 		return *a.nanowatts_per_literLazy
@@ -809,7 +891,9 @@ func (a *PowerDensity) NanowattsPerLiter() float64 {
 	return nanowatts_per_liter
 }
 
-// MicrowattPerLiter returns the value in MicrowattPerLiter.
+// MicrowattsPerLiter returns the PowerDensity value in MicrowattsPerLiter.
+//
+// 
 func (a *PowerDensity) MicrowattsPerLiter() float64 {
 	if a.microwatts_per_literLazy != nil {
 		return *a.microwatts_per_literLazy
@@ -819,7 +903,9 @@ func (a *PowerDensity) MicrowattsPerLiter() float64 {
 	return microwatts_per_liter
 }
 
-// MilliwattPerLiter returns the value in MilliwattPerLiter.
+// MilliwattsPerLiter returns the PowerDensity value in MilliwattsPerLiter.
+//
+// 
 func (a *PowerDensity) MilliwattsPerLiter() float64 {
 	if a.milliwatts_per_literLazy != nil {
 		return *a.milliwatts_per_literLazy
@@ -829,7 +915,9 @@ func (a *PowerDensity) MilliwattsPerLiter() float64 {
 	return milliwatts_per_liter
 }
 
-// DeciwattPerLiter returns the value in DeciwattPerLiter.
+// DeciwattsPerLiter returns the PowerDensity value in DeciwattsPerLiter.
+//
+// 
 func (a *PowerDensity) DeciwattsPerLiter() float64 {
 	if a.deciwatts_per_literLazy != nil {
 		return *a.deciwatts_per_literLazy
@@ -839,7 +927,9 @@ func (a *PowerDensity) DeciwattsPerLiter() float64 {
 	return deciwatts_per_liter
 }
 
-// DecawattPerLiter returns the value in DecawattPerLiter.
+// DecawattsPerLiter returns the PowerDensity value in DecawattsPerLiter.
+//
+// 
 func (a *PowerDensity) DecawattsPerLiter() float64 {
 	if a.decawatts_per_literLazy != nil {
 		return *a.decawatts_per_literLazy
@@ -849,7 +939,9 @@ func (a *PowerDensity) DecawattsPerLiter() float64 {
 	return decawatts_per_liter
 }
 
-// KilowattPerLiter returns the value in KilowattPerLiter.
+// KilowattsPerLiter returns the PowerDensity value in KilowattsPerLiter.
+//
+// 
 func (a *PowerDensity) KilowattsPerLiter() float64 {
 	if a.kilowatts_per_literLazy != nil {
 		return *a.kilowatts_per_literLazy
@@ -859,7 +951,9 @@ func (a *PowerDensity) KilowattsPerLiter() float64 {
 	return kilowatts_per_liter
 }
 
-// MegawattPerLiter returns the value in MegawattPerLiter.
+// MegawattsPerLiter returns the PowerDensity value in MegawattsPerLiter.
+//
+// 
 func (a *PowerDensity) MegawattsPerLiter() float64 {
 	if a.megawatts_per_literLazy != nil {
 		return *a.megawatts_per_literLazy
@@ -869,7 +963,9 @@ func (a *PowerDensity) MegawattsPerLiter() float64 {
 	return megawatts_per_liter
 }
 
-// GigawattPerLiter returns the value in GigawattPerLiter.
+// GigawattsPerLiter returns the PowerDensity value in GigawattsPerLiter.
+//
+// 
 func (a *PowerDensity) GigawattsPerLiter() float64 {
 	if a.gigawatts_per_literLazy != nil {
 		return *a.gigawatts_per_literLazy
@@ -879,7 +975,9 @@ func (a *PowerDensity) GigawattsPerLiter() float64 {
 	return gigawatts_per_liter
 }
 
-// TerawattPerLiter returns the value in TerawattPerLiter.
+// TerawattsPerLiter returns the PowerDensity value in TerawattsPerLiter.
+//
+// 
 func (a *PowerDensity) TerawattsPerLiter() float64 {
 	if a.terawatts_per_literLazy != nil {
 		return *a.terawatts_per_literLazy
@@ -890,7 +988,9 @@ func (a *PowerDensity) TerawattsPerLiter() float64 {
 }
 
 
-// ToDto creates an PowerDensityDto representation.
+// ToDto creates a PowerDensityDto representation from the PowerDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerCubicMeter by default.
 func (a *PowerDensity) ToDto(holdInUnit *PowerDensityUnits) PowerDensityDto {
 	if holdInUnit == nil {
 		defaultUnit := PowerDensityWattPerCubicMeter // Default value
@@ -903,12 +1003,19 @@ func (a *PowerDensity) ToDto(holdInUnit *PowerDensityUnits) PowerDensityDto {
 	}
 }
 
-// ToDtoJSON creates an PowerDensityDto representation.
+// ToDtoJSON creates a JSON representation of the PowerDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerCubicMeter by default.
 func (a *PowerDensity) ToDtoJSON(holdInUnit *PowerDensityUnits) ([]byte, error) {
+	// Convert to PowerDensityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts PowerDensity to a specific unit value.
+// Convert converts a PowerDensity to a specific unit value.
+// The function uses the provided unit type (PowerDensityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *PowerDensity) Convert(toUnit PowerDensityUnits) float64 {
 	switch toUnit { 
     case PowerDensityWattPerCubicMeter:
@@ -1000,7 +1107,7 @@ func (a *PowerDensity) Convert(toUnit PowerDensityUnits) float64 {
     case PowerDensityTerawattPerLiter:
 		return a.TerawattsPerLiter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -1195,13 +1302,22 @@ func (a *PowerDensity) convertToBase(value float64, fromUnit PowerDensityUnits) 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the PowerDensity in the default unit (WattPerCubicMeter),
+// formatted to two decimal places.
 func (a PowerDensity) String() string {
 	return a.ToString(PowerDensityWattPerCubicMeter, 2)
 }
 
-// ToString formats the PowerDensity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the PowerDensity value as a string with the specified unit and fractional digits.
+// It converts the PowerDensity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the PowerDensity value will be converted (e.g., WattPerCubicMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the PowerDensity with the unit abbreviation.
 func (a *PowerDensity) ToString(unit PowerDensityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1307,12 +1423,26 @@ func (a *PowerDensity) getUnitAbbreviation(unit PowerDensityUnits) string {
 	}
 }
 
-// Check if the given PowerDensity are equals to the current PowerDensity
+// Equals checks if the given PowerDensity is equal to the current PowerDensity.
+//
+// Parameters:
+//    other: The PowerDensity to compare against.
+//
+// Returns:
+//    bool: Returns true if both PowerDensity are equal, false otherwise.
 func (a *PowerDensity) Equals(other *PowerDensity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given PowerDensity are equals to the current PowerDensity
+// CompareTo compares the current PowerDensity with another PowerDensity.
+// It returns -1 if the current PowerDensity is less than the other PowerDensity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The PowerDensity to compare against.
+//
+// Returns:
+//    int: -1 if the current PowerDensity is less, 1 if greater, and 0 if equal.
 func (a *PowerDensity) CompareTo(other *PowerDensity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1325,22 +1455,50 @@ func (a *PowerDensity) CompareTo(other *PowerDensity) int {
 	return 0
 }
 
-// Add the given PowerDensity to the current PowerDensity.
+// Add adds the given PowerDensity to the current PowerDensity and returns the result.
+// The result is a new PowerDensity instance with the sum of the values.
+//
+// Parameters:
+//    other: The PowerDensity to add to the current PowerDensity.
+//
+// Returns:
+//    *PowerDensity: A new PowerDensity instance representing the sum of both PowerDensity.
 func (a *PowerDensity) Add(other *PowerDensity) *PowerDensity {
 	return &PowerDensity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given PowerDensity to the current PowerDensity.
+// Subtract subtracts the given PowerDensity from the current PowerDensity and returns the result.
+// The result is a new PowerDensity instance with the difference of the values.
+//
+// Parameters:
+//    other: The PowerDensity to subtract from the current PowerDensity.
+//
+// Returns:
+//    *PowerDensity: A new PowerDensity instance representing the difference of both PowerDensity.
 func (a *PowerDensity) Subtract(other *PowerDensity) *PowerDensity {
 	return &PowerDensity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given PowerDensity to the current PowerDensity.
+// Multiply multiplies the current PowerDensity by the given PowerDensity and returns the result.
+// The result is a new PowerDensity instance with the product of the values.
+//
+// Parameters:
+//    other: The PowerDensity to multiply with the current PowerDensity.
+//
+// Returns:
+//    *PowerDensity: A new PowerDensity instance representing the product of both PowerDensity.
 func (a *PowerDensity) Multiply(other *PowerDensity) *PowerDensity {
 	return &PowerDensity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given PowerDensity to the current PowerDensity.
+// Divide divides the current PowerDensity by the given PowerDensity and returns the result.
+// The result is a new PowerDensity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The PowerDensity to divide the current PowerDensity by.
+//
+// Returns:
+//    *PowerDensity: A new PowerDensity instance representing the quotient of both PowerDensity.
 func (a *PowerDensity) Divide(other *PowerDensity) *PowerDensity {
 	return &PowerDensity{value: a.value / other.BaseValue()}
 }

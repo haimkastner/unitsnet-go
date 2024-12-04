@@ -12,7 +12,7 @@ import (
 
 
 
-// TemperatureChangeRateUnits enumeration
+// TemperatureChangeRateUnits defines various units of TemperatureChangeRate.
 type TemperatureChangeRateUnits string
 
 const (
@@ -41,19 +41,24 @@ const (
         TemperatureChangeRateKilodegreeCelsiusPerSecond TemperatureChangeRateUnits = "KilodegreeCelsiusPerSecond"
 )
 
-// TemperatureChangeRateDto represents an TemperatureChangeRate
+// TemperatureChangeRateDto represents a TemperatureChangeRate measurement with a numerical value and its corresponding unit.
 type TemperatureChangeRateDto struct {
+    // Value is the numerical representation of the TemperatureChangeRate.
 	Value float64
+    // Unit specifies the unit of measurement for the TemperatureChangeRate, as defined in the TemperatureChangeRateUnits enumeration.
 	Unit  TemperatureChangeRateUnits
 }
 
-// TemperatureChangeRateDtoFactory struct to group related functions
+// TemperatureChangeRateDtoFactory groups methods for creating and serializing TemperatureChangeRateDto objects.
 type TemperatureChangeRateDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a TemperatureChangeRateDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf TemperatureChangeRateDtoFactory) FromJSON(data []byte) (*TemperatureChangeRateDto, error) {
 	a := TemperatureChangeRateDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into TemperatureChangeRateDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -61,6 +66,9 @@ func (udf TemperatureChangeRateDtoFactory) FromJSON(data []byte) (*TemperatureCh
 	return &a, nil
 }
 
+// ToJSON serializes a TemperatureChangeRateDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a TemperatureChangeRateDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -72,10 +80,11 @@ func (a TemperatureChangeRateDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// TemperatureChangeRate struct
+// TemperatureChangeRate represents a measurement in a of TemperatureChangeRate.
+//
+// Temperature change rate is the ratio of the temperature change to the time during which the change occurred (value of temperature changes per unit time).
 type TemperatureChangeRate struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     degrees_celsius_per_secondLazy *float64 
@@ -91,82 +100,83 @@ type TemperatureChangeRate struct {
     kilodegrees_celsius_per_secondLazy *float64 
 }
 
-// TemperatureChangeRateFactory struct to group related functions
+// TemperatureChangeRateFactory groups methods for creating TemperatureChangeRate instances.
 type TemperatureChangeRateFactory struct{}
 
+// CreateTemperatureChangeRate creates a new TemperatureChangeRate instance from the given value and unit.
 func (uf TemperatureChangeRateFactory) CreateTemperatureChangeRate(value float64, unit TemperatureChangeRateUnits) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, unit)
 }
 
+// FromDto converts a TemperatureChangeRateDto to a TemperatureChangeRate instance.
 func (uf TemperatureChangeRateFactory) FromDto(dto TemperatureChangeRateDto) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a TemperatureChangeRate instance.
 func (uf TemperatureChangeRateFactory) FromDtoJSON(data []byte) (*TemperatureChangeRate, error) {
 	unitDto, err := TemperatureChangeRateDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse TemperatureChangeRateDto from JSON: %w", err)
 	}
 	return TemperatureChangeRateFactory{}.FromDto(*unitDto)
 }
 
 
-// FromDegreeCelsiusPerSecond creates a new TemperatureChangeRate instance from DegreeCelsiusPerSecond.
+// FromDegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in DegreesCelsiusPerSecond.
 func (uf TemperatureChangeRateFactory) FromDegreesCelsiusPerSecond(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeCelsiusPerSecond)
 }
 
-// FromDegreeCelsiusPerMinute creates a new TemperatureChangeRate instance from DegreeCelsiusPerMinute.
+// FromDegreesCelsiusPerMinute creates a new TemperatureChangeRate instance from a value in DegreesCelsiusPerMinute.
 func (uf TemperatureChangeRateFactory) FromDegreesCelsiusPerMinute(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeCelsiusPerMinute)
 }
 
-// FromDegreeKelvinPerMinute creates a new TemperatureChangeRate instance from DegreeKelvinPerMinute.
+// FromDegreesKelvinPerMinute creates a new TemperatureChangeRate instance from a value in DegreesKelvinPerMinute.
 func (uf TemperatureChangeRateFactory) FromDegreesKelvinPerMinute(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeKelvinPerMinute)
 }
 
-// FromNanodegreeCelsiusPerSecond creates a new TemperatureChangeRate instance from NanodegreeCelsiusPerSecond.
+// FromNanodegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in NanodegreesCelsiusPerSecond.
 func (uf TemperatureChangeRateFactory) FromNanodegreesCelsiusPerSecond(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateNanodegreeCelsiusPerSecond)
 }
 
-// FromMicrodegreeCelsiusPerSecond creates a new TemperatureChangeRate instance from MicrodegreeCelsiusPerSecond.
+// FromMicrodegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in MicrodegreesCelsiusPerSecond.
 func (uf TemperatureChangeRateFactory) FromMicrodegreesCelsiusPerSecond(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateMicrodegreeCelsiusPerSecond)
 }
 
-// FromMillidegreeCelsiusPerSecond creates a new TemperatureChangeRate instance from MillidegreeCelsiusPerSecond.
+// FromMillidegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in MillidegreesCelsiusPerSecond.
 func (uf TemperatureChangeRateFactory) FromMillidegreesCelsiusPerSecond(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateMillidegreeCelsiusPerSecond)
 }
 
-// FromCentidegreeCelsiusPerSecond creates a new TemperatureChangeRate instance from CentidegreeCelsiusPerSecond.
+// FromCentidegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in CentidegreesCelsiusPerSecond.
 func (uf TemperatureChangeRateFactory) FromCentidegreesCelsiusPerSecond(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateCentidegreeCelsiusPerSecond)
 }
 
-// FromDecidegreeCelsiusPerSecond creates a new TemperatureChangeRate instance from DecidegreeCelsiusPerSecond.
+// FromDecidegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in DecidegreesCelsiusPerSecond.
 func (uf TemperatureChangeRateFactory) FromDecidegreesCelsiusPerSecond(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateDecidegreeCelsiusPerSecond)
 }
 
-// FromDecadegreeCelsiusPerSecond creates a new TemperatureChangeRate instance from DecadegreeCelsiusPerSecond.
+// FromDecadegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in DecadegreesCelsiusPerSecond.
 func (uf TemperatureChangeRateFactory) FromDecadegreesCelsiusPerSecond(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateDecadegreeCelsiusPerSecond)
 }
 
-// FromHectodegreeCelsiusPerSecond creates a new TemperatureChangeRate instance from HectodegreeCelsiusPerSecond.
+// FromHectodegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in HectodegreesCelsiusPerSecond.
 func (uf TemperatureChangeRateFactory) FromHectodegreesCelsiusPerSecond(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateHectodegreeCelsiusPerSecond)
 }
 
-// FromKilodegreeCelsiusPerSecond creates a new TemperatureChangeRate instance from KilodegreeCelsiusPerSecond.
+// FromKilodegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in KilodegreesCelsiusPerSecond.
 func (uf TemperatureChangeRateFactory) FromKilodegreesCelsiusPerSecond(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateKilodegreeCelsiusPerSecond)
 }
-
-
 
 
 // newTemperatureChangeRate creates a new TemperatureChangeRate.
@@ -179,13 +189,15 @@ func newTemperatureChangeRate(value float64, fromUnit TemperatureChangeRateUnits
 	return a, nil
 }
 
-// BaseValue returns the base value of TemperatureChangeRate in DegreeCelsiusPerSecond.
+// BaseValue returns the base value of TemperatureChangeRate in DegreeCelsiusPerSecond unit (the base/default quantity).
 func (a *TemperatureChangeRate) BaseValue() float64 {
 	return a.value
 }
 
 
-// DegreeCelsiusPerSecond returns the value in DegreeCelsiusPerSecond.
+// DegreesCelsiusPerSecond returns the TemperatureChangeRate value in DegreesCelsiusPerSecond.
+//
+// 
 func (a *TemperatureChangeRate) DegreesCelsiusPerSecond() float64 {
 	if a.degrees_celsius_per_secondLazy != nil {
 		return *a.degrees_celsius_per_secondLazy
@@ -195,7 +207,9 @@ func (a *TemperatureChangeRate) DegreesCelsiusPerSecond() float64 {
 	return degrees_celsius_per_second
 }
 
-// DegreeCelsiusPerMinute returns the value in DegreeCelsiusPerMinute.
+// DegreesCelsiusPerMinute returns the TemperatureChangeRate value in DegreesCelsiusPerMinute.
+//
+// 
 func (a *TemperatureChangeRate) DegreesCelsiusPerMinute() float64 {
 	if a.degrees_celsius_per_minuteLazy != nil {
 		return *a.degrees_celsius_per_minuteLazy
@@ -205,7 +219,9 @@ func (a *TemperatureChangeRate) DegreesCelsiusPerMinute() float64 {
 	return degrees_celsius_per_minute
 }
 
-// DegreeKelvinPerMinute returns the value in DegreeKelvinPerMinute.
+// DegreesKelvinPerMinute returns the TemperatureChangeRate value in DegreesKelvinPerMinute.
+//
+// 
 func (a *TemperatureChangeRate) DegreesKelvinPerMinute() float64 {
 	if a.degrees_kelvin_per_minuteLazy != nil {
 		return *a.degrees_kelvin_per_minuteLazy
@@ -215,7 +231,9 @@ func (a *TemperatureChangeRate) DegreesKelvinPerMinute() float64 {
 	return degrees_kelvin_per_minute
 }
 
-// NanodegreeCelsiusPerSecond returns the value in NanodegreeCelsiusPerSecond.
+// NanodegreesCelsiusPerSecond returns the TemperatureChangeRate value in NanodegreesCelsiusPerSecond.
+//
+// 
 func (a *TemperatureChangeRate) NanodegreesCelsiusPerSecond() float64 {
 	if a.nanodegrees_celsius_per_secondLazy != nil {
 		return *a.nanodegrees_celsius_per_secondLazy
@@ -225,7 +243,9 @@ func (a *TemperatureChangeRate) NanodegreesCelsiusPerSecond() float64 {
 	return nanodegrees_celsius_per_second
 }
 
-// MicrodegreeCelsiusPerSecond returns the value in MicrodegreeCelsiusPerSecond.
+// MicrodegreesCelsiusPerSecond returns the TemperatureChangeRate value in MicrodegreesCelsiusPerSecond.
+//
+// 
 func (a *TemperatureChangeRate) MicrodegreesCelsiusPerSecond() float64 {
 	if a.microdegrees_celsius_per_secondLazy != nil {
 		return *a.microdegrees_celsius_per_secondLazy
@@ -235,7 +255,9 @@ func (a *TemperatureChangeRate) MicrodegreesCelsiusPerSecond() float64 {
 	return microdegrees_celsius_per_second
 }
 
-// MillidegreeCelsiusPerSecond returns the value in MillidegreeCelsiusPerSecond.
+// MillidegreesCelsiusPerSecond returns the TemperatureChangeRate value in MillidegreesCelsiusPerSecond.
+//
+// 
 func (a *TemperatureChangeRate) MillidegreesCelsiusPerSecond() float64 {
 	if a.millidegrees_celsius_per_secondLazy != nil {
 		return *a.millidegrees_celsius_per_secondLazy
@@ -245,7 +267,9 @@ func (a *TemperatureChangeRate) MillidegreesCelsiusPerSecond() float64 {
 	return millidegrees_celsius_per_second
 }
 
-// CentidegreeCelsiusPerSecond returns the value in CentidegreeCelsiusPerSecond.
+// CentidegreesCelsiusPerSecond returns the TemperatureChangeRate value in CentidegreesCelsiusPerSecond.
+//
+// 
 func (a *TemperatureChangeRate) CentidegreesCelsiusPerSecond() float64 {
 	if a.centidegrees_celsius_per_secondLazy != nil {
 		return *a.centidegrees_celsius_per_secondLazy
@@ -255,7 +279,9 @@ func (a *TemperatureChangeRate) CentidegreesCelsiusPerSecond() float64 {
 	return centidegrees_celsius_per_second
 }
 
-// DecidegreeCelsiusPerSecond returns the value in DecidegreeCelsiusPerSecond.
+// DecidegreesCelsiusPerSecond returns the TemperatureChangeRate value in DecidegreesCelsiusPerSecond.
+//
+// 
 func (a *TemperatureChangeRate) DecidegreesCelsiusPerSecond() float64 {
 	if a.decidegrees_celsius_per_secondLazy != nil {
 		return *a.decidegrees_celsius_per_secondLazy
@@ -265,7 +291,9 @@ func (a *TemperatureChangeRate) DecidegreesCelsiusPerSecond() float64 {
 	return decidegrees_celsius_per_second
 }
 
-// DecadegreeCelsiusPerSecond returns the value in DecadegreeCelsiusPerSecond.
+// DecadegreesCelsiusPerSecond returns the TemperatureChangeRate value in DecadegreesCelsiusPerSecond.
+//
+// 
 func (a *TemperatureChangeRate) DecadegreesCelsiusPerSecond() float64 {
 	if a.decadegrees_celsius_per_secondLazy != nil {
 		return *a.decadegrees_celsius_per_secondLazy
@@ -275,7 +303,9 @@ func (a *TemperatureChangeRate) DecadegreesCelsiusPerSecond() float64 {
 	return decadegrees_celsius_per_second
 }
 
-// HectodegreeCelsiusPerSecond returns the value in HectodegreeCelsiusPerSecond.
+// HectodegreesCelsiusPerSecond returns the TemperatureChangeRate value in HectodegreesCelsiusPerSecond.
+//
+// 
 func (a *TemperatureChangeRate) HectodegreesCelsiusPerSecond() float64 {
 	if a.hectodegrees_celsius_per_secondLazy != nil {
 		return *a.hectodegrees_celsius_per_secondLazy
@@ -285,7 +315,9 @@ func (a *TemperatureChangeRate) HectodegreesCelsiusPerSecond() float64 {
 	return hectodegrees_celsius_per_second
 }
 
-// KilodegreeCelsiusPerSecond returns the value in KilodegreeCelsiusPerSecond.
+// KilodegreesCelsiusPerSecond returns the TemperatureChangeRate value in KilodegreesCelsiusPerSecond.
+//
+// 
 func (a *TemperatureChangeRate) KilodegreesCelsiusPerSecond() float64 {
 	if a.kilodegrees_celsius_per_secondLazy != nil {
 		return *a.kilodegrees_celsius_per_secondLazy
@@ -296,7 +328,9 @@ func (a *TemperatureChangeRate) KilodegreesCelsiusPerSecond() float64 {
 }
 
 
-// ToDto creates an TemperatureChangeRateDto representation.
+// ToDto creates a TemperatureChangeRateDto representation from the TemperatureChangeRate instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DegreeCelsiusPerSecond by default.
 func (a *TemperatureChangeRate) ToDto(holdInUnit *TemperatureChangeRateUnits) TemperatureChangeRateDto {
 	if holdInUnit == nil {
 		defaultUnit := TemperatureChangeRateDegreeCelsiusPerSecond // Default value
@@ -309,12 +343,19 @@ func (a *TemperatureChangeRate) ToDto(holdInUnit *TemperatureChangeRateUnits) Te
 	}
 }
 
-// ToDtoJSON creates an TemperatureChangeRateDto representation.
+// ToDtoJSON creates a JSON representation of the TemperatureChangeRate instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DegreeCelsiusPerSecond by default.
 func (a *TemperatureChangeRate) ToDtoJSON(holdInUnit *TemperatureChangeRateUnits) ([]byte, error) {
+	// Convert to TemperatureChangeRateDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts TemperatureChangeRate to a specific unit value.
+// Convert converts a TemperatureChangeRate to a specific unit value.
+// The function uses the provided unit type (TemperatureChangeRateUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *TemperatureChangeRate) Convert(toUnit TemperatureChangeRateUnits) float64 {
 	switch toUnit { 
     case TemperatureChangeRateDegreeCelsiusPerSecond:
@@ -340,7 +381,7 @@ func (a *TemperatureChangeRate) Convert(toUnit TemperatureChangeRateUnits) float
     case TemperatureChangeRateKilodegreeCelsiusPerSecond:
 		return a.KilodegreesCelsiusPerSecond()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -403,13 +444,22 @@ func (a *TemperatureChangeRate) convertToBase(value float64, fromUnit Temperatur
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the TemperatureChangeRate in the default unit (DegreeCelsiusPerSecond),
+// formatted to two decimal places.
 func (a TemperatureChangeRate) String() string {
 	return a.ToString(TemperatureChangeRateDegreeCelsiusPerSecond, 2)
 }
 
-// ToString formats the TemperatureChangeRate to string.
-// fractionalDigits -1 for not mention
+// ToString formats the TemperatureChangeRate value as a string with the specified unit and fractional digits.
+// It converts the TemperatureChangeRate to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the TemperatureChangeRate value will be converted (e.g., DegreeCelsiusPerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the TemperatureChangeRate with the unit abbreviation.
 func (a *TemperatureChangeRate) ToString(unit TemperatureChangeRateUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -449,12 +499,26 @@ func (a *TemperatureChangeRate) getUnitAbbreviation(unit TemperatureChangeRateUn
 	}
 }
 
-// Check if the given TemperatureChangeRate are equals to the current TemperatureChangeRate
+// Equals checks if the given TemperatureChangeRate is equal to the current TemperatureChangeRate.
+//
+// Parameters:
+//    other: The TemperatureChangeRate to compare against.
+//
+// Returns:
+//    bool: Returns true if both TemperatureChangeRate are equal, false otherwise.
 func (a *TemperatureChangeRate) Equals(other *TemperatureChangeRate) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given TemperatureChangeRate are equals to the current TemperatureChangeRate
+// CompareTo compares the current TemperatureChangeRate with another TemperatureChangeRate.
+// It returns -1 if the current TemperatureChangeRate is less than the other TemperatureChangeRate, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The TemperatureChangeRate to compare against.
+//
+// Returns:
+//    int: -1 if the current TemperatureChangeRate is less, 1 if greater, and 0 if equal.
 func (a *TemperatureChangeRate) CompareTo(other *TemperatureChangeRate) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -467,22 +531,50 @@ func (a *TemperatureChangeRate) CompareTo(other *TemperatureChangeRate) int {
 	return 0
 }
 
-// Add the given TemperatureChangeRate to the current TemperatureChangeRate.
+// Add adds the given TemperatureChangeRate to the current TemperatureChangeRate and returns the result.
+// The result is a new TemperatureChangeRate instance with the sum of the values.
+//
+// Parameters:
+//    other: The TemperatureChangeRate to add to the current TemperatureChangeRate.
+//
+// Returns:
+//    *TemperatureChangeRate: A new TemperatureChangeRate instance representing the sum of both TemperatureChangeRate.
 func (a *TemperatureChangeRate) Add(other *TemperatureChangeRate) *TemperatureChangeRate {
 	return &TemperatureChangeRate{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given TemperatureChangeRate to the current TemperatureChangeRate.
+// Subtract subtracts the given TemperatureChangeRate from the current TemperatureChangeRate and returns the result.
+// The result is a new TemperatureChangeRate instance with the difference of the values.
+//
+// Parameters:
+//    other: The TemperatureChangeRate to subtract from the current TemperatureChangeRate.
+//
+// Returns:
+//    *TemperatureChangeRate: A new TemperatureChangeRate instance representing the difference of both TemperatureChangeRate.
 func (a *TemperatureChangeRate) Subtract(other *TemperatureChangeRate) *TemperatureChangeRate {
 	return &TemperatureChangeRate{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given TemperatureChangeRate to the current TemperatureChangeRate.
+// Multiply multiplies the current TemperatureChangeRate by the given TemperatureChangeRate and returns the result.
+// The result is a new TemperatureChangeRate instance with the product of the values.
+//
+// Parameters:
+//    other: The TemperatureChangeRate to multiply with the current TemperatureChangeRate.
+//
+// Returns:
+//    *TemperatureChangeRate: A new TemperatureChangeRate instance representing the product of both TemperatureChangeRate.
 func (a *TemperatureChangeRate) Multiply(other *TemperatureChangeRate) *TemperatureChangeRate {
 	return &TemperatureChangeRate{value: a.value * other.BaseValue()}
 }
 
-// Divide the given TemperatureChangeRate to the current TemperatureChangeRate.
+// Divide divides the current TemperatureChangeRate by the given TemperatureChangeRate and returns the result.
+// The result is a new TemperatureChangeRate instance with the quotient of the values.
+//
+// Parameters:
+//    other: The TemperatureChangeRate to divide the current TemperatureChangeRate by.
+//
+// Returns:
+//    *TemperatureChangeRate: A new TemperatureChangeRate instance representing the quotient of both TemperatureChangeRate.
 func (a *TemperatureChangeRate) Divide(other *TemperatureChangeRate) *TemperatureChangeRate {
 	return &TemperatureChangeRate{value: a.value / other.BaseValue()}
 }

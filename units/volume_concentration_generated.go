@@ -12,7 +12,7 @@ import (
 
 
 
-// VolumeConcentrationUnits enumeration
+// VolumeConcentrationUnits defines various units of VolumeConcentration.
 type VolumeConcentrationUnits string
 
 const (
@@ -59,19 +59,24 @@ const (
         VolumeConcentrationDecilitersPerMililiter VolumeConcentrationUnits = "DecilitersPerMililiter"
 )
 
-// VolumeConcentrationDto represents an VolumeConcentration
+// VolumeConcentrationDto represents a VolumeConcentration measurement with a numerical value and its corresponding unit.
 type VolumeConcentrationDto struct {
+    // Value is the numerical representation of the VolumeConcentration.
 	Value float64
+    // Unit specifies the unit of measurement for the VolumeConcentration, as defined in the VolumeConcentrationUnits enumeration.
 	Unit  VolumeConcentrationUnits
 }
 
-// VolumeConcentrationDtoFactory struct to group related functions
+// VolumeConcentrationDtoFactory groups methods for creating and serializing VolumeConcentrationDto objects.
 type VolumeConcentrationDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a VolumeConcentrationDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf VolumeConcentrationDtoFactory) FromJSON(data []byte) (*VolumeConcentrationDto, error) {
 	a := VolumeConcentrationDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into VolumeConcentrationDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -79,6 +84,9 @@ func (udf VolumeConcentrationDtoFactory) FromJSON(data []byte) (*VolumeConcentra
 	return &a, nil
 }
 
+// ToJSON serializes a VolumeConcentrationDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a VolumeConcentrationDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -90,10 +98,11 @@ func (a VolumeConcentrationDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// VolumeConcentration struct
+// VolumeConcentration represents a measurement in a of VolumeConcentration.
+//
+// The volume concentration (not to be confused with volume fraction) is defined as the volume of a constituent divided by the total volume of the mixture.
 type VolumeConcentration struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     decimal_fractionsLazy *float64 
@@ -118,127 +127,128 @@ type VolumeConcentration struct {
     deciliters_per_mililiterLazy *float64 
 }
 
-// VolumeConcentrationFactory struct to group related functions
+// VolumeConcentrationFactory groups methods for creating VolumeConcentration instances.
 type VolumeConcentrationFactory struct{}
 
+// CreateVolumeConcentration creates a new VolumeConcentration instance from the given value and unit.
 func (uf VolumeConcentrationFactory) CreateVolumeConcentration(value float64, unit VolumeConcentrationUnits) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, unit)
 }
 
+// FromDto converts a VolumeConcentrationDto to a VolumeConcentration instance.
 func (uf VolumeConcentrationFactory) FromDto(dto VolumeConcentrationDto) (*VolumeConcentration, error) {
 	return newVolumeConcentration(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a VolumeConcentration instance.
 func (uf VolumeConcentrationFactory) FromDtoJSON(data []byte) (*VolumeConcentration, error) {
 	unitDto, err := VolumeConcentrationDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse VolumeConcentrationDto from JSON: %w", err)
 	}
 	return VolumeConcentrationFactory{}.FromDto(*unitDto)
 }
 
 
-// FromDecimalFraction creates a new VolumeConcentration instance from DecimalFraction.
+// FromDecimalFractions creates a new VolumeConcentration instance from a value in DecimalFractions.
 func (uf VolumeConcentrationFactory) FromDecimalFractions(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationDecimalFraction)
 }
 
-// FromLitersPerLiter creates a new VolumeConcentration instance from LitersPerLiter.
+// FromLitersPerLiter creates a new VolumeConcentration instance from a value in LitersPerLiter.
 func (uf VolumeConcentrationFactory) FromLitersPerLiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationLitersPerLiter)
 }
 
-// FromLitersPerMililiter creates a new VolumeConcentration instance from LitersPerMililiter.
+// FromLitersPerMililiter creates a new VolumeConcentration instance from a value in LitersPerMililiter.
 func (uf VolumeConcentrationFactory) FromLitersPerMililiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationLitersPerMililiter)
 }
 
-// FromPercent creates a new VolumeConcentration instance from Percent.
+// FromPercent creates a new VolumeConcentration instance from a value in Percent.
 func (uf VolumeConcentrationFactory) FromPercent(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationPercent)
 }
 
-// FromPartPerThousand creates a new VolumeConcentration instance from PartPerThousand.
+// FromPartsPerThousand creates a new VolumeConcentration instance from a value in PartsPerThousand.
 func (uf VolumeConcentrationFactory) FromPartsPerThousand(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationPartPerThousand)
 }
 
-// FromPartPerMillion creates a new VolumeConcentration instance from PartPerMillion.
+// FromPartsPerMillion creates a new VolumeConcentration instance from a value in PartsPerMillion.
 func (uf VolumeConcentrationFactory) FromPartsPerMillion(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationPartPerMillion)
 }
 
-// FromPartPerBillion creates a new VolumeConcentration instance from PartPerBillion.
+// FromPartsPerBillion creates a new VolumeConcentration instance from a value in PartsPerBillion.
 func (uf VolumeConcentrationFactory) FromPartsPerBillion(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationPartPerBillion)
 }
 
-// FromPartPerTrillion creates a new VolumeConcentration instance from PartPerTrillion.
+// FromPartsPerTrillion creates a new VolumeConcentration instance from a value in PartsPerTrillion.
 func (uf VolumeConcentrationFactory) FromPartsPerTrillion(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationPartPerTrillion)
 }
 
-// FromPicolitersPerLiter creates a new VolumeConcentration instance from PicolitersPerLiter.
+// FromPicolitersPerLiter creates a new VolumeConcentration instance from a value in PicolitersPerLiter.
 func (uf VolumeConcentrationFactory) FromPicolitersPerLiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationPicolitersPerLiter)
 }
 
-// FromNanolitersPerLiter creates a new VolumeConcentration instance from NanolitersPerLiter.
+// FromNanolitersPerLiter creates a new VolumeConcentration instance from a value in NanolitersPerLiter.
 func (uf VolumeConcentrationFactory) FromNanolitersPerLiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationNanolitersPerLiter)
 }
 
-// FromMicrolitersPerLiter creates a new VolumeConcentration instance from MicrolitersPerLiter.
+// FromMicrolitersPerLiter creates a new VolumeConcentration instance from a value in MicrolitersPerLiter.
 func (uf VolumeConcentrationFactory) FromMicrolitersPerLiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationMicrolitersPerLiter)
 }
 
-// FromMillilitersPerLiter creates a new VolumeConcentration instance from MillilitersPerLiter.
+// FromMillilitersPerLiter creates a new VolumeConcentration instance from a value in MillilitersPerLiter.
 func (uf VolumeConcentrationFactory) FromMillilitersPerLiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationMillilitersPerLiter)
 }
 
-// FromCentilitersPerLiter creates a new VolumeConcentration instance from CentilitersPerLiter.
+// FromCentilitersPerLiter creates a new VolumeConcentration instance from a value in CentilitersPerLiter.
 func (uf VolumeConcentrationFactory) FromCentilitersPerLiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationCentilitersPerLiter)
 }
 
-// FromDecilitersPerLiter creates a new VolumeConcentration instance from DecilitersPerLiter.
+// FromDecilitersPerLiter creates a new VolumeConcentration instance from a value in DecilitersPerLiter.
 func (uf VolumeConcentrationFactory) FromDecilitersPerLiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationDecilitersPerLiter)
 }
 
-// FromPicolitersPerMililiter creates a new VolumeConcentration instance from PicolitersPerMililiter.
+// FromPicolitersPerMililiter creates a new VolumeConcentration instance from a value in PicolitersPerMililiter.
 func (uf VolumeConcentrationFactory) FromPicolitersPerMililiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationPicolitersPerMililiter)
 }
 
-// FromNanolitersPerMililiter creates a new VolumeConcentration instance from NanolitersPerMililiter.
+// FromNanolitersPerMililiter creates a new VolumeConcentration instance from a value in NanolitersPerMililiter.
 func (uf VolumeConcentrationFactory) FromNanolitersPerMililiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationNanolitersPerMililiter)
 }
 
-// FromMicrolitersPerMililiter creates a new VolumeConcentration instance from MicrolitersPerMililiter.
+// FromMicrolitersPerMililiter creates a new VolumeConcentration instance from a value in MicrolitersPerMililiter.
 func (uf VolumeConcentrationFactory) FromMicrolitersPerMililiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationMicrolitersPerMililiter)
 }
 
-// FromMillilitersPerMililiter creates a new VolumeConcentration instance from MillilitersPerMililiter.
+// FromMillilitersPerMililiter creates a new VolumeConcentration instance from a value in MillilitersPerMililiter.
 func (uf VolumeConcentrationFactory) FromMillilitersPerMililiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationMillilitersPerMililiter)
 }
 
-// FromCentilitersPerMililiter creates a new VolumeConcentration instance from CentilitersPerMililiter.
+// FromCentilitersPerMililiter creates a new VolumeConcentration instance from a value in CentilitersPerMililiter.
 func (uf VolumeConcentrationFactory) FromCentilitersPerMililiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationCentilitersPerMililiter)
 }
 
-// FromDecilitersPerMililiter creates a new VolumeConcentration instance from DecilitersPerMililiter.
+// FromDecilitersPerMililiter creates a new VolumeConcentration instance from a value in DecilitersPerMililiter.
 func (uf VolumeConcentrationFactory) FromDecilitersPerMililiter(value float64) (*VolumeConcentration, error) {
 	return newVolumeConcentration(value, VolumeConcentrationDecilitersPerMililiter)
 }
-
-
 
 
 // newVolumeConcentration creates a new VolumeConcentration.
@@ -251,13 +261,15 @@ func newVolumeConcentration(value float64, fromUnit VolumeConcentrationUnits) (*
 	return a, nil
 }
 
-// BaseValue returns the base value of VolumeConcentration in DecimalFraction.
+// BaseValue returns the base value of VolumeConcentration in DecimalFraction unit (the base/default quantity).
 func (a *VolumeConcentration) BaseValue() float64 {
 	return a.value
 }
 
 
-// DecimalFraction returns the value in DecimalFraction.
+// DecimalFractions returns the VolumeConcentration value in DecimalFractions.
+//
+// 
 func (a *VolumeConcentration) DecimalFractions() float64 {
 	if a.decimal_fractionsLazy != nil {
 		return *a.decimal_fractionsLazy
@@ -267,7 +279,9 @@ func (a *VolumeConcentration) DecimalFractions() float64 {
 	return decimal_fractions
 }
 
-// LitersPerLiter returns the value in LitersPerLiter.
+// LitersPerLiter returns the VolumeConcentration value in LitersPerLiter.
+//
+// 
 func (a *VolumeConcentration) LitersPerLiter() float64 {
 	if a.liters_per_literLazy != nil {
 		return *a.liters_per_literLazy
@@ -277,7 +291,9 @@ func (a *VolumeConcentration) LitersPerLiter() float64 {
 	return liters_per_liter
 }
 
-// LitersPerMililiter returns the value in LitersPerMililiter.
+// LitersPerMililiter returns the VolumeConcentration value in LitersPerMililiter.
+//
+// 
 func (a *VolumeConcentration) LitersPerMililiter() float64 {
 	if a.liters_per_mililiterLazy != nil {
 		return *a.liters_per_mililiterLazy
@@ -287,7 +303,9 @@ func (a *VolumeConcentration) LitersPerMililiter() float64 {
 	return liters_per_mililiter
 }
 
-// Percent returns the value in Percent.
+// Percent returns the VolumeConcentration value in Percent.
+//
+// 
 func (a *VolumeConcentration) Percent() float64 {
 	if a.percentLazy != nil {
 		return *a.percentLazy
@@ -297,7 +315,9 @@ func (a *VolumeConcentration) Percent() float64 {
 	return percent
 }
 
-// PartPerThousand returns the value in PartPerThousand.
+// PartsPerThousand returns the VolumeConcentration value in PartsPerThousand.
+//
+// 
 func (a *VolumeConcentration) PartsPerThousand() float64 {
 	if a.parts_per_thousandLazy != nil {
 		return *a.parts_per_thousandLazy
@@ -307,7 +327,9 @@ func (a *VolumeConcentration) PartsPerThousand() float64 {
 	return parts_per_thousand
 }
 
-// PartPerMillion returns the value in PartPerMillion.
+// PartsPerMillion returns the VolumeConcentration value in PartsPerMillion.
+//
+// 
 func (a *VolumeConcentration) PartsPerMillion() float64 {
 	if a.parts_per_millionLazy != nil {
 		return *a.parts_per_millionLazy
@@ -317,7 +339,9 @@ func (a *VolumeConcentration) PartsPerMillion() float64 {
 	return parts_per_million
 }
 
-// PartPerBillion returns the value in PartPerBillion.
+// PartsPerBillion returns the VolumeConcentration value in PartsPerBillion.
+//
+// 
 func (a *VolumeConcentration) PartsPerBillion() float64 {
 	if a.parts_per_billionLazy != nil {
 		return *a.parts_per_billionLazy
@@ -327,7 +351,9 @@ func (a *VolumeConcentration) PartsPerBillion() float64 {
 	return parts_per_billion
 }
 
-// PartPerTrillion returns the value in PartPerTrillion.
+// PartsPerTrillion returns the VolumeConcentration value in PartsPerTrillion.
+//
+// 
 func (a *VolumeConcentration) PartsPerTrillion() float64 {
 	if a.parts_per_trillionLazy != nil {
 		return *a.parts_per_trillionLazy
@@ -337,7 +363,9 @@ func (a *VolumeConcentration) PartsPerTrillion() float64 {
 	return parts_per_trillion
 }
 
-// PicolitersPerLiter returns the value in PicolitersPerLiter.
+// PicolitersPerLiter returns the VolumeConcentration value in PicolitersPerLiter.
+//
+// 
 func (a *VolumeConcentration) PicolitersPerLiter() float64 {
 	if a.picoliters_per_literLazy != nil {
 		return *a.picoliters_per_literLazy
@@ -347,7 +375,9 @@ func (a *VolumeConcentration) PicolitersPerLiter() float64 {
 	return picoliters_per_liter
 }
 
-// NanolitersPerLiter returns the value in NanolitersPerLiter.
+// NanolitersPerLiter returns the VolumeConcentration value in NanolitersPerLiter.
+//
+// 
 func (a *VolumeConcentration) NanolitersPerLiter() float64 {
 	if a.nanoliters_per_literLazy != nil {
 		return *a.nanoliters_per_literLazy
@@ -357,7 +387,9 @@ func (a *VolumeConcentration) NanolitersPerLiter() float64 {
 	return nanoliters_per_liter
 }
 
-// MicrolitersPerLiter returns the value in MicrolitersPerLiter.
+// MicrolitersPerLiter returns the VolumeConcentration value in MicrolitersPerLiter.
+//
+// 
 func (a *VolumeConcentration) MicrolitersPerLiter() float64 {
 	if a.microliters_per_literLazy != nil {
 		return *a.microliters_per_literLazy
@@ -367,7 +399,9 @@ func (a *VolumeConcentration) MicrolitersPerLiter() float64 {
 	return microliters_per_liter
 }
 
-// MillilitersPerLiter returns the value in MillilitersPerLiter.
+// MillilitersPerLiter returns the VolumeConcentration value in MillilitersPerLiter.
+//
+// 
 func (a *VolumeConcentration) MillilitersPerLiter() float64 {
 	if a.milliliters_per_literLazy != nil {
 		return *a.milliliters_per_literLazy
@@ -377,7 +411,9 @@ func (a *VolumeConcentration) MillilitersPerLiter() float64 {
 	return milliliters_per_liter
 }
 
-// CentilitersPerLiter returns the value in CentilitersPerLiter.
+// CentilitersPerLiter returns the VolumeConcentration value in CentilitersPerLiter.
+//
+// 
 func (a *VolumeConcentration) CentilitersPerLiter() float64 {
 	if a.centiliters_per_literLazy != nil {
 		return *a.centiliters_per_literLazy
@@ -387,7 +423,9 @@ func (a *VolumeConcentration) CentilitersPerLiter() float64 {
 	return centiliters_per_liter
 }
 
-// DecilitersPerLiter returns the value in DecilitersPerLiter.
+// DecilitersPerLiter returns the VolumeConcentration value in DecilitersPerLiter.
+//
+// 
 func (a *VolumeConcentration) DecilitersPerLiter() float64 {
 	if a.deciliters_per_literLazy != nil {
 		return *a.deciliters_per_literLazy
@@ -397,7 +435,9 @@ func (a *VolumeConcentration) DecilitersPerLiter() float64 {
 	return deciliters_per_liter
 }
 
-// PicolitersPerMililiter returns the value in PicolitersPerMililiter.
+// PicolitersPerMililiter returns the VolumeConcentration value in PicolitersPerMililiter.
+//
+// 
 func (a *VolumeConcentration) PicolitersPerMililiter() float64 {
 	if a.picoliters_per_mililiterLazy != nil {
 		return *a.picoliters_per_mililiterLazy
@@ -407,7 +447,9 @@ func (a *VolumeConcentration) PicolitersPerMililiter() float64 {
 	return picoliters_per_mililiter
 }
 
-// NanolitersPerMililiter returns the value in NanolitersPerMililiter.
+// NanolitersPerMililiter returns the VolumeConcentration value in NanolitersPerMililiter.
+//
+// 
 func (a *VolumeConcentration) NanolitersPerMililiter() float64 {
 	if a.nanoliters_per_mililiterLazy != nil {
 		return *a.nanoliters_per_mililiterLazy
@@ -417,7 +459,9 @@ func (a *VolumeConcentration) NanolitersPerMililiter() float64 {
 	return nanoliters_per_mililiter
 }
 
-// MicrolitersPerMililiter returns the value in MicrolitersPerMililiter.
+// MicrolitersPerMililiter returns the VolumeConcentration value in MicrolitersPerMililiter.
+//
+// 
 func (a *VolumeConcentration) MicrolitersPerMililiter() float64 {
 	if a.microliters_per_mililiterLazy != nil {
 		return *a.microliters_per_mililiterLazy
@@ -427,7 +471,9 @@ func (a *VolumeConcentration) MicrolitersPerMililiter() float64 {
 	return microliters_per_mililiter
 }
 
-// MillilitersPerMililiter returns the value in MillilitersPerMililiter.
+// MillilitersPerMililiter returns the VolumeConcentration value in MillilitersPerMililiter.
+//
+// 
 func (a *VolumeConcentration) MillilitersPerMililiter() float64 {
 	if a.milliliters_per_mililiterLazy != nil {
 		return *a.milliliters_per_mililiterLazy
@@ -437,7 +483,9 @@ func (a *VolumeConcentration) MillilitersPerMililiter() float64 {
 	return milliliters_per_mililiter
 }
 
-// CentilitersPerMililiter returns the value in CentilitersPerMililiter.
+// CentilitersPerMililiter returns the VolumeConcentration value in CentilitersPerMililiter.
+//
+// 
 func (a *VolumeConcentration) CentilitersPerMililiter() float64 {
 	if a.centiliters_per_mililiterLazy != nil {
 		return *a.centiliters_per_mililiterLazy
@@ -447,7 +495,9 @@ func (a *VolumeConcentration) CentilitersPerMililiter() float64 {
 	return centiliters_per_mililiter
 }
 
-// DecilitersPerMililiter returns the value in DecilitersPerMililiter.
+// DecilitersPerMililiter returns the VolumeConcentration value in DecilitersPerMililiter.
+//
+// 
 func (a *VolumeConcentration) DecilitersPerMililiter() float64 {
 	if a.deciliters_per_mililiterLazy != nil {
 		return *a.deciliters_per_mililiterLazy
@@ -458,7 +508,9 @@ func (a *VolumeConcentration) DecilitersPerMililiter() float64 {
 }
 
 
-// ToDto creates an VolumeConcentrationDto representation.
+// ToDto creates a VolumeConcentrationDto representation from the VolumeConcentration instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DecimalFraction by default.
 func (a *VolumeConcentration) ToDto(holdInUnit *VolumeConcentrationUnits) VolumeConcentrationDto {
 	if holdInUnit == nil {
 		defaultUnit := VolumeConcentrationDecimalFraction // Default value
@@ -471,12 +523,19 @@ func (a *VolumeConcentration) ToDto(holdInUnit *VolumeConcentrationUnits) Volume
 	}
 }
 
-// ToDtoJSON creates an VolumeConcentrationDto representation.
+// ToDtoJSON creates a JSON representation of the VolumeConcentration instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DecimalFraction by default.
 func (a *VolumeConcentration) ToDtoJSON(holdInUnit *VolumeConcentrationUnits) ([]byte, error) {
+	// Convert to VolumeConcentrationDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts VolumeConcentration to a specific unit value.
+// Convert converts a VolumeConcentration to a specific unit value.
+// The function uses the provided unit type (VolumeConcentrationUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *VolumeConcentration) Convert(toUnit VolumeConcentrationUnits) float64 {
 	switch toUnit { 
     case VolumeConcentrationDecimalFraction:
@@ -520,7 +579,7 @@ func (a *VolumeConcentration) Convert(toUnit VolumeConcentrationUnits) float64 {
     case VolumeConcentrationDecilitersPerMililiter:
 		return a.DecilitersPerMililiter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -619,13 +678,22 @@ func (a *VolumeConcentration) convertToBase(value float64, fromUnit VolumeConcen
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the VolumeConcentration in the default unit (DecimalFraction),
+// formatted to two decimal places.
 func (a VolumeConcentration) String() string {
 	return a.ToString(VolumeConcentrationDecimalFraction, 2)
 }
 
-// ToString formats the VolumeConcentration to string.
-// fractionalDigits -1 for not mention
+// ToString formats the VolumeConcentration value as a string with the specified unit and fractional digits.
+// It converts the VolumeConcentration to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the VolumeConcentration value will be converted (e.g., DecimalFraction))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the VolumeConcentration with the unit abbreviation.
 func (a *VolumeConcentration) ToString(unit VolumeConcentrationUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -683,12 +751,26 @@ func (a *VolumeConcentration) getUnitAbbreviation(unit VolumeConcentrationUnits)
 	}
 }
 
-// Check if the given VolumeConcentration are equals to the current VolumeConcentration
+// Equals checks if the given VolumeConcentration is equal to the current VolumeConcentration.
+//
+// Parameters:
+//    other: The VolumeConcentration to compare against.
+//
+// Returns:
+//    bool: Returns true if both VolumeConcentration are equal, false otherwise.
 func (a *VolumeConcentration) Equals(other *VolumeConcentration) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given VolumeConcentration are equals to the current VolumeConcentration
+// CompareTo compares the current VolumeConcentration with another VolumeConcentration.
+// It returns -1 if the current VolumeConcentration is less than the other VolumeConcentration, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The VolumeConcentration to compare against.
+//
+// Returns:
+//    int: -1 if the current VolumeConcentration is less, 1 if greater, and 0 if equal.
 func (a *VolumeConcentration) CompareTo(other *VolumeConcentration) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -701,22 +783,50 @@ func (a *VolumeConcentration) CompareTo(other *VolumeConcentration) int {
 	return 0
 }
 
-// Add the given VolumeConcentration to the current VolumeConcentration.
+// Add adds the given VolumeConcentration to the current VolumeConcentration and returns the result.
+// The result is a new VolumeConcentration instance with the sum of the values.
+//
+// Parameters:
+//    other: The VolumeConcentration to add to the current VolumeConcentration.
+//
+// Returns:
+//    *VolumeConcentration: A new VolumeConcentration instance representing the sum of both VolumeConcentration.
 func (a *VolumeConcentration) Add(other *VolumeConcentration) *VolumeConcentration {
 	return &VolumeConcentration{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given VolumeConcentration to the current VolumeConcentration.
+// Subtract subtracts the given VolumeConcentration from the current VolumeConcentration and returns the result.
+// The result is a new VolumeConcentration instance with the difference of the values.
+//
+// Parameters:
+//    other: The VolumeConcentration to subtract from the current VolumeConcentration.
+//
+// Returns:
+//    *VolumeConcentration: A new VolumeConcentration instance representing the difference of both VolumeConcentration.
 func (a *VolumeConcentration) Subtract(other *VolumeConcentration) *VolumeConcentration {
 	return &VolumeConcentration{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given VolumeConcentration to the current VolumeConcentration.
+// Multiply multiplies the current VolumeConcentration by the given VolumeConcentration and returns the result.
+// The result is a new VolumeConcentration instance with the product of the values.
+//
+// Parameters:
+//    other: The VolumeConcentration to multiply with the current VolumeConcentration.
+//
+// Returns:
+//    *VolumeConcentration: A new VolumeConcentration instance representing the product of both VolumeConcentration.
 func (a *VolumeConcentration) Multiply(other *VolumeConcentration) *VolumeConcentration {
 	return &VolumeConcentration{value: a.value * other.BaseValue()}
 }
 
-// Divide the given VolumeConcentration to the current VolumeConcentration.
+// Divide divides the current VolumeConcentration by the given VolumeConcentration and returns the result.
+// The result is a new VolumeConcentration instance with the quotient of the values.
+//
+// Parameters:
+//    other: The VolumeConcentration to divide the current VolumeConcentration by.
+//
+// Returns:
+//    *VolumeConcentration: A new VolumeConcentration instance representing the quotient of both VolumeConcentration.
 func (a *VolumeConcentration) Divide(other *VolumeConcentration) *VolumeConcentration {
 	return &VolumeConcentration{value: a.value / other.BaseValue()}
 }

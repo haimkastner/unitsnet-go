@@ -12,7 +12,7 @@ import (
 
 
 
-// MolarityUnits enumeration
+// MolarityUnits defines various units of Molarity.
 type MolarityUnits string
 
 const (
@@ -41,19 +41,24 @@ const (
         MolarityDecimolePerLiter MolarityUnits = "DecimolePerLiter"
 )
 
-// MolarityDto represents an Molarity
+// MolarityDto represents a Molarity measurement with a numerical value and its corresponding unit.
 type MolarityDto struct {
+    // Value is the numerical representation of the Molarity.
 	Value float64
+    // Unit specifies the unit of measurement for the Molarity, as defined in the MolarityUnits enumeration.
 	Unit  MolarityUnits
 }
 
-// MolarityDtoFactory struct to group related functions
+// MolarityDtoFactory groups methods for creating and serializing MolarityDto objects.
 type MolarityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MolarityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MolarityDtoFactory) FromJSON(data []byte) (*MolarityDto, error) {
 	a := MolarityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MolarityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -61,6 +66,9 @@ func (udf MolarityDtoFactory) FromJSON(data []byte) (*MolarityDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a MolarityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MolarityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -72,10 +80,11 @@ func (a MolarityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Molarity struct
+// Molarity represents a measurement in a of Molarity.
+//
+// Molar concentration, also called molarity, amount concentration or substance concentration, is a measure of the concentration of a solute in a solution, or of any chemical species, in terms of amount of substance in a given volume.
 type Molarity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     moles_per_cubic_meterLazy *float64 
@@ -91,82 +100,83 @@ type Molarity struct {
     decimoles_per_literLazy *float64 
 }
 
-// MolarityFactory struct to group related functions
+// MolarityFactory groups methods for creating Molarity instances.
 type MolarityFactory struct{}
 
+// CreateMolarity creates a new Molarity instance from the given value and unit.
 func (uf MolarityFactory) CreateMolarity(value float64, unit MolarityUnits) (*Molarity, error) {
 	return newMolarity(value, unit)
 }
 
+// FromDto converts a MolarityDto to a Molarity instance.
 func (uf MolarityFactory) FromDto(dto MolarityDto) (*Molarity, error) {
 	return newMolarity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Molarity instance.
 func (uf MolarityFactory) FromDtoJSON(data []byte) (*Molarity, error) {
 	unitDto, err := MolarityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MolarityDto from JSON: %w", err)
 	}
 	return MolarityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMolePerCubicMeter creates a new Molarity instance from MolePerCubicMeter.
+// FromMolesPerCubicMeter creates a new Molarity instance from a value in MolesPerCubicMeter.
 func (uf MolarityFactory) FromMolesPerCubicMeter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityMolePerCubicMeter)
 }
 
-// FromMolePerLiter creates a new Molarity instance from MolePerLiter.
+// FromMolesPerLiter creates a new Molarity instance from a value in MolesPerLiter.
 func (uf MolarityFactory) FromMolesPerLiter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityMolePerLiter)
 }
 
-// FromPoundMolePerCubicFoot creates a new Molarity instance from PoundMolePerCubicFoot.
+// FromPoundMolesPerCubicFoot creates a new Molarity instance from a value in PoundMolesPerCubicFoot.
 func (uf MolarityFactory) FromPoundMolesPerCubicFoot(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityPoundMolePerCubicFoot)
 }
 
-// FromKilomolePerCubicMeter creates a new Molarity instance from KilomolePerCubicMeter.
+// FromKilomolesPerCubicMeter creates a new Molarity instance from a value in KilomolesPerCubicMeter.
 func (uf MolarityFactory) FromKilomolesPerCubicMeter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityKilomolePerCubicMeter)
 }
 
-// FromFemtomolePerLiter creates a new Molarity instance from FemtomolePerLiter.
+// FromFemtomolesPerLiter creates a new Molarity instance from a value in FemtomolesPerLiter.
 func (uf MolarityFactory) FromFemtomolesPerLiter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityFemtomolePerLiter)
 }
 
-// FromPicomolePerLiter creates a new Molarity instance from PicomolePerLiter.
+// FromPicomolesPerLiter creates a new Molarity instance from a value in PicomolesPerLiter.
 func (uf MolarityFactory) FromPicomolesPerLiter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityPicomolePerLiter)
 }
 
-// FromNanomolePerLiter creates a new Molarity instance from NanomolePerLiter.
+// FromNanomolesPerLiter creates a new Molarity instance from a value in NanomolesPerLiter.
 func (uf MolarityFactory) FromNanomolesPerLiter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityNanomolePerLiter)
 }
 
-// FromMicromolePerLiter creates a new Molarity instance from MicromolePerLiter.
+// FromMicromolesPerLiter creates a new Molarity instance from a value in MicromolesPerLiter.
 func (uf MolarityFactory) FromMicromolesPerLiter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityMicromolePerLiter)
 }
 
-// FromMillimolePerLiter creates a new Molarity instance from MillimolePerLiter.
+// FromMillimolesPerLiter creates a new Molarity instance from a value in MillimolesPerLiter.
 func (uf MolarityFactory) FromMillimolesPerLiter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityMillimolePerLiter)
 }
 
-// FromCentimolePerLiter creates a new Molarity instance from CentimolePerLiter.
+// FromCentimolesPerLiter creates a new Molarity instance from a value in CentimolesPerLiter.
 func (uf MolarityFactory) FromCentimolesPerLiter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityCentimolePerLiter)
 }
 
-// FromDecimolePerLiter creates a new Molarity instance from DecimolePerLiter.
+// FromDecimolesPerLiter creates a new Molarity instance from a value in DecimolesPerLiter.
 func (uf MolarityFactory) FromDecimolesPerLiter(value float64) (*Molarity, error) {
 	return newMolarity(value, MolarityDecimolePerLiter)
 }
-
-
 
 
 // newMolarity creates a new Molarity.
@@ -179,13 +189,15 @@ func newMolarity(value float64, fromUnit MolarityUnits) (*Molarity, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Molarity in MolePerCubicMeter.
+// BaseValue returns the base value of Molarity in MolePerCubicMeter unit (the base/default quantity).
 func (a *Molarity) BaseValue() float64 {
 	return a.value
 }
 
 
-// MolePerCubicMeter returns the value in MolePerCubicMeter.
+// MolesPerCubicMeter returns the Molarity value in MolesPerCubicMeter.
+//
+// 
 func (a *Molarity) MolesPerCubicMeter() float64 {
 	if a.moles_per_cubic_meterLazy != nil {
 		return *a.moles_per_cubic_meterLazy
@@ -195,7 +207,9 @@ func (a *Molarity) MolesPerCubicMeter() float64 {
 	return moles_per_cubic_meter
 }
 
-// MolePerLiter returns the value in MolePerLiter.
+// MolesPerLiter returns the Molarity value in MolesPerLiter.
+//
+// 
 func (a *Molarity) MolesPerLiter() float64 {
 	if a.moles_per_literLazy != nil {
 		return *a.moles_per_literLazy
@@ -205,7 +219,9 @@ func (a *Molarity) MolesPerLiter() float64 {
 	return moles_per_liter
 }
 
-// PoundMolePerCubicFoot returns the value in PoundMolePerCubicFoot.
+// PoundMolesPerCubicFoot returns the Molarity value in PoundMolesPerCubicFoot.
+//
+// 
 func (a *Molarity) PoundMolesPerCubicFoot() float64 {
 	if a.pound_moles_per_cubic_footLazy != nil {
 		return *a.pound_moles_per_cubic_footLazy
@@ -215,7 +231,9 @@ func (a *Molarity) PoundMolesPerCubicFoot() float64 {
 	return pound_moles_per_cubic_foot
 }
 
-// KilomolePerCubicMeter returns the value in KilomolePerCubicMeter.
+// KilomolesPerCubicMeter returns the Molarity value in KilomolesPerCubicMeter.
+//
+// 
 func (a *Molarity) KilomolesPerCubicMeter() float64 {
 	if a.kilomoles_per_cubic_meterLazy != nil {
 		return *a.kilomoles_per_cubic_meterLazy
@@ -225,7 +243,9 @@ func (a *Molarity) KilomolesPerCubicMeter() float64 {
 	return kilomoles_per_cubic_meter
 }
 
-// FemtomolePerLiter returns the value in FemtomolePerLiter.
+// FemtomolesPerLiter returns the Molarity value in FemtomolesPerLiter.
+//
+// 
 func (a *Molarity) FemtomolesPerLiter() float64 {
 	if a.femtomoles_per_literLazy != nil {
 		return *a.femtomoles_per_literLazy
@@ -235,7 +255,9 @@ func (a *Molarity) FemtomolesPerLiter() float64 {
 	return femtomoles_per_liter
 }
 
-// PicomolePerLiter returns the value in PicomolePerLiter.
+// PicomolesPerLiter returns the Molarity value in PicomolesPerLiter.
+//
+// 
 func (a *Molarity) PicomolesPerLiter() float64 {
 	if a.picomoles_per_literLazy != nil {
 		return *a.picomoles_per_literLazy
@@ -245,7 +267,9 @@ func (a *Molarity) PicomolesPerLiter() float64 {
 	return picomoles_per_liter
 }
 
-// NanomolePerLiter returns the value in NanomolePerLiter.
+// NanomolesPerLiter returns the Molarity value in NanomolesPerLiter.
+//
+// 
 func (a *Molarity) NanomolesPerLiter() float64 {
 	if a.nanomoles_per_literLazy != nil {
 		return *a.nanomoles_per_literLazy
@@ -255,7 +279,9 @@ func (a *Molarity) NanomolesPerLiter() float64 {
 	return nanomoles_per_liter
 }
 
-// MicromolePerLiter returns the value in MicromolePerLiter.
+// MicromolesPerLiter returns the Molarity value in MicromolesPerLiter.
+//
+// 
 func (a *Molarity) MicromolesPerLiter() float64 {
 	if a.micromoles_per_literLazy != nil {
 		return *a.micromoles_per_literLazy
@@ -265,7 +291,9 @@ func (a *Molarity) MicromolesPerLiter() float64 {
 	return micromoles_per_liter
 }
 
-// MillimolePerLiter returns the value in MillimolePerLiter.
+// MillimolesPerLiter returns the Molarity value in MillimolesPerLiter.
+//
+// 
 func (a *Molarity) MillimolesPerLiter() float64 {
 	if a.millimoles_per_literLazy != nil {
 		return *a.millimoles_per_literLazy
@@ -275,7 +303,9 @@ func (a *Molarity) MillimolesPerLiter() float64 {
 	return millimoles_per_liter
 }
 
-// CentimolePerLiter returns the value in CentimolePerLiter.
+// CentimolesPerLiter returns the Molarity value in CentimolesPerLiter.
+//
+// 
 func (a *Molarity) CentimolesPerLiter() float64 {
 	if a.centimoles_per_literLazy != nil {
 		return *a.centimoles_per_literLazy
@@ -285,7 +315,9 @@ func (a *Molarity) CentimolesPerLiter() float64 {
 	return centimoles_per_liter
 }
 
-// DecimolePerLiter returns the value in DecimolePerLiter.
+// DecimolesPerLiter returns the Molarity value in DecimolesPerLiter.
+//
+// 
 func (a *Molarity) DecimolesPerLiter() float64 {
 	if a.decimoles_per_literLazy != nil {
 		return *a.decimoles_per_literLazy
@@ -296,7 +328,9 @@ func (a *Molarity) DecimolesPerLiter() float64 {
 }
 
 
-// ToDto creates an MolarityDto representation.
+// ToDto creates a MolarityDto representation from the Molarity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MolePerCubicMeter by default.
 func (a *Molarity) ToDto(holdInUnit *MolarityUnits) MolarityDto {
 	if holdInUnit == nil {
 		defaultUnit := MolarityMolePerCubicMeter // Default value
@@ -309,12 +343,19 @@ func (a *Molarity) ToDto(holdInUnit *MolarityUnits) MolarityDto {
 	}
 }
 
-// ToDtoJSON creates an MolarityDto representation.
+// ToDtoJSON creates a JSON representation of the Molarity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MolePerCubicMeter by default.
 func (a *Molarity) ToDtoJSON(holdInUnit *MolarityUnits) ([]byte, error) {
+	// Convert to MolarityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Molarity to a specific unit value.
+// Convert converts a Molarity to a specific unit value.
+// The function uses the provided unit type (MolarityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Molarity) Convert(toUnit MolarityUnits) float64 {
 	switch toUnit { 
     case MolarityMolePerCubicMeter:
@@ -340,7 +381,7 @@ func (a *Molarity) Convert(toUnit MolarityUnits) float64 {
     case MolarityDecimolePerLiter:
 		return a.DecimolesPerLiter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -403,13 +444,22 @@ func (a *Molarity) convertToBase(value float64, fromUnit MolarityUnits) float64 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Molarity in the default unit (MolePerCubicMeter),
+// formatted to two decimal places.
 func (a Molarity) String() string {
 	return a.ToString(MolarityMolePerCubicMeter, 2)
 }
 
-// ToString formats the Molarity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Molarity value as a string with the specified unit and fractional digits.
+// It converts the Molarity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Molarity value will be converted (e.g., MolePerCubicMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Molarity with the unit abbreviation.
 func (a *Molarity) ToString(unit MolarityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -449,12 +499,26 @@ func (a *Molarity) getUnitAbbreviation(unit MolarityUnits) string {
 	}
 }
 
-// Check if the given Molarity are equals to the current Molarity
+// Equals checks if the given Molarity is equal to the current Molarity.
+//
+// Parameters:
+//    other: The Molarity to compare against.
+//
+// Returns:
+//    bool: Returns true if both Molarity are equal, false otherwise.
 func (a *Molarity) Equals(other *Molarity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Molarity are equals to the current Molarity
+// CompareTo compares the current Molarity with another Molarity.
+// It returns -1 if the current Molarity is less than the other Molarity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Molarity to compare against.
+//
+// Returns:
+//    int: -1 if the current Molarity is less, 1 if greater, and 0 if equal.
 func (a *Molarity) CompareTo(other *Molarity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -467,22 +531,50 @@ func (a *Molarity) CompareTo(other *Molarity) int {
 	return 0
 }
 
-// Add the given Molarity to the current Molarity.
+// Add adds the given Molarity to the current Molarity and returns the result.
+// The result is a new Molarity instance with the sum of the values.
+//
+// Parameters:
+//    other: The Molarity to add to the current Molarity.
+//
+// Returns:
+//    *Molarity: A new Molarity instance representing the sum of both Molarity.
 func (a *Molarity) Add(other *Molarity) *Molarity {
 	return &Molarity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Molarity to the current Molarity.
+// Subtract subtracts the given Molarity from the current Molarity and returns the result.
+// The result is a new Molarity instance with the difference of the values.
+//
+// Parameters:
+//    other: The Molarity to subtract from the current Molarity.
+//
+// Returns:
+//    *Molarity: A new Molarity instance representing the difference of both Molarity.
 func (a *Molarity) Subtract(other *Molarity) *Molarity {
 	return &Molarity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Molarity to the current Molarity.
+// Multiply multiplies the current Molarity by the given Molarity and returns the result.
+// The result is a new Molarity instance with the product of the values.
+//
+// Parameters:
+//    other: The Molarity to multiply with the current Molarity.
+//
+// Returns:
+//    *Molarity: A new Molarity instance representing the product of both Molarity.
 func (a *Molarity) Multiply(other *Molarity) *Molarity {
 	return &Molarity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Molarity to the current Molarity.
+// Divide divides the current Molarity by the given Molarity and returns the result.
+// The result is a new Molarity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Molarity to divide the current Molarity by.
+//
+// Returns:
+//    *Molarity: A new Molarity instance representing the quotient of both Molarity.
 func (a *Molarity) Divide(other *Molarity) *Molarity {
 	return &Molarity{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// LuminousIntensityUnits enumeration
+// LuminousIntensityUnits defines various units of LuminousIntensity.
 type LuminousIntensityUnits string
 
 const (
@@ -21,19 +21,24 @@ const (
         LuminousIntensityCandela LuminousIntensityUnits = "Candela"
 )
 
-// LuminousIntensityDto represents an LuminousIntensity
+// LuminousIntensityDto represents a LuminousIntensity measurement with a numerical value and its corresponding unit.
 type LuminousIntensityDto struct {
+    // Value is the numerical representation of the LuminousIntensity.
 	Value float64
+    // Unit specifies the unit of measurement for the LuminousIntensity, as defined in the LuminousIntensityUnits enumeration.
 	Unit  LuminousIntensityUnits
 }
 
-// LuminousIntensityDtoFactory struct to group related functions
+// LuminousIntensityDtoFactory groups methods for creating and serializing LuminousIntensityDto objects.
 type LuminousIntensityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a LuminousIntensityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf LuminousIntensityDtoFactory) FromJSON(data []byte) (*LuminousIntensityDto, error) {
 	a := LuminousIntensityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into LuminousIntensityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -41,6 +46,9 @@ func (udf LuminousIntensityDtoFactory) FromJSON(data []byte) (*LuminousIntensity
 	return &a, nil
 }
 
+// ToJSON serializes a LuminousIntensityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a LuminousIntensityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -52,41 +60,43 @@ func (a LuminousIntensityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// LuminousIntensity struct
+// LuminousIntensity represents a measurement in a of LuminousIntensity.
+//
+// In photometry, luminous intensity is a measure of the wavelength-weighted power emitted by a light source in a particular direction per unit solid angle, based on the luminosity function, a standardized model of the sensitivity of the human eye.
 type LuminousIntensity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     candelaLazy *float64 
 }
 
-// LuminousIntensityFactory struct to group related functions
+// LuminousIntensityFactory groups methods for creating LuminousIntensity instances.
 type LuminousIntensityFactory struct{}
 
+// CreateLuminousIntensity creates a new LuminousIntensity instance from the given value and unit.
 func (uf LuminousIntensityFactory) CreateLuminousIntensity(value float64, unit LuminousIntensityUnits) (*LuminousIntensity, error) {
 	return newLuminousIntensity(value, unit)
 }
 
+// FromDto converts a LuminousIntensityDto to a LuminousIntensity instance.
 func (uf LuminousIntensityFactory) FromDto(dto LuminousIntensityDto) (*LuminousIntensity, error) {
 	return newLuminousIntensity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a LuminousIntensity instance.
 func (uf LuminousIntensityFactory) FromDtoJSON(data []byte) (*LuminousIntensity, error) {
 	unitDto, err := LuminousIntensityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse LuminousIntensityDto from JSON: %w", err)
 	}
 	return LuminousIntensityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromCandela creates a new LuminousIntensity instance from Candela.
+// FromCandela creates a new LuminousIntensity instance from a value in Candela.
 func (uf LuminousIntensityFactory) FromCandela(value float64) (*LuminousIntensity, error) {
 	return newLuminousIntensity(value, LuminousIntensityCandela)
 }
-
-
 
 
 // newLuminousIntensity creates a new LuminousIntensity.
@@ -99,13 +109,15 @@ func newLuminousIntensity(value float64, fromUnit LuminousIntensityUnits) (*Lumi
 	return a, nil
 }
 
-// BaseValue returns the base value of LuminousIntensity in Candela.
+// BaseValue returns the base value of LuminousIntensity in Candela unit (the base/default quantity).
 func (a *LuminousIntensity) BaseValue() float64 {
 	return a.value
 }
 
 
-// Candela returns the value in Candela.
+// Candela returns the LuminousIntensity value in Candela.
+//
+// 
 func (a *LuminousIntensity) Candela() float64 {
 	if a.candelaLazy != nil {
 		return *a.candelaLazy
@@ -116,7 +128,9 @@ func (a *LuminousIntensity) Candela() float64 {
 }
 
 
-// ToDto creates an LuminousIntensityDto representation.
+// ToDto creates a LuminousIntensityDto representation from the LuminousIntensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Candela by default.
 func (a *LuminousIntensity) ToDto(holdInUnit *LuminousIntensityUnits) LuminousIntensityDto {
 	if holdInUnit == nil {
 		defaultUnit := LuminousIntensityCandela // Default value
@@ -129,18 +143,25 @@ func (a *LuminousIntensity) ToDto(holdInUnit *LuminousIntensityUnits) LuminousIn
 	}
 }
 
-// ToDtoJSON creates an LuminousIntensityDto representation.
+// ToDtoJSON creates a JSON representation of the LuminousIntensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Candela by default.
 func (a *LuminousIntensity) ToDtoJSON(holdInUnit *LuminousIntensityUnits) ([]byte, error) {
+	// Convert to LuminousIntensityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts LuminousIntensity to a specific unit value.
+// Convert converts a LuminousIntensity to a specific unit value.
+// The function uses the provided unit type (LuminousIntensityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *LuminousIntensity) Convert(toUnit LuminousIntensityUnits) float64 {
 	switch toUnit { 
     case LuminousIntensityCandela:
 		return a.Candela()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -163,13 +184,22 @@ func (a *LuminousIntensity) convertToBase(value float64, fromUnit LuminousIntens
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the LuminousIntensity in the default unit (Candela),
+// formatted to two decimal places.
 func (a LuminousIntensity) String() string {
 	return a.ToString(LuminousIntensityCandela, 2)
 }
 
-// ToString formats the LuminousIntensity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the LuminousIntensity value as a string with the specified unit and fractional digits.
+// It converts the LuminousIntensity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the LuminousIntensity value will be converted (e.g., Candela))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the LuminousIntensity with the unit abbreviation.
 func (a *LuminousIntensity) ToString(unit LuminousIntensityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -189,12 +219,26 @@ func (a *LuminousIntensity) getUnitAbbreviation(unit LuminousIntensityUnits) str
 	}
 }
 
-// Check if the given LuminousIntensity are equals to the current LuminousIntensity
+// Equals checks if the given LuminousIntensity is equal to the current LuminousIntensity.
+//
+// Parameters:
+//    other: The LuminousIntensity to compare against.
+//
+// Returns:
+//    bool: Returns true if both LuminousIntensity are equal, false otherwise.
 func (a *LuminousIntensity) Equals(other *LuminousIntensity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given LuminousIntensity are equals to the current LuminousIntensity
+// CompareTo compares the current LuminousIntensity with another LuminousIntensity.
+// It returns -1 if the current LuminousIntensity is less than the other LuminousIntensity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The LuminousIntensity to compare against.
+//
+// Returns:
+//    int: -1 if the current LuminousIntensity is less, 1 if greater, and 0 if equal.
 func (a *LuminousIntensity) CompareTo(other *LuminousIntensity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -207,22 +251,50 @@ func (a *LuminousIntensity) CompareTo(other *LuminousIntensity) int {
 	return 0
 }
 
-// Add the given LuminousIntensity to the current LuminousIntensity.
+// Add adds the given LuminousIntensity to the current LuminousIntensity and returns the result.
+// The result is a new LuminousIntensity instance with the sum of the values.
+//
+// Parameters:
+//    other: The LuminousIntensity to add to the current LuminousIntensity.
+//
+// Returns:
+//    *LuminousIntensity: A new LuminousIntensity instance representing the sum of both LuminousIntensity.
 func (a *LuminousIntensity) Add(other *LuminousIntensity) *LuminousIntensity {
 	return &LuminousIntensity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given LuminousIntensity to the current LuminousIntensity.
+// Subtract subtracts the given LuminousIntensity from the current LuminousIntensity and returns the result.
+// The result is a new LuminousIntensity instance with the difference of the values.
+//
+// Parameters:
+//    other: The LuminousIntensity to subtract from the current LuminousIntensity.
+//
+// Returns:
+//    *LuminousIntensity: A new LuminousIntensity instance representing the difference of both LuminousIntensity.
 func (a *LuminousIntensity) Subtract(other *LuminousIntensity) *LuminousIntensity {
 	return &LuminousIntensity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given LuminousIntensity to the current LuminousIntensity.
+// Multiply multiplies the current LuminousIntensity by the given LuminousIntensity and returns the result.
+// The result is a new LuminousIntensity instance with the product of the values.
+//
+// Parameters:
+//    other: The LuminousIntensity to multiply with the current LuminousIntensity.
+//
+// Returns:
+//    *LuminousIntensity: A new LuminousIntensity instance representing the product of both LuminousIntensity.
 func (a *LuminousIntensity) Multiply(other *LuminousIntensity) *LuminousIntensity {
 	return &LuminousIntensity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given LuminousIntensity to the current LuminousIntensity.
+// Divide divides the current LuminousIntensity by the given LuminousIntensity and returns the result.
+// The result is a new LuminousIntensity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The LuminousIntensity to divide the current LuminousIntensity by.
+//
+// Returns:
+//    *LuminousIntensity: A new LuminousIntensity instance representing the quotient of both LuminousIntensity.
 func (a *LuminousIntensity) Divide(other *LuminousIntensity) *LuminousIntensity {
 	return &LuminousIntensity{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// LinearDensityUnits enumeration
+// LinearDensityUnits defines various units of LinearDensity.
 type LinearDensityUnits string
 
 const (
@@ -55,19 +55,24 @@ const (
         LinearDensityKilogramPerFoot LinearDensityUnits = "KilogramPerFoot"
 )
 
-// LinearDensityDto represents an LinearDensity
+// LinearDensityDto represents a LinearDensity measurement with a numerical value and its corresponding unit.
 type LinearDensityDto struct {
+    // Value is the numerical representation of the LinearDensity.
 	Value float64
+    // Unit specifies the unit of measurement for the LinearDensity, as defined in the LinearDensityUnits enumeration.
 	Unit  LinearDensityUnits
 }
 
-// LinearDensityDtoFactory struct to group related functions
+// LinearDensityDtoFactory groups methods for creating and serializing LinearDensityDto objects.
 type LinearDensityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a LinearDensityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf LinearDensityDtoFactory) FromJSON(data []byte) (*LinearDensityDto, error) {
 	a := LinearDensityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into LinearDensityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -75,6 +80,9 @@ func (udf LinearDensityDtoFactory) FromJSON(data []byte) (*LinearDensityDto, err
 	return &a, nil
 }
 
+// ToJSON serializes a LinearDensityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a LinearDensityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -86,10 +94,11 @@ func (a LinearDensityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// LinearDensity struct
+// LinearDensity represents a measurement in a of LinearDensity.
+//
+// The Linear Density, or more precisely, the linear mass density, of a substance is its mass per unit length.  The term linear density is most often used when describing the characteristics of one-dimensional objects, although linear density can also be used to describe the density of a three-dimensional quantity along one particular dimension.
 type LinearDensity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     grams_per_millimeterLazy *float64 
@@ -112,117 +121,118 @@ type LinearDensity struct {
     kilograms_per_footLazy *float64 
 }
 
-// LinearDensityFactory struct to group related functions
+// LinearDensityFactory groups methods for creating LinearDensity instances.
 type LinearDensityFactory struct{}
 
+// CreateLinearDensity creates a new LinearDensity instance from the given value and unit.
 func (uf LinearDensityFactory) CreateLinearDensity(value float64, unit LinearDensityUnits) (*LinearDensity, error) {
 	return newLinearDensity(value, unit)
 }
 
+// FromDto converts a LinearDensityDto to a LinearDensity instance.
 func (uf LinearDensityFactory) FromDto(dto LinearDensityDto) (*LinearDensity, error) {
 	return newLinearDensity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a LinearDensity instance.
 func (uf LinearDensityFactory) FromDtoJSON(data []byte) (*LinearDensity, error) {
 	unitDto, err := LinearDensityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse LinearDensityDto from JSON: %w", err)
 	}
 	return LinearDensityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromGramPerMillimeter creates a new LinearDensity instance from GramPerMillimeter.
+// FromGramsPerMillimeter creates a new LinearDensity instance from a value in GramsPerMillimeter.
 func (uf LinearDensityFactory) FromGramsPerMillimeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityGramPerMillimeter)
 }
 
-// FromGramPerCentimeter creates a new LinearDensity instance from GramPerCentimeter.
+// FromGramsPerCentimeter creates a new LinearDensity instance from a value in GramsPerCentimeter.
 func (uf LinearDensityFactory) FromGramsPerCentimeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityGramPerCentimeter)
 }
 
-// FromGramPerMeter creates a new LinearDensity instance from GramPerMeter.
+// FromGramsPerMeter creates a new LinearDensity instance from a value in GramsPerMeter.
 func (uf LinearDensityFactory) FromGramsPerMeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityGramPerMeter)
 }
 
-// FromPoundPerInch creates a new LinearDensity instance from PoundPerInch.
+// FromPoundsPerInch creates a new LinearDensity instance from a value in PoundsPerInch.
 func (uf LinearDensityFactory) FromPoundsPerInch(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityPoundPerInch)
 }
 
-// FromPoundPerFoot creates a new LinearDensity instance from PoundPerFoot.
+// FromPoundsPerFoot creates a new LinearDensity instance from a value in PoundsPerFoot.
 func (uf LinearDensityFactory) FromPoundsPerFoot(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityPoundPerFoot)
 }
 
-// FromGramPerFoot creates a new LinearDensity instance from GramPerFoot.
+// FromGramsPerFoot creates a new LinearDensity instance from a value in GramsPerFoot.
 func (uf LinearDensityFactory) FromGramsPerFoot(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityGramPerFoot)
 }
 
-// FromMicrogramPerMillimeter creates a new LinearDensity instance from MicrogramPerMillimeter.
+// FromMicrogramsPerMillimeter creates a new LinearDensity instance from a value in MicrogramsPerMillimeter.
 func (uf LinearDensityFactory) FromMicrogramsPerMillimeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityMicrogramPerMillimeter)
 }
 
-// FromMilligramPerMillimeter creates a new LinearDensity instance from MilligramPerMillimeter.
+// FromMilligramsPerMillimeter creates a new LinearDensity instance from a value in MilligramsPerMillimeter.
 func (uf LinearDensityFactory) FromMilligramsPerMillimeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityMilligramPerMillimeter)
 }
 
-// FromKilogramPerMillimeter creates a new LinearDensity instance from KilogramPerMillimeter.
+// FromKilogramsPerMillimeter creates a new LinearDensity instance from a value in KilogramsPerMillimeter.
 func (uf LinearDensityFactory) FromKilogramsPerMillimeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityKilogramPerMillimeter)
 }
 
-// FromMicrogramPerCentimeter creates a new LinearDensity instance from MicrogramPerCentimeter.
+// FromMicrogramsPerCentimeter creates a new LinearDensity instance from a value in MicrogramsPerCentimeter.
 func (uf LinearDensityFactory) FromMicrogramsPerCentimeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityMicrogramPerCentimeter)
 }
 
-// FromMilligramPerCentimeter creates a new LinearDensity instance from MilligramPerCentimeter.
+// FromMilligramsPerCentimeter creates a new LinearDensity instance from a value in MilligramsPerCentimeter.
 func (uf LinearDensityFactory) FromMilligramsPerCentimeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityMilligramPerCentimeter)
 }
 
-// FromKilogramPerCentimeter creates a new LinearDensity instance from KilogramPerCentimeter.
+// FromKilogramsPerCentimeter creates a new LinearDensity instance from a value in KilogramsPerCentimeter.
 func (uf LinearDensityFactory) FromKilogramsPerCentimeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityKilogramPerCentimeter)
 }
 
-// FromMicrogramPerMeter creates a new LinearDensity instance from MicrogramPerMeter.
+// FromMicrogramsPerMeter creates a new LinearDensity instance from a value in MicrogramsPerMeter.
 func (uf LinearDensityFactory) FromMicrogramsPerMeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityMicrogramPerMeter)
 }
 
-// FromMilligramPerMeter creates a new LinearDensity instance from MilligramPerMeter.
+// FromMilligramsPerMeter creates a new LinearDensity instance from a value in MilligramsPerMeter.
 func (uf LinearDensityFactory) FromMilligramsPerMeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityMilligramPerMeter)
 }
 
-// FromKilogramPerMeter creates a new LinearDensity instance from KilogramPerMeter.
+// FromKilogramsPerMeter creates a new LinearDensity instance from a value in KilogramsPerMeter.
 func (uf LinearDensityFactory) FromKilogramsPerMeter(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityKilogramPerMeter)
 }
 
-// FromMicrogramPerFoot creates a new LinearDensity instance from MicrogramPerFoot.
+// FromMicrogramsPerFoot creates a new LinearDensity instance from a value in MicrogramsPerFoot.
 func (uf LinearDensityFactory) FromMicrogramsPerFoot(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityMicrogramPerFoot)
 }
 
-// FromMilligramPerFoot creates a new LinearDensity instance from MilligramPerFoot.
+// FromMilligramsPerFoot creates a new LinearDensity instance from a value in MilligramsPerFoot.
 func (uf LinearDensityFactory) FromMilligramsPerFoot(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityMilligramPerFoot)
 }
 
-// FromKilogramPerFoot creates a new LinearDensity instance from KilogramPerFoot.
+// FromKilogramsPerFoot creates a new LinearDensity instance from a value in KilogramsPerFoot.
 func (uf LinearDensityFactory) FromKilogramsPerFoot(value float64) (*LinearDensity, error) {
 	return newLinearDensity(value, LinearDensityKilogramPerFoot)
 }
-
-
 
 
 // newLinearDensity creates a new LinearDensity.
@@ -235,13 +245,15 @@ func newLinearDensity(value float64, fromUnit LinearDensityUnits) (*LinearDensit
 	return a, nil
 }
 
-// BaseValue returns the base value of LinearDensity in KilogramPerMeter.
+// BaseValue returns the base value of LinearDensity in KilogramPerMeter unit (the base/default quantity).
 func (a *LinearDensity) BaseValue() float64 {
 	return a.value
 }
 
 
-// GramPerMillimeter returns the value in GramPerMillimeter.
+// GramsPerMillimeter returns the LinearDensity value in GramsPerMillimeter.
+//
+// 
 func (a *LinearDensity) GramsPerMillimeter() float64 {
 	if a.grams_per_millimeterLazy != nil {
 		return *a.grams_per_millimeterLazy
@@ -251,7 +263,9 @@ func (a *LinearDensity) GramsPerMillimeter() float64 {
 	return grams_per_millimeter
 }
 
-// GramPerCentimeter returns the value in GramPerCentimeter.
+// GramsPerCentimeter returns the LinearDensity value in GramsPerCentimeter.
+//
+// 
 func (a *LinearDensity) GramsPerCentimeter() float64 {
 	if a.grams_per_centimeterLazy != nil {
 		return *a.grams_per_centimeterLazy
@@ -261,7 +275,9 @@ func (a *LinearDensity) GramsPerCentimeter() float64 {
 	return grams_per_centimeter
 }
 
-// GramPerMeter returns the value in GramPerMeter.
+// GramsPerMeter returns the LinearDensity value in GramsPerMeter.
+//
+// 
 func (a *LinearDensity) GramsPerMeter() float64 {
 	if a.grams_per_meterLazy != nil {
 		return *a.grams_per_meterLazy
@@ -271,7 +287,9 @@ func (a *LinearDensity) GramsPerMeter() float64 {
 	return grams_per_meter
 }
 
-// PoundPerInch returns the value in PoundPerInch.
+// PoundsPerInch returns the LinearDensity value in PoundsPerInch.
+//
+// 
 func (a *LinearDensity) PoundsPerInch() float64 {
 	if a.pounds_per_inchLazy != nil {
 		return *a.pounds_per_inchLazy
@@ -281,7 +299,9 @@ func (a *LinearDensity) PoundsPerInch() float64 {
 	return pounds_per_inch
 }
 
-// PoundPerFoot returns the value in PoundPerFoot.
+// PoundsPerFoot returns the LinearDensity value in PoundsPerFoot.
+//
+// 
 func (a *LinearDensity) PoundsPerFoot() float64 {
 	if a.pounds_per_footLazy != nil {
 		return *a.pounds_per_footLazy
@@ -291,7 +311,9 @@ func (a *LinearDensity) PoundsPerFoot() float64 {
 	return pounds_per_foot
 }
 
-// GramPerFoot returns the value in GramPerFoot.
+// GramsPerFoot returns the LinearDensity value in GramsPerFoot.
+//
+// 
 func (a *LinearDensity) GramsPerFoot() float64 {
 	if a.grams_per_footLazy != nil {
 		return *a.grams_per_footLazy
@@ -301,7 +323,9 @@ func (a *LinearDensity) GramsPerFoot() float64 {
 	return grams_per_foot
 }
 
-// MicrogramPerMillimeter returns the value in MicrogramPerMillimeter.
+// MicrogramsPerMillimeter returns the LinearDensity value in MicrogramsPerMillimeter.
+//
+// 
 func (a *LinearDensity) MicrogramsPerMillimeter() float64 {
 	if a.micrograms_per_millimeterLazy != nil {
 		return *a.micrograms_per_millimeterLazy
@@ -311,7 +335,9 @@ func (a *LinearDensity) MicrogramsPerMillimeter() float64 {
 	return micrograms_per_millimeter
 }
 
-// MilligramPerMillimeter returns the value in MilligramPerMillimeter.
+// MilligramsPerMillimeter returns the LinearDensity value in MilligramsPerMillimeter.
+//
+// 
 func (a *LinearDensity) MilligramsPerMillimeter() float64 {
 	if a.milligrams_per_millimeterLazy != nil {
 		return *a.milligrams_per_millimeterLazy
@@ -321,7 +347,9 @@ func (a *LinearDensity) MilligramsPerMillimeter() float64 {
 	return milligrams_per_millimeter
 }
 
-// KilogramPerMillimeter returns the value in KilogramPerMillimeter.
+// KilogramsPerMillimeter returns the LinearDensity value in KilogramsPerMillimeter.
+//
+// 
 func (a *LinearDensity) KilogramsPerMillimeter() float64 {
 	if a.kilograms_per_millimeterLazy != nil {
 		return *a.kilograms_per_millimeterLazy
@@ -331,7 +359,9 @@ func (a *LinearDensity) KilogramsPerMillimeter() float64 {
 	return kilograms_per_millimeter
 }
 
-// MicrogramPerCentimeter returns the value in MicrogramPerCentimeter.
+// MicrogramsPerCentimeter returns the LinearDensity value in MicrogramsPerCentimeter.
+//
+// 
 func (a *LinearDensity) MicrogramsPerCentimeter() float64 {
 	if a.micrograms_per_centimeterLazy != nil {
 		return *a.micrograms_per_centimeterLazy
@@ -341,7 +371,9 @@ func (a *LinearDensity) MicrogramsPerCentimeter() float64 {
 	return micrograms_per_centimeter
 }
 
-// MilligramPerCentimeter returns the value in MilligramPerCentimeter.
+// MilligramsPerCentimeter returns the LinearDensity value in MilligramsPerCentimeter.
+//
+// 
 func (a *LinearDensity) MilligramsPerCentimeter() float64 {
 	if a.milligrams_per_centimeterLazy != nil {
 		return *a.milligrams_per_centimeterLazy
@@ -351,7 +383,9 @@ func (a *LinearDensity) MilligramsPerCentimeter() float64 {
 	return milligrams_per_centimeter
 }
 
-// KilogramPerCentimeter returns the value in KilogramPerCentimeter.
+// KilogramsPerCentimeter returns the LinearDensity value in KilogramsPerCentimeter.
+//
+// 
 func (a *LinearDensity) KilogramsPerCentimeter() float64 {
 	if a.kilograms_per_centimeterLazy != nil {
 		return *a.kilograms_per_centimeterLazy
@@ -361,7 +395,9 @@ func (a *LinearDensity) KilogramsPerCentimeter() float64 {
 	return kilograms_per_centimeter
 }
 
-// MicrogramPerMeter returns the value in MicrogramPerMeter.
+// MicrogramsPerMeter returns the LinearDensity value in MicrogramsPerMeter.
+//
+// 
 func (a *LinearDensity) MicrogramsPerMeter() float64 {
 	if a.micrograms_per_meterLazy != nil {
 		return *a.micrograms_per_meterLazy
@@ -371,7 +407,9 @@ func (a *LinearDensity) MicrogramsPerMeter() float64 {
 	return micrograms_per_meter
 }
 
-// MilligramPerMeter returns the value in MilligramPerMeter.
+// MilligramsPerMeter returns the LinearDensity value in MilligramsPerMeter.
+//
+// 
 func (a *LinearDensity) MilligramsPerMeter() float64 {
 	if a.milligrams_per_meterLazy != nil {
 		return *a.milligrams_per_meterLazy
@@ -381,7 +419,9 @@ func (a *LinearDensity) MilligramsPerMeter() float64 {
 	return milligrams_per_meter
 }
 
-// KilogramPerMeter returns the value in KilogramPerMeter.
+// KilogramsPerMeter returns the LinearDensity value in KilogramsPerMeter.
+//
+// 
 func (a *LinearDensity) KilogramsPerMeter() float64 {
 	if a.kilograms_per_meterLazy != nil {
 		return *a.kilograms_per_meterLazy
@@ -391,7 +431,9 @@ func (a *LinearDensity) KilogramsPerMeter() float64 {
 	return kilograms_per_meter
 }
 
-// MicrogramPerFoot returns the value in MicrogramPerFoot.
+// MicrogramsPerFoot returns the LinearDensity value in MicrogramsPerFoot.
+//
+// 
 func (a *LinearDensity) MicrogramsPerFoot() float64 {
 	if a.micrograms_per_footLazy != nil {
 		return *a.micrograms_per_footLazy
@@ -401,7 +443,9 @@ func (a *LinearDensity) MicrogramsPerFoot() float64 {
 	return micrograms_per_foot
 }
 
-// MilligramPerFoot returns the value in MilligramPerFoot.
+// MilligramsPerFoot returns the LinearDensity value in MilligramsPerFoot.
+//
+// 
 func (a *LinearDensity) MilligramsPerFoot() float64 {
 	if a.milligrams_per_footLazy != nil {
 		return *a.milligrams_per_footLazy
@@ -411,7 +455,9 @@ func (a *LinearDensity) MilligramsPerFoot() float64 {
 	return milligrams_per_foot
 }
 
-// KilogramPerFoot returns the value in KilogramPerFoot.
+// KilogramsPerFoot returns the LinearDensity value in KilogramsPerFoot.
+//
+// 
 func (a *LinearDensity) KilogramsPerFoot() float64 {
 	if a.kilograms_per_footLazy != nil {
 		return *a.kilograms_per_footLazy
@@ -422,7 +468,9 @@ func (a *LinearDensity) KilogramsPerFoot() float64 {
 }
 
 
-// ToDto creates an LinearDensityDto representation.
+// ToDto creates a LinearDensityDto representation from the LinearDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerMeter by default.
 func (a *LinearDensity) ToDto(holdInUnit *LinearDensityUnits) LinearDensityDto {
 	if holdInUnit == nil {
 		defaultUnit := LinearDensityKilogramPerMeter // Default value
@@ -435,12 +483,19 @@ func (a *LinearDensity) ToDto(holdInUnit *LinearDensityUnits) LinearDensityDto {
 	}
 }
 
-// ToDtoJSON creates an LinearDensityDto representation.
+// ToDtoJSON creates a JSON representation of the LinearDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerMeter by default.
 func (a *LinearDensity) ToDtoJSON(holdInUnit *LinearDensityUnits) ([]byte, error) {
+	// Convert to LinearDensityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts LinearDensity to a specific unit value.
+// Convert converts a LinearDensity to a specific unit value.
+// The function uses the provided unit type (LinearDensityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *LinearDensity) Convert(toUnit LinearDensityUnits) float64 {
 	switch toUnit { 
     case LinearDensityGramPerMillimeter:
@@ -480,7 +535,7 @@ func (a *LinearDensity) Convert(toUnit LinearDensityUnits) float64 {
     case LinearDensityKilogramPerFoot:
 		return a.KilogramsPerFoot()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -571,13 +626,22 @@ func (a *LinearDensity) convertToBase(value float64, fromUnit LinearDensityUnits
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the LinearDensity in the default unit (KilogramPerMeter),
+// formatted to two decimal places.
 func (a LinearDensity) String() string {
 	return a.ToString(LinearDensityKilogramPerMeter, 2)
 }
 
-// ToString formats the LinearDensity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the LinearDensity value as a string with the specified unit and fractional digits.
+// It converts the LinearDensity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the LinearDensity value will be converted (e.g., KilogramPerMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the LinearDensity with the unit abbreviation.
 func (a *LinearDensity) ToString(unit LinearDensityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -631,12 +695,26 @@ func (a *LinearDensity) getUnitAbbreviation(unit LinearDensityUnits) string {
 	}
 }
 
-// Check if the given LinearDensity are equals to the current LinearDensity
+// Equals checks if the given LinearDensity is equal to the current LinearDensity.
+//
+// Parameters:
+//    other: The LinearDensity to compare against.
+//
+// Returns:
+//    bool: Returns true if both LinearDensity are equal, false otherwise.
 func (a *LinearDensity) Equals(other *LinearDensity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given LinearDensity are equals to the current LinearDensity
+// CompareTo compares the current LinearDensity with another LinearDensity.
+// It returns -1 if the current LinearDensity is less than the other LinearDensity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The LinearDensity to compare against.
+//
+// Returns:
+//    int: -1 if the current LinearDensity is less, 1 if greater, and 0 if equal.
 func (a *LinearDensity) CompareTo(other *LinearDensity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -649,22 +727,50 @@ func (a *LinearDensity) CompareTo(other *LinearDensity) int {
 	return 0
 }
 
-// Add the given LinearDensity to the current LinearDensity.
+// Add adds the given LinearDensity to the current LinearDensity and returns the result.
+// The result is a new LinearDensity instance with the sum of the values.
+//
+// Parameters:
+//    other: The LinearDensity to add to the current LinearDensity.
+//
+// Returns:
+//    *LinearDensity: A new LinearDensity instance representing the sum of both LinearDensity.
 func (a *LinearDensity) Add(other *LinearDensity) *LinearDensity {
 	return &LinearDensity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given LinearDensity to the current LinearDensity.
+// Subtract subtracts the given LinearDensity from the current LinearDensity and returns the result.
+// The result is a new LinearDensity instance with the difference of the values.
+//
+// Parameters:
+//    other: The LinearDensity to subtract from the current LinearDensity.
+//
+// Returns:
+//    *LinearDensity: A new LinearDensity instance representing the difference of both LinearDensity.
 func (a *LinearDensity) Subtract(other *LinearDensity) *LinearDensity {
 	return &LinearDensity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given LinearDensity to the current LinearDensity.
+// Multiply multiplies the current LinearDensity by the given LinearDensity and returns the result.
+// The result is a new LinearDensity instance with the product of the values.
+//
+// Parameters:
+//    other: The LinearDensity to multiply with the current LinearDensity.
+//
+// Returns:
+//    *LinearDensity: A new LinearDensity instance representing the product of both LinearDensity.
 func (a *LinearDensity) Multiply(other *LinearDensity) *LinearDensity {
 	return &LinearDensity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given LinearDensity to the current LinearDensity.
+// Divide divides the current LinearDensity by the given LinearDensity and returns the result.
+// The result is a new LinearDensity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The LinearDensity to divide the current LinearDensity by.
+//
+// Returns:
+//    *LinearDensity: A new LinearDensity instance representing the quotient of both LinearDensity.
 func (a *LinearDensity) Divide(other *LinearDensity) *LinearDensity {
 	return &LinearDensity{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// HeatFluxUnits enumeration
+// HeatFluxUnits defines various units of HeatFlux.
 type HeatFluxUnits string
 
 const (
@@ -55,19 +55,24 @@ const (
         HeatFluxKilocaloriePerSecondSquareCentimeter HeatFluxUnits = "KilocaloriePerSecondSquareCentimeter"
 )
 
-// HeatFluxDto represents an HeatFlux
+// HeatFluxDto represents a HeatFlux measurement with a numerical value and its corresponding unit.
 type HeatFluxDto struct {
+    // Value is the numerical representation of the HeatFlux.
 	Value float64
+    // Unit specifies the unit of measurement for the HeatFlux, as defined in the HeatFluxUnits enumeration.
 	Unit  HeatFluxUnits
 }
 
-// HeatFluxDtoFactory struct to group related functions
+// HeatFluxDtoFactory groups methods for creating and serializing HeatFluxDto objects.
 type HeatFluxDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a HeatFluxDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf HeatFluxDtoFactory) FromJSON(data []byte) (*HeatFluxDto, error) {
 	a := HeatFluxDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into HeatFluxDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -75,6 +80,9 @@ func (udf HeatFluxDtoFactory) FromJSON(data []byte) (*HeatFluxDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a HeatFluxDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a HeatFluxDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -86,10 +94,11 @@ func (a HeatFluxDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// HeatFlux struct
+// HeatFlux represents a measurement in a of HeatFlux.
+//
+// Heat flux is the flow of energy per unit of area per unit of time
 type HeatFlux struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     watts_per_square_meterLazy *float64 
@@ -112,117 +121,118 @@ type HeatFlux struct {
     kilocalories_per_second_square_centimeterLazy *float64 
 }
 
-// HeatFluxFactory struct to group related functions
+// HeatFluxFactory groups methods for creating HeatFlux instances.
 type HeatFluxFactory struct{}
 
+// CreateHeatFlux creates a new HeatFlux instance from the given value and unit.
 func (uf HeatFluxFactory) CreateHeatFlux(value float64, unit HeatFluxUnits) (*HeatFlux, error) {
 	return newHeatFlux(value, unit)
 }
 
+// FromDto converts a HeatFluxDto to a HeatFlux instance.
 func (uf HeatFluxFactory) FromDto(dto HeatFluxDto) (*HeatFlux, error) {
 	return newHeatFlux(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a HeatFlux instance.
 func (uf HeatFluxFactory) FromDtoJSON(data []byte) (*HeatFlux, error) {
 	unitDto, err := HeatFluxDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse HeatFluxDto from JSON: %w", err)
 	}
 	return HeatFluxFactory{}.FromDto(*unitDto)
 }
 
 
-// FromWattPerSquareMeter creates a new HeatFlux instance from WattPerSquareMeter.
+// FromWattsPerSquareMeter creates a new HeatFlux instance from a value in WattsPerSquareMeter.
 func (uf HeatFluxFactory) FromWattsPerSquareMeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxWattPerSquareMeter)
 }
 
-// FromWattPerSquareInch creates a new HeatFlux instance from WattPerSquareInch.
+// FromWattsPerSquareInch creates a new HeatFlux instance from a value in WattsPerSquareInch.
 func (uf HeatFluxFactory) FromWattsPerSquareInch(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxWattPerSquareInch)
 }
 
-// FromWattPerSquareFoot creates a new HeatFlux instance from WattPerSquareFoot.
+// FromWattsPerSquareFoot creates a new HeatFlux instance from a value in WattsPerSquareFoot.
 func (uf HeatFluxFactory) FromWattsPerSquareFoot(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxWattPerSquareFoot)
 }
 
-// FromBtuPerSecondSquareInch creates a new HeatFlux instance from BtuPerSecondSquareInch.
+// FromBtusPerSecondSquareInch creates a new HeatFlux instance from a value in BtusPerSecondSquareInch.
 func (uf HeatFluxFactory) FromBtusPerSecondSquareInch(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxBtuPerSecondSquareInch)
 }
 
-// FromBtuPerSecondSquareFoot creates a new HeatFlux instance from BtuPerSecondSquareFoot.
+// FromBtusPerSecondSquareFoot creates a new HeatFlux instance from a value in BtusPerSecondSquareFoot.
 func (uf HeatFluxFactory) FromBtusPerSecondSquareFoot(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxBtuPerSecondSquareFoot)
 }
 
-// FromBtuPerMinuteSquareFoot creates a new HeatFlux instance from BtuPerMinuteSquareFoot.
+// FromBtusPerMinuteSquareFoot creates a new HeatFlux instance from a value in BtusPerMinuteSquareFoot.
 func (uf HeatFluxFactory) FromBtusPerMinuteSquareFoot(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxBtuPerMinuteSquareFoot)
 }
 
-// FromBtuPerHourSquareFoot creates a new HeatFlux instance from BtuPerHourSquareFoot.
+// FromBtusPerHourSquareFoot creates a new HeatFlux instance from a value in BtusPerHourSquareFoot.
 func (uf HeatFluxFactory) FromBtusPerHourSquareFoot(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxBtuPerHourSquareFoot)
 }
 
-// FromCaloriePerSecondSquareCentimeter creates a new HeatFlux instance from CaloriePerSecondSquareCentimeter.
+// FromCaloriesPerSecondSquareCentimeter creates a new HeatFlux instance from a value in CaloriesPerSecondSquareCentimeter.
 func (uf HeatFluxFactory) FromCaloriesPerSecondSquareCentimeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxCaloriePerSecondSquareCentimeter)
 }
 
-// FromKilocaloriePerHourSquareMeter creates a new HeatFlux instance from KilocaloriePerHourSquareMeter.
+// FromKilocaloriesPerHourSquareMeter creates a new HeatFlux instance from a value in KilocaloriesPerHourSquareMeter.
 func (uf HeatFluxFactory) FromKilocaloriesPerHourSquareMeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxKilocaloriePerHourSquareMeter)
 }
 
-// FromPoundForcePerFootSecond creates a new HeatFlux instance from PoundForcePerFootSecond.
+// FromPoundsForcePerFootSecond creates a new HeatFlux instance from a value in PoundsForcePerFootSecond.
 func (uf HeatFluxFactory) FromPoundsForcePerFootSecond(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxPoundForcePerFootSecond)
 }
 
-// FromPoundPerSecondCubed creates a new HeatFlux instance from PoundPerSecondCubed.
+// FromPoundsPerSecondCubed creates a new HeatFlux instance from a value in PoundsPerSecondCubed.
 func (uf HeatFluxFactory) FromPoundsPerSecondCubed(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxPoundPerSecondCubed)
 }
 
-// FromNanowattPerSquareMeter creates a new HeatFlux instance from NanowattPerSquareMeter.
+// FromNanowattsPerSquareMeter creates a new HeatFlux instance from a value in NanowattsPerSquareMeter.
 func (uf HeatFluxFactory) FromNanowattsPerSquareMeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxNanowattPerSquareMeter)
 }
 
-// FromMicrowattPerSquareMeter creates a new HeatFlux instance from MicrowattPerSquareMeter.
+// FromMicrowattsPerSquareMeter creates a new HeatFlux instance from a value in MicrowattsPerSquareMeter.
 func (uf HeatFluxFactory) FromMicrowattsPerSquareMeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxMicrowattPerSquareMeter)
 }
 
-// FromMilliwattPerSquareMeter creates a new HeatFlux instance from MilliwattPerSquareMeter.
+// FromMilliwattsPerSquareMeter creates a new HeatFlux instance from a value in MilliwattsPerSquareMeter.
 func (uf HeatFluxFactory) FromMilliwattsPerSquareMeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxMilliwattPerSquareMeter)
 }
 
-// FromCentiwattPerSquareMeter creates a new HeatFlux instance from CentiwattPerSquareMeter.
+// FromCentiwattsPerSquareMeter creates a new HeatFlux instance from a value in CentiwattsPerSquareMeter.
 func (uf HeatFluxFactory) FromCentiwattsPerSquareMeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxCentiwattPerSquareMeter)
 }
 
-// FromDeciwattPerSquareMeter creates a new HeatFlux instance from DeciwattPerSquareMeter.
+// FromDeciwattsPerSquareMeter creates a new HeatFlux instance from a value in DeciwattsPerSquareMeter.
 func (uf HeatFluxFactory) FromDeciwattsPerSquareMeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxDeciwattPerSquareMeter)
 }
 
-// FromKilowattPerSquareMeter creates a new HeatFlux instance from KilowattPerSquareMeter.
+// FromKilowattsPerSquareMeter creates a new HeatFlux instance from a value in KilowattsPerSquareMeter.
 func (uf HeatFluxFactory) FromKilowattsPerSquareMeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxKilowattPerSquareMeter)
 }
 
-// FromKilocaloriePerSecondSquareCentimeter creates a new HeatFlux instance from KilocaloriePerSecondSquareCentimeter.
+// FromKilocaloriesPerSecondSquareCentimeter creates a new HeatFlux instance from a value in KilocaloriesPerSecondSquareCentimeter.
 func (uf HeatFluxFactory) FromKilocaloriesPerSecondSquareCentimeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxKilocaloriePerSecondSquareCentimeter)
 }
-
-
 
 
 // newHeatFlux creates a new HeatFlux.
@@ -235,13 +245,15 @@ func newHeatFlux(value float64, fromUnit HeatFluxUnits) (*HeatFlux, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of HeatFlux in WattPerSquareMeter.
+// BaseValue returns the base value of HeatFlux in WattPerSquareMeter unit (the base/default quantity).
 func (a *HeatFlux) BaseValue() float64 {
 	return a.value
 }
 
 
-// WattPerSquareMeter returns the value in WattPerSquareMeter.
+// WattsPerSquareMeter returns the HeatFlux value in WattsPerSquareMeter.
+//
+// 
 func (a *HeatFlux) WattsPerSquareMeter() float64 {
 	if a.watts_per_square_meterLazy != nil {
 		return *a.watts_per_square_meterLazy
@@ -251,7 +263,9 @@ func (a *HeatFlux) WattsPerSquareMeter() float64 {
 	return watts_per_square_meter
 }
 
-// WattPerSquareInch returns the value in WattPerSquareInch.
+// WattsPerSquareInch returns the HeatFlux value in WattsPerSquareInch.
+//
+// 
 func (a *HeatFlux) WattsPerSquareInch() float64 {
 	if a.watts_per_square_inchLazy != nil {
 		return *a.watts_per_square_inchLazy
@@ -261,7 +275,9 @@ func (a *HeatFlux) WattsPerSquareInch() float64 {
 	return watts_per_square_inch
 }
 
-// WattPerSquareFoot returns the value in WattPerSquareFoot.
+// WattsPerSquareFoot returns the HeatFlux value in WattsPerSquareFoot.
+//
+// 
 func (a *HeatFlux) WattsPerSquareFoot() float64 {
 	if a.watts_per_square_footLazy != nil {
 		return *a.watts_per_square_footLazy
@@ -271,7 +287,9 @@ func (a *HeatFlux) WattsPerSquareFoot() float64 {
 	return watts_per_square_foot
 }
 
-// BtuPerSecondSquareInch returns the value in BtuPerSecondSquareInch.
+// BtusPerSecondSquareInch returns the HeatFlux value in BtusPerSecondSquareInch.
+//
+// 
 func (a *HeatFlux) BtusPerSecondSquareInch() float64 {
 	if a.btus_per_second_square_inchLazy != nil {
 		return *a.btus_per_second_square_inchLazy
@@ -281,7 +299,9 @@ func (a *HeatFlux) BtusPerSecondSquareInch() float64 {
 	return btus_per_second_square_inch
 }
 
-// BtuPerSecondSquareFoot returns the value in BtuPerSecondSquareFoot.
+// BtusPerSecondSquareFoot returns the HeatFlux value in BtusPerSecondSquareFoot.
+//
+// 
 func (a *HeatFlux) BtusPerSecondSquareFoot() float64 {
 	if a.btus_per_second_square_footLazy != nil {
 		return *a.btus_per_second_square_footLazy
@@ -291,7 +311,9 @@ func (a *HeatFlux) BtusPerSecondSquareFoot() float64 {
 	return btus_per_second_square_foot
 }
 
-// BtuPerMinuteSquareFoot returns the value in BtuPerMinuteSquareFoot.
+// BtusPerMinuteSquareFoot returns the HeatFlux value in BtusPerMinuteSquareFoot.
+//
+// 
 func (a *HeatFlux) BtusPerMinuteSquareFoot() float64 {
 	if a.btus_per_minute_square_footLazy != nil {
 		return *a.btus_per_minute_square_footLazy
@@ -301,7 +323,9 @@ func (a *HeatFlux) BtusPerMinuteSquareFoot() float64 {
 	return btus_per_minute_square_foot
 }
 
-// BtuPerHourSquareFoot returns the value in BtuPerHourSquareFoot.
+// BtusPerHourSquareFoot returns the HeatFlux value in BtusPerHourSquareFoot.
+//
+// 
 func (a *HeatFlux) BtusPerHourSquareFoot() float64 {
 	if a.btus_per_hour_square_footLazy != nil {
 		return *a.btus_per_hour_square_footLazy
@@ -311,7 +335,9 @@ func (a *HeatFlux) BtusPerHourSquareFoot() float64 {
 	return btus_per_hour_square_foot
 }
 
-// CaloriePerSecondSquareCentimeter returns the value in CaloriePerSecondSquareCentimeter.
+// CaloriesPerSecondSquareCentimeter returns the HeatFlux value in CaloriesPerSecondSquareCentimeter.
+//
+// 
 func (a *HeatFlux) CaloriesPerSecondSquareCentimeter() float64 {
 	if a.calories_per_second_square_centimeterLazy != nil {
 		return *a.calories_per_second_square_centimeterLazy
@@ -321,7 +347,9 @@ func (a *HeatFlux) CaloriesPerSecondSquareCentimeter() float64 {
 	return calories_per_second_square_centimeter
 }
 
-// KilocaloriePerHourSquareMeter returns the value in KilocaloriePerHourSquareMeter.
+// KilocaloriesPerHourSquareMeter returns the HeatFlux value in KilocaloriesPerHourSquareMeter.
+//
+// 
 func (a *HeatFlux) KilocaloriesPerHourSquareMeter() float64 {
 	if a.kilocalories_per_hour_square_meterLazy != nil {
 		return *a.kilocalories_per_hour_square_meterLazy
@@ -331,7 +359,9 @@ func (a *HeatFlux) KilocaloriesPerHourSquareMeter() float64 {
 	return kilocalories_per_hour_square_meter
 }
 
-// PoundForcePerFootSecond returns the value in PoundForcePerFootSecond.
+// PoundsForcePerFootSecond returns the HeatFlux value in PoundsForcePerFootSecond.
+//
+// 
 func (a *HeatFlux) PoundsForcePerFootSecond() float64 {
 	if a.pounds_force_per_foot_secondLazy != nil {
 		return *a.pounds_force_per_foot_secondLazy
@@ -341,7 +371,9 @@ func (a *HeatFlux) PoundsForcePerFootSecond() float64 {
 	return pounds_force_per_foot_second
 }
 
-// PoundPerSecondCubed returns the value in PoundPerSecondCubed.
+// PoundsPerSecondCubed returns the HeatFlux value in PoundsPerSecondCubed.
+//
+// 
 func (a *HeatFlux) PoundsPerSecondCubed() float64 {
 	if a.pounds_per_second_cubedLazy != nil {
 		return *a.pounds_per_second_cubedLazy
@@ -351,7 +383,9 @@ func (a *HeatFlux) PoundsPerSecondCubed() float64 {
 	return pounds_per_second_cubed
 }
 
-// NanowattPerSquareMeter returns the value in NanowattPerSquareMeter.
+// NanowattsPerSquareMeter returns the HeatFlux value in NanowattsPerSquareMeter.
+//
+// 
 func (a *HeatFlux) NanowattsPerSquareMeter() float64 {
 	if a.nanowatts_per_square_meterLazy != nil {
 		return *a.nanowatts_per_square_meterLazy
@@ -361,7 +395,9 @@ func (a *HeatFlux) NanowattsPerSquareMeter() float64 {
 	return nanowatts_per_square_meter
 }
 
-// MicrowattPerSquareMeter returns the value in MicrowattPerSquareMeter.
+// MicrowattsPerSquareMeter returns the HeatFlux value in MicrowattsPerSquareMeter.
+//
+// 
 func (a *HeatFlux) MicrowattsPerSquareMeter() float64 {
 	if a.microwatts_per_square_meterLazy != nil {
 		return *a.microwatts_per_square_meterLazy
@@ -371,7 +407,9 @@ func (a *HeatFlux) MicrowattsPerSquareMeter() float64 {
 	return microwatts_per_square_meter
 }
 
-// MilliwattPerSquareMeter returns the value in MilliwattPerSquareMeter.
+// MilliwattsPerSquareMeter returns the HeatFlux value in MilliwattsPerSquareMeter.
+//
+// 
 func (a *HeatFlux) MilliwattsPerSquareMeter() float64 {
 	if a.milliwatts_per_square_meterLazy != nil {
 		return *a.milliwatts_per_square_meterLazy
@@ -381,7 +419,9 @@ func (a *HeatFlux) MilliwattsPerSquareMeter() float64 {
 	return milliwatts_per_square_meter
 }
 
-// CentiwattPerSquareMeter returns the value in CentiwattPerSquareMeter.
+// CentiwattsPerSquareMeter returns the HeatFlux value in CentiwattsPerSquareMeter.
+//
+// 
 func (a *HeatFlux) CentiwattsPerSquareMeter() float64 {
 	if a.centiwatts_per_square_meterLazy != nil {
 		return *a.centiwatts_per_square_meterLazy
@@ -391,7 +431,9 @@ func (a *HeatFlux) CentiwattsPerSquareMeter() float64 {
 	return centiwatts_per_square_meter
 }
 
-// DeciwattPerSquareMeter returns the value in DeciwattPerSquareMeter.
+// DeciwattsPerSquareMeter returns the HeatFlux value in DeciwattsPerSquareMeter.
+//
+// 
 func (a *HeatFlux) DeciwattsPerSquareMeter() float64 {
 	if a.deciwatts_per_square_meterLazy != nil {
 		return *a.deciwatts_per_square_meterLazy
@@ -401,7 +443,9 @@ func (a *HeatFlux) DeciwattsPerSquareMeter() float64 {
 	return deciwatts_per_square_meter
 }
 
-// KilowattPerSquareMeter returns the value in KilowattPerSquareMeter.
+// KilowattsPerSquareMeter returns the HeatFlux value in KilowattsPerSquareMeter.
+//
+// 
 func (a *HeatFlux) KilowattsPerSquareMeter() float64 {
 	if a.kilowatts_per_square_meterLazy != nil {
 		return *a.kilowatts_per_square_meterLazy
@@ -411,7 +455,9 @@ func (a *HeatFlux) KilowattsPerSquareMeter() float64 {
 	return kilowatts_per_square_meter
 }
 
-// KilocaloriePerSecondSquareCentimeter returns the value in KilocaloriePerSecondSquareCentimeter.
+// KilocaloriesPerSecondSquareCentimeter returns the HeatFlux value in KilocaloriesPerSecondSquareCentimeter.
+//
+// 
 func (a *HeatFlux) KilocaloriesPerSecondSquareCentimeter() float64 {
 	if a.kilocalories_per_second_square_centimeterLazy != nil {
 		return *a.kilocalories_per_second_square_centimeterLazy
@@ -422,7 +468,9 @@ func (a *HeatFlux) KilocaloriesPerSecondSquareCentimeter() float64 {
 }
 
 
-// ToDto creates an HeatFluxDto representation.
+// ToDto creates a HeatFluxDto representation from the HeatFlux instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerSquareMeter by default.
 func (a *HeatFlux) ToDto(holdInUnit *HeatFluxUnits) HeatFluxDto {
 	if holdInUnit == nil {
 		defaultUnit := HeatFluxWattPerSquareMeter // Default value
@@ -435,12 +483,19 @@ func (a *HeatFlux) ToDto(holdInUnit *HeatFluxUnits) HeatFluxDto {
 	}
 }
 
-// ToDtoJSON creates an HeatFluxDto representation.
+// ToDtoJSON creates a JSON representation of the HeatFlux instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerSquareMeter by default.
 func (a *HeatFlux) ToDtoJSON(holdInUnit *HeatFluxUnits) ([]byte, error) {
+	// Convert to HeatFluxDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts HeatFlux to a specific unit value.
+// Convert converts a HeatFlux to a specific unit value.
+// The function uses the provided unit type (HeatFluxUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *HeatFlux) Convert(toUnit HeatFluxUnits) float64 {
 	switch toUnit { 
     case HeatFluxWattPerSquareMeter:
@@ -480,7 +535,7 @@ func (a *HeatFlux) Convert(toUnit HeatFluxUnits) float64 {
     case HeatFluxKilocaloriePerSecondSquareCentimeter:
 		return a.KilocaloriesPerSecondSquareCentimeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -571,13 +626,22 @@ func (a *HeatFlux) convertToBase(value float64, fromUnit HeatFluxUnits) float64 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the HeatFlux in the default unit (WattPerSquareMeter),
+// formatted to two decimal places.
 func (a HeatFlux) String() string {
 	return a.ToString(HeatFluxWattPerSquareMeter, 2)
 }
 
-// ToString formats the HeatFlux to string.
-// fractionalDigits -1 for not mention
+// ToString formats the HeatFlux value as a string with the specified unit and fractional digits.
+// It converts the HeatFlux to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the HeatFlux value will be converted (e.g., WattPerSquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the HeatFlux with the unit abbreviation.
 func (a *HeatFlux) ToString(unit HeatFluxUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -631,12 +695,26 @@ func (a *HeatFlux) getUnitAbbreviation(unit HeatFluxUnits) string {
 	}
 }
 
-// Check if the given HeatFlux are equals to the current HeatFlux
+// Equals checks if the given HeatFlux is equal to the current HeatFlux.
+//
+// Parameters:
+//    other: The HeatFlux to compare against.
+//
+// Returns:
+//    bool: Returns true if both HeatFlux are equal, false otherwise.
 func (a *HeatFlux) Equals(other *HeatFlux) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given HeatFlux are equals to the current HeatFlux
+// CompareTo compares the current HeatFlux with another HeatFlux.
+// It returns -1 if the current HeatFlux is less than the other HeatFlux, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The HeatFlux to compare against.
+//
+// Returns:
+//    int: -1 if the current HeatFlux is less, 1 if greater, and 0 if equal.
 func (a *HeatFlux) CompareTo(other *HeatFlux) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -649,22 +727,50 @@ func (a *HeatFlux) CompareTo(other *HeatFlux) int {
 	return 0
 }
 
-// Add the given HeatFlux to the current HeatFlux.
+// Add adds the given HeatFlux to the current HeatFlux and returns the result.
+// The result is a new HeatFlux instance with the sum of the values.
+//
+// Parameters:
+//    other: The HeatFlux to add to the current HeatFlux.
+//
+// Returns:
+//    *HeatFlux: A new HeatFlux instance representing the sum of both HeatFlux.
 func (a *HeatFlux) Add(other *HeatFlux) *HeatFlux {
 	return &HeatFlux{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given HeatFlux to the current HeatFlux.
+// Subtract subtracts the given HeatFlux from the current HeatFlux and returns the result.
+// The result is a new HeatFlux instance with the difference of the values.
+//
+// Parameters:
+//    other: The HeatFlux to subtract from the current HeatFlux.
+//
+// Returns:
+//    *HeatFlux: A new HeatFlux instance representing the difference of both HeatFlux.
 func (a *HeatFlux) Subtract(other *HeatFlux) *HeatFlux {
 	return &HeatFlux{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given HeatFlux to the current HeatFlux.
+// Multiply multiplies the current HeatFlux by the given HeatFlux and returns the result.
+// The result is a new HeatFlux instance with the product of the values.
+//
+// Parameters:
+//    other: The HeatFlux to multiply with the current HeatFlux.
+//
+// Returns:
+//    *HeatFlux: A new HeatFlux instance representing the product of both HeatFlux.
 func (a *HeatFlux) Multiply(other *HeatFlux) *HeatFlux {
 	return &HeatFlux{value: a.value * other.BaseValue()}
 }
 
-// Divide the given HeatFlux to the current HeatFlux.
+// Divide divides the current HeatFlux by the given HeatFlux and returns the result.
+// The result is a new HeatFlux instance with the quotient of the values.
+//
+// Parameters:
+//    other: The HeatFlux to divide the current HeatFlux by.
+//
+// Returns:
+//    *HeatFlux: A new HeatFlux instance representing the quotient of both HeatFlux.
 func (a *HeatFlux) Divide(other *HeatFlux) *HeatFlux {
 	return &HeatFlux{value: a.value / other.BaseValue()}
 }

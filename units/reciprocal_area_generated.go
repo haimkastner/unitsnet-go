@@ -12,7 +12,7 @@ import (
 
 
 
-// ReciprocalAreaUnits enumeration
+// ReciprocalAreaUnits defines various units of ReciprocalArea.
 type ReciprocalAreaUnits string
 
 const (
@@ -41,19 +41,24 @@ const (
         ReciprocalAreaInverseSquareInch ReciprocalAreaUnits = "InverseSquareInch"
 )
 
-// ReciprocalAreaDto represents an ReciprocalArea
+// ReciprocalAreaDto represents a ReciprocalArea measurement with a numerical value and its corresponding unit.
 type ReciprocalAreaDto struct {
+    // Value is the numerical representation of the ReciprocalArea.
 	Value float64
+    // Unit specifies the unit of measurement for the ReciprocalArea, as defined in the ReciprocalAreaUnits enumeration.
 	Unit  ReciprocalAreaUnits
 }
 
-// ReciprocalAreaDtoFactory struct to group related functions
+// ReciprocalAreaDtoFactory groups methods for creating and serializing ReciprocalAreaDto objects.
 type ReciprocalAreaDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ReciprocalAreaDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ReciprocalAreaDtoFactory) FromJSON(data []byte) (*ReciprocalAreaDto, error) {
 	a := ReciprocalAreaDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ReciprocalAreaDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -61,6 +66,9 @@ func (udf ReciprocalAreaDtoFactory) FromJSON(data []byte) (*ReciprocalAreaDto, e
 	return &a, nil
 }
 
+// ToJSON serializes a ReciprocalAreaDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ReciprocalAreaDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -72,10 +80,11 @@ func (a ReciprocalAreaDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ReciprocalArea struct
+// ReciprocalArea represents a measurement in a of ReciprocalArea.
+//
+// Reciprocal area (Inverse-square) quantity is used to specify a physical quantity inversely proportional to the square of the distance.
 type ReciprocalArea struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     inverse_square_metersLazy *float64 
@@ -91,82 +100,83 @@ type ReciprocalArea struct {
     inverse_square_inchesLazy *float64 
 }
 
-// ReciprocalAreaFactory struct to group related functions
+// ReciprocalAreaFactory groups methods for creating ReciprocalArea instances.
 type ReciprocalAreaFactory struct{}
 
+// CreateReciprocalArea creates a new ReciprocalArea instance from the given value and unit.
 func (uf ReciprocalAreaFactory) CreateReciprocalArea(value float64, unit ReciprocalAreaUnits) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, unit)
 }
 
+// FromDto converts a ReciprocalAreaDto to a ReciprocalArea instance.
 func (uf ReciprocalAreaFactory) FromDto(dto ReciprocalAreaDto) (*ReciprocalArea, error) {
 	return newReciprocalArea(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ReciprocalArea instance.
 func (uf ReciprocalAreaFactory) FromDtoJSON(data []byte) (*ReciprocalArea, error) {
 	unitDto, err := ReciprocalAreaDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ReciprocalAreaDto from JSON: %w", err)
 	}
 	return ReciprocalAreaFactory{}.FromDto(*unitDto)
 }
 
 
-// FromInverseSquareMeter creates a new ReciprocalArea instance from InverseSquareMeter.
+// FromInverseSquareMeters creates a new ReciprocalArea instance from a value in InverseSquareMeters.
 func (uf ReciprocalAreaFactory) FromInverseSquareMeters(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareMeter)
 }
 
-// FromInverseSquareKilometer creates a new ReciprocalArea instance from InverseSquareKilometer.
+// FromInverseSquareKilometers creates a new ReciprocalArea instance from a value in InverseSquareKilometers.
 func (uf ReciprocalAreaFactory) FromInverseSquareKilometers(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareKilometer)
 }
 
-// FromInverseSquareDecimeter creates a new ReciprocalArea instance from InverseSquareDecimeter.
+// FromInverseSquareDecimeters creates a new ReciprocalArea instance from a value in InverseSquareDecimeters.
 func (uf ReciprocalAreaFactory) FromInverseSquareDecimeters(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareDecimeter)
 }
 
-// FromInverseSquareCentimeter creates a new ReciprocalArea instance from InverseSquareCentimeter.
+// FromInverseSquareCentimeters creates a new ReciprocalArea instance from a value in InverseSquareCentimeters.
 func (uf ReciprocalAreaFactory) FromInverseSquareCentimeters(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareCentimeter)
 }
 
-// FromInverseSquareMillimeter creates a new ReciprocalArea instance from InverseSquareMillimeter.
+// FromInverseSquareMillimeters creates a new ReciprocalArea instance from a value in InverseSquareMillimeters.
 func (uf ReciprocalAreaFactory) FromInverseSquareMillimeters(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareMillimeter)
 }
 
-// FromInverseSquareMicrometer creates a new ReciprocalArea instance from InverseSquareMicrometer.
+// FromInverseSquareMicrometers creates a new ReciprocalArea instance from a value in InverseSquareMicrometers.
 func (uf ReciprocalAreaFactory) FromInverseSquareMicrometers(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareMicrometer)
 }
 
-// FromInverseSquareMile creates a new ReciprocalArea instance from InverseSquareMile.
+// FromInverseSquareMiles creates a new ReciprocalArea instance from a value in InverseSquareMiles.
 func (uf ReciprocalAreaFactory) FromInverseSquareMiles(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareMile)
 }
 
-// FromInverseSquareYard creates a new ReciprocalArea instance from InverseSquareYard.
+// FromInverseSquareYards creates a new ReciprocalArea instance from a value in InverseSquareYards.
 func (uf ReciprocalAreaFactory) FromInverseSquareYards(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareYard)
 }
 
-// FromInverseSquareFoot creates a new ReciprocalArea instance from InverseSquareFoot.
+// FromInverseSquareFeet creates a new ReciprocalArea instance from a value in InverseSquareFeet.
 func (uf ReciprocalAreaFactory) FromInverseSquareFeet(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareFoot)
 }
 
-// FromInverseUsSurveySquareFoot creates a new ReciprocalArea instance from InverseUsSurveySquareFoot.
+// FromInverseUsSurveySquareFeet creates a new ReciprocalArea instance from a value in InverseUsSurveySquareFeet.
 func (uf ReciprocalAreaFactory) FromInverseUsSurveySquareFeet(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseUsSurveySquareFoot)
 }
 
-// FromInverseSquareInch creates a new ReciprocalArea instance from InverseSquareInch.
+// FromInverseSquareInches creates a new ReciprocalArea instance from a value in InverseSquareInches.
 func (uf ReciprocalAreaFactory) FromInverseSquareInches(value float64) (*ReciprocalArea, error) {
 	return newReciprocalArea(value, ReciprocalAreaInverseSquareInch)
 }
-
-
 
 
 // newReciprocalArea creates a new ReciprocalArea.
@@ -179,13 +189,15 @@ func newReciprocalArea(value float64, fromUnit ReciprocalAreaUnits) (*Reciprocal
 	return a, nil
 }
 
-// BaseValue returns the base value of ReciprocalArea in InverseSquareMeter.
+// BaseValue returns the base value of ReciprocalArea in InverseSquareMeter unit (the base/default quantity).
 func (a *ReciprocalArea) BaseValue() float64 {
 	return a.value
 }
 
 
-// InverseSquareMeter returns the value in InverseSquareMeter.
+// InverseSquareMeters returns the ReciprocalArea value in InverseSquareMeters.
+//
+// 
 func (a *ReciprocalArea) InverseSquareMeters() float64 {
 	if a.inverse_square_metersLazy != nil {
 		return *a.inverse_square_metersLazy
@@ -195,7 +207,9 @@ func (a *ReciprocalArea) InverseSquareMeters() float64 {
 	return inverse_square_meters
 }
 
-// InverseSquareKilometer returns the value in InverseSquareKilometer.
+// InverseSquareKilometers returns the ReciprocalArea value in InverseSquareKilometers.
+//
+// 
 func (a *ReciprocalArea) InverseSquareKilometers() float64 {
 	if a.inverse_square_kilometersLazy != nil {
 		return *a.inverse_square_kilometersLazy
@@ -205,7 +219,9 @@ func (a *ReciprocalArea) InverseSquareKilometers() float64 {
 	return inverse_square_kilometers
 }
 
-// InverseSquareDecimeter returns the value in InverseSquareDecimeter.
+// InverseSquareDecimeters returns the ReciprocalArea value in InverseSquareDecimeters.
+//
+// 
 func (a *ReciprocalArea) InverseSquareDecimeters() float64 {
 	if a.inverse_square_decimetersLazy != nil {
 		return *a.inverse_square_decimetersLazy
@@ -215,7 +231,9 @@ func (a *ReciprocalArea) InverseSquareDecimeters() float64 {
 	return inverse_square_decimeters
 }
 
-// InverseSquareCentimeter returns the value in InverseSquareCentimeter.
+// InverseSquareCentimeters returns the ReciprocalArea value in InverseSquareCentimeters.
+//
+// 
 func (a *ReciprocalArea) InverseSquareCentimeters() float64 {
 	if a.inverse_square_centimetersLazy != nil {
 		return *a.inverse_square_centimetersLazy
@@ -225,7 +243,9 @@ func (a *ReciprocalArea) InverseSquareCentimeters() float64 {
 	return inverse_square_centimeters
 }
 
-// InverseSquareMillimeter returns the value in InverseSquareMillimeter.
+// InverseSquareMillimeters returns the ReciprocalArea value in InverseSquareMillimeters.
+//
+// 
 func (a *ReciprocalArea) InverseSquareMillimeters() float64 {
 	if a.inverse_square_millimetersLazy != nil {
 		return *a.inverse_square_millimetersLazy
@@ -235,7 +255,9 @@ func (a *ReciprocalArea) InverseSquareMillimeters() float64 {
 	return inverse_square_millimeters
 }
 
-// InverseSquareMicrometer returns the value in InverseSquareMicrometer.
+// InverseSquareMicrometers returns the ReciprocalArea value in InverseSquareMicrometers.
+//
+// 
 func (a *ReciprocalArea) InverseSquareMicrometers() float64 {
 	if a.inverse_square_micrometersLazy != nil {
 		return *a.inverse_square_micrometersLazy
@@ -245,7 +267,9 @@ func (a *ReciprocalArea) InverseSquareMicrometers() float64 {
 	return inverse_square_micrometers
 }
 
-// InverseSquareMile returns the value in InverseSquareMile.
+// InverseSquareMiles returns the ReciprocalArea value in InverseSquareMiles.
+//
+// 
 func (a *ReciprocalArea) InverseSquareMiles() float64 {
 	if a.inverse_square_milesLazy != nil {
 		return *a.inverse_square_milesLazy
@@ -255,7 +279,9 @@ func (a *ReciprocalArea) InverseSquareMiles() float64 {
 	return inverse_square_miles
 }
 
-// InverseSquareYard returns the value in InverseSquareYard.
+// InverseSquareYards returns the ReciprocalArea value in InverseSquareYards.
+//
+// 
 func (a *ReciprocalArea) InverseSquareYards() float64 {
 	if a.inverse_square_yardsLazy != nil {
 		return *a.inverse_square_yardsLazy
@@ -265,7 +291,9 @@ func (a *ReciprocalArea) InverseSquareYards() float64 {
 	return inverse_square_yards
 }
 
-// InverseSquareFoot returns the value in InverseSquareFoot.
+// InverseSquareFeet returns the ReciprocalArea value in InverseSquareFeet.
+//
+// 
 func (a *ReciprocalArea) InverseSquareFeet() float64 {
 	if a.inverse_square_feetLazy != nil {
 		return *a.inverse_square_feetLazy
@@ -275,7 +303,9 @@ func (a *ReciprocalArea) InverseSquareFeet() float64 {
 	return inverse_square_feet
 }
 
-// InverseUsSurveySquareFoot returns the value in InverseUsSurveySquareFoot.
+// InverseUsSurveySquareFeet returns the ReciprocalArea value in InverseUsSurveySquareFeet.
+//
+// 
 func (a *ReciprocalArea) InverseUsSurveySquareFeet() float64 {
 	if a.inverse_us_survey_square_feetLazy != nil {
 		return *a.inverse_us_survey_square_feetLazy
@@ -285,7 +315,9 @@ func (a *ReciprocalArea) InverseUsSurveySquareFeet() float64 {
 	return inverse_us_survey_square_feet
 }
 
-// InverseSquareInch returns the value in InverseSquareInch.
+// InverseSquareInches returns the ReciprocalArea value in InverseSquareInches.
+//
+// 
 func (a *ReciprocalArea) InverseSquareInches() float64 {
 	if a.inverse_square_inchesLazy != nil {
 		return *a.inverse_square_inchesLazy
@@ -296,7 +328,9 @@ func (a *ReciprocalArea) InverseSquareInches() float64 {
 }
 
 
-// ToDto creates an ReciprocalAreaDto representation.
+// ToDto creates a ReciprocalAreaDto representation from the ReciprocalArea instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by InverseSquareMeter by default.
 func (a *ReciprocalArea) ToDto(holdInUnit *ReciprocalAreaUnits) ReciprocalAreaDto {
 	if holdInUnit == nil {
 		defaultUnit := ReciprocalAreaInverseSquareMeter // Default value
@@ -309,12 +343,19 @@ func (a *ReciprocalArea) ToDto(holdInUnit *ReciprocalAreaUnits) ReciprocalAreaDt
 	}
 }
 
-// ToDtoJSON creates an ReciprocalAreaDto representation.
+// ToDtoJSON creates a JSON representation of the ReciprocalArea instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by InverseSquareMeter by default.
 func (a *ReciprocalArea) ToDtoJSON(holdInUnit *ReciprocalAreaUnits) ([]byte, error) {
+	// Convert to ReciprocalAreaDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ReciprocalArea to a specific unit value.
+// Convert converts a ReciprocalArea to a specific unit value.
+// The function uses the provided unit type (ReciprocalAreaUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ReciprocalArea) Convert(toUnit ReciprocalAreaUnits) float64 {
 	switch toUnit { 
     case ReciprocalAreaInverseSquareMeter:
@@ -340,7 +381,7 @@ func (a *ReciprocalArea) Convert(toUnit ReciprocalAreaUnits) float64 {
     case ReciprocalAreaInverseSquareInch:
 		return a.InverseSquareInches()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -403,13 +444,22 @@ func (a *ReciprocalArea) convertToBase(value float64, fromUnit ReciprocalAreaUni
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ReciprocalArea in the default unit (InverseSquareMeter),
+// formatted to two decimal places.
 func (a ReciprocalArea) String() string {
 	return a.ToString(ReciprocalAreaInverseSquareMeter, 2)
 }
 
-// ToString formats the ReciprocalArea to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ReciprocalArea value as a string with the specified unit and fractional digits.
+// It converts the ReciprocalArea to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ReciprocalArea value will be converted (e.g., InverseSquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ReciprocalArea with the unit abbreviation.
 func (a *ReciprocalArea) ToString(unit ReciprocalAreaUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -449,12 +499,26 @@ func (a *ReciprocalArea) getUnitAbbreviation(unit ReciprocalAreaUnits) string {
 	}
 }
 
-// Check if the given ReciprocalArea are equals to the current ReciprocalArea
+// Equals checks if the given ReciprocalArea is equal to the current ReciprocalArea.
+//
+// Parameters:
+//    other: The ReciprocalArea to compare against.
+//
+// Returns:
+//    bool: Returns true if both ReciprocalArea are equal, false otherwise.
 func (a *ReciprocalArea) Equals(other *ReciprocalArea) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ReciprocalArea are equals to the current ReciprocalArea
+// CompareTo compares the current ReciprocalArea with another ReciprocalArea.
+// It returns -1 if the current ReciprocalArea is less than the other ReciprocalArea, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ReciprocalArea to compare against.
+//
+// Returns:
+//    int: -1 if the current ReciprocalArea is less, 1 if greater, and 0 if equal.
 func (a *ReciprocalArea) CompareTo(other *ReciprocalArea) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -467,22 +531,50 @@ func (a *ReciprocalArea) CompareTo(other *ReciprocalArea) int {
 	return 0
 }
 
-// Add the given ReciprocalArea to the current ReciprocalArea.
+// Add adds the given ReciprocalArea to the current ReciprocalArea and returns the result.
+// The result is a new ReciprocalArea instance with the sum of the values.
+//
+// Parameters:
+//    other: The ReciprocalArea to add to the current ReciprocalArea.
+//
+// Returns:
+//    *ReciprocalArea: A new ReciprocalArea instance representing the sum of both ReciprocalArea.
 func (a *ReciprocalArea) Add(other *ReciprocalArea) *ReciprocalArea {
 	return &ReciprocalArea{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ReciprocalArea to the current ReciprocalArea.
+// Subtract subtracts the given ReciprocalArea from the current ReciprocalArea and returns the result.
+// The result is a new ReciprocalArea instance with the difference of the values.
+//
+// Parameters:
+//    other: The ReciprocalArea to subtract from the current ReciprocalArea.
+//
+// Returns:
+//    *ReciprocalArea: A new ReciprocalArea instance representing the difference of both ReciprocalArea.
 func (a *ReciprocalArea) Subtract(other *ReciprocalArea) *ReciprocalArea {
 	return &ReciprocalArea{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ReciprocalArea to the current ReciprocalArea.
+// Multiply multiplies the current ReciprocalArea by the given ReciprocalArea and returns the result.
+// The result is a new ReciprocalArea instance with the product of the values.
+//
+// Parameters:
+//    other: The ReciprocalArea to multiply with the current ReciprocalArea.
+//
+// Returns:
+//    *ReciprocalArea: A new ReciprocalArea instance representing the product of both ReciprocalArea.
 func (a *ReciprocalArea) Multiply(other *ReciprocalArea) *ReciprocalArea {
 	return &ReciprocalArea{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ReciprocalArea to the current ReciprocalArea.
+// Divide divides the current ReciprocalArea by the given ReciprocalArea and returns the result.
+// The result is a new ReciprocalArea instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ReciprocalArea to divide the current ReciprocalArea by.
+//
+// Returns:
+//    *ReciprocalArea: A new ReciprocalArea instance representing the quotient of both ReciprocalArea.
 func (a *ReciprocalArea) Divide(other *ReciprocalArea) *ReciprocalArea {
 	return &ReciprocalArea{value: a.value / other.BaseValue()}
 }

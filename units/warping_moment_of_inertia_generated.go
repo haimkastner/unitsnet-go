@@ -12,7 +12,7 @@ import (
 
 
 
-// WarpingMomentOfInertiaUnits enumeration
+// WarpingMomentOfInertiaUnits defines various units of WarpingMomentOfInertia.
 type WarpingMomentOfInertiaUnits string
 
 const (
@@ -31,19 +31,24 @@ const (
         WarpingMomentOfInertiaInchToTheSixth WarpingMomentOfInertiaUnits = "InchToTheSixth"
 )
 
-// WarpingMomentOfInertiaDto represents an WarpingMomentOfInertia
+// WarpingMomentOfInertiaDto represents a WarpingMomentOfInertia measurement with a numerical value and its corresponding unit.
 type WarpingMomentOfInertiaDto struct {
+    // Value is the numerical representation of the WarpingMomentOfInertia.
 	Value float64
+    // Unit specifies the unit of measurement for the WarpingMomentOfInertia, as defined in the WarpingMomentOfInertiaUnits enumeration.
 	Unit  WarpingMomentOfInertiaUnits
 }
 
-// WarpingMomentOfInertiaDtoFactory struct to group related functions
+// WarpingMomentOfInertiaDtoFactory groups methods for creating and serializing WarpingMomentOfInertiaDto objects.
 type WarpingMomentOfInertiaDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a WarpingMomentOfInertiaDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf WarpingMomentOfInertiaDtoFactory) FromJSON(data []byte) (*WarpingMomentOfInertiaDto, error) {
 	a := WarpingMomentOfInertiaDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into WarpingMomentOfInertiaDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -51,6 +56,9 @@ func (udf WarpingMomentOfInertiaDtoFactory) FromJSON(data []byte) (*WarpingMomen
 	return &a, nil
 }
 
+// ToJSON serializes a WarpingMomentOfInertiaDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a WarpingMomentOfInertiaDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -62,10 +70,11 @@ func (a WarpingMomentOfInertiaDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// WarpingMomentOfInertia struct
+// WarpingMomentOfInertia represents a measurement in a of WarpingMomentOfInertia.
+//
+// A geometric property of an area that is used to determine the warping stress.
 type WarpingMomentOfInertia struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     meters_to_the_sixthLazy *float64 
@@ -76,57 +85,58 @@ type WarpingMomentOfInertia struct {
     inches_to_the_sixthLazy *float64 
 }
 
-// WarpingMomentOfInertiaFactory struct to group related functions
+// WarpingMomentOfInertiaFactory groups methods for creating WarpingMomentOfInertia instances.
 type WarpingMomentOfInertiaFactory struct{}
 
+// CreateWarpingMomentOfInertia creates a new WarpingMomentOfInertia instance from the given value and unit.
 func (uf WarpingMomentOfInertiaFactory) CreateWarpingMomentOfInertia(value float64, unit WarpingMomentOfInertiaUnits) (*WarpingMomentOfInertia, error) {
 	return newWarpingMomentOfInertia(value, unit)
 }
 
+// FromDto converts a WarpingMomentOfInertiaDto to a WarpingMomentOfInertia instance.
 func (uf WarpingMomentOfInertiaFactory) FromDto(dto WarpingMomentOfInertiaDto) (*WarpingMomentOfInertia, error) {
 	return newWarpingMomentOfInertia(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a WarpingMomentOfInertia instance.
 func (uf WarpingMomentOfInertiaFactory) FromDtoJSON(data []byte) (*WarpingMomentOfInertia, error) {
 	unitDto, err := WarpingMomentOfInertiaDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse WarpingMomentOfInertiaDto from JSON: %w", err)
 	}
 	return WarpingMomentOfInertiaFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMeterToTheSixth creates a new WarpingMomentOfInertia instance from MeterToTheSixth.
+// FromMetersToTheSixth creates a new WarpingMomentOfInertia instance from a value in MetersToTheSixth.
 func (uf WarpingMomentOfInertiaFactory) FromMetersToTheSixth(value float64) (*WarpingMomentOfInertia, error) {
 	return newWarpingMomentOfInertia(value, WarpingMomentOfInertiaMeterToTheSixth)
 }
 
-// FromDecimeterToTheSixth creates a new WarpingMomentOfInertia instance from DecimeterToTheSixth.
+// FromDecimetersToTheSixth creates a new WarpingMomentOfInertia instance from a value in DecimetersToTheSixth.
 func (uf WarpingMomentOfInertiaFactory) FromDecimetersToTheSixth(value float64) (*WarpingMomentOfInertia, error) {
 	return newWarpingMomentOfInertia(value, WarpingMomentOfInertiaDecimeterToTheSixth)
 }
 
-// FromCentimeterToTheSixth creates a new WarpingMomentOfInertia instance from CentimeterToTheSixth.
+// FromCentimetersToTheSixth creates a new WarpingMomentOfInertia instance from a value in CentimetersToTheSixth.
 func (uf WarpingMomentOfInertiaFactory) FromCentimetersToTheSixth(value float64) (*WarpingMomentOfInertia, error) {
 	return newWarpingMomentOfInertia(value, WarpingMomentOfInertiaCentimeterToTheSixth)
 }
 
-// FromMillimeterToTheSixth creates a new WarpingMomentOfInertia instance from MillimeterToTheSixth.
+// FromMillimetersToTheSixth creates a new WarpingMomentOfInertia instance from a value in MillimetersToTheSixth.
 func (uf WarpingMomentOfInertiaFactory) FromMillimetersToTheSixth(value float64) (*WarpingMomentOfInertia, error) {
 	return newWarpingMomentOfInertia(value, WarpingMomentOfInertiaMillimeterToTheSixth)
 }
 
-// FromFootToTheSixth creates a new WarpingMomentOfInertia instance from FootToTheSixth.
+// FromFeetToTheSixth creates a new WarpingMomentOfInertia instance from a value in FeetToTheSixth.
 func (uf WarpingMomentOfInertiaFactory) FromFeetToTheSixth(value float64) (*WarpingMomentOfInertia, error) {
 	return newWarpingMomentOfInertia(value, WarpingMomentOfInertiaFootToTheSixth)
 }
 
-// FromInchToTheSixth creates a new WarpingMomentOfInertia instance from InchToTheSixth.
+// FromInchesToTheSixth creates a new WarpingMomentOfInertia instance from a value in InchesToTheSixth.
 func (uf WarpingMomentOfInertiaFactory) FromInchesToTheSixth(value float64) (*WarpingMomentOfInertia, error) {
 	return newWarpingMomentOfInertia(value, WarpingMomentOfInertiaInchToTheSixth)
 }
-
-
 
 
 // newWarpingMomentOfInertia creates a new WarpingMomentOfInertia.
@@ -139,13 +149,15 @@ func newWarpingMomentOfInertia(value float64, fromUnit WarpingMomentOfInertiaUni
 	return a, nil
 }
 
-// BaseValue returns the base value of WarpingMomentOfInertia in MeterToTheSixth.
+// BaseValue returns the base value of WarpingMomentOfInertia in MeterToTheSixth unit (the base/default quantity).
 func (a *WarpingMomentOfInertia) BaseValue() float64 {
 	return a.value
 }
 
 
-// MeterToTheSixth returns the value in MeterToTheSixth.
+// MetersToTheSixth returns the WarpingMomentOfInertia value in MetersToTheSixth.
+//
+// 
 func (a *WarpingMomentOfInertia) MetersToTheSixth() float64 {
 	if a.meters_to_the_sixthLazy != nil {
 		return *a.meters_to_the_sixthLazy
@@ -155,7 +167,9 @@ func (a *WarpingMomentOfInertia) MetersToTheSixth() float64 {
 	return meters_to_the_sixth
 }
 
-// DecimeterToTheSixth returns the value in DecimeterToTheSixth.
+// DecimetersToTheSixth returns the WarpingMomentOfInertia value in DecimetersToTheSixth.
+//
+// 
 func (a *WarpingMomentOfInertia) DecimetersToTheSixth() float64 {
 	if a.decimeters_to_the_sixthLazy != nil {
 		return *a.decimeters_to_the_sixthLazy
@@ -165,7 +179,9 @@ func (a *WarpingMomentOfInertia) DecimetersToTheSixth() float64 {
 	return decimeters_to_the_sixth
 }
 
-// CentimeterToTheSixth returns the value in CentimeterToTheSixth.
+// CentimetersToTheSixth returns the WarpingMomentOfInertia value in CentimetersToTheSixth.
+//
+// 
 func (a *WarpingMomentOfInertia) CentimetersToTheSixth() float64 {
 	if a.centimeters_to_the_sixthLazy != nil {
 		return *a.centimeters_to_the_sixthLazy
@@ -175,7 +191,9 @@ func (a *WarpingMomentOfInertia) CentimetersToTheSixth() float64 {
 	return centimeters_to_the_sixth
 }
 
-// MillimeterToTheSixth returns the value in MillimeterToTheSixth.
+// MillimetersToTheSixth returns the WarpingMomentOfInertia value in MillimetersToTheSixth.
+//
+// 
 func (a *WarpingMomentOfInertia) MillimetersToTheSixth() float64 {
 	if a.millimeters_to_the_sixthLazy != nil {
 		return *a.millimeters_to_the_sixthLazy
@@ -185,7 +203,9 @@ func (a *WarpingMomentOfInertia) MillimetersToTheSixth() float64 {
 	return millimeters_to_the_sixth
 }
 
-// FootToTheSixth returns the value in FootToTheSixth.
+// FeetToTheSixth returns the WarpingMomentOfInertia value in FeetToTheSixth.
+//
+// 
 func (a *WarpingMomentOfInertia) FeetToTheSixth() float64 {
 	if a.feet_to_the_sixthLazy != nil {
 		return *a.feet_to_the_sixthLazy
@@ -195,7 +215,9 @@ func (a *WarpingMomentOfInertia) FeetToTheSixth() float64 {
 	return feet_to_the_sixth
 }
 
-// InchToTheSixth returns the value in InchToTheSixth.
+// InchesToTheSixth returns the WarpingMomentOfInertia value in InchesToTheSixth.
+//
+// 
 func (a *WarpingMomentOfInertia) InchesToTheSixth() float64 {
 	if a.inches_to_the_sixthLazy != nil {
 		return *a.inches_to_the_sixthLazy
@@ -206,7 +228,9 @@ func (a *WarpingMomentOfInertia) InchesToTheSixth() float64 {
 }
 
 
-// ToDto creates an WarpingMomentOfInertiaDto representation.
+// ToDto creates a WarpingMomentOfInertiaDto representation from the WarpingMomentOfInertia instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterToTheSixth by default.
 func (a *WarpingMomentOfInertia) ToDto(holdInUnit *WarpingMomentOfInertiaUnits) WarpingMomentOfInertiaDto {
 	if holdInUnit == nil {
 		defaultUnit := WarpingMomentOfInertiaMeterToTheSixth // Default value
@@ -219,12 +243,19 @@ func (a *WarpingMomentOfInertia) ToDto(holdInUnit *WarpingMomentOfInertiaUnits) 
 	}
 }
 
-// ToDtoJSON creates an WarpingMomentOfInertiaDto representation.
+// ToDtoJSON creates a JSON representation of the WarpingMomentOfInertia instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterToTheSixth by default.
 func (a *WarpingMomentOfInertia) ToDtoJSON(holdInUnit *WarpingMomentOfInertiaUnits) ([]byte, error) {
+	// Convert to WarpingMomentOfInertiaDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts WarpingMomentOfInertia to a specific unit value.
+// Convert converts a WarpingMomentOfInertia to a specific unit value.
+// The function uses the provided unit type (WarpingMomentOfInertiaUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *WarpingMomentOfInertia) Convert(toUnit WarpingMomentOfInertiaUnits) float64 {
 	switch toUnit { 
     case WarpingMomentOfInertiaMeterToTheSixth:
@@ -240,7 +271,7 @@ func (a *WarpingMomentOfInertia) Convert(toUnit WarpingMomentOfInertiaUnits) flo
     case WarpingMomentOfInertiaInchToTheSixth:
 		return a.InchesToTheSixth()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -283,13 +314,22 @@ func (a *WarpingMomentOfInertia) convertToBase(value float64, fromUnit WarpingMo
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the WarpingMomentOfInertia in the default unit (MeterToTheSixth),
+// formatted to two decimal places.
 func (a WarpingMomentOfInertia) String() string {
 	return a.ToString(WarpingMomentOfInertiaMeterToTheSixth, 2)
 }
 
-// ToString formats the WarpingMomentOfInertia to string.
-// fractionalDigits -1 for not mention
+// ToString formats the WarpingMomentOfInertia value as a string with the specified unit and fractional digits.
+// It converts the WarpingMomentOfInertia to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the WarpingMomentOfInertia value will be converted (e.g., MeterToTheSixth))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the WarpingMomentOfInertia with the unit abbreviation.
 func (a *WarpingMomentOfInertia) ToString(unit WarpingMomentOfInertiaUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -319,12 +359,26 @@ func (a *WarpingMomentOfInertia) getUnitAbbreviation(unit WarpingMomentOfInertia
 	}
 }
 
-// Check if the given WarpingMomentOfInertia are equals to the current WarpingMomentOfInertia
+// Equals checks if the given WarpingMomentOfInertia is equal to the current WarpingMomentOfInertia.
+//
+// Parameters:
+//    other: The WarpingMomentOfInertia to compare against.
+//
+// Returns:
+//    bool: Returns true if both WarpingMomentOfInertia are equal, false otherwise.
 func (a *WarpingMomentOfInertia) Equals(other *WarpingMomentOfInertia) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given WarpingMomentOfInertia are equals to the current WarpingMomentOfInertia
+// CompareTo compares the current WarpingMomentOfInertia with another WarpingMomentOfInertia.
+// It returns -1 if the current WarpingMomentOfInertia is less than the other WarpingMomentOfInertia, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The WarpingMomentOfInertia to compare against.
+//
+// Returns:
+//    int: -1 if the current WarpingMomentOfInertia is less, 1 if greater, and 0 if equal.
 func (a *WarpingMomentOfInertia) CompareTo(other *WarpingMomentOfInertia) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -337,22 +391,50 @@ func (a *WarpingMomentOfInertia) CompareTo(other *WarpingMomentOfInertia) int {
 	return 0
 }
 
-// Add the given WarpingMomentOfInertia to the current WarpingMomentOfInertia.
+// Add adds the given WarpingMomentOfInertia to the current WarpingMomentOfInertia and returns the result.
+// The result is a new WarpingMomentOfInertia instance with the sum of the values.
+//
+// Parameters:
+//    other: The WarpingMomentOfInertia to add to the current WarpingMomentOfInertia.
+//
+// Returns:
+//    *WarpingMomentOfInertia: A new WarpingMomentOfInertia instance representing the sum of both WarpingMomentOfInertia.
 func (a *WarpingMomentOfInertia) Add(other *WarpingMomentOfInertia) *WarpingMomentOfInertia {
 	return &WarpingMomentOfInertia{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given WarpingMomentOfInertia to the current WarpingMomentOfInertia.
+// Subtract subtracts the given WarpingMomentOfInertia from the current WarpingMomentOfInertia and returns the result.
+// The result is a new WarpingMomentOfInertia instance with the difference of the values.
+//
+// Parameters:
+//    other: The WarpingMomentOfInertia to subtract from the current WarpingMomentOfInertia.
+//
+// Returns:
+//    *WarpingMomentOfInertia: A new WarpingMomentOfInertia instance representing the difference of both WarpingMomentOfInertia.
 func (a *WarpingMomentOfInertia) Subtract(other *WarpingMomentOfInertia) *WarpingMomentOfInertia {
 	return &WarpingMomentOfInertia{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given WarpingMomentOfInertia to the current WarpingMomentOfInertia.
+// Multiply multiplies the current WarpingMomentOfInertia by the given WarpingMomentOfInertia and returns the result.
+// The result is a new WarpingMomentOfInertia instance with the product of the values.
+//
+// Parameters:
+//    other: The WarpingMomentOfInertia to multiply with the current WarpingMomentOfInertia.
+//
+// Returns:
+//    *WarpingMomentOfInertia: A new WarpingMomentOfInertia instance representing the product of both WarpingMomentOfInertia.
 func (a *WarpingMomentOfInertia) Multiply(other *WarpingMomentOfInertia) *WarpingMomentOfInertia {
 	return &WarpingMomentOfInertia{value: a.value * other.BaseValue()}
 }
 
-// Divide the given WarpingMomentOfInertia to the current WarpingMomentOfInertia.
+// Divide divides the current WarpingMomentOfInertia by the given WarpingMomentOfInertia and returns the result.
+// The result is a new WarpingMomentOfInertia instance with the quotient of the values.
+//
+// Parameters:
+//    other: The WarpingMomentOfInertia to divide the current WarpingMomentOfInertia by.
+//
+// Returns:
+//    *WarpingMomentOfInertia: A new WarpingMomentOfInertia instance representing the quotient of both WarpingMomentOfInertia.
 func (a *WarpingMomentOfInertia) Divide(other *WarpingMomentOfInertia) *WarpingMomentOfInertia {
 	return &WarpingMomentOfInertia{value: a.value / other.BaseValue()}
 }

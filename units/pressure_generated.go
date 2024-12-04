@@ -12,7 +12,7 @@ import (
 
 
 
-// PressureUnits enumeration
+// PressureUnits defines various units of Pressure.
 type PressureUnits string
 
 const (
@@ -117,19 +117,24 @@ const (
         PressureCentimeterOfWaterColumn PressureUnits = "CentimeterOfWaterColumn"
 )
 
-// PressureDto represents an Pressure
+// PressureDto represents a Pressure measurement with a numerical value and its corresponding unit.
 type PressureDto struct {
+    // Value is the numerical representation of the Pressure.
 	Value float64
+    // Unit specifies the unit of measurement for the Pressure, as defined in the PressureUnits enumeration.
 	Unit  PressureUnits
 }
 
-// PressureDtoFactory struct to group related functions
+// PressureDtoFactory groups methods for creating and serializing PressureDto objects.
 type PressureDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a PressureDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf PressureDtoFactory) FromJSON(data []byte) (*PressureDto, error) {
 	a := PressureDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into PressureDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -137,6 +142,9 @@ func (udf PressureDtoFactory) FromJSON(data []byte) (*PressureDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a PressureDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a PressureDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -148,10 +156,11 @@ func (a PressureDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Pressure struct
+// Pressure represents a measurement in a of Pressure.
+//
+// Pressure (symbol: P or p) is the ratio of force to the area over which that force is distributed. Pressure is force per unit area applied in a direction perpendicular to the surface of an object. Gauge pressure (also spelled gage pressure)[a] is the pressure relative to the local atmospheric or ambient pressure. Pressure is measured in any unit of force divided by any unit of area. The SI unit of pressure is the newton per square metre, which is called the pascal (Pa) after the seventeenth-century philosopher and scientist Blaise Pascal. A pressure of 1 Pa is small; it approximately equals the pressure exerted by a dollar bill resting flat on a table. Everyday pressures are often stated in kilopascals (1 kPa = 1000 Pa).
 type Pressure struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     pascalsLazy *float64 
@@ -205,272 +214,273 @@ type Pressure struct {
     centimeters_of_water_columnLazy *float64 
 }
 
-// PressureFactory struct to group related functions
+// PressureFactory groups methods for creating Pressure instances.
 type PressureFactory struct{}
 
+// CreatePressure creates a new Pressure instance from the given value and unit.
 func (uf PressureFactory) CreatePressure(value float64, unit PressureUnits) (*Pressure, error) {
 	return newPressure(value, unit)
 }
 
+// FromDto converts a PressureDto to a Pressure instance.
 func (uf PressureFactory) FromDto(dto PressureDto) (*Pressure, error) {
 	return newPressure(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Pressure instance.
 func (uf PressureFactory) FromDtoJSON(data []byte) (*Pressure, error) {
 	unitDto, err := PressureDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse PressureDto from JSON: %w", err)
 	}
 	return PressureFactory{}.FromDto(*unitDto)
 }
 
 
-// FromPascal creates a new Pressure instance from Pascal.
+// FromPascals creates a new Pressure instance from a value in Pascals.
 func (uf PressureFactory) FromPascals(value float64) (*Pressure, error) {
 	return newPressure(value, PressurePascal)
 }
 
-// FromAtmosphere creates a new Pressure instance from Atmosphere.
+// FromAtmospheres creates a new Pressure instance from a value in Atmospheres.
 func (uf PressureFactory) FromAtmospheres(value float64) (*Pressure, error) {
 	return newPressure(value, PressureAtmosphere)
 }
 
-// FromBar creates a new Pressure instance from Bar.
+// FromBars creates a new Pressure instance from a value in Bars.
 func (uf PressureFactory) FromBars(value float64) (*Pressure, error) {
 	return newPressure(value, PressureBar)
 }
 
-// FromKilogramForcePerSquareMeter creates a new Pressure instance from KilogramForcePerSquareMeter.
+// FromKilogramsForcePerSquareMeter creates a new Pressure instance from a value in KilogramsForcePerSquareMeter.
 func (uf PressureFactory) FromKilogramsForcePerSquareMeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilogramForcePerSquareMeter)
 }
 
-// FromKilogramForcePerSquareCentimeter creates a new Pressure instance from KilogramForcePerSquareCentimeter.
+// FromKilogramsForcePerSquareCentimeter creates a new Pressure instance from a value in KilogramsForcePerSquareCentimeter.
 func (uf PressureFactory) FromKilogramsForcePerSquareCentimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilogramForcePerSquareCentimeter)
 }
 
-// FromKilogramForcePerSquareMillimeter creates a new Pressure instance from KilogramForcePerSquareMillimeter.
+// FromKilogramsForcePerSquareMillimeter creates a new Pressure instance from a value in KilogramsForcePerSquareMillimeter.
 func (uf PressureFactory) FromKilogramsForcePerSquareMillimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilogramForcePerSquareMillimeter)
 }
 
-// FromNewtonPerSquareMeter creates a new Pressure instance from NewtonPerSquareMeter.
+// FromNewtonsPerSquareMeter creates a new Pressure instance from a value in NewtonsPerSquareMeter.
 func (uf PressureFactory) FromNewtonsPerSquareMeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureNewtonPerSquareMeter)
 }
 
-// FromNewtonPerSquareCentimeter creates a new Pressure instance from NewtonPerSquareCentimeter.
+// FromNewtonsPerSquareCentimeter creates a new Pressure instance from a value in NewtonsPerSquareCentimeter.
 func (uf PressureFactory) FromNewtonsPerSquareCentimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureNewtonPerSquareCentimeter)
 }
 
-// FromNewtonPerSquareMillimeter creates a new Pressure instance from NewtonPerSquareMillimeter.
+// FromNewtonsPerSquareMillimeter creates a new Pressure instance from a value in NewtonsPerSquareMillimeter.
 func (uf PressureFactory) FromNewtonsPerSquareMillimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureNewtonPerSquareMillimeter)
 }
 
-// FromTechnicalAtmosphere creates a new Pressure instance from TechnicalAtmosphere.
+// FromTechnicalAtmospheres creates a new Pressure instance from a value in TechnicalAtmospheres.
 func (uf PressureFactory) FromTechnicalAtmospheres(value float64) (*Pressure, error) {
 	return newPressure(value, PressureTechnicalAtmosphere)
 }
 
-// FromTorr creates a new Pressure instance from Torr.
+// FromTorrs creates a new Pressure instance from a value in Torrs.
 func (uf PressureFactory) FromTorrs(value float64) (*Pressure, error) {
 	return newPressure(value, PressureTorr)
 }
 
-// FromPoundForcePerSquareInch creates a new Pressure instance from PoundForcePerSquareInch.
+// FromPoundsForcePerSquareInch creates a new Pressure instance from a value in PoundsForcePerSquareInch.
 func (uf PressureFactory) FromPoundsForcePerSquareInch(value float64) (*Pressure, error) {
 	return newPressure(value, PressurePoundForcePerSquareInch)
 }
 
-// FromPoundForcePerSquareMil creates a new Pressure instance from PoundForcePerSquareMil.
+// FromPoundsForcePerSquareMil creates a new Pressure instance from a value in PoundsForcePerSquareMil.
 func (uf PressureFactory) FromPoundsForcePerSquareMil(value float64) (*Pressure, error) {
 	return newPressure(value, PressurePoundForcePerSquareMil)
 }
 
-// FromPoundForcePerSquareFoot creates a new Pressure instance from PoundForcePerSquareFoot.
+// FromPoundsForcePerSquareFoot creates a new Pressure instance from a value in PoundsForcePerSquareFoot.
 func (uf PressureFactory) FromPoundsForcePerSquareFoot(value float64) (*Pressure, error) {
 	return newPressure(value, PressurePoundForcePerSquareFoot)
 }
 
-// FromTonneForcePerSquareMillimeter creates a new Pressure instance from TonneForcePerSquareMillimeter.
+// FromTonnesForcePerSquareMillimeter creates a new Pressure instance from a value in TonnesForcePerSquareMillimeter.
 func (uf PressureFactory) FromTonnesForcePerSquareMillimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureTonneForcePerSquareMillimeter)
 }
 
-// FromTonneForcePerSquareMeter creates a new Pressure instance from TonneForcePerSquareMeter.
+// FromTonnesForcePerSquareMeter creates a new Pressure instance from a value in TonnesForcePerSquareMeter.
 func (uf PressureFactory) FromTonnesForcePerSquareMeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureTonneForcePerSquareMeter)
 }
 
-// FromMeterOfHead creates a new Pressure instance from MeterOfHead.
+// FromMetersOfHead creates a new Pressure instance from a value in MetersOfHead.
 func (uf PressureFactory) FromMetersOfHead(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMeterOfHead)
 }
 
-// FromTonneForcePerSquareCentimeter creates a new Pressure instance from TonneForcePerSquareCentimeter.
+// FromTonnesForcePerSquareCentimeter creates a new Pressure instance from a value in TonnesForcePerSquareCentimeter.
 func (uf PressureFactory) FromTonnesForcePerSquareCentimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureTonneForcePerSquareCentimeter)
 }
 
-// FromFootOfHead creates a new Pressure instance from FootOfHead.
+// FromFeetOfHead creates a new Pressure instance from a value in FeetOfHead.
 func (uf PressureFactory) FromFeetOfHead(value float64) (*Pressure, error) {
 	return newPressure(value, PressureFootOfHead)
 }
 
-// FromMillimeterOfMercury creates a new Pressure instance from MillimeterOfMercury.
+// FromMillimetersOfMercury creates a new Pressure instance from a value in MillimetersOfMercury.
 func (uf PressureFactory) FromMillimetersOfMercury(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMillimeterOfMercury)
 }
 
-// FromInchOfMercury creates a new Pressure instance from InchOfMercury.
+// FromInchesOfMercury creates a new Pressure instance from a value in InchesOfMercury.
 func (uf PressureFactory) FromInchesOfMercury(value float64) (*Pressure, error) {
 	return newPressure(value, PressureInchOfMercury)
 }
 
-// FromDynePerSquareCentimeter creates a new Pressure instance from DynePerSquareCentimeter.
+// FromDynesPerSquareCentimeter creates a new Pressure instance from a value in DynesPerSquareCentimeter.
 func (uf PressureFactory) FromDynesPerSquareCentimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureDynePerSquareCentimeter)
 }
 
-// FromPoundPerInchSecondSquared creates a new Pressure instance from PoundPerInchSecondSquared.
+// FromPoundsPerInchSecondSquared creates a new Pressure instance from a value in PoundsPerInchSecondSquared.
 func (uf PressureFactory) FromPoundsPerInchSecondSquared(value float64) (*Pressure, error) {
 	return newPressure(value, PressurePoundPerInchSecondSquared)
 }
 
-// FromMeterOfWaterColumn creates a new Pressure instance from MeterOfWaterColumn.
+// FromMetersOfWaterColumn creates a new Pressure instance from a value in MetersOfWaterColumn.
 func (uf PressureFactory) FromMetersOfWaterColumn(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMeterOfWaterColumn)
 }
 
-// FromInchOfWaterColumn creates a new Pressure instance from InchOfWaterColumn.
+// FromInchesOfWaterColumn creates a new Pressure instance from a value in InchesOfWaterColumn.
 func (uf PressureFactory) FromInchesOfWaterColumn(value float64) (*Pressure, error) {
 	return newPressure(value, PressureInchOfWaterColumn)
 }
 
-// FromMeterOfElevation creates a new Pressure instance from MeterOfElevation.
+// FromMetersOfElevation creates a new Pressure instance from a value in MetersOfElevation.
 func (uf PressureFactory) FromMetersOfElevation(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMeterOfElevation)
 }
 
-// FromFootOfElevation creates a new Pressure instance from FootOfElevation.
+// FromFeetOfElevation creates a new Pressure instance from a value in FeetOfElevation.
 func (uf PressureFactory) FromFeetOfElevation(value float64) (*Pressure, error) {
 	return newPressure(value, PressureFootOfElevation)
 }
 
-// FromMicropascal creates a new Pressure instance from Micropascal.
+// FromMicropascals creates a new Pressure instance from a value in Micropascals.
 func (uf PressureFactory) FromMicropascals(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMicropascal)
 }
 
-// FromMillipascal creates a new Pressure instance from Millipascal.
+// FromMillipascals creates a new Pressure instance from a value in Millipascals.
 func (uf PressureFactory) FromMillipascals(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMillipascal)
 }
 
-// FromDecapascal creates a new Pressure instance from Decapascal.
+// FromDecapascals creates a new Pressure instance from a value in Decapascals.
 func (uf PressureFactory) FromDecapascals(value float64) (*Pressure, error) {
 	return newPressure(value, PressureDecapascal)
 }
 
-// FromHectopascal creates a new Pressure instance from Hectopascal.
+// FromHectopascals creates a new Pressure instance from a value in Hectopascals.
 func (uf PressureFactory) FromHectopascals(value float64) (*Pressure, error) {
 	return newPressure(value, PressureHectopascal)
 }
 
-// FromKilopascal creates a new Pressure instance from Kilopascal.
+// FromKilopascals creates a new Pressure instance from a value in Kilopascals.
 func (uf PressureFactory) FromKilopascals(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilopascal)
 }
 
-// FromMegapascal creates a new Pressure instance from Megapascal.
+// FromMegapascals creates a new Pressure instance from a value in Megapascals.
 func (uf PressureFactory) FromMegapascals(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMegapascal)
 }
 
-// FromGigapascal creates a new Pressure instance from Gigapascal.
+// FromGigapascals creates a new Pressure instance from a value in Gigapascals.
 func (uf PressureFactory) FromGigapascals(value float64) (*Pressure, error) {
 	return newPressure(value, PressureGigapascal)
 }
 
-// FromMicrobar creates a new Pressure instance from Microbar.
+// FromMicrobars creates a new Pressure instance from a value in Microbars.
 func (uf PressureFactory) FromMicrobars(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMicrobar)
 }
 
-// FromMillibar creates a new Pressure instance from Millibar.
+// FromMillibars creates a new Pressure instance from a value in Millibars.
 func (uf PressureFactory) FromMillibars(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMillibar)
 }
 
-// FromCentibar creates a new Pressure instance from Centibar.
+// FromCentibars creates a new Pressure instance from a value in Centibars.
 func (uf PressureFactory) FromCentibars(value float64) (*Pressure, error) {
 	return newPressure(value, PressureCentibar)
 }
 
-// FromDecibar creates a new Pressure instance from Decibar.
+// FromDecibars creates a new Pressure instance from a value in Decibars.
 func (uf PressureFactory) FromDecibars(value float64) (*Pressure, error) {
 	return newPressure(value, PressureDecibar)
 }
 
-// FromKilobar creates a new Pressure instance from Kilobar.
+// FromKilobars creates a new Pressure instance from a value in Kilobars.
 func (uf PressureFactory) FromKilobars(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilobar)
 }
 
-// FromMegabar creates a new Pressure instance from Megabar.
+// FromMegabars creates a new Pressure instance from a value in Megabars.
 func (uf PressureFactory) FromMegabars(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMegabar)
 }
 
-// FromKilonewtonPerSquareMeter creates a new Pressure instance from KilonewtonPerSquareMeter.
+// FromKilonewtonsPerSquareMeter creates a new Pressure instance from a value in KilonewtonsPerSquareMeter.
 func (uf PressureFactory) FromKilonewtonsPerSquareMeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilonewtonPerSquareMeter)
 }
 
-// FromMeganewtonPerSquareMeter creates a new Pressure instance from MeganewtonPerSquareMeter.
+// FromMeganewtonsPerSquareMeter creates a new Pressure instance from a value in MeganewtonsPerSquareMeter.
 func (uf PressureFactory) FromMeganewtonsPerSquareMeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMeganewtonPerSquareMeter)
 }
 
-// FromKilonewtonPerSquareCentimeter creates a new Pressure instance from KilonewtonPerSquareCentimeter.
+// FromKilonewtonsPerSquareCentimeter creates a new Pressure instance from a value in KilonewtonsPerSquareCentimeter.
 func (uf PressureFactory) FromKilonewtonsPerSquareCentimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilonewtonPerSquareCentimeter)
 }
 
-// FromKilonewtonPerSquareMillimeter creates a new Pressure instance from KilonewtonPerSquareMillimeter.
+// FromKilonewtonsPerSquareMillimeter creates a new Pressure instance from a value in KilonewtonsPerSquareMillimeter.
 func (uf PressureFactory) FromKilonewtonsPerSquareMillimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilonewtonPerSquareMillimeter)
 }
 
-// FromKilopoundForcePerSquareInch creates a new Pressure instance from KilopoundForcePerSquareInch.
+// FromKilopoundsForcePerSquareInch creates a new Pressure instance from a value in KilopoundsForcePerSquareInch.
 func (uf PressureFactory) FromKilopoundsForcePerSquareInch(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilopoundForcePerSquareInch)
 }
 
-// FromKilopoundForcePerSquareMil creates a new Pressure instance from KilopoundForcePerSquareMil.
+// FromKilopoundsForcePerSquareMil creates a new Pressure instance from a value in KilopoundsForcePerSquareMil.
 func (uf PressureFactory) FromKilopoundsForcePerSquareMil(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilopoundForcePerSquareMil)
 }
 
-// FromKilopoundForcePerSquareFoot creates a new Pressure instance from KilopoundForcePerSquareFoot.
+// FromKilopoundsForcePerSquareFoot creates a new Pressure instance from a value in KilopoundsForcePerSquareFoot.
 func (uf PressureFactory) FromKilopoundsForcePerSquareFoot(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilopoundForcePerSquareFoot)
 }
 
-// FromMillimeterOfWaterColumn creates a new Pressure instance from MillimeterOfWaterColumn.
+// FromMillimetersOfWaterColumn creates a new Pressure instance from a value in MillimetersOfWaterColumn.
 func (uf PressureFactory) FromMillimetersOfWaterColumn(value float64) (*Pressure, error) {
 	return newPressure(value, PressureMillimeterOfWaterColumn)
 }
 
-// FromCentimeterOfWaterColumn creates a new Pressure instance from CentimeterOfWaterColumn.
+// FromCentimetersOfWaterColumn creates a new Pressure instance from a value in CentimetersOfWaterColumn.
 func (uf PressureFactory) FromCentimetersOfWaterColumn(value float64) (*Pressure, error) {
 	return newPressure(value, PressureCentimeterOfWaterColumn)
 }
-
-
 
 
 // newPressure creates a new Pressure.
@@ -483,13 +493,15 @@ func newPressure(value float64, fromUnit PressureUnits) (*Pressure, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Pressure in Pascal.
+// BaseValue returns the base value of Pressure in Pascal unit (the base/default quantity).
 func (a *Pressure) BaseValue() float64 {
 	return a.value
 }
 
 
-// Pascal returns the value in Pascal.
+// Pascals returns the Pressure value in Pascals.
+//
+// 
 func (a *Pressure) Pascals() float64 {
 	if a.pascalsLazy != nil {
 		return *a.pascalsLazy
@@ -499,7 +511,9 @@ func (a *Pressure) Pascals() float64 {
 	return pascals
 }
 
-// Atmosphere returns the value in Atmosphere.
+// Atmospheres returns the Pressure value in Atmospheres.
+//
+// 
 func (a *Pressure) Atmospheres() float64 {
 	if a.atmospheresLazy != nil {
 		return *a.atmospheresLazy
@@ -509,7 +523,9 @@ func (a *Pressure) Atmospheres() float64 {
 	return atmospheres
 }
 
-// Bar returns the value in Bar.
+// Bars returns the Pressure value in Bars.
+//
+// 
 func (a *Pressure) Bars() float64 {
 	if a.barsLazy != nil {
 		return *a.barsLazy
@@ -519,7 +535,9 @@ func (a *Pressure) Bars() float64 {
 	return bars
 }
 
-// KilogramForcePerSquareMeter returns the value in KilogramForcePerSquareMeter.
+// KilogramsForcePerSquareMeter returns the Pressure value in KilogramsForcePerSquareMeter.
+//
+// 
 func (a *Pressure) KilogramsForcePerSquareMeter() float64 {
 	if a.kilograms_force_per_square_meterLazy != nil {
 		return *a.kilograms_force_per_square_meterLazy
@@ -529,7 +547,9 @@ func (a *Pressure) KilogramsForcePerSquareMeter() float64 {
 	return kilograms_force_per_square_meter
 }
 
-// KilogramForcePerSquareCentimeter returns the value in KilogramForcePerSquareCentimeter.
+// KilogramsForcePerSquareCentimeter returns the Pressure value in KilogramsForcePerSquareCentimeter.
+//
+// 
 func (a *Pressure) KilogramsForcePerSquareCentimeter() float64 {
 	if a.kilograms_force_per_square_centimeterLazy != nil {
 		return *a.kilograms_force_per_square_centimeterLazy
@@ -539,7 +559,9 @@ func (a *Pressure) KilogramsForcePerSquareCentimeter() float64 {
 	return kilograms_force_per_square_centimeter
 }
 
-// KilogramForcePerSquareMillimeter returns the value in KilogramForcePerSquareMillimeter.
+// KilogramsForcePerSquareMillimeter returns the Pressure value in KilogramsForcePerSquareMillimeter.
+//
+// 
 func (a *Pressure) KilogramsForcePerSquareMillimeter() float64 {
 	if a.kilograms_force_per_square_millimeterLazy != nil {
 		return *a.kilograms_force_per_square_millimeterLazy
@@ -549,7 +571,9 @@ func (a *Pressure) KilogramsForcePerSquareMillimeter() float64 {
 	return kilograms_force_per_square_millimeter
 }
 
-// NewtonPerSquareMeter returns the value in NewtonPerSquareMeter.
+// NewtonsPerSquareMeter returns the Pressure value in NewtonsPerSquareMeter.
+//
+// 
 func (a *Pressure) NewtonsPerSquareMeter() float64 {
 	if a.newtons_per_square_meterLazy != nil {
 		return *a.newtons_per_square_meterLazy
@@ -559,7 +583,9 @@ func (a *Pressure) NewtonsPerSquareMeter() float64 {
 	return newtons_per_square_meter
 }
 
-// NewtonPerSquareCentimeter returns the value in NewtonPerSquareCentimeter.
+// NewtonsPerSquareCentimeter returns the Pressure value in NewtonsPerSquareCentimeter.
+//
+// 
 func (a *Pressure) NewtonsPerSquareCentimeter() float64 {
 	if a.newtons_per_square_centimeterLazy != nil {
 		return *a.newtons_per_square_centimeterLazy
@@ -569,7 +595,9 @@ func (a *Pressure) NewtonsPerSquareCentimeter() float64 {
 	return newtons_per_square_centimeter
 }
 
-// NewtonPerSquareMillimeter returns the value in NewtonPerSquareMillimeter.
+// NewtonsPerSquareMillimeter returns the Pressure value in NewtonsPerSquareMillimeter.
+//
+// 
 func (a *Pressure) NewtonsPerSquareMillimeter() float64 {
 	if a.newtons_per_square_millimeterLazy != nil {
 		return *a.newtons_per_square_millimeterLazy
@@ -579,7 +607,9 @@ func (a *Pressure) NewtonsPerSquareMillimeter() float64 {
 	return newtons_per_square_millimeter
 }
 
-// TechnicalAtmosphere returns the value in TechnicalAtmosphere.
+// TechnicalAtmospheres returns the Pressure value in TechnicalAtmospheres.
+//
+// 
 func (a *Pressure) TechnicalAtmospheres() float64 {
 	if a.technical_atmospheresLazy != nil {
 		return *a.technical_atmospheresLazy
@@ -589,7 +619,9 @@ func (a *Pressure) TechnicalAtmospheres() float64 {
 	return technical_atmospheres
 }
 
-// Torr returns the value in Torr.
+// Torrs returns the Pressure value in Torrs.
+//
+// 
 func (a *Pressure) Torrs() float64 {
 	if a.torrsLazy != nil {
 		return *a.torrsLazy
@@ -599,7 +631,9 @@ func (a *Pressure) Torrs() float64 {
 	return torrs
 }
 
-// PoundForcePerSquareInch returns the value in PoundForcePerSquareInch.
+// PoundsForcePerSquareInch returns the Pressure value in PoundsForcePerSquareInch.
+//
+// 
 func (a *Pressure) PoundsForcePerSquareInch() float64 {
 	if a.pounds_force_per_square_inchLazy != nil {
 		return *a.pounds_force_per_square_inchLazy
@@ -609,7 +643,9 @@ func (a *Pressure) PoundsForcePerSquareInch() float64 {
 	return pounds_force_per_square_inch
 }
 
-// PoundForcePerSquareMil returns the value in PoundForcePerSquareMil.
+// PoundsForcePerSquareMil returns the Pressure value in PoundsForcePerSquareMil.
+//
+// 
 func (a *Pressure) PoundsForcePerSquareMil() float64 {
 	if a.pounds_force_per_square_milLazy != nil {
 		return *a.pounds_force_per_square_milLazy
@@ -619,7 +655,9 @@ func (a *Pressure) PoundsForcePerSquareMil() float64 {
 	return pounds_force_per_square_mil
 }
 
-// PoundForcePerSquareFoot returns the value in PoundForcePerSquareFoot.
+// PoundsForcePerSquareFoot returns the Pressure value in PoundsForcePerSquareFoot.
+//
+// 
 func (a *Pressure) PoundsForcePerSquareFoot() float64 {
 	if a.pounds_force_per_square_footLazy != nil {
 		return *a.pounds_force_per_square_footLazy
@@ -629,7 +667,9 @@ func (a *Pressure) PoundsForcePerSquareFoot() float64 {
 	return pounds_force_per_square_foot
 }
 
-// TonneForcePerSquareMillimeter returns the value in TonneForcePerSquareMillimeter.
+// TonnesForcePerSquareMillimeter returns the Pressure value in TonnesForcePerSquareMillimeter.
+//
+// 
 func (a *Pressure) TonnesForcePerSquareMillimeter() float64 {
 	if a.tonnes_force_per_square_millimeterLazy != nil {
 		return *a.tonnes_force_per_square_millimeterLazy
@@ -639,7 +679,9 @@ func (a *Pressure) TonnesForcePerSquareMillimeter() float64 {
 	return tonnes_force_per_square_millimeter
 }
 
-// TonneForcePerSquareMeter returns the value in TonneForcePerSquareMeter.
+// TonnesForcePerSquareMeter returns the Pressure value in TonnesForcePerSquareMeter.
+//
+// 
 func (a *Pressure) TonnesForcePerSquareMeter() float64 {
 	if a.tonnes_force_per_square_meterLazy != nil {
 		return *a.tonnes_force_per_square_meterLazy
@@ -649,7 +691,9 @@ func (a *Pressure) TonnesForcePerSquareMeter() float64 {
 	return tonnes_force_per_square_meter
 }
 
-// MeterOfHead returns the value in MeterOfHead.
+// MetersOfHead returns the Pressure value in MetersOfHead.
+//
+// 
 func (a *Pressure) MetersOfHead() float64 {
 	if a.meters_of_headLazy != nil {
 		return *a.meters_of_headLazy
@@ -659,7 +703,9 @@ func (a *Pressure) MetersOfHead() float64 {
 	return meters_of_head
 }
 
-// TonneForcePerSquareCentimeter returns the value in TonneForcePerSquareCentimeter.
+// TonnesForcePerSquareCentimeter returns the Pressure value in TonnesForcePerSquareCentimeter.
+//
+// 
 func (a *Pressure) TonnesForcePerSquareCentimeter() float64 {
 	if a.tonnes_force_per_square_centimeterLazy != nil {
 		return *a.tonnes_force_per_square_centimeterLazy
@@ -669,7 +715,9 @@ func (a *Pressure) TonnesForcePerSquareCentimeter() float64 {
 	return tonnes_force_per_square_centimeter
 }
 
-// FootOfHead returns the value in FootOfHead.
+// FeetOfHead returns the Pressure value in FeetOfHead.
+//
+// 
 func (a *Pressure) FeetOfHead() float64 {
 	if a.feet_of_headLazy != nil {
 		return *a.feet_of_headLazy
@@ -679,7 +727,9 @@ func (a *Pressure) FeetOfHead() float64 {
 	return feet_of_head
 }
 
-// MillimeterOfMercury returns the value in MillimeterOfMercury.
+// MillimetersOfMercury returns the Pressure value in MillimetersOfMercury.
+//
+// 
 func (a *Pressure) MillimetersOfMercury() float64 {
 	if a.millimeters_of_mercuryLazy != nil {
 		return *a.millimeters_of_mercuryLazy
@@ -689,7 +739,9 @@ func (a *Pressure) MillimetersOfMercury() float64 {
 	return millimeters_of_mercury
 }
 
-// InchOfMercury returns the value in InchOfMercury.
+// InchesOfMercury returns the Pressure value in InchesOfMercury.
+//
+// 
 func (a *Pressure) InchesOfMercury() float64 {
 	if a.inches_of_mercuryLazy != nil {
 		return *a.inches_of_mercuryLazy
@@ -699,7 +751,9 @@ func (a *Pressure) InchesOfMercury() float64 {
 	return inches_of_mercury
 }
 
-// DynePerSquareCentimeter returns the value in DynePerSquareCentimeter.
+// DynesPerSquareCentimeter returns the Pressure value in DynesPerSquareCentimeter.
+//
+// 
 func (a *Pressure) DynesPerSquareCentimeter() float64 {
 	if a.dynes_per_square_centimeterLazy != nil {
 		return *a.dynes_per_square_centimeterLazy
@@ -709,7 +763,9 @@ func (a *Pressure) DynesPerSquareCentimeter() float64 {
 	return dynes_per_square_centimeter
 }
 
-// PoundPerInchSecondSquared returns the value in PoundPerInchSecondSquared.
+// PoundsPerInchSecondSquared returns the Pressure value in PoundsPerInchSecondSquared.
+//
+// 
 func (a *Pressure) PoundsPerInchSecondSquared() float64 {
 	if a.pounds_per_inch_second_squaredLazy != nil {
 		return *a.pounds_per_inch_second_squaredLazy
@@ -719,7 +775,9 @@ func (a *Pressure) PoundsPerInchSecondSquared() float64 {
 	return pounds_per_inch_second_squared
 }
 
-// MeterOfWaterColumn returns the value in MeterOfWaterColumn.
+// MetersOfWaterColumn returns the Pressure value in MetersOfWaterColumn.
+//
+// 
 func (a *Pressure) MetersOfWaterColumn() float64 {
 	if a.meters_of_water_columnLazy != nil {
 		return *a.meters_of_water_columnLazy
@@ -729,7 +787,9 @@ func (a *Pressure) MetersOfWaterColumn() float64 {
 	return meters_of_water_column
 }
 
-// InchOfWaterColumn returns the value in InchOfWaterColumn.
+// InchesOfWaterColumn returns the Pressure value in InchesOfWaterColumn.
+//
+// 
 func (a *Pressure) InchesOfWaterColumn() float64 {
 	if a.inches_of_water_columnLazy != nil {
 		return *a.inches_of_water_columnLazy
@@ -739,7 +799,9 @@ func (a *Pressure) InchesOfWaterColumn() float64 {
 	return inches_of_water_column
 }
 
-// MeterOfElevation returns the value in MeterOfElevation.
+// MetersOfElevation returns the Pressure value in MetersOfElevation.
+//
+// 
 func (a *Pressure) MetersOfElevation() float64 {
 	if a.meters_of_elevationLazy != nil {
 		return *a.meters_of_elevationLazy
@@ -749,7 +811,9 @@ func (a *Pressure) MetersOfElevation() float64 {
 	return meters_of_elevation
 }
 
-// FootOfElevation returns the value in FootOfElevation.
+// FeetOfElevation returns the Pressure value in FeetOfElevation.
+//
+// 
 func (a *Pressure) FeetOfElevation() float64 {
 	if a.feet_of_elevationLazy != nil {
 		return *a.feet_of_elevationLazy
@@ -759,7 +823,9 @@ func (a *Pressure) FeetOfElevation() float64 {
 	return feet_of_elevation
 }
 
-// Micropascal returns the value in Micropascal.
+// Micropascals returns the Pressure value in Micropascals.
+//
+// 
 func (a *Pressure) Micropascals() float64 {
 	if a.micropascalsLazy != nil {
 		return *a.micropascalsLazy
@@ -769,7 +835,9 @@ func (a *Pressure) Micropascals() float64 {
 	return micropascals
 }
 
-// Millipascal returns the value in Millipascal.
+// Millipascals returns the Pressure value in Millipascals.
+//
+// 
 func (a *Pressure) Millipascals() float64 {
 	if a.millipascalsLazy != nil {
 		return *a.millipascalsLazy
@@ -779,7 +847,9 @@ func (a *Pressure) Millipascals() float64 {
 	return millipascals
 }
 
-// Decapascal returns the value in Decapascal.
+// Decapascals returns the Pressure value in Decapascals.
+//
+// 
 func (a *Pressure) Decapascals() float64 {
 	if a.decapascalsLazy != nil {
 		return *a.decapascalsLazy
@@ -789,7 +859,9 @@ func (a *Pressure) Decapascals() float64 {
 	return decapascals
 }
 
-// Hectopascal returns the value in Hectopascal.
+// Hectopascals returns the Pressure value in Hectopascals.
+//
+// 
 func (a *Pressure) Hectopascals() float64 {
 	if a.hectopascalsLazy != nil {
 		return *a.hectopascalsLazy
@@ -799,7 +871,9 @@ func (a *Pressure) Hectopascals() float64 {
 	return hectopascals
 }
 
-// Kilopascal returns the value in Kilopascal.
+// Kilopascals returns the Pressure value in Kilopascals.
+//
+// 
 func (a *Pressure) Kilopascals() float64 {
 	if a.kilopascalsLazy != nil {
 		return *a.kilopascalsLazy
@@ -809,7 +883,9 @@ func (a *Pressure) Kilopascals() float64 {
 	return kilopascals
 }
 
-// Megapascal returns the value in Megapascal.
+// Megapascals returns the Pressure value in Megapascals.
+//
+// 
 func (a *Pressure) Megapascals() float64 {
 	if a.megapascalsLazy != nil {
 		return *a.megapascalsLazy
@@ -819,7 +895,9 @@ func (a *Pressure) Megapascals() float64 {
 	return megapascals
 }
 
-// Gigapascal returns the value in Gigapascal.
+// Gigapascals returns the Pressure value in Gigapascals.
+//
+// 
 func (a *Pressure) Gigapascals() float64 {
 	if a.gigapascalsLazy != nil {
 		return *a.gigapascalsLazy
@@ -829,7 +907,9 @@ func (a *Pressure) Gigapascals() float64 {
 	return gigapascals
 }
 
-// Microbar returns the value in Microbar.
+// Microbars returns the Pressure value in Microbars.
+//
+// 
 func (a *Pressure) Microbars() float64 {
 	if a.microbarsLazy != nil {
 		return *a.microbarsLazy
@@ -839,7 +919,9 @@ func (a *Pressure) Microbars() float64 {
 	return microbars
 }
 
-// Millibar returns the value in Millibar.
+// Millibars returns the Pressure value in Millibars.
+//
+// 
 func (a *Pressure) Millibars() float64 {
 	if a.millibarsLazy != nil {
 		return *a.millibarsLazy
@@ -849,7 +931,9 @@ func (a *Pressure) Millibars() float64 {
 	return millibars
 }
 
-// Centibar returns the value in Centibar.
+// Centibars returns the Pressure value in Centibars.
+//
+// 
 func (a *Pressure) Centibars() float64 {
 	if a.centibarsLazy != nil {
 		return *a.centibarsLazy
@@ -859,7 +943,9 @@ func (a *Pressure) Centibars() float64 {
 	return centibars
 }
 
-// Decibar returns the value in Decibar.
+// Decibars returns the Pressure value in Decibars.
+//
+// 
 func (a *Pressure) Decibars() float64 {
 	if a.decibarsLazy != nil {
 		return *a.decibarsLazy
@@ -869,7 +955,9 @@ func (a *Pressure) Decibars() float64 {
 	return decibars
 }
 
-// Kilobar returns the value in Kilobar.
+// Kilobars returns the Pressure value in Kilobars.
+//
+// 
 func (a *Pressure) Kilobars() float64 {
 	if a.kilobarsLazy != nil {
 		return *a.kilobarsLazy
@@ -879,7 +967,9 @@ func (a *Pressure) Kilobars() float64 {
 	return kilobars
 }
 
-// Megabar returns the value in Megabar.
+// Megabars returns the Pressure value in Megabars.
+//
+// 
 func (a *Pressure) Megabars() float64 {
 	if a.megabarsLazy != nil {
 		return *a.megabarsLazy
@@ -889,7 +979,9 @@ func (a *Pressure) Megabars() float64 {
 	return megabars
 }
 
-// KilonewtonPerSquareMeter returns the value in KilonewtonPerSquareMeter.
+// KilonewtonsPerSquareMeter returns the Pressure value in KilonewtonsPerSquareMeter.
+//
+// 
 func (a *Pressure) KilonewtonsPerSquareMeter() float64 {
 	if a.kilonewtons_per_square_meterLazy != nil {
 		return *a.kilonewtons_per_square_meterLazy
@@ -899,7 +991,9 @@ func (a *Pressure) KilonewtonsPerSquareMeter() float64 {
 	return kilonewtons_per_square_meter
 }
 
-// MeganewtonPerSquareMeter returns the value in MeganewtonPerSquareMeter.
+// MeganewtonsPerSquareMeter returns the Pressure value in MeganewtonsPerSquareMeter.
+//
+// 
 func (a *Pressure) MeganewtonsPerSquareMeter() float64 {
 	if a.meganewtons_per_square_meterLazy != nil {
 		return *a.meganewtons_per_square_meterLazy
@@ -909,7 +1003,9 @@ func (a *Pressure) MeganewtonsPerSquareMeter() float64 {
 	return meganewtons_per_square_meter
 }
 
-// KilonewtonPerSquareCentimeter returns the value in KilonewtonPerSquareCentimeter.
+// KilonewtonsPerSquareCentimeter returns the Pressure value in KilonewtonsPerSquareCentimeter.
+//
+// 
 func (a *Pressure) KilonewtonsPerSquareCentimeter() float64 {
 	if a.kilonewtons_per_square_centimeterLazy != nil {
 		return *a.kilonewtons_per_square_centimeterLazy
@@ -919,7 +1015,9 @@ func (a *Pressure) KilonewtonsPerSquareCentimeter() float64 {
 	return kilonewtons_per_square_centimeter
 }
 
-// KilonewtonPerSquareMillimeter returns the value in KilonewtonPerSquareMillimeter.
+// KilonewtonsPerSquareMillimeter returns the Pressure value in KilonewtonsPerSquareMillimeter.
+//
+// 
 func (a *Pressure) KilonewtonsPerSquareMillimeter() float64 {
 	if a.kilonewtons_per_square_millimeterLazy != nil {
 		return *a.kilonewtons_per_square_millimeterLazy
@@ -929,7 +1027,9 @@ func (a *Pressure) KilonewtonsPerSquareMillimeter() float64 {
 	return kilonewtons_per_square_millimeter
 }
 
-// KilopoundForcePerSquareInch returns the value in KilopoundForcePerSquareInch.
+// KilopoundsForcePerSquareInch returns the Pressure value in KilopoundsForcePerSquareInch.
+//
+// 
 func (a *Pressure) KilopoundsForcePerSquareInch() float64 {
 	if a.kilopounds_force_per_square_inchLazy != nil {
 		return *a.kilopounds_force_per_square_inchLazy
@@ -939,7 +1039,9 @@ func (a *Pressure) KilopoundsForcePerSquareInch() float64 {
 	return kilopounds_force_per_square_inch
 }
 
-// KilopoundForcePerSquareMil returns the value in KilopoundForcePerSquareMil.
+// KilopoundsForcePerSquareMil returns the Pressure value in KilopoundsForcePerSquareMil.
+//
+// 
 func (a *Pressure) KilopoundsForcePerSquareMil() float64 {
 	if a.kilopounds_force_per_square_milLazy != nil {
 		return *a.kilopounds_force_per_square_milLazy
@@ -949,7 +1051,9 @@ func (a *Pressure) KilopoundsForcePerSquareMil() float64 {
 	return kilopounds_force_per_square_mil
 }
 
-// KilopoundForcePerSquareFoot returns the value in KilopoundForcePerSquareFoot.
+// KilopoundsForcePerSquareFoot returns the Pressure value in KilopoundsForcePerSquareFoot.
+//
+// 
 func (a *Pressure) KilopoundsForcePerSquareFoot() float64 {
 	if a.kilopounds_force_per_square_footLazy != nil {
 		return *a.kilopounds_force_per_square_footLazy
@@ -959,7 +1063,9 @@ func (a *Pressure) KilopoundsForcePerSquareFoot() float64 {
 	return kilopounds_force_per_square_foot
 }
 
-// MillimeterOfWaterColumn returns the value in MillimeterOfWaterColumn.
+// MillimetersOfWaterColumn returns the Pressure value in MillimetersOfWaterColumn.
+//
+// 
 func (a *Pressure) MillimetersOfWaterColumn() float64 {
 	if a.millimeters_of_water_columnLazy != nil {
 		return *a.millimeters_of_water_columnLazy
@@ -969,7 +1075,9 @@ func (a *Pressure) MillimetersOfWaterColumn() float64 {
 	return millimeters_of_water_column
 }
 
-// CentimeterOfWaterColumn returns the value in CentimeterOfWaterColumn.
+// CentimetersOfWaterColumn returns the Pressure value in CentimetersOfWaterColumn.
+//
+// 
 func (a *Pressure) CentimetersOfWaterColumn() float64 {
 	if a.centimeters_of_water_columnLazy != nil {
 		return *a.centimeters_of_water_columnLazy
@@ -980,7 +1088,9 @@ func (a *Pressure) CentimetersOfWaterColumn() float64 {
 }
 
 
-// ToDto creates an PressureDto representation.
+// ToDto creates a PressureDto representation from the Pressure instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Pascal by default.
 func (a *Pressure) ToDto(holdInUnit *PressureUnits) PressureDto {
 	if holdInUnit == nil {
 		defaultUnit := PressurePascal // Default value
@@ -993,12 +1103,19 @@ func (a *Pressure) ToDto(holdInUnit *PressureUnits) PressureDto {
 	}
 }
 
-// ToDtoJSON creates an PressureDto representation.
+// ToDtoJSON creates a JSON representation of the Pressure instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Pascal by default.
 func (a *Pressure) ToDtoJSON(holdInUnit *PressureUnits) ([]byte, error) {
+	// Convert to PressureDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Pressure to a specific unit value.
+// Convert converts a Pressure to a specific unit value.
+// The function uses the provided unit type (PressureUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Pressure) Convert(toUnit PressureUnits) float64 {
 	switch toUnit { 
     case PressurePascal:
@@ -1100,7 +1217,7 @@ func (a *Pressure) Convert(toUnit PressureUnits) float64 {
     case PressureCentimeterOfWaterColumn:
 		return a.CentimetersOfWaterColumn()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -1315,13 +1432,22 @@ func (a *Pressure) convertToBase(value float64, fromUnit PressureUnits) float64 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Pressure in the default unit (Pascal),
+// formatted to two decimal places.
 func (a Pressure) String() string {
 	return a.ToString(PressurePascal, 2)
 }
 
-// ToString formats the Pressure to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Pressure value as a string with the specified unit and fractional digits.
+// It converts the Pressure to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Pressure value will be converted (e.g., Pascal))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Pressure with the unit abbreviation.
 func (a *Pressure) ToString(unit PressureUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1437,12 +1563,26 @@ func (a *Pressure) getUnitAbbreviation(unit PressureUnits) string {
 	}
 }
 
-// Check if the given Pressure are equals to the current Pressure
+// Equals checks if the given Pressure is equal to the current Pressure.
+//
+// Parameters:
+//    other: The Pressure to compare against.
+//
+// Returns:
+//    bool: Returns true if both Pressure are equal, false otherwise.
 func (a *Pressure) Equals(other *Pressure) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Pressure are equals to the current Pressure
+// CompareTo compares the current Pressure with another Pressure.
+// It returns -1 if the current Pressure is less than the other Pressure, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Pressure to compare against.
+//
+// Returns:
+//    int: -1 if the current Pressure is less, 1 if greater, and 0 if equal.
 func (a *Pressure) CompareTo(other *Pressure) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1455,22 +1595,50 @@ func (a *Pressure) CompareTo(other *Pressure) int {
 	return 0
 }
 
-// Add the given Pressure to the current Pressure.
+// Add adds the given Pressure to the current Pressure and returns the result.
+// The result is a new Pressure instance with the sum of the values.
+//
+// Parameters:
+//    other: The Pressure to add to the current Pressure.
+//
+// Returns:
+//    *Pressure: A new Pressure instance representing the sum of both Pressure.
 func (a *Pressure) Add(other *Pressure) *Pressure {
 	return &Pressure{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Pressure to the current Pressure.
+// Subtract subtracts the given Pressure from the current Pressure and returns the result.
+// The result is a new Pressure instance with the difference of the values.
+//
+// Parameters:
+//    other: The Pressure to subtract from the current Pressure.
+//
+// Returns:
+//    *Pressure: A new Pressure instance representing the difference of both Pressure.
 func (a *Pressure) Subtract(other *Pressure) *Pressure {
 	return &Pressure{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Pressure to the current Pressure.
+// Multiply multiplies the current Pressure by the given Pressure and returns the result.
+// The result is a new Pressure instance with the product of the values.
+//
+// Parameters:
+//    other: The Pressure to multiply with the current Pressure.
+//
+// Returns:
+//    *Pressure: A new Pressure instance representing the product of both Pressure.
 func (a *Pressure) Multiply(other *Pressure) *Pressure {
 	return &Pressure{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Pressure to the current Pressure.
+// Divide divides the current Pressure by the given Pressure and returns the result.
+// The result is a new Pressure instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Pressure to divide the current Pressure by.
+//
+// Returns:
+//    *Pressure: A new Pressure instance representing the quotient of both Pressure.
 func (a *Pressure) Divide(other *Pressure) *Pressure {
 	return &Pressure{value: a.value / other.BaseValue()}
 }

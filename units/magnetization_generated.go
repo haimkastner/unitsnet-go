@@ -12,7 +12,7 @@ import (
 
 
 
-// MagnetizationUnits enumeration
+// MagnetizationUnits defines various units of Magnetization.
 type MagnetizationUnits string
 
 const (
@@ -21,19 +21,24 @@ const (
         MagnetizationAmperePerMeter MagnetizationUnits = "AmperePerMeter"
 )
 
-// MagnetizationDto represents an Magnetization
+// MagnetizationDto represents a Magnetization measurement with a numerical value and its corresponding unit.
 type MagnetizationDto struct {
+    // Value is the numerical representation of the Magnetization.
 	Value float64
+    // Unit specifies the unit of measurement for the Magnetization, as defined in the MagnetizationUnits enumeration.
 	Unit  MagnetizationUnits
 }
 
-// MagnetizationDtoFactory struct to group related functions
+// MagnetizationDtoFactory groups methods for creating and serializing MagnetizationDto objects.
 type MagnetizationDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MagnetizationDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MagnetizationDtoFactory) FromJSON(data []byte) (*MagnetizationDto, error) {
 	a := MagnetizationDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MagnetizationDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -41,6 +46,9 @@ func (udf MagnetizationDtoFactory) FromJSON(data []byte) (*MagnetizationDto, err
 	return &a, nil
 }
 
+// ToJSON serializes a MagnetizationDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MagnetizationDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -52,41 +60,43 @@ func (a MagnetizationDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Magnetization struct
+// Magnetization represents a measurement in a of Magnetization.
+//
+// In classical electromagnetism, magnetization is the vector field that expresses the density of permanent or induced magnetic dipole moments in a magnetic material.
 type Magnetization struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     amperes_per_meterLazy *float64 
 }
 
-// MagnetizationFactory struct to group related functions
+// MagnetizationFactory groups methods for creating Magnetization instances.
 type MagnetizationFactory struct{}
 
+// CreateMagnetization creates a new Magnetization instance from the given value and unit.
 func (uf MagnetizationFactory) CreateMagnetization(value float64, unit MagnetizationUnits) (*Magnetization, error) {
 	return newMagnetization(value, unit)
 }
 
+// FromDto converts a MagnetizationDto to a Magnetization instance.
 func (uf MagnetizationFactory) FromDto(dto MagnetizationDto) (*Magnetization, error) {
 	return newMagnetization(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Magnetization instance.
 func (uf MagnetizationFactory) FromDtoJSON(data []byte) (*Magnetization, error) {
 	unitDto, err := MagnetizationDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MagnetizationDto from JSON: %w", err)
 	}
 	return MagnetizationFactory{}.FromDto(*unitDto)
 }
 
 
-// FromAmperePerMeter creates a new Magnetization instance from AmperePerMeter.
+// FromAmperesPerMeter creates a new Magnetization instance from a value in AmperesPerMeter.
 func (uf MagnetizationFactory) FromAmperesPerMeter(value float64) (*Magnetization, error) {
 	return newMagnetization(value, MagnetizationAmperePerMeter)
 }
-
-
 
 
 // newMagnetization creates a new Magnetization.
@@ -99,13 +109,15 @@ func newMagnetization(value float64, fromUnit MagnetizationUnits) (*Magnetizatio
 	return a, nil
 }
 
-// BaseValue returns the base value of Magnetization in AmperePerMeter.
+// BaseValue returns the base value of Magnetization in AmperePerMeter unit (the base/default quantity).
 func (a *Magnetization) BaseValue() float64 {
 	return a.value
 }
 
 
-// AmperePerMeter returns the value in AmperePerMeter.
+// AmperesPerMeter returns the Magnetization value in AmperesPerMeter.
+//
+// 
 func (a *Magnetization) AmperesPerMeter() float64 {
 	if a.amperes_per_meterLazy != nil {
 		return *a.amperes_per_meterLazy
@@ -116,7 +128,9 @@ func (a *Magnetization) AmperesPerMeter() float64 {
 }
 
 
-// ToDto creates an MagnetizationDto representation.
+// ToDto creates a MagnetizationDto representation from the Magnetization instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by AmperePerMeter by default.
 func (a *Magnetization) ToDto(holdInUnit *MagnetizationUnits) MagnetizationDto {
 	if holdInUnit == nil {
 		defaultUnit := MagnetizationAmperePerMeter // Default value
@@ -129,18 +143,25 @@ func (a *Magnetization) ToDto(holdInUnit *MagnetizationUnits) MagnetizationDto {
 	}
 }
 
-// ToDtoJSON creates an MagnetizationDto representation.
+// ToDtoJSON creates a JSON representation of the Magnetization instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by AmperePerMeter by default.
 func (a *Magnetization) ToDtoJSON(holdInUnit *MagnetizationUnits) ([]byte, error) {
+	// Convert to MagnetizationDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Magnetization to a specific unit value.
+// Convert converts a Magnetization to a specific unit value.
+// The function uses the provided unit type (MagnetizationUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Magnetization) Convert(toUnit MagnetizationUnits) float64 {
 	switch toUnit { 
     case MagnetizationAmperePerMeter:
 		return a.AmperesPerMeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -163,13 +184,22 @@ func (a *Magnetization) convertToBase(value float64, fromUnit MagnetizationUnits
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Magnetization in the default unit (AmperePerMeter),
+// formatted to two decimal places.
 func (a Magnetization) String() string {
 	return a.ToString(MagnetizationAmperePerMeter, 2)
 }
 
-// ToString formats the Magnetization to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Magnetization value as a string with the specified unit and fractional digits.
+// It converts the Magnetization to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Magnetization value will be converted (e.g., AmperePerMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Magnetization with the unit abbreviation.
 func (a *Magnetization) ToString(unit MagnetizationUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -189,12 +219,26 @@ func (a *Magnetization) getUnitAbbreviation(unit MagnetizationUnits) string {
 	}
 }
 
-// Check if the given Magnetization are equals to the current Magnetization
+// Equals checks if the given Magnetization is equal to the current Magnetization.
+//
+// Parameters:
+//    other: The Magnetization to compare against.
+//
+// Returns:
+//    bool: Returns true if both Magnetization are equal, false otherwise.
 func (a *Magnetization) Equals(other *Magnetization) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Magnetization are equals to the current Magnetization
+// CompareTo compares the current Magnetization with another Magnetization.
+// It returns -1 if the current Magnetization is less than the other Magnetization, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Magnetization to compare against.
+//
+// Returns:
+//    int: -1 if the current Magnetization is less, 1 if greater, and 0 if equal.
 func (a *Magnetization) CompareTo(other *Magnetization) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -207,22 +251,50 @@ func (a *Magnetization) CompareTo(other *Magnetization) int {
 	return 0
 }
 
-// Add the given Magnetization to the current Magnetization.
+// Add adds the given Magnetization to the current Magnetization and returns the result.
+// The result is a new Magnetization instance with the sum of the values.
+//
+// Parameters:
+//    other: The Magnetization to add to the current Magnetization.
+//
+// Returns:
+//    *Magnetization: A new Magnetization instance representing the sum of both Magnetization.
 func (a *Magnetization) Add(other *Magnetization) *Magnetization {
 	return &Magnetization{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Magnetization to the current Magnetization.
+// Subtract subtracts the given Magnetization from the current Magnetization and returns the result.
+// The result is a new Magnetization instance with the difference of the values.
+//
+// Parameters:
+//    other: The Magnetization to subtract from the current Magnetization.
+//
+// Returns:
+//    *Magnetization: A new Magnetization instance representing the difference of both Magnetization.
 func (a *Magnetization) Subtract(other *Magnetization) *Magnetization {
 	return &Magnetization{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Magnetization to the current Magnetization.
+// Multiply multiplies the current Magnetization by the given Magnetization and returns the result.
+// The result is a new Magnetization instance with the product of the values.
+//
+// Parameters:
+//    other: The Magnetization to multiply with the current Magnetization.
+//
+// Returns:
+//    *Magnetization: A new Magnetization instance representing the product of both Magnetization.
 func (a *Magnetization) Multiply(other *Magnetization) *Magnetization {
 	return &Magnetization{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Magnetization to the current Magnetization.
+// Divide divides the current Magnetization by the given Magnetization and returns the result.
+// The result is a new Magnetization instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Magnetization to divide the current Magnetization by.
+//
+// Returns:
+//    *Magnetization: A new Magnetization instance representing the quotient of both Magnetization.
 func (a *Magnetization) Divide(other *Magnetization) *Magnetization {
 	return &Magnetization{value: a.value / other.BaseValue()}
 }

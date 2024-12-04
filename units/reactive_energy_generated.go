@@ -12,7 +12,7 @@ import (
 
 
 
-// ReactiveEnergyUnits enumeration
+// ReactiveEnergyUnits defines various units of ReactiveEnergy.
 type ReactiveEnergyUnits string
 
 const (
@@ -25,19 +25,24 @@ const (
         ReactiveEnergyMegavoltampereReactiveHour ReactiveEnergyUnits = "MegavoltampereReactiveHour"
 )
 
-// ReactiveEnergyDto represents an ReactiveEnergy
+// ReactiveEnergyDto represents a ReactiveEnergy measurement with a numerical value and its corresponding unit.
 type ReactiveEnergyDto struct {
+    // Value is the numerical representation of the ReactiveEnergy.
 	Value float64
+    // Unit specifies the unit of measurement for the ReactiveEnergy, as defined in the ReactiveEnergyUnits enumeration.
 	Unit  ReactiveEnergyUnits
 }
 
-// ReactiveEnergyDtoFactory struct to group related functions
+// ReactiveEnergyDtoFactory groups methods for creating and serializing ReactiveEnergyDto objects.
 type ReactiveEnergyDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ReactiveEnergyDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ReactiveEnergyDtoFactory) FromJSON(data []byte) (*ReactiveEnergyDto, error) {
 	a := ReactiveEnergyDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ReactiveEnergyDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -45,6 +50,9 @@ func (udf ReactiveEnergyDtoFactory) FromJSON(data []byte) (*ReactiveEnergyDto, e
 	return &a, nil
 }
 
+// ToJSON serializes a ReactiveEnergyDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ReactiveEnergyDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -56,10 +64,11 @@ func (a ReactiveEnergyDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ReactiveEnergy struct
+// ReactiveEnergy represents a measurement in a of ReactiveEnergy.
+//
+// The Volt-ampere reactive hour (expressed as varh) is the reactive power of one Volt-ampere reactive produced in one hour.
 type ReactiveEnergy struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     voltampere_reactive_hoursLazy *float64 
@@ -67,42 +76,43 @@ type ReactiveEnergy struct {
     megavoltampere_reactive_hoursLazy *float64 
 }
 
-// ReactiveEnergyFactory struct to group related functions
+// ReactiveEnergyFactory groups methods for creating ReactiveEnergy instances.
 type ReactiveEnergyFactory struct{}
 
+// CreateReactiveEnergy creates a new ReactiveEnergy instance from the given value and unit.
 func (uf ReactiveEnergyFactory) CreateReactiveEnergy(value float64, unit ReactiveEnergyUnits) (*ReactiveEnergy, error) {
 	return newReactiveEnergy(value, unit)
 }
 
+// FromDto converts a ReactiveEnergyDto to a ReactiveEnergy instance.
 func (uf ReactiveEnergyFactory) FromDto(dto ReactiveEnergyDto) (*ReactiveEnergy, error) {
 	return newReactiveEnergy(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ReactiveEnergy instance.
 func (uf ReactiveEnergyFactory) FromDtoJSON(data []byte) (*ReactiveEnergy, error) {
 	unitDto, err := ReactiveEnergyDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ReactiveEnergyDto from JSON: %w", err)
 	}
 	return ReactiveEnergyFactory{}.FromDto(*unitDto)
 }
 
 
-// FromVoltampereReactiveHour creates a new ReactiveEnergy instance from VoltampereReactiveHour.
+// FromVoltampereReactiveHours creates a new ReactiveEnergy instance from a value in VoltampereReactiveHours.
 func (uf ReactiveEnergyFactory) FromVoltampereReactiveHours(value float64) (*ReactiveEnergy, error) {
 	return newReactiveEnergy(value, ReactiveEnergyVoltampereReactiveHour)
 }
 
-// FromKilovoltampereReactiveHour creates a new ReactiveEnergy instance from KilovoltampereReactiveHour.
+// FromKilovoltampereReactiveHours creates a new ReactiveEnergy instance from a value in KilovoltampereReactiveHours.
 func (uf ReactiveEnergyFactory) FromKilovoltampereReactiveHours(value float64) (*ReactiveEnergy, error) {
 	return newReactiveEnergy(value, ReactiveEnergyKilovoltampereReactiveHour)
 }
 
-// FromMegavoltampereReactiveHour creates a new ReactiveEnergy instance from MegavoltampereReactiveHour.
+// FromMegavoltampereReactiveHours creates a new ReactiveEnergy instance from a value in MegavoltampereReactiveHours.
 func (uf ReactiveEnergyFactory) FromMegavoltampereReactiveHours(value float64) (*ReactiveEnergy, error) {
 	return newReactiveEnergy(value, ReactiveEnergyMegavoltampereReactiveHour)
 }
-
-
 
 
 // newReactiveEnergy creates a new ReactiveEnergy.
@@ -115,13 +125,15 @@ func newReactiveEnergy(value float64, fromUnit ReactiveEnergyUnits) (*ReactiveEn
 	return a, nil
 }
 
-// BaseValue returns the base value of ReactiveEnergy in VoltampereReactiveHour.
+// BaseValue returns the base value of ReactiveEnergy in VoltampereReactiveHour unit (the base/default quantity).
 func (a *ReactiveEnergy) BaseValue() float64 {
 	return a.value
 }
 
 
-// VoltampereReactiveHour returns the value in VoltampereReactiveHour.
+// VoltampereReactiveHours returns the ReactiveEnergy value in VoltampereReactiveHours.
+//
+// 
 func (a *ReactiveEnergy) VoltampereReactiveHours() float64 {
 	if a.voltampere_reactive_hoursLazy != nil {
 		return *a.voltampere_reactive_hoursLazy
@@ -131,7 +143,9 @@ func (a *ReactiveEnergy) VoltampereReactiveHours() float64 {
 	return voltampere_reactive_hours
 }
 
-// KilovoltampereReactiveHour returns the value in KilovoltampereReactiveHour.
+// KilovoltampereReactiveHours returns the ReactiveEnergy value in KilovoltampereReactiveHours.
+//
+// 
 func (a *ReactiveEnergy) KilovoltampereReactiveHours() float64 {
 	if a.kilovoltampere_reactive_hoursLazy != nil {
 		return *a.kilovoltampere_reactive_hoursLazy
@@ -141,7 +155,9 @@ func (a *ReactiveEnergy) KilovoltampereReactiveHours() float64 {
 	return kilovoltampere_reactive_hours
 }
 
-// MegavoltampereReactiveHour returns the value in MegavoltampereReactiveHour.
+// MegavoltampereReactiveHours returns the ReactiveEnergy value in MegavoltampereReactiveHours.
+//
+// 
 func (a *ReactiveEnergy) MegavoltampereReactiveHours() float64 {
 	if a.megavoltampere_reactive_hoursLazy != nil {
 		return *a.megavoltampere_reactive_hoursLazy
@@ -152,7 +168,9 @@ func (a *ReactiveEnergy) MegavoltampereReactiveHours() float64 {
 }
 
 
-// ToDto creates an ReactiveEnergyDto representation.
+// ToDto creates a ReactiveEnergyDto representation from the ReactiveEnergy instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by VoltampereReactiveHour by default.
 func (a *ReactiveEnergy) ToDto(holdInUnit *ReactiveEnergyUnits) ReactiveEnergyDto {
 	if holdInUnit == nil {
 		defaultUnit := ReactiveEnergyVoltampereReactiveHour // Default value
@@ -165,12 +183,19 @@ func (a *ReactiveEnergy) ToDto(holdInUnit *ReactiveEnergyUnits) ReactiveEnergyDt
 	}
 }
 
-// ToDtoJSON creates an ReactiveEnergyDto representation.
+// ToDtoJSON creates a JSON representation of the ReactiveEnergy instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by VoltampereReactiveHour by default.
 func (a *ReactiveEnergy) ToDtoJSON(holdInUnit *ReactiveEnergyUnits) ([]byte, error) {
+	// Convert to ReactiveEnergyDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ReactiveEnergy to a specific unit value.
+// Convert converts a ReactiveEnergy to a specific unit value.
+// The function uses the provided unit type (ReactiveEnergyUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ReactiveEnergy) Convert(toUnit ReactiveEnergyUnits) float64 {
 	switch toUnit { 
     case ReactiveEnergyVoltampereReactiveHour:
@@ -180,7 +205,7 @@ func (a *ReactiveEnergy) Convert(toUnit ReactiveEnergyUnits) float64 {
     case ReactiveEnergyMegavoltampereReactiveHour:
 		return a.MegavoltampereReactiveHours()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -211,13 +236,22 @@ func (a *ReactiveEnergy) convertToBase(value float64, fromUnit ReactiveEnergyUni
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ReactiveEnergy in the default unit (VoltampereReactiveHour),
+// formatted to two decimal places.
 func (a ReactiveEnergy) String() string {
 	return a.ToString(ReactiveEnergyVoltampereReactiveHour, 2)
 }
 
-// ToString formats the ReactiveEnergy to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ReactiveEnergy value as a string with the specified unit and fractional digits.
+// It converts the ReactiveEnergy to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ReactiveEnergy value will be converted (e.g., VoltampereReactiveHour))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ReactiveEnergy with the unit abbreviation.
 func (a *ReactiveEnergy) ToString(unit ReactiveEnergyUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -241,12 +275,26 @@ func (a *ReactiveEnergy) getUnitAbbreviation(unit ReactiveEnergyUnits) string {
 	}
 }
 
-// Check if the given ReactiveEnergy are equals to the current ReactiveEnergy
+// Equals checks if the given ReactiveEnergy is equal to the current ReactiveEnergy.
+//
+// Parameters:
+//    other: The ReactiveEnergy to compare against.
+//
+// Returns:
+//    bool: Returns true if both ReactiveEnergy are equal, false otherwise.
 func (a *ReactiveEnergy) Equals(other *ReactiveEnergy) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ReactiveEnergy are equals to the current ReactiveEnergy
+// CompareTo compares the current ReactiveEnergy with another ReactiveEnergy.
+// It returns -1 if the current ReactiveEnergy is less than the other ReactiveEnergy, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ReactiveEnergy to compare against.
+//
+// Returns:
+//    int: -1 if the current ReactiveEnergy is less, 1 if greater, and 0 if equal.
 func (a *ReactiveEnergy) CompareTo(other *ReactiveEnergy) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -259,22 +307,50 @@ func (a *ReactiveEnergy) CompareTo(other *ReactiveEnergy) int {
 	return 0
 }
 
-// Add the given ReactiveEnergy to the current ReactiveEnergy.
+// Add adds the given ReactiveEnergy to the current ReactiveEnergy and returns the result.
+// The result is a new ReactiveEnergy instance with the sum of the values.
+//
+// Parameters:
+//    other: The ReactiveEnergy to add to the current ReactiveEnergy.
+//
+// Returns:
+//    *ReactiveEnergy: A new ReactiveEnergy instance representing the sum of both ReactiveEnergy.
 func (a *ReactiveEnergy) Add(other *ReactiveEnergy) *ReactiveEnergy {
 	return &ReactiveEnergy{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ReactiveEnergy to the current ReactiveEnergy.
+// Subtract subtracts the given ReactiveEnergy from the current ReactiveEnergy and returns the result.
+// The result is a new ReactiveEnergy instance with the difference of the values.
+//
+// Parameters:
+//    other: The ReactiveEnergy to subtract from the current ReactiveEnergy.
+//
+// Returns:
+//    *ReactiveEnergy: A new ReactiveEnergy instance representing the difference of both ReactiveEnergy.
 func (a *ReactiveEnergy) Subtract(other *ReactiveEnergy) *ReactiveEnergy {
 	return &ReactiveEnergy{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ReactiveEnergy to the current ReactiveEnergy.
+// Multiply multiplies the current ReactiveEnergy by the given ReactiveEnergy and returns the result.
+// The result is a new ReactiveEnergy instance with the product of the values.
+//
+// Parameters:
+//    other: The ReactiveEnergy to multiply with the current ReactiveEnergy.
+//
+// Returns:
+//    *ReactiveEnergy: A new ReactiveEnergy instance representing the product of both ReactiveEnergy.
 func (a *ReactiveEnergy) Multiply(other *ReactiveEnergy) *ReactiveEnergy {
 	return &ReactiveEnergy{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ReactiveEnergy to the current ReactiveEnergy.
+// Divide divides the current ReactiveEnergy by the given ReactiveEnergy and returns the result.
+// The result is a new ReactiveEnergy instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ReactiveEnergy to divide the current ReactiveEnergy by.
+//
+// Returns:
+//    *ReactiveEnergy: A new ReactiveEnergy instance representing the quotient of both ReactiveEnergy.
 func (a *ReactiveEnergy) Divide(other *ReactiveEnergy) *ReactiveEnergy {
 	return &ReactiveEnergy{value: a.value / other.BaseValue()}
 }

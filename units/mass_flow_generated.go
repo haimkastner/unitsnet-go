@@ -12,7 +12,7 @@ import (
 
 
 
-// MassFlowUnits enumeration
+// MassFlowUnits defines various units of MassFlow.
 type MassFlowUnits string
 
 const (
@@ -85,19 +85,24 @@ const (
         MassFlowMegapoundPerSecond MassFlowUnits = "MegapoundPerSecond"
 )
 
-// MassFlowDto represents an MassFlow
+// MassFlowDto represents a MassFlow measurement with a numerical value and its corresponding unit.
 type MassFlowDto struct {
+    // Value is the numerical representation of the MassFlow.
 	Value float64
+    // Unit specifies the unit of measurement for the MassFlow, as defined in the MassFlowUnits enumeration.
 	Unit  MassFlowUnits
 }
 
-// MassFlowDtoFactory struct to group related functions
+// MassFlowDtoFactory groups methods for creating and serializing MassFlowDto objects.
 type MassFlowDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MassFlowDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MassFlowDtoFactory) FromJSON(data []byte) (*MassFlowDto, error) {
 	a := MassFlowDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MassFlowDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -105,6 +110,9 @@ func (udf MassFlowDtoFactory) FromJSON(data []byte) (*MassFlowDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a MassFlowDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MassFlowDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -116,10 +124,11 @@ func (a MassFlowDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// MassFlow struct
+// MassFlow represents a measurement in a of MassFlow.
+//
+// Mass flow is the ratio of the mass change to the time during which the change occurred (value of mass changes per unit time).
 type MassFlow struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     grams_per_secondLazy *float64 
@@ -157,192 +166,193 @@ type MassFlow struct {
     megapounds_per_secondLazy *float64 
 }
 
-// MassFlowFactory struct to group related functions
+// MassFlowFactory groups methods for creating MassFlow instances.
 type MassFlowFactory struct{}
 
+// CreateMassFlow creates a new MassFlow instance from the given value and unit.
 func (uf MassFlowFactory) CreateMassFlow(value float64, unit MassFlowUnits) (*MassFlow, error) {
 	return newMassFlow(value, unit)
 }
 
+// FromDto converts a MassFlowDto to a MassFlow instance.
 func (uf MassFlowFactory) FromDto(dto MassFlowDto) (*MassFlow, error) {
 	return newMassFlow(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a MassFlow instance.
 func (uf MassFlowFactory) FromDtoJSON(data []byte) (*MassFlow, error) {
 	unitDto, err := MassFlowDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MassFlowDto from JSON: %w", err)
 	}
 	return MassFlowFactory{}.FromDto(*unitDto)
 }
 
 
-// FromGramPerSecond creates a new MassFlow instance from GramPerSecond.
+// FromGramsPerSecond creates a new MassFlow instance from a value in GramsPerSecond.
 func (uf MassFlowFactory) FromGramsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowGramPerSecond)
 }
 
-// FromGramPerDay creates a new MassFlow instance from GramPerDay.
+// FromGramsPerDay creates a new MassFlow instance from a value in GramsPerDay.
 func (uf MassFlowFactory) FromGramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowGramPerDay)
 }
 
-// FromGramPerHour creates a new MassFlow instance from GramPerHour.
+// FromGramsPerHour creates a new MassFlow instance from a value in GramsPerHour.
 func (uf MassFlowFactory) FromGramsPerHour(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowGramPerHour)
 }
 
-// FromKilogramPerHour creates a new MassFlow instance from KilogramPerHour.
+// FromKilogramsPerHour creates a new MassFlow instance from a value in KilogramsPerHour.
 func (uf MassFlowFactory) FromKilogramsPerHour(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowKilogramPerHour)
 }
 
-// FromKilogramPerMinute creates a new MassFlow instance from KilogramPerMinute.
+// FromKilogramsPerMinute creates a new MassFlow instance from a value in KilogramsPerMinute.
 func (uf MassFlowFactory) FromKilogramsPerMinute(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowKilogramPerMinute)
 }
 
-// FromTonnePerHour creates a new MassFlow instance from TonnePerHour.
+// FromTonnesPerHour creates a new MassFlow instance from a value in TonnesPerHour.
 func (uf MassFlowFactory) FromTonnesPerHour(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowTonnePerHour)
 }
 
-// FromPoundPerDay creates a new MassFlow instance from PoundPerDay.
+// FromPoundsPerDay creates a new MassFlow instance from a value in PoundsPerDay.
 func (uf MassFlowFactory) FromPoundsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowPoundPerDay)
 }
 
-// FromPoundPerHour creates a new MassFlow instance from PoundPerHour.
+// FromPoundsPerHour creates a new MassFlow instance from a value in PoundsPerHour.
 func (uf MassFlowFactory) FromPoundsPerHour(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowPoundPerHour)
 }
 
-// FromPoundPerMinute creates a new MassFlow instance from PoundPerMinute.
+// FromPoundsPerMinute creates a new MassFlow instance from a value in PoundsPerMinute.
 func (uf MassFlowFactory) FromPoundsPerMinute(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowPoundPerMinute)
 }
 
-// FromPoundPerSecond creates a new MassFlow instance from PoundPerSecond.
+// FromPoundsPerSecond creates a new MassFlow instance from a value in PoundsPerSecond.
 func (uf MassFlowFactory) FromPoundsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowPoundPerSecond)
 }
 
-// FromTonnePerDay creates a new MassFlow instance from TonnePerDay.
+// FromTonnesPerDay creates a new MassFlow instance from a value in TonnesPerDay.
 func (uf MassFlowFactory) FromTonnesPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowTonnePerDay)
 }
 
-// FromShortTonPerHour creates a new MassFlow instance from ShortTonPerHour.
+// FromShortTonsPerHour creates a new MassFlow instance from a value in ShortTonsPerHour.
 func (uf MassFlowFactory) FromShortTonsPerHour(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowShortTonPerHour)
 }
 
-// FromNanogramPerSecond creates a new MassFlow instance from NanogramPerSecond.
+// FromNanogramsPerSecond creates a new MassFlow instance from a value in NanogramsPerSecond.
 func (uf MassFlowFactory) FromNanogramsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowNanogramPerSecond)
 }
 
-// FromMicrogramPerSecond creates a new MassFlow instance from MicrogramPerSecond.
+// FromMicrogramsPerSecond creates a new MassFlow instance from a value in MicrogramsPerSecond.
 func (uf MassFlowFactory) FromMicrogramsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowMicrogramPerSecond)
 }
 
-// FromMilligramPerSecond creates a new MassFlow instance from MilligramPerSecond.
+// FromMilligramsPerSecond creates a new MassFlow instance from a value in MilligramsPerSecond.
 func (uf MassFlowFactory) FromMilligramsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowMilligramPerSecond)
 }
 
-// FromCentigramPerSecond creates a new MassFlow instance from CentigramPerSecond.
+// FromCentigramsPerSecond creates a new MassFlow instance from a value in CentigramsPerSecond.
 func (uf MassFlowFactory) FromCentigramsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowCentigramPerSecond)
 }
 
-// FromDecigramPerSecond creates a new MassFlow instance from DecigramPerSecond.
+// FromDecigramsPerSecond creates a new MassFlow instance from a value in DecigramsPerSecond.
 func (uf MassFlowFactory) FromDecigramsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowDecigramPerSecond)
 }
 
-// FromDecagramPerSecond creates a new MassFlow instance from DecagramPerSecond.
+// FromDecagramsPerSecond creates a new MassFlow instance from a value in DecagramsPerSecond.
 func (uf MassFlowFactory) FromDecagramsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowDecagramPerSecond)
 }
 
-// FromHectogramPerSecond creates a new MassFlow instance from HectogramPerSecond.
+// FromHectogramsPerSecond creates a new MassFlow instance from a value in HectogramsPerSecond.
 func (uf MassFlowFactory) FromHectogramsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowHectogramPerSecond)
 }
 
-// FromKilogramPerSecond creates a new MassFlow instance from KilogramPerSecond.
+// FromKilogramsPerSecond creates a new MassFlow instance from a value in KilogramsPerSecond.
 func (uf MassFlowFactory) FromKilogramsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowKilogramPerSecond)
 }
 
-// FromNanogramPerDay creates a new MassFlow instance from NanogramPerDay.
+// FromNanogramsPerDay creates a new MassFlow instance from a value in NanogramsPerDay.
 func (uf MassFlowFactory) FromNanogramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowNanogramPerDay)
 }
 
-// FromMicrogramPerDay creates a new MassFlow instance from MicrogramPerDay.
+// FromMicrogramsPerDay creates a new MassFlow instance from a value in MicrogramsPerDay.
 func (uf MassFlowFactory) FromMicrogramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowMicrogramPerDay)
 }
 
-// FromMilligramPerDay creates a new MassFlow instance from MilligramPerDay.
+// FromMilligramsPerDay creates a new MassFlow instance from a value in MilligramsPerDay.
 func (uf MassFlowFactory) FromMilligramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowMilligramPerDay)
 }
 
-// FromCentigramPerDay creates a new MassFlow instance from CentigramPerDay.
+// FromCentigramsPerDay creates a new MassFlow instance from a value in CentigramsPerDay.
 func (uf MassFlowFactory) FromCentigramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowCentigramPerDay)
 }
 
-// FromDecigramPerDay creates a new MassFlow instance from DecigramPerDay.
+// FromDecigramsPerDay creates a new MassFlow instance from a value in DecigramsPerDay.
 func (uf MassFlowFactory) FromDecigramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowDecigramPerDay)
 }
 
-// FromDecagramPerDay creates a new MassFlow instance from DecagramPerDay.
+// FromDecagramsPerDay creates a new MassFlow instance from a value in DecagramsPerDay.
 func (uf MassFlowFactory) FromDecagramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowDecagramPerDay)
 }
 
-// FromHectogramPerDay creates a new MassFlow instance from HectogramPerDay.
+// FromHectogramsPerDay creates a new MassFlow instance from a value in HectogramsPerDay.
 func (uf MassFlowFactory) FromHectogramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowHectogramPerDay)
 }
 
-// FromKilogramPerDay creates a new MassFlow instance from KilogramPerDay.
+// FromKilogramsPerDay creates a new MassFlow instance from a value in KilogramsPerDay.
 func (uf MassFlowFactory) FromKilogramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowKilogramPerDay)
 }
 
-// FromMegagramPerDay creates a new MassFlow instance from MegagramPerDay.
+// FromMegagramsPerDay creates a new MassFlow instance from a value in MegagramsPerDay.
 func (uf MassFlowFactory) FromMegagramsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowMegagramPerDay)
 }
 
-// FromMegapoundPerDay creates a new MassFlow instance from MegapoundPerDay.
+// FromMegapoundsPerDay creates a new MassFlow instance from a value in MegapoundsPerDay.
 func (uf MassFlowFactory) FromMegapoundsPerDay(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowMegapoundPerDay)
 }
 
-// FromMegapoundPerHour creates a new MassFlow instance from MegapoundPerHour.
+// FromMegapoundsPerHour creates a new MassFlow instance from a value in MegapoundsPerHour.
 func (uf MassFlowFactory) FromMegapoundsPerHour(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowMegapoundPerHour)
 }
 
-// FromMegapoundPerMinute creates a new MassFlow instance from MegapoundPerMinute.
+// FromMegapoundsPerMinute creates a new MassFlow instance from a value in MegapoundsPerMinute.
 func (uf MassFlowFactory) FromMegapoundsPerMinute(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowMegapoundPerMinute)
 }
 
-// FromMegapoundPerSecond creates a new MassFlow instance from MegapoundPerSecond.
+// FromMegapoundsPerSecond creates a new MassFlow instance from a value in MegapoundsPerSecond.
 func (uf MassFlowFactory) FromMegapoundsPerSecond(value float64) (*MassFlow, error) {
 	return newMassFlow(value, MassFlowMegapoundPerSecond)
 }
-
-
 
 
 // newMassFlow creates a new MassFlow.
@@ -355,13 +365,15 @@ func newMassFlow(value float64, fromUnit MassFlowUnits) (*MassFlow, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of MassFlow in GramPerSecond.
+// BaseValue returns the base value of MassFlow in GramPerSecond unit (the base/default quantity).
 func (a *MassFlow) BaseValue() float64 {
 	return a.value
 }
 
 
-// GramPerSecond returns the value in GramPerSecond.
+// GramsPerSecond returns the MassFlow value in GramsPerSecond.
+//
+// 
 func (a *MassFlow) GramsPerSecond() float64 {
 	if a.grams_per_secondLazy != nil {
 		return *a.grams_per_secondLazy
@@ -371,7 +383,9 @@ func (a *MassFlow) GramsPerSecond() float64 {
 	return grams_per_second
 }
 
-// GramPerDay returns the value in GramPerDay.
+// GramsPerDay returns the MassFlow value in GramsPerDay.
+//
+// 
 func (a *MassFlow) GramsPerDay() float64 {
 	if a.grams_per_dayLazy != nil {
 		return *a.grams_per_dayLazy
@@ -381,7 +395,9 @@ func (a *MassFlow) GramsPerDay() float64 {
 	return grams_per_day
 }
 
-// GramPerHour returns the value in GramPerHour.
+// GramsPerHour returns the MassFlow value in GramsPerHour.
+//
+// 
 func (a *MassFlow) GramsPerHour() float64 {
 	if a.grams_per_hourLazy != nil {
 		return *a.grams_per_hourLazy
@@ -391,7 +407,9 @@ func (a *MassFlow) GramsPerHour() float64 {
 	return grams_per_hour
 }
 
-// KilogramPerHour returns the value in KilogramPerHour.
+// KilogramsPerHour returns the MassFlow value in KilogramsPerHour.
+//
+// 
 func (a *MassFlow) KilogramsPerHour() float64 {
 	if a.kilograms_per_hourLazy != nil {
 		return *a.kilograms_per_hourLazy
@@ -401,7 +419,9 @@ func (a *MassFlow) KilogramsPerHour() float64 {
 	return kilograms_per_hour
 }
 
-// KilogramPerMinute returns the value in KilogramPerMinute.
+// KilogramsPerMinute returns the MassFlow value in KilogramsPerMinute.
+//
+// 
 func (a *MassFlow) KilogramsPerMinute() float64 {
 	if a.kilograms_per_minuteLazy != nil {
 		return *a.kilograms_per_minuteLazy
@@ -411,7 +431,9 @@ func (a *MassFlow) KilogramsPerMinute() float64 {
 	return kilograms_per_minute
 }
 
-// TonnePerHour returns the value in TonnePerHour.
+// TonnesPerHour returns the MassFlow value in TonnesPerHour.
+//
+// 
 func (a *MassFlow) TonnesPerHour() float64 {
 	if a.tonnes_per_hourLazy != nil {
 		return *a.tonnes_per_hourLazy
@@ -421,7 +443,9 @@ func (a *MassFlow) TonnesPerHour() float64 {
 	return tonnes_per_hour
 }
 
-// PoundPerDay returns the value in PoundPerDay.
+// PoundsPerDay returns the MassFlow value in PoundsPerDay.
+//
+// 
 func (a *MassFlow) PoundsPerDay() float64 {
 	if a.pounds_per_dayLazy != nil {
 		return *a.pounds_per_dayLazy
@@ -431,7 +455,9 @@ func (a *MassFlow) PoundsPerDay() float64 {
 	return pounds_per_day
 }
 
-// PoundPerHour returns the value in PoundPerHour.
+// PoundsPerHour returns the MassFlow value in PoundsPerHour.
+//
+// 
 func (a *MassFlow) PoundsPerHour() float64 {
 	if a.pounds_per_hourLazy != nil {
 		return *a.pounds_per_hourLazy
@@ -441,7 +467,9 @@ func (a *MassFlow) PoundsPerHour() float64 {
 	return pounds_per_hour
 }
 
-// PoundPerMinute returns the value in PoundPerMinute.
+// PoundsPerMinute returns the MassFlow value in PoundsPerMinute.
+//
+// 
 func (a *MassFlow) PoundsPerMinute() float64 {
 	if a.pounds_per_minuteLazy != nil {
 		return *a.pounds_per_minuteLazy
@@ -451,7 +479,9 @@ func (a *MassFlow) PoundsPerMinute() float64 {
 	return pounds_per_minute
 }
 
-// PoundPerSecond returns the value in PoundPerSecond.
+// PoundsPerSecond returns the MassFlow value in PoundsPerSecond.
+//
+// 
 func (a *MassFlow) PoundsPerSecond() float64 {
 	if a.pounds_per_secondLazy != nil {
 		return *a.pounds_per_secondLazy
@@ -461,7 +491,9 @@ func (a *MassFlow) PoundsPerSecond() float64 {
 	return pounds_per_second
 }
 
-// TonnePerDay returns the value in TonnePerDay.
+// TonnesPerDay returns the MassFlow value in TonnesPerDay.
+//
+// 
 func (a *MassFlow) TonnesPerDay() float64 {
 	if a.tonnes_per_dayLazy != nil {
 		return *a.tonnes_per_dayLazy
@@ -471,7 +503,9 @@ func (a *MassFlow) TonnesPerDay() float64 {
 	return tonnes_per_day
 }
 
-// ShortTonPerHour returns the value in ShortTonPerHour.
+// ShortTonsPerHour returns the MassFlow value in ShortTonsPerHour.
+//
+// 
 func (a *MassFlow) ShortTonsPerHour() float64 {
 	if a.short_tons_per_hourLazy != nil {
 		return *a.short_tons_per_hourLazy
@@ -481,7 +515,9 @@ func (a *MassFlow) ShortTonsPerHour() float64 {
 	return short_tons_per_hour
 }
 
-// NanogramPerSecond returns the value in NanogramPerSecond.
+// NanogramsPerSecond returns the MassFlow value in NanogramsPerSecond.
+//
+// 
 func (a *MassFlow) NanogramsPerSecond() float64 {
 	if a.nanograms_per_secondLazy != nil {
 		return *a.nanograms_per_secondLazy
@@ -491,7 +527,9 @@ func (a *MassFlow) NanogramsPerSecond() float64 {
 	return nanograms_per_second
 }
 
-// MicrogramPerSecond returns the value in MicrogramPerSecond.
+// MicrogramsPerSecond returns the MassFlow value in MicrogramsPerSecond.
+//
+// 
 func (a *MassFlow) MicrogramsPerSecond() float64 {
 	if a.micrograms_per_secondLazy != nil {
 		return *a.micrograms_per_secondLazy
@@ -501,7 +539,9 @@ func (a *MassFlow) MicrogramsPerSecond() float64 {
 	return micrograms_per_second
 }
 
-// MilligramPerSecond returns the value in MilligramPerSecond.
+// MilligramsPerSecond returns the MassFlow value in MilligramsPerSecond.
+//
+// 
 func (a *MassFlow) MilligramsPerSecond() float64 {
 	if a.milligrams_per_secondLazy != nil {
 		return *a.milligrams_per_secondLazy
@@ -511,7 +551,9 @@ func (a *MassFlow) MilligramsPerSecond() float64 {
 	return milligrams_per_second
 }
 
-// CentigramPerSecond returns the value in CentigramPerSecond.
+// CentigramsPerSecond returns the MassFlow value in CentigramsPerSecond.
+//
+// 
 func (a *MassFlow) CentigramsPerSecond() float64 {
 	if a.centigrams_per_secondLazy != nil {
 		return *a.centigrams_per_secondLazy
@@ -521,7 +563,9 @@ func (a *MassFlow) CentigramsPerSecond() float64 {
 	return centigrams_per_second
 }
 
-// DecigramPerSecond returns the value in DecigramPerSecond.
+// DecigramsPerSecond returns the MassFlow value in DecigramsPerSecond.
+//
+// 
 func (a *MassFlow) DecigramsPerSecond() float64 {
 	if a.decigrams_per_secondLazy != nil {
 		return *a.decigrams_per_secondLazy
@@ -531,7 +575,9 @@ func (a *MassFlow) DecigramsPerSecond() float64 {
 	return decigrams_per_second
 }
 
-// DecagramPerSecond returns the value in DecagramPerSecond.
+// DecagramsPerSecond returns the MassFlow value in DecagramsPerSecond.
+//
+// 
 func (a *MassFlow) DecagramsPerSecond() float64 {
 	if a.decagrams_per_secondLazy != nil {
 		return *a.decagrams_per_secondLazy
@@ -541,7 +587,9 @@ func (a *MassFlow) DecagramsPerSecond() float64 {
 	return decagrams_per_second
 }
 
-// HectogramPerSecond returns the value in HectogramPerSecond.
+// HectogramsPerSecond returns the MassFlow value in HectogramsPerSecond.
+//
+// 
 func (a *MassFlow) HectogramsPerSecond() float64 {
 	if a.hectograms_per_secondLazy != nil {
 		return *a.hectograms_per_secondLazy
@@ -551,7 +599,9 @@ func (a *MassFlow) HectogramsPerSecond() float64 {
 	return hectograms_per_second
 }
 
-// KilogramPerSecond returns the value in KilogramPerSecond.
+// KilogramsPerSecond returns the MassFlow value in KilogramsPerSecond.
+//
+// 
 func (a *MassFlow) KilogramsPerSecond() float64 {
 	if a.kilograms_per_secondLazy != nil {
 		return *a.kilograms_per_secondLazy
@@ -561,7 +611,9 @@ func (a *MassFlow) KilogramsPerSecond() float64 {
 	return kilograms_per_second
 }
 
-// NanogramPerDay returns the value in NanogramPerDay.
+// NanogramsPerDay returns the MassFlow value in NanogramsPerDay.
+//
+// 
 func (a *MassFlow) NanogramsPerDay() float64 {
 	if a.nanograms_per_dayLazy != nil {
 		return *a.nanograms_per_dayLazy
@@ -571,7 +623,9 @@ func (a *MassFlow) NanogramsPerDay() float64 {
 	return nanograms_per_day
 }
 
-// MicrogramPerDay returns the value in MicrogramPerDay.
+// MicrogramsPerDay returns the MassFlow value in MicrogramsPerDay.
+//
+// 
 func (a *MassFlow) MicrogramsPerDay() float64 {
 	if a.micrograms_per_dayLazy != nil {
 		return *a.micrograms_per_dayLazy
@@ -581,7 +635,9 @@ func (a *MassFlow) MicrogramsPerDay() float64 {
 	return micrograms_per_day
 }
 
-// MilligramPerDay returns the value in MilligramPerDay.
+// MilligramsPerDay returns the MassFlow value in MilligramsPerDay.
+//
+// 
 func (a *MassFlow) MilligramsPerDay() float64 {
 	if a.milligrams_per_dayLazy != nil {
 		return *a.milligrams_per_dayLazy
@@ -591,7 +647,9 @@ func (a *MassFlow) MilligramsPerDay() float64 {
 	return milligrams_per_day
 }
 
-// CentigramPerDay returns the value in CentigramPerDay.
+// CentigramsPerDay returns the MassFlow value in CentigramsPerDay.
+//
+// 
 func (a *MassFlow) CentigramsPerDay() float64 {
 	if a.centigrams_per_dayLazy != nil {
 		return *a.centigrams_per_dayLazy
@@ -601,7 +659,9 @@ func (a *MassFlow) CentigramsPerDay() float64 {
 	return centigrams_per_day
 }
 
-// DecigramPerDay returns the value in DecigramPerDay.
+// DecigramsPerDay returns the MassFlow value in DecigramsPerDay.
+//
+// 
 func (a *MassFlow) DecigramsPerDay() float64 {
 	if a.decigrams_per_dayLazy != nil {
 		return *a.decigrams_per_dayLazy
@@ -611,7 +671,9 @@ func (a *MassFlow) DecigramsPerDay() float64 {
 	return decigrams_per_day
 }
 
-// DecagramPerDay returns the value in DecagramPerDay.
+// DecagramsPerDay returns the MassFlow value in DecagramsPerDay.
+//
+// 
 func (a *MassFlow) DecagramsPerDay() float64 {
 	if a.decagrams_per_dayLazy != nil {
 		return *a.decagrams_per_dayLazy
@@ -621,7 +683,9 @@ func (a *MassFlow) DecagramsPerDay() float64 {
 	return decagrams_per_day
 }
 
-// HectogramPerDay returns the value in HectogramPerDay.
+// HectogramsPerDay returns the MassFlow value in HectogramsPerDay.
+//
+// 
 func (a *MassFlow) HectogramsPerDay() float64 {
 	if a.hectograms_per_dayLazy != nil {
 		return *a.hectograms_per_dayLazy
@@ -631,7 +695,9 @@ func (a *MassFlow) HectogramsPerDay() float64 {
 	return hectograms_per_day
 }
 
-// KilogramPerDay returns the value in KilogramPerDay.
+// KilogramsPerDay returns the MassFlow value in KilogramsPerDay.
+//
+// 
 func (a *MassFlow) KilogramsPerDay() float64 {
 	if a.kilograms_per_dayLazy != nil {
 		return *a.kilograms_per_dayLazy
@@ -641,7 +707,9 @@ func (a *MassFlow) KilogramsPerDay() float64 {
 	return kilograms_per_day
 }
 
-// MegagramPerDay returns the value in MegagramPerDay.
+// MegagramsPerDay returns the MassFlow value in MegagramsPerDay.
+//
+// 
 func (a *MassFlow) MegagramsPerDay() float64 {
 	if a.megagrams_per_dayLazy != nil {
 		return *a.megagrams_per_dayLazy
@@ -651,7 +719,9 @@ func (a *MassFlow) MegagramsPerDay() float64 {
 	return megagrams_per_day
 }
 
-// MegapoundPerDay returns the value in MegapoundPerDay.
+// MegapoundsPerDay returns the MassFlow value in MegapoundsPerDay.
+//
+// 
 func (a *MassFlow) MegapoundsPerDay() float64 {
 	if a.megapounds_per_dayLazy != nil {
 		return *a.megapounds_per_dayLazy
@@ -661,7 +731,9 @@ func (a *MassFlow) MegapoundsPerDay() float64 {
 	return megapounds_per_day
 }
 
-// MegapoundPerHour returns the value in MegapoundPerHour.
+// MegapoundsPerHour returns the MassFlow value in MegapoundsPerHour.
+//
+// 
 func (a *MassFlow) MegapoundsPerHour() float64 {
 	if a.megapounds_per_hourLazy != nil {
 		return *a.megapounds_per_hourLazy
@@ -671,7 +743,9 @@ func (a *MassFlow) MegapoundsPerHour() float64 {
 	return megapounds_per_hour
 }
 
-// MegapoundPerMinute returns the value in MegapoundPerMinute.
+// MegapoundsPerMinute returns the MassFlow value in MegapoundsPerMinute.
+//
+// 
 func (a *MassFlow) MegapoundsPerMinute() float64 {
 	if a.megapounds_per_minuteLazy != nil {
 		return *a.megapounds_per_minuteLazy
@@ -681,7 +755,9 @@ func (a *MassFlow) MegapoundsPerMinute() float64 {
 	return megapounds_per_minute
 }
 
-// MegapoundPerSecond returns the value in MegapoundPerSecond.
+// MegapoundsPerSecond returns the MassFlow value in MegapoundsPerSecond.
+//
+// 
 func (a *MassFlow) MegapoundsPerSecond() float64 {
 	if a.megapounds_per_secondLazy != nil {
 		return *a.megapounds_per_secondLazy
@@ -692,7 +768,9 @@ func (a *MassFlow) MegapoundsPerSecond() float64 {
 }
 
 
-// ToDto creates an MassFlowDto representation.
+// ToDto creates a MassFlowDto representation from the MassFlow instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by GramPerSecond by default.
 func (a *MassFlow) ToDto(holdInUnit *MassFlowUnits) MassFlowDto {
 	if holdInUnit == nil {
 		defaultUnit := MassFlowGramPerSecond // Default value
@@ -705,12 +783,19 @@ func (a *MassFlow) ToDto(holdInUnit *MassFlowUnits) MassFlowDto {
 	}
 }
 
-// ToDtoJSON creates an MassFlowDto representation.
+// ToDtoJSON creates a JSON representation of the MassFlow instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by GramPerSecond by default.
 func (a *MassFlow) ToDtoJSON(holdInUnit *MassFlowUnits) ([]byte, error) {
+	// Convert to MassFlowDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts MassFlow to a specific unit value.
+// Convert converts a MassFlow to a specific unit value.
+// The function uses the provided unit type (MassFlowUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *MassFlow) Convert(toUnit MassFlowUnits) float64 {
 	switch toUnit { 
     case MassFlowGramPerSecond:
@@ -780,7 +865,7 @@ func (a *MassFlow) Convert(toUnit MassFlowUnits) float64 {
     case MassFlowMegapoundPerSecond:
 		return a.MegapoundsPerSecond()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -931,13 +1016,22 @@ func (a *MassFlow) convertToBase(value float64, fromUnit MassFlowUnits) float64 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the MassFlow in the default unit (GramPerSecond),
+// formatted to two decimal places.
 func (a MassFlow) String() string {
 	return a.ToString(MassFlowGramPerSecond, 2)
 }
 
-// ToString formats the MassFlow to string.
-// fractionalDigits -1 for not mention
+// ToString formats the MassFlow value as a string with the specified unit and fractional digits.
+// It converts the MassFlow to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the MassFlow value will be converted (e.g., GramPerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the MassFlow with the unit abbreviation.
 func (a *MassFlow) ToString(unit MassFlowUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1021,12 +1115,26 @@ func (a *MassFlow) getUnitAbbreviation(unit MassFlowUnits) string {
 	}
 }
 
-// Check if the given MassFlow are equals to the current MassFlow
+// Equals checks if the given MassFlow is equal to the current MassFlow.
+//
+// Parameters:
+//    other: The MassFlow to compare against.
+//
+// Returns:
+//    bool: Returns true if both MassFlow are equal, false otherwise.
 func (a *MassFlow) Equals(other *MassFlow) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given MassFlow are equals to the current MassFlow
+// CompareTo compares the current MassFlow with another MassFlow.
+// It returns -1 if the current MassFlow is less than the other MassFlow, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MassFlow to compare against.
+//
+// Returns:
+//    int: -1 if the current MassFlow is less, 1 if greater, and 0 if equal.
 func (a *MassFlow) CompareTo(other *MassFlow) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1039,22 +1147,50 @@ func (a *MassFlow) CompareTo(other *MassFlow) int {
 	return 0
 }
 
-// Add the given MassFlow to the current MassFlow.
+// Add adds the given MassFlow to the current MassFlow and returns the result.
+// The result is a new MassFlow instance with the sum of the values.
+//
+// Parameters:
+//    other: The MassFlow to add to the current MassFlow.
+//
+// Returns:
+//    *MassFlow: A new MassFlow instance representing the sum of both MassFlow.
 func (a *MassFlow) Add(other *MassFlow) *MassFlow {
 	return &MassFlow{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given MassFlow to the current MassFlow.
+// Subtract subtracts the given MassFlow from the current MassFlow and returns the result.
+// The result is a new MassFlow instance with the difference of the values.
+//
+// Parameters:
+//    other: The MassFlow to subtract from the current MassFlow.
+//
+// Returns:
+//    *MassFlow: A new MassFlow instance representing the difference of both MassFlow.
 func (a *MassFlow) Subtract(other *MassFlow) *MassFlow {
 	return &MassFlow{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given MassFlow to the current MassFlow.
+// Multiply multiplies the current MassFlow by the given MassFlow and returns the result.
+// The result is a new MassFlow instance with the product of the values.
+//
+// Parameters:
+//    other: The MassFlow to multiply with the current MassFlow.
+//
+// Returns:
+//    *MassFlow: A new MassFlow instance representing the product of both MassFlow.
 func (a *MassFlow) Multiply(other *MassFlow) *MassFlow {
 	return &MassFlow{value: a.value * other.BaseValue()}
 }
 
-// Divide the given MassFlow to the current MassFlow.
+// Divide divides the current MassFlow by the given MassFlow and returns the result.
+// The result is a new MassFlow instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MassFlow to divide the current MassFlow by.
+//
+// Returns:
+//    *MassFlow: A new MassFlow instance representing the quotient of both MassFlow.
 func (a *MassFlow) Divide(other *MassFlow) *MassFlow {
 	return &MassFlow{value: a.value / other.BaseValue()}
 }

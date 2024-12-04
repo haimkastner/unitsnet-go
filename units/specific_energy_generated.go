@@ -12,7 +12,7 @@ import (
 
 
 
-// SpecificEnergyUnits enumeration
+// SpecificEnergyUnits defines various units of SpecificEnergy.
 type SpecificEnergyUnits string
 
 const (
@@ -79,19 +79,24 @@ const (
         SpecificEnergyGigawattHourPerPound SpecificEnergyUnits = "GigawattHourPerPound"
 )
 
-// SpecificEnergyDto represents an SpecificEnergy
+// SpecificEnergyDto represents a SpecificEnergy measurement with a numerical value and its corresponding unit.
 type SpecificEnergyDto struct {
+    // Value is the numerical representation of the SpecificEnergy.
 	Value float64
+    // Unit specifies the unit of measurement for the SpecificEnergy, as defined in the SpecificEnergyUnits enumeration.
 	Unit  SpecificEnergyUnits
 }
 
-// SpecificEnergyDtoFactory struct to group related functions
+// SpecificEnergyDtoFactory groups methods for creating and serializing SpecificEnergyDto objects.
 type SpecificEnergyDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a SpecificEnergyDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf SpecificEnergyDtoFactory) FromJSON(data []byte) (*SpecificEnergyDto, error) {
 	a := SpecificEnergyDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into SpecificEnergyDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -99,6 +104,9 @@ func (udf SpecificEnergyDtoFactory) FromJSON(data []byte) (*SpecificEnergyDto, e
 	return &a, nil
 }
 
+// ToJSON serializes a SpecificEnergyDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a SpecificEnergyDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -110,10 +118,11 @@ func (a SpecificEnergyDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// SpecificEnergy struct
+// SpecificEnergy represents a measurement in a of SpecificEnergy.
+//
+// The SpecificEnergy
 type SpecificEnergy struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     joules_per_kilogramLazy *float64 
@@ -148,177 +157,178 @@ type SpecificEnergy struct {
     gigawatt_hours_per_poundLazy *float64 
 }
 
-// SpecificEnergyFactory struct to group related functions
+// SpecificEnergyFactory groups methods for creating SpecificEnergy instances.
 type SpecificEnergyFactory struct{}
 
+// CreateSpecificEnergy creates a new SpecificEnergy instance from the given value and unit.
 func (uf SpecificEnergyFactory) CreateSpecificEnergy(value float64, unit SpecificEnergyUnits) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, unit)
 }
 
+// FromDto converts a SpecificEnergyDto to a SpecificEnergy instance.
 func (uf SpecificEnergyFactory) FromDto(dto SpecificEnergyDto) (*SpecificEnergy, error) {
 	return newSpecificEnergy(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a SpecificEnergy instance.
 func (uf SpecificEnergyFactory) FromDtoJSON(data []byte) (*SpecificEnergy, error) {
 	unitDto, err := SpecificEnergyDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse SpecificEnergyDto from JSON: %w", err)
 	}
 	return SpecificEnergyFactory{}.FromDto(*unitDto)
 }
 
 
-// FromJoulePerKilogram creates a new SpecificEnergy instance from JoulePerKilogram.
+// FromJoulesPerKilogram creates a new SpecificEnergy instance from a value in JoulesPerKilogram.
 func (uf SpecificEnergyFactory) FromJoulesPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyJoulePerKilogram)
 }
 
-// FromMegaJoulePerTonne creates a new SpecificEnergy instance from MegaJoulePerTonne.
+// FromMegaJoulesPerTonne creates a new SpecificEnergy instance from a value in MegaJoulesPerTonne.
 func (uf SpecificEnergyFactory) FromMegaJoulesPerTonne(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyMegaJoulePerTonne)
 }
 
-// FromCaloriePerGram creates a new SpecificEnergy instance from CaloriePerGram.
+// FromCaloriesPerGram creates a new SpecificEnergy instance from a value in CaloriesPerGram.
 func (uf SpecificEnergyFactory) FromCaloriesPerGram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyCaloriePerGram)
 }
 
-// FromWattHourPerKilogram creates a new SpecificEnergy instance from WattHourPerKilogram.
+// FromWattHoursPerKilogram creates a new SpecificEnergy instance from a value in WattHoursPerKilogram.
 func (uf SpecificEnergyFactory) FromWattHoursPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyWattHourPerKilogram)
 }
 
-// FromWattDayPerKilogram creates a new SpecificEnergy instance from WattDayPerKilogram.
+// FromWattDaysPerKilogram creates a new SpecificEnergy instance from a value in WattDaysPerKilogram.
 func (uf SpecificEnergyFactory) FromWattDaysPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyWattDayPerKilogram)
 }
 
-// FromWattDayPerTonne creates a new SpecificEnergy instance from WattDayPerTonne.
+// FromWattDaysPerTonne creates a new SpecificEnergy instance from a value in WattDaysPerTonne.
 func (uf SpecificEnergyFactory) FromWattDaysPerTonne(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyWattDayPerTonne)
 }
 
-// FromWattDayPerShortTon creates a new SpecificEnergy instance from WattDayPerShortTon.
+// FromWattDaysPerShortTon creates a new SpecificEnergy instance from a value in WattDaysPerShortTon.
 func (uf SpecificEnergyFactory) FromWattDaysPerShortTon(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyWattDayPerShortTon)
 }
 
-// FromWattHourPerPound creates a new SpecificEnergy instance from WattHourPerPound.
+// FromWattHoursPerPound creates a new SpecificEnergy instance from a value in WattHoursPerPound.
 func (uf SpecificEnergyFactory) FromWattHoursPerPound(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyWattHourPerPound)
 }
 
-// FromBtuPerPound creates a new SpecificEnergy instance from BtuPerPound.
+// FromBtuPerPound creates a new SpecificEnergy instance from a value in BtuPerPound.
 func (uf SpecificEnergyFactory) FromBtuPerPound(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyBtuPerPound)
 }
 
-// FromKilojoulePerKilogram creates a new SpecificEnergy instance from KilojoulePerKilogram.
+// FromKilojoulesPerKilogram creates a new SpecificEnergy instance from a value in KilojoulesPerKilogram.
 func (uf SpecificEnergyFactory) FromKilojoulesPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyKilojoulePerKilogram)
 }
 
-// FromMegajoulePerKilogram creates a new SpecificEnergy instance from MegajoulePerKilogram.
+// FromMegajoulesPerKilogram creates a new SpecificEnergy instance from a value in MegajoulesPerKilogram.
 func (uf SpecificEnergyFactory) FromMegajoulesPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyMegajoulePerKilogram)
 }
 
-// FromKilocaloriePerGram creates a new SpecificEnergy instance from KilocaloriePerGram.
+// FromKilocaloriesPerGram creates a new SpecificEnergy instance from a value in KilocaloriesPerGram.
 func (uf SpecificEnergyFactory) FromKilocaloriesPerGram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyKilocaloriePerGram)
 }
 
-// FromKilowattHourPerKilogram creates a new SpecificEnergy instance from KilowattHourPerKilogram.
+// FromKilowattHoursPerKilogram creates a new SpecificEnergy instance from a value in KilowattHoursPerKilogram.
 func (uf SpecificEnergyFactory) FromKilowattHoursPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyKilowattHourPerKilogram)
 }
 
-// FromMegawattHourPerKilogram creates a new SpecificEnergy instance from MegawattHourPerKilogram.
+// FromMegawattHoursPerKilogram creates a new SpecificEnergy instance from a value in MegawattHoursPerKilogram.
 func (uf SpecificEnergyFactory) FromMegawattHoursPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyMegawattHourPerKilogram)
 }
 
-// FromGigawattHourPerKilogram creates a new SpecificEnergy instance from GigawattHourPerKilogram.
+// FromGigawattHoursPerKilogram creates a new SpecificEnergy instance from a value in GigawattHoursPerKilogram.
 func (uf SpecificEnergyFactory) FromGigawattHoursPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyGigawattHourPerKilogram)
 }
 
-// FromKilowattDayPerKilogram creates a new SpecificEnergy instance from KilowattDayPerKilogram.
+// FromKilowattDaysPerKilogram creates a new SpecificEnergy instance from a value in KilowattDaysPerKilogram.
 func (uf SpecificEnergyFactory) FromKilowattDaysPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyKilowattDayPerKilogram)
 }
 
-// FromMegawattDayPerKilogram creates a new SpecificEnergy instance from MegawattDayPerKilogram.
+// FromMegawattDaysPerKilogram creates a new SpecificEnergy instance from a value in MegawattDaysPerKilogram.
 func (uf SpecificEnergyFactory) FromMegawattDaysPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyMegawattDayPerKilogram)
 }
 
-// FromGigawattDayPerKilogram creates a new SpecificEnergy instance from GigawattDayPerKilogram.
+// FromGigawattDaysPerKilogram creates a new SpecificEnergy instance from a value in GigawattDaysPerKilogram.
 func (uf SpecificEnergyFactory) FromGigawattDaysPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyGigawattDayPerKilogram)
 }
 
-// FromTerawattDayPerKilogram creates a new SpecificEnergy instance from TerawattDayPerKilogram.
+// FromTerawattDaysPerKilogram creates a new SpecificEnergy instance from a value in TerawattDaysPerKilogram.
 func (uf SpecificEnergyFactory) FromTerawattDaysPerKilogram(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyTerawattDayPerKilogram)
 }
 
-// FromKilowattDayPerTonne creates a new SpecificEnergy instance from KilowattDayPerTonne.
+// FromKilowattDaysPerTonne creates a new SpecificEnergy instance from a value in KilowattDaysPerTonne.
 func (uf SpecificEnergyFactory) FromKilowattDaysPerTonne(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyKilowattDayPerTonne)
 }
 
-// FromMegawattDayPerTonne creates a new SpecificEnergy instance from MegawattDayPerTonne.
+// FromMegawattDaysPerTonne creates a new SpecificEnergy instance from a value in MegawattDaysPerTonne.
 func (uf SpecificEnergyFactory) FromMegawattDaysPerTonne(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyMegawattDayPerTonne)
 }
 
-// FromGigawattDayPerTonne creates a new SpecificEnergy instance from GigawattDayPerTonne.
+// FromGigawattDaysPerTonne creates a new SpecificEnergy instance from a value in GigawattDaysPerTonne.
 func (uf SpecificEnergyFactory) FromGigawattDaysPerTonne(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyGigawattDayPerTonne)
 }
 
-// FromTerawattDayPerTonne creates a new SpecificEnergy instance from TerawattDayPerTonne.
+// FromTerawattDaysPerTonne creates a new SpecificEnergy instance from a value in TerawattDaysPerTonne.
 func (uf SpecificEnergyFactory) FromTerawattDaysPerTonne(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyTerawattDayPerTonne)
 }
 
-// FromKilowattDayPerShortTon creates a new SpecificEnergy instance from KilowattDayPerShortTon.
+// FromKilowattDaysPerShortTon creates a new SpecificEnergy instance from a value in KilowattDaysPerShortTon.
 func (uf SpecificEnergyFactory) FromKilowattDaysPerShortTon(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyKilowattDayPerShortTon)
 }
 
-// FromMegawattDayPerShortTon creates a new SpecificEnergy instance from MegawattDayPerShortTon.
+// FromMegawattDaysPerShortTon creates a new SpecificEnergy instance from a value in MegawattDaysPerShortTon.
 func (uf SpecificEnergyFactory) FromMegawattDaysPerShortTon(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyMegawattDayPerShortTon)
 }
 
-// FromGigawattDayPerShortTon creates a new SpecificEnergy instance from GigawattDayPerShortTon.
+// FromGigawattDaysPerShortTon creates a new SpecificEnergy instance from a value in GigawattDaysPerShortTon.
 func (uf SpecificEnergyFactory) FromGigawattDaysPerShortTon(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyGigawattDayPerShortTon)
 }
 
-// FromTerawattDayPerShortTon creates a new SpecificEnergy instance from TerawattDayPerShortTon.
+// FromTerawattDaysPerShortTon creates a new SpecificEnergy instance from a value in TerawattDaysPerShortTon.
 func (uf SpecificEnergyFactory) FromTerawattDaysPerShortTon(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyTerawattDayPerShortTon)
 }
 
-// FromKilowattHourPerPound creates a new SpecificEnergy instance from KilowattHourPerPound.
+// FromKilowattHoursPerPound creates a new SpecificEnergy instance from a value in KilowattHoursPerPound.
 func (uf SpecificEnergyFactory) FromKilowattHoursPerPound(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyKilowattHourPerPound)
 }
 
-// FromMegawattHourPerPound creates a new SpecificEnergy instance from MegawattHourPerPound.
+// FromMegawattHoursPerPound creates a new SpecificEnergy instance from a value in MegawattHoursPerPound.
 func (uf SpecificEnergyFactory) FromMegawattHoursPerPound(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyMegawattHourPerPound)
 }
 
-// FromGigawattHourPerPound creates a new SpecificEnergy instance from GigawattHourPerPound.
+// FromGigawattHoursPerPound creates a new SpecificEnergy instance from a value in GigawattHoursPerPound.
 func (uf SpecificEnergyFactory) FromGigawattHoursPerPound(value float64) (*SpecificEnergy, error) {
 	return newSpecificEnergy(value, SpecificEnergyGigawattHourPerPound)
 }
-
-
 
 
 // newSpecificEnergy creates a new SpecificEnergy.
@@ -331,13 +341,15 @@ func newSpecificEnergy(value float64, fromUnit SpecificEnergyUnits) (*SpecificEn
 	return a, nil
 }
 
-// BaseValue returns the base value of SpecificEnergy in JoulePerKilogram.
+// BaseValue returns the base value of SpecificEnergy in JoulePerKilogram unit (the base/default quantity).
 func (a *SpecificEnergy) BaseValue() float64 {
 	return a.value
 }
 
 
-// JoulePerKilogram returns the value in JoulePerKilogram.
+// JoulesPerKilogram returns the SpecificEnergy value in JoulesPerKilogram.
+//
+// 
 func (a *SpecificEnergy) JoulesPerKilogram() float64 {
 	if a.joules_per_kilogramLazy != nil {
 		return *a.joules_per_kilogramLazy
@@ -347,7 +359,9 @@ func (a *SpecificEnergy) JoulesPerKilogram() float64 {
 	return joules_per_kilogram
 }
 
-// MegaJoulePerTonne returns the value in MegaJoulePerTonne.
+// MegaJoulesPerTonne returns the SpecificEnergy value in MegaJoulesPerTonne.
+//
+// 
 func (a *SpecificEnergy) MegaJoulesPerTonne() float64 {
 	if a.mega_joules_per_tonneLazy != nil {
 		return *a.mega_joules_per_tonneLazy
@@ -357,7 +371,9 @@ func (a *SpecificEnergy) MegaJoulesPerTonne() float64 {
 	return mega_joules_per_tonne
 }
 
-// CaloriePerGram returns the value in CaloriePerGram.
+// CaloriesPerGram returns the SpecificEnergy value in CaloriesPerGram.
+//
+// 
 func (a *SpecificEnergy) CaloriesPerGram() float64 {
 	if a.calories_per_gramLazy != nil {
 		return *a.calories_per_gramLazy
@@ -367,7 +383,9 @@ func (a *SpecificEnergy) CaloriesPerGram() float64 {
 	return calories_per_gram
 }
 
-// WattHourPerKilogram returns the value in WattHourPerKilogram.
+// WattHoursPerKilogram returns the SpecificEnergy value in WattHoursPerKilogram.
+//
+// 
 func (a *SpecificEnergy) WattHoursPerKilogram() float64 {
 	if a.watt_hours_per_kilogramLazy != nil {
 		return *a.watt_hours_per_kilogramLazy
@@ -377,7 +395,9 @@ func (a *SpecificEnergy) WattHoursPerKilogram() float64 {
 	return watt_hours_per_kilogram
 }
 
-// WattDayPerKilogram returns the value in WattDayPerKilogram.
+// WattDaysPerKilogram returns the SpecificEnergy value in WattDaysPerKilogram.
+//
+// 
 func (a *SpecificEnergy) WattDaysPerKilogram() float64 {
 	if a.watt_days_per_kilogramLazy != nil {
 		return *a.watt_days_per_kilogramLazy
@@ -387,7 +407,9 @@ func (a *SpecificEnergy) WattDaysPerKilogram() float64 {
 	return watt_days_per_kilogram
 }
 
-// WattDayPerTonne returns the value in WattDayPerTonne.
+// WattDaysPerTonne returns the SpecificEnergy value in WattDaysPerTonne.
+//
+// 
 func (a *SpecificEnergy) WattDaysPerTonne() float64 {
 	if a.watt_days_per_tonneLazy != nil {
 		return *a.watt_days_per_tonneLazy
@@ -397,7 +419,9 @@ func (a *SpecificEnergy) WattDaysPerTonne() float64 {
 	return watt_days_per_tonne
 }
 
-// WattDayPerShortTon returns the value in WattDayPerShortTon.
+// WattDaysPerShortTon returns the SpecificEnergy value in WattDaysPerShortTon.
+//
+// 
 func (a *SpecificEnergy) WattDaysPerShortTon() float64 {
 	if a.watt_days_per_short_tonLazy != nil {
 		return *a.watt_days_per_short_tonLazy
@@ -407,7 +431,9 @@ func (a *SpecificEnergy) WattDaysPerShortTon() float64 {
 	return watt_days_per_short_ton
 }
 
-// WattHourPerPound returns the value in WattHourPerPound.
+// WattHoursPerPound returns the SpecificEnergy value in WattHoursPerPound.
+//
+// 
 func (a *SpecificEnergy) WattHoursPerPound() float64 {
 	if a.watt_hours_per_poundLazy != nil {
 		return *a.watt_hours_per_poundLazy
@@ -417,7 +443,9 @@ func (a *SpecificEnergy) WattHoursPerPound() float64 {
 	return watt_hours_per_pound
 }
 
-// BtuPerPound returns the value in BtuPerPound.
+// BtuPerPound returns the SpecificEnergy value in BtuPerPound.
+//
+// 
 func (a *SpecificEnergy) BtuPerPound() float64 {
 	if a.btu_per_poundLazy != nil {
 		return *a.btu_per_poundLazy
@@ -427,7 +455,9 @@ func (a *SpecificEnergy) BtuPerPound() float64 {
 	return btu_per_pound
 }
 
-// KilojoulePerKilogram returns the value in KilojoulePerKilogram.
+// KilojoulesPerKilogram returns the SpecificEnergy value in KilojoulesPerKilogram.
+//
+// 
 func (a *SpecificEnergy) KilojoulesPerKilogram() float64 {
 	if a.kilojoules_per_kilogramLazy != nil {
 		return *a.kilojoules_per_kilogramLazy
@@ -437,7 +467,9 @@ func (a *SpecificEnergy) KilojoulesPerKilogram() float64 {
 	return kilojoules_per_kilogram
 }
 
-// MegajoulePerKilogram returns the value in MegajoulePerKilogram.
+// MegajoulesPerKilogram returns the SpecificEnergy value in MegajoulesPerKilogram.
+//
+// 
 func (a *SpecificEnergy) MegajoulesPerKilogram() float64 {
 	if a.megajoules_per_kilogramLazy != nil {
 		return *a.megajoules_per_kilogramLazy
@@ -447,7 +479,9 @@ func (a *SpecificEnergy) MegajoulesPerKilogram() float64 {
 	return megajoules_per_kilogram
 }
 
-// KilocaloriePerGram returns the value in KilocaloriePerGram.
+// KilocaloriesPerGram returns the SpecificEnergy value in KilocaloriesPerGram.
+//
+// 
 func (a *SpecificEnergy) KilocaloriesPerGram() float64 {
 	if a.kilocalories_per_gramLazy != nil {
 		return *a.kilocalories_per_gramLazy
@@ -457,7 +491,9 @@ func (a *SpecificEnergy) KilocaloriesPerGram() float64 {
 	return kilocalories_per_gram
 }
 
-// KilowattHourPerKilogram returns the value in KilowattHourPerKilogram.
+// KilowattHoursPerKilogram returns the SpecificEnergy value in KilowattHoursPerKilogram.
+//
+// 
 func (a *SpecificEnergy) KilowattHoursPerKilogram() float64 {
 	if a.kilowatt_hours_per_kilogramLazy != nil {
 		return *a.kilowatt_hours_per_kilogramLazy
@@ -467,7 +503,9 @@ func (a *SpecificEnergy) KilowattHoursPerKilogram() float64 {
 	return kilowatt_hours_per_kilogram
 }
 
-// MegawattHourPerKilogram returns the value in MegawattHourPerKilogram.
+// MegawattHoursPerKilogram returns the SpecificEnergy value in MegawattHoursPerKilogram.
+//
+// 
 func (a *SpecificEnergy) MegawattHoursPerKilogram() float64 {
 	if a.megawatt_hours_per_kilogramLazy != nil {
 		return *a.megawatt_hours_per_kilogramLazy
@@ -477,7 +515,9 @@ func (a *SpecificEnergy) MegawattHoursPerKilogram() float64 {
 	return megawatt_hours_per_kilogram
 }
 
-// GigawattHourPerKilogram returns the value in GigawattHourPerKilogram.
+// GigawattHoursPerKilogram returns the SpecificEnergy value in GigawattHoursPerKilogram.
+//
+// 
 func (a *SpecificEnergy) GigawattHoursPerKilogram() float64 {
 	if a.gigawatt_hours_per_kilogramLazy != nil {
 		return *a.gigawatt_hours_per_kilogramLazy
@@ -487,7 +527,9 @@ func (a *SpecificEnergy) GigawattHoursPerKilogram() float64 {
 	return gigawatt_hours_per_kilogram
 }
 
-// KilowattDayPerKilogram returns the value in KilowattDayPerKilogram.
+// KilowattDaysPerKilogram returns the SpecificEnergy value in KilowattDaysPerKilogram.
+//
+// 
 func (a *SpecificEnergy) KilowattDaysPerKilogram() float64 {
 	if a.kilowatt_days_per_kilogramLazy != nil {
 		return *a.kilowatt_days_per_kilogramLazy
@@ -497,7 +539,9 @@ func (a *SpecificEnergy) KilowattDaysPerKilogram() float64 {
 	return kilowatt_days_per_kilogram
 }
 
-// MegawattDayPerKilogram returns the value in MegawattDayPerKilogram.
+// MegawattDaysPerKilogram returns the SpecificEnergy value in MegawattDaysPerKilogram.
+//
+// 
 func (a *SpecificEnergy) MegawattDaysPerKilogram() float64 {
 	if a.megawatt_days_per_kilogramLazy != nil {
 		return *a.megawatt_days_per_kilogramLazy
@@ -507,7 +551,9 @@ func (a *SpecificEnergy) MegawattDaysPerKilogram() float64 {
 	return megawatt_days_per_kilogram
 }
 
-// GigawattDayPerKilogram returns the value in GigawattDayPerKilogram.
+// GigawattDaysPerKilogram returns the SpecificEnergy value in GigawattDaysPerKilogram.
+//
+// 
 func (a *SpecificEnergy) GigawattDaysPerKilogram() float64 {
 	if a.gigawatt_days_per_kilogramLazy != nil {
 		return *a.gigawatt_days_per_kilogramLazy
@@ -517,7 +563,9 @@ func (a *SpecificEnergy) GigawattDaysPerKilogram() float64 {
 	return gigawatt_days_per_kilogram
 }
 
-// TerawattDayPerKilogram returns the value in TerawattDayPerKilogram.
+// TerawattDaysPerKilogram returns the SpecificEnergy value in TerawattDaysPerKilogram.
+//
+// 
 func (a *SpecificEnergy) TerawattDaysPerKilogram() float64 {
 	if a.terawatt_days_per_kilogramLazy != nil {
 		return *a.terawatt_days_per_kilogramLazy
@@ -527,7 +575,9 @@ func (a *SpecificEnergy) TerawattDaysPerKilogram() float64 {
 	return terawatt_days_per_kilogram
 }
 
-// KilowattDayPerTonne returns the value in KilowattDayPerTonne.
+// KilowattDaysPerTonne returns the SpecificEnergy value in KilowattDaysPerTonne.
+//
+// 
 func (a *SpecificEnergy) KilowattDaysPerTonne() float64 {
 	if a.kilowatt_days_per_tonneLazy != nil {
 		return *a.kilowatt_days_per_tonneLazy
@@ -537,7 +587,9 @@ func (a *SpecificEnergy) KilowattDaysPerTonne() float64 {
 	return kilowatt_days_per_tonne
 }
 
-// MegawattDayPerTonne returns the value in MegawattDayPerTonne.
+// MegawattDaysPerTonne returns the SpecificEnergy value in MegawattDaysPerTonne.
+//
+// 
 func (a *SpecificEnergy) MegawattDaysPerTonne() float64 {
 	if a.megawatt_days_per_tonneLazy != nil {
 		return *a.megawatt_days_per_tonneLazy
@@ -547,7 +599,9 @@ func (a *SpecificEnergy) MegawattDaysPerTonne() float64 {
 	return megawatt_days_per_tonne
 }
 
-// GigawattDayPerTonne returns the value in GigawattDayPerTonne.
+// GigawattDaysPerTonne returns the SpecificEnergy value in GigawattDaysPerTonne.
+//
+// 
 func (a *SpecificEnergy) GigawattDaysPerTonne() float64 {
 	if a.gigawatt_days_per_tonneLazy != nil {
 		return *a.gigawatt_days_per_tonneLazy
@@ -557,7 +611,9 @@ func (a *SpecificEnergy) GigawattDaysPerTonne() float64 {
 	return gigawatt_days_per_tonne
 }
 
-// TerawattDayPerTonne returns the value in TerawattDayPerTonne.
+// TerawattDaysPerTonne returns the SpecificEnergy value in TerawattDaysPerTonne.
+//
+// 
 func (a *SpecificEnergy) TerawattDaysPerTonne() float64 {
 	if a.terawatt_days_per_tonneLazy != nil {
 		return *a.terawatt_days_per_tonneLazy
@@ -567,7 +623,9 @@ func (a *SpecificEnergy) TerawattDaysPerTonne() float64 {
 	return terawatt_days_per_tonne
 }
 
-// KilowattDayPerShortTon returns the value in KilowattDayPerShortTon.
+// KilowattDaysPerShortTon returns the SpecificEnergy value in KilowattDaysPerShortTon.
+//
+// 
 func (a *SpecificEnergy) KilowattDaysPerShortTon() float64 {
 	if a.kilowatt_days_per_short_tonLazy != nil {
 		return *a.kilowatt_days_per_short_tonLazy
@@ -577,7 +635,9 @@ func (a *SpecificEnergy) KilowattDaysPerShortTon() float64 {
 	return kilowatt_days_per_short_ton
 }
 
-// MegawattDayPerShortTon returns the value in MegawattDayPerShortTon.
+// MegawattDaysPerShortTon returns the SpecificEnergy value in MegawattDaysPerShortTon.
+//
+// 
 func (a *SpecificEnergy) MegawattDaysPerShortTon() float64 {
 	if a.megawatt_days_per_short_tonLazy != nil {
 		return *a.megawatt_days_per_short_tonLazy
@@ -587,7 +647,9 @@ func (a *SpecificEnergy) MegawattDaysPerShortTon() float64 {
 	return megawatt_days_per_short_ton
 }
 
-// GigawattDayPerShortTon returns the value in GigawattDayPerShortTon.
+// GigawattDaysPerShortTon returns the SpecificEnergy value in GigawattDaysPerShortTon.
+//
+// 
 func (a *SpecificEnergy) GigawattDaysPerShortTon() float64 {
 	if a.gigawatt_days_per_short_tonLazy != nil {
 		return *a.gigawatt_days_per_short_tonLazy
@@ -597,7 +659,9 @@ func (a *SpecificEnergy) GigawattDaysPerShortTon() float64 {
 	return gigawatt_days_per_short_ton
 }
 
-// TerawattDayPerShortTon returns the value in TerawattDayPerShortTon.
+// TerawattDaysPerShortTon returns the SpecificEnergy value in TerawattDaysPerShortTon.
+//
+// 
 func (a *SpecificEnergy) TerawattDaysPerShortTon() float64 {
 	if a.terawatt_days_per_short_tonLazy != nil {
 		return *a.terawatt_days_per_short_tonLazy
@@ -607,7 +671,9 @@ func (a *SpecificEnergy) TerawattDaysPerShortTon() float64 {
 	return terawatt_days_per_short_ton
 }
 
-// KilowattHourPerPound returns the value in KilowattHourPerPound.
+// KilowattHoursPerPound returns the SpecificEnergy value in KilowattHoursPerPound.
+//
+// 
 func (a *SpecificEnergy) KilowattHoursPerPound() float64 {
 	if a.kilowatt_hours_per_poundLazy != nil {
 		return *a.kilowatt_hours_per_poundLazy
@@ -617,7 +683,9 @@ func (a *SpecificEnergy) KilowattHoursPerPound() float64 {
 	return kilowatt_hours_per_pound
 }
 
-// MegawattHourPerPound returns the value in MegawattHourPerPound.
+// MegawattHoursPerPound returns the SpecificEnergy value in MegawattHoursPerPound.
+//
+// 
 func (a *SpecificEnergy) MegawattHoursPerPound() float64 {
 	if a.megawatt_hours_per_poundLazy != nil {
 		return *a.megawatt_hours_per_poundLazy
@@ -627,7 +695,9 @@ func (a *SpecificEnergy) MegawattHoursPerPound() float64 {
 	return megawatt_hours_per_pound
 }
 
-// GigawattHourPerPound returns the value in GigawattHourPerPound.
+// GigawattHoursPerPound returns the SpecificEnergy value in GigawattHoursPerPound.
+//
+// 
 func (a *SpecificEnergy) GigawattHoursPerPound() float64 {
 	if a.gigawatt_hours_per_poundLazy != nil {
 		return *a.gigawatt_hours_per_poundLazy
@@ -638,7 +708,9 @@ func (a *SpecificEnergy) GigawattHoursPerPound() float64 {
 }
 
 
-// ToDto creates an SpecificEnergyDto representation.
+// ToDto creates a SpecificEnergyDto representation from the SpecificEnergy instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerKilogram by default.
 func (a *SpecificEnergy) ToDto(holdInUnit *SpecificEnergyUnits) SpecificEnergyDto {
 	if holdInUnit == nil {
 		defaultUnit := SpecificEnergyJoulePerKilogram // Default value
@@ -651,12 +723,19 @@ func (a *SpecificEnergy) ToDto(holdInUnit *SpecificEnergyUnits) SpecificEnergyDt
 	}
 }
 
-// ToDtoJSON creates an SpecificEnergyDto representation.
+// ToDtoJSON creates a JSON representation of the SpecificEnergy instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerKilogram by default.
 func (a *SpecificEnergy) ToDtoJSON(holdInUnit *SpecificEnergyUnits) ([]byte, error) {
+	// Convert to SpecificEnergyDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts SpecificEnergy to a specific unit value.
+// Convert converts a SpecificEnergy to a specific unit value.
+// The function uses the provided unit type (SpecificEnergyUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *SpecificEnergy) Convert(toUnit SpecificEnergyUnits) float64 {
 	switch toUnit { 
     case SpecificEnergyJoulePerKilogram:
@@ -720,7 +799,7 @@ func (a *SpecificEnergy) Convert(toUnit SpecificEnergyUnits) float64 {
     case SpecificEnergyGigawattHourPerPound:
 		return a.GigawattHoursPerPound()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -859,13 +938,22 @@ func (a *SpecificEnergy) convertToBase(value float64, fromUnit SpecificEnergyUni
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the SpecificEnergy in the default unit (JoulePerKilogram),
+// formatted to two decimal places.
 func (a SpecificEnergy) String() string {
 	return a.ToString(SpecificEnergyJoulePerKilogram, 2)
 }
 
-// ToString formats the SpecificEnergy to string.
-// fractionalDigits -1 for not mention
+// ToString formats the SpecificEnergy value as a string with the specified unit and fractional digits.
+// It converts the SpecificEnergy to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the SpecificEnergy value will be converted (e.g., JoulePerKilogram))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the SpecificEnergy with the unit abbreviation.
 func (a *SpecificEnergy) ToString(unit SpecificEnergyUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -943,12 +1031,26 @@ func (a *SpecificEnergy) getUnitAbbreviation(unit SpecificEnergyUnits) string {
 	}
 }
 
-// Check if the given SpecificEnergy are equals to the current SpecificEnergy
+// Equals checks if the given SpecificEnergy is equal to the current SpecificEnergy.
+//
+// Parameters:
+//    other: The SpecificEnergy to compare against.
+//
+// Returns:
+//    bool: Returns true if both SpecificEnergy are equal, false otherwise.
 func (a *SpecificEnergy) Equals(other *SpecificEnergy) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given SpecificEnergy are equals to the current SpecificEnergy
+// CompareTo compares the current SpecificEnergy with another SpecificEnergy.
+// It returns -1 if the current SpecificEnergy is less than the other SpecificEnergy, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The SpecificEnergy to compare against.
+//
+// Returns:
+//    int: -1 if the current SpecificEnergy is less, 1 if greater, and 0 if equal.
 func (a *SpecificEnergy) CompareTo(other *SpecificEnergy) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -961,22 +1063,50 @@ func (a *SpecificEnergy) CompareTo(other *SpecificEnergy) int {
 	return 0
 }
 
-// Add the given SpecificEnergy to the current SpecificEnergy.
+// Add adds the given SpecificEnergy to the current SpecificEnergy and returns the result.
+// The result is a new SpecificEnergy instance with the sum of the values.
+//
+// Parameters:
+//    other: The SpecificEnergy to add to the current SpecificEnergy.
+//
+// Returns:
+//    *SpecificEnergy: A new SpecificEnergy instance representing the sum of both SpecificEnergy.
 func (a *SpecificEnergy) Add(other *SpecificEnergy) *SpecificEnergy {
 	return &SpecificEnergy{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given SpecificEnergy to the current SpecificEnergy.
+// Subtract subtracts the given SpecificEnergy from the current SpecificEnergy and returns the result.
+// The result is a new SpecificEnergy instance with the difference of the values.
+//
+// Parameters:
+//    other: The SpecificEnergy to subtract from the current SpecificEnergy.
+//
+// Returns:
+//    *SpecificEnergy: A new SpecificEnergy instance representing the difference of both SpecificEnergy.
 func (a *SpecificEnergy) Subtract(other *SpecificEnergy) *SpecificEnergy {
 	return &SpecificEnergy{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given SpecificEnergy to the current SpecificEnergy.
+// Multiply multiplies the current SpecificEnergy by the given SpecificEnergy and returns the result.
+// The result is a new SpecificEnergy instance with the product of the values.
+//
+// Parameters:
+//    other: The SpecificEnergy to multiply with the current SpecificEnergy.
+//
+// Returns:
+//    *SpecificEnergy: A new SpecificEnergy instance representing the product of both SpecificEnergy.
 func (a *SpecificEnergy) Multiply(other *SpecificEnergy) *SpecificEnergy {
 	return &SpecificEnergy{value: a.value * other.BaseValue()}
 }
 
-// Divide the given SpecificEnergy to the current SpecificEnergy.
+// Divide divides the current SpecificEnergy by the given SpecificEnergy and returns the result.
+// The result is a new SpecificEnergy instance with the quotient of the values.
+//
+// Parameters:
+//    other: The SpecificEnergy to divide the current SpecificEnergy by.
+//
+// Returns:
+//    *SpecificEnergy: A new SpecificEnergy instance representing the quotient of both SpecificEnergy.
 func (a *SpecificEnergy) Divide(other *SpecificEnergy) *SpecificEnergy {
 	return &SpecificEnergy{value: a.value / other.BaseValue()}
 }

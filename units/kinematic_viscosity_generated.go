@@ -12,7 +12,7 @@ import (
 
 
 
-// KinematicViscosityUnits enumeration
+// KinematicViscosityUnits defines various units of KinematicViscosity.
 type KinematicViscosityUnits string
 
 const (
@@ -37,19 +37,24 @@ const (
         KinematicViscosityKilostokes KinematicViscosityUnits = "Kilostokes"
 )
 
-// KinematicViscosityDto represents an KinematicViscosity
+// KinematicViscosityDto represents a KinematicViscosity measurement with a numerical value and its corresponding unit.
 type KinematicViscosityDto struct {
+    // Value is the numerical representation of the KinematicViscosity.
 	Value float64
+    // Unit specifies the unit of measurement for the KinematicViscosity, as defined in the KinematicViscosityUnits enumeration.
 	Unit  KinematicViscosityUnits
 }
 
-// KinematicViscosityDtoFactory struct to group related functions
+// KinematicViscosityDtoFactory groups methods for creating and serializing KinematicViscosityDto objects.
 type KinematicViscosityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a KinematicViscosityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf KinematicViscosityDtoFactory) FromJSON(data []byte) (*KinematicViscosityDto, error) {
 	a := KinematicViscosityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into KinematicViscosityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -57,6 +62,9 @@ func (udf KinematicViscosityDtoFactory) FromJSON(data []byte) (*KinematicViscosi
 	return &a, nil
 }
 
+// ToJSON serializes a KinematicViscosityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a KinematicViscosityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -68,10 +76,11 @@ func (a KinematicViscosityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// KinematicViscosity struct
+// KinematicViscosity represents a measurement in a of KinematicViscosity.
+//
+// The viscosity of a fluid is a measure of its resistance to gradual deformation by shear stress or tensile stress.
 type KinematicViscosity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     square_meters_per_secondLazy *float64 
@@ -85,72 +94,73 @@ type KinematicViscosity struct {
     kilostokesLazy *float64 
 }
 
-// KinematicViscosityFactory struct to group related functions
+// KinematicViscosityFactory groups methods for creating KinematicViscosity instances.
 type KinematicViscosityFactory struct{}
 
+// CreateKinematicViscosity creates a new KinematicViscosity instance from the given value and unit.
 func (uf KinematicViscosityFactory) CreateKinematicViscosity(value float64, unit KinematicViscosityUnits) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, unit)
 }
 
+// FromDto converts a KinematicViscosityDto to a KinematicViscosity instance.
 func (uf KinematicViscosityFactory) FromDto(dto KinematicViscosityDto) (*KinematicViscosity, error) {
 	return newKinematicViscosity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a KinematicViscosity instance.
 func (uf KinematicViscosityFactory) FromDtoJSON(data []byte) (*KinematicViscosity, error) {
 	unitDto, err := KinematicViscosityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse KinematicViscosityDto from JSON: %w", err)
 	}
 	return KinematicViscosityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromSquareMeterPerSecond creates a new KinematicViscosity instance from SquareMeterPerSecond.
+// FromSquareMetersPerSecond creates a new KinematicViscosity instance from a value in SquareMetersPerSecond.
 func (uf KinematicViscosityFactory) FromSquareMetersPerSecond(value float64) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, KinematicViscositySquareMeterPerSecond)
 }
 
-// FromStokes creates a new KinematicViscosity instance from Stokes.
+// FromStokes creates a new KinematicViscosity instance from a value in Stokes.
 func (uf KinematicViscosityFactory) FromStokes(value float64) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, KinematicViscosityStokes)
 }
 
-// FromSquareFootPerSecond creates a new KinematicViscosity instance from SquareFootPerSecond.
+// FromSquareFeetPerSecond creates a new KinematicViscosity instance from a value in SquareFeetPerSecond.
 func (uf KinematicViscosityFactory) FromSquareFeetPerSecond(value float64) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, KinematicViscositySquareFootPerSecond)
 }
 
-// FromNanostokes creates a new KinematicViscosity instance from Nanostokes.
+// FromNanostokes creates a new KinematicViscosity instance from a value in Nanostokes.
 func (uf KinematicViscosityFactory) FromNanostokes(value float64) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, KinematicViscosityNanostokes)
 }
 
-// FromMicrostokes creates a new KinematicViscosity instance from Microstokes.
+// FromMicrostokes creates a new KinematicViscosity instance from a value in Microstokes.
 func (uf KinematicViscosityFactory) FromMicrostokes(value float64) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, KinematicViscosityMicrostokes)
 }
 
-// FromMillistokes creates a new KinematicViscosity instance from Millistokes.
+// FromMillistokes creates a new KinematicViscosity instance from a value in Millistokes.
 func (uf KinematicViscosityFactory) FromMillistokes(value float64) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, KinematicViscosityMillistokes)
 }
 
-// FromCentistokes creates a new KinematicViscosity instance from Centistokes.
+// FromCentistokes creates a new KinematicViscosity instance from a value in Centistokes.
 func (uf KinematicViscosityFactory) FromCentistokes(value float64) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, KinematicViscosityCentistokes)
 }
 
-// FromDecistokes creates a new KinematicViscosity instance from Decistokes.
+// FromDecistokes creates a new KinematicViscosity instance from a value in Decistokes.
 func (uf KinematicViscosityFactory) FromDecistokes(value float64) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, KinematicViscosityDecistokes)
 }
 
-// FromKilostokes creates a new KinematicViscosity instance from Kilostokes.
+// FromKilostokes creates a new KinematicViscosity instance from a value in Kilostokes.
 func (uf KinematicViscosityFactory) FromKilostokes(value float64) (*KinematicViscosity, error) {
 	return newKinematicViscosity(value, KinematicViscosityKilostokes)
 }
-
-
 
 
 // newKinematicViscosity creates a new KinematicViscosity.
@@ -163,13 +173,15 @@ func newKinematicViscosity(value float64, fromUnit KinematicViscosityUnits) (*Ki
 	return a, nil
 }
 
-// BaseValue returns the base value of KinematicViscosity in SquareMeterPerSecond.
+// BaseValue returns the base value of KinematicViscosity in SquareMeterPerSecond unit (the base/default quantity).
 func (a *KinematicViscosity) BaseValue() float64 {
 	return a.value
 }
 
 
-// SquareMeterPerSecond returns the value in SquareMeterPerSecond.
+// SquareMetersPerSecond returns the KinematicViscosity value in SquareMetersPerSecond.
+//
+// 
 func (a *KinematicViscosity) SquareMetersPerSecond() float64 {
 	if a.square_meters_per_secondLazy != nil {
 		return *a.square_meters_per_secondLazy
@@ -179,7 +191,9 @@ func (a *KinematicViscosity) SquareMetersPerSecond() float64 {
 	return square_meters_per_second
 }
 
-// Stokes returns the value in Stokes.
+// Stokes returns the KinematicViscosity value in Stokes.
+//
+// 
 func (a *KinematicViscosity) Stokes() float64 {
 	if a.stokesLazy != nil {
 		return *a.stokesLazy
@@ -189,7 +203,9 @@ func (a *KinematicViscosity) Stokes() float64 {
 	return stokes
 }
 
-// SquareFootPerSecond returns the value in SquareFootPerSecond.
+// SquareFeetPerSecond returns the KinematicViscosity value in SquareFeetPerSecond.
+//
+// 
 func (a *KinematicViscosity) SquareFeetPerSecond() float64 {
 	if a.square_feet_per_secondLazy != nil {
 		return *a.square_feet_per_secondLazy
@@ -199,7 +215,9 @@ func (a *KinematicViscosity) SquareFeetPerSecond() float64 {
 	return square_feet_per_second
 }
 
-// Nanostokes returns the value in Nanostokes.
+// Nanostokes returns the KinematicViscosity value in Nanostokes.
+//
+// 
 func (a *KinematicViscosity) Nanostokes() float64 {
 	if a.nanostokesLazy != nil {
 		return *a.nanostokesLazy
@@ -209,7 +227,9 @@ func (a *KinematicViscosity) Nanostokes() float64 {
 	return nanostokes
 }
 
-// Microstokes returns the value in Microstokes.
+// Microstokes returns the KinematicViscosity value in Microstokes.
+//
+// 
 func (a *KinematicViscosity) Microstokes() float64 {
 	if a.microstokesLazy != nil {
 		return *a.microstokesLazy
@@ -219,7 +239,9 @@ func (a *KinematicViscosity) Microstokes() float64 {
 	return microstokes
 }
 
-// Millistokes returns the value in Millistokes.
+// Millistokes returns the KinematicViscosity value in Millistokes.
+//
+// 
 func (a *KinematicViscosity) Millistokes() float64 {
 	if a.millistokesLazy != nil {
 		return *a.millistokesLazy
@@ -229,7 +251,9 @@ func (a *KinematicViscosity) Millistokes() float64 {
 	return millistokes
 }
 
-// Centistokes returns the value in Centistokes.
+// Centistokes returns the KinematicViscosity value in Centistokes.
+//
+// 
 func (a *KinematicViscosity) Centistokes() float64 {
 	if a.centistokesLazy != nil {
 		return *a.centistokesLazy
@@ -239,7 +263,9 @@ func (a *KinematicViscosity) Centistokes() float64 {
 	return centistokes
 }
 
-// Decistokes returns the value in Decistokes.
+// Decistokes returns the KinematicViscosity value in Decistokes.
+//
+// 
 func (a *KinematicViscosity) Decistokes() float64 {
 	if a.decistokesLazy != nil {
 		return *a.decistokesLazy
@@ -249,7 +275,9 @@ func (a *KinematicViscosity) Decistokes() float64 {
 	return decistokes
 }
 
-// Kilostokes returns the value in Kilostokes.
+// Kilostokes returns the KinematicViscosity value in Kilostokes.
+//
+// 
 func (a *KinematicViscosity) Kilostokes() float64 {
 	if a.kilostokesLazy != nil {
 		return *a.kilostokesLazy
@@ -260,7 +288,9 @@ func (a *KinematicViscosity) Kilostokes() float64 {
 }
 
 
-// ToDto creates an KinematicViscosityDto representation.
+// ToDto creates a KinematicViscosityDto representation from the KinematicViscosity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by SquareMeterPerSecond by default.
 func (a *KinematicViscosity) ToDto(holdInUnit *KinematicViscosityUnits) KinematicViscosityDto {
 	if holdInUnit == nil {
 		defaultUnit := KinematicViscositySquareMeterPerSecond // Default value
@@ -273,12 +303,19 @@ func (a *KinematicViscosity) ToDto(holdInUnit *KinematicViscosityUnits) Kinemati
 	}
 }
 
-// ToDtoJSON creates an KinematicViscosityDto representation.
+// ToDtoJSON creates a JSON representation of the KinematicViscosity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by SquareMeterPerSecond by default.
 func (a *KinematicViscosity) ToDtoJSON(holdInUnit *KinematicViscosityUnits) ([]byte, error) {
+	// Convert to KinematicViscosityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts KinematicViscosity to a specific unit value.
+// Convert converts a KinematicViscosity to a specific unit value.
+// The function uses the provided unit type (KinematicViscosityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *KinematicViscosity) Convert(toUnit KinematicViscosityUnits) float64 {
 	switch toUnit { 
     case KinematicViscositySquareMeterPerSecond:
@@ -300,7 +337,7 @@ func (a *KinematicViscosity) Convert(toUnit KinematicViscosityUnits) float64 {
     case KinematicViscosityKilostokes:
 		return a.Kilostokes()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -355,13 +392,22 @@ func (a *KinematicViscosity) convertToBase(value float64, fromUnit KinematicVisc
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the KinematicViscosity in the default unit (SquareMeterPerSecond),
+// formatted to two decimal places.
 func (a KinematicViscosity) String() string {
 	return a.ToString(KinematicViscositySquareMeterPerSecond, 2)
 }
 
-// ToString formats the KinematicViscosity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the KinematicViscosity value as a string with the specified unit and fractional digits.
+// It converts the KinematicViscosity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the KinematicViscosity value will be converted (e.g., SquareMeterPerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the KinematicViscosity with the unit abbreviation.
 func (a *KinematicViscosity) ToString(unit KinematicViscosityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -397,12 +443,26 @@ func (a *KinematicViscosity) getUnitAbbreviation(unit KinematicViscosityUnits) s
 	}
 }
 
-// Check if the given KinematicViscosity are equals to the current KinematicViscosity
+// Equals checks if the given KinematicViscosity is equal to the current KinematicViscosity.
+//
+// Parameters:
+//    other: The KinematicViscosity to compare against.
+//
+// Returns:
+//    bool: Returns true if both KinematicViscosity are equal, false otherwise.
 func (a *KinematicViscosity) Equals(other *KinematicViscosity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given KinematicViscosity are equals to the current KinematicViscosity
+// CompareTo compares the current KinematicViscosity with another KinematicViscosity.
+// It returns -1 if the current KinematicViscosity is less than the other KinematicViscosity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The KinematicViscosity to compare against.
+//
+// Returns:
+//    int: -1 if the current KinematicViscosity is less, 1 if greater, and 0 if equal.
 func (a *KinematicViscosity) CompareTo(other *KinematicViscosity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -415,22 +475,50 @@ func (a *KinematicViscosity) CompareTo(other *KinematicViscosity) int {
 	return 0
 }
 
-// Add the given KinematicViscosity to the current KinematicViscosity.
+// Add adds the given KinematicViscosity to the current KinematicViscosity and returns the result.
+// The result is a new KinematicViscosity instance with the sum of the values.
+//
+// Parameters:
+//    other: The KinematicViscosity to add to the current KinematicViscosity.
+//
+// Returns:
+//    *KinematicViscosity: A new KinematicViscosity instance representing the sum of both KinematicViscosity.
 func (a *KinematicViscosity) Add(other *KinematicViscosity) *KinematicViscosity {
 	return &KinematicViscosity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given KinematicViscosity to the current KinematicViscosity.
+// Subtract subtracts the given KinematicViscosity from the current KinematicViscosity and returns the result.
+// The result is a new KinematicViscosity instance with the difference of the values.
+//
+// Parameters:
+//    other: The KinematicViscosity to subtract from the current KinematicViscosity.
+//
+// Returns:
+//    *KinematicViscosity: A new KinematicViscosity instance representing the difference of both KinematicViscosity.
 func (a *KinematicViscosity) Subtract(other *KinematicViscosity) *KinematicViscosity {
 	return &KinematicViscosity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given KinematicViscosity to the current KinematicViscosity.
+// Multiply multiplies the current KinematicViscosity by the given KinematicViscosity and returns the result.
+// The result is a new KinematicViscosity instance with the product of the values.
+//
+// Parameters:
+//    other: The KinematicViscosity to multiply with the current KinematicViscosity.
+//
+// Returns:
+//    *KinematicViscosity: A new KinematicViscosity instance representing the product of both KinematicViscosity.
 func (a *KinematicViscosity) Multiply(other *KinematicViscosity) *KinematicViscosity {
 	return &KinematicViscosity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given KinematicViscosity to the current KinematicViscosity.
+// Divide divides the current KinematicViscosity by the given KinematicViscosity and returns the result.
+// The result is a new KinematicViscosity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The KinematicViscosity to divide the current KinematicViscosity by.
+//
+// Returns:
+//    *KinematicViscosity: A new KinematicViscosity instance representing the quotient of both KinematicViscosity.
 func (a *KinematicViscosity) Divide(other *KinematicViscosity) *KinematicViscosity {
 	return &KinematicViscosity{value: a.value / other.BaseValue()}
 }

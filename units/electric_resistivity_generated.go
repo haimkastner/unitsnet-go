@@ -12,7 +12,7 @@ import (
 
 
 
-// ElectricResistivityUnits enumeration
+// ElectricResistivityUnits defines various units of ElectricResistivity.
 type ElectricResistivityUnits string
 
 const (
@@ -47,19 +47,24 @@ const (
         ElectricResistivityMegaohmCentimeter ElectricResistivityUnits = "MegaohmCentimeter"
 )
 
-// ElectricResistivityDto represents an ElectricResistivity
+// ElectricResistivityDto represents a ElectricResistivity measurement with a numerical value and its corresponding unit.
 type ElectricResistivityDto struct {
+    // Value is the numerical representation of the ElectricResistivity.
 	Value float64
+    // Unit specifies the unit of measurement for the ElectricResistivity, as defined in the ElectricResistivityUnits enumeration.
 	Unit  ElectricResistivityUnits
 }
 
-// ElectricResistivityDtoFactory struct to group related functions
+// ElectricResistivityDtoFactory groups methods for creating and serializing ElectricResistivityDto objects.
 type ElectricResistivityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricResistivityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ElectricResistivityDtoFactory) FromJSON(data []byte) (*ElectricResistivityDto, error) {
 	a := ElectricResistivityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ElectricResistivityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -67,6 +72,9 @@ func (udf ElectricResistivityDtoFactory) FromJSON(data []byte) (*ElectricResisti
 	return &a, nil
 }
 
+// ToJSON serializes a ElectricResistivityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ElectricResistivityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -78,10 +86,11 @@ func (a ElectricResistivityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ElectricResistivity struct
+// ElectricResistivity represents a measurement in a of ElectricResistivity.
+//
+// Electrical resistivity (also known as resistivity, specific electrical resistance, or volume resistivity) is a fundamental property that quantifies how strongly a given material opposes the flow of electric current.
 type ElectricResistivity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     ohm_metersLazy *float64 
@@ -100,97 +109,98 @@ type ElectricResistivity struct {
     megaohms_centimeterLazy *float64 
 }
 
-// ElectricResistivityFactory struct to group related functions
+// ElectricResistivityFactory groups methods for creating ElectricResistivity instances.
 type ElectricResistivityFactory struct{}
 
+// CreateElectricResistivity creates a new ElectricResistivity instance from the given value and unit.
 func (uf ElectricResistivityFactory) CreateElectricResistivity(value float64, unit ElectricResistivityUnits) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, unit)
 }
 
+// FromDto converts a ElectricResistivityDto to a ElectricResistivity instance.
 func (uf ElectricResistivityFactory) FromDto(dto ElectricResistivityDto) (*ElectricResistivity, error) {
 	return newElectricResistivity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricResistivity instance.
 func (uf ElectricResistivityFactory) FromDtoJSON(data []byte) (*ElectricResistivity, error) {
 	unitDto, err := ElectricResistivityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ElectricResistivityDto from JSON: %w", err)
 	}
 	return ElectricResistivityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromOhmMeter creates a new ElectricResistivity instance from OhmMeter.
+// FromOhmMeters creates a new ElectricResistivity instance from a value in OhmMeters.
 func (uf ElectricResistivityFactory) FromOhmMeters(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityOhmMeter)
 }
 
-// FromOhmCentimeter creates a new ElectricResistivity instance from OhmCentimeter.
+// FromOhmsCentimeter creates a new ElectricResistivity instance from a value in OhmsCentimeter.
 func (uf ElectricResistivityFactory) FromOhmsCentimeter(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityOhmCentimeter)
 }
 
-// FromPicoohmMeter creates a new ElectricResistivity instance from PicoohmMeter.
+// FromPicoohmMeters creates a new ElectricResistivity instance from a value in PicoohmMeters.
 func (uf ElectricResistivityFactory) FromPicoohmMeters(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityPicoohmMeter)
 }
 
-// FromNanoohmMeter creates a new ElectricResistivity instance from NanoohmMeter.
+// FromNanoohmMeters creates a new ElectricResistivity instance from a value in NanoohmMeters.
 func (uf ElectricResistivityFactory) FromNanoohmMeters(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityNanoohmMeter)
 }
 
-// FromMicroohmMeter creates a new ElectricResistivity instance from MicroohmMeter.
+// FromMicroohmMeters creates a new ElectricResistivity instance from a value in MicroohmMeters.
 func (uf ElectricResistivityFactory) FromMicroohmMeters(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityMicroohmMeter)
 }
 
-// FromMilliohmMeter creates a new ElectricResistivity instance from MilliohmMeter.
+// FromMilliohmMeters creates a new ElectricResistivity instance from a value in MilliohmMeters.
 func (uf ElectricResistivityFactory) FromMilliohmMeters(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityMilliohmMeter)
 }
 
-// FromKiloohmMeter creates a new ElectricResistivity instance from KiloohmMeter.
+// FromKiloohmMeters creates a new ElectricResistivity instance from a value in KiloohmMeters.
 func (uf ElectricResistivityFactory) FromKiloohmMeters(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityKiloohmMeter)
 }
 
-// FromMegaohmMeter creates a new ElectricResistivity instance from MegaohmMeter.
+// FromMegaohmMeters creates a new ElectricResistivity instance from a value in MegaohmMeters.
 func (uf ElectricResistivityFactory) FromMegaohmMeters(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityMegaohmMeter)
 }
 
-// FromPicoohmCentimeter creates a new ElectricResistivity instance from PicoohmCentimeter.
+// FromPicoohmsCentimeter creates a new ElectricResistivity instance from a value in PicoohmsCentimeter.
 func (uf ElectricResistivityFactory) FromPicoohmsCentimeter(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityPicoohmCentimeter)
 }
 
-// FromNanoohmCentimeter creates a new ElectricResistivity instance from NanoohmCentimeter.
+// FromNanoohmsCentimeter creates a new ElectricResistivity instance from a value in NanoohmsCentimeter.
 func (uf ElectricResistivityFactory) FromNanoohmsCentimeter(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityNanoohmCentimeter)
 }
 
-// FromMicroohmCentimeter creates a new ElectricResistivity instance from MicroohmCentimeter.
+// FromMicroohmsCentimeter creates a new ElectricResistivity instance from a value in MicroohmsCentimeter.
 func (uf ElectricResistivityFactory) FromMicroohmsCentimeter(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityMicroohmCentimeter)
 }
 
-// FromMilliohmCentimeter creates a new ElectricResistivity instance from MilliohmCentimeter.
+// FromMilliohmsCentimeter creates a new ElectricResistivity instance from a value in MilliohmsCentimeter.
 func (uf ElectricResistivityFactory) FromMilliohmsCentimeter(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityMilliohmCentimeter)
 }
 
-// FromKiloohmCentimeter creates a new ElectricResistivity instance from KiloohmCentimeter.
+// FromKiloohmsCentimeter creates a new ElectricResistivity instance from a value in KiloohmsCentimeter.
 func (uf ElectricResistivityFactory) FromKiloohmsCentimeter(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityKiloohmCentimeter)
 }
 
-// FromMegaohmCentimeter creates a new ElectricResistivity instance from MegaohmCentimeter.
+// FromMegaohmsCentimeter creates a new ElectricResistivity instance from a value in MegaohmsCentimeter.
 func (uf ElectricResistivityFactory) FromMegaohmsCentimeter(value float64) (*ElectricResistivity, error) {
 	return newElectricResistivity(value, ElectricResistivityMegaohmCentimeter)
 }
-
-
 
 
 // newElectricResistivity creates a new ElectricResistivity.
@@ -203,13 +213,15 @@ func newElectricResistivity(value float64, fromUnit ElectricResistivityUnits) (*
 	return a, nil
 }
 
-// BaseValue returns the base value of ElectricResistivity in OhmMeter.
+// BaseValue returns the base value of ElectricResistivity in OhmMeter unit (the base/default quantity).
 func (a *ElectricResistivity) BaseValue() float64 {
 	return a.value
 }
 
 
-// OhmMeter returns the value in OhmMeter.
+// OhmMeters returns the ElectricResistivity value in OhmMeters.
+//
+// 
 func (a *ElectricResistivity) OhmMeters() float64 {
 	if a.ohm_metersLazy != nil {
 		return *a.ohm_metersLazy
@@ -219,7 +231,9 @@ func (a *ElectricResistivity) OhmMeters() float64 {
 	return ohm_meters
 }
 
-// OhmCentimeter returns the value in OhmCentimeter.
+// OhmsCentimeter returns the ElectricResistivity value in OhmsCentimeter.
+//
+// 
 func (a *ElectricResistivity) OhmsCentimeter() float64 {
 	if a.ohms_centimeterLazy != nil {
 		return *a.ohms_centimeterLazy
@@ -229,7 +243,9 @@ func (a *ElectricResistivity) OhmsCentimeter() float64 {
 	return ohms_centimeter
 }
 
-// PicoohmMeter returns the value in PicoohmMeter.
+// PicoohmMeters returns the ElectricResistivity value in PicoohmMeters.
+//
+// 
 func (a *ElectricResistivity) PicoohmMeters() float64 {
 	if a.picoohm_metersLazy != nil {
 		return *a.picoohm_metersLazy
@@ -239,7 +255,9 @@ func (a *ElectricResistivity) PicoohmMeters() float64 {
 	return picoohm_meters
 }
 
-// NanoohmMeter returns the value in NanoohmMeter.
+// NanoohmMeters returns the ElectricResistivity value in NanoohmMeters.
+//
+// 
 func (a *ElectricResistivity) NanoohmMeters() float64 {
 	if a.nanoohm_metersLazy != nil {
 		return *a.nanoohm_metersLazy
@@ -249,7 +267,9 @@ func (a *ElectricResistivity) NanoohmMeters() float64 {
 	return nanoohm_meters
 }
 
-// MicroohmMeter returns the value in MicroohmMeter.
+// MicroohmMeters returns the ElectricResistivity value in MicroohmMeters.
+//
+// 
 func (a *ElectricResistivity) MicroohmMeters() float64 {
 	if a.microohm_metersLazy != nil {
 		return *a.microohm_metersLazy
@@ -259,7 +279,9 @@ func (a *ElectricResistivity) MicroohmMeters() float64 {
 	return microohm_meters
 }
 
-// MilliohmMeter returns the value in MilliohmMeter.
+// MilliohmMeters returns the ElectricResistivity value in MilliohmMeters.
+//
+// 
 func (a *ElectricResistivity) MilliohmMeters() float64 {
 	if a.milliohm_metersLazy != nil {
 		return *a.milliohm_metersLazy
@@ -269,7 +291,9 @@ func (a *ElectricResistivity) MilliohmMeters() float64 {
 	return milliohm_meters
 }
 
-// KiloohmMeter returns the value in KiloohmMeter.
+// KiloohmMeters returns the ElectricResistivity value in KiloohmMeters.
+//
+// 
 func (a *ElectricResistivity) KiloohmMeters() float64 {
 	if a.kiloohm_metersLazy != nil {
 		return *a.kiloohm_metersLazy
@@ -279,7 +303,9 @@ func (a *ElectricResistivity) KiloohmMeters() float64 {
 	return kiloohm_meters
 }
 
-// MegaohmMeter returns the value in MegaohmMeter.
+// MegaohmMeters returns the ElectricResistivity value in MegaohmMeters.
+//
+// 
 func (a *ElectricResistivity) MegaohmMeters() float64 {
 	if a.megaohm_metersLazy != nil {
 		return *a.megaohm_metersLazy
@@ -289,7 +315,9 @@ func (a *ElectricResistivity) MegaohmMeters() float64 {
 	return megaohm_meters
 }
 
-// PicoohmCentimeter returns the value in PicoohmCentimeter.
+// PicoohmsCentimeter returns the ElectricResistivity value in PicoohmsCentimeter.
+//
+// 
 func (a *ElectricResistivity) PicoohmsCentimeter() float64 {
 	if a.picoohms_centimeterLazy != nil {
 		return *a.picoohms_centimeterLazy
@@ -299,7 +327,9 @@ func (a *ElectricResistivity) PicoohmsCentimeter() float64 {
 	return picoohms_centimeter
 }
 
-// NanoohmCentimeter returns the value in NanoohmCentimeter.
+// NanoohmsCentimeter returns the ElectricResistivity value in NanoohmsCentimeter.
+//
+// 
 func (a *ElectricResistivity) NanoohmsCentimeter() float64 {
 	if a.nanoohms_centimeterLazy != nil {
 		return *a.nanoohms_centimeterLazy
@@ -309,7 +339,9 @@ func (a *ElectricResistivity) NanoohmsCentimeter() float64 {
 	return nanoohms_centimeter
 }
 
-// MicroohmCentimeter returns the value in MicroohmCentimeter.
+// MicroohmsCentimeter returns the ElectricResistivity value in MicroohmsCentimeter.
+//
+// 
 func (a *ElectricResistivity) MicroohmsCentimeter() float64 {
 	if a.microohms_centimeterLazy != nil {
 		return *a.microohms_centimeterLazy
@@ -319,7 +351,9 @@ func (a *ElectricResistivity) MicroohmsCentimeter() float64 {
 	return microohms_centimeter
 }
 
-// MilliohmCentimeter returns the value in MilliohmCentimeter.
+// MilliohmsCentimeter returns the ElectricResistivity value in MilliohmsCentimeter.
+//
+// 
 func (a *ElectricResistivity) MilliohmsCentimeter() float64 {
 	if a.milliohms_centimeterLazy != nil {
 		return *a.milliohms_centimeterLazy
@@ -329,7 +363,9 @@ func (a *ElectricResistivity) MilliohmsCentimeter() float64 {
 	return milliohms_centimeter
 }
 
-// KiloohmCentimeter returns the value in KiloohmCentimeter.
+// KiloohmsCentimeter returns the ElectricResistivity value in KiloohmsCentimeter.
+//
+// 
 func (a *ElectricResistivity) KiloohmsCentimeter() float64 {
 	if a.kiloohms_centimeterLazy != nil {
 		return *a.kiloohms_centimeterLazy
@@ -339,7 +375,9 @@ func (a *ElectricResistivity) KiloohmsCentimeter() float64 {
 	return kiloohms_centimeter
 }
 
-// MegaohmCentimeter returns the value in MegaohmCentimeter.
+// MegaohmsCentimeter returns the ElectricResistivity value in MegaohmsCentimeter.
+//
+// 
 func (a *ElectricResistivity) MegaohmsCentimeter() float64 {
 	if a.megaohms_centimeterLazy != nil {
 		return *a.megaohms_centimeterLazy
@@ -350,7 +388,9 @@ func (a *ElectricResistivity) MegaohmsCentimeter() float64 {
 }
 
 
-// ToDto creates an ElectricResistivityDto representation.
+// ToDto creates a ElectricResistivityDto representation from the ElectricResistivity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by OhmMeter by default.
 func (a *ElectricResistivity) ToDto(holdInUnit *ElectricResistivityUnits) ElectricResistivityDto {
 	if holdInUnit == nil {
 		defaultUnit := ElectricResistivityOhmMeter // Default value
@@ -363,12 +403,19 @@ func (a *ElectricResistivity) ToDto(holdInUnit *ElectricResistivityUnits) Electr
 	}
 }
 
-// ToDtoJSON creates an ElectricResistivityDto representation.
+// ToDtoJSON creates a JSON representation of the ElectricResistivity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by OhmMeter by default.
 func (a *ElectricResistivity) ToDtoJSON(holdInUnit *ElectricResistivityUnits) ([]byte, error) {
+	// Convert to ElectricResistivityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ElectricResistivity to a specific unit value.
+// Convert converts a ElectricResistivity to a specific unit value.
+// The function uses the provided unit type (ElectricResistivityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ElectricResistivity) Convert(toUnit ElectricResistivityUnits) float64 {
 	switch toUnit { 
     case ElectricResistivityOhmMeter:
@@ -400,7 +447,7 @@ func (a *ElectricResistivity) Convert(toUnit ElectricResistivityUnits) float64 {
     case ElectricResistivityMegaohmCentimeter:
 		return a.MegaohmsCentimeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -475,13 +522,22 @@ func (a *ElectricResistivity) convertToBase(value float64, fromUnit ElectricResi
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ElectricResistivity in the default unit (OhmMeter),
+// formatted to two decimal places.
 func (a ElectricResistivity) String() string {
 	return a.ToString(ElectricResistivityOhmMeter, 2)
 }
 
-// ToString formats the ElectricResistivity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ElectricResistivity value as a string with the specified unit and fractional digits.
+// It converts the ElectricResistivity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ElectricResistivity value will be converted (e.g., OhmMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ElectricResistivity with the unit abbreviation.
 func (a *ElectricResistivity) ToString(unit ElectricResistivityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -527,12 +583,26 @@ func (a *ElectricResistivity) getUnitAbbreviation(unit ElectricResistivityUnits)
 	}
 }
 
-// Check if the given ElectricResistivity are equals to the current ElectricResistivity
+// Equals checks if the given ElectricResistivity is equal to the current ElectricResistivity.
+//
+// Parameters:
+//    other: The ElectricResistivity to compare against.
+//
+// Returns:
+//    bool: Returns true if both ElectricResistivity are equal, false otherwise.
 func (a *ElectricResistivity) Equals(other *ElectricResistivity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ElectricResistivity are equals to the current ElectricResistivity
+// CompareTo compares the current ElectricResistivity with another ElectricResistivity.
+// It returns -1 if the current ElectricResistivity is less than the other ElectricResistivity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ElectricResistivity to compare against.
+//
+// Returns:
+//    int: -1 if the current ElectricResistivity is less, 1 if greater, and 0 if equal.
 func (a *ElectricResistivity) CompareTo(other *ElectricResistivity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -545,22 +615,50 @@ func (a *ElectricResistivity) CompareTo(other *ElectricResistivity) int {
 	return 0
 }
 
-// Add the given ElectricResistivity to the current ElectricResistivity.
+// Add adds the given ElectricResistivity to the current ElectricResistivity and returns the result.
+// The result is a new ElectricResistivity instance with the sum of the values.
+//
+// Parameters:
+//    other: The ElectricResistivity to add to the current ElectricResistivity.
+//
+// Returns:
+//    *ElectricResistivity: A new ElectricResistivity instance representing the sum of both ElectricResistivity.
 func (a *ElectricResistivity) Add(other *ElectricResistivity) *ElectricResistivity {
 	return &ElectricResistivity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ElectricResistivity to the current ElectricResistivity.
+// Subtract subtracts the given ElectricResistivity from the current ElectricResistivity and returns the result.
+// The result is a new ElectricResistivity instance with the difference of the values.
+//
+// Parameters:
+//    other: The ElectricResistivity to subtract from the current ElectricResistivity.
+//
+// Returns:
+//    *ElectricResistivity: A new ElectricResistivity instance representing the difference of both ElectricResistivity.
 func (a *ElectricResistivity) Subtract(other *ElectricResistivity) *ElectricResistivity {
 	return &ElectricResistivity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ElectricResistivity to the current ElectricResistivity.
+// Multiply multiplies the current ElectricResistivity by the given ElectricResistivity and returns the result.
+// The result is a new ElectricResistivity instance with the product of the values.
+//
+// Parameters:
+//    other: The ElectricResistivity to multiply with the current ElectricResistivity.
+//
+// Returns:
+//    *ElectricResistivity: A new ElectricResistivity instance representing the product of both ElectricResistivity.
 func (a *ElectricResistivity) Multiply(other *ElectricResistivity) *ElectricResistivity {
 	return &ElectricResistivity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ElectricResistivity to the current ElectricResistivity.
+// Divide divides the current ElectricResistivity by the given ElectricResistivity and returns the result.
+// The result is a new ElectricResistivity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ElectricResistivity to divide the current ElectricResistivity by.
+//
+// Returns:
+//    *ElectricResistivity: A new ElectricResistivity instance representing the quotient of both ElectricResistivity.
 func (a *ElectricResistivity) Divide(other *ElectricResistivity) *ElectricResistivity {
 	return &ElectricResistivity{value: a.value / other.BaseValue()}
 }

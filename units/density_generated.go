@@ -12,7 +12,7 @@ import (
 
 
 
-// DensityUnits enumeration
+// DensityUnits defines various units of Density.
 type DensityUnits string
 
 const (
@@ -131,19 +131,24 @@ const (
         DensityDecigramPerMilliliter DensityUnits = "DecigramPerMilliliter"
 )
 
-// DensityDto represents an Density
+// DensityDto represents a Density measurement with a numerical value and its corresponding unit.
 type DensityDto struct {
+    // Value is the numerical representation of the Density.
 	Value float64
+    // Unit specifies the unit of measurement for the Density, as defined in the DensityUnits enumeration.
 	Unit  DensityUnits
 }
 
-// DensityDtoFactory struct to group related functions
+// DensityDtoFactory groups methods for creating and serializing DensityDto objects.
 type DensityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a DensityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf DensityDtoFactory) FromJSON(data []byte) (*DensityDto, error) {
 	a := DensityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into DensityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -151,6 +156,9 @@ func (udf DensityDtoFactory) FromJSON(data []byte) (*DensityDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a DensityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a DensityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -162,10 +170,11 @@ func (a DensityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Density struct
+// Density represents a measurement in a of Density.
+//
+// The density, or more precisely, the volumetric mass density, of a substance is its mass per unit volume.
 type Density struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     grams_per_cubic_millimeterLazy *float64 
@@ -226,307 +235,308 @@ type Density struct {
     decigrams_per_milliliterLazy *float64 
 }
 
-// DensityFactory struct to group related functions
+// DensityFactory groups methods for creating Density instances.
 type DensityFactory struct{}
 
+// CreateDensity creates a new Density instance from the given value and unit.
 func (uf DensityFactory) CreateDensity(value float64, unit DensityUnits) (*Density, error) {
 	return newDensity(value, unit)
 }
 
+// FromDto converts a DensityDto to a Density instance.
 func (uf DensityFactory) FromDto(dto DensityDto) (*Density, error) {
 	return newDensity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Density instance.
 func (uf DensityFactory) FromDtoJSON(data []byte) (*Density, error) {
 	unitDto, err := DensityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse DensityDto from JSON: %w", err)
 	}
 	return DensityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromGramPerCubicMillimeter creates a new Density instance from GramPerCubicMillimeter.
+// FromGramsPerCubicMillimeter creates a new Density instance from a value in GramsPerCubicMillimeter.
 func (uf DensityFactory) FromGramsPerCubicMillimeter(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerCubicMillimeter)
 }
 
-// FromGramPerCubicCentimeter creates a new Density instance from GramPerCubicCentimeter.
+// FromGramsPerCubicCentimeter creates a new Density instance from a value in GramsPerCubicCentimeter.
 func (uf DensityFactory) FromGramsPerCubicCentimeter(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerCubicCentimeter)
 }
 
-// FromGramPerCubicMeter creates a new Density instance from GramPerCubicMeter.
+// FromGramsPerCubicMeter creates a new Density instance from a value in GramsPerCubicMeter.
 func (uf DensityFactory) FromGramsPerCubicMeter(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerCubicMeter)
 }
 
-// FromPoundPerCubicInch creates a new Density instance from PoundPerCubicInch.
+// FromPoundsPerCubicInch creates a new Density instance from a value in PoundsPerCubicInch.
 func (uf DensityFactory) FromPoundsPerCubicInch(value float64) (*Density, error) {
 	return newDensity(value, DensityPoundPerCubicInch)
 }
 
-// FromPoundPerCubicFoot creates a new Density instance from PoundPerCubicFoot.
+// FromPoundsPerCubicFoot creates a new Density instance from a value in PoundsPerCubicFoot.
 func (uf DensityFactory) FromPoundsPerCubicFoot(value float64) (*Density, error) {
 	return newDensity(value, DensityPoundPerCubicFoot)
 }
 
-// FromPoundPerCubicYard creates a new Density instance from PoundPerCubicYard.
+// FromPoundsPerCubicYard creates a new Density instance from a value in PoundsPerCubicYard.
 func (uf DensityFactory) FromPoundsPerCubicYard(value float64) (*Density, error) {
 	return newDensity(value, DensityPoundPerCubicYard)
 }
 
-// FromTonnePerCubicMillimeter creates a new Density instance from TonnePerCubicMillimeter.
+// FromTonnesPerCubicMillimeter creates a new Density instance from a value in TonnesPerCubicMillimeter.
 func (uf DensityFactory) FromTonnesPerCubicMillimeter(value float64) (*Density, error) {
 	return newDensity(value, DensityTonnePerCubicMillimeter)
 }
 
-// FromTonnePerCubicCentimeter creates a new Density instance from TonnePerCubicCentimeter.
+// FromTonnesPerCubicCentimeter creates a new Density instance from a value in TonnesPerCubicCentimeter.
 func (uf DensityFactory) FromTonnesPerCubicCentimeter(value float64) (*Density, error) {
 	return newDensity(value, DensityTonnePerCubicCentimeter)
 }
 
-// FromTonnePerCubicMeter creates a new Density instance from TonnePerCubicMeter.
+// FromTonnesPerCubicMeter creates a new Density instance from a value in TonnesPerCubicMeter.
 func (uf DensityFactory) FromTonnesPerCubicMeter(value float64) (*Density, error) {
 	return newDensity(value, DensityTonnePerCubicMeter)
 }
 
-// FromSlugPerCubicFoot creates a new Density instance from SlugPerCubicFoot.
+// FromSlugsPerCubicFoot creates a new Density instance from a value in SlugsPerCubicFoot.
 func (uf DensityFactory) FromSlugsPerCubicFoot(value float64) (*Density, error) {
 	return newDensity(value, DensitySlugPerCubicFoot)
 }
 
-// FromGramPerLiter creates a new Density instance from GramPerLiter.
+// FromGramsPerLiter creates a new Density instance from a value in GramsPerLiter.
 func (uf DensityFactory) FromGramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerLiter)
 }
 
-// FromGramPerDeciliter creates a new Density instance from GramPerDeciliter.
+// FromGramsPerDeciLiter creates a new Density instance from a value in GramsPerDeciLiter.
 func (uf DensityFactory) FromGramsPerDeciLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerDeciliter)
 }
 
-// FromGramPerMilliliter creates a new Density instance from GramPerMilliliter.
+// FromGramsPerMilliliter creates a new Density instance from a value in GramsPerMilliliter.
 func (uf DensityFactory) FromGramsPerMilliliter(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerMilliliter)
 }
 
-// FromPoundPerUSGallon creates a new Density instance from PoundPerUSGallon.
+// FromPoundsPerUSGallon creates a new Density instance from a value in PoundsPerUSGallon.
 func (uf DensityFactory) FromPoundsPerUSGallon(value float64) (*Density, error) {
 	return newDensity(value, DensityPoundPerUSGallon)
 }
 
-// FromPoundPerImperialGallon creates a new Density instance from PoundPerImperialGallon.
+// FromPoundsPerImperialGallon creates a new Density instance from a value in PoundsPerImperialGallon.
 func (uf DensityFactory) FromPoundsPerImperialGallon(value float64) (*Density, error) {
 	return newDensity(value, DensityPoundPerImperialGallon)
 }
 
-// FromKilogramPerLiter creates a new Density instance from KilogramPerLiter.
+// FromKilogramsPerLiter creates a new Density instance from a value in KilogramsPerLiter.
 func (uf DensityFactory) FromKilogramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityKilogramPerLiter)
 }
 
-// FromTonnePerCubicFoot creates a new Density instance from TonnePerCubicFoot.
+// FromTonnesPerCubicFoot creates a new Density instance from a value in TonnesPerCubicFoot.
 func (uf DensityFactory) FromTonnesPerCubicFoot(value float64) (*Density, error) {
 	return newDensity(value, DensityTonnePerCubicFoot)
 }
 
-// FromTonnePerCubicInch creates a new Density instance from TonnePerCubicInch.
+// FromTonnesPerCubicInch creates a new Density instance from a value in TonnesPerCubicInch.
 func (uf DensityFactory) FromTonnesPerCubicInch(value float64) (*Density, error) {
 	return newDensity(value, DensityTonnePerCubicInch)
 }
 
-// FromGramPerCubicFoot creates a new Density instance from GramPerCubicFoot.
+// FromGramsPerCubicFoot creates a new Density instance from a value in GramsPerCubicFoot.
 func (uf DensityFactory) FromGramsPerCubicFoot(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerCubicFoot)
 }
 
-// FromGramPerCubicInch creates a new Density instance from GramPerCubicInch.
+// FromGramsPerCubicInch creates a new Density instance from a value in GramsPerCubicInch.
 func (uf DensityFactory) FromGramsPerCubicInch(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerCubicInch)
 }
 
-// FromPoundPerCubicMeter creates a new Density instance from PoundPerCubicMeter.
+// FromPoundsPerCubicMeter creates a new Density instance from a value in PoundsPerCubicMeter.
 func (uf DensityFactory) FromPoundsPerCubicMeter(value float64) (*Density, error) {
 	return newDensity(value, DensityPoundPerCubicMeter)
 }
 
-// FromPoundPerCubicCentimeter creates a new Density instance from PoundPerCubicCentimeter.
+// FromPoundsPerCubicCentimeter creates a new Density instance from a value in PoundsPerCubicCentimeter.
 func (uf DensityFactory) FromPoundsPerCubicCentimeter(value float64) (*Density, error) {
 	return newDensity(value, DensityPoundPerCubicCentimeter)
 }
 
-// FromPoundPerCubicMillimeter creates a new Density instance from PoundPerCubicMillimeter.
+// FromPoundsPerCubicMillimeter creates a new Density instance from a value in PoundsPerCubicMillimeter.
 func (uf DensityFactory) FromPoundsPerCubicMillimeter(value float64) (*Density, error) {
 	return newDensity(value, DensityPoundPerCubicMillimeter)
 }
 
-// FromSlugPerCubicMeter creates a new Density instance from SlugPerCubicMeter.
+// FromSlugsPerCubicMeter creates a new Density instance from a value in SlugsPerCubicMeter.
 func (uf DensityFactory) FromSlugsPerCubicMeter(value float64) (*Density, error) {
 	return newDensity(value, DensitySlugPerCubicMeter)
 }
 
-// FromSlugPerCubicCentimeter creates a new Density instance from SlugPerCubicCentimeter.
+// FromSlugsPerCubicCentimeter creates a new Density instance from a value in SlugsPerCubicCentimeter.
 func (uf DensityFactory) FromSlugsPerCubicCentimeter(value float64) (*Density, error) {
 	return newDensity(value, DensitySlugPerCubicCentimeter)
 }
 
-// FromSlugPerCubicMillimeter creates a new Density instance from SlugPerCubicMillimeter.
+// FromSlugsPerCubicMillimeter creates a new Density instance from a value in SlugsPerCubicMillimeter.
 func (uf DensityFactory) FromSlugsPerCubicMillimeter(value float64) (*Density, error) {
 	return newDensity(value, DensitySlugPerCubicMillimeter)
 }
 
-// FromSlugPerCubicInch creates a new Density instance from SlugPerCubicInch.
+// FromSlugsPerCubicInch creates a new Density instance from a value in SlugsPerCubicInch.
 func (uf DensityFactory) FromSlugsPerCubicInch(value float64) (*Density, error) {
 	return newDensity(value, DensitySlugPerCubicInch)
 }
 
-// FromKilogramPerCubicMillimeter creates a new Density instance from KilogramPerCubicMillimeter.
+// FromKilogramsPerCubicMillimeter creates a new Density instance from a value in KilogramsPerCubicMillimeter.
 func (uf DensityFactory) FromKilogramsPerCubicMillimeter(value float64) (*Density, error) {
 	return newDensity(value, DensityKilogramPerCubicMillimeter)
 }
 
-// FromKilogramPerCubicCentimeter creates a new Density instance from KilogramPerCubicCentimeter.
+// FromKilogramsPerCubicCentimeter creates a new Density instance from a value in KilogramsPerCubicCentimeter.
 func (uf DensityFactory) FromKilogramsPerCubicCentimeter(value float64) (*Density, error) {
 	return newDensity(value, DensityKilogramPerCubicCentimeter)
 }
 
-// FromKilogramPerCubicMeter creates a new Density instance from KilogramPerCubicMeter.
+// FromKilogramsPerCubicMeter creates a new Density instance from a value in KilogramsPerCubicMeter.
 func (uf DensityFactory) FromKilogramsPerCubicMeter(value float64) (*Density, error) {
 	return newDensity(value, DensityKilogramPerCubicMeter)
 }
 
-// FromMilligramPerCubicMeter creates a new Density instance from MilligramPerCubicMeter.
+// FromMilligramsPerCubicMeter creates a new Density instance from a value in MilligramsPerCubicMeter.
 func (uf DensityFactory) FromMilligramsPerCubicMeter(value float64) (*Density, error) {
 	return newDensity(value, DensityMilligramPerCubicMeter)
 }
 
-// FromMicrogramPerCubicMeter creates a new Density instance from MicrogramPerCubicMeter.
+// FromMicrogramsPerCubicMeter creates a new Density instance from a value in MicrogramsPerCubicMeter.
 func (uf DensityFactory) FromMicrogramsPerCubicMeter(value float64) (*Density, error) {
 	return newDensity(value, DensityMicrogramPerCubicMeter)
 }
 
-// FromKilopoundPerCubicInch creates a new Density instance from KilopoundPerCubicInch.
+// FromKilopoundsPerCubicInch creates a new Density instance from a value in KilopoundsPerCubicInch.
 func (uf DensityFactory) FromKilopoundsPerCubicInch(value float64) (*Density, error) {
 	return newDensity(value, DensityKilopoundPerCubicInch)
 }
 
-// FromKilopoundPerCubicFoot creates a new Density instance from KilopoundPerCubicFoot.
+// FromKilopoundsPerCubicFoot creates a new Density instance from a value in KilopoundsPerCubicFoot.
 func (uf DensityFactory) FromKilopoundsPerCubicFoot(value float64) (*Density, error) {
 	return newDensity(value, DensityKilopoundPerCubicFoot)
 }
 
-// FromKilopoundPerCubicYard creates a new Density instance from KilopoundPerCubicYard.
+// FromKilopoundsPerCubicYard creates a new Density instance from a value in KilopoundsPerCubicYard.
 func (uf DensityFactory) FromKilopoundsPerCubicYard(value float64) (*Density, error) {
 	return newDensity(value, DensityKilopoundPerCubicYard)
 }
 
-// FromFemtogramPerLiter creates a new Density instance from FemtogramPerLiter.
+// FromFemtogramsPerLiter creates a new Density instance from a value in FemtogramsPerLiter.
 func (uf DensityFactory) FromFemtogramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityFemtogramPerLiter)
 }
 
-// FromPicogramPerLiter creates a new Density instance from PicogramPerLiter.
+// FromPicogramsPerLiter creates a new Density instance from a value in PicogramsPerLiter.
 func (uf DensityFactory) FromPicogramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityPicogramPerLiter)
 }
 
-// FromNanogramPerLiter creates a new Density instance from NanogramPerLiter.
+// FromNanogramsPerLiter creates a new Density instance from a value in NanogramsPerLiter.
 func (uf DensityFactory) FromNanogramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityNanogramPerLiter)
 }
 
-// FromMicrogramPerLiter creates a new Density instance from MicrogramPerLiter.
+// FromMicrogramsPerLiter creates a new Density instance from a value in MicrogramsPerLiter.
 func (uf DensityFactory) FromMicrogramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityMicrogramPerLiter)
 }
 
-// FromMilligramPerLiter creates a new Density instance from MilligramPerLiter.
+// FromMilligramsPerLiter creates a new Density instance from a value in MilligramsPerLiter.
 func (uf DensityFactory) FromMilligramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityMilligramPerLiter)
 }
 
-// FromCentigramPerLiter creates a new Density instance from CentigramPerLiter.
+// FromCentigramsPerLiter creates a new Density instance from a value in CentigramsPerLiter.
 func (uf DensityFactory) FromCentigramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityCentigramPerLiter)
 }
 
-// FromDecigramPerLiter creates a new Density instance from DecigramPerLiter.
+// FromDecigramsPerLiter creates a new Density instance from a value in DecigramsPerLiter.
 func (uf DensityFactory) FromDecigramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityDecigramPerLiter)
 }
 
-// FromFemtogramPerDeciliter creates a new Density instance from FemtogramPerDeciliter.
+// FromFemtogramsPerDeciLiter creates a new Density instance from a value in FemtogramsPerDeciLiter.
 func (uf DensityFactory) FromFemtogramsPerDeciLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityFemtogramPerDeciliter)
 }
 
-// FromPicogramPerDeciliter creates a new Density instance from PicogramPerDeciliter.
+// FromPicogramsPerDeciLiter creates a new Density instance from a value in PicogramsPerDeciLiter.
 func (uf DensityFactory) FromPicogramsPerDeciLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityPicogramPerDeciliter)
 }
 
-// FromNanogramPerDeciliter creates a new Density instance from NanogramPerDeciliter.
+// FromNanogramsPerDeciLiter creates a new Density instance from a value in NanogramsPerDeciLiter.
 func (uf DensityFactory) FromNanogramsPerDeciLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityNanogramPerDeciliter)
 }
 
-// FromMicrogramPerDeciliter creates a new Density instance from MicrogramPerDeciliter.
+// FromMicrogramsPerDeciLiter creates a new Density instance from a value in MicrogramsPerDeciLiter.
 func (uf DensityFactory) FromMicrogramsPerDeciLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityMicrogramPerDeciliter)
 }
 
-// FromMilligramPerDeciliter creates a new Density instance from MilligramPerDeciliter.
+// FromMilligramsPerDeciLiter creates a new Density instance from a value in MilligramsPerDeciLiter.
 func (uf DensityFactory) FromMilligramsPerDeciLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityMilligramPerDeciliter)
 }
 
-// FromCentigramPerDeciliter creates a new Density instance from CentigramPerDeciliter.
+// FromCentigramsPerDeciLiter creates a new Density instance from a value in CentigramsPerDeciLiter.
 func (uf DensityFactory) FromCentigramsPerDeciLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityCentigramPerDeciliter)
 }
 
-// FromDecigramPerDeciliter creates a new Density instance from DecigramPerDeciliter.
+// FromDecigramsPerDeciLiter creates a new Density instance from a value in DecigramsPerDeciLiter.
 func (uf DensityFactory) FromDecigramsPerDeciLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityDecigramPerDeciliter)
 }
 
-// FromFemtogramPerMilliliter creates a new Density instance from FemtogramPerMilliliter.
+// FromFemtogramsPerMilliliter creates a new Density instance from a value in FemtogramsPerMilliliter.
 func (uf DensityFactory) FromFemtogramsPerMilliliter(value float64) (*Density, error) {
 	return newDensity(value, DensityFemtogramPerMilliliter)
 }
 
-// FromPicogramPerMilliliter creates a new Density instance from PicogramPerMilliliter.
+// FromPicogramsPerMilliliter creates a new Density instance from a value in PicogramsPerMilliliter.
 func (uf DensityFactory) FromPicogramsPerMilliliter(value float64) (*Density, error) {
 	return newDensity(value, DensityPicogramPerMilliliter)
 }
 
-// FromNanogramPerMilliliter creates a new Density instance from NanogramPerMilliliter.
+// FromNanogramsPerMilliliter creates a new Density instance from a value in NanogramsPerMilliliter.
 func (uf DensityFactory) FromNanogramsPerMilliliter(value float64) (*Density, error) {
 	return newDensity(value, DensityNanogramPerMilliliter)
 }
 
-// FromMicrogramPerMilliliter creates a new Density instance from MicrogramPerMilliliter.
+// FromMicrogramsPerMilliliter creates a new Density instance from a value in MicrogramsPerMilliliter.
 func (uf DensityFactory) FromMicrogramsPerMilliliter(value float64) (*Density, error) {
 	return newDensity(value, DensityMicrogramPerMilliliter)
 }
 
-// FromMilligramPerMilliliter creates a new Density instance from MilligramPerMilliliter.
+// FromMilligramsPerMilliliter creates a new Density instance from a value in MilligramsPerMilliliter.
 func (uf DensityFactory) FromMilligramsPerMilliliter(value float64) (*Density, error) {
 	return newDensity(value, DensityMilligramPerMilliliter)
 }
 
-// FromCentigramPerMilliliter creates a new Density instance from CentigramPerMilliliter.
+// FromCentigramsPerMilliliter creates a new Density instance from a value in CentigramsPerMilliliter.
 func (uf DensityFactory) FromCentigramsPerMilliliter(value float64) (*Density, error) {
 	return newDensity(value, DensityCentigramPerMilliliter)
 }
 
-// FromDecigramPerMilliliter creates a new Density instance from DecigramPerMilliliter.
+// FromDecigramsPerMilliliter creates a new Density instance from a value in DecigramsPerMilliliter.
 func (uf DensityFactory) FromDecigramsPerMilliliter(value float64) (*Density, error) {
 	return newDensity(value, DensityDecigramPerMilliliter)
 }
-
-
 
 
 // newDensity creates a new Density.
@@ -539,13 +549,15 @@ func newDensity(value float64, fromUnit DensityUnits) (*Density, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Density in KilogramPerCubicMeter.
+// BaseValue returns the base value of Density in KilogramPerCubicMeter unit (the base/default quantity).
 func (a *Density) BaseValue() float64 {
 	return a.value
 }
 
 
-// GramPerCubicMillimeter returns the value in GramPerCubicMillimeter.
+// GramsPerCubicMillimeter returns the Density value in GramsPerCubicMillimeter.
+//
+// 
 func (a *Density) GramsPerCubicMillimeter() float64 {
 	if a.grams_per_cubic_millimeterLazy != nil {
 		return *a.grams_per_cubic_millimeterLazy
@@ -555,7 +567,9 @@ func (a *Density) GramsPerCubicMillimeter() float64 {
 	return grams_per_cubic_millimeter
 }
 
-// GramPerCubicCentimeter returns the value in GramPerCubicCentimeter.
+// GramsPerCubicCentimeter returns the Density value in GramsPerCubicCentimeter.
+//
+// 
 func (a *Density) GramsPerCubicCentimeter() float64 {
 	if a.grams_per_cubic_centimeterLazy != nil {
 		return *a.grams_per_cubic_centimeterLazy
@@ -565,7 +579,9 @@ func (a *Density) GramsPerCubicCentimeter() float64 {
 	return grams_per_cubic_centimeter
 }
 
-// GramPerCubicMeter returns the value in GramPerCubicMeter.
+// GramsPerCubicMeter returns the Density value in GramsPerCubicMeter.
+//
+// 
 func (a *Density) GramsPerCubicMeter() float64 {
 	if a.grams_per_cubic_meterLazy != nil {
 		return *a.grams_per_cubic_meterLazy
@@ -575,7 +591,9 @@ func (a *Density) GramsPerCubicMeter() float64 {
 	return grams_per_cubic_meter
 }
 
-// PoundPerCubicInch returns the value in PoundPerCubicInch.
+// PoundsPerCubicInch returns the Density value in PoundsPerCubicInch.
+//
+// 
 func (a *Density) PoundsPerCubicInch() float64 {
 	if a.pounds_per_cubic_inchLazy != nil {
 		return *a.pounds_per_cubic_inchLazy
@@ -585,7 +603,9 @@ func (a *Density) PoundsPerCubicInch() float64 {
 	return pounds_per_cubic_inch
 }
 
-// PoundPerCubicFoot returns the value in PoundPerCubicFoot.
+// PoundsPerCubicFoot returns the Density value in PoundsPerCubicFoot.
+//
+// 
 func (a *Density) PoundsPerCubicFoot() float64 {
 	if a.pounds_per_cubic_footLazy != nil {
 		return *a.pounds_per_cubic_footLazy
@@ -595,7 +615,9 @@ func (a *Density) PoundsPerCubicFoot() float64 {
 	return pounds_per_cubic_foot
 }
 
-// PoundPerCubicYard returns the value in PoundPerCubicYard.
+// PoundsPerCubicYard returns the Density value in PoundsPerCubicYard.
+//
+// Calculated from the definition of <a href="https://en.wikipedia.org/wiki/Pound_(mass)">pound</a> and <a href="https://en.wikipedia.org/wiki/Yard">yard</a> compared to metric kilogram and meter.
 func (a *Density) PoundsPerCubicYard() float64 {
 	if a.pounds_per_cubic_yardLazy != nil {
 		return *a.pounds_per_cubic_yardLazy
@@ -605,7 +627,9 @@ func (a *Density) PoundsPerCubicYard() float64 {
 	return pounds_per_cubic_yard
 }
 
-// TonnePerCubicMillimeter returns the value in TonnePerCubicMillimeter.
+// TonnesPerCubicMillimeter returns the Density value in TonnesPerCubicMillimeter.
+//
+// 
 func (a *Density) TonnesPerCubicMillimeter() float64 {
 	if a.tonnes_per_cubic_millimeterLazy != nil {
 		return *a.tonnes_per_cubic_millimeterLazy
@@ -615,7 +639,9 @@ func (a *Density) TonnesPerCubicMillimeter() float64 {
 	return tonnes_per_cubic_millimeter
 }
 
-// TonnePerCubicCentimeter returns the value in TonnePerCubicCentimeter.
+// TonnesPerCubicCentimeter returns the Density value in TonnesPerCubicCentimeter.
+//
+// 
 func (a *Density) TonnesPerCubicCentimeter() float64 {
 	if a.tonnes_per_cubic_centimeterLazy != nil {
 		return *a.tonnes_per_cubic_centimeterLazy
@@ -625,7 +651,9 @@ func (a *Density) TonnesPerCubicCentimeter() float64 {
 	return tonnes_per_cubic_centimeter
 }
 
-// TonnePerCubicMeter returns the value in TonnePerCubicMeter.
+// TonnesPerCubicMeter returns the Density value in TonnesPerCubicMeter.
+//
+// 
 func (a *Density) TonnesPerCubicMeter() float64 {
 	if a.tonnes_per_cubic_meterLazy != nil {
 		return *a.tonnes_per_cubic_meterLazy
@@ -635,7 +663,9 @@ func (a *Density) TonnesPerCubicMeter() float64 {
 	return tonnes_per_cubic_meter
 }
 
-// SlugPerCubicFoot returns the value in SlugPerCubicFoot.
+// SlugsPerCubicFoot returns the Density value in SlugsPerCubicFoot.
+//
+// 
 func (a *Density) SlugsPerCubicFoot() float64 {
 	if a.slugs_per_cubic_footLazy != nil {
 		return *a.slugs_per_cubic_footLazy
@@ -645,7 +675,9 @@ func (a *Density) SlugsPerCubicFoot() float64 {
 	return slugs_per_cubic_foot
 }
 
-// GramPerLiter returns the value in GramPerLiter.
+// GramsPerLiter returns the Density value in GramsPerLiter.
+//
+// 
 func (a *Density) GramsPerLiter() float64 {
 	if a.grams_per_literLazy != nil {
 		return *a.grams_per_literLazy
@@ -655,7 +687,9 @@ func (a *Density) GramsPerLiter() float64 {
 	return grams_per_liter
 }
 
-// GramPerDeciliter returns the value in GramPerDeciliter.
+// GramsPerDeciLiter returns the Density value in GramsPerDeciLiter.
+//
+// 
 func (a *Density) GramsPerDeciLiter() float64 {
 	if a.grams_per_deci_literLazy != nil {
 		return *a.grams_per_deci_literLazy
@@ -665,7 +699,9 @@ func (a *Density) GramsPerDeciLiter() float64 {
 	return grams_per_deci_liter
 }
 
-// GramPerMilliliter returns the value in GramPerMilliliter.
+// GramsPerMilliliter returns the Density value in GramsPerMilliliter.
+//
+// 
 func (a *Density) GramsPerMilliliter() float64 {
 	if a.grams_per_milliliterLazy != nil {
 		return *a.grams_per_milliliterLazy
@@ -675,7 +711,9 @@ func (a *Density) GramsPerMilliliter() float64 {
 	return grams_per_milliliter
 }
 
-// PoundPerUSGallon returns the value in PoundPerUSGallon.
+// PoundsPerUSGallon returns the Density value in PoundsPerUSGallon.
+//
+// 
 func (a *Density) PoundsPerUSGallon() float64 {
 	if a.pounds_per_us_gallonLazy != nil {
 		return *a.pounds_per_us_gallonLazy
@@ -685,7 +723,9 @@ func (a *Density) PoundsPerUSGallon() float64 {
 	return pounds_per_us_gallon
 }
 
-// PoundPerImperialGallon returns the value in PoundPerImperialGallon.
+// PoundsPerImperialGallon returns the Density value in PoundsPerImperialGallon.
+//
+// 
 func (a *Density) PoundsPerImperialGallon() float64 {
 	if a.pounds_per_imperial_gallonLazy != nil {
 		return *a.pounds_per_imperial_gallonLazy
@@ -695,7 +735,9 @@ func (a *Density) PoundsPerImperialGallon() float64 {
 	return pounds_per_imperial_gallon
 }
 
-// KilogramPerLiter returns the value in KilogramPerLiter.
+// KilogramsPerLiter returns the Density value in KilogramsPerLiter.
+//
+// 
 func (a *Density) KilogramsPerLiter() float64 {
 	if a.kilograms_per_literLazy != nil {
 		return *a.kilograms_per_literLazy
@@ -705,7 +747,9 @@ func (a *Density) KilogramsPerLiter() float64 {
 	return kilograms_per_liter
 }
 
-// TonnePerCubicFoot returns the value in TonnePerCubicFoot.
+// TonnesPerCubicFoot returns the Density value in TonnesPerCubicFoot.
+//
+// 
 func (a *Density) TonnesPerCubicFoot() float64 {
 	if a.tonnes_per_cubic_footLazy != nil {
 		return *a.tonnes_per_cubic_footLazy
@@ -715,7 +759,9 @@ func (a *Density) TonnesPerCubicFoot() float64 {
 	return tonnes_per_cubic_foot
 }
 
-// TonnePerCubicInch returns the value in TonnePerCubicInch.
+// TonnesPerCubicInch returns the Density value in TonnesPerCubicInch.
+//
+// 
 func (a *Density) TonnesPerCubicInch() float64 {
 	if a.tonnes_per_cubic_inchLazy != nil {
 		return *a.tonnes_per_cubic_inchLazy
@@ -725,7 +771,9 @@ func (a *Density) TonnesPerCubicInch() float64 {
 	return tonnes_per_cubic_inch
 }
 
-// GramPerCubicFoot returns the value in GramPerCubicFoot.
+// GramsPerCubicFoot returns the Density value in GramsPerCubicFoot.
+//
+// 
 func (a *Density) GramsPerCubicFoot() float64 {
 	if a.grams_per_cubic_footLazy != nil {
 		return *a.grams_per_cubic_footLazy
@@ -735,7 +783,9 @@ func (a *Density) GramsPerCubicFoot() float64 {
 	return grams_per_cubic_foot
 }
 
-// GramPerCubicInch returns the value in GramPerCubicInch.
+// GramsPerCubicInch returns the Density value in GramsPerCubicInch.
+//
+// 
 func (a *Density) GramsPerCubicInch() float64 {
 	if a.grams_per_cubic_inchLazy != nil {
 		return *a.grams_per_cubic_inchLazy
@@ -745,7 +795,9 @@ func (a *Density) GramsPerCubicInch() float64 {
 	return grams_per_cubic_inch
 }
 
-// PoundPerCubicMeter returns the value in PoundPerCubicMeter.
+// PoundsPerCubicMeter returns the Density value in PoundsPerCubicMeter.
+//
+// 
 func (a *Density) PoundsPerCubicMeter() float64 {
 	if a.pounds_per_cubic_meterLazy != nil {
 		return *a.pounds_per_cubic_meterLazy
@@ -755,7 +807,9 @@ func (a *Density) PoundsPerCubicMeter() float64 {
 	return pounds_per_cubic_meter
 }
 
-// PoundPerCubicCentimeter returns the value in PoundPerCubicCentimeter.
+// PoundsPerCubicCentimeter returns the Density value in PoundsPerCubicCentimeter.
+//
+// 
 func (a *Density) PoundsPerCubicCentimeter() float64 {
 	if a.pounds_per_cubic_centimeterLazy != nil {
 		return *a.pounds_per_cubic_centimeterLazy
@@ -765,7 +819,9 @@ func (a *Density) PoundsPerCubicCentimeter() float64 {
 	return pounds_per_cubic_centimeter
 }
 
-// PoundPerCubicMillimeter returns the value in PoundPerCubicMillimeter.
+// PoundsPerCubicMillimeter returns the Density value in PoundsPerCubicMillimeter.
+//
+// 
 func (a *Density) PoundsPerCubicMillimeter() float64 {
 	if a.pounds_per_cubic_millimeterLazy != nil {
 		return *a.pounds_per_cubic_millimeterLazy
@@ -775,7 +831,9 @@ func (a *Density) PoundsPerCubicMillimeter() float64 {
 	return pounds_per_cubic_millimeter
 }
 
-// SlugPerCubicMeter returns the value in SlugPerCubicMeter.
+// SlugsPerCubicMeter returns the Density value in SlugsPerCubicMeter.
+//
+// 
 func (a *Density) SlugsPerCubicMeter() float64 {
 	if a.slugs_per_cubic_meterLazy != nil {
 		return *a.slugs_per_cubic_meterLazy
@@ -785,7 +843,9 @@ func (a *Density) SlugsPerCubicMeter() float64 {
 	return slugs_per_cubic_meter
 }
 
-// SlugPerCubicCentimeter returns the value in SlugPerCubicCentimeter.
+// SlugsPerCubicCentimeter returns the Density value in SlugsPerCubicCentimeter.
+//
+// 
 func (a *Density) SlugsPerCubicCentimeter() float64 {
 	if a.slugs_per_cubic_centimeterLazy != nil {
 		return *a.slugs_per_cubic_centimeterLazy
@@ -795,7 +855,9 @@ func (a *Density) SlugsPerCubicCentimeter() float64 {
 	return slugs_per_cubic_centimeter
 }
 
-// SlugPerCubicMillimeter returns the value in SlugPerCubicMillimeter.
+// SlugsPerCubicMillimeter returns the Density value in SlugsPerCubicMillimeter.
+//
+// 
 func (a *Density) SlugsPerCubicMillimeter() float64 {
 	if a.slugs_per_cubic_millimeterLazy != nil {
 		return *a.slugs_per_cubic_millimeterLazy
@@ -805,7 +867,9 @@ func (a *Density) SlugsPerCubicMillimeter() float64 {
 	return slugs_per_cubic_millimeter
 }
 
-// SlugPerCubicInch returns the value in SlugPerCubicInch.
+// SlugsPerCubicInch returns the Density value in SlugsPerCubicInch.
+//
+// 
 func (a *Density) SlugsPerCubicInch() float64 {
 	if a.slugs_per_cubic_inchLazy != nil {
 		return *a.slugs_per_cubic_inchLazy
@@ -815,7 +879,9 @@ func (a *Density) SlugsPerCubicInch() float64 {
 	return slugs_per_cubic_inch
 }
 
-// KilogramPerCubicMillimeter returns the value in KilogramPerCubicMillimeter.
+// KilogramsPerCubicMillimeter returns the Density value in KilogramsPerCubicMillimeter.
+//
+// 
 func (a *Density) KilogramsPerCubicMillimeter() float64 {
 	if a.kilograms_per_cubic_millimeterLazy != nil {
 		return *a.kilograms_per_cubic_millimeterLazy
@@ -825,7 +891,9 @@ func (a *Density) KilogramsPerCubicMillimeter() float64 {
 	return kilograms_per_cubic_millimeter
 }
 
-// KilogramPerCubicCentimeter returns the value in KilogramPerCubicCentimeter.
+// KilogramsPerCubicCentimeter returns the Density value in KilogramsPerCubicCentimeter.
+//
+// 
 func (a *Density) KilogramsPerCubicCentimeter() float64 {
 	if a.kilograms_per_cubic_centimeterLazy != nil {
 		return *a.kilograms_per_cubic_centimeterLazy
@@ -835,7 +903,9 @@ func (a *Density) KilogramsPerCubicCentimeter() float64 {
 	return kilograms_per_cubic_centimeter
 }
 
-// KilogramPerCubicMeter returns the value in KilogramPerCubicMeter.
+// KilogramsPerCubicMeter returns the Density value in KilogramsPerCubicMeter.
+//
+// 
 func (a *Density) KilogramsPerCubicMeter() float64 {
 	if a.kilograms_per_cubic_meterLazy != nil {
 		return *a.kilograms_per_cubic_meterLazy
@@ -845,7 +915,9 @@ func (a *Density) KilogramsPerCubicMeter() float64 {
 	return kilograms_per_cubic_meter
 }
 
-// MilligramPerCubicMeter returns the value in MilligramPerCubicMeter.
+// MilligramsPerCubicMeter returns the Density value in MilligramsPerCubicMeter.
+//
+// 
 func (a *Density) MilligramsPerCubicMeter() float64 {
 	if a.milligrams_per_cubic_meterLazy != nil {
 		return *a.milligrams_per_cubic_meterLazy
@@ -855,7 +927,9 @@ func (a *Density) MilligramsPerCubicMeter() float64 {
 	return milligrams_per_cubic_meter
 }
 
-// MicrogramPerCubicMeter returns the value in MicrogramPerCubicMeter.
+// MicrogramsPerCubicMeter returns the Density value in MicrogramsPerCubicMeter.
+//
+// 
 func (a *Density) MicrogramsPerCubicMeter() float64 {
 	if a.micrograms_per_cubic_meterLazy != nil {
 		return *a.micrograms_per_cubic_meterLazy
@@ -865,7 +939,9 @@ func (a *Density) MicrogramsPerCubicMeter() float64 {
 	return micrograms_per_cubic_meter
 }
 
-// KilopoundPerCubicInch returns the value in KilopoundPerCubicInch.
+// KilopoundsPerCubicInch returns the Density value in KilopoundsPerCubicInch.
+//
+// 
 func (a *Density) KilopoundsPerCubicInch() float64 {
 	if a.kilopounds_per_cubic_inchLazy != nil {
 		return *a.kilopounds_per_cubic_inchLazy
@@ -875,7 +951,9 @@ func (a *Density) KilopoundsPerCubicInch() float64 {
 	return kilopounds_per_cubic_inch
 }
 
-// KilopoundPerCubicFoot returns the value in KilopoundPerCubicFoot.
+// KilopoundsPerCubicFoot returns the Density value in KilopoundsPerCubicFoot.
+//
+// 
 func (a *Density) KilopoundsPerCubicFoot() float64 {
 	if a.kilopounds_per_cubic_footLazy != nil {
 		return *a.kilopounds_per_cubic_footLazy
@@ -885,7 +963,9 @@ func (a *Density) KilopoundsPerCubicFoot() float64 {
 	return kilopounds_per_cubic_foot
 }
 
-// KilopoundPerCubicYard returns the value in KilopoundPerCubicYard.
+// KilopoundsPerCubicYard returns the Density value in KilopoundsPerCubicYard.
+//
+// 
 func (a *Density) KilopoundsPerCubicYard() float64 {
 	if a.kilopounds_per_cubic_yardLazy != nil {
 		return *a.kilopounds_per_cubic_yardLazy
@@ -895,7 +975,9 @@ func (a *Density) KilopoundsPerCubicYard() float64 {
 	return kilopounds_per_cubic_yard
 }
 
-// FemtogramPerLiter returns the value in FemtogramPerLiter.
+// FemtogramsPerLiter returns the Density value in FemtogramsPerLiter.
+//
+// 
 func (a *Density) FemtogramsPerLiter() float64 {
 	if a.femtograms_per_literLazy != nil {
 		return *a.femtograms_per_literLazy
@@ -905,7 +987,9 @@ func (a *Density) FemtogramsPerLiter() float64 {
 	return femtograms_per_liter
 }
 
-// PicogramPerLiter returns the value in PicogramPerLiter.
+// PicogramsPerLiter returns the Density value in PicogramsPerLiter.
+//
+// 
 func (a *Density) PicogramsPerLiter() float64 {
 	if a.picograms_per_literLazy != nil {
 		return *a.picograms_per_literLazy
@@ -915,7 +999,9 @@ func (a *Density) PicogramsPerLiter() float64 {
 	return picograms_per_liter
 }
 
-// NanogramPerLiter returns the value in NanogramPerLiter.
+// NanogramsPerLiter returns the Density value in NanogramsPerLiter.
+//
+// 
 func (a *Density) NanogramsPerLiter() float64 {
 	if a.nanograms_per_literLazy != nil {
 		return *a.nanograms_per_literLazy
@@ -925,7 +1011,9 @@ func (a *Density) NanogramsPerLiter() float64 {
 	return nanograms_per_liter
 }
 
-// MicrogramPerLiter returns the value in MicrogramPerLiter.
+// MicrogramsPerLiter returns the Density value in MicrogramsPerLiter.
+//
+// 
 func (a *Density) MicrogramsPerLiter() float64 {
 	if a.micrograms_per_literLazy != nil {
 		return *a.micrograms_per_literLazy
@@ -935,7 +1023,9 @@ func (a *Density) MicrogramsPerLiter() float64 {
 	return micrograms_per_liter
 }
 
-// MilligramPerLiter returns the value in MilligramPerLiter.
+// MilligramsPerLiter returns the Density value in MilligramsPerLiter.
+//
+// 
 func (a *Density) MilligramsPerLiter() float64 {
 	if a.milligrams_per_literLazy != nil {
 		return *a.milligrams_per_literLazy
@@ -945,7 +1035,9 @@ func (a *Density) MilligramsPerLiter() float64 {
 	return milligrams_per_liter
 }
 
-// CentigramPerLiter returns the value in CentigramPerLiter.
+// CentigramsPerLiter returns the Density value in CentigramsPerLiter.
+//
+// 
 func (a *Density) CentigramsPerLiter() float64 {
 	if a.centigrams_per_literLazy != nil {
 		return *a.centigrams_per_literLazy
@@ -955,7 +1047,9 @@ func (a *Density) CentigramsPerLiter() float64 {
 	return centigrams_per_liter
 }
 
-// DecigramPerLiter returns the value in DecigramPerLiter.
+// DecigramsPerLiter returns the Density value in DecigramsPerLiter.
+//
+// 
 func (a *Density) DecigramsPerLiter() float64 {
 	if a.decigrams_per_literLazy != nil {
 		return *a.decigrams_per_literLazy
@@ -965,7 +1059,9 @@ func (a *Density) DecigramsPerLiter() float64 {
 	return decigrams_per_liter
 }
 
-// FemtogramPerDeciliter returns the value in FemtogramPerDeciliter.
+// FemtogramsPerDeciLiter returns the Density value in FemtogramsPerDeciLiter.
+//
+// 
 func (a *Density) FemtogramsPerDeciLiter() float64 {
 	if a.femtograms_per_deci_literLazy != nil {
 		return *a.femtograms_per_deci_literLazy
@@ -975,7 +1071,9 @@ func (a *Density) FemtogramsPerDeciLiter() float64 {
 	return femtograms_per_deci_liter
 }
 
-// PicogramPerDeciliter returns the value in PicogramPerDeciliter.
+// PicogramsPerDeciLiter returns the Density value in PicogramsPerDeciLiter.
+//
+// 
 func (a *Density) PicogramsPerDeciLiter() float64 {
 	if a.picograms_per_deci_literLazy != nil {
 		return *a.picograms_per_deci_literLazy
@@ -985,7 +1083,9 @@ func (a *Density) PicogramsPerDeciLiter() float64 {
 	return picograms_per_deci_liter
 }
 
-// NanogramPerDeciliter returns the value in NanogramPerDeciliter.
+// NanogramsPerDeciLiter returns the Density value in NanogramsPerDeciLiter.
+//
+// 
 func (a *Density) NanogramsPerDeciLiter() float64 {
 	if a.nanograms_per_deci_literLazy != nil {
 		return *a.nanograms_per_deci_literLazy
@@ -995,7 +1095,9 @@ func (a *Density) NanogramsPerDeciLiter() float64 {
 	return nanograms_per_deci_liter
 }
 
-// MicrogramPerDeciliter returns the value in MicrogramPerDeciliter.
+// MicrogramsPerDeciLiter returns the Density value in MicrogramsPerDeciLiter.
+//
+// 
 func (a *Density) MicrogramsPerDeciLiter() float64 {
 	if a.micrograms_per_deci_literLazy != nil {
 		return *a.micrograms_per_deci_literLazy
@@ -1005,7 +1107,9 @@ func (a *Density) MicrogramsPerDeciLiter() float64 {
 	return micrograms_per_deci_liter
 }
 
-// MilligramPerDeciliter returns the value in MilligramPerDeciliter.
+// MilligramsPerDeciLiter returns the Density value in MilligramsPerDeciLiter.
+//
+// 
 func (a *Density) MilligramsPerDeciLiter() float64 {
 	if a.milligrams_per_deci_literLazy != nil {
 		return *a.milligrams_per_deci_literLazy
@@ -1015,7 +1119,9 @@ func (a *Density) MilligramsPerDeciLiter() float64 {
 	return milligrams_per_deci_liter
 }
 
-// CentigramPerDeciliter returns the value in CentigramPerDeciliter.
+// CentigramsPerDeciLiter returns the Density value in CentigramsPerDeciLiter.
+//
+// 
 func (a *Density) CentigramsPerDeciLiter() float64 {
 	if a.centigrams_per_deci_literLazy != nil {
 		return *a.centigrams_per_deci_literLazy
@@ -1025,7 +1131,9 @@ func (a *Density) CentigramsPerDeciLiter() float64 {
 	return centigrams_per_deci_liter
 }
 
-// DecigramPerDeciliter returns the value in DecigramPerDeciliter.
+// DecigramsPerDeciLiter returns the Density value in DecigramsPerDeciLiter.
+//
+// 
 func (a *Density) DecigramsPerDeciLiter() float64 {
 	if a.decigrams_per_deci_literLazy != nil {
 		return *a.decigrams_per_deci_literLazy
@@ -1035,7 +1143,9 @@ func (a *Density) DecigramsPerDeciLiter() float64 {
 	return decigrams_per_deci_liter
 }
 
-// FemtogramPerMilliliter returns the value in FemtogramPerMilliliter.
+// FemtogramsPerMilliliter returns the Density value in FemtogramsPerMilliliter.
+//
+// 
 func (a *Density) FemtogramsPerMilliliter() float64 {
 	if a.femtograms_per_milliliterLazy != nil {
 		return *a.femtograms_per_milliliterLazy
@@ -1045,7 +1155,9 @@ func (a *Density) FemtogramsPerMilliliter() float64 {
 	return femtograms_per_milliliter
 }
 
-// PicogramPerMilliliter returns the value in PicogramPerMilliliter.
+// PicogramsPerMilliliter returns the Density value in PicogramsPerMilliliter.
+//
+// 
 func (a *Density) PicogramsPerMilliliter() float64 {
 	if a.picograms_per_milliliterLazy != nil {
 		return *a.picograms_per_milliliterLazy
@@ -1055,7 +1167,9 @@ func (a *Density) PicogramsPerMilliliter() float64 {
 	return picograms_per_milliliter
 }
 
-// NanogramPerMilliliter returns the value in NanogramPerMilliliter.
+// NanogramsPerMilliliter returns the Density value in NanogramsPerMilliliter.
+//
+// 
 func (a *Density) NanogramsPerMilliliter() float64 {
 	if a.nanograms_per_milliliterLazy != nil {
 		return *a.nanograms_per_milliliterLazy
@@ -1065,7 +1179,9 @@ func (a *Density) NanogramsPerMilliliter() float64 {
 	return nanograms_per_milliliter
 }
 
-// MicrogramPerMilliliter returns the value in MicrogramPerMilliliter.
+// MicrogramsPerMilliliter returns the Density value in MicrogramsPerMilliliter.
+//
+// 
 func (a *Density) MicrogramsPerMilliliter() float64 {
 	if a.micrograms_per_milliliterLazy != nil {
 		return *a.micrograms_per_milliliterLazy
@@ -1075,7 +1191,9 @@ func (a *Density) MicrogramsPerMilliliter() float64 {
 	return micrograms_per_milliliter
 }
 
-// MilligramPerMilliliter returns the value in MilligramPerMilliliter.
+// MilligramsPerMilliliter returns the Density value in MilligramsPerMilliliter.
+//
+// 
 func (a *Density) MilligramsPerMilliliter() float64 {
 	if a.milligrams_per_milliliterLazy != nil {
 		return *a.milligrams_per_milliliterLazy
@@ -1085,7 +1203,9 @@ func (a *Density) MilligramsPerMilliliter() float64 {
 	return milligrams_per_milliliter
 }
 
-// CentigramPerMilliliter returns the value in CentigramPerMilliliter.
+// CentigramsPerMilliliter returns the Density value in CentigramsPerMilliliter.
+//
+// 
 func (a *Density) CentigramsPerMilliliter() float64 {
 	if a.centigrams_per_milliliterLazy != nil {
 		return *a.centigrams_per_milliliterLazy
@@ -1095,7 +1215,9 @@ func (a *Density) CentigramsPerMilliliter() float64 {
 	return centigrams_per_milliliter
 }
 
-// DecigramPerMilliliter returns the value in DecigramPerMilliliter.
+// DecigramsPerMilliliter returns the Density value in DecigramsPerMilliliter.
+//
+// 
 func (a *Density) DecigramsPerMilliliter() float64 {
 	if a.decigrams_per_milliliterLazy != nil {
 		return *a.decigrams_per_milliliterLazy
@@ -1106,7 +1228,9 @@ func (a *Density) DecigramsPerMilliliter() float64 {
 }
 
 
-// ToDto creates an DensityDto representation.
+// ToDto creates a DensityDto representation from the Density instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerCubicMeter by default.
 func (a *Density) ToDto(holdInUnit *DensityUnits) DensityDto {
 	if holdInUnit == nil {
 		defaultUnit := DensityKilogramPerCubicMeter // Default value
@@ -1119,12 +1243,19 @@ func (a *Density) ToDto(holdInUnit *DensityUnits) DensityDto {
 	}
 }
 
-// ToDtoJSON creates an DensityDto representation.
+// ToDtoJSON creates a JSON representation of the Density instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerCubicMeter by default.
 func (a *Density) ToDtoJSON(holdInUnit *DensityUnits) ([]byte, error) {
+	// Convert to DensityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Density to a specific unit value.
+// Convert converts a Density to a specific unit value.
+// The function uses the provided unit type (DensityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Density) Convert(toUnit DensityUnits) float64 {
 	switch toUnit { 
     case DensityGramPerCubicMillimeter:
@@ -1240,7 +1371,7 @@ func (a *Density) Convert(toUnit DensityUnits) float64 {
     case DensityDecigramPerMilliliter:
 		return a.DecigramsPerMilliliter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -1483,13 +1614,22 @@ func (a *Density) convertToBase(value float64, fromUnit DensityUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Density in the default unit (KilogramPerCubicMeter),
+// formatted to two decimal places.
 func (a Density) String() string {
 	return a.ToString(DensityKilogramPerCubicMeter, 2)
 }
 
-// ToString formats the Density to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Density value as a string with the specified unit and fractional digits.
+// It converts the Density to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Density value will be converted (e.g., KilogramPerCubicMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Density with the unit abbreviation.
 func (a *Density) ToString(unit DensityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1619,12 +1759,26 @@ func (a *Density) getUnitAbbreviation(unit DensityUnits) string {
 	}
 }
 
-// Check if the given Density are equals to the current Density
+// Equals checks if the given Density is equal to the current Density.
+//
+// Parameters:
+//    other: The Density to compare against.
+//
+// Returns:
+//    bool: Returns true if both Density are equal, false otherwise.
 func (a *Density) Equals(other *Density) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Density are equals to the current Density
+// CompareTo compares the current Density with another Density.
+// It returns -1 if the current Density is less than the other Density, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Density to compare against.
+//
+// Returns:
+//    int: -1 if the current Density is less, 1 if greater, and 0 if equal.
 func (a *Density) CompareTo(other *Density) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1637,22 +1791,50 @@ func (a *Density) CompareTo(other *Density) int {
 	return 0
 }
 
-// Add the given Density to the current Density.
+// Add adds the given Density to the current Density and returns the result.
+// The result is a new Density instance with the sum of the values.
+//
+// Parameters:
+//    other: The Density to add to the current Density.
+//
+// Returns:
+//    *Density: A new Density instance representing the sum of both Density.
 func (a *Density) Add(other *Density) *Density {
 	return &Density{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Density to the current Density.
+// Subtract subtracts the given Density from the current Density and returns the result.
+// The result is a new Density instance with the difference of the values.
+//
+// Parameters:
+//    other: The Density to subtract from the current Density.
+//
+// Returns:
+//    *Density: A new Density instance representing the difference of both Density.
 func (a *Density) Subtract(other *Density) *Density {
 	return &Density{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Density to the current Density.
+// Multiply multiplies the current Density by the given Density and returns the result.
+// The result is a new Density instance with the product of the values.
+//
+// Parameters:
+//    other: The Density to multiply with the current Density.
+//
+// Returns:
+//    *Density: A new Density instance representing the product of both Density.
 func (a *Density) Multiply(other *Density) *Density {
 	return &Density{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Density to the current Density.
+// Divide divides the current Density by the given Density and returns the result.
+// The result is a new Density instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Density to divide the current Density by.
+//
+// Returns:
+//    *Density: A new Density instance representing the quotient of both Density.
 func (a *Density) Divide(other *Density) *Density {
 	return &Density{value: a.value / other.BaseValue()}
 }

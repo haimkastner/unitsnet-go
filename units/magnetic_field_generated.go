@@ -12,7 +12,7 @@ import (
 
 
 
-// MagneticFieldUnits enumeration
+// MagneticFieldUnits defines various units of MagneticField.
 type MagneticFieldUnits string
 
 const (
@@ -31,19 +31,24 @@ const (
         MagneticFieldMilligauss MagneticFieldUnits = "Milligauss"
 )
 
-// MagneticFieldDto represents an MagneticField
+// MagneticFieldDto represents a MagneticField measurement with a numerical value and its corresponding unit.
 type MagneticFieldDto struct {
+    // Value is the numerical representation of the MagneticField.
 	Value float64
+    // Unit specifies the unit of measurement for the MagneticField, as defined in the MagneticFieldUnits enumeration.
 	Unit  MagneticFieldUnits
 }
 
-// MagneticFieldDtoFactory struct to group related functions
+// MagneticFieldDtoFactory groups methods for creating and serializing MagneticFieldDto objects.
 type MagneticFieldDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MagneticFieldDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MagneticFieldDtoFactory) FromJSON(data []byte) (*MagneticFieldDto, error) {
 	a := MagneticFieldDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MagneticFieldDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -51,6 +56,9 @@ func (udf MagneticFieldDtoFactory) FromJSON(data []byte) (*MagneticFieldDto, err
 	return &a, nil
 }
 
+// ToJSON serializes a MagneticFieldDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MagneticFieldDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -62,10 +70,11 @@ func (a MagneticFieldDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// MagneticField struct
+// MagneticField represents a measurement in a of MagneticField.
+//
+// A magnetic field is a force field that is created by moving electric charges (electric currents) and magnetic dipoles, and exerts a force on other nearby moving charges and magnetic dipoles.
 type MagneticField struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     teslasLazy *float64 
@@ -76,57 +85,58 @@ type MagneticField struct {
     milligaussesLazy *float64 
 }
 
-// MagneticFieldFactory struct to group related functions
+// MagneticFieldFactory groups methods for creating MagneticField instances.
 type MagneticFieldFactory struct{}
 
+// CreateMagneticField creates a new MagneticField instance from the given value and unit.
 func (uf MagneticFieldFactory) CreateMagneticField(value float64, unit MagneticFieldUnits) (*MagneticField, error) {
 	return newMagneticField(value, unit)
 }
 
+// FromDto converts a MagneticFieldDto to a MagneticField instance.
 func (uf MagneticFieldFactory) FromDto(dto MagneticFieldDto) (*MagneticField, error) {
 	return newMagneticField(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a MagneticField instance.
 func (uf MagneticFieldFactory) FromDtoJSON(data []byte) (*MagneticField, error) {
 	unitDto, err := MagneticFieldDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MagneticFieldDto from JSON: %w", err)
 	}
 	return MagneticFieldFactory{}.FromDto(*unitDto)
 }
 
 
-// FromTesla creates a new MagneticField instance from Tesla.
+// FromTeslas creates a new MagneticField instance from a value in Teslas.
 func (uf MagneticFieldFactory) FromTeslas(value float64) (*MagneticField, error) {
 	return newMagneticField(value, MagneticFieldTesla)
 }
 
-// FromGauss creates a new MagneticField instance from Gauss.
+// FromGausses creates a new MagneticField instance from a value in Gausses.
 func (uf MagneticFieldFactory) FromGausses(value float64) (*MagneticField, error) {
 	return newMagneticField(value, MagneticFieldGauss)
 }
 
-// FromNanotesla creates a new MagneticField instance from Nanotesla.
+// FromNanoteslas creates a new MagneticField instance from a value in Nanoteslas.
 func (uf MagneticFieldFactory) FromNanoteslas(value float64) (*MagneticField, error) {
 	return newMagneticField(value, MagneticFieldNanotesla)
 }
 
-// FromMicrotesla creates a new MagneticField instance from Microtesla.
+// FromMicroteslas creates a new MagneticField instance from a value in Microteslas.
 func (uf MagneticFieldFactory) FromMicroteslas(value float64) (*MagneticField, error) {
 	return newMagneticField(value, MagneticFieldMicrotesla)
 }
 
-// FromMillitesla creates a new MagneticField instance from Millitesla.
+// FromMilliteslas creates a new MagneticField instance from a value in Milliteslas.
 func (uf MagneticFieldFactory) FromMilliteslas(value float64) (*MagneticField, error) {
 	return newMagneticField(value, MagneticFieldMillitesla)
 }
 
-// FromMilligauss creates a new MagneticField instance from Milligauss.
+// FromMilligausses creates a new MagneticField instance from a value in Milligausses.
 func (uf MagneticFieldFactory) FromMilligausses(value float64) (*MagneticField, error) {
 	return newMagneticField(value, MagneticFieldMilligauss)
 }
-
-
 
 
 // newMagneticField creates a new MagneticField.
@@ -139,13 +149,15 @@ func newMagneticField(value float64, fromUnit MagneticFieldUnits) (*MagneticFiel
 	return a, nil
 }
 
-// BaseValue returns the base value of MagneticField in Tesla.
+// BaseValue returns the base value of MagneticField in Tesla unit (the base/default quantity).
 func (a *MagneticField) BaseValue() float64 {
 	return a.value
 }
 
 
-// Tesla returns the value in Tesla.
+// Teslas returns the MagneticField value in Teslas.
+//
+// 
 func (a *MagneticField) Teslas() float64 {
 	if a.teslasLazy != nil {
 		return *a.teslasLazy
@@ -155,7 +167,9 @@ func (a *MagneticField) Teslas() float64 {
 	return teslas
 }
 
-// Gauss returns the value in Gauss.
+// Gausses returns the MagneticField value in Gausses.
+//
+// 
 func (a *MagneticField) Gausses() float64 {
 	if a.gaussesLazy != nil {
 		return *a.gaussesLazy
@@ -165,7 +179,9 @@ func (a *MagneticField) Gausses() float64 {
 	return gausses
 }
 
-// Nanotesla returns the value in Nanotesla.
+// Nanoteslas returns the MagneticField value in Nanoteslas.
+//
+// 
 func (a *MagneticField) Nanoteslas() float64 {
 	if a.nanoteslasLazy != nil {
 		return *a.nanoteslasLazy
@@ -175,7 +191,9 @@ func (a *MagneticField) Nanoteslas() float64 {
 	return nanoteslas
 }
 
-// Microtesla returns the value in Microtesla.
+// Microteslas returns the MagneticField value in Microteslas.
+//
+// 
 func (a *MagneticField) Microteslas() float64 {
 	if a.microteslasLazy != nil {
 		return *a.microteslasLazy
@@ -185,7 +203,9 @@ func (a *MagneticField) Microteslas() float64 {
 	return microteslas
 }
 
-// Millitesla returns the value in Millitesla.
+// Milliteslas returns the MagneticField value in Milliteslas.
+//
+// 
 func (a *MagneticField) Milliteslas() float64 {
 	if a.milliteslasLazy != nil {
 		return *a.milliteslasLazy
@@ -195,7 +215,9 @@ func (a *MagneticField) Milliteslas() float64 {
 	return milliteslas
 }
 
-// Milligauss returns the value in Milligauss.
+// Milligausses returns the MagneticField value in Milligausses.
+//
+// 
 func (a *MagneticField) Milligausses() float64 {
 	if a.milligaussesLazy != nil {
 		return *a.milligaussesLazy
@@ -206,7 +228,9 @@ func (a *MagneticField) Milligausses() float64 {
 }
 
 
-// ToDto creates an MagneticFieldDto representation.
+// ToDto creates a MagneticFieldDto representation from the MagneticField instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Tesla by default.
 func (a *MagneticField) ToDto(holdInUnit *MagneticFieldUnits) MagneticFieldDto {
 	if holdInUnit == nil {
 		defaultUnit := MagneticFieldTesla // Default value
@@ -219,12 +243,19 @@ func (a *MagneticField) ToDto(holdInUnit *MagneticFieldUnits) MagneticFieldDto {
 	}
 }
 
-// ToDtoJSON creates an MagneticFieldDto representation.
+// ToDtoJSON creates a JSON representation of the MagneticField instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Tesla by default.
 func (a *MagneticField) ToDtoJSON(holdInUnit *MagneticFieldUnits) ([]byte, error) {
+	// Convert to MagneticFieldDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts MagneticField to a specific unit value.
+// Convert converts a MagneticField to a specific unit value.
+// The function uses the provided unit type (MagneticFieldUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *MagneticField) Convert(toUnit MagneticFieldUnits) float64 {
 	switch toUnit { 
     case MagneticFieldTesla:
@@ -240,7 +271,7 @@ func (a *MagneticField) Convert(toUnit MagneticFieldUnits) float64 {
     case MagneticFieldMilligauss:
 		return a.Milligausses()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -283,13 +314,22 @@ func (a *MagneticField) convertToBase(value float64, fromUnit MagneticFieldUnits
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the MagneticField in the default unit (Tesla),
+// formatted to two decimal places.
 func (a MagneticField) String() string {
 	return a.ToString(MagneticFieldTesla, 2)
 }
 
-// ToString formats the MagneticField to string.
-// fractionalDigits -1 for not mention
+// ToString formats the MagneticField value as a string with the specified unit and fractional digits.
+// It converts the MagneticField to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the MagneticField value will be converted (e.g., Tesla))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the MagneticField with the unit abbreviation.
 func (a *MagneticField) ToString(unit MagneticFieldUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -319,12 +359,26 @@ func (a *MagneticField) getUnitAbbreviation(unit MagneticFieldUnits) string {
 	}
 }
 
-// Check if the given MagneticField are equals to the current MagneticField
+// Equals checks if the given MagneticField is equal to the current MagneticField.
+//
+// Parameters:
+//    other: The MagneticField to compare against.
+//
+// Returns:
+//    bool: Returns true if both MagneticField are equal, false otherwise.
 func (a *MagneticField) Equals(other *MagneticField) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given MagneticField are equals to the current MagneticField
+// CompareTo compares the current MagneticField with another MagneticField.
+// It returns -1 if the current MagneticField is less than the other MagneticField, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MagneticField to compare against.
+//
+// Returns:
+//    int: -1 if the current MagneticField is less, 1 if greater, and 0 if equal.
 func (a *MagneticField) CompareTo(other *MagneticField) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -337,22 +391,50 @@ func (a *MagneticField) CompareTo(other *MagneticField) int {
 	return 0
 }
 
-// Add the given MagneticField to the current MagneticField.
+// Add adds the given MagneticField to the current MagneticField and returns the result.
+// The result is a new MagneticField instance with the sum of the values.
+//
+// Parameters:
+//    other: The MagneticField to add to the current MagneticField.
+//
+// Returns:
+//    *MagneticField: A new MagneticField instance representing the sum of both MagneticField.
 func (a *MagneticField) Add(other *MagneticField) *MagneticField {
 	return &MagneticField{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given MagneticField to the current MagneticField.
+// Subtract subtracts the given MagneticField from the current MagneticField and returns the result.
+// The result is a new MagneticField instance with the difference of the values.
+//
+// Parameters:
+//    other: The MagneticField to subtract from the current MagneticField.
+//
+// Returns:
+//    *MagneticField: A new MagneticField instance representing the difference of both MagneticField.
 func (a *MagneticField) Subtract(other *MagneticField) *MagneticField {
 	return &MagneticField{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given MagneticField to the current MagneticField.
+// Multiply multiplies the current MagneticField by the given MagneticField and returns the result.
+// The result is a new MagneticField instance with the product of the values.
+//
+// Parameters:
+//    other: The MagneticField to multiply with the current MagneticField.
+//
+// Returns:
+//    *MagneticField: A new MagneticField instance representing the product of both MagneticField.
 func (a *MagneticField) Multiply(other *MagneticField) *MagneticField {
 	return &MagneticField{value: a.value * other.BaseValue()}
 }
 
-// Divide the given MagneticField to the current MagneticField.
+// Divide divides the current MagneticField by the given MagneticField and returns the result.
+// The result is a new MagneticField instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MagneticField to divide the current MagneticField by.
+//
+// Returns:
+//    *MagneticField: A new MagneticField instance representing the quotient of both MagneticField.
 func (a *MagneticField) Divide(other *MagneticField) *MagneticField {
 	return &MagneticField{value: a.value / other.BaseValue()}
 }

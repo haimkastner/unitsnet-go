@@ -12,7 +12,7 @@ import (
 
 
 
-// SolidAngleUnits enumeration
+// SolidAngleUnits defines various units of SolidAngle.
 type SolidAngleUnits string
 
 const (
@@ -21,19 +21,24 @@ const (
         SolidAngleSteradian SolidAngleUnits = "Steradian"
 )
 
-// SolidAngleDto represents an SolidAngle
+// SolidAngleDto represents a SolidAngle measurement with a numerical value and its corresponding unit.
 type SolidAngleDto struct {
+    // Value is the numerical representation of the SolidAngle.
 	Value float64
+    // Unit specifies the unit of measurement for the SolidAngle, as defined in the SolidAngleUnits enumeration.
 	Unit  SolidAngleUnits
 }
 
-// SolidAngleDtoFactory struct to group related functions
+// SolidAngleDtoFactory groups methods for creating and serializing SolidAngleDto objects.
 type SolidAngleDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a SolidAngleDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf SolidAngleDtoFactory) FromJSON(data []byte) (*SolidAngleDto, error) {
 	a := SolidAngleDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into SolidAngleDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -41,6 +46,9 @@ func (udf SolidAngleDtoFactory) FromJSON(data []byte) (*SolidAngleDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a SolidAngleDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a SolidAngleDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -52,41 +60,43 @@ func (a SolidAngleDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// SolidAngle struct
+// SolidAngle represents a measurement in a of SolidAngle.
+//
+// In geometry, a solid angle is the two-dimensional angle in three-dimensional space that an object subtends at a point.
 type SolidAngle struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     steradiansLazy *float64 
 }
 
-// SolidAngleFactory struct to group related functions
+// SolidAngleFactory groups methods for creating SolidAngle instances.
 type SolidAngleFactory struct{}
 
+// CreateSolidAngle creates a new SolidAngle instance from the given value and unit.
 func (uf SolidAngleFactory) CreateSolidAngle(value float64, unit SolidAngleUnits) (*SolidAngle, error) {
 	return newSolidAngle(value, unit)
 }
 
+// FromDto converts a SolidAngleDto to a SolidAngle instance.
 func (uf SolidAngleFactory) FromDto(dto SolidAngleDto) (*SolidAngle, error) {
 	return newSolidAngle(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a SolidAngle instance.
 func (uf SolidAngleFactory) FromDtoJSON(data []byte) (*SolidAngle, error) {
 	unitDto, err := SolidAngleDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse SolidAngleDto from JSON: %w", err)
 	}
 	return SolidAngleFactory{}.FromDto(*unitDto)
 }
 
 
-// FromSteradian creates a new SolidAngle instance from Steradian.
+// FromSteradians creates a new SolidAngle instance from a value in Steradians.
 func (uf SolidAngleFactory) FromSteradians(value float64) (*SolidAngle, error) {
 	return newSolidAngle(value, SolidAngleSteradian)
 }
-
-
 
 
 // newSolidAngle creates a new SolidAngle.
@@ -99,13 +109,15 @@ func newSolidAngle(value float64, fromUnit SolidAngleUnits) (*SolidAngle, error)
 	return a, nil
 }
 
-// BaseValue returns the base value of SolidAngle in Steradian.
+// BaseValue returns the base value of SolidAngle in Steradian unit (the base/default quantity).
 func (a *SolidAngle) BaseValue() float64 {
 	return a.value
 }
 
 
-// Steradian returns the value in Steradian.
+// Steradians returns the SolidAngle value in Steradians.
+//
+// 
 func (a *SolidAngle) Steradians() float64 {
 	if a.steradiansLazy != nil {
 		return *a.steradiansLazy
@@ -116,7 +128,9 @@ func (a *SolidAngle) Steradians() float64 {
 }
 
 
-// ToDto creates an SolidAngleDto representation.
+// ToDto creates a SolidAngleDto representation from the SolidAngle instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Steradian by default.
 func (a *SolidAngle) ToDto(holdInUnit *SolidAngleUnits) SolidAngleDto {
 	if holdInUnit == nil {
 		defaultUnit := SolidAngleSteradian // Default value
@@ -129,18 +143,25 @@ func (a *SolidAngle) ToDto(holdInUnit *SolidAngleUnits) SolidAngleDto {
 	}
 }
 
-// ToDtoJSON creates an SolidAngleDto representation.
+// ToDtoJSON creates a JSON representation of the SolidAngle instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Steradian by default.
 func (a *SolidAngle) ToDtoJSON(holdInUnit *SolidAngleUnits) ([]byte, error) {
+	// Convert to SolidAngleDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts SolidAngle to a specific unit value.
+// Convert converts a SolidAngle to a specific unit value.
+// The function uses the provided unit type (SolidAngleUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *SolidAngle) Convert(toUnit SolidAngleUnits) float64 {
 	switch toUnit { 
     case SolidAngleSteradian:
 		return a.Steradians()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -163,13 +184,22 @@ func (a *SolidAngle) convertToBase(value float64, fromUnit SolidAngleUnits) floa
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the SolidAngle in the default unit (Steradian),
+// formatted to two decimal places.
 func (a SolidAngle) String() string {
 	return a.ToString(SolidAngleSteradian, 2)
 }
 
-// ToString formats the SolidAngle to string.
-// fractionalDigits -1 for not mention
+// ToString formats the SolidAngle value as a string with the specified unit and fractional digits.
+// It converts the SolidAngle to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the SolidAngle value will be converted (e.g., Steradian))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the SolidAngle with the unit abbreviation.
 func (a *SolidAngle) ToString(unit SolidAngleUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -189,12 +219,26 @@ func (a *SolidAngle) getUnitAbbreviation(unit SolidAngleUnits) string {
 	}
 }
 
-// Check if the given SolidAngle are equals to the current SolidAngle
+// Equals checks if the given SolidAngle is equal to the current SolidAngle.
+//
+// Parameters:
+//    other: The SolidAngle to compare against.
+//
+// Returns:
+//    bool: Returns true if both SolidAngle are equal, false otherwise.
 func (a *SolidAngle) Equals(other *SolidAngle) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given SolidAngle are equals to the current SolidAngle
+// CompareTo compares the current SolidAngle with another SolidAngle.
+// It returns -1 if the current SolidAngle is less than the other SolidAngle, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The SolidAngle to compare against.
+//
+// Returns:
+//    int: -1 if the current SolidAngle is less, 1 if greater, and 0 if equal.
 func (a *SolidAngle) CompareTo(other *SolidAngle) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -207,22 +251,50 @@ func (a *SolidAngle) CompareTo(other *SolidAngle) int {
 	return 0
 }
 
-// Add the given SolidAngle to the current SolidAngle.
+// Add adds the given SolidAngle to the current SolidAngle and returns the result.
+// The result is a new SolidAngle instance with the sum of the values.
+//
+// Parameters:
+//    other: The SolidAngle to add to the current SolidAngle.
+//
+// Returns:
+//    *SolidAngle: A new SolidAngle instance representing the sum of both SolidAngle.
 func (a *SolidAngle) Add(other *SolidAngle) *SolidAngle {
 	return &SolidAngle{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given SolidAngle to the current SolidAngle.
+// Subtract subtracts the given SolidAngle from the current SolidAngle and returns the result.
+// The result is a new SolidAngle instance with the difference of the values.
+//
+// Parameters:
+//    other: The SolidAngle to subtract from the current SolidAngle.
+//
+// Returns:
+//    *SolidAngle: A new SolidAngle instance representing the difference of both SolidAngle.
 func (a *SolidAngle) Subtract(other *SolidAngle) *SolidAngle {
 	return &SolidAngle{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given SolidAngle to the current SolidAngle.
+// Multiply multiplies the current SolidAngle by the given SolidAngle and returns the result.
+// The result is a new SolidAngle instance with the product of the values.
+//
+// Parameters:
+//    other: The SolidAngle to multiply with the current SolidAngle.
+//
+// Returns:
+//    *SolidAngle: A new SolidAngle instance representing the product of both SolidAngle.
 func (a *SolidAngle) Multiply(other *SolidAngle) *SolidAngle {
 	return &SolidAngle{value: a.value * other.BaseValue()}
 }
 
-// Divide the given SolidAngle to the current SolidAngle.
+// Divide divides the current SolidAngle by the given SolidAngle and returns the result.
+// The result is a new SolidAngle instance with the quotient of the values.
+//
+// Parameters:
+//    other: The SolidAngle to divide the current SolidAngle by.
+//
+// Returns:
+//    *SolidAngle: A new SolidAngle instance representing the quotient of both SolidAngle.
 func (a *SolidAngle) Divide(other *SolidAngle) *SolidAngle {
 	return &SolidAngle{value: a.value / other.BaseValue()}
 }

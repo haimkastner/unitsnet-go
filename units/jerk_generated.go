@@ -12,7 +12,7 @@ import (
 
 
 
-// JerkUnits enumeration
+// JerkUnits defines various units of Jerk.
 type JerkUnits string
 
 const (
@@ -41,19 +41,24 @@ const (
         JerkMillistandardGravitiesPerSecond JerkUnits = "MillistandardGravitiesPerSecond"
 )
 
-// JerkDto represents an Jerk
+// JerkDto represents a Jerk measurement with a numerical value and its corresponding unit.
 type JerkDto struct {
+    // Value is the numerical representation of the Jerk.
 	Value float64
+    // Unit specifies the unit of measurement for the Jerk, as defined in the JerkUnits enumeration.
 	Unit  JerkUnits
 }
 
-// JerkDtoFactory struct to group related functions
+// JerkDtoFactory groups methods for creating and serializing JerkDto objects.
 type JerkDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a JerkDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf JerkDtoFactory) FromJSON(data []byte) (*JerkDto, error) {
 	a := JerkDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into JerkDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -61,6 +66,9 @@ func (udf JerkDtoFactory) FromJSON(data []byte) (*JerkDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a JerkDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a JerkDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -72,10 +80,11 @@ func (a JerkDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Jerk struct
+// Jerk represents a measurement in a of Jerk.
+//
+// None
 type Jerk struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     meters_per_second_cubedLazy *float64 
@@ -91,82 +100,83 @@ type Jerk struct {
     millistandard_gravities_per_secondLazy *float64 
 }
 
-// JerkFactory struct to group related functions
+// JerkFactory groups methods for creating Jerk instances.
 type JerkFactory struct{}
 
+// CreateJerk creates a new Jerk instance from the given value and unit.
 func (uf JerkFactory) CreateJerk(value float64, unit JerkUnits) (*Jerk, error) {
 	return newJerk(value, unit)
 }
 
+// FromDto converts a JerkDto to a Jerk instance.
 func (uf JerkFactory) FromDto(dto JerkDto) (*Jerk, error) {
 	return newJerk(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Jerk instance.
 func (uf JerkFactory) FromDtoJSON(data []byte) (*Jerk, error) {
 	unitDto, err := JerkDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse JerkDto from JSON: %w", err)
 	}
 	return JerkFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMeterPerSecondCubed creates a new Jerk instance from MeterPerSecondCubed.
+// FromMetersPerSecondCubed creates a new Jerk instance from a value in MetersPerSecondCubed.
 func (uf JerkFactory) FromMetersPerSecondCubed(value float64) (*Jerk, error) {
 	return newJerk(value, JerkMeterPerSecondCubed)
 }
 
-// FromInchPerSecondCubed creates a new Jerk instance from InchPerSecondCubed.
+// FromInchesPerSecondCubed creates a new Jerk instance from a value in InchesPerSecondCubed.
 func (uf JerkFactory) FromInchesPerSecondCubed(value float64) (*Jerk, error) {
 	return newJerk(value, JerkInchPerSecondCubed)
 }
 
-// FromFootPerSecondCubed creates a new Jerk instance from FootPerSecondCubed.
+// FromFeetPerSecondCubed creates a new Jerk instance from a value in FeetPerSecondCubed.
 func (uf JerkFactory) FromFeetPerSecondCubed(value float64) (*Jerk, error) {
 	return newJerk(value, JerkFootPerSecondCubed)
 }
 
-// FromStandardGravitiesPerSecond creates a new Jerk instance from StandardGravitiesPerSecond.
+// FromStandardGravitiesPerSecond creates a new Jerk instance from a value in StandardGravitiesPerSecond.
 func (uf JerkFactory) FromStandardGravitiesPerSecond(value float64) (*Jerk, error) {
 	return newJerk(value, JerkStandardGravitiesPerSecond)
 }
 
-// FromNanometerPerSecondCubed creates a new Jerk instance from NanometerPerSecondCubed.
+// FromNanometersPerSecondCubed creates a new Jerk instance from a value in NanometersPerSecondCubed.
 func (uf JerkFactory) FromNanometersPerSecondCubed(value float64) (*Jerk, error) {
 	return newJerk(value, JerkNanometerPerSecondCubed)
 }
 
-// FromMicrometerPerSecondCubed creates a new Jerk instance from MicrometerPerSecondCubed.
+// FromMicrometersPerSecondCubed creates a new Jerk instance from a value in MicrometersPerSecondCubed.
 func (uf JerkFactory) FromMicrometersPerSecondCubed(value float64) (*Jerk, error) {
 	return newJerk(value, JerkMicrometerPerSecondCubed)
 }
 
-// FromMillimeterPerSecondCubed creates a new Jerk instance from MillimeterPerSecondCubed.
+// FromMillimetersPerSecondCubed creates a new Jerk instance from a value in MillimetersPerSecondCubed.
 func (uf JerkFactory) FromMillimetersPerSecondCubed(value float64) (*Jerk, error) {
 	return newJerk(value, JerkMillimeterPerSecondCubed)
 }
 
-// FromCentimeterPerSecondCubed creates a new Jerk instance from CentimeterPerSecondCubed.
+// FromCentimetersPerSecondCubed creates a new Jerk instance from a value in CentimetersPerSecondCubed.
 func (uf JerkFactory) FromCentimetersPerSecondCubed(value float64) (*Jerk, error) {
 	return newJerk(value, JerkCentimeterPerSecondCubed)
 }
 
-// FromDecimeterPerSecondCubed creates a new Jerk instance from DecimeterPerSecondCubed.
+// FromDecimetersPerSecondCubed creates a new Jerk instance from a value in DecimetersPerSecondCubed.
 func (uf JerkFactory) FromDecimetersPerSecondCubed(value float64) (*Jerk, error) {
 	return newJerk(value, JerkDecimeterPerSecondCubed)
 }
 
-// FromKilometerPerSecondCubed creates a new Jerk instance from KilometerPerSecondCubed.
+// FromKilometersPerSecondCubed creates a new Jerk instance from a value in KilometersPerSecondCubed.
 func (uf JerkFactory) FromKilometersPerSecondCubed(value float64) (*Jerk, error) {
 	return newJerk(value, JerkKilometerPerSecondCubed)
 }
 
-// FromMillistandardGravitiesPerSecond creates a new Jerk instance from MillistandardGravitiesPerSecond.
+// FromMillistandardGravitiesPerSecond creates a new Jerk instance from a value in MillistandardGravitiesPerSecond.
 func (uf JerkFactory) FromMillistandardGravitiesPerSecond(value float64) (*Jerk, error) {
 	return newJerk(value, JerkMillistandardGravitiesPerSecond)
 }
-
-
 
 
 // newJerk creates a new Jerk.
@@ -179,13 +189,15 @@ func newJerk(value float64, fromUnit JerkUnits) (*Jerk, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Jerk in MeterPerSecondCubed.
+// BaseValue returns the base value of Jerk in MeterPerSecondCubed unit (the base/default quantity).
 func (a *Jerk) BaseValue() float64 {
 	return a.value
 }
 
 
-// MeterPerSecondCubed returns the value in MeterPerSecondCubed.
+// MetersPerSecondCubed returns the Jerk value in MetersPerSecondCubed.
+//
+// 
 func (a *Jerk) MetersPerSecondCubed() float64 {
 	if a.meters_per_second_cubedLazy != nil {
 		return *a.meters_per_second_cubedLazy
@@ -195,7 +207,9 @@ func (a *Jerk) MetersPerSecondCubed() float64 {
 	return meters_per_second_cubed
 }
 
-// InchPerSecondCubed returns the value in InchPerSecondCubed.
+// InchesPerSecondCubed returns the Jerk value in InchesPerSecondCubed.
+//
+// 
 func (a *Jerk) InchesPerSecondCubed() float64 {
 	if a.inches_per_second_cubedLazy != nil {
 		return *a.inches_per_second_cubedLazy
@@ -205,7 +219,9 @@ func (a *Jerk) InchesPerSecondCubed() float64 {
 	return inches_per_second_cubed
 }
 
-// FootPerSecondCubed returns the value in FootPerSecondCubed.
+// FeetPerSecondCubed returns the Jerk value in FeetPerSecondCubed.
+//
+// 
 func (a *Jerk) FeetPerSecondCubed() float64 {
 	if a.feet_per_second_cubedLazy != nil {
 		return *a.feet_per_second_cubedLazy
@@ -215,7 +231,9 @@ func (a *Jerk) FeetPerSecondCubed() float64 {
 	return feet_per_second_cubed
 }
 
-// StandardGravitiesPerSecond returns the value in StandardGravitiesPerSecond.
+// StandardGravitiesPerSecond returns the Jerk value in StandardGravitiesPerSecond.
+//
+// 
 func (a *Jerk) StandardGravitiesPerSecond() float64 {
 	if a.standard_gravities_per_secondLazy != nil {
 		return *a.standard_gravities_per_secondLazy
@@ -225,7 +243,9 @@ func (a *Jerk) StandardGravitiesPerSecond() float64 {
 	return standard_gravities_per_second
 }
 
-// NanometerPerSecondCubed returns the value in NanometerPerSecondCubed.
+// NanometersPerSecondCubed returns the Jerk value in NanometersPerSecondCubed.
+//
+// 
 func (a *Jerk) NanometersPerSecondCubed() float64 {
 	if a.nanometers_per_second_cubedLazy != nil {
 		return *a.nanometers_per_second_cubedLazy
@@ -235,7 +255,9 @@ func (a *Jerk) NanometersPerSecondCubed() float64 {
 	return nanometers_per_second_cubed
 }
 
-// MicrometerPerSecondCubed returns the value in MicrometerPerSecondCubed.
+// MicrometersPerSecondCubed returns the Jerk value in MicrometersPerSecondCubed.
+//
+// 
 func (a *Jerk) MicrometersPerSecondCubed() float64 {
 	if a.micrometers_per_second_cubedLazy != nil {
 		return *a.micrometers_per_second_cubedLazy
@@ -245,7 +267,9 @@ func (a *Jerk) MicrometersPerSecondCubed() float64 {
 	return micrometers_per_second_cubed
 }
 
-// MillimeterPerSecondCubed returns the value in MillimeterPerSecondCubed.
+// MillimetersPerSecondCubed returns the Jerk value in MillimetersPerSecondCubed.
+//
+// 
 func (a *Jerk) MillimetersPerSecondCubed() float64 {
 	if a.millimeters_per_second_cubedLazy != nil {
 		return *a.millimeters_per_second_cubedLazy
@@ -255,7 +279,9 @@ func (a *Jerk) MillimetersPerSecondCubed() float64 {
 	return millimeters_per_second_cubed
 }
 
-// CentimeterPerSecondCubed returns the value in CentimeterPerSecondCubed.
+// CentimetersPerSecondCubed returns the Jerk value in CentimetersPerSecondCubed.
+//
+// 
 func (a *Jerk) CentimetersPerSecondCubed() float64 {
 	if a.centimeters_per_second_cubedLazy != nil {
 		return *a.centimeters_per_second_cubedLazy
@@ -265,7 +291,9 @@ func (a *Jerk) CentimetersPerSecondCubed() float64 {
 	return centimeters_per_second_cubed
 }
 
-// DecimeterPerSecondCubed returns the value in DecimeterPerSecondCubed.
+// DecimetersPerSecondCubed returns the Jerk value in DecimetersPerSecondCubed.
+//
+// 
 func (a *Jerk) DecimetersPerSecondCubed() float64 {
 	if a.decimeters_per_second_cubedLazy != nil {
 		return *a.decimeters_per_second_cubedLazy
@@ -275,7 +303,9 @@ func (a *Jerk) DecimetersPerSecondCubed() float64 {
 	return decimeters_per_second_cubed
 }
 
-// KilometerPerSecondCubed returns the value in KilometerPerSecondCubed.
+// KilometersPerSecondCubed returns the Jerk value in KilometersPerSecondCubed.
+//
+// 
 func (a *Jerk) KilometersPerSecondCubed() float64 {
 	if a.kilometers_per_second_cubedLazy != nil {
 		return *a.kilometers_per_second_cubedLazy
@@ -285,7 +315,9 @@ func (a *Jerk) KilometersPerSecondCubed() float64 {
 	return kilometers_per_second_cubed
 }
 
-// MillistandardGravitiesPerSecond returns the value in MillistandardGravitiesPerSecond.
+// MillistandardGravitiesPerSecond returns the Jerk value in MillistandardGravitiesPerSecond.
+//
+// 
 func (a *Jerk) MillistandardGravitiesPerSecond() float64 {
 	if a.millistandard_gravities_per_secondLazy != nil {
 		return *a.millistandard_gravities_per_secondLazy
@@ -296,7 +328,9 @@ func (a *Jerk) MillistandardGravitiesPerSecond() float64 {
 }
 
 
-// ToDto creates an JerkDto representation.
+// ToDto creates a JerkDto representation from the Jerk instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterPerSecondCubed by default.
 func (a *Jerk) ToDto(holdInUnit *JerkUnits) JerkDto {
 	if holdInUnit == nil {
 		defaultUnit := JerkMeterPerSecondCubed // Default value
@@ -309,12 +343,19 @@ func (a *Jerk) ToDto(holdInUnit *JerkUnits) JerkDto {
 	}
 }
 
-// ToDtoJSON creates an JerkDto representation.
+// ToDtoJSON creates a JSON representation of the Jerk instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterPerSecondCubed by default.
 func (a *Jerk) ToDtoJSON(holdInUnit *JerkUnits) ([]byte, error) {
+	// Convert to JerkDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Jerk to a specific unit value.
+// Convert converts a Jerk to a specific unit value.
+// The function uses the provided unit type (JerkUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Jerk) Convert(toUnit JerkUnits) float64 {
 	switch toUnit { 
     case JerkMeterPerSecondCubed:
@@ -340,7 +381,7 @@ func (a *Jerk) Convert(toUnit JerkUnits) float64 {
     case JerkMillistandardGravitiesPerSecond:
 		return a.MillistandardGravitiesPerSecond()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -403,13 +444,22 @@ func (a *Jerk) convertToBase(value float64, fromUnit JerkUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Jerk in the default unit (MeterPerSecondCubed),
+// formatted to two decimal places.
 func (a Jerk) String() string {
 	return a.ToString(JerkMeterPerSecondCubed, 2)
 }
 
-// ToString formats the Jerk to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Jerk value as a string with the specified unit and fractional digits.
+// It converts the Jerk to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Jerk value will be converted (e.g., MeterPerSecondCubed))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Jerk with the unit abbreviation.
 func (a *Jerk) ToString(unit JerkUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -449,12 +499,26 @@ func (a *Jerk) getUnitAbbreviation(unit JerkUnits) string {
 	}
 }
 
-// Check if the given Jerk are equals to the current Jerk
+// Equals checks if the given Jerk is equal to the current Jerk.
+//
+// Parameters:
+//    other: The Jerk to compare against.
+//
+// Returns:
+//    bool: Returns true if both Jerk are equal, false otherwise.
 func (a *Jerk) Equals(other *Jerk) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Jerk are equals to the current Jerk
+// CompareTo compares the current Jerk with another Jerk.
+// It returns -1 if the current Jerk is less than the other Jerk, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Jerk to compare against.
+//
+// Returns:
+//    int: -1 if the current Jerk is less, 1 if greater, and 0 if equal.
 func (a *Jerk) CompareTo(other *Jerk) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -467,22 +531,50 @@ func (a *Jerk) CompareTo(other *Jerk) int {
 	return 0
 }
 
-// Add the given Jerk to the current Jerk.
+// Add adds the given Jerk to the current Jerk and returns the result.
+// The result is a new Jerk instance with the sum of the values.
+//
+// Parameters:
+//    other: The Jerk to add to the current Jerk.
+//
+// Returns:
+//    *Jerk: A new Jerk instance representing the sum of both Jerk.
 func (a *Jerk) Add(other *Jerk) *Jerk {
 	return &Jerk{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Jerk to the current Jerk.
+// Subtract subtracts the given Jerk from the current Jerk and returns the result.
+// The result is a new Jerk instance with the difference of the values.
+//
+// Parameters:
+//    other: The Jerk to subtract from the current Jerk.
+//
+// Returns:
+//    *Jerk: A new Jerk instance representing the difference of both Jerk.
 func (a *Jerk) Subtract(other *Jerk) *Jerk {
 	return &Jerk{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Jerk to the current Jerk.
+// Multiply multiplies the current Jerk by the given Jerk and returns the result.
+// The result is a new Jerk instance with the product of the values.
+//
+// Parameters:
+//    other: The Jerk to multiply with the current Jerk.
+//
+// Returns:
+//    *Jerk: A new Jerk instance representing the product of both Jerk.
 func (a *Jerk) Multiply(other *Jerk) *Jerk {
 	return &Jerk{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Jerk to the current Jerk.
+// Divide divides the current Jerk by the given Jerk and returns the result.
+// The result is a new Jerk instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Jerk to divide the current Jerk by.
+//
+// Returns:
+//    *Jerk: A new Jerk instance representing the quotient of both Jerk.
 func (a *Jerk) Divide(other *Jerk) *Jerk {
 	return &Jerk{value: a.value / other.BaseValue()}
 }

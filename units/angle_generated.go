@@ -12,7 +12,7 @@ import (
 
 
 
-// AngleUnits enumeration
+// AngleUnits defines various units of Angle.
 type AngleUnits string
 
 const (
@@ -51,19 +51,24 @@ const (
         AngleMillidegree AngleUnits = "Millidegree"
 )
 
-// AngleDto represents an Angle
+// AngleDto represents a Angle measurement with a numerical value and its corresponding unit.
 type AngleDto struct {
+    // Value is the numerical representation of the Angle.
 	Value float64
+    // Unit specifies the unit of measurement for the Angle, as defined in the AngleUnits enumeration.
 	Unit  AngleUnits
 }
 
-// AngleDtoFactory struct to group related functions
+// AngleDtoFactory groups methods for creating and serializing AngleDto objects.
 type AngleDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a AngleDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf AngleDtoFactory) FromJSON(data []byte) (*AngleDto, error) {
 	a := AngleDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into AngleDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -71,6 +76,9 @@ func (udf AngleDtoFactory) FromJSON(data []byte) (*AngleDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a AngleDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a AngleDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -82,10 +90,11 @@ func (a AngleDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Angle struct
+// Angle represents a measurement in a of Angle.
+//
+// In geometry, an angle is the figure formed by two rays, called the sides of the angle, sharing a common endpoint, called the vertex of the angle.
 type Angle struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     radiansLazy *float64 
@@ -106,107 +115,108 @@ type Angle struct {
     millidegreesLazy *float64 
 }
 
-// AngleFactory struct to group related functions
+// AngleFactory groups methods for creating Angle instances.
 type AngleFactory struct{}
 
+// CreateAngle creates a new Angle instance from the given value and unit.
 func (uf AngleFactory) CreateAngle(value float64, unit AngleUnits) (*Angle, error) {
 	return newAngle(value, unit)
 }
 
+// FromDto converts a AngleDto to a Angle instance.
 func (uf AngleFactory) FromDto(dto AngleDto) (*Angle, error) {
 	return newAngle(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Angle instance.
 func (uf AngleFactory) FromDtoJSON(data []byte) (*Angle, error) {
 	unitDto, err := AngleDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse AngleDto from JSON: %w", err)
 	}
 	return AngleFactory{}.FromDto(*unitDto)
 }
 
 
-// FromRadian creates a new Angle instance from Radian.
+// FromRadians creates a new Angle instance from a value in Radians.
 func (uf AngleFactory) FromRadians(value float64) (*Angle, error) {
 	return newAngle(value, AngleRadian)
 }
 
-// FromDegree creates a new Angle instance from Degree.
+// FromDegrees creates a new Angle instance from a value in Degrees.
 func (uf AngleFactory) FromDegrees(value float64) (*Angle, error) {
 	return newAngle(value, AngleDegree)
 }
 
-// FromArcminute creates a new Angle instance from Arcminute.
+// FromArcminutes creates a new Angle instance from a value in Arcminutes.
 func (uf AngleFactory) FromArcminutes(value float64) (*Angle, error) {
 	return newAngle(value, AngleArcminute)
 }
 
-// FromArcsecond creates a new Angle instance from Arcsecond.
+// FromArcseconds creates a new Angle instance from a value in Arcseconds.
 func (uf AngleFactory) FromArcseconds(value float64) (*Angle, error) {
 	return newAngle(value, AngleArcsecond)
 }
 
-// FromGradian creates a new Angle instance from Gradian.
+// FromGradians creates a new Angle instance from a value in Gradians.
 func (uf AngleFactory) FromGradians(value float64) (*Angle, error) {
 	return newAngle(value, AngleGradian)
 }
 
-// FromNatoMil creates a new Angle instance from NatoMil.
+// FromNatoMils creates a new Angle instance from a value in NatoMils.
 func (uf AngleFactory) FromNatoMils(value float64) (*Angle, error) {
 	return newAngle(value, AngleNatoMil)
 }
 
-// FromRevolution creates a new Angle instance from Revolution.
+// FromRevolutions creates a new Angle instance from a value in Revolutions.
 func (uf AngleFactory) FromRevolutions(value float64) (*Angle, error) {
 	return newAngle(value, AngleRevolution)
 }
 
-// FromTilt creates a new Angle instance from Tilt.
+// FromTilt creates a new Angle instance from a value in Tilt.
 func (uf AngleFactory) FromTilt(value float64) (*Angle, error) {
 	return newAngle(value, AngleTilt)
 }
 
-// FromNanoradian creates a new Angle instance from Nanoradian.
+// FromNanoradians creates a new Angle instance from a value in Nanoradians.
 func (uf AngleFactory) FromNanoradians(value float64) (*Angle, error) {
 	return newAngle(value, AngleNanoradian)
 }
 
-// FromMicroradian creates a new Angle instance from Microradian.
+// FromMicroradians creates a new Angle instance from a value in Microradians.
 func (uf AngleFactory) FromMicroradians(value float64) (*Angle, error) {
 	return newAngle(value, AngleMicroradian)
 }
 
-// FromMilliradian creates a new Angle instance from Milliradian.
+// FromMilliradians creates a new Angle instance from a value in Milliradians.
 func (uf AngleFactory) FromMilliradians(value float64) (*Angle, error) {
 	return newAngle(value, AngleMilliradian)
 }
 
-// FromCentiradian creates a new Angle instance from Centiradian.
+// FromCentiradians creates a new Angle instance from a value in Centiradians.
 func (uf AngleFactory) FromCentiradians(value float64) (*Angle, error) {
 	return newAngle(value, AngleCentiradian)
 }
 
-// FromDeciradian creates a new Angle instance from Deciradian.
+// FromDeciradians creates a new Angle instance from a value in Deciradians.
 func (uf AngleFactory) FromDeciradians(value float64) (*Angle, error) {
 	return newAngle(value, AngleDeciradian)
 }
 
-// FromNanodegree creates a new Angle instance from Nanodegree.
+// FromNanodegrees creates a new Angle instance from a value in Nanodegrees.
 func (uf AngleFactory) FromNanodegrees(value float64) (*Angle, error) {
 	return newAngle(value, AngleNanodegree)
 }
 
-// FromMicrodegree creates a new Angle instance from Microdegree.
+// FromMicrodegrees creates a new Angle instance from a value in Microdegrees.
 func (uf AngleFactory) FromMicrodegrees(value float64) (*Angle, error) {
 	return newAngle(value, AngleMicrodegree)
 }
 
-// FromMillidegree creates a new Angle instance from Millidegree.
+// FromMillidegrees creates a new Angle instance from a value in Millidegrees.
 func (uf AngleFactory) FromMillidegrees(value float64) (*Angle, error) {
 	return newAngle(value, AngleMillidegree)
 }
-
-
 
 
 // newAngle creates a new Angle.
@@ -219,13 +229,15 @@ func newAngle(value float64, fromUnit AngleUnits) (*Angle, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Angle in Degree.
+// BaseValue returns the base value of Angle in Degree unit (the base/default quantity).
 func (a *Angle) BaseValue() float64 {
 	return a.value
 }
 
 
-// Radian returns the value in Radian.
+// Radians returns the Angle value in Radians.
+//
+// 
 func (a *Angle) Radians() float64 {
 	if a.radiansLazy != nil {
 		return *a.radiansLazy
@@ -235,7 +247,9 @@ func (a *Angle) Radians() float64 {
 	return radians
 }
 
-// Degree returns the value in Degree.
+// Degrees returns the Angle value in Degrees.
+//
+// 
 func (a *Angle) Degrees() float64 {
 	if a.degreesLazy != nil {
 		return *a.degreesLazy
@@ -245,7 +259,9 @@ func (a *Angle) Degrees() float64 {
 	return degrees
 }
 
-// Arcminute returns the value in Arcminute.
+// Arcminutes returns the Angle value in Arcminutes.
+//
+// 
 func (a *Angle) Arcminutes() float64 {
 	if a.arcminutesLazy != nil {
 		return *a.arcminutesLazy
@@ -255,7 +271,9 @@ func (a *Angle) Arcminutes() float64 {
 	return arcminutes
 }
 
-// Arcsecond returns the value in Arcsecond.
+// Arcseconds returns the Angle value in Arcseconds.
+//
+// 
 func (a *Angle) Arcseconds() float64 {
 	if a.arcsecondsLazy != nil {
 		return *a.arcsecondsLazy
@@ -265,7 +283,9 @@ func (a *Angle) Arcseconds() float64 {
 	return arcseconds
 }
 
-// Gradian returns the value in Gradian.
+// Gradians returns the Angle value in Gradians.
+//
+// 
 func (a *Angle) Gradians() float64 {
 	if a.gradiansLazy != nil {
 		return *a.gradiansLazy
@@ -275,7 +295,9 @@ func (a *Angle) Gradians() float64 {
 	return gradians
 }
 
-// NatoMil returns the value in NatoMil.
+// NatoMils returns the Angle value in NatoMils.
+//
+// 
 func (a *Angle) NatoMils() float64 {
 	if a.nato_milsLazy != nil {
 		return *a.nato_milsLazy
@@ -285,7 +307,9 @@ func (a *Angle) NatoMils() float64 {
 	return nato_mils
 }
 
-// Revolution returns the value in Revolution.
+// Revolutions returns the Angle value in Revolutions.
+//
+// 
 func (a *Angle) Revolutions() float64 {
 	if a.revolutionsLazy != nil {
 		return *a.revolutionsLazy
@@ -295,7 +319,9 @@ func (a *Angle) Revolutions() float64 {
 	return revolutions
 }
 
-// Tilt returns the value in Tilt.
+// Tilt returns the Angle value in Tilt.
+//
+// 
 func (a *Angle) Tilt() float64 {
 	if a.tiltLazy != nil {
 		return *a.tiltLazy
@@ -305,7 +331,9 @@ func (a *Angle) Tilt() float64 {
 	return tilt
 }
 
-// Nanoradian returns the value in Nanoradian.
+// Nanoradians returns the Angle value in Nanoradians.
+//
+// 
 func (a *Angle) Nanoradians() float64 {
 	if a.nanoradiansLazy != nil {
 		return *a.nanoradiansLazy
@@ -315,7 +343,9 @@ func (a *Angle) Nanoradians() float64 {
 	return nanoradians
 }
 
-// Microradian returns the value in Microradian.
+// Microradians returns the Angle value in Microradians.
+//
+// 
 func (a *Angle) Microradians() float64 {
 	if a.microradiansLazy != nil {
 		return *a.microradiansLazy
@@ -325,7 +355,9 @@ func (a *Angle) Microradians() float64 {
 	return microradians
 }
 
-// Milliradian returns the value in Milliradian.
+// Milliradians returns the Angle value in Milliradians.
+//
+// 
 func (a *Angle) Milliradians() float64 {
 	if a.milliradiansLazy != nil {
 		return *a.milliradiansLazy
@@ -335,7 +367,9 @@ func (a *Angle) Milliradians() float64 {
 	return milliradians
 }
 
-// Centiradian returns the value in Centiradian.
+// Centiradians returns the Angle value in Centiradians.
+//
+// 
 func (a *Angle) Centiradians() float64 {
 	if a.centiradiansLazy != nil {
 		return *a.centiradiansLazy
@@ -345,7 +379,9 @@ func (a *Angle) Centiradians() float64 {
 	return centiradians
 }
 
-// Deciradian returns the value in Deciradian.
+// Deciradians returns the Angle value in Deciradians.
+//
+// 
 func (a *Angle) Deciradians() float64 {
 	if a.deciradiansLazy != nil {
 		return *a.deciradiansLazy
@@ -355,7 +391,9 @@ func (a *Angle) Deciradians() float64 {
 	return deciradians
 }
 
-// Nanodegree returns the value in Nanodegree.
+// Nanodegrees returns the Angle value in Nanodegrees.
+//
+// 
 func (a *Angle) Nanodegrees() float64 {
 	if a.nanodegreesLazy != nil {
 		return *a.nanodegreesLazy
@@ -365,7 +403,9 @@ func (a *Angle) Nanodegrees() float64 {
 	return nanodegrees
 }
 
-// Microdegree returns the value in Microdegree.
+// Microdegrees returns the Angle value in Microdegrees.
+//
+// 
 func (a *Angle) Microdegrees() float64 {
 	if a.microdegreesLazy != nil {
 		return *a.microdegreesLazy
@@ -375,7 +415,9 @@ func (a *Angle) Microdegrees() float64 {
 	return microdegrees
 }
 
-// Millidegree returns the value in Millidegree.
+// Millidegrees returns the Angle value in Millidegrees.
+//
+// 
 func (a *Angle) Millidegrees() float64 {
 	if a.millidegreesLazy != nil {
 		return *a.millidegreesLazy
@@ -386,7 +428,9 @@ func (a *Angle) Millidegrees() float64 {
 }
 
 
-// ToDto creates an AngleDto representation.
+// ToDto creates a AngleDto representation from the Angle instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Degree by default.
 func (a *Angle) ToDto(holdInUnit *AngleUnits) AngleDto {
 	if holdInUnit == nil {
 		defaultUnit := AngleDegree // Default value
@@ -399,12 +443,19 @@ func (a *Angle) ToDto(holdInUnit *AngleUnits) AngleDto {
 	}
 }
 
-// ToDtoJSON creates an AngleDto representation.
+// ToDtoJSON creates a JSON representation of the Angle instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Degree by default.
 func (a *Angle) ToDtoJSON(holdInUnit *AngleUnits) ([]byte, error) {
+	// Convert to AngleDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Angle to a specific unit value.
+// Convert converts a Angle to a specific unit value.
+// The function uses the provided unit type (AngleUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Angle) Convert(toUnit AngleUnits) float64 {
 	switch toUnit { 
     case AngleRadian:
@@ -440,7 +491,7 @@ func (a *Angle) Convert(toUnit AngleUnits) float64 {
     case AngleMillidegree:
 		return a.Millidegrees()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -523,13 +574,22 @@ func (a *Angle) convertToBase(value float64, fromUnit AngleUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Angle in the default unit (Degree),
+// formatted to two decimal places.
 func (a Angle) String() string {
 	return a.ToString(AngleDegree, 2)
 }
 
-// ToString formats the Angle to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Angle value as a string with the specified unit and fractional digits.
+// It converts the Angle to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Angle value will be converted (e.g., Degree))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Angle with the unit abbreviation.
 func (a *Angle) ToString(unit AngleUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -579,12 +639,26 @@ func (a *Angle) getUnitAbbreviation(unit AngleUnits) string {
 	}
 }
 
-// Check if the given Angle are equals to the current Angle
+// Equals checks if the given Angle is equal to the current Angle.
+//
+// Parameters:
+//    other: The Angle to compare against.
+//
+// Returns:
+//    bool: Returns true if both Angle are equal, false otherwise.
 func (a *Angle) Equals(other *Angle) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Angle are equals to the current Angle
+// CompareTo compares the current Angle with another Angle.
+// It returns -1 if the current Angle is less than the other Angle, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Angle to compare against.
+//
+// Returns:
+//    int: -1 if the current Angle is less, 1 if greater, and 0 if equal.
 func (a *Angle) CompareTo(other *Angle) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -597,22 +671,50 @@ func (a *Angle) CompareTo(other *Angle) int {
 	return 0
 }
 
-// Add the given Angle to the current Angle.
+// Add adds the given Angle to the current Angle and returns the result.
+// The result is a new Angle instance with the sum of the values.
+//
+// Parameters:
+//    other: The Angle to add to the current Angle.
+//
+// Returns:
+//    *Angle: A new Angle instance representing the sum of both Angle.
 func (a *Angle) Add(other *Angle) *Angle {
 	return &Angle{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Angle to the current Angle.
+// Subtract subtracts the given Angle from the current Angle and returns the result.
+// The result is a new Angle instance with the difference of the values.
+//
+// Parameters:
+//    other: The Angle to subtract from the current Angle.
+//
+// Returns:
+//    *Angle: A new Angle instance representing the difference of both Angle.
 func (a *Angle) Subtract(other *Angle) *Angle {
 	return &Angle{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Angle to the current Angle.
+// Multiply multiplies the current Angle by the given Angle and returns the result.
+// The result is a new Angle instance with the product of the values.
+//
+// Parameters:
+//    other: The Angle to multiply with the current Angle.
+//
+// Returns:
+//    *Angle: A new Angle instance representing the product of both Angle.
 func (a *Angle) Multiply(other *Angle) *Angle {
 	return &Angle{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Angle to the current Angle.
+// Divide divides the current Angle by the given Angle and returns the result.
+// The result is a new Angle instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Angle to divide the current Angle by.
+//
+// Returns:
+//    *Angle: A new Angle instance representing the quotient of both Angle.
 func (a *Angle) Divide(other *Angle) *Angle {
 	return &Angle{value: a.value / other.BaseValue()}
 }

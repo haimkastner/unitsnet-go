@@ -12,7 +12,7 @@ import (
 
 
 
-// StandardVolumeFlowUnits enumeration
+// StandardVolumeFlowUnits defines various units of StandardVolumeFlow.
 type StandardVolumeFlowUnits string
 
 const (
@@ -37,19 +37,24 @@ const (
         StandardVolumeFlowStandardCubicFootPerHour StandardVolumeFlowUnits = "StandardCubicFootPerHour"
 )
 
-// StandardVolumeFlowDto represents an StandardVolumeFlow
+// StandardVolumeFlowDto represents a StandardVolumeFlow measurement with a numerical value and its corresponding unit.
 type StandardVolumeFlowDto struct {
+    // Value is the numerical representation of the StandardVolumeFlow.
 	Value float64
+    // Unit specifies the unit of measurement for the StandardVolumeFlow, as defined in the StandardVolumeFlowUnits enumeration.
 	Unit  StandardVolumeFlowUnits
 }
 
-// StandardVolumeFlowDtoFactory struct to group related functions
+// StandardVolumeFlowDtoFactory groups methods for creating and serializing StandardVolumeFlowDto objects.
 type StandardVolumeFlowDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a StandardVolumeFlowDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf StandardVolumeFlowDtoFactory) FromJSON(data []byte) (*StandardVolumeFlowDto, error) {
 	a := StandardVolumeFlowDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into StandardVolumeFlowDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -57,6 +62,9 @@ func (udf StandardVolumeFlowDtoFactory) FromJSON(data []byte) (*StandardVolumeFl
 	return &a, nil
 }
 
+// ToJSON serializes a StandardVolumeFlowDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a StandardVolumeFlowDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -68,10 +76,11 @@ func (a StandardVolumeFlowDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// StandardVolumeFlow struct
+// StandardVolumeFlow represents a measurement in a of StandardVolumeFlow.
+//
+// The molar flow rate of a gas corrected to standardized conditions of temperature and pressure thus representing a fixed number of moles of gas regardless of composition and actual flow conditions.
 type StandardVolumeFlow struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     standard_cubic_meters_per_secondLazy *float64 
@@ -85,72 +94,73 @@ type StandardVolumeFlow struct {
     standard_cubic_feet_per_hourLazy *float64 
 }
 
-// StandardVolumeFlowFactory struct to group related functions
+// StandardVolumeFlowFactory groups methods for creating StandardVolumeFlow instances.
 type StandardVolumeFlowFactory struct{}
 
+// CreateStandardVolumeFlow creates a new StandardVolumeFlow instance from the given value and unit.
 func (uf StandardVolumeFlowFactory) CreateStandardVolumeFlow(value float64, unit StandardVolumeFlowUnits) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, unit)
 }
 
+// FromDto converts a StandardVolumeFlowDto to a StandardVolumeFlow instance.
 func (uf StandardVolumeFlowFactory) FromDto(dto StandardVolumeFlowDto) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a StandardVolumeFlow instance.
 func (uf StandardVolumeFlowFactory) FromDtoJSON(data []byte) (*StandardVolumeFlow, error) {
 	unitDto, err := StandardVolumeFlowDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse StandardVolumeFlowDto from JSON: %w", err)
 	}
 	return StandardVolumeFlowFactory{}.FromDto(*unitDto)
 }
 
 
-// FromStandardCubicMeterPerSecond creates a new StandardVolumeFlow instance from StandardCubicMeterPerSecond.
+// FromStandardCubicMetersPerSecond creates a new StandardVolumeFlow instance from a value in StandardCubicMetersPerSecond.
 func (uf StandardVolumeFlowFactory) FromStandardCubicMetersPerSecond(value float64) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, StandardVolumeFlowStandardCubicMeterPerSecond)
 }
 
-// FromStandardCubicMeterPerMinute creates a new StandardVolumeFlow instance from StandardCubicMeterPerMinute.
+// FromStandardCubicMetersPerMinute creates a new StandardVolumeFlow instance from a value in StandardCubicMetersPerMinute.
 func (uf StandardVolumeFlowFactory) FromStandardCubicMetersPerMinute(value float64) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, StandardVolumeFlowStandardCubicMeterPerMinute)
 }
 
-// FromStandardCubicMeterPerHour creates a new StandardVolumeFlow instance from StandardCubicMeterPerHour.
+// FromStandardCubicMetersPerHour creates a new StandardVolumeFlow instance from a value in StandardCubicMetersPerHour.
 func (uf StandardVolumeFlowFactory) FromStandardCubicMetersPerHour(value float64) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, StandardVolumeFlowStandardCubicMeterPerHour)
 }
 
-// FromStandardCubicMeterPerDay creates a new StandardVolumeFlow instance from StandardCubicMeterPerDay.
+// FromStandardCubicMetersPerDay creates a new StandardVolumeFlow instance from a value in StandardCubicMetersPerDay.
 func (uf StandardVolumeFlowFactory) FromStandardCubicMetersPerDay(value float64) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, StandardVolumeFlowStandardCubicMeterPerDay)
 }
 
-// FromStandardCubicCentimeterPerMinute creates a new StandardVolumeFlow instance from StandardCubicCentimeterPerMinute.
+// FromStandardCubicCentimetersPerMinute creates a new StandardVolumeFlow instance from a value in StandardCubicCentimetersPerMinute.
 func (uf StandardVolumeFlowFactory) FromStandardCubicCentimetersPerMinute(value float64) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, StandardVolumeFlowStandardCubicCentimeterPerMinute)
 }
 
-// FromStandardLiterPerMinute creates a new StandardVolumeFlow instance from StandardLiterPerMinute.
+// FromStandardLitersPerMinute creates a new StandardVolumeFlow instance from a value in StandardLitersPerMinute.
 func (uf StandardVolumeFlowFactory) FromStandardLitersPerMinute(value float64) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, StandardVolumeFlowStandardLiterPerMinute)
 }
 
-// FromStandardCubicFootPerSecond creates a new StandardVolumeFlow instance from StandardCubicFootPerSecond.
+// FromStandardCubicFeetPerSecond creates a new StandardVolumeFlow instance from a value in StandardCubicFeetPerSecond.
 func (uf StandardVolumeFlowFactory) FromStandardCubicFeetPerSecond(value float64) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, StandardVolumeFlowStandardCubicFootPerSecond)
 }
 
-// FromStandardCubicFootPerMinute creates a new StandardVolumeFlow instance from StandardCubicFootPerMinute.
+// FromStandardCubicFeetPerMinute creates a new StandardVolumeFlow instance from a value in StandardCubicFeetPerMinute.
 func (uf StandardVolumeFlowFactory) FromStandardCubicFeetPerMinute(value float64) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, StandardVolumeFlowStandardCubicFootPerMinute)
 }
 
-// FromStandardCubicFootPerHour creates a new StandardVolumeFlow instance from StandardCubicFootPerHour.
+// FromStandardCubicFeetPerHour creates a new StandardVolumeFlow instance from a value in StandardCubicFeetPerHour.
 func (uf StandardVolumeFlowFactory) FromStandardCubicFeetPerHour(value float64) (*StandardVolumeFlow, error) {
 	return newStandardVolumeFlow(value, StandardVolumeFlowStandardCubicFootPerHour)
 }
-
-
 
 
 // newStandardVolumeFlow creates a new StandardVolumeFlow.
@@ -163,13 +173,15 @@ func newStandardVolumeFlow(value float64, fromUnit StandardVolumeFlowUnits) (*St
 	return a, nil
 }
 
-// BaseValue returns the base value of StandardVolumeFlow in StandardCubicMeterPerSecond.
+// BaseValue returns the base value of StandardVolumeFlow in StandardCubicMeterPerSecond unit (the base/default quantity).
 func (a *StandardVolumeFlow) BaseValue() float64 {
 	return a.value
 }
 
 
-// StandardCubicMeterPerSecond returns the value in StandardCubicMeterPerSecond.
+// StandardCubicMetersPerSecond returns the StandardVolumeFlow value in StandardCubicMetersPerSecond.
+//
+// 
 func (a *StandardVolumeFlow) StandardCubicMetersPerSecond() float64 {
 	if a.standard_cubic_meters_per_secondLazy != nil {
 		return *a.standard_cubic_meters_per_secondLazy
@@ -179,7 +191,9 @@ func (a *StandardVolumeFlow) StandardCubicMetersPerSecond() float64 {
 	return standard_cubic_meters_per_second
 }
 
-// StandardCubicMeterPerMinute returns the value in StandardCubicMeterPerMinute.
+// StandardCubicMetersPerMinute returns the StandardVolumeFlow value in StandardCubicMetersPerMinute.
+//
+// 
 func (a *StandardVolumeFlow) StandardCubicMetersPerMinute() float64 {
 	if a.standard_cubic_meters_per_minuteLazy != nil {
 		return *a.standard_cubic_meters_per_minuteLazy
@@ -189,7 +203,9 @@ func (a *StandardVolumeFlow) StandardCubicMetersPerMinute() float64 {
 	return standard_cubic_meters_per_minute
 }
 
-// StandardCubicMeterPerHour returns the value in StandardCubicMeterPerHour.
+// StandardCubicMetersPerHour returns the StandardVolumeFlow value in StandardCubicMetersPerHour.
+//
+// 
 func (a *StandardVolumeFlow) StandardCubicMetersPerHour() float64 {
 	if a.standard_cubic_meters_per_hourLazy != nil {
 		return *a.standard_cubic_meters_per_hourLazy
@@ -199,7 +215,9 @@ func (a *StandardVolumeFlow) StandardCubicMetersPerHour() float64 {
 	return standard_cubic_meters_per_hour
 }
 
-// StandardCubicMeterPerDay returns the value in StandardCubicMeterPerDay.
+// StandardCubicMetersPerDay returns the StandardVolumeFlow value in StandardCubicMetersPerDay.
+//
+// 
 func (a *StandardVolumeFlow) StandardCubicMetersPerDay() float64 {
 	if a.standard_cubic_meters_per_dayLazy != nil {
 		return *a.standard_cubic_meters_per_dayLazy
@@ -209,7 +227,9 @@ func (a *StandardVolumeFlow) StandardCubicMetersPerDay() float64 {
 	return standard_cubic_meters_per_day
 }
 
-// StandardCubicCentimeterPerMinute returns the value in StandardCubicCentimeterPerMinute.
+// StandardCubicCentimetersPerMinute returns the StandardVolumeFlow value in StandardCubicCentimetersPerMinute.
+//
+// 
 func (a *StandardVolumeFlow) StandardCubicCentimetersPerMinute() float64 {
 	if a.standard_cubic_centimeters_per_minuteLazy != nil {
 		return *a.standard_cubic_centimeters_per_minuteLazy
@@ -219,7 +239,9 @@ func (a *StandardVolumeFlow) StandardCubicCentimetersPerMinute() float64 {
 	return standard_cubic_centimeters_per_minute
 }
 
-// StandardLiterPerMinute returns the value in StandardLiterPerMinute.
+// StandardLitersPerMinute returns the StandardVolumeFlow value in StandardLitersPerMinute.
+//
+// 
 func (a *StandardVolumeFlow) StandardLitersPerMinute() float64 {
 	if a.standard_liters_per_minuteLazy != nil {
 		return *a.standard_liters_per_minuteLazy
@@ -229,7 +251,9 @@ func (a *StandardVolumeFlow) StandardLitersPerMinute() float64 {
 	return standard_liters_per_minute
 }
 
-// StandardCubicFootPerSecond returns the value in StandardCubicFootPerSecond.
+// StandardCubicFeetPerSecond returns the StandardVolumeFlow value in StandardCubicFeetPerSecond.
+//
+// 
 func (a *StandardVolumeFlow) StandardCubicFeetPerSecond() float64 {
 	if a.standard_cubic_feet_per_secondLazy != nil {
 		return *a.standard_cubic_feet_per_secondLazy
@@ -239,7 +263,9 @@ func (a *StandardVolumeFlow) StandardCubicFeetPerSecond() float64 {
 	return standard_cubic_feet_per_second
 }
 
-// StandardCubicFootPerMinute returns the value in StandardCubicFootPerMinute.
+// StandardCubicFeetPerMinute returns the StandardVolumeFlow value in StandardCubicFeetPerMinute.
+//
+// 
 func (a *StandardVolumeFlow) StandardCubicFeetPerMinute() float64 {
 	if a.standard_cubic_feet_per_minuteLazy != nil {
 		return *a.standard_cubic_feet_per_minuteLazy
@@ -249,7 +275,9 @@ func (a *StandardVolumeFlow) StandardCubicFeetPerMinute() float64 {
 	return standard_cubic_feet_per_minute
 }
 
-// StandardCubicFootPerHour returns the value in StandardCubicFootPerHour.
+// StandardCubicFeetPerHour returns the StandardVolumeFlow value in StandardCubicFeetPerHour.
+//
+// 
 func (a *StandardVolumeFlow) StandardCubicFeetPerHour() float64 {
 	if a.standard_cubic_feet_per_hourLazy != nil {
 		return *a.standard_cubic_feet_per_hourLazy
@@ -260,7 +288,9 @@ func (a *StandardVolumeFlow) StandardCubicFeetPerHour() float64 {
 }
 
 
-// ToDto creates an StandardVolumeFlowDto representation.
+// ToDto creates a StandardVolumeFlowDto representation from the StandardVolumeFlow instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by StandardCubicMeterPerSecond by default.
 func (a *StandardVolumeFlow) ToDto(holdInUnit *StandardVolumeFlowUnits) StandardVolumeFlowDto {
 	if holdInUnit == nil {
 		defaultUnit := StandardVolumeFlowStandardCubicMeterPerSecond // Default value
@@ -273,12 +303,19 @@ func (a *StandardVolumeFlow) ToDto(holdInUnit *StandardVolumeFlowUnits) Standard
 	}
 }
 
-// ToDtoJSON creates an StandardVolumeFlowDto representation.
+// ToDtoJSON creates a JSON representation of the StandardVolumeFlow instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by StandardCubicMeterPerSecond by default.
 func (a *StandardVolumeFlow) ToDtoJSON(holdInUnit *StandardVolumeFlowUnits) ([]byte, error) {
+	// Convert to StandardVolumeFlowDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts StandardVolumeFlow to a specific unit value.
+// Convert converts a StandardVolumeFlow to a specific unit value.
+// The function uses the provided unit type (StandardVolumeFlowUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *StandardVolumeFlow) Convert(toUnit StandardVolumeFlowUnits) float64 {
 	switch toUnit { 
     case StandardVolumeFlowStandardCubicMeterPerSecond:
@@ -300,7 +337,7 @@ func (a *StandardVolumeFlow) Convert(toUnit StandardVolumeFlowUnits) float64 {
     case StandardVolumeFlowStandardCubicFootPerHour:
 		return a.StandardCubicFeetPerHour()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -355,13 +392,22 @@ func (a *StandardVolumeFlow) convertToBase(value float64, fromUnit StandardVolum
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the StandardVolumeFlow in the default unit (StandardCubicMeterPerSecond),
+// formatted to two decimal places.
 func (a StandardVolumeFlow) String() string {
 	return a.ToString(StandardVolumeFlowStandardCubicMeterPerSecond, 2)
 }
 
-// ToString formats the StandardVolumeFlow to string.
-// fractionalDigits -1 for not mention
+// ToString formats the StandardVolumeFlow value as a string with the specified unit and fractional digits.
+// It converts the StandardVolumeFlow to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the StandardVolumeFlow value will be converted (e.g., StandardCubicMeterPerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the StandardVolumeFlow with the unit abbreviation.
 func (a *StandardVolumeFlow) ToString(unit StandardVolumeFlowUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -397,12 +443,26 @@ func (a *StandardVolumeFlow) getUnitAbbreviation(unit StandardVolumeFlowUnits) s
 	}
 }
 
-// Check if the given StandardVolumeFlow are equals to the current StandardVolumeFlow
+// Equals checks if the given StandardVolumeFlow is equal to the current StandardVolumeFlow.
+//
+// Parameters:
+//    other: The StandardVolumeFlow to compare against.
+//
+// Returns:
+//    bool: Returns true if both StandardVolumeFlow are equal, false otherwise.
 func (a *StandardVolumeFlow) Equals(other *StandardVolumeFlow) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given StandardVolumeFlow are equals to the current StandardVolumeFlow
+// CompareTo compares the current StandardVolumeFlow with another StandardVolumeFlow.
+// It returns -1 if the current StandardVolumeFlow is less than the other StandardVolumeFlow, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The StandardVolumeFlow to compare against.
+//
+// Returns:
+//    int: -1 if the current StandardVolumeFlow is less, 1 if greater, and 0 if equal.
 func (a *StandardVolumeFlow) CompareTo(other *StandardVolumeFlow) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -415,22 +475,50 @@ func (a *StandardVolumeFlow) CompareTo(other *StandardVolumeFlow) int {
 	return 0
 }
 
-// Add the given StandardVolumeFlow to the current StandardVolumeFlow.
+// Add adds the given StandardVolumeFlow to the current StandardVolumeFlow and returns the result.
+// The result is a new StandardVolumeFlow instance with the sum of the values.
+//
+// Parameters:
+//    other: The StandardVolumeFlow to add to the current StandardVolumeFlow.
+//
+// Returns:
+//    *StandardVolumeFlow: A new StandardVolumeFlow instance representing the sum of both StandardVolumeFlow.
 func (a *StandardVolumeFlow) Add(other *StandardVolumeFlow) *StandardVolumeFlow {
 	return &StandardVolumeFlow{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given StandardVolumeFlow to the current StandardVolumeFlow.
+// Subtract subtracts the given StandardVolumeFlow from the current StandardVolumeFlow and returns the result.
+// The result is a new StandardVolumeFlow instance with the difference of the values.
+//
+// Parameters:
+//    other: The StandardVolumeFlow to subtract from the current StandardVolumeFlow.
+//
+// Returns:
+//    *StandardVolumeFlow: A new StandardVolumeFlow instance representing the difference of both StandardVolumeFlow.
 func (a *StandardVolumeFlow) Subtract(other *StandardVolumeFlow) *StandardVolumeFlow {
 	return &StandardVolumeFlow{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given StandardVolumeFlow to the current StandardVolumeFlow.
+// Multiply multiplies the current StandardVolumeFlow by the given StandardVolumeFlow and returns the result.
+// The result is a new StandardVolumeFlow instance with the product of the values.
+//
+// Parameters:
+//    other: The StandardVolumeFlow to multiply with the current StandardVolumeFlow.
+//
+// Returns:
+//    *StandardVolumeFlow: A new StandardVolumeFlow instance representing the product of both StandardVolumeFlow.
 func (a *StandardVolumeFlow) Multiply(other *StandardVolumeFlow) *StandardVolumeFlow {
 	return &StandardVolumeFlow{value: a.value * other.BaseValue()}
 }
 
-// Divide the given StandardVolumeFlow to the current StandardVolumeFlow.
+// Divide divides the current StandardVolumeFlow by the given StandardVolumeFlow and returns the result.
+// The result is a new StandardVolumeFlow instance with the quotient of the values.
+//
+// Parameters:
+//    other: The StandardVolumeFlow to divide the current StandardVolumeFlow by.
+//
+// Returns:
+//    *StandardVolumeFlow: A new StandardVolumeFlow instance representing the quotient of both StandardVolumeFlow.
 func (a *StandardVolumeFlow) Divide(other *StandardVolumeFlow) *StandardVolumeFlow {
 	return &StandardVolumeFlow{value: a.value / other.BaseValue()}
 }

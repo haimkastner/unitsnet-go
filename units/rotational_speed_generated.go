@@ -12,7 +12,7 @@ import (
 
 
 
-// RotationalSpeedUnits enumeration
+// RotationalSpeedUnits defines various units of RotationalSpeed.
 type RotationalSpeedUnits string
 
 const (
@@ -45,19 +45,24 @@ const (
         RotationalSpeedMillidegreePerSecond RotationalSpeedUnits = "MillidegreePerSecond"
 )
 
-// RotationalSpeedDto represents an RotationalSpeed
+// RotationalSpeedDto represents a RotationalSpeed measurement with a numerical value and its corresponding unit.
 type RotationalSpeedDto struct {
+    // Value is the numerical representation of the RotationalSpeed.
 	Value float64
+    // Unit specifies the unit of measurement for the RotationalSpeed, as defined in the RotationalSpeedUnits enumeration.
 	Unit  RotationalSpeedUnits
 }
 
-// RotationalSpeedDtoFactory struct to group related functions
+// RotationalSpeedDtoFactory groups methods for creating and serializing RotationalSpeedDto objects.
 type RotationalSpeedDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a RotationalSpeedDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf RotationalSpeedDtoFactory) FromJSON(data []byte) (*RotationalSpeedDto, error) {
 	a := RotationalSpeedDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into RotationalSpeedDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -65,6 +70,9 @@ func (udf RotationalSpeedDtoFactory) FromJSON(data []byte) (*RotationalSpeedDto,
 	return &a, nil
 }
 
+// ToJSON serializes a RotationalSpeedDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a RotationalSpeedDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -76,10 +84,11 @@ func (a RotationalSpeedDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// RotationalSpeed struct
+// RotationalSpeed represents a measurement in a of RotationalSpeed.
+//
+// Rotational speed (sometimes called speed of revolution) is the number of complete rotations, revolutions, cycles, or turns per time unit. Rotational speed is a cyclic frequency, measured in radians per second or in hertz in the SI System by scientists, or in revolutions per minute (rpm or min-1) or revolutions per second in everyday life. The symbol for rotational speed is ω (the Greek lowercase letter "omega").
 type RotationalSpeed struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     radians_per_secondLazy *float64 
@@ -97,92 +106,93 @@ type RotationalSpeed struct {
     millidegrees_per_secondLazy *float64 
 }
 
-// RotationalSpeedFactory struct to group related functions
+// RotationalSpeedFactory groups methods for creating RotationalSpeed instances.
 type RotationalSpeedFactory struct{}
 
+// CreateRotationalSpeed creates a new RotationalSpeed instance from the given value and unit.
 func (uf RotationalSpeedFactory) CreateRotationalSpeed(value float64, unit RotationalSpeedUnits) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, unit)
 }
 
+// FromDto converts a RotationalSpeedDto to a RotationalSpeed instance.
 func (uf RotationalSpeedFactory) FromDto(dto RotationalSpeedDto) (*RotationalSpeed, error) {
 	return newRotationalSpeed(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a RotationalSpeed instance.
 func (uf RotationalSpeedFactory) FromDtoJSON(data []byte) (*RotationalSpeed, error) {
 	unitDto, err := RotationalSpeedDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse RotationalSpeedDto from JSON: %w", err)
 	}
 	return RotationalSpeedFactory{}.FromDto(*unitDto)
 }
 
 
-// FromRadianPerSecond creates a new RotationalSpeed instance from RadianPerSecond.
+// FromRadiansPerSecond creates a new RotationalSpeed instance from a value in RadiansPerSecond.
 func (uf RotationalSpeedFactory) FromRadiansPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedRadianPerSecond)
 }
 
-// FromDegreePerSecond creates a new RotationalSpeed instance from DegreePerSecond.
+// FromDegreesPerSecond creates a new RotationalSpeed instance from a value in DegreesPerSecond.
 func (uf RotationalSpeedFactory) FromDegreesPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedDegreePerSecond)
 }
 
-// FromDegreePerMinute creates a new RotationalSpeed instance from DegreePerMinute.
+// FromDegreesPerMinute creates a new RotationalSpeed instance from a value in DegreesPerMinute.
 func (uf RotationalSpeedFactory) FromDegreesPerMinute(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedDegreePerMinute)
 }
 
-// FromRevolutionPerSecond creates a new RotationalSpeed instance from RevolutionPerSecond.
+// FromRevolutionsPerSecond creates a new RotationalSpeed instance from a value in RevolutionsPerSecond.
 func (uf RotationalSpeedFactory) FromRevolutionsPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedRevolutionPerSecond)
 }
 
-// FromRevolutionPerMinute creates a new RotationalSpeed instance from RevolutionPerMinute.
+// FromRevolutionsPerMinute creates a new RotationalSpeed instance from a value in RevolutionsPerMinute.
 func (uf RotationalSpeedFactory) FromRevolutionsPerMinute(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedRevolutionPerMinute)
 }
 
-// FromNanoradianPerSecond creates a new RotationalSpeed instance from NanoradianPerSecond.
+// FromNanoradiansPerSecond creates a new RotationalSpeed instance from a value in NanoradiansPerSecond.
 func (uf RotationalSpeedFactory) FromNanoradiansPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedNanoradianPerSecond)
 }
 
-// FromMicroradianPerSecond creates a new RotationalSpeed instance from MicroradianPerSecond.
+// FromMicroradiansPerSecond creates a new RotationalSpeed instance from a value in MicroradiansPerSecond.
 func (uf RotationalSpeedFactory) FromMicroradiansPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedMicroradianPerSecond)
 }
 
-// FromMilliradianPerSecond creates a new RotationalSpeed instance from MilliradianPerSecond.
+// FromMilliradiansPerSecond creates a new RotationalSpeed instance from a value in MilliradiansPerSecond.
 func (uf RotationalSpeedFactory) FromMilliradiansPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedMilliradianPerSecond)
 }
 
-// FromCentiradianPerSecond creates a new RotationalSpeed instance from CentiradianPerSecond.
+// FromCentiradiansPerSecond creates a new RotationalSpeed instance from a value in CentiradiansPerSecond.
 func (uf RotationalSpeedFactory) FromCentiradiansPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedCentiradianPerSecond)
 }
 
-// FromDeciradianPerSecond creates a new RotationalSpeed instance from DeciradianPerSecond.
+// FromDeciradiansPerSecond creates a new RotationalSpeed instance from a value in DeciradiansPerSecond.
 func (uf RotationalSpeedFactory) FromDeciradiansPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedDeciradianPerSecond)
 }
 
-// FromNanodegreePerSecond creates a new RotationalSpeed instance from NanodegreePerSecond.
+// FromNanodegreesPerSecond creates a new RotationalSpeed instance from a value in NanodegreesPerSecond.
 func (uf RotationalSpeedFactory) FromNanodegreesPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedNanodegreePerSecond)
 }
 
-// FromMicrodegreePerSecond creates a new RotationalSpeed instance from MicrodegreePerSecond.
+// FromMicrodegreesPerSecond creates a new RotationalSpeed instance from a value in MicrodegreesPerSecond.
 func (uf RotationalSpeedFactory) FromMicrodegreesPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedMicrodegreePerSecond)
 }
 
-// FromMillidegreePerSecond creates a new RotationalSpeed instance from MillidegreePerSecond.
+// FromMillidegreesPerSecond creates a new RotationalSpeed instance from a value in MillidegreesPerSecond.
 func (uf RotationalSpeedFactory) FromMillidegreesPerSecond(value float64) (*RotationalSpeed, error) {
 	return newRotationalSpeed(value, RotationalSpeedMillidegreePerSecond)
 }
-
-
 
 
 // newRotationalSpeed creates a new RotationalSpeed.
@@ -195,13 +205,15 @@ func newRotationalSpeed(value float64, fromUnit RotationalSpeedUnits) (*Rotation
 	return a, nil
 }
 
-// BaseValue returns the base value of RotationalSpeed in RadianPerSecond.
+// BaseValue returns the base value of RotationalSpeed in RadianPerSecond unit (the base/default quantity).
 func (a *RotationalSpeed) BaseValue() float64 {
 	return a.value
 }
 
 
-// RadianPerSecond returns the value in RadianPerSecond.
+// RadiansPerSecond returns the RotationalSpeed value in RadiansPerSecond.
+//
+// 
 func (a *RotationalSpeed) RadiansPerSecond() float64 {
 	if a.radians_per_secondLazy != nil {
 		return *a.radians_per_secondLazy
@@ -211,7 +223,9 @@ func (a *RotationalSpeed) RadiansPerSecond() float64 {
 	return radians_per_second
 }
 
-// DegreePerSecond returns the value in DegreePerSecond.
+// DegreesPerSecond returns the RotationalSpeed value in DegreesPerSecond.
+//
+// 
 func (a *RotationalSpeed) DegreesPerSecond() float64 {
 	if a.degrees_per_secondLazy != nil {
 		return *a.degrees_per_secondLazy
@@ -221,7 +235,9 @@ func (a *RotationalSpeed) DegreesPerSecond() float64 {
 	return degrees_per_second
 }
 
-// DegreePerMinute returns the value in DegreePerMinute.
+// DegreesPerMinute returns the RotationalSpeed value in DegreesPerMinute.
+//
+// 
 func (a *RotationalSpeed) DegreesPerMinute() float64 {
 	if a.degrees_per_minuteLazy != nil {
 		return *a.degrees_per_minuteLazy
@@ -231,7 +247,9 @@ func (a *RotationalSpeed) DegreesPerMinute() float64 {
 	return degrees_per_minute
 }
 
-// RevolutionPerSecond returns the value in RevolutionPerSecond.
+// RevolutionsPerSecond returns the RotationalSpeed value in RevolutionsPerSecond.
+//
+// 
 func (a *RotationalSpeed) RevolutionsPerSecond() float64 {
 	if a.revolutions_per_secondLazy != nil {
 		return *a.revolutions_per_secondLazy
@@ -241,7 +259,9 @@ func (a *RotationalSpeed) RevolutionsPerSecond() float64 {
 	return revolutions_per_second
 }
 
-// RevolutionPerMinute returns the value in RevolutionPerMinute.
+// RevolutionsPerMinute returns the RotationalSpeed value in RevolutionsPerMinute.
+//
+// 
 func (a *RotationalSpeed) RevolutionsPerMinute() float64 {
 	if a.revolutions_per_minuteLazy != nil {
 		return *a.revolutions_per_minuteLazy
@@ -251,7 +271,9 @@ func (a *RotationalSpeed) RevolutionsPerMinute() float64 {
 	return revolutions_per_minute
 }
 
-// NanoradianPerSecond returns the value in NanoradianPerSecond.
+// NanoradiansPerSecond returns the RotationalSpeed value in NanoradiansPerSecond.
+//
+// 
 func (a *RotationalSpeed) NanoradiansPerSecond() float64 {
 	if a.nanoradians_per_secondLazy != nil {
 		return *a.nanoradians_per_secondLazy
@@ -261,7 +283,9 @@ func (a *RotationalSpeed) NanoradiansPerSecond() float64 {
 	return nanoradians_per_second
 }
 
-// MicroradianPerSecond returns the value in MicroradianPerSecond.
+// MicroradiansPerSecond returns the RotationalSpeed value in MicroradiansPerSecond.
+//
+// 
 func (a *RotationalSpeed) MicroradiansPerSecond() float64 {
 	if a.microradians_per_secondLazy != nil {
 		return *a.microradians_per_secondLazy
@@ -271,7 +295,9 @@ func (a *RotationalSpeed) MicroradiansPerSecond() float64 {
 	return microradians_per_second
 }
 
-// MilliradianPerSecond returns the value in MilliradianPerSecond.
+// MilliradiansPerSecond returns the RotationalSpeed value in MilliradiansPerSecond.
+//
+// 
 func (a *RotationalSpeed) MilliradiansPerSecond() float64 {
 	if a.milliradians_per_secondLazy != nil {
 		return *a.milliradians_per_secondLazy
@@ -281,7 +307,9 @@ func (a *RotationalSpeed) MilliradiansPerSecond() float64 {
 	return milliradians_per_second
 }
 
-// CentiradianPerSecond returns the value in CentiradianPerSecond.
+// CentiradiansPerSecond returns the RotationalSpeed value in CentiradiansPerSecond.
+//
+// 
 func (a *RotationalSpeed) CentiradiansPerSecond() float64 {
 	if a.centiradians_per_secondLazy != nil {
 		return *a.centiradians_per_secondLazy
@@ -291,7 +319,9 @@ func (a *RotationalSpeed) CentiradiansPerSecond() float64 {
 	return centiradians_per_second
 }
 
-// DeciradianPerSecond returns the value in DeciradianPerSecond.
+// DeciradiansPerSecond returns the RotationalSpeed value in DeciradiansPerSecond.
+//
+// 
 func (a *RotationalSpeed) DeciradiansPerSecond() float64 {
 	if a.deciradians_per_secondLazy != nil {
 		return *a.deciradians_per_secondLazy
@@ -301,7 +331,9 @@ func (a *RotationalSpeed) DeciradiansPerSecond() float64 {
 	return deciradians_per_second
 }
 
-// NanodegreePerSecond returns the value in NanodegreePerSecond.
+// NanodegreesPerSecond returns the RotationalSpeed value in NanodegreesPerSecond.
+//
+// 
 func (a *RotationalSpeed) NanodegreesPerSecond() float64 {
 	if a.nanodegrees_per_secondLazy != nil {
 		return *a.nanodegrees_per_secondLazy
@@ -311,7 +343,9 @@ func (a *RotationalSpeed) NanodegreesPerSecond() float64 {
 	return nanodegrees_per_second
 }
 
-// MicrodegreePerSecond returns the value in MicrodegreePerSecond.
+// MicrodegreesPerSecond returns the RotationalSpeed value in MicrodegreesPerSecond.
+//
+// 
 func (a *RotationalSpeed) MicrodegreesPerSecond() float64 {
 	if a.microdegrees_per_secondLazy != nil {
 		return *a.microdegrees_per_secondLazy
@@ -321,7 +355,9 @@ func (a *RotationalSpeed) MicrodegreesPerSecond() float64 {
 	return microdegrees_per_second
 }
 
-// MillidegreePerSecond returns the value in MillidegreePerSecond.
+// MillidegreesPerSecond returns the RotationalSpeed value in MillidegreesPerSecond.
+//
+// 
 func (a *RotationalSpeed) MillidegreesPerSecond() float64 {
 	if a.millidegrees_per_secondLazy != nil {
 		return *a.millidegrees_per_secondLazy
@@ -332,7 +368,9 @@ func (a *RotationalSpeed) MillidegreesPerSecond() float64 {
 }
 
 
-// ToDto creates an RotationalSpeedDto representation.
+// ToDto creates a RotationalSpeedDto representation from the RotationalSpeed instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by RadianPerSecond by default.
 func (a *RotationalSpeed) ToDto(holdInUnit *RotationalSpeedUnits) RotationalSpeedDto {
 	if holdInUnit == nil {
 		defaultUnit := RotationalSpeedRadianPerSecond // Default value
@@ -345,12 +383,19 @@ func (a *RotationalSpeed) ToDto(holdInUnit *RotationalSpeedUnits) RotationalSpee
 	}
 }
 
-// ToDtoJSON creates an RotationalSpeedDto representation.
+// ToDtoJSON creates a JSON representation of the RotationalSpeed instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by RadianPerSecond by default.
 func (a *RotationalSpeed) ToDtoJSON(holdInUnit *RotationalSpeedUnits) ([]byte, error) {
+	// Convert to RotationalSpeedDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts RotationalSpeed to a specific unit value.
+// Convert converts a RotationalSpeed to a specific unit value.
+// The function uses the provided unit type (RotationalSpeedUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *RotationalSpeed) Convert(toUnit RotationalSpeedUnits) float64 {
 	switch toUnit { 
     case RotationalSpeedRadianPerSecond:
@@ -380,7 +425,7 @@ func (a *RotationalSpeed) Convert(toUnit RotationalSpeedUnits) float64 {
     case RotationalSpeedMillidegreePerSecond:
 		return a.MillidegreesPerSecond()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -451,13 +496,22 @@ func (a *RotationalSpeed) convertToBase(value float64, fromUnit RotationalSpeedU
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the RotationalSpeed in the default unit (RadianPerSecond),
+// formatted to two decimal places.
 func (a RotationalSpeed) String() string {
 	return a.ToString(RotationalSpeedRadianPerSecond, 2)
 }
 
-// ToString formats the RotationalSpeed to string.
-// fractionalDigits -1 for not mention
+// ToString formats the RotationalSpeed value as a string with the specified unit and fractional digits.
+// It converts the RotationalSpeed to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the RotationalSpeed value will be converted (e.g., RadianPerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the RotationalSpeed with the unit abbreviation.
 func (a *RotationalSpeed) ToString(unit RotationalSpeedUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -501,12 +555,26 @@ func (a *RotationalSpeed) getUnitAbbreviation(unit RotationalSpeedUnits) string 
 	}
 }
 
-// Check if the given RotationalSpeed are equals to the current RotationalSpeed
+// Equals checks if the given RotationalSpeed is equal to the current RotationalSpeed.
+//
+// Parameters:
+//    other: The RotationalSpeed to compare against.
+//
+// Returns:
+//    bool: Returns true if both RotationalSpeed are equal, false otherwise.
 func (a *RotationalSpeed) Equals(other *RotationalSpeed) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given RotationalSpeed are equals to the current RotationalSpeed
+// CompareTo compares the current RotationalSpeed with another RotationalSpeed.
+// It returns -1 if the current RotationalSpeed is less than the other RotationalSpeed, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The RotationalSpeed to compare against.
+//
+// Returns:
+//    int: -1 if the current RotationalSpeed is less, 1 if greater, and 0 if equal.
 func (a *RotationalSpeed) CompareTo(other *RotationalSpeed) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -519,22 +587,50 @@ func (a *RotationalSpeed) CompareTo(other *RotationalSpeed) int {
 	return 0
 }
 
-// Add the given RotationalSpeed to the current RotationalSpeed.
+// Add adds the given RotationalSpeed to the current RotationalSpeed and returns the result.
+// The result is a new RotationalSpeed instance with the sum of the values.
+//
+// Parameters:
+//    other: The RotationalSpeed to add to the current RotationalSpeed.
+//
+// Returns:
+//    *RotationalSpeed: A new RotationalSpeed instance representing the sum of both RotationalSpeed.
 func (a *RotationalSpeed) Add(other *RotationalSpeed) *RotationalSpeed {
 	return &RotationalSpeed{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given RotationalSpeed to the current RotationalSpeed.
+// Subtract subtracts the given RotationalSpeed from the current RotationalSpeed and returns the result.
+// The result is a new RotationalSpeed instance with the difference of the values.
+//
+// Parameters:
+//    other: The RotationalSpeed to subtract from the current RotationalSpeed.
+//
+// Returns:
+//    *RotationalSpeed: A new RotationalSpeed instance representing the difference of both RotationalSpeed.
 func (a *RotationalSpeed) Subtract(other *RotationalSpeed) *RotationalSpeed {
 	return &RotationalSpeed{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given RotationalSpeed to the current RotationalSpeed.
+// Multiply multiplies the current RotationalSpeed by the given RotationalSpeed and returns the result.
+// The result is a new RotationalSpeed instance with the product of the values.
+//
+// Parameters:
+//    other: The RotationalSpeed to multiply with the current RotationalSpeed.
+//
+// Returns:
+//    *RotationalSpeed: A new RotationalSpeed instance representing the product of both RotationalSpeed.
 func (a *RotationalSpeed) Multiply(other *RotationalSpeed) *RotationalSpeed {
 	return &RotationalSpeed{value: a.value * other.BaseValue()}
 }
 
-// Divide the given RotationalSpeed to the current RotationalSpeed.
+// Divide divides the current RotationalSpeed by the given RotationalSpeed and returns the result.
+// The result is a new RotationalSpeed instance with the quotient of the values.
+//
+// Parameters:
+//    other: The RotationalSpeed to divide the current RotationalSpeed by.
+//
+// Returns:
+//    *RotationalSpeed: A new RotationalSpeed instance representing the quotient of both RotationalSpeed.
 func (a *RotationalSpeed) Divide(other *RotationalSpeed) *RotationalSpeed {
 	return &RotationalSpeed{value: a.value / other.BaseValue()}
 }

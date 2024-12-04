@@ -12,7 +12,7 @@ import (
 
 
 
-// InformationUnits enumeration
+// InformationUnits defines various units of Information.
 type InformationUnits string
 
 const (
@@ -71,19 +71,24 @@ const (
         InformationExbibit InformationUnits = "Exbibit"
 )
 
-// InformationDto represents an Information
+// InformationDto represents a Information measurement with a numerical value and its corresponding unit.
 type InformationDto struct {
+    // Value is the numerical representation of the Information.
 	Value float64
+    // Unit specifies the unit of measurement for the Information, as defined in the InformationUnits enumeration.
 	Unit  InformationUnits
 }
 
-// InformationDtoFactory struct to group related functions
+// InformationDtoFactory groups methods for creating and serializing InformationDto objects.
 type InformationDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a InformationDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf InformationDtoFactory) FromJSON(data []byte) (*InformationDto, error) {
 	a := InformationDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into InformationDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -91,6 +96,9 @@ func (udf InformationDtoFactory) FromJSON(data []byte) (*InformationDto, error) 
 	return &a, nil
 }
 
+// ToJSON serializes a InformationDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a InformationDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -102,10 +110,11 @@ func (a InformationDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Information struct
+// Information represents a measurement in a of Information.
+//
+// In computing and telecommunications, a unit of information is the capacity of some standard data storage system or communication channel, used to measure the capacities of other systems and channels. In information theory, units of information are also used to measure the information contents or entropy of random variables.
 type Information struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     bytesLazy *float64 
@@ -136,157 +145,158 @@ type Information struct {
     exbibitsLazy *float64 
 }
 
-// InformationFactory struct to group related functions
+// InformationFactory groups methods for creating Information instances.
 type InformationFactory struct{}
 
+// CreateInformation creates a new Information instance from the given value and unit.
 func (uf InformationFactory) CreateInformation(value float64, unit InformationUnits) (*Information, error) {
 	return newInformation(value, unit)
 }
 
+// FromDto converts a InformationDto to a Information instance.
 func (uf InformationFactory) FromDto(dto InformationDto) (*Information, error) {
 	return newInformation(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Information instance.
 func (uf InformationFactory) FromDtoJSON(data []byte) (*Information, error) {
 	unitDto, err := InformationDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse InformationDto from JSON: %w", err)
 	}
 	return InformationFactory{}.FromDto(*unitDto)
 }
 
 
-// FromByte creates a new Information instance from Byte.
+// FromBytes creates a new Information instance from a value in Bytes.
 func (uf InformationFactory) FromBytes(value float64) (*Information, error) {
 	return newInformation(value, InformationByte)
 }
 
-// FromBit creates a new Information instance from Bit.
+// FromBits creates a new Information instance from a value in Bits.
 func (uf InformationFactory) FromBits(value float64) (*Information, error) {
 	return newInformation(value, InformationBit)
 }
 
-// FromKilobyte creates a new Information instance from Kilobyte.
+// FromKilobytes creates a new Information instance from a value in Kilobytes.
 func (uf InformationFactory) FromKilobytes(value float64) (*Information, error) {
 	return newInformation(value, InformationKilobyte)
 }
 
-// FromMegabyte creates a new Information instance from Megabyte.
+// FromMegabytes creates a new Information instance from a value in Megabytes.
 func (uf InformationFactory) FromMegabytes(value float64) (*Information, error) {
 	return newInformation(value, InformationMegabyte)
 }
 
-// FromGigabyte creates a new Information instance from Gigabyte.
+// FromGigabytes creates a new Information instance from a value in Gigabytes.
 func (uf InformationFactory) FromGigabytes(value float64) (*Information, error) {
 	return newInformation(value, InformationGigabyte)
 }
 
-// FromTerabyte creates a new Information instance from Terabyte.
+// FromTerabytes creates a new Information instance from a value in Terabytes.
 func (uf InformationFactory) FromTerabytes(value float64) (*Information, error) {
 	return newInformation(value, InformationTerabyte)
 }
 
-// FromPetabyte creates a new Information instance from Petabyte.
+// FromPetabytes creates a new Information instance from a value in Petabytes.
 func (uf InformationFactory) FromPetabytes(value float64) (*Information, error) {
 	return newInformation(value, InformationPetabyte)
 }
 
-// FromExabyte creates a new Information instance from Exabyte.
+// FromExabytes creates a new Information instance from a value in Exabytes.
 func (uf InformationFactory) FromExabytes(value float64) (*Information, error) {
 	return newInformation(value, InformationExabyte)
 }
 
-// FromKibibyte creates a new Information instance from Kibibyte.
+// FromKibibytes creates a new Information instance from a value in Kibibytes.
 func (uf InformationFactory) FromKibibytes(value float64) (*Information, error) {
 	return newInformation(value, InformationKibibyte)
 }
 
-// FromMebibyte creates a new Information instance from Mebibyte.
+// FromMebibytes creates a new Information instance from a value in Mebibytes.
 func (uf InformationFactory) FromMebibytes(value float64) (*Information, error) {
 	return newInformation(value, InformationMebibyte)
 }
 
-// FromGibibyte creates a new Information instance from Gibibyte.
+// FromGibibytes creates a new Information instance from a value in Gibibytes.
 func (uf InformationFactory) FromGibibytes(value float64) (*Information, error) {
 	return newInformation(value, InformationGibibyte)
 }
 
-// FromTebibyte creates a new Information instance from Tebibyte.
+// FromTebibytes creates a new Information instance from a value in Tebibytes.
 func (uf InformationFactory) FromTebibytes(value float64) (*Information, error) {
 	return newInformation(value, InformationTebibyte)
 }
 
-// FromPebibyte creates a new Information instance from Pebibyte.
+// FromPebibytes creates a new Information instance from a value in Pebibytes.
 func (uf InformationFactory) FromPebibytes(value float64) (*Information, error) {
 	return newInformation(value, InformationPebibyte)
 }
 
-// FromExbibyte creates a new Information instance from Exbibyte.
+// FromExbibytes creates a new Information instance from a value in Exbibytes.
 func (uf InformationFactory) FromExbibytes(value float64) (*Information, error) {
 	return newInformation(value, InformationExbibyte)
 }
 
-// FromKilobit creates a new Information instance from Kilobit.
+// FromKilobits creates a new Information instance from a value in Kilobits.
 func (uf InformationFactory) FromKilobits(value float64) (*Information, error) {
 	return newInformation(value, InformationKilobit)
 }
 
-// FromMegabit creates a new Information instance from Megabit.
+// FromMegabits creates a new Information instance from a value in Megabits.
 func (uf InformationFactory) FromMegabits(value float64) (*Information, error) {
 	return newInformation(value, InformationMegabit)
 }
 
-// FromGigabit creates a new Information instance from Gigabit.
+// FromGigabits creates a new Information instance from a value in Gigabits.
 func (uf InformationFactory) FromGigabits(value float64) (*Information, error) {
 	return newInformation(value, InformationGigabit)
 }
 
-// FromTerabit creates a new Information instance from Terabit.
+// FromTerabits creates a new Information instance from a value in Terabits.
 func (uf InformationFactory) FromTerabits(value float64) (*Information, error) {
 	return newInformation(value, InformationTerabit)
 }
 
-// FromPetabit creates a new Information instance from Petabit.
+// FromPetabits creates a new Information instance from a value in Petabits.
 func (uf InformationFactory) FromPetabits(value float64) (*Information, error) {
 	return newInformation(value, InformationPetabit)
 }
 
-// FromExabit creates a new Information instance from Exabit.
+// FromExabits creates a new Information instance from a value in Exabits.
 func (uf InformationFactory) FromExabits(value float64) (*Information, error) {
 	return newInformation(value, InformationExabit)
 }
 
-// FromKibibit creates a new Information instance from Kibibit.
+// FromKibibits creates a new Information instance from a value in Kibibits.
 func (uf InformationFactory) FromKibibits(value float64) (*Information, error) {
 	return newInformation(value, InformationKibibit)
 }
 
-// FromMebibit creates a new Information instance from Mebibit.
+// FromMebibits creates a new Information instance from a value in Mebibits.
 func (uf InformationFactory) FromMebibits(value float64) (*Information, error) {
 	return newInformation(value, InformationMebibit)
 }
 
-// FromGibibit creates a new Information instance from Gibibit.
+// FromGibibits creates a new Information instance from a value in Gibibits.
 func (uf InformationFactory) FromGibibits(value float64) (*Information, error) {
 	return newInformation(value, InformationGibibit)
 }
 
-// FromTebibit creates a new Information instance from Tebibit.
+// FromTebibits creates a new Information instance from a value in Tebibits.
 func (uf InformationFactory) FromTebibits(value float64) (*Information, error) {
 	return newInformation(value, InformationTebibit)
 }
 
-// FromPebibit creates a new Information instance from Pebibit.
+// FromPebibits creates a new Information instance from a value in Pebibits.
 func (uf InformationFactory) FromPebibits(value float64) (*Information, error) {
 	return newInformation(value, InformationPebibit)
 }
 
-// FromExbibit creates a new Information instance from Exbibit.
+// FromExbibits creates a new Information instance from a value in Exbibits.
 func (uf InformationFactory) FromExbibits(value float64) (*Information, error) {
 	return newInformation(value, InformationExbibit)
 }
-
-
 
 
 // newInformation creates a new Information.
@@ -299,13 +309,15 @@ func newInformation(value float64, fromUnit InformationUnits) (*Information, err
 	return a, nil
 }
 
-// BaseValue returns the base value of Information in Bit.
+// BaseValue returns the base value of Information in Bit unit (the base/default quantity).
 func (a *Information) BaseValue() float64 {
 	return a.value
 }
 
 
-// Byte returns the value in Byte.
+// Bytes returns the Information value in Bytes.
+//
+// 
 func (a *Information) Bytes() float64 {
 	if a.bytesLazy != nil {
 		return *a.bytesLazy
@@ -315,7 +327,9 @@ func (a *Information) Bytes() float64 {
 	return bytes
 }
 
-// Bit returns the value in Bit.
+// Bits returns the Information value in Bits.
+//
+// 
 func (a *Information) Bits() float64 {
 	if a.bitsLazy != nil {
 		return *a.bitsLazy
@@ -325,7 +339,9 @@ func (a *Information) Bits() float64 {
 	return bits
 }
 
-// Kilobyte returns the value in Kilobyte.
+// Kilobytes returns the Information value in Kilobytes.
+//
+// 
 func (a *Information) Kilobytes() float64 {
 	if a.kilobytesLazy != nil {
 		return *a.kilobytesLazy
@@ -335,7 +351,9 @@ func (a *Information) Kilobytes() float64 {
 	return kilobytes
 }
 
-// Megabyte returns the value in Megabyte.
+// Megabytes returns the Information value in Megabytes.
+//
+// 
 func (a *Information) Megabytes() float64 {
 	if a.megabytesLazy != nil {
 		return *a.megabytesLazy
@@ -345,7 +363,9 @@ func (a *Information) Megabytes() float64 {
 	return megabytes
 }
 
-// Gigabyte returns the value in Gigabyte.
+// Gigabytes returns the Information value in Gigabytes.
+//
+// 
 func (a *Information) Gigabytes() float64 {
 	if a.gigabytesLazy != nil {
 		return *a.gigabytesLazy
@@ -355,7 +375,9 @@ func (a *Information) Gigabytes() float64 {
 	return gigabytes
 }
 
-// Terabyte returns the value in Terabyte.
+// Terabytes returns the Information value in Terabytes.
+//
+// 
 func (a *Information) Terabytes() float64 {
 	if a.terabytesLazy != nil {
 		return *a.terabytesLazy
@@ -365,7 +387,9 @@ func (a *Information) Terabytes() float64 {
 	return terabytes
 }
 
-// Petabyte returns the value in Petabyte.
+// Petabytes returns the Information value in Petabytes.
+//
+// 
 func (a *Information) Petabytes() float64 {
 	if a.petabytesLazy != nil {
 		return *a.petabytesLazy
@@ -375,7 +399,9 @@ func (a *Information) Petabytes() float64 {
 	return petabytes
 }
 
-// Exabyte returns the value in Exabyte.
+// Exabytes returns the Information value in Exabytes.
+//
+// 
 func (a *Information) Exabytes() float64 {
 	if a.exabytesLazy != nil {
 		return *a.exabytesLazy
@@ -385,7 +411,9 @@ func (a *Information) Exabytes() float64 {
 	return exabytes
 }
 
-// Kibibyte returns the value in Kibibyte.
+// Kibibytes returns the Information value in Kibibytes.
+//
+// 
 func (a *Information) Kibibytes() float64 {
 	if a.kibibytesLazy != nil {
 		return *a.kibibytesLazy
@@ -395,7 +423,9 @@ func (a *Information) Kibibytes() float64 {
 	return kibibytes
 }
 
-// Mebibyte returns the value in Mebibyte.
+// Mebibytes returns the Information value in Mebibytes.
+//
+// 
 func (a *Information) Mebibytes() float64 {
 	if a.mebibytesLazy != nil {
 		return *a.mebibytesLazy
@@ -405,7 +435,9 @@ func (a *Information) Mebibytes() float64 {
 	return mebibytes
 }
 
-// Gibibyte returns the value in Gibibyte.
+// Gibibytes returns the Information value in Gibibytes.
+//
+// 
 func (a *Information) Gibibytes() float64 {
 	if a.gibibytesLazy != nil {
 		return *a.gibibytesLazy
@@ -415,7 +447,9 @@ func (a *Information) Gibibytes() float64 {
 	return gibibytes
 }
 
-// Tebibyte returns the value in Tebibyte.
+// Tebibytes returns the Information value in Tebibytes.
+//
+// 
 func (a *Information) Tebibytes() float64 {
 	if a.tebibytesLazy != nil {
 		return *a.tebibytesLazy
@@ -425,7 +459,9 @@ func (a *Information) Tebibytes() float64 {
 	return tebibytes
 }
 
-// Pebibyte returns the value in Pebibyte.
+// Pebibytes returns the Information value in Pebibytes.
+//
+// 
 func (a *Information) Pebibytes() float64 {
 	if a.pebibytesLazy != nil {
 		return *a.pebibytesLazy
@@ -435,7 +471,9 @@ func (a *Information) Pebibytes() float64 {
 	return pebibytes
 }
 
-// Exbibyte returns the value in Exbibyte.
+// Exbibytes returns the Information value in Exbibytes.
+//
+// 
 func (a *Information) Exbibytes() float64 {
 	if a.exbibytesLazy != nil {
 		return *a.exbibytesLazy
@@ -445,7 +483,9 @@ func (a *Information) Exbibytes() float64 {
 	return exbibytes
 }
 
-// Kilobit returns the value in Kilobit.
+// Kilobits returns the Information value in Kilobits.
+//
+// 
 func (a *Information) Kilobits() float64 {
 	if a.kilobitsLazy != nil {
 		return *a.kilobitsLazy
@@ -455,7 +495,9 @@ func (a *Information) Kilobits() float64 {
 	return kilobits
 }
 
-// Megabit returns the value in Megabit.
+// Megabits returns the Information value in Megabits.
+//
+// 
 func (a *Information) Megabits() float64 {
 	if a.megabitsLazy != nil {
 		return *a.megabitsLazy
@@ -465,7 +507,9 @@ func (a *Information) Megabits() float64 {
 	return megabits
 }
 
-// Gigabit returns the value in Gigabit.
+// Gigabits returns the Information value in Gigabits.
+//
+// 
 func (a *Information) Gigabits() float64 {
 	if a.gigabitsLazy != nil {
 		return *a.gigabitsLazy
@@ -475,7 +519,9 @@ func (a *Information) Gigabits() float64 {
 	return gigabits
 }
 
-// Terabit returns the value in Terabit.
+// Terabits returns the Information value in Terabits.
+//
+// 
 func (a *Information) Terabits() float64 {
 	if a.terabitsLazy != nil {
 		return *a.terabitsLazy
@@ -485,7 +531,9 @@ func (a *Information) Terabits() float64 {
 	return terabits
 }
 
-// Petabit returns the value in Petabit.
+// Petabits returns the Information value in Petabits.
+//
+// 
 func (a *Information) Petabits() float64 {
 	if a.petabitsLazy != nil {
 		return *a.petabitsLazy
@@ -495,7 +543,9 @@ func (a *Information) Petabits() float64 {
 	return petabits
 }
 
-// Exabit returns the value in Exabit.
+// Exabits returns the Information value in Exabits.
+//
+// 
 func (a *Information) Exabits() float64 {
 	if a.exabitsLazy != nil {
 		return *a.exabitsLazy
@@ -505,7 +555,9 @@ func (a *Information) Exabits() float64 {
 	return exabits
 }
 
-// Kibibit returns the value in Kibibit.
+// Kibibits returns the Information value in Kibibits.
+//
+// 
 func (a *Information) Kibibits() float64 {
 	if a.kibibitsLazy != nil {
 		return *a.kibibitsLazy
@@ -515,7 +567,9 @@ func (a *Information) Kibibits() float64 {
 	return kibibits
 }
 
-// Mebibit returns the value in Mebibit.
+// Mebibits returns the Information value in Mebibits.
+//
+// 
 func (a *Information) Mebibits() float64 {
 	if a.mebibitsLazy != nil {
 		return *a.mebibitsLazy
@@ -525,7 +579,9 @@ func (a *Information) Mebibits() float64 {
 	return mebibits
 }
 
-// Gibibit returns the value in Gibibit.
+// Gibibits returns the Information value in Gibibits.
+//
+// 
 func (a *Information) Gibibits() float64 {
 	if a.gibibitsLazy != nil {
 		return *a.gibibitsLazy
@@ -535,7 +591,9 @@ func (a *Information) Gibibits() float64 {
 	return gibibits
 }
 
-// Tebibit returns the value in Tebibit.
+// Tebibits returns the Information value in Tebibits.
+//
+// 
 func (a *Information) Tebibits() float64 {
 	if a.tebibitsLazy != nil {
 		return *a.tebibitsLazy
@@ -545,7 +603,9 @@ func (a *Information) Tebibits() float64 {
 	return tebibits
 }
 
-// Pebibit returns the value in Pebibit.
+// Pebibits returns the Information value in Pebibits.
+//
+// 
 func (a *Information) Pebibits() float64 {
 	if a.pebibitsLazy != nil {
 		return *a.pebibitsLazy
@@ -555,7 +615,9 @@ func (a *Information) Pebibits() float64 {
 	return pebibits
 }
 
-// Exbibit returns the value in Exbibit.
+// Exbibits returns the Information value in Exbibits.
+//
+// 
 func (a *Information) Exbibits() float64 {
 	if a.exbibitsLazy != nil {
 		return *a.exbibitsLazy
@@ -566,7 +628,9 @@ func (a *Information) Exbibits() float64 {
 }
 
 
-// ToDto creates an InformationDto representation.
+// ToDto creates a InformationDto representation from the Information instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Bit by default.
 func (a *Information) ToDto(holdInUnit *InformationUnits) InformationDto {
 	if holdInUnit == nil {
 		defaultUnit := InformationBit // Default value
@@ -579,12 +643,19 @@ func (a *Information) ToDto(holdInUnit *InformationUnits) InformationDto {
 	}
 }
 
-// ToDtoJSON creates an InformationDto representation.
+// ToDtoJSON creates a JSON representation of the Information instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Bit by default.
 func (a *Information) ToDtoJSON(holdInUnit *InformationUnits) ([]byte, error) {
+	// Convert to InformationDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Information to a specific unit value.
+// Convert converts a Information to a specific unit value.
+// The function uses the provided unit type (InformationUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Information) Convert(toUnit InformationUnits) float64 {
 	switch toUnit { 
     case InformationByte:
@@ -640,7 +711,7 @@ func (a *Information) Convert(toUnit InformationUnits) float64 {
     case InformationExbibit:
 		return a.Exbibits()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -763,13 +834,22 @@ func (a *Information) convertToBase(value float64, fromUnit InformationUnits) fl
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Information in the default unit (Bit),
+// formatted to two decimal places.
 func (a Information) String() string {
 	return a.ToString(InformationBit, 2)
 }
 
-// ToString formats the Information to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Information value as a string with the specified unit and fractional digits.
+// It converts the Information to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Information value will be converted (e.g., Bit))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Information with the unit abbreviation.
 func (a *Information) ToString(unit InformationUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -839,12 +919,26 @@ func (a *Information) getUnitAbbreviation(unit InformationUnits) string {
 	}
 }
 
-// Check if the given Information are equals to the current Information
+// Equals checks if the given Information is equal to the current Information.
+//
+// Parameters:
+//    other: The Information to compare against.
+//
+// Returns:
+//    bool: Returns true if both Information are equal, false otherwise.
 func (a *Information) Equals(other *Information) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Information are equals to the current Information
+// CompareTo compares the current Information with another Information.
+// It returns -1 if the current Information is less than the other Information, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Information to compare against.
+//
+// Returns:
+//    int: -1 if the current Information is less, 1 if greater, and 0 if equal.
 func (a *Information) CompareTo(other *Information) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -857,22 +951,50 @@ func (a *Information) CompareTo(other *Information) int {
 	return 0
 }
 
-// Add the given Information to the current Information.
+// Add adds the given Information to the current Information and returns the result.
+// The result is a new Information instance with the sum of the values.
+//
+// Parameters:
+//    other: The Information to add to the current Information.
+//
+// Returns:
+//    *Information: A new Information instance representing the sum of both Information.
 func (a *Information) Add(other *Information) *Information {
 	return &Information{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Information to the current Information.
+// Subtract subtracts the given Information from the current Information and returns the result.
+// The result is a new Information instance with the difference of the values.
+//
+// Parameters:
+//    other: The Information to subtract from the current Information.
+//
+// Returns:
+//    *Information: A new Information instance representing the difference of both Information.
 func (a *Information) Subtract(other *Information) *Information {
 	return &Information{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Information to the current Information.
+// Multiply multiplies the current Information by the given Information and returns the result.
+// The result is a new Information instance with the product of the values.
+//
+// Parameters:
+//    other: The Information to multiply with the current Information.
+//
+// Returns:
+//    *Information: A new Information instance representing the product of both Information.
 func (a *Information) Multiply(other *Information) *Information {
 	return &Information{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Information to the current Information.
+// Divide divides the current Information by the given Information and returns the result.
+// The result is a new Information instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Information to divide the current Information by.
+//
+// Returns:
+//    *Information: A new Information instance representing the quotient of both Information.
 func (a *Information) Divide(other *Information) *Information {
 	return &Information{value: a.value / other.BaseValue()}
 }

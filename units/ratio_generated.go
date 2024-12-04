@@ -12,7 +12,7 @@ import (
 
 
 
-// RatioUnits enumeration
+// RatioUnits defines various units of Ratio.
 type RatioUnits string
 
 const (
@@ -31,19 +31,24 @@ const (
         RatioPartPerTrillion RatioUnits = "PartPerTrillion"
 )
 
-// RatioDto represents an Ratio
+// RatioDto represents a Ratio measurement with a numerical value and its corresponding unit.
 type RatioDto struct {
+    // Value is the numerical representation of the Ratio.
 	Value float64
+    // Unit specifies the unit of measurement for the Ratio, as defined in the RatioUnits enumeration.
 	Unit  RatioUnits
 }
 
-// RatioDtoFactory struct to group related functions
+// RatioDtoFactory groups methods for creating and serializing RatioDto objects.
 type RatioDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a RatioDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf RatioDtoFactory) FromJSON(data []byte) (*RatioDto, error) {
 	a := RatioDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into RatioDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -51,6 +56,9 @@ func (udf RatioDtoFactory) FromJSON(data []byte) (*RatioDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a RatioDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a RatioDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -62,10 +70,11 @@ func (a RatioDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Ratio struct
+// Ratio represents a measurement in a of Ratio.
+//
+// In mathematics, a ratio is a relationship between two numbers of the same kind (e.g., objects, persons, students, spoonfuls, units of whatever identical dimension), usually expressed as "a to b" or a:b, sometimes expressed arithmetically as a dimensionless quotient of the two that explicitly indicates how many times the first number contains the second (not necessarily an integer).
 type Ratio struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     decimal_fractionsLazy *float64 
@@ -76,57 +85,58 @@ type Ratio struct {
     parts_per_trillionLazy *float64 
 }
 
-// RatioFactory struct to group related functions
+// RatioFactory groups methods for creating Ratio instances.
 type RatioFactory struct{}
 
+// CreateRatio creates a new Ratio instance from the given value and unit.
 func (uf RatioFactory) CreateRatio(value float64, unit RatioUnits) (*Ratio, error) {
 	return newRatio(value, unit)
 }
 
+// FromDto converts a RatioDto to a Ratio instance.
 func (uf RatioFactory) FromDto(dto RatioDto) (*Ratio, error) {
 	return newRatio(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Ratio instance.
 func (uf RatioFactory) FromDtoJSON(data []byte) (*Ratio, error) {
 	unitDto, err := RatioDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse RatioDto from JSON: %w", err)
 	}
 	return RatioFactory{}.FromDto(*unitDto)
 }
 
 
-// FromDecimalFraction creates a new Ratio instance from DecimalFraction.
+// FromDecimalFractions creates a new Ratio instance from a value in DecimalFractions.
 func (uf RatioFactory) FromDecimalFractions(value float64) (*Ratio, error) {
 	return newRatio(value, RatioDecimalFraction)
 }
 
-// FromPercent creates a new Ratio instance from Percent.
+// FromPercent creates a new Ratio instance from a value in Percent.
 func (uf RatioFactory) FromPercent(value float64) (*Ratio, error) {
 	return newRatio(value, RatioPercent)
 }
 
-// FromPartPerThousand creates a new Ratio instance from PartPerThousand.
+// FromPartsPerThousand creates a new Ratio instance from a value in PartsPerThousand.
 func (uf RatioFactory) FromPartsPerThousand(value float64) (*Ratio, error) {
 	return newRatio(value, RatioPartPerThousand)
 }
 
-// FromPartPerMillion creates a new Ratio instance from PartPerMillion.
+// FromPartsPerMillion creates a new Ratio instance from a value in PartsPerMillion.
 func (uf RatioFactory) FromPartsPerMillion(value float64) (*Ratio, error) {
 	return newRatio(value, RatioPartPerMillion)
 }
 
-// FromPartPerBillion creates a new Ratio instance from PartPerBillion.
+// FromPartsPerBillion creates a new Ratio instance from a value in PartsPerBillion.
 func (uf RatioFactory) FromPartsPerBillion(value float64) (*Ratio, error) {
 	return newRatio(value, RatioPartPerBillion)
 }
 
-// FromPartPerTrillion creates a new Ratio instance from PartPerTrillion.
+// FromPartsPerTrillion creates a new Ratio instance from a value in PartsPerTrillion.
 func (uf RatioFactory) FromPartsPerTrillion(value float64) (*Ratio, error) {
 	return newRatio(value, RatioPartPerTrillion)
 }
-
-
 
 
 // newRatio creates a new Ratio.
@@ -139,13 +149,15 @@ func newRatio(value float64, fromUnit RatioUnits) (*Ratio, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Ratio in DecimalFraction.
+// BaseValue returns the base value of Ratio in DecimalFraction unit (the base/default quantity).
 func (a *Ratio) BaseValue() float64 {
 	return a.value
 }
 
 
-// DecimalFraction returns the value in DecimalFraction.
+// DecimalFractions returns the Ratio value in DecimalFractions.
+//
+// 
 func (a *Ratio) DecimalFractions() float64 {
 	if a.decimal_fractionsLazy != nil {
 		return *a.decimal_fractionsLazy
@@ -155,7 +167,9 @@ func (a *Ratio) DecimalFractions() float64 {
 	return decimal_fractions
 }
 
-// Percent returns the value in Percent.
+// Percent returns the Ratio value in Percent.
+//
+// 
 func (a *Ratio) Percent() float64 {
 	if a.percentLazy != nil {
 		return *a.percentLazy
@@ -165,7 +179,9 @@ func (a *Ratio) Percent() float64 {
 	return percent
 }
 
-// PartPerThousand returns the value in PartPerThousand.
+// PartsPerThousand returns the Ratio value in PartsPerThousand.
+//
+// 
 func (a *Ratio) PartsPerThousand() float64 {
 	if a.parts_per_thousandLazy != nil {
 		return *a.parts_per_thousandLazy
@@ -175,7 +191,9 @@ func (a *Ratio) PartsPerThousand() float64 {
 	return parts_per_thousand
 }
 
-// PartPerMillion returns the value in PartPerMillion.
+// PartsPerMillion returns the Ratio value in PartsPerMillion.
+//
+// 
 func (a *Ratio) PartsPerMillion() float64 {
 	if a.parts_per_millionLazy != nil {
 		return *a.parts_per_millionLazy
@@ -185,7 +203,9 @@ func (a *Ratio) PartsPerMillion() float64 {
 	return parts_per_million
 }
 
-// PartPerBillion returns the value in PartPerBillion.
+// PartsPerBillion returns the Ratio value in PartsPerBillion.
+//
+// 
 func (a *Ratio) PartsPerBillion() float64 {
 	if a.parts_per_billionLazy != nil {
 		return *a.parts_per_billionLazy
@@ -195,7 +215,9 @@ func (a *Ratio) PartsPerBillion() float64 {
 	return parts_per_billion
 }
 
-// PartPerTrillion returns the value in PartPerTrillion.
+// PartsPerTrillion returns the Ratio value in PartsPerTrillion.
+//
+// 
 func (a *Ratio) PartsPerTrillion() float64 {
 	if a.parts_per_trillionLazy != nil {
 		return *a.parts_per_trillionLazy
@@ -206,7 +228,9 @@ func (a *Ratio) PartsPerTrillion() float64 {
 }
 
 
-// ToDto creates an RatioDto representation.
+// ToDto creates a RatioDto representation from the Ratio instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DecimalFraction by default.
 func (a *Ratio) ToDto(holdInUnit *RatioUnits) RatioDto {
 	if holdInUnit == nil {
 		defaultUnit := RatioDecimalFraction // Default value
@@ -219,12 +243,19 @@ func (a *Ratio) ToDto(holdInUnit *RatioUnits) RatioDto {
 	}
 }
 
-// ToDtoJSON creates an RatioDto representation.
+// ToDtoJSON creates a JSON representation of the Ratio instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DecimalFraction by default.
 func (a *Ratio) ToDtoJSON(holdInUnit *RatioUnits) ([]byte, error) {
+	// Convert to RatioDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Ratio to a specific unit value.
+// Convert converts a Ratio to a specific unit value.
+// The function uses the provided unit type (RatioUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Ratio) Convert(toUnit RatioUnits) float64 {
 	switch toUnit { 
     case RatioDecimalFraction:
@@ -240,7 +271,7 @@ func (a *Ratio) Convert(toUnit RatioUnits) float64 {
     case RatioPartPerTrillion:
 		return a.PartsPerTrillion()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -283,13 +314,22 @@ func (a *Ratio) convertToBase(value float64, fromUnit RatioUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Ratio in the default unit (DecimalFraction),
+// formatted to two decimal places.
 func (a Ratio) String() string {
 	return a.ToString(RatioDecimalFraction, 2)
 }
 
-// ToString formats the Ratio to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Ratio value as a string with the specified unit and fractional digits.
+// It converts the Ratio to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Ratio value will be converted (e.g., DecimalFraction))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Ratio with the unit abbreviation.
 func (a *Ratio) ToString(unit RatioUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -319,12 +359,26 @@ func (a *Ratio) getUnitAbbreviation(unit RatioUnits) string {
 	}
 }
 
-// Check if the given Ratio are equals to the current Ratio
+// Equals checks if the given Ratio is equal to the current Ratio.
+//
+// Parameters:
+//    other: The Ratio to compare against.
+//
+// Returns:
+//    bool: Returns true if both Ratio are equal, false otherwise.
 func (a *Ratio) Equals(other *Ratio) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Ratio are equals to the current Ratio
+// CompareTo compares the current Ratio with another Ratio.
+// It returns -1 if the current Ratio is less than the other Ratio, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Ratio to compare against.
+//
+// Returns:
+//    int: -1 if the current Ratio is less, 1 if greater, and 0 if equal.
 func (a *Ratio) CompareTo(other *Ratio) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -337,22 +391,50 @@ func (a *Ratio) CompareTo(other *Ratio) int {
 	return 0
 }
 
-// Add the given Ratio to the current Ratio.
+// Add adds the given Ratio to the current Ratio and returns the result.
+// The result is a new Ratio instance with the sum of the values.
+//
+// Parameters:
+//    other: The Ratio to add to the current Ratio.
+//
+// Returns:
+//    *Ratio: A new Ratio instance representing the sum of both Ratio.
 func (a *Ratio) Add(other *Ratio) *Ratio {
 	return &Ratio{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Ratio to the current Ratio.
+// Subtract subtracts the given Ratio from the current Ratio and returns the result.
+// The result is a new Ratio instance with the difference of the values.
+//
+// Parameters:
+//    other: The Ratio to subtract from the current Ratio.
+//
+// Returns:
+//    *Ratio: A new Ratio instance representing the difference of both Ratio.
 func (a *Ratio) Subtract(other *Ratio) *Ratio {
 	return &Ratio{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Ratio to the current Ratio.
+// Multiply multiplies the current Ratio by the given Ratio and returns the result.
+// The result is a new Ratio instance with the product of the values.
+//
+// Parameters:
+//    other: The Ratio to multiply with the current Ratio.
+//
+// Returns:
+//    *Ratio: A new Ratio instance representing the product of both Ratio.
 func (a *Ratio) Multiply(other *Ratio) *Ratio {
 	return &Ratio{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Ratio to the current Ratio.
+// Divide divides the current Ratio by the given Ratio and returns the result.
+// The result is a new Ratio instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Ratio to divide the current Ratio by.
+//
+// Returns:
+//    *Ratio: A new Ratio instance representing the quotient of both Ratio.
 func (a *Ratio) Divide(other *Ratio) *Ratio {
 	return &Ratio{value: a.value / other.BaseValue()}
 }

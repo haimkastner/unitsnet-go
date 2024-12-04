@@ -12,7 +12,7 @@ import (
 
 
 
-// RadiationEquivalentDoseUnits enumeration
+// RadiationEquivalentDoseUnits defines various units of RadiationEquivalentDose.
 type RadiationEquivalentDoseUnits string
 
 const (
@@ -31,19 +31,24 @@ const (
         RadiationEquivalentDoseMilliroentgenEquivalentMan RadiationEquivalentDoseUnits = "MilliroentgenEquivalentMan"
 )
 
-// RadiationEquivalentDoseDto represents an RadiationEquivalentDose
+// RadiationEquivalentDoseDto represents a RadiationEquivalentDose measurement with a numerical value and its corresponding unit.
 type RadiationEquivalentDoseDto struct {
+    // Value is the numerical representation of the RadiationEquivalentDose.
 	Value float64
+    // Unit specifies the unit of measurement for the RadiationEquivalentDose, as defined in the RadiationEquivalentDoseUnits enumeration.
 	Unit  RadiationEquivalentDoseUnits
 }
 
-// RadiationEquivalentDoseDtoFactory struct to group related functions
+// RadiationEquivalentDoseDtoFactory groups methods for creating and serializing RadiationEquivalentDoseDto objects.
 type RadiationEquivalentDoseDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a RadiationEquivalentDoseDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf RadiationEquivalentDoseDtoFactory) FromJSON(data []byte) (*RadiationEquivalentDoseDto, error) {
 	a := RadiationEquivalentDoseDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into RadiationEquivalentDoseDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -51,6 +56,9 @@ func (udf RadiationEquivalentDoseDtoFactory) FromJSON(data []byte) (*RadiationEq
 	return &a, nil
 }
 
+// ToJSON serializes a RadiationEquivalentDoseDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a RadiationEquivalentDoseDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -62,10 +70,11 @@ func (a RadiationEquivalentDoseDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// RadiationEquivalentDose struct
+// RadiationEquivalentDose represents a measurement in a of RadiationEquivalentDose.
+//
+// Equivalent dose is a dose quantity representing the stochastic health effects of low levels of ionizing radiation on the human body which represents the probability of radiation-induced cancer and genetic damage.
 type RadiationEquivalentDose struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     sievertsLazy *float64 
@@ -76,57 +85,58 @@ type RadiationEquivalentDose struct {
     milliroentgens_equivalent_manLazy *float64 
 }
 
-// RadiationEquivalentDoseFactory struct to group related functions
+// RadiationEquivalentDoseFactory groups methods for creating RadiationEquivalentDose instances.
 type RadiationEquivalentDoseFactory struct{}
 
+// CreateRadiationEquivalentDose creates a new RadiationEquivalentDose instance from the given value and unit.
 func (uf RadiationEquivalentDoseFactory) CreateRadiationEquivalentDose(value float64, unit RadiationEquivalentDoseUnits) (*RadiationEquivalentDose, error) {
 	return newRadiationEquivalentDose(value, unit)
 }
 
+// FromDto converts a RadiationEquivalentDoseDto to a RadiationEquivalentDose instance.
 func (uf RadiationEquivalentDoseFactory) FromDto(dto RadiationEquivalentDoseDto) (*RadiationEquivalentDose, error) {
 	return newRadiationEquivalentDose(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a RadiationEquivalentDose instance.
 func (uf RadiationEquivalentDoseFactory) FromDtoJSON(data []byte) (*RadiationEquivalentDose, error) {
 	unitDto, err := RadiationEquivalentDoseDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse RadiationEquivalentDoseDto from JSON: %w", err)
 	}
 	return RadiationEquivalentDoseFactory{}.FromDto(*unitDto)
 }
 
 
-// FromSievert creates a new RadiationEquivalentDose instance from Sievert.
+// FromSieverts creates a new RadiationEquivalentDose instance from a value in Sieverts.
 func (uf RadiationEquivalentDoseFactory) FromSieverts(value float64) (*RadiationEquivalentDose, error) {
 	return newRadiationEquivalentDose(value, RadiationEquivalentDoseSievert)
 }
 
-// FromRoentgenEquivalentMan creates a new RadiationEquivalentDose instance from RoentgenEquivalentMan.
+// FromRoentgensEquivalentMan creates a new RadiationEquivalentDose instance from a value in RoentgensEquivalentMan.
 func (uf RadiationEquivalentDoseFactory) FromRoentgensEquivalentMan(value float64) (*RadiationEquivalentDose, error) {
 	return newRadiationEquivalentDose(value, RadiationEquivalentDoseRoentgenEquivalentMan)
 }
 
-// FromNanosievert creates a new RadiationEquivalentDose instance from Nanosievert.
+// FromNanosieverts creates a new RadiationEquivalentDose instance from a value in Nanosieverts.
 func (uf RadiationEquivalentDoseFactory) FromNanosieverts(value float64) (*RadiationEquivalentDose, error) {
 	return newRadiationEquivalentDose(value, RadiationEquivalentDoseNanosievert)
 }
 
-// FromMicrosievert creates a new RadiationEquivalentDose instance from Microsievert.
+// FromMicrosieverts creates a new RadiationEquivalentDose instance from a value in Microsieverts.
 func (uf RadiationEquivalentDoseFactory) FromMicrosieverts(value float64) (*RadiationEquivalentDose, error) {
 	return newRadiationEquivalentDose(value, RadiationEquivalentDoseMicrosievert)
 }
 
-// FromMillisievert creates a new RadiationEquivalentDose instance from Millisievert.
+// FromMillisieverts creates a new RadiationEquivalentDose instance from a value in Millisieverts.
 func (uf RadiationEquivalentDoseFactory) FromMillisieverts(value float64) (*RadiationEquivalentDose, error) {
 	return newRadiationEquivalentDose(value, RadiationEquivalentDoseMillisievert)
 }
 
-// FromMilliroentgenEquivalentMan creates a new RadiationEquivalentDose instance from MilliroentgenEquivalentMan.
+// FromMilliroentgensEquivalentMan creates a new RadiationEquivalentDose instance from a value in MilliroentgensEquivalentMan.
 func (uf RadiationEquivalentDoseFactory) FromMilliroentgensEquivalentMan(value float64) (*RadiationEquivalentDose, error) {
 	return newRadiationEquivalentDose(value, RadiationEquivalentDoseMilliroentgenEquivalentMan)
 }
-
-
 
 
 // newRadiationEquivalentDose creates a new RadiationEquivalentDose.
@@ -139,13 +149,15 @@ func newRadiationEquivalentDose(value float64, fromUnit RadiationEquivalentDoseU
 	return a, nil
 }
 
-// BaseValue returns the base value of RadiationEquivalentDose in Sievert.
+// BaseValue returns the base value of RadiationEquivalentDose in Sievert unit (the base/default quantity).
 func (a *RadiationEquivalentDose) BaseValue() float64 {
 	return a.value
 }
 
 
-// Sievert returns the value in Sievert.
+// Sieverts returns the RadiationEquivalentDose value in Sieverts.
+//
+// The sievert is a unit in the International System of Units (SI) intended to represent the stochastic health risk of ionizing radiation, which is defined as the probability of causing radiation-induced cancer and genetic damage.
 func (a *RadiationEquivalentDose) Sieverts() float64 {
 	if a.sievertsLazy != nil {
 		return *a.sievertsLazy
@@ -155,7 +167,9 @@ func (a *RadiationEquivalentDose) Sieverts() float64 {
 	return sieverts
 }
 
-// RoentgenEquivalentMan returns the value in RoentgenEquivalentMan.
+// RoentgensEquivalentMan returns the RadiationEquivalentDose value in RoentgensEquivalentMan.
+//
+// 
 func (a *RadiationEquivalentDose) RoentgensEquivalentMan() float64 {
 	if a.roentgens_equivalent_manLazy != nil {
 		return *a.roentgens_equivalent_manLazy
@@ -165,7 +179,9 @@ func (a *RadiationEquivalentDose) RoentgensEquivalentMan() float64 {
 	return roentgens_equivalent_man
 }
 
-// Nanosievert returns the value in Nanosievert.
+// Nanosieverts returns the RadiationEquivalentDose value in Nanosieverts.
+//
+// 
 func (a *RadiationEquivalentDose) Nanosieverts() float64 {
 	if a.nanosievertsLazy != nil {
 		return *a.nanosievertsLazy
@@ -175,7 +191,9 @@ func (a *RadiationEquivalentDose) Nanosieverts() float64 {
 	return nanosieverts
 }
 
-// Microsievert returns the value in Microsievert.
+// Microsieverts returns the RadiationEquivalentDose value in Microsieverts.
+//
+// 
 func (a *RadiationEquivalentDose) Microsieverts() float64 {
 	if a.microsievertsLazy != nil {
 		return *a.microsievertsLazy
@@ -185,7 +203,9 @@ func (a *RadiationEquivalentDose) Microsieverts() float64 {
 	return microsieverts
 }
 
-// Millisievert returns the value in Millisievert.
+// Millisieverts returns the RadiationEquivalentDose value in Millisieverts.
+//
+// 
 func (a *RadiationEquivalentDose) Millisieverts() float64 {
 	if a.millisievertsLazy != nil {
 		return *a.millisievertsLazy
@@ -195,7 +215,9 @@ func (a *RadiationEquivalentDose) Millisieverts() float64 {
 	return millisieverts
 }
 
-// MilliroentgenEquivalentMan returns the value in MilliroentgenEquivalentMan.
+// MilliroentgensEquivalentMan returns the RadiationEquivalentDose value in MilliroentgensEquivalentMan.
+//
+// 
 func (a *RadiationEquivalentDose) MilliroentgensEquivalentMan() float64 {
 	if a.milliroentgens_equivalent_manLazy != nil {
 		return *a.milliroentgens_equivalent_manLazy
@@ -206,7 +228,9 @@ func (a *RadiationEquivalentDose) MilliroentgensEquivalentMan() float64 {
 }
 
 
-// ToDto creates an RadiationEquivalentDoseDto representation.
+// ToDto creates a RadiationEquivalentDoseDto representation from the RadiationEquivalentDose instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Sievert by default.
 func (a *RadiationEquivalentDose) ToDto(holdInUnit *RadiationEquivalentDoseUnits) RadiationEquivalentDoseDto {
 	if holdInUnit == nil {
 		defaultUnit := RadiationEquivalentDoseSievert // Default value
@@ -219,12 +243,19 @@ func (a *RadiationEquivalentDose) ToDto(holdInUnit *RadiationEquivalentDoseUnits
 	}
 }
 
-// ToDtoJSON creates an RadiationEquivalentDoseDto representation.
+// ToDtoJSON creates a JSON representation of the RadiationEquivalentDose instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Sievert by default.
 func (a *RadiationEquivalentDose) ToDtoJSON(holdInUnit *RadiationEquivalentDoseUnits) ([]byte, error) {
+	// Convert to RadiationEquivalentDoseDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts RadiationEquivalentDose to a specific unit value.
+// Convert converts a RadiationEquivalentDose to a specific unit value.
+// The function uses the provided unit type (RadiationEquivalentDoseUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *RadiationEquivalentDose) Convert(toUnit RadiationEquivalentDoseUnits) float64 {
 	switch toUnit { 
     case RadiationEquivalentDoseSievert:
@@ -240,7 +271,7 @@ func (a *RadiationEquivalentDose) Convert(toUnit RadiationEquivalentDoseUnits) f
     case RadiationEquivalentDoseMilliroentgenEquivalentMan:
 		return a.MilliroentgensEquivalentMan()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -283,13 +314,22 @@ func (a *RadiationEquivalentDose) convertToBase(value float64, fromUnit Radiatio
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the RadiationEquivalentDose in the default unit (Sievert),
+// formatted to two decimal places.
 func (a RadiationEquivalentDose) String() string {
 	return a.ToString(RadiationEquivalentDoseSievert, 2)
 }
 
-// ToString formats the RadiationEquivalentDose to string.
-// fractionalDigits -1 for not mention
+// ToString formats the RadiationEquivalentDose value as a string with the specified unit and fractional digits.
+// It converts the RadiationEquivalentDose to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the RadiationEquivalentDose value will be converted (e.g., Sievert))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the RadiationEquivalentDose with the unit abbreviation.
 func (a *RadiationEquivalentDose) ToString(unit RadiationEquivalentDoseUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -319,12 +359,26 @@ func (a *RadiationEquivalentDose) getUnitAbbreviation(unit RadiationEquivalentDo
 	}
 }
 
-// Check if the given RadiationEquivalentDose are equals to the current RadiationEquivalentDose
+// Equals checks if the given RadiationEquivalentDose is equal to the current RadiationEquivalentDose.
+//
+// Parameters:
+//    other: The RadiationEquivalentDose to compare against.
+//
+// Returns:
+//    bool: Returns true if both RadiationEquivalentDose are equal, false otherwise.
 func (a *RadiationEquivalentDose) Equals(other *RadiationEquivalentDose) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given RadiationEquivalentDose are equals to the current RadiationEquivalentDose
+// CompareTo compares the current RadiationEquivalentDose with another RadiationEquivalentDose.
+// It returns -1 if the current RadiationEquivalentDose is less than the other RadiationEquivalentDose, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The RadiationEquivalentDose to compare against.
+//
+// Returns:
+//    int: -1 if the current RadiationEquivalentDose is less, 1 if greater, and 0 if equal.
 func (a *RadiationEquivalentDose) CompareTo(other *RadiationEquivalentDose) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -337,22 +391,50 @@ func (a *RadiationEquivalentDose) CompareTo(other *RadiationEquivalentDose) int 
 	return 0
 }
 
-// Add the given RadiationEquivalentDose to the current RadiationEquivalentDose.
+// Add adds the given RadiationEquivalentDose to the current RadiationEquivalentDose and returns the result.
+// The result is a new RadiationEquivalentDose instance with the sum of the values.
+//
+// Parameters:
+//    other: The RadiationEquivalentDose to add to the current RadiationEquivalentDose.
+//
+// Returns:
+//    *RadiationEquivalentDose: A new RadiationEquivalentDose instance representing the sum of both RadiationEquivalentDose.
 func (a *RadiationEquivalentDose) Add(other *RadiationEquivalentDose) *RadiationEquivalentDose {
 	return &RadiationEquivalentDose{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given RadiationEquivalentDose to the current RadiationEquivalentDose.
+// Subtract subtracts the given RadiationEquivalentDose from the current RadiationEquivalentDose and returns the result.
+// The result is a new RadiationEquivalentDose instance with the difference of the values.
+//
+// Parameters:
+//    other: The RadiationEquivalentDose to subtract from the current RadiationEquivalentDose.
+//
+// Returns:
+//    *RadiationEquivalentDose: A new RadiationEquivalentDose instance representing the difference of both RadiationEquivalentDose.
 func (a *RadiationEquivalentDose) Subtract(other *RadiationEquivalentDose) *RadiationEquivalentDose {
 	return &RadiationEquivalentDose{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given RadiationEquivalentDose to the current RadiationEquivalentDose.
+// Multiply multiplies the current RadiationEquivalentDose by the given RadiationEquivalentDose and returns the result.
+// The result is a new RadiationEquivalentDose instance with the product of the values.
+//
+// Parameters:
+//    other: The RadiationEquivalentDose to multiply with the current RadiationEquivalentDose.
+//
+// Returns:
+//    *RadiationEquivalentDose: A new RadiationEquivalentDose instance representing the product of both RadiationEquivalentDose.
 func (a *RadiationEquivalentDose) Multiply(other *RadiationEquivalentDose) *RadiationEquivalentDose {
 	return &RadiationEquivalentDose{value: a.value * other.BaseValue()}
 }
 
-// Divide the given RadiationEquivalentDose to the current RadiationEquivalentDose.
+// Divide divides the current RadiationEquivalentDose by the given RadiationEquivalentDose and returns the result.
+// The result is a new RadiationEquivalentDose instance with the quotient of the values.
+//
+// Parameters:
+//    other: The RadiationEquivalentDose to divide the current RadiationEquivalentDose by.
+//
+// Returns:
+//    *RadiationEquivalentDose: A new RadiationEquivalentDose instance representing the quotient of both RadiationEquivalentDose.
 func (a *RadiationEquivalentDose) Divide(other *RadiationEquivalentDose) *RadiationEquivalentDose {
 	return &RadiationEquivalentDose{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// AccelerationUnits enumeration
+// AccelerationUnits defines various units of Acceleration.
 type AccelerationUnits string
 
 const (
@@ -47,19 +47,24 @@ const (
         AccelerationMillistandardGravity AccelerationUnits = "MillistandardGravity"
 )
 
-// AccelerationDto represents an Acceleration
+// AccelerationDto represents a Acceleration measurement with a numerical value and its corresponding unit.
 type AccelerationDto struct {
+    // Value is the numerical representation of the Acceleration.
 	Value float64
+    // Unit specifies the unit of measurement for the Acceleration, as defined in the AccelerationUnits enumeration.
 	Unit  AccelerationUnits
 }
 
-// AccelerationDtoFactory struct to group related functions
+// AccelerationDtoFactory groups methods for creating and serializing AccelerationDto objects.
 type AccelerationDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a AccelerationDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf AccelerationDtoFactory) FromJSON(data []byte) (*AccelerationDto, error) {
 	a := AccelerationDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into AccelerationDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -67,6 +72,9 @@ func (udf AccelerationDtoFactory) FromJSON(data []byte) (*AccelerationDto, error
 	return &a, nil
 }
 
+// ToJSON serializes a AccelerationDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a AccelerationDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -78,10 +86,11 @@ func (a AccelerationDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Acceleration struct
+// Acceleration represents a measurement in a of Acceleration.
+//
+// Acceleration, in physics, is the rate at which the velocity of an object changes over time. An object's acceleration is the net result of any and all forces acting on the object, as described by Newton's Second Law. The SI unit for acceleration is the Meter per second squared (m/s²). Accelerations are vector quantities (they have magnitude and direction) and add according to the parallelogram law. As a vector, the calculated net force is equal to the product of the object's mass (a scalar quantity) and the acceleration.
 type Acceleration struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     meters_per_second_squaredLazy *float64 
@@ -100,97 +109,98 @@ type Acceleration struct {
     millistandard_gravityLazy *float64 
 }
 
-// AccelerationFactory struct to group related functions
+// AccelerationFactory groups methods for creating Acceleration instances.
 type AccelerationFactory struct{}
 
+// CreateAcceleration creates a new Acceleration instance from the given value and unit.
 func (uf AccelerationFactory) CreateAcceleration(value float64, unit AccelerationUnits) (*Acceleration, error) {
 	return newAcceleration(value, unit)
 }
 
+// FromDto converts a AccelerationDto to a Acceleration instance.
 func (uf AccelerationFactory) FromDto(dto AccelerationDto) (*Acceleration, error) {
 	return newAcceleration(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Acceleration instance.
 func (uf AccelerationFactory) FromDtoJSON(data []byte) (*Acceleration, error) {
 	unitDto, err := AccelerationDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse AccelerationDto from JSON: %w", err)
 	}
 	return AccelerationFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMeterPerSecondSquared creates a new Acceleration instance from MeterPerSecondSquared.
+// FromMetersPerSecondSquared creates a new Acceleration instance from a value in MetersPerSecondSquared.
 func (uf AccelerationFactory) FromMetersPerSecondSquared(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationMeterPerSecondSquared)
 }
 
-// FromInchPerSecondSquared creates a new Acceleration instance from InchPerSecondSquared.
+// FromInchesPerSecondSquared creates a new Acceleration instance from a value in InchesPerSecondSquared.
 func (uf AccelerationFactory) FromInchesPerSecondSquared(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationInchPerSecondSquared)
 }
 
-// FromFootPerSecondSquared creates a new Acceleration instance from FootPerSecondSquared.
+// FromFeetPerSecondSquared creates a new Acceleration instance from a value in FeetPerSecondSquared.
 func (uf AccelerationFactory) FromFeetPerSecondSquared(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationFootPerSecondSquared)
 }
 
-// FromKnotPerSecond creates a new Acceleration instance from KnotPerSecond.
+// FromKnotsPerSecond creates a new Acceleration instance from a value in KnotsPerSecond.
 func (uf AccelerationFactory) FromKnotsPerSecond(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationKnotPerSecond)
 }
 
-// FromKnotPerMinute creates a new Acceleration instance from KnotPerMinute.
+// FromKnotsPerMinute creates a new Acceleration instance from a value in KnotsPerMinute.
 func (uf AccelerationFactory) FromKnotsPerMinute(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationKnotPerMinute)
 }
 
-// FromKnotPerHour creates a new Acceleration instance from KnotPerHour.
+// FromKnotsPerHour creates a new Acceleration instance from a value in KnotsPerHour.
 func (uf AccelerationFactory) FromKnotsPerHour(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationKnotPerHour)
 }
 
-// FromStandardGravity creates a new Acceleration instance from StandardGravity.
+// FromStandardGravity creates a new Acceleration instance from a value in StandardGravity.
 func (uf AccelerationFactory) FromStandardGravity(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationStandardGravity)
 }
 
-// FromNanometerPerSecondSquared creates a new Acceleration instance from NanometerPerSecondSquared.
+// FromNanometersPerSecondSquared creates a new Acceleration instance from a value in NanometersPerSecondSquared.
 func (uf AccelerationFactory) FromNanometersPerSecondSquared(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationNanometerPerSecondSquared)
 }
 
-// FromMicrometerPerSecondSquared creates a new Acceleration instance from MicrometerPerSecondSquared.
+// FromMicrometersPerSecondSquared creates a new Acceleration instance from a value in MicrometersPerSecondSquared.
 func (uf AccelerationFactory) FromMicrometersPerSecondSquared(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationMicrometerPerSecondSquared)
 }
 
-// FromMillimeterPerSecondSquared creates a new Acceleration instance from MillimeterPerSecondSquared.
+// FromMillimetersPerSecondSquared creates a new Acceleration instance from a value in MillimetersPerSecondSquared.
 func (uf AccelerationFactory) FromMillimetersPerSecondSquared(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationMillimeterPerSecondSquared)
 }
 
-// FromCentimeterPerSecondSquared creates a new Acceleration instance from CentimeterPerSecondSquared.
+// FromCentimetersPerSecondSquared creates a new Acceleration instance from a value in CentimetersPerSecondSquared.
 func (uf AccelerationFactory) FromCentimetersPerSecondSquared(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationCentimeterPerSecondSquared)
 }
 
-// FromDecimeterPerSecondSquared creates a new Acceleration instance from DecimeterPerSecondSquared.
+// FromDecimetersPerSecondSquared creates a new Acceleration instance from a value in DecimetersPerSecondSquared.
 func (uf AccelerationFactory) FromDecimetersPerSecondSquared(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationDecimeterPerSecondSquared)
 }
 
-// FromKilometerPerSecondSquared creates a new Acceleration instance from KilometerPerSecondSquared.
+// FromKilometersPerSecondSquared creates a new Acceleration instance from a value in KilometersPerSecondSquared.
 func (uf AccelerationFactory) FromKilometersPerSecondSquared(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationKilometerPerSecondSquared)
 }
 
-// FromMillistandardGravity creates a new Acceleration instance from MillistandardGravity.
+// FromMillistandardGravity creates a new Acceleration instance from a value in MillistandardGravity.
 func (uf AccelerationFactory) FromMillistandardGravity(value float64) (*Acceleration, error) {
 	return newAcceleration(value, AccelerationMillistandardGravity)
 }
-
-
 
 
 // newAcceleration creates a new Acceleration.
@@ -203,13 +213,15 @@ func newAcceleration(value float64, fromUnit AccelerationUnits) (*Acceleration, 
 	return a, nil
 }
 
-// BaseValue returns the base value of Acceleration in MeterPerSecondSquared.
+// BaseValue returns the base value of Acceleration in MeterPerSecondSquared unit (the base/default quantity).
 func (a *Acceleration) BaseValue() float64 {
 	return a.value
 }
 
 
-// MeterPerSecondSquared returns the value in MeterPerSecondSquared.
+// MetersPerSecondSquared returns the Acceleration value in MetersPerSecondSquared.
+//
+// 
 func (a *Acceleration) MetersPerSecondSquared() float64 {
 	if a.meters_per_second_squaredLazy != nil {
 		return *a.meters_per_second_squaredLazy
@@ -219,7 +231,9 @@ func (a *Acceleration) MetersPerSecondSquared() float64 {
 	return meters_per_second_squared
 }
 
-// InchPerSecondSquared returns the value in InchPerSecondSquared.
+// InchesPerSecondSquared returns the Acceleration value in InchesPerSecondSquared.
+//
+// 
 func (a *Acceleration) InchesPerSecondSquared() float64 {
 	if a.inches_per_second_squaredLazy != nil {
 		return *a.inches_per_second_squaredLazy
@@ -229,7 +243,9 @@ func (a *Acceleration) InchesPerSecondSquared() float64 {
 	return inches_per_second_squared
 }
 
-// FootPerSecondSquared returns the value in FootPerSecondSquared.
+// FeetPerSecondSquared returns the Acceleration value in FeetPerSecondSquared.
+//
+// 
 func (a *Acceleration) FeetPerSecondSquared() float64 {
 	if a.feet_per_second_squaredLazy != nil {
 		return *a.feet_per_second_squaredLazy
@@ -239,7 +255,9 @@ func (a *Acceleration) FeetPerSecondSquared() float64 {
 	return feet_per_second_squared
 }
 
-// KnotPerSecond returns the value in KnotPerSecond.
+// KnotsPerSecond returns the Acceleration value in KnotsPerSecond.
+//
+// 
 func (a *Acceleration) KnotsPerSecond() float64 {
 	if a.knots_per_secondLazy != nil {
 		return *a.knots_per_secondLazy
@@ -249,7 +267,9 @@ func (a *Acceleration) KnotsPerSecond() float64 {
 	return knots_per_second
 }
 
-// KnotPerMinute returns the value in KnotPerMinute.
+// KnotsPerMinute returns the Acceleration value in KnotsPerMinute.
+//
+// 
 func (a *Acceleration) KnotsPerMinute() float64 {
 	if a.knots_per_minuteLazy != nil {
 		return *a.knots_per_minuteLazy
@@ -259,7 +279,9 @@ func (a *Acceleration) KnotsPerMinute() float64 {
 	return knots_per_minute
 }
 
-// KnotPerHour returns the value in KnotPerHour.
+// KnotsPerHour returns the Acceleration value in KnotsPerHour.
+//
+// 
 func (a *Acceleration) KnotsPerHour() float64 {
 	if a.knots_per_hourLazy != nil {
 		return *a.knots_per_hourLazy
@@ -269,7 +291,9 @@ func (a *Acceleration) KnotsPerHour() float64 {
 	return knots_per_hour
 }
 
-// StandardGravity returns the value in StandardGravity.
+// StandardGravity returns the Acceleration value in StandardGravity.
+//
+// 
 func (a *Acceleration) StandardGravity() float64 {
 	if a.standard_gravityLazy != nil {
 		return *a.standard_gravityLazy
@@ -279,7 +303,9 @@ func (a *Acceleration) StandardGravity() float64 {
 	return standard_gravity
 }
 
-// NanometerPerSecondSquared returns the value in NanometerPerSecondSquared.
+// NanometersPerSecondSquared returns the Acceleration value in NanometersPerSecondSquared.
+//
+// 
 func (a *Acceleration) NanometersPerSecondSquared() float64 {
 	if a.nanometers_per_second_squaredLazy != nil {
 		return *a.nanometers_per_second_squaredLazy
@@ -289,7 +315,9 @@ func (a *Acceleration) NanometersPerSecondSquared() float64 {
 	return nanometers_per_second_squared
 }
 
-// MicrometerPerSecondSquared returns the value in MicrometerPerSecondSquared.
+// MicrometersPerSecondSquared returns the Acceleration value in MicrometersPerSecondSquared.
+//
+// 
 func (a *Acceleration) MicrometersPerSecondSquared() float64 {
 	if a.micrometers_per_second_squaredLazy != nil {
 		return *a.micrometers_per_second_squaredLazy
@@ -299,7 +327,9 @@ func (a *Acceleration) MicrometersPerSecondSquared() float64 {
 	return micrometers_per_second_squared
 }
 
-// MillimeterPerSecondSquared returns the value in MillimeterPerSecondSquared.
+// MillimetersPerSecondSquared returns the Acceleration value in MillimetersPerSecondSquared.
+//
+// 
 func (a *Acceleration) MillimetersPerSecondSquared() float64 {
 	if a.millimeters_per_second_squaredLazy != nil {
 		return *a.millimeters_per_second_squaredLazy
@@ -309,7 +339,9 @@ func (a *Acceleration) MillimetersPerSecondSquared() float64 {
 	return millimeters_per_second_squared
 }
 
-// CentimeterPerSecondSquared returns the value in CentimeterPerSecondSquared.
+// CentimetersPerSecondSquared returns the Acceleration value in CentimetersPerSecondSquared.
+//
+// 
 func (a *Acceleration) CentimetersPerSecondSquared() float64 {
 	if a.centimeters_per_second_squaredLazy != nil {
 		return *a.centimeters_per_second_squaredLazy
@@ -319,7 +351,9 @@ func (a *Acceleration) CentimetersPerSecondSquared() float64 {
 	return centimeters_per_second_squared
 }
 
-// DecimeterPerSecondSquared returns the value in DecimeterPerSecondSquared.
+// DecimetersPerSecondSquared returns the Acceleration value in DecimetersPerSecondSquared.
+//
+// 
 func (a *Acceleration) DecimetersPerSecondSquared() float64 {
 	if a.decimeters_per_second_squaredLazy != nil {
 		return *a.decimeters_per_second_squaredLazy
@@ -329,7 +363,9 @@ func (a *Acceleration) DecimetersPerSecondSquared() float64 {
 	return decimeters_per_second_squared
 }
 
-// KilometerPerSecondSquared returns the value in KilometerPerSecondSquared.
+// KilometersPerSecondSquared returns the Acceleration value in KilometersPerSecondSquared.
+//
+// 
 func (a *Acceleration) KilometersPerSecondSquared() float64 {
 	if a.kilometers_per_second_squaredLazy != nil {
 		return *a.kilometers_per_second_squaredLazy
@@ -339,7 +375,9 @@ func (a *Acceleration) KilometersPerSecondSquared() float64 {
 	return kilometers_per_second_squared
 }
 
-// MillistandardGravity returns the value in MillistandardGravity.
+// MillistandardGravity returns the Acceleration value in MillistandardGravity.
+//
+// 
 func (a *Acceleration) MillistandardGravity() float64 {
 	if a.millistandard_gravityLazy != nil {
 		return *a.millistandard_gravityLazy
@@ -350,7 +388,9 @@ func (a *Acceleration) MillistandardGravity() float64 {
 }
 
 
-// ToDto creates an AccelerationDto representation.
+// ToDto creates a AccelerationDto representation from the Acceleration instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterPerSecondSquared by default.
 func (a *Acceleration) ToDto(holdInUnit *AccelerationUnits) AccelerationDto {
 	if holdInUnit == nil {
 		defaultUnit := AccelerationMeterPerSecondSquared // Default value
@@ -363,12 +403,19 @@ func (a *Acceleration) ToDto(holdInUnit *AccelerationUnits) AccelerationDto {
 	}
 }
 
-// ToDtoJSON creates an AccelerationDto representation.
+// ToDtoJSON creates a JSON representation of the Acceleration instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterPerSecondSquared by default.
 func (a *Acceleration) ToDtoJSON(holdInUnit *AccelerationUnits) ([]byte, error) {
+	// Convert to AccelerationDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Acceleration to a specific unit value.
+// Convert converts a Acceleration to a specific unit value.
+// The function uses the provided unit type (AccelerationUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Acceleration) Convert(toUnit AccelerationUnits) float64 {
 	switch toUnit { 
     case AccelerationMeterPerSecondSquared:
@@ -400,7 +447,7 @@ func (a *Acceleration) Convert(toUnit AccelerationUnits) float64 {
     case AccelerationMillistandardGravity:
 		return a.MillistandardGravity()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -475,13 +522,22 @@ func (a *Acceleration) convertToBase(value float64, fromUnit AccelerationUnits) 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Acceleration in the default unit (MeterPerSecondSquared),
+// formatted to two decimal places.
 func (a Acceleration) String() string {
 	return a.ToString(AccelerationMeterPerSecondSquared, 2)
 }
 
-// ToString formats the Acceleration to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Acceleration value as a string with the specified unit and fractional digits.
+// It converts the Acceleration to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Acceleration value will be converted (e.g., MeterPerSecondSquared))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Acceleration with the unit abbreviation.
 func (a *Acceleration) ToString(unit AccelerationUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -527,12 +583,26 @@ func (a *Acceleration) getUnitAbbreviation(unit AccelerationUnits) string {
 	}
 }
 
-// Check if the given Acceleration are equals to the current Acceleration
+// Equals checks if the given Acceleration is equal to the current Acceleration.
+//
+// Parameters:
+//    other: The Acceleration to compare against.
+//
+// Returns:
+//    bool: Returns true if both Acceleration are equal, false otherwise.
 func (a *Acceleration) Equals(other *Acceleration) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Acceleration are equals to the current Acceleration
+// CompareTo compares the current Acceleration with another Acceleration.
+// It returns -1 if the current Acceleration is less than the other Acceleration, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Acceleration to compare against.
+//
+// Returns:
+//    int: -1 if the current Acceleration is less, 1 if greater, and 0 if equal.
 func (a *Acceleration) CompareTo(other *Acceleration) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -545,22 +615,50 @@ func (a *Acceleration) CompareTo(other *Acceleration) int {
 	return 0
 }
 
-// Add the given Acceleration to the current Acceleration.
+// Add adds the given Acceleration to the current Acceleration and returns the result.
+// The result is a new Acceleration instance with the sum of the values.
+//
+// Parameters:
+//    other: The Acceleration to add to the current Acceleration.
+//
+// Returns:
+//    *Acceleration: A new Acceleration instance representing the sum of both Acceleration.
 func (a *Acceleration) Add(other *Acceleration) *Acceleration {
 	return &Acceleration{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Acceleration to the current Acceleration.
+// Subtract subtracts the given Acceleration from the current Acceleration and returns the result.
+// The result is a new Acceleration instance with the difference of the values.
+//
+// Parameters:
+//    other: The Acceleration to subtract from the current Acceleration.
+//
+// Returns:
+//    *Acceleration: A new Acceleration instance representing the difference of both Acceleration.
 func (a *Acceleration) Subtract(other *Acceleration) *Acceleration {
 	return &Acceleration{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Acceleration to the current Acceleration.
+// Multiply multiplies the current Acceleration by the given Acceleration and returns the result.
+// The result is a new Acceleration instance with the product of the values.
+//
+// Parameters:
+//    other: The Acceleration to multiply with the current Acceleration.
+//
+// Returns:
+//    *Acceleration: A new Acceleration instance representing the product of both Acceleration.
 func (a *Acceleration) Multiply(other *Acceleration) *Acceleration {
 	return &Acceleration{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Acceleration to the current Acceleration.
+// Divide divides the current Acceleration by the given Acceleration and returns the result.
+// The result is a new Acceleration instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Acceleration to divide the current Acceleration by.
+//
+// Returns:
+//    *Acceleration: A new Acceleration instance representing the quotient of both Acceleration.
 func (a *Acceleration) Divide(other *Acceleration) *Acceleration {
 	return &Acceleration{value: a.value / other.BaseValue()}
 }

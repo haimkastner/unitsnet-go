@@ -12,7 +12,7 @@ import (
 
 
 
-// RotationalStiffnessUnits enumeration
+// RotationalStiffnessUnits defines various units of RotationalStiffness.
 type RotationalStiffnessUnits string
 
 const (
@@ -85,19 +85,24 @@ const (
         RotationalStiffnessMeganewtonMillimeterPerRadian RotationalStiffnessUnits = "MeganewtonMillimeterPerRadian"
 )
 
-// RotationalStiffnessDto represents an RotationalStiffness
+// RotationalStiffnessDto represents a RotationalStiffness measurement with a numerical value and its corresponding unit.
 type RotationalStiffnessDto struct {
+    // Value is the numerical representation of the RotationalStiffness.
 	Value float64
+    // Unit specifies the unit of measurement for the RotationalStiffness, as defined in the RotationalStiffnessUnits enumeration.
 	Unit  RotationalStiffnessUnits
 }
 
-// RotationalStiffnessDtoFactory struct to group related functions
+// RotationalStiffnessDtoFactory groups methods for creating and serializing RotationalStiffnessDto objects.
 type RotationalStiffnessDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a RotationalStiffnessDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf RotationalStiffnessDtoFactory) FromJSON(data []byte) (*RotationalStiffnessDto, error) {
 	a := RotationalStiffnessDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into RotationalStiffnessDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -105,6 +110,9 @@ func (udf RotationalStiffnessDtoFactory) FromJSON(data []byte) (*RotationalStiff
 	return &a, nil
 }
 
+// ToJSON serializes a RotationalStiffnessDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a RotationalStiffnessDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -116,10 +124,11 @@ func (a RotationalStiffnessDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// RotationalStiffness struct
+// RotationalStiffness represents a measurement in a of RotationalStiffness.
+//
+// https://en.wikipedia.org/wiki/Stiffness#Rotational_stiffness
 type RotationalStiffness struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     newton_meters_per_radianLazy *float64 
@@ -157,192 +166,193 @@ type RotationalStiffness struct {
     meganewton_millimeters_per_radianLazy *float64 
 }
 
-// RotationalStiffnessFactory struct to group related functions
+// RotationalStiffnessFactory groups methods for creating RotationalStiffness instances.
 type RotationalStiffnessFactory struct{}
 
+// CreateRotationalStiffness creates a new RotationalStiffness instance from the given value and unit.
 func (uf RotationalStiffnessFactory) CreateRotationalStiffness(value float64, unit RotationalStiffnessUnits) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, unit)
 }
 
+// FromDto converts a RotationalStiffnessDto to a RotationalStiffness instance.
 func (uf RotationalStiffnessFactory) FromDto(dto RotationalStiffnessDto) (*RotationalStiffness, error) {
 	return newRotationalStiffness(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a RotationalStiffness instance.
 func (uf RotationalStiffnessFactory) FromDtoJSON(data []byte) (*RotationalStiffness, error) {
 	unitDto, err := RotationalStiffnessDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse RotationalStiffnessDto from JSON: %w", err)
 	}
 	return RotationalStiffnessFactory{}.FromDto(*unitDto)
 }
 
 
-// FromNewtonMeterPerRadian creates a new RotationalStiffness instance from NewtonMeterPerRadian.
+// FromNewtonMetersPerRadian creates a new RotationalStiffness instance from a value in NewtonMetersPerRadian.
 func (uf RotationalStiffnessFactory) FromNewtonMetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessNewtonMeterPerRadian)
 }
 
-// FromPoundForceFootPerDegrees creates a new RotationalStiffness instance from PoundForceFootPerDegrees.
+// FromPoundForceFeetPerDegrees creates a new RotationalStiffness instance from a value in PoundForceFeetPerDegrees.
 func (uf RotationalStiffnessFactory) FromPoundForceFeetPerDegrees(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessPoundForceFootPerDegrees)
 }
 
-// FromKilopoundForceFootPerDegrees creates a new RotationalStiffness instance from KilopoundForceFootPerDegrees.
+// FromKilopoundForceFeetPerDegrees creates a new RotationalStiffness instance from a value in KilopoundForceFeetPerDegrees.
 func (uf RotationalStiffnessFactory) FromKilopoundForceFeetPerDegrees(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessKilopoundForceFootPerDegrees)
 }
 
-// FromNewtonMillimeterPerDegree creates a new RotationalStiffness instance from NewtonMillimeterPerDegree.
+// FromNewtonMillimetersPerDegree creates a new RotationalStiffness instance from a value in NewtonMillimetersPerDegree.
 func (uf RotationalStiffnessFactory) FromNewtonMillimetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessNewtonMillimeterPerDegree)
 }
 
-// FromNewtonMeterPerDegree creates a new RotationalStiffness instance from NewtonMeterPerDegree.
+// FromNewtonMetersPerDegree creates a new RotationalStiffness instance from a value in NewtonMetersPerDegree.
 func (uf RotationalStiffnessFactory) FromNewtonMetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessNewtonMeterPerDegree)
 }
 
-// FromNewtonMillimeterPerRadian creates a new RotationalStiffness instance from NewtonMillimeterPerRadian.
+// FromNewtonMillimetersPerRadian creates a new RotationalStiffness instance from a value in NewtonMillimetersPerRadian.
 func (uf RotationalStiffnessFactory) FromNewtonMillimetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessNewtonMillimeterPerRadian)
 }
 
-// FromPoundForceFeetPerRadian creates a new RotationalStiffness instance from PoundForceFeetPerRadian.
+// FromPoundForceFeetPerRadian creates a new RotationalStiffness instance from a value in PoundForceFeetPerRadian.
 func (uf RotationalStiffnessFactory) FromPoundForceFeetPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessPoundForceFeetPerRadian)
 }
 
-// FromKilonewtonMeterPerRadian creates a new RotationalStiffness instance from KilonewtonMeterPerRadian.
+// FromKilonewtonMetersPerRadian creates a new RotationalStiffness instance from a value in KilonewtonMetersPerRadian.
 func (uf RotationalStiffnessFactory) FromKilonewtonMetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessKilonewtonMeterPerRadian)
 }
 
-// FromMeganewtonMeterPerRadian creates a new RotationalStiffness instance from MeganewtonMeterPerRadian.
+// FromMeganewtonMetersPerRadian creates a new RotationalStiffness instance from a value in MeganewtonMetersPerRadian.
 func (uf RotationalStiffnessFactory) FromMeganewtonMetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMeganewtonMeterPerRadian)
 }
 
-// FromNanonewtonMillimeterPerDegree creates a new RotationalStiffness instance from NanonewtonMillimeterPerDegree.
+// FromNanonewtonMillimetersPerDegree creates a new RotationalStiffness instance from a value in NanonewtonMillimetersPerDegree.
 func (uf RotationalStiffnessFactory) FromNanonewtonMillimetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessNanonewtonMillimeterPerDegree)
 }
 
-// FromMicronewtonMillimeterPerDegree creates a new RotationalStiffness instance from MicronewtonMillimeterPerDegree.
+// FromMicronewtonMillimetersPerDegree creates a new RotationalStiffness instance from a value in MicronewtonMillimetersPerDegree.
 func (uf RotationalStiffnessFactory) FromMicronewtonMillimetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMicronewtonMillimeterPerDegree)
 }
 
-// FromMillinewtonMillimeterPerDegree creates a new RotationalStiffness instance from MillinewtonMillimeterPerDegree.
+// FromMillinewtonMillimetersPerDegree creates a new RotationalStiffness instance from a value in MillinewtonMillimetersPerDegree.
 func (uf RotationalStiffnessFactory) FromMillinewtonMillimetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMillinewtonMillimeterPerDegree)
 }
 
-// FromCentinewtonMillimeterPerDegree creates a new RotationalStiffness instance from CentinewtonMillimeterPerDegree.
+// FromCentinewtonMillimetersPerDegree creates a new RotationalStiffness instance from a value in CentinewtonMillimetersPerDegree.
 func (uf RotationalStiffnessFactory) FromCentinewtonMillimetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessCentinewtonMillimeterPerDegree)
 }
 
-// FromDecinewtonMillimeterPerDegree creates a new RotationalStiffness instance from DecinewtonMillimeterPerDegree.
+// FromDecinewtonMillimetersPerDegree creates a new RotationalStiffness instance from a value in DecinewtonMillimetersPerDegree.
 func (uf RotationalStiffnessFactory) FromDecinewtonMillimetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessDecinewtonMillimeterPerDegree)
 }
 
-// FromDecanewtonMillimeterPerDegree creates a new RotationalStiffness instance from DecanewtonMillimeterPerDegree.
+// FromDecanewtonMillimetersPerDegree creates a new RotationalStiffness instance from a value in DecanewtonMillimetersPerDegree.
 func (uf RotationalStiffnessFactory) FromDecanewtonMillimetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessDecanewtonMillimeterPerDegree)
 }
 
-// FromKilonewtonMillimeterPerDegree creates a new RotationalStiffness instance from KilonewtonMillimeterPerDegree.
+// FromKilonewtonMillimetersPerDegree creates a new RotationalStiffness instance from a value in KilonewtonMillimetersPerDegree.
 func (uf RotationalStiffnessFactory) FromKilonewtonMillimetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessKilonewtonMillimeterPerDegree)
 }
 
-// FromMeganewtonMillimeterPerDegree creates a new RotationalStiffness instance from MeganewtonMillimeterPerDegree.
+// FromMeganewtonMillimetersPerDegree creates a new RotationalStiffness instance from a value in MeganewtonMillimetersPerDegree.
 func (uf RotationalStiffnessFactory) FromMeganewtonMillimetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMeganewtonMillimeterPerDegree)
 }
 
-// FromNanonewtonMeterPerDegree creates a new RotationalStiffness instance from NanonewtonMeterPerDegree.
+// FromNanonewtonMetersPerDegree creates a new RotationalStiffness instance from a value in NanonewtonMetersPerDegree.
 func (uf RotationalStiffnessFactory) FromNanonewtonMetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessNanonewtonMeterPerDegree)
 }
 
-// FromMicronewtonMeterPerDegree creates a new RotationalStiffness instance from MicronewtonMeterPerDegree.
+// FromMicronewtonMetersPerDegree creates a new RotationalStiffness instance from a value in MicronewtonMetersPerDegree.
 func (uf RotationalStiffnessFactory) FromMicronewtonMetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMicronewtonMeterPerDegree)
 }
 
-// FromMillinewtonMeterPerDegree creates a new RotationalStiffness instance from MillinewtonMeterPerDegree.
+// FromMillinewtonMetersPerDegree creates a new RotationalStiffness instance from a value in MillinewtonMetersPerDegree.
 func (uf RotationalStiffnessFactory) FromMillinewtonMetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMillinewtonMeterPerDegree)
 }
 
-// FromCentinewtonMeterPerDegree creates a new RotationalStiffness instance from CentinewtonMeterPerDegree.
+// FromCentinewtonMetersPerDegree creates a new RotationalStiffness instance from a value in CentinewtonMetersPerDegree.
 func (uf RotationalStiffnessFactory) FromCentinewtonMetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessCentinewtonMeterPerDegree)
 }
 
-// FromDecinewtonMeterPerDegree creates a new RotationalStiffness instance from DecinewtonMeterPerDegree.
+// FromDecinewtonMetersPerDegree creates a new RotationalStiffness instance from a value in DecinewtonMetersPerDegree.
 func (uf RotationalStiffnessFactory) FromDecinewtonMetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessDecinewtonMeterPerDegree)
 }
 
-// FromDecanewtonMeterPerDegree creates a new RotationalStiffness instance from DecanewtonMeterPerDegree.
+// FromDecanewtonMetersPerDegree creates a new RotationalStiffness instance from a value in DecanewtonMetersPerDegree.
 func (uf RotationalStiffnessFactory) FromDecanewtonMetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessDecanewtonMeterPerDegree)
 }
 
-// FromKilonewtonMeterPerDegree creates a new RotationalStiffness instance from KilonewtonMeterPerDegree.
+// FromKilonewtonMetersPerDegree creates a new RotationalStiffness instance from a value in KilonewtonMetersPerDegree.
 func (uf RotationalStiffnessFactory) FromKilonewtonMetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessKilonewtonMeterPerDegree)
 }
 
-// FromMeganewtonMeterPerDegree creates a new RotationalStiffness instance from MeganewtonMeterPerDegree.
+// FromMeganewtonMetersPerDegree creates a new RotationalStiffness instance from a value in MeganewtonMetersPerDegree.
 func (uf RotationalStiffnessFactory) FromMeganewtonMetersPerDegree(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMeganewtonMeterPerDegree)
 }
 
-// FromNanonewtonMillimeterPerRadian creates a new RotationalStiffness instance from NanonewtonMillimeterPerRadian.
+// FromNanonewtonMillimetersPerRadian creates a new RotationalStiffness instance from a value in NanonewtonMillimetersPerRadian.
 func (uf RotationalStiffnessFactory) FromNanonewtonMillimetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessNanonewtonMillimeterPerRadian)
 }
 
-// FromMicronewtonMillimeterPerRadian creates a new RotationalStiffness instance from MicronewtonMillimeterPerRadian.
+// FromMicronewtonMillimetersPerRadian creates a new RotationalStiffness instance from a value in MicronewtonMillimetersPerRadian.
 func (uf RotationalStiffnessFactory) FromMicronewtonMillimetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMicronewtonMillimeterPerRadian)
 }
 
-// FromMillinewtonMillimeterPerRadian creates a new RotationalStiffness instance from MillinewtonMillimeterPerRadian.
+// FromMillinewtonMillimetersPerRadian creates a new RotationalStiffness instance from a value in MillinewtonMillimetersPerRadian.
 func (uf RotationalStiffnessFactory) FromMillinewtonMillimetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMillinewtonMillimeterPerRadian)
 }
 
-// FromCentinewtonMillimeterPerRadian creates a new RotationalStiffness instance from CentinewtonMillimeterPerRadian.
+// FromCentinewtonMillimetersPerRadian creates a new RotationalStiffness instance from a value in CentinewtonMillimetersPerRadian.
 func (uf RotationalStiffnessFactory) FromCentinewtonMillimetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessCentinewtonMillimeterPerRadian)
 }
 
-// FromDecinewtonMillimeterPerRadian creates a new RotationalStiffness instance from DecinewtonMillimeterPerRadian.
+// FromDecinewtonMillimetersPerRadian creates a new RotationalStiffness instance from a value in DecinewtonMillimetersPerRadian.
 func (uf RotationalStiffnessFactory) FromDecinewtonMillimetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessDecinewtonMillimeterPerRadian)
 }
 
-// FromDecanewtonMillimeterPerRadian creates a new RotationalStiffness instance from DecanewtonMillimeterPerRadian.
+// FromDecanewtonMillimetersPerRadian creates a new RotationalStiffness instance from a value in DecanewtonMillimetersPerRadian.
 func (uf RotationalStiffnessFactory) FromDecanewtonMillimetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessDecanewtonMillimeterPerRadian)
 }
 
-// FromKilonewtonMillimeterPerRadian creates a new RotationalStiffness instance from KilonewtonMillimeterPerRadian.
+// FromKilonewtonMillimetersPerRadian creates a new RotationalStiffness instance from a value in KilonewtonMillimetersPerRadian.
 func (uf RotationalStiffnessFactory) FromKilonewtonMillimetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessKilonewtonMillimeterPerRadian)
 }
 
-// FromMeganewtonMillimeterPerRadian creates a new RotationalStiffness instance from MeganewtonMillimeterPerRadian.
+// FromMeganewtonMillimetersPerRadian creates a new RotationalStiffness instance from a value in MeganewtonMillimetersPerRadian.
 func (uf RotationalStiffnessFactory) FromMeganewtonMillimetersPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessMeganewtonMillimeterPerRadian)
 }
-
-
 
 
 // newRotationalStiffness creates a new RotationalStiffness.
@@ -355,13 +365,15 @@ func newRotationalStiffness(value float64, fromUnit RotationalStiffnessUnits) (*
 	return a, nil
 }
 
-// BaseValue returns the base value of RotationalStiffness in NewtonMeterPerRadian.
+// BaseValue returns the base value of RotationalStiffness in NewtonMeterPerRadian unit (the base/default quantity).
 func (a *RotationalStiffness) BaseValue() float64 {
 	return a.value
 }
 
 
-// NewtonMeterPerRadian returns the value in NewtonMeterPerRadian.
+// NewtonMetersPerRadian returns the RotationalStiffness value in NewtonMetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) NewtonMetersPerRadian() float64 {
 	if a.newton_meters_per_radianLazy != nil {
 		return *a.newton_meters_per_radianLazy
@@ -371,7 +383,9 @@ func (a *RotationalStiffness) NewtonMetersPerRadian() float64 {
 	return newton_meters_per_radian
 }
 
-// PoundForceFootPerDegrees returns the value in PoundForceFootPerDegrees.
+// PoundForceFeetPerDegrees returns the RotationalStiffness value in PoundForceFeetPerDegrees.
+//
+// 
 func (a *RotationalStiffness) PoundForceFeetPerDegrees() float64 {
 	if a.pound_force_feet_per_degreesLazy != nil {
 		return *a.pound_force_feet_per_degreesLazy
@@ -381,7 +395,9 @@ func (a *RotationalStiffness) PoundForceFeetPerDegrees() float64 {
 	return pound_force_feet_per_degrees
 }
 
-// KilopoundForceFootPerDegrees returns the value in KilopoundForceFootPerDegrees.
+// KilopoundForceFeetPerDegrees returns the RotationalStiffness value in KilopoundForceFeetPerDegrees.
+//
+// 
 func (a *RotationalStiffness) KilopoundForceFeetPerDegrees() float64 {
 	if a.kilopound_force_feet_per_degreesLazy != nil {
 		return *a.kilopound_force_feet_per_degreesLazy
@@ -391,7 +407,9 @@ func (a *RotationalStiffness) KilopoundForceFeetPerDegrees() float64 {
 	return kilopound_force_feet_per_degrees
 }
 
-// NewtonMillimeterPerDegree returns the value in NewtonMillimeterPerDegree.
+// NewtonMillimetersPerDegree returns the RotationalStiffness value in NewtonMillimetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) NewtonMillimetersPerDegree() float64 {
 	if a.newton_millimeters_per_degreeLazy != nil {
 		return *a.newton_millimeters_per_degreeLazy
@@ -401,7 +419,9 @@ func (a *RotationalStiffness) NewtonMillimetersPerDegree() float64 {
 	return newton_millimeters_per_degree
 }
 
-// NewtonMeterPerDegree returns the value in NewtonMeterPerDegree.
+// NewtonMetersPerDegree returns the RotationalStiffness value in NewtonMetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) NewtonMetersPerDegree() float64 {
 	if a.newton_meters_per_degreeLazy != nil {
 		return *a.newton_meters_per_degreeLazy
@@ -411,7 +431,9 @@ func (a *RotationalStiffness) NewtonMetersPerDegree() float64 {
 	return newton_meters_per_degree
 }
 
-// NewtonMillimeterPerRadian returns the value in NewtonMillimeterPerRadian.
+// NewtonMillimetersPerRadian returns the RotationalStiffness value in NewtonMillimetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) NewtonMillimetersPerRadian() float64 {
 	if a.newton_millimeters_per_radianLazy != nil {
 		return *a.newton_millimeters_per_radianLazy
@@ -421,7 +443,9 @@ func (a *RotationalStiffness) NewtonMillimetersPerRadian() float64 {
 	return newton_millimeters_per_radian
 }
 
-// PoundForceFeetPerRadian returns the value in PoundForceFeetPerRadian.
+// PoundForceFeetPerRadian returns the RotationalStiffness value in PoundForceFeetPerRadian.
+//
+// 
 func (a *RotationalStiffness) PoundForceFeetPerRadian() float64 {
 	if a.pound_force_feet_per_radianLazy != nil {
 		return *a.pound_force_feet_per_radianLazy
@@ -431,7 +455,9 @@ func (a *RotationalStiffness) PoundForceFeetPerRadian() float64 {
 	return pound_force_feet_per_radian
 }
 
-// KilonewtonMeterPerRadian returns the value in KilonewtonMeterPerRadian.
+// KilonewtonMetersPerRadian returns the RotationalStiffness value in KilonewtonMetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) KilonewtonMetersPerRadian() float64 {
 	if a.kilonewton_meters_per_radianLazy != nil {
 		return *a.kilonewton_meters_per_radianLazy
@@ -441,7 +467,9 @@ func (a *RotationalStiffness) KilonewtonMetersPerRadian() float64 {
 	return kilonewton_meters_per_radian
 }
 
-// MeganewtonMeterPerRadian returns the value in MeganewtonMeterPerRadian.
+// MeganewtonMetersPerRadian returns the RotationalStiffness value in MeganewtonMetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) MeganewtonMetersPerRadian() float64 {
 	if a.meganewton_meters_per_radianLazy != nil {
 		return *a.meganewton_meters_per_radianLazy
@@ -451,7 +479,9 @@ func (a *RotationalStiffness) MeganewtonMetersPerRadian() float64 {
 	return meganewton_meters_per_radian
 }
 
-// NanonewtonMillimeterPerDegree returns the value in NanonewtonMillimeterPerDegree.
+// NanonewtonMillimetersPerDegree returns the RotationalStiffness value in NanonewtonMillimetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) NanonewtonMillimetersPerDegree() float64 {
 	if a.nanonewton_millimeters_per_degreeLazy != nil {
 		return *a.nanonewton_millimeters_per_degreeLazy
@@ -461,7 +491,9 @@ func (a *RotationalStiffness) NanonewtonMillimetersPerDegree() float64 {
 	return nanonewton_millimeters_per_degree
 }
 
-// MicronewtonMillimeterPerDegree returns the value in MicronewtonMillimeterPerDegree.
+// MicronewtonMillimetersPerDegree returns the RotationalStiffness value in MicronewtonMillimetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) MicronewtonMillimetersPerDegree() float64 {
 	if a.micronewton_millimeters_per_degreeLazy != nil {
 		return *a.micronewton_millimeters_per_degreeLazy
@@ -471,7 +503,9 @@ func (a *RotationalStiffness) MicronewtonMillimetersPerDegree() float64 {
 	return micronewton_millimeters_per_degree
 }
 
-// MillinewtonMillimeterPerDegree returns the value in MillinewtonMillimeterPerDegree.
+// MillinewtonMillimetersPerDegree returns the RotationalStiffness value in MillinewtonMillimetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) MillinewtonMillimetersPerDegree() float64 {
 	if a.millinewton_millimeters_per_degreeLazy != nil {
 		return *a.millinewton_millimeters_per_degreeLazy
@@ -481,7 +515,9 @@ func (a *RotationalStiffness) MillinewtonMillimetersPerDegree() float64 {
 	return millinewton_millimeters_per_degree
 }
 
-// CentinewtonMillimeterPerDegree returns the value in CentinewtonMillimeterPerDegree.
+// CentinewtonMillimetersPerDegree returns the RotationalStiffness value in CentinewtonMillimetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) CentinewtonMillimetersPerDegree() float64 {
 	if a.centinewton_millimeters_per_degreeLazy != nil {
 		return *a.centinewton_millimeters_per_degreeLazy
@@ -491,7 +527,9 @@ func (a *RotationalStiffness) CentinewtonMillimetersPerDegree() float64 {
 	return centinewton_millimeters_per_degree
 }
 
-// DecinewtonMillimeterPerDegree returns the value in DecinewtonMillimeterPerDegree.
+// DecinewtonMillimetersPerDegree returns the RotationalStiffness value in DecinewtonMillimetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) DecinewtonMillimetersPerDegree() float64 {
 	if a.decinewton_millimeters_per_degreeLazy != nil {
 		return *a.decinewton_millimeters_per_degreeLazy
@@ -501,7 +539,9 @@ func (a *RotationalStiffness) DecinewtonMillimetersPerDegree() float64 {
 	return decinewton_millimeters_per_degree
 }
 
-// DecanewtonMillimeterPerDegree returns the value in DecanewtonMillimeterPerDegree.
+// DecanewtonMillimetersPerDegree returns the RotationalStiffness value in DecanewtonMillimetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) DecanewtonMillimetersPerDegree() float64 {
 	if a.decanewton_millimeters_per_degreeLazy != nil {
 		return *a.decanewton_millimeters_per_degreeLazy
@@ -511,7 +551,9 @@ func (a *RotationalStiffness) DecanewtonMillimetersPerDegree() float64 {
 	return decanewton_millimeters_per_degree
 }
 
-// KilonewtonMillimeterPerDegree returns the value in KilonewtonMillimeterPerDegree.
+// KilonewtonMillimetersPerDegree returns the RotationalStiffness value in KilonewtonMillimetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) KilonewtonMillimetersPerDegree() float64 {
 	if a.kilonewton_millimeters_per_degreeLazy != nil {
 		return *a.kilonewton_millimeters_per_degreeLazy
@@ -521,7 +563,9 @@ func (a *RotationalStiffness) KilonewtonMillimetersPerDegree() float64 {
 	return kilonewton_millimeters_per_degree
 }
 
-// MeganewtonMillimeterPerDegree returns the value in MeganewtonMillimeterPerDegree.
+// MeganewtonMillimetersPerDegree returns the RotationalStiffness value in MeganewtonMillimetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) MeganewtonMillimetersPerDegree() float64 {
 	if a.meganewton_millimeters_per_degreeLazy != nil {
 		return *a.meganewton_millimeters_per_degreeLazy
@@ -531,7 +575,9 @@ func (a *RotationalStiffness) MeganewtonMillimetersPerDegree() float64 {
 	return meganewton_millimeters_per_degree
 }
 
-// NanonewtonMeterPerDegree returns the value in NanonewtonMeterPerDegree.
+// NanonewtonMetersPerDegree returns the RotationalStiffness value in NanonewtonMetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) NanonewtonMetersPerDegree() float64 {
 	if a.nanonewton_meters_per_degreeLazy != nil {
 		return *a.nanonewton_meters_per_degreeLazy
@@ -541,7 +587,9 @@ func (a *RotationalStiffness) NanonewtonMetersPerDegree() float64 {
 	return nanonewton_meters_per_degree
 }
 
-// MicronewtonMeterPerDegree returns the value in MicronewtonMeterPerDegree.
+// MicronewtonMetersPerDegree returns the RotationalStiffness value in MicronewtonMetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) MicronewtonMetersPerDegree() float64 {
 	if a.micronewton_meters_per_degreeLazy != nil {
 		return *a.micronewton_meters_per_degreeLazy
@@ -551,7 +599,9 @@ func (a *RotationalStiffness) MicronewtonMetersPerDegree() float64 {
 	return micronewton_meters_per_degree
 }
 
-// MillinewtonMeterPerDegree returns the value in MillinewtonMeterPerDegree.
+// MillinewtonMetersPerDegree returns the RotationalStiffness value in MillinewtonMetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) MillinewtonMetersPerDegree() float64 {
 	if a.millinewton_meters_per_degreeLazy != nil {
 		return *a.millinewton_meters_per_degreeLazy
@@ -561,7 +611,9 @@ func (a *RotationalStiffness) MillinewtonMetersPerDegree() float64 {
 	return millinewton_meters_per_degree
 }
 
-// CentinewtonMeterPerDegree returns the value in CentinewtonMeterPerDegree.
+// CentinewtonMetersPerDegree returns the RotationalStiffness value in CentinewtonMetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) CentinewtonMetersPerDegree() float64 {
 	if a.centinewton_meters_per_degreeLazy != nil {
 		return *a.centinewton_meters_per_degreeLazy
@@ -571,7 +623,9 @@ func (a *RotationalStiffness) CentinewtonMetersPerDegree() float64 {
 	return centinewton_meters_per_degree
 }
 
-// DecinewtonMeterPerDegree returns the value in DecinewtonMeterPerDegree.
+// DecinewtonMetersPerDegree returns the RotationalStiffness value in DecinewtonMetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) DecinewtonMetersPerDegree() float64 {
 	if a.decinewton_meters_per_degreeLazy != nil {
 		return *a.decinewton_meters_per_degreeLazy
@@ -581,7 +635,9 @@ func (a *RotationalStiffness) DecinewtonMetersPerDegree() float64 {
 	return decinewton_meters_per_degree
 }
 
-// DecanewtonMeterPerDegree returns the value in DecanewtonMeterPerDegree.
+// DecanewtonMetersPerDegree returns the RotationalStiffness value in DecanewtonMetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) DecanewtonMetersPerDegree() float64 {
 	if a.decanewton_meters_per_degreeLazy != nil {
 		return *a.decanewton_meters_per_degreeLazy
@@ -591,7 +647,9 @@ func (a *RotationalStiffness) DecanewtonMetersPerDegree() float64 {
 	return decanewton_meters_per_degree
 }
 
-// KilonewtonMeterPerDegree returns the value in KilonewtonMeterPerDegree.
+// KilonewtonMetersPerDegree returns the RotationalStiffness value in KilonewtonMetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) KilonewtonMetersPerDegree() float64 {
 	if a.kilonewton_meters_per_degreeLazy != nil {
 		return *a.kilonewton_meters_per_degreeLazy
@@ -601,7 +659,9 @@ func (a *RotationalStiffness) KilonewtonMetersPerDegree() float64 {
 	return kilonewton_meters_per_degree
 }
 
-// MeganewtonMeterPerDegree returns the value in MeganewtonMeterPerDegree.
+// MeganewtonMetersPerDegree returns the RotationalStiffness value in MeganewtonMetersPerDegree.
+//
+// 
 func (a *RotationalStiffness) MeganewtonMetersPerDegree() float64 {
 	if a.meganewton_meters_per_degreeLazy != nil {
 		return *a.meganewton_meters_per_degreeLazy
@@ -611,7 +671,9 @@ func (a *RotationalStiffness) MeganewtonMetersPerDegree() float64 {
 	return meganewton_meters_per_degree
 }
 
-// NanonewtonMillimeterPerRadian returns the value in NanonewtonMillimeterPerRadian.
+// NanonewtonMillimetersPerRadian returns the RotationalStiffness value in NanonewtonMillimetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) NanonewtonMillimetersPerRadian() float64 {
 	if a.nanonewton_millimeters_per_radianLazy != nil {
 		return *a.nanonewton_millimeters_per_radianLazy
@@ -621,7 +683,9 @@ func (a *RotationalStiffness) NanonewtonMillimetersPerRadian() float64 {
 	return nanonewton_millimeters_per_radian
 }
 
-// MicronewtonMillimeterPerRadian returns the value in MicronewtonMillimeterPerRadian.
+// MicronewtonMillimetersPerRadian returns the RotationalStiffness value in MicronewtonMillimetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) MicronewtonMillimetersPerRadian() float64 {
 	if a.micronewton_millimeters_per_radianLazy != nil {
 		return *a.micronewton_millimeters_per_radianLazy
@@ -631,7 +695,9 @@ func (a *RotationalStiffness) MicronewtonMillimetersPerRadian() float64 {
 	return micronewton_millimeters_per_radian
 }
 
-// MillinewtonMillimeterPerRadian returns the value in MillinewtonMillimeterPerRadian.
+// MillinewtonMillimetersPerRadian returns the RotationalStiffness value in MillinewtonMillimetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) MillinewtonMillimetersPerRadian() float64 {
 	if a.millinewton_millimeters_per_radianLazy != nil {
 		return *a.millinewton_millimeters_per_radianLazy
@@ -641,7 +707,9 @@ func (a *RotationalStiffness) MillinewtonMillimetersPerRadian() float64 {
 	return millinewton_millimeters_per_radian
 }
 
-// CentinewtonMillimeterPerRadian returns the value in CentinewtonMillimeterPerRadian.
+// CentinewtonMillimetersPerRadian returns the RotationalStiffness value in CentinewtonMillimetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) CentinewtonMillimetersPerRadian() float64 {
 	if a.centinewton_millimeters_per_radianLazy != nil {
 		return *a.centinewton_millimeters_per_radianLazy
@@ -651,7 +719,9 @@ func (a *RotationalStiffness) CentinewtonMillimetersPerRadian() float64 {
 	return centinewton_millimeters_per_radian
 }
 
-// DecinewtonMillimeterPerRadian returns the value in DecinewtonMillimeterPerRadian.
+// DecinewtonMillimetersPerRadian returns the RotationalStiffness value in DecinewtonMillimetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) DecinewtonMillimetersPerRadian() float64 {
 	if a.decinewton_millimeters_per_radianLazy != nil {
 		return *a.decinewton_millimeters_per_radianLazy
@@ -661,7 +731,9 @@ func (a *RotationalStiffness) DecinewtonMillimetersPerRadian() float64 {
 	return decinewton_millimeters_per_radian
 }
 
-// DecanewtonMillimeterPerRadian returns the value in DecanewtonMillimeterPerRadian.
+// DecanewtonMillimetersPerRadian returns the RotationalStiffness value in DecanewtonMillimetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) DecanewtonMillimetersPerRadian() float64 {
 	if a.decanewton_millimeters_per_radianLazy != nil {
 		return *a.decanewton_millimeters_per_radianLazy
@@ -671,7 +743,9 @@ func (a *RotationalStiffness) DecanewtonMillimetersPerRadian() float64 {
 	return decanewton_millimeters_per_radian
 }
 
-// KilonewtonMillimeterPerRadian returns the value in KilonewtonMillimeterPerRadian.
+// KilonewtonMillimetersPerRadian returns the RotationalStiffness value in KilonewtonMillimetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) KilonewtonMillimetersPerRadian() float64 {
 	if a.kilonewton_millimeters_per_radianLazy != nil {
 		return *a.kilonewton_millimeters_per_radianLazy
@@ -681,7 +755,9 @@ func (a *RotationalStiffness) KilonewtonMillimetersPerRadian() float64 {
 	return kilonewton_millimeters_per_radian
 }
 
-// MeganewtonMillimeterPerRadian returns the value in MeganewtonMillimeterPerRadian.
+// MeganewtonMillimetersPerRadian returns the RotationalStiffness value in MeganewtonMillimetersPerRadian.
+//
+// 
 func (a *RotationalStiffness) MeganewtonMillimetersPerRadian() float64 {
 	if a.meganewton_millimeters_per_radianLazy != nil {
 		return *a.meganewton_millimeters_per_radianLazy
@@ -692,7 +768,9 @@ func (a *RotationalStiffness) MeganewtonMillimetersPerRadian() float64 {
 }
 
 
-// ToDto creates an RotationalStiffnessDto representation.
+// ToDto creates a RotationalStiffnessDto representation from the RotationalStiffness instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonMeterPerRadian by default.
 func (a *RotationalStiffness) ToDto(holdInUnit *RotationalStiffnessUnits) RotationalStiffnessDto {
 	if holdInUnit == nil {
 		defaultUnit := RotationalStiffnessNewtonMeterPerRadian // Default value
@@ -705,12 +783,19 @@ func (a *RotationalStiffness) ToDto(holdInUnit *RotationalStiffnessUnits) Rotati
 	}
 }
 
-// ToDtoJSON creates an RotationalStiffnessDto representation.
+// ToDtoJSON creates a JSON representation of the RotationalStiffness instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonMeterPerRadian by default.
 func (a *RotationalStiffness) ToDtoJSON(holdInUnit *RotationalStiffnessUnits) ([]byte, error) {
+	// Convert to RotationalStiffnessDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts RotationalStiffness to a specific unit value.
+// Convert converts a RotationalStiffness to a specific unit value.
+// The function uses the provided unit type (RotationalStiffnessUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *RotationalStiffness) Convert(toUnit RotationalStiffnessUnits) float64 {
 	switch toUnit { 
     case RotationalStiffnessNewtonMeterPerRadian:
@@ -780,7 +865,7 @@ func (a *RotationalStiffness) Convert(toUnit RotationalStiffnessUnits) float64 {
     case RotationalStiffnessMeganewtonMillimeterPerRadian:
 		return a.MeganewtonMillimetersPerRadian()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -931,13 +1016,22 @@ func (a *RotationalStiffness) convertToBase(value float64, fromUnit RotationalSt
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the RotationalStiffness in the default unit (NewtonMeterPerRadian),
+// formatted to two decimal places.
 func (a RotationalStiffness) String() string {
 	return a.ToString(RotationalStiffnessNewtonMeterPerRadian, 2)
 }
 
-// ToString formats the RotationalStiffness to string.
-// fractionalDigits -1 for not mention
+// ToString formats the RotationalStiffness value as a string with the specified unit and fractional digits.
+// It converts the RotationalStiffness to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the RotationalStiffness value will be converted (e.g., NewtonMeterPerRadian))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the RotationalStiffness with the unit abbreviation.
 func (a *RotationalStiffness) ToString(unit RotationalStiffnessUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1021,12 +1115,26 @@ func (a *RotationalStiffness) getUnitAbbreviation(unit RotationalStiffnessUnits)
 	}
 }
 
-// Check if the given RotationalStiffness are equals to the current RotationalStiffness
+// Equals checks if the given RotationalStiffness is equal to the current RotationalStiffness.
+//
+// Parameters:
+//    other: The RotationalStiffness to compare against.
+//
+// Returns:
+//    bool: Returns true if both RotationalStiffness are equal, false otherwise.
 func (a *RotationalStiffness) Equals(other *RotationalStiffness) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given RotationalStiffness are equals to the current RotationalStiffness
+// CompareTo compares the current RotationalStiffness with another RotationalStiffness.
+// It returns -1 if the current RotationalStiffness is less than the other RotationalStiffness, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The RotationalStiffness to compare against.
+//
+// Returns:
+//    int: -1 if the current RotationalStiffness is less, 1 if greater, and 0 if equal.
 func (a *RotationalStiffness) CompareTo(other *RotationalStiffness) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1039,22 +1147,50 @@ func (a *RotationalStiffness) CompareTo(other *RotationalStiffness) int {
 	return 0
 }
 
-// Add the given RotationalStiffness to the current RotationalStiffness.
+// Add adds the given RotationalStiffness to the current RotationalStiffness and returns the result.
+// The result is a new RotationalStiffness instance with the sum of the values.
+//
+// Parameters:
+//    other: The RotationalStiffness to add to the current RotationalStiffness.
+//
+// Returns:
+//    *RotationalStiffness: A new RotationalStiffness instance representing the sum of both RotationalStiffness.
 func (a *RotationalStiffness) Add(other *RotationalStiffness) *RotationalStiffness {
 	return &RotationalStiffness{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given RotationalStiffness to the current RotationalStiffness.
+// Subtract subtracts the given RotationalStiffness from the current RotationalStiffness and returns the result.
+// The result is a new RotationalStiffness instance with the difference of the values.
+//
+// Parameters:
+//    other: The RotationalStiffness to subtract from the current RotationalStiffness.
+//
+// Returns:
+//    *RotationalStiffness: A new RotationalStiffness instance representing the difference of both RotationalStiffness.
 func (a *RotationalStiffness) Subtract(other *RotationalStiffness) *RotationalStiffness {
 	return &RotationalStiffness{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given RotationalStiffness to the current RotationalStiffness.
+// Multiply multiplies the current RotationalStiffness by the given RotationalStiffness and returns the result.
+// The result is a new RotationalStiffness instance with the product of the values.
+//
+// Parameters:
+//    other: The RotationalStiffness to multiply with the current RotationalStiffness.
+//
+// Returns:
+//    *RotationalStiffness: A new RotationalStiffness instance representing the product of both RotationalStiffness.
 func (a *RotationalStiffness) Multiply(other *RotationalStiffness) *RotationalStiffness {
 	return &RotationalStiffness{value: a.value * other.BaseValue()}
 }
 
-// Divide the given RotationalStiffness to the current RotationalStiffness.
+// Divide divides the current RotationalStiffness by the given RotationalStiffness and returns the result.
+// The result is a new RotationalStiffness instance with the quotient of the values.
+//
+// Parameters:
+//    other: The RotationalStiffness to divide the current RotationalStiffness by.
+//
+// Returns:
+//    *RotationalStiffness: A new RotationalStiffness instance representing the quotient of both RotationalStiffness.
 func (a *RotationalStiffness) Divide(other *RotationalStiffness) *RotationalStiffness {
 	return &RotationalStiffness{value: a.value / other.BaseValue()}
 }

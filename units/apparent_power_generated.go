@@ -12,7 +12,7 @@ import (
 
 
 
-// ApparentPowerUnits enumeration
+// ApparentPowerUnits defines various units of ApparentPower.
 type ApparentPowerUnits string
 
 const (
@@ -31,19 +31,24 @@ const (
         ApparentPowerGigavoltampere ApparentPowerUnits = "Gigavoltampere"
 )
 
-// ApparentPowerDto represents an ApparentPower
+// ApparentPowerDto represents a ApparentPower measurement with a numerical value and its corresponding unit.
 type ApparentPowerDto struct {
+    // Value is the numerical representation of the ApparentPower.
 	Value float64
+    // Unit specifies the unit of measurement for the ApparentPower, as defined in the ApparentPowerUnits enumeration.
 	Unit  ApparentPowerUnits
 }
 
-// ApparentPowerDtoFactory struct to group related functions
+// ApparentPowerDtoFactory groups methods for creating and serializing ApparentPowerDto objects.
 type ApparentPowerDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ApparentPowerDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ApparentPowerDtoFactory) FromJSON(data []byte) (*ApparentPowerDto, error) {
 	a := ApparentPowerDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ApparentPowerDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -51,6 +56,9 @@ func (udf ApparentPowerDtoFactory) FromJSON(data []byte) (*ApparentPowerDto, err
 	return &a, nil
 }
 
+// ToJSON serializes a ApparentPowerDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ApparentPowerDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -62,10 +70,11 @@ func (a ApparentPowerDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ApparentPower struct
+// ApparentPower represents a measurement in a of ApparentPower.
+//
+// Power engineers measure apparent power as the magnitude of the vector sum of active and reactive power. Apparent power is the product of the root-mean-square of voltage and current.
 type ApparentPower struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     voltamperesLazy *float64 
@@ -76,57 +85,58 @@ type ApparentPower struct {
     gigavoltamperesLazy *float64 
 }
 
-// ApparentPowerFactory struct to group related functions
+// ApparentPowerFactory groups methods for creating ApparentPower instances.
 type ApparentPowerFactory struct{}
 
+// CreateApparentPower creates a new ApparentPower instance from the given value and unit.
 func (uf ApparentPowerFactory) CreateApparentPower(value float64, unit ApparentPowerUnits) (*ApparentPower, error) {
 	return newApparentPower(value, unit)
 }
 
+// FromDto converts a ApparentPowerDto to a ApparentPower instance.
 func (uf ApparentPowerFactory) FromDto(dto ApparentPowerDto) (*ApparentPower, error) {
 	return newApparentPower(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ApparentPower instance.
 func (uf ApparentPowerFactory) FromDtoJSON(data []byte) (*ApparentPower, error) {
 	unitDto, err := ApparentPowerDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ApparentPowerDto from JSON: %w", err)
 	}
 	return ApparentPowerFactory{}.FromDto(*unitDto)
 }
 
 
-// FromVoltampere creates a new ApparentPower instance from Voltampere.
+// FromVoltamperes creates a new ApparentPower instance from a value in Voltamperes.
 func (uf ApparentPowerFactory) FromVoltamperes(value float64) (*ApparentPower, error) {
 	return newApparentPower(value, ApparentPowerVoltampere)
 }
 
-// FromMicrovoltampere creates a new ApparentPower instance from Microvoltampere.
+// FromMicrovoltamperes creates a new ApparentPower instance from a value in Microvoltamperes.
 func (uf ApparentPowerFactory) FromMicrovoltamperes(value float64) (*ApparentPower, error) {
 	return newApparentPower(value, ApparentPowerMicrovoltampere)
 }
 
-// FromMillivoltampere creates a new ApparentPower instance from Millivoltampere.
+// FromMillivoltamperes creates a new ApparentPower instance from a value in Millivoltamperes.
 func (uf ApparentPowerFactory) FromMillivoltamperes(value float64) (*ApparentPower, error) {
 	return newApparentPower(value, ApparentPowerMillivoltampere)
 }
 
-// FromKilovoltampere creates a new ApparentPower instance from Kilovoltampere.
+// FromKilovoltamperes creates a new ApparentPower instance from a value in Kilovoltamperes.
 func (uf ApparentPowerFactory) FromKilovoltamperes(value float64) (*ApparentPower, error) {
 	return newApparentPower(value, ApparentPowerKilovoltampere)
 }
 
-// FromMegavoltampere creates a new ApparentPower instance from Megavoltampere.
+// FromMegavoltamperes creates a new ApparentPower instance from a value in Megavoltamperes.
 func (uf ApparentPowerFactory) FromMegavoltamperes(value float64) (*ApparentPower, error) {
 	return newApparentPower(value, ApparentPowerMegavoltampere)
 }
 
-// FromGigavoltampere creates a new ApparentPower instance from Gigavoltampere.
+// FromGigavoltamperes creates a new ApparentPower instance from a value in Gigavoltamperes.
 func (uf ApparentPowerFactory) FromGigavoltamperes(value float64) (*ApparentPower, error) {
 	return newApparentPower(value, ApparentPowerGigavoltampere)
 }
-
-
 
 
 // newApparentPower creates a new ApparentPower.
@@ -139,13 +149,15 @@ func newApparentPower(value float64, fromUnit ApparentPowerUnits) (*ApparentPowe
 	return a, nil
 }
 
-// BaseValue returns the base value of ApparentPower in Voltampere.
+// BaseValue returns the base value of ApparentPower in Voltampere unit (the base/default quantity).
 func (a *ApparentPower) BaseValue() float64 {
 	return a.value
 }
 
 
-// Voltampere returns the value in Voltampere.
+// Voltamperes returns the ApparentPower value in Voltamperes.
+//
+// 
 func (a *ApparentPower) Voltamperes() float64 {
 	if a.voltamperesLazy != nil {
 		return *a.voltamperesLazy
@@ -155,7 +167,9 @@ func (a *ApparentPower) Voltamperes() float64 {
 	return voltamperes
 }
 
-// Microvoltampere returns the value in Microvoltampere.
+// Microvoltamperes returns the ApparentPower value in Microvoltamperes.
+//
+// 
 func (a *ApparentPower) Microvoltamperes() float64 {
 	if a.microvoltamperesLazy != nil {
 		return *a.microvoltamperesLazy
@@ -165,7 +179,9 @@ func (a *ApparentPower) Microvoltamperes() float64 {
 	return microvoltamperes
 }
 
-// Millivoltampere returns the value in Millivoltampere.
+// Millivoltamperes returns the ApparentPower value in Millivoltamperes.
+//
+// 
 func (a *ApparentPower) Millivoltamperes() float64 {
 	if a.millivoltamperesLazy != nil {
 		return *a.millivoltamperesLazy
@@ -175,7 +191,9 @@ func (a *ApparentPower) Millivoltamperes() float64 {
 	return millivoltamperes
 }
 
-// Kilovoltampere returns the value in Kilovoltampere.
+// Kilovoltamperes returns the ApparentPower value in Kilovoltamperes.
+//
+// 
 func (a *ApparentPower) Kilovoltamperes() float64 {
 	if a.kilovoltamperesLazy != nil {
 		return *a.kilovoltamperesLazy
@@ -185,7 +203,9 @@ func (a *ApparentPower) Kilovoltamperes() float64 {
 	return kilovoltamperes
 }
 
-// Megavoltampere returns the value in Megavoltampere.
+// Megavoltamperes returns the ApparentPower value in Megavoltamperes.
+//
+// 
 func (a *ApparentPower) Megavoltamperes() float64 {
 	if a.megavoltamperesLazy != nil {
 		return *a.megavoltamperesLazy
@@ -195,7 +215,9 @@ func (a *ApparentPower) Megavoltamperes() float64 {
 	return megavoltamperes
 }
 
-// Gigavoltampere returns the value in Gigavoltampere.
+// Gigavoltamperes returns the ApparentPower value in Gigavoltamperes.
+//
+// 
 func (a *ApparentPower) Gigavoltamperes() float64 {
 	if a.gigavoltamperesLazy != nil {
 		return *a.gigavoltamperesLazy
@@ -206,7 +228,9 @@ func (a *ApparentPower) Gigavoltamperes() float64 {
 }
 
 
-// ToDto creates an ApparentPowerDto representation.
+// ToDto creates a ApparentPowerDto representation from the ApparentPower instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Voltampere by default.
 func (a *ApparentPower) ToDto(holdInUnit *ApparentPowerUnits) ApparentPowerDto {
 	if holdInUnit == nil {
 		defaultUnit := ApparentPowerVoltampere // Default value
@@ -219,12 +243,19 @@ func (a *ApparentPower) ToDto(holdInUnit *ApparentPowerUnits) ApparentPowerDto {
 	}
 }
 
-// ToDtoJSON creates an ApparentPowerDto representation.
+// ToDtoJSON creates a JSON representation of the ApparentPower instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Voltampere by default.
 func (a *ApparentPower) ToDtoJSON(holdInUnit *ApparentPowerUnits) ([]byte, error) {
+	// Convert to ApparentPowerDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ApparentPower to a specific unit value.
+// Convert converts a ApparentPower to a specific unit value.
+// The function uses the provided unit type (ApparentPowerUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ApparentPower) Convert(toUnit ApparentPowerUnits) float64 {
 	switch toUnit { 
     case ApparentPowerVoltampere:
@@ -240,7 +271,7 @@ func (a *ApparentPower) Convert(toUnit ApparentPowerUnits) float64 {
     case ApparentPowerGigavoltampere:
 		return a.Gigavoltamperes()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -283,13 +314,22 @@ func (a *ApparentPower) convertToBase(value float64, fromUnit ApparentPowerUnits
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ApparentPower in the default unit (Voltampere),
+// formatted to two decimal places.
 func (a ApparentPower) String() string {
 	return a.ToString(ApparentPowerVoltampere, 2)
 }
 
-// ToString formats the ApparentPower to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ApparentPower value as a string with the specified unit and fractional digits.
+// It converts the ApparentPower to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ApparentPower value will be converted (e.g., Voltampere))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ApparentPower with the unit abbreviation.
 func (a *ApparentPower) ToString(unit ApparentPowerUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -319,12 +359,26 @@ func (a *ApparentPower) getUnitAbbreviation(unit ApparentPowerUnits) string {
 	}
 }
 
-// Check if the given ApparentPower are equals to the current ApparentPower
+// Equals checks if the given ApparentPower is equal to the current ApparentPower.
+//
+// Parameters:
+//    other: The ApparentPower to compare against.
+//
+// Returns:
+//    bool: Returns true if both ApparentPower are equal, false otherwise.
 func (a *ApparentPower) Equals(other *ApparentPower) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ApparentPower are equals to the current ApparentPower
+// CompareTo compares the current ApparentPower with another ApparentPower.
+// It returns -1 if the current ApparentPower is less than the other ApparentPower, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ApparentPower to compare against.
+//
+// Returns:
+//    int: -1 if the current ApparentPower is less, 1 if greater, and 0 if equal.
 func (a *ApparentPower) CompareTo(other *ApparentPower) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -337,22 +391,50 @@ func (a *ApparentPower) CompareTo(other *ApparentPower) int {
 	return 0
 }
 
-// Add the given ApparentPower to the current ApparentPower.
+// Add adds the given ApparentPower to the current ApparentPower and returns the result.
+// The result is a new ApparentPower instance with the sum of the values.
+//
+// Parameters:
+//    other: The ApparentPower to add to the current ApparentPower.
+//
+// Returns:
+//    *ApparentPower: A new ApparentPower instance representing the sum of both ApparentPower.
 func (a *ApparentPower) Add(other *ApparentPower) *ApparentPower {
 	return &ApparentPower{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ApparentPower to the current ApparentPower.
+// Subtract subtracts the given ApparentPower from the current ApparentPower and returns the result.
+// The result is a new ApparentPower instance with the difference of the values.
+//
+// Parameters:
+//    other: The ApparentPower to subtract from the current ApparentPower.
+//
+// Returns:
+//    *ApparentPower: A new ApparentPower instance representing the difference of both ApparentPower.
 func (a *ApparentPower) Subtract(other *ApparentPower) *ApparentPower {
 	return &ApparentPower{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ApparentPower to the current ApparentPower.
+// Multiply multiplies the current ApparentPower by the given ApparentPower and returns the result.
+// The result is a new ApparentPower instance with the product of the values.
+//
+// Parameters:
+//    other: The ApparentPower to multiply with the current ApparentPower.
+//
+// Returns:
+//    *ApparentPower: A new ApparentPower instance representing the product of both ApparentPower.
 func (a *ApparentPower) Multiply(other *ApparentPower) *ApparentPower {
 	return &ApparentPower{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ApparentPower to the current ApparentPower.
+// Divide divides the current ApparentPower by the given ApparentPower and returns the result.
+// The result is a new ApparentPower instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ApparentPower to divide the current ApparentPower by.
+//
+// Returns:
+//    *ApparentPower: A new ApparentPower instance representing the quotient of both ApparentPower.
 func (a *ApparentPower) Divide(other *ApparentPower) *ApparentPower {
 	return &ApparentPower{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// DurationUnits enumeration
+// DurationUnits defines various units of Duration.
 type DurationUnits string
 
 const (
@@ -43,19 +43,24 @@ const (
         DurationMillisecond DurationUnits = "Millisecond"
 )
 
-// DurationDto represents an Duration
+// DurationDto represents a Duration measurement with a numerical value and its corresponding unit.
 type DurationDto struct {
+    // Value is the numerical representation of the Duration.
 	Value float64
+    // Unit specifies the unit of measurement for the Duration, as defined in the DurationUnits enumeration.
 	Unit  DurationUnits
 }
 
-// DurationDtoFactory struct to group related functions
+// DurationDtoFactory groups methods for creating and serializing DurationDto objects.
 type DurationDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a DurationDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf DurationDtoFactory) FromJSON(data []byte) (*DurationDto, error) {
 	a := DurationDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into DurationDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -63,6 +68,9 @@ func (udf DurationDtoFactory) FromJSON(data []byte) (*DurationDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a DurationDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a DurationDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -74,10 +82,11 @@ func (a DurationDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Duration struct
+// Duration represents a measurement in a of Duration.
+//
+// Time is a dimension in which events can be ordered from the past through the present into the future, and also the measure of durations of events and the intervals between them.
 type Duration struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     years365Lazy *float64 
@@ -94,87 +103,88 @@ type Duration struct {
     millisecondsLazy *float64 
 }
 
-// DurationFactory struct to group related functions
+// DurationFactory groups methods for creating Duration instances.
 type DurationFactory struct{}
 
+// CreateDuration creates a new Duration instance from the given value and unit.
 func (uf DurationFactory) CreateDuration(value float64, unit DurationUnits) (*Duration, error) {
 	return newDuration(value, unit)
 }
 
+// FromDto converts a DurationDto to a Duration instance.
 func (uf DurationFactory) FromDto(dto DurationDto) (*Duration, error) {
 	return newDuration(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Duration instance.
 func (uf DurationFactory) FromDtoJSON(data []byte) (*Duration, error) {
 	unitDto, err := DurationDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse DurationDto from JSON: %w", err)
 	}
 	return DurationFactory{}.FromDto(*unitDto)
 }
 
 
-// FromYear365 creates a new Duration instance from Year365.
+// FromYears365 creates a new Duration instance from a value in Years365.
 func (uf DurationFactory) FromYears365(value float64) (*Duration, error) {
 	return newDuration(value, DurationYear365)
 }
 
-// FromMonth30 creates a new Duration instance from Month30.
+// FromMonths30 creates a new Duration instance from a value in Months30.
 func (uf DurationFactory) FromMonths30(value float64) (*Duration, error) {
 	return newDuration(value, DurationMonth30)
 }
 
-// FromWeek creates a new Duration instance from Week.
+// FromWeeks creates a new Duration instance from a value in Weeks.
 func (uf DurationFactory) FromWeeks(value float64) (*Duration, error) {
 	return newDuration(value, DurationWeek)
 }
 
-// FromDay creates a new Duration instance from Day.
+// FromDays creates a new Duration instance from a value in Days.
 func (uf DurationFactory) FromDays(value float64) (*Duration, error) {
 	return newDuration(value, DurationDay)
 }
 
-// FromHour creates a new Duration instance from Hour.
+// FromHours creates a new Duration instance from a value in Hours.
 func (uf DurationFactory) FromHours(value float64) (*Duration, error) {
 	return newDuration(value, DurationHour)
 }
 
-// FromMinute creates a new Duration instance from Minute.
+// FromMinutes creates a new Duration instance from a value in Minutes.
 func (uf DurationFactory) FromMinutes(value float64) (*Duration, error) {
 	return newDuration(value, DurationMinute)
 }
 
-// FromSecond creates a new Duration instance from Second.
+// FromSeconds creates a new Duration instance from a value in Seconds.
 func (uf DurationFactory) FromSeconds(value float64) (*Duration, error) {
 	return newDuration(value, DurationSecond)
 }
 
-// FromJulianYear creates a new Duration instance from JulianYear.
+// FromJulianYears creates a new Duration instance from a value in JulianYears.
 func (uf DurationFactory) FromJulianYears(value float64) (*Duration, error) {
 	return newDuration(value, DurationJulianYear)
 }
 
-// FromSol creates a new Duration instance from Sol.
+// FromSols creates a new Duration instance from a value in Sols.
 func (uf DurationFactory) FromSols(value float64) (*Duration, error) {
 	return newDuration(value, DurationSol)
 }
 
-// FromNanosecond creates a new Duration instance from Nanosecond.
+// FromNanoseconds creates a new Duration instance from a value in Nanoseconds.
 func (uf DurationFactory) FromNanoseconds(value float64) (*Duration, error) {
 	return newDuration(value, DurationNanosecond)
 }
 
-// FromMicrosecond creates a new Duration instance from Microsecond.
+// FromMicroseconds creates a new Duration instance from a value in Microseconds.
 func (uf DurationFactory) FromMicroseconds(value float64) (*Duration, error) {
 	return newDuration(value, DurationMicrosecond)
 }
 
-// FromMillisecond creates a new Duration instance from Millisecond.
+// FromMilliseconds creates a new Duration instance from a value in Milliseconds.
 func (uf DurationFactory) FromMilliseconds(value float64) (*Duration, error) {
 	return newDuration(value, DurationMillisecond)
 }
-
-
 
 
 // newDuration creates a new Duration.
@@ -187,13 +197,15 @@ func newDuration(value float64, fromUnit DurationUnits) (*Duration, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Duration in Second.
+// BaseValue returns the base value of Duration in Second unit (the base/default quantity).
 func (a *Duration) BaseValue() float64 {
 	return a.value
 }
 
 
-// Year365 returns the value in Year365.
+// Years365 returns the Duration value in Years365.
+//
+// 
 func (a *Duration) Years365() float64 {
 	if a.years365Lazy != nil {
 		return *a.years365Lazy
@@ -203,7 +215,9 @@ func (a *Duration) Years365() float64 {
 	return years365
 }
 
-// Month30 returns the value in Month30.
+// Months30 returns the Duration value in Months30.
+//
+// 
 func (a *Duration) Months30() float64 {
 	if a.months30Lazy != nil {
 		return *a.months30Lazy
@@ -213,7 +227,9 @@ func (a *Duration) Months30() float64 {
 	return months30
 }
 
-// Week returns the value in Week.
+// Weeks returns the Duration value in Weeks.
+//
+// 
 func (a *Duration) Weeks() float64 {
 	if a.weeksLazy != nil {
 		return *a.weeksLazy
@@ -223,7 +239,9 @@ func (a *Duration) Weeks() float64 {
 	return weeks
 }
 
-// Day returns the value in Day.
+// Days returns the Duration value in Days.
+//
+// 
 func (a *Duration) Days() float64 {
 	if a.daysLazy != nil {
 		return *a.daysLazy
@@ -233,7 +251,9 @@ func (a *Duration) Days() float64 {
 	return days
 }
 
-// Hour returns the value in Hour.
+// Hours returns the Duration value in Hours.
+//
+// 
 func (a *Duration) Hours() float64 {
 	if a.hoursLazy != nil {
 		return *a.hoursLazy
@@ -243,7 +263,9 @@ func (a *Duration) Hours() float64 {
 	return hours
 }
 
-// Minute returns the value in Minute.
+// Minutes returns the Duration value in Minutes.
+//
+// 
 func (a *Duration) Minutes() float64 {
 	if a.minutesLazy != nil {
 		return *a.minutesLazy
@@ -253,7 +275,9 @@ func (a *Duration) Minutes() float64 {
 	return minutes
 }
 
-// Second returns the value in Second.
+// Seconds returns the Duration value in Seconds.
+//
+// 
 func (a *Duration) Seconds() float64 {
 	if a.secondsLazy != nil {
 		return *a.secondsLazy
@@ -263,7 +287,9 @@ func (a *Duration) Seconds() float64 {
 	return seconds
 }
 
-// JulianYear returns the value in JulianYear.
+// JulianYears returns the Duration value in JulianYears.
+//
+// 
 func (a *Duration) JulianYears() float64 {
 	if a.julian_yearsLazy != nil {
 		return *a.julian_yearsLazy
@@ -273,7 +299,9 @@ func (a *Duration) JulianYears() float64 {
 	return julian_years
 }
 
-// Sol returns the value in Sol.
+// Sols returns the Duration value in Sols.
+//
+// 
 func (a *Duration) Sols() float64 {
 	if a.solsLazy != nil {
 		return *a.solsLazy
@@ -283,7 +311,9 @@ func (a *Duration) Sols() float64 {
 	return sols
 }
 
-// Nanosecond returns the value in Nanosecond.
+// Nanoseconds returns the Duration value in Nanoseconds.
+//
+// 
 func (a *Duration) Nanoseconds() float64 {
 	if a.nanosecondsLazy != nil {
 		return *a.nanosecondsLazy
@@ -293,7 +323,9 @@ func (a *Duration) Nanoseconds() float64 {
 	return nanoseconds
 }
 
-// Microsecond returns the value in Microsecond.
+// Microseconds returns the Duration value in Microseconds.
+//
+// 
 func (a *Duration) Microseconds() float64 {
 	if a.microsecondsLazy != nil {
 		return *a.microsecondsLazy
@@ -303,7 +335,9 @@ func (a *Duration) Microseconds() float64 {
 	return microseconds
 }
 
-// Millisecond returns the value in Millisecond.
+// Milliseconds returns the Duration value in Milliseconds.
+//
+// 
 func (a *Duration) Milliseconds() float64 {
 	if a.millisecondsLazy != nil {
 		return *a.millisecondsLazy
@@ -314,7 +348,9 @@ func (a *Duration) Milliseconds() float64 {
 }
 
 
-// ToDto creates an DurationDto representation.
+// ToDto creates a DurationDto representation from the Duration instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Second by default.
 func (a *Duration) ToDto(holdInUnit *DurationUnits) DurationDto {
 	if holdInUnit == nil {
 		defaultUnit := DurationSecond // Default value
@@ -327,12 +363,19 @@ func (a *Duration) ToDto(holdInUnit *DurationUnits) DurationDto {
 	}
 }
 
-// ToDtoJSON creates an DurationDto representation.
+// ToDtoJSON creates a JSON representation of the Duration instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Second by default.
 func (a *Duration) ToDtoJSON(holdInUnit *DurationUnits) ([]byte, error) {
+	// Convert to DurationDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Duration to a specific unit value.
+// Convert converts a Duration to a specific unit value.
+// The function uses the provided unit type (DurationUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Duration) Convert(toUnit DurationUnits) float64 {
 	switch toUnit { 
     case DurationYear365:
@@ -360,7 +403,7 @@ func (a *Duration) Convert(toUnit DurationUnits) float64 {
     case DurationMillisecond:
 		return a.Milliseconds()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -427,13 +470,22 @@ func (a *Duration) convertToBase(value float64, fromUnit DurationUnits) float64 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Duration in the default unit (Second),
+// formatted to two decimal places.
 func (a Duration) String() string {
 	return a.ToString(DurationSecond, 2)
 }
 
-// ToString formats the Duration to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Duration value as a string with the specified unit and fractional digits.
+// It converts the Duration to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Duration value will be converted (e.g., Second))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Duration with the unit abbreviation.
 func (a *Duration) ToString(unit DurationUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -475,12 +527,26 @@ func (a *Duration) getUnitAbbreviation(unit DurationUnits) string {
 	}
 }
 
-// Check if the given Duration are equals to the current Duration
+// Equals checks if the given Duration is equal to the current Duration.
+//
+// Parameters:
+//    other: The Duration to compare against.
+//
+// Returns:
+//    bool: Returns true if both Duration are equal, false otherwise.
 func (a *Duration) Equals(other *Duration) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Duration are equals to the current Duration
+// CompareTo compares the current Duration with another Duration.
+// It returns -1 if the current Duration is less than the other Duration, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Duration to compare against.
+//
+// Returns:
+//    int: -1 if the current Duration is less, 1 if greater, and 0 if equal.
 func (a *Duration) CompareTo(other *Duration) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -493,22 +559,50 @@ func (a *Duration) CompareTo(other *Duration) int {
 	return 0
 }
 
-// Add the given Duration to the current Duration.
+// Add adds the given Duration to the current Duration and returns the result.
+// The result is a new Duration instance with the sum of the values.
+//
+// Parameters:
+//    other: The Duration to add to the current Duration.
+//
+// Returns:
+//    *Duration: A new Duration instance representing the sum of both Duration.
 func (a *Duration) Add(other *Duration) *Duration {
 	return &Duration{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Duration to the current Duration.
+// Subtract subtracts the given Duration from the current Duration and returns the result.
+// The result is a new Duration instance with the difference of the values.
+//
+// Parameters:
+//    other: The Duration to subtract from the current Duration.
+//
+// Returns:
+//    *Duration: A new Duration instance representing the difference of both Duration.
 func (a *Duration) Subtract(other *Duration) *Duration {
 	return &Duration{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Duration to the current Duration.
+// Multiply multiplies the current Duration by the given Duration and returns the result.
+// The result is a new Duration instance with the product of the values.
+//
+// Parameters:
+//    other: The Duration to multiply with the current Duration.
+//
+// Returns:
+//    *Duration: A new Duration instance representing the product of both Duration.
 func (a *Duration) Multiply(other *Duration) *Duration {
 	return &Duration{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Duration to the current Duration.
+// Divide divides the current Duration by the given Duration and returns the result.
+// The result is a new Duration instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Duration to divide the current Duration by.
+//
+// Returns:
+//    *Duration: A new Duration instance representing the quotient of both Duration.
 func (a *Duration) Divide(other *Duration) *Duration {
 	return &Duration{value: a.value / other.BaseValue()}
 }

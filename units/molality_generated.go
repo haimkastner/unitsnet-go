@@ -12,7 +12,7 @@ import (
 
 
 
-// MolalityUnits enumeration
+// MolalityUnits defines various units of Molality.
 type MolalityUnits string
 
 const (
@@ -25,19 +25,24 @@ const (
         MolalityMillimolePerKilogram MolalityUnits = "MillimolePerKilogram"
 )
 
-// MolalityDto represents an Molality
+// MolalityDto represents a Molality measurement with a numerical value and its corresponding unit.
 type MolalityDto struct {
+    // Value is the numerical representation of the Molality.
 	Value float64
+    // Unit specifies the unit of measurement for the Molality, as defined in the MolalityUnits enumeration.
 	Unit  MolalityUnits
 }
 
-// MolalityDtoFactory struct to group related functions
+// MolalityDtoFactory groups methods for creating and serializing MolalityDto objects.
 type MolalityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MolalityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MolalityDtoFactory) FromJSON(data []byte) (*MolalityDto, error) {
 	a := MolalityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MolalityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -45,6 +50,9 @@ func (udf MolalityDtoFactory) FromJSON(data []byte) (*MolalityDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a MolalityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MolalityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -56,10 +64,11 @@ func (a MolalityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Molality struct
+// Molality represents a measurement in a of Molality.
+//
+// Molality is a measure of the amount of solute in a solution relative to a given mass of solvent.
 type Molality struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     moles_per_kilogramLazy *float64 
@@ -67,42 +76,43 @@ type Molality struct {
     millimoles_per_kilogramLazy *float64 
 }
 
-// MolalityFactory struct to group related functions
+// MolalityFactory groups methods for creating Molality instances.
 type MolalityFactory struct{}
 
+// CreateMolality creates a new Molality instance from the given value and unit.
 func (uf MolalityFactory) CreateMolality(value float64, unit MolalityUnits) (*Molality, error) {
 	return newMolality(value, unit)
 }
 
+// FromDto converts a MolalityDto to a Molality instance.
 func (uf MolalityFactory) FromDto(dto MolalityDto) (*Molality, error) {
 	return newMolality(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Molality instance.
 func (uf MolalityFactory) FromDtoJSON(data []byte) (*Molality, error) {
 	unitDto, err := MolalityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MolalityDto from JSON: %w", err)
 	}
 	return MolalityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMolePerKilogram creates a new Molality instance from MolePerKilogram.
+// FromMolesPerKilogram creates a new Molality instance from a value in MolesPerKilogram.
 func (uf MolalityFactory) FromMolesPerKilogram(value float64) (*Molality, error) {
 	return newMolality(value, MolalityMolePerKilogram)
 }
 
-// FromMolePerGram creates a new Molality instance from MolePerGram.
+// FromMolesPerGram creates a new Molality instance from a value in MolesPerGram.
 func (uf MolalityFactory) FromMolesPerGram(value float64) (*Molality, error) {
 	return newMolality(value, MolalityMolePerGram)
 }
 
-// FromMillimolePerKilogram creates a new Molality instance from MillimolePerKilogram.
+// FromMillimolesPerKilogram creates a new Molality instance from a value in MillimolesPerKilogram.
 func (uf MolalityFactory) FromMillimolesPerKilogram(value float64) (*Molality, error) {
 	return newMolality(value, MolalityMillimolePerKilogram)
 }
-
-
 
 
 // newMolality creates a new Molality.
@@ -115,13 +125,15 @@ func newMolality(value float64, fromUnit MolalityUnits) (*Molality, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Molality in MolePerKilogram.
+// BaseValue returns the base value of Molality in MolePerKilogram unit (the base/default quantity).
 func (a *Molality) BaseValue() float64 {
 	return a.value
 }
 
 
-// MolePerKilogram returns the value in MolePerKilogram.
+// MolesPerKilogram returns the Molality value in MolesPerKilogram.
+//
+// 
 func (a *Molality) MolesPerKilogram() float64 {
 	if a.moles_per_kilogramLazy != nil {
 		return *a.moles_per_kilogramLazy
@@ -131,7 +143,9 @@ func (a *Molality) MolesPerKilogram() float64 {
 	return moles_per_kilogram
 }
 
-// MolePerGram returns the value in MolePerGram.
+// MolesPerGram returns the Molality value in MolesPerGram.
+//
+// 
 func (a *Molality) MolesPerGram() float64 {
 	if a.moles_per_gramLazy != nil {
 		return *a.moles_per_gramLazy
@@ -141,7 +155,9 @@ func (a *Molality) MolesPerGram() float64 {
 	return moles_per_gram
 }
 
-// MillimolePerKilogram returns the value in MillimolePerKilogram.
+// MillimolesPerKilogram returns the Molality value in MillimolesPerKilogram.
+//
+// 
 func (a *Molality) MillimolesPerKilogram() float64 {
 	if a.millimoles_per_kilogramLazy != nil {
 		return *a.millimoles_per_kilogramLazy
@@ -152,7 +168,9 @@ func (a *Molality) MillimolesPerKilogram() float64 {
 }
 
 
-// ToDto creates an MolalityDto representation.
+// ToDto creates a MolalityDto representation from the Molality instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MolePerKilogram by default.
 func (a *Molality) ToDto(holdInUnit *MolalityUnits) MolalityDto {
 	if holdInUnit == nil {
 		defaultUnit := MolalityMolePerKilogram // Default value
@@ -165,12 +183,19 @@ func (a *Molality) ToDto(holdInUnit *MolalityUnits) MolalityDto {
 	}
 }
 
-// ToDtoJSON creates an MolalityDto representation.
+// ToDtoJSON creates a JSON representation of the Molality instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MolePerKilogram by default.
 func (a *Molality) ToDtoJSON(holdInUnit *MolalityUnits) ([]byte, error) {
+	// Convert to MolalityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Molality to a specific unit value.
+// Convert converts a Molality to a specific unit value.
+// The function uses the provided unit type (MolalityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Molality) Convert(toUnit MolalityUnits) float64 {
 	switch toUnit { 
     case MolalityMolePerKilogram:
@@ -180,7 +205,7 @@ func (a *Molality) Convert(toUnit MolalityUnits) float64 {
     case MolalityMillimolePerKilogram:
 		return a.MillimolesPerKilogram()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -211,13 +236,22 @@ func (a *Molality) convertToBase(value float64, fromUnit MolalityUnits) float64 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Molality in the default unit (MolePerKilogram),
+// formatted to two decimal places.
 func (a Molality) String() string {
 	return a.ToString(MolalityMolePerKilogram, 2)
 }
 
-// ToString formats the Molality to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Molality value as a string with the specified unit and fractional digits.
+// It converts the Molality to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Molality value will be converted (e.g., MolePerKilogram))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Molality with the unit abbreviation.
 func (a *Molality) ToString(unit MolalityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -241,12 +275,26 @@ func (a *Molality) getUnitAbbreviation(unit MolalityUnits) string {
 	}
 }
 
-// Check if the given Molality are equals to the current Molality
+// Equals checks if the given Molality is equal to the current Molality.
+//
+// Parameters:
+//    other: The Molality to compare against.
+//
+// Returns:
+//    bool: Returns true if both Molality are equal, false otherwise.
 func (a *Molality) Equals(other *Molality) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Molality are equals to the current Molality
+// CompareTo compares the current Molality with another Molality.
+// It returns -1 if the current Molality is less than the other Molality, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Molality to compare against.
+//
+// Returns:
+//    int: -1 if the current Molality is less, 1 if greater, and 0 if equal.
 func (a *Molality) CompareTo(other *Molality) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -259,22 +307,50 @@ func (a *Molality) CompareTo(other *Molality) int {
 	return 0
 }
 
-// Add the given Molality to the current Molality.
+// Add adds the given Molality to the current Molality and returns the result.
+// The result is a new Molality instance with the sum of the values.
+//
+// Parameters:
+//    other: The Molality to add to the current Molality.
+//
+// Returns:
+//    *Molality: A new Molality instance representing the sum of both Molality.
 func (a *Molality) Add(other *Molality) *Molality {
 	return &Molality{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Molality to the current Molality.
+// Subtract subtracts the given Molality from the current Molality and returns the result.
+// The result is a new Molality instance with the difference of the values.
+//
+// Parameters:
+//    other: The Molality to subtract from the current Molality.
+//
+// Returns:
+//    *Molality: A new Molality instance representing the difference of both Molality.
 func (a *Molality) Subtract(other *Molality) *Molality {
 	return &Molality{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Molality to the current Molality.
+// Multiply multiplies the current Molality by the given Molality and returns the result.
+// The result is a new Molality instance with the product of the values.
+//
+// Parameters:
+//    other: The Molality to multiply with the current Molality.
+//
+// Returns:
+//    *Molality: A new Molality instance representing the product of both Molality.
 func (a *Molality) Multiply(other *Molality) *Molality {
 	return &Molality{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Molality to the current Molality.
+// Divide divides the current Molality by the given Molality and returns the result.
+// The result is a new Molality instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Molality to divide the current Molality by.
+//
+// Returns:
+//    *Molality: A new Molality instance representing the quotient of both Molality.
 func (a *Molality) Divide(other *Molality) *Molality {
 	return &Molality{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// LengthUnits enumeration
+// LengthUnits defines various units of Length.
 type LengthUnits string
 
 const (
@@ -103,19 +103,24 @@ const (
         LengthMegalightYear LengthUnits = "MegalightYear"
 )
 
-// LengthDto represents an Length
+// LengthDto represents a Length measurement with a numerical value and its corresponding unit.
 type LengthDto struct {
+    // Value is the numerical representation of the Length.
 	Value float64
+    // Unit specifies the unit of measurement for the Length, as defined in the LengthUnits enumeration.
 	Unit  LengthUnits
 }
 
-// LengthDtoFactory struct to group related functions
+// LengthDtoFactory groups methods for creating and serializing LengthDto objects.
 type LengthDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a LengthDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf LengthDtoFactory) FromJSON(data []byte) (*LengthDto, error) {
 	a := LengthDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into LengthDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -123,6 +128,9 @@ func (udf LengthDtoFactory) FromJSON(data []byte) (*LengthDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a LengthDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a LengthDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -134,10 +142,11 @@ func (a LengthDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Length struct
+// Length represents a measurement in a of Length.
+//
+// Many different units of length have been used around the world. The main units in modern use are U.S. customary units in the United States and the Metric system elsewhere. British Imperial units are still used for some purposes in the United Kingdom and some other countries. The metric system is sub-divided into SI and non-SI units.
 type Length struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     metersLazy *float64 
@@ -184,237 +193,238 @@ type Length struct {
     megalight_yearsLazy *float64 
 }
 
-// LengthFactory struct to group related functions
+// LengthFactory groups methods for creating Length instances.
 type LengthFactory struct{}
 
+// CreateLength creates a new Length instance from the given value and unit.
 func (uf LengthFactory) CreateLength(value float64, unit LengthUnits) (*Length, error) {
 	return newLength(value, unit)
 }
 
+// FromDto converts a LengthDto to a Length instance.
 func (uf LengthFactory) FromDto(dto LengthDto) (*Length, error) {
 	return newLength(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Length instance.
 func (uf LengthFactory) FromDtoJSON(data []byte) (*Length, error) {
 	unitDto, err := LengthDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse LengthDto from JSON: %w", err)
 	}
 	return LengthFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMeter creates a new Length instance from Meter.
+// FromMeters creates a new Length instance from a value in Meters.
 func (uf LengthFactory) FromMeters(value float64) (*Length, error) {
 	return newLength(value, LengthMeter)
 }
 
-// FromMile creates a new Length instance from Mile.
+// FromMiles creates a new Length instance from a value in Miles.
 func (uf LengthFactory) FromMiles(value float64) (*Length, error) {
 	return newLength(value, LengthMile)
 }
 
-// FromYard creates a new Length instance from Yard.
+// FromYards creates a new Length instance from a value in Yards.
 func (uf LengthFactory) FromYards(value float64) (*Length, error) {
 	return newLength(value, LengthYard)
 }
 
-// FromFoot creates a new Length instance from Foot.
+// FromFeet creates a new Length instance from a value in Feet.
 func (uf LengthFactory) FromFeet(value float64) (*Length, error) {
 	return newLength(value, LengthFoot)
 }
 
-// FromUsSurveyFoot creates a new Length instance from UsSurveyFoot.
+// FromUsSurveyFeet creates a new Length instance from a value in UsSurveyFeet.
 func (uf LengthFactory) FromUsSurveyFeet(value float64) (*Length, error) {
 	return newLength(value, LengthUsSurveyFoot)
 }
 
-// FromInch creates a new Length instance from Inch.
+// FromInches creates a new Length instance from a value in Inches.
 func (uf LengthFactory) FromInches(value float64) (*Length, error) {
 	return newLength(value, LengthInch)
 }
 
-// FromMil creates a new Length instance from Mil.
+// FromMils creates a new Length instance from a value in Mils.
 func (uf LengthFactory) FromMils(value float64) (*Length, error) {
 	return newLength(value, LengthMil)
 }
 
-// FromNauticalMile creates a new Length instance from NauticalMile.
+// FromNauticalMiles creates a new Length instance from a value in NauticalMiles.
 func (uf LengthFactory) FromNauticalMiles(value float64) (*Length, error) {
 	return newLength(value, LengthNauticalMile)
 }
 
-// FromFathom creates a new Length instance from Fathom.
+// FromFathoms creates a new Length instance from a value in Fathoms.
 func (uf LengthFactory) FromFathoms(value float64) (*Length, error) {
 	return newLength(value, LengthFathom)
 }
 
-// FromShackle creates a new Length instance from Shackle.
+// FromShackles creates a new Length instance from a value in Shackles.
 func (uf LengthFactory) FromShackles(value float64) (*Length, error) {
 	return newLength(value, LengthShackle)
 }
 
-// FromMicroinch creates a new Length instance from Microinch.
+// FromMicroinches creates a new Length instance from a value in Microinches.
 func (uf LengthFactory) FromMicroinches(value float64) (*Length, error) {
 	return newLength(value, LengthMicroinch)
 }
 
-// FromPrinterPoint creates a new Length instance from PrinterPoint.
+// FromPrinterPoints creates a new Length instance from a value in PrinterPoints.
 func (uf LengthFactory) FromPrinterPoints(value float64) (*Length, error) {
 	return newLength(value, LengthPrinterPoint)
 }
 
-// FromDtpPoint creates a new Length instance from DtpPoint.
+// FromDtpPoints creates a new Length instance from a value in DtpPoints.
 func (uf LengthFactory) FromDtpPoints(value float64) (*Length, error) {
 	return newLength(value, LengthDtpPoint)
 }
 
-// FromPrinterPica creates a new Length instance from PrinterPica.
+// FromPrinterPicas creates a new Length instance from a value in PrinterPicas.
 func (uf LengthFactory) FromPrinterPicas(value float64) (*Length, error) {
 	return newLength(value, LengthPrinterPica)
 }
 
-// FromDtpPica creates a new Length instance from DtpPica.
+// FromDtpPicas creates a new Length instance from a value in DtpPicas.
 func (uf LengthFactory) FromDtpPicas(value float64) (*Length, error) {
 	return newLength(value, LengthDtpPica)
 }
 
-// FromTwip creates a new Length instance from Twip.
+// FromTwips creates a new Length instance from a value in Twips.
 func (uf LengthFactory) FromTwips(value float64) (*Length, error) {
 	return newLength(value, LengthTwip)
 }
 
-// FromHand creates a new Length instance from Hand.
+// FromHands creates a new Length instance from a value in Hands.
 func (uf LengthFactory) FromHands(value float64) (*Length, error) {
 	return newLength(value, LengthHand)
 }
 
-// FromAstronomicalUnit creates a new Length instance from AstronomicalUnit.
+// FromAstronomicalUnits creates a new Length instance from a value in AstronomicalUnits.
 func (uf LengthFactory) FromAstronomicalUnits(value float64) (*Length, error) {
 	return newLength(value, LengthAstronomicalUnit)
 }
 
-// FromParsec creates a new Length instance from Parsec.
+// FromParsecs creates a new Length instance from a value in Parsecs.
 func (uf LengthFactory) FromParsecs(value float64) (*Length, error) {
 	return newLength(value, LengthParsec)
 }
 
-// FromLightYear creates a new Length instance from LightYear.
+// FromLightYears creates a new Length instance from a value in LightYears.
 func (uf LengthFactory) FromLightYears(value float64) (*Length, error) {
 	return newLength(value, LengthLightYear)
 }
 
-// FromSolarRadius creates a new Length instance from SolarRadius.
+// FromSolarRadiuses creates a new Length instance from a value in SolarRadiuses.
 func (uf LengthFactory) FromSolarRadiuses(value float64) (*Length, error) {
 	return newLength(value, LengthSolarRadius)
 }
 
-// FromChain creates a new Length instance from Chain.
+// FromChains creates a new Length instance from a value in Chains.
 func (uf LengthFactory) FromChains(value float64) (*Length, error) {
 	return newLength(value, LengthChain)
 }
 
-// FromAngstrom creates a new Length instance from Angstrom.
+// FromAngstroms creates a new Length instance from a value in Angstroms.
 func (uf LengthFactory) FromAngstroms(value float64) (*Length, error) {
 	return newLength(value, LengthAngstrom)
 }
 
-// FromDataMile creates a new Length instance from DataMile.
+// FromDataMiles creates a new Length instance from a value in DataMiles.
 func (uf LengthFactory) FromDataMiles(value float64) (*Length, error) {
 	return newLength(value, LengthDataMile)
 }
 
-// FromFemtometer creates a new Length instance from Femtometer.
+// FromFemtometers creates a new Length instance from a value in Femtometers.
 func (uf LengthFactory) FromFemtometers(value float64) (*Length, error) {
 	return newLength(value, LengthFemtometer)
 }
 
-// FromPicometer creates a new Length instance from Picometer.
+// FromPicometers creates a new Length instance from a value in Picometers.
 func (uf LengthFactory) FromPicometers(value float64) (*Length, error) {
 	return newLength(value, LengthPicometer)
 }
 
-// FromNanometer creates a new Length instance from Nanometer.
+// FromNanometers creates a new Length instance from a value in Nanometers.
 func (uf LengthFactory) FromNanometers(value float64) (*Length, error) {
 	return newLength(value, LengthNanometer)
 }
 
-// FromMicrometer creates a new Length instance from Micrometer.
+// FromMicrometers creates a new Length instance from a value in Micrometers.
 func (uf LengthFactory) FromMicrometers(value float64) (*Length, error) {
 	return newLength(value, LengthMicrometer)
 }
 
-// FromMillimeter creates a new Length instance from Millimeter.
+// FromMillimeters creates a new Length instance from a value in Millimeters.
 func (uf LengthFactory) FromMillimeters(value float64) (*Length, error) {
 	return newLength(value, LengthMillimeter)
 }
 
-// FromCentimeter creates a new Length instance from Centimeter.
+// FromCentimeters creates a new Length instance from a value in Centimeters.
 func (uf LengthFactory) FromCentimeters(value float64) (*Length, error) {
 	return newLength(value, LengthCentimeter)
 }
 
-// FromDecimeter creates a new Length instance from Decimeter.
+// FromDecimeters creates a new Length instance from a value in Decimeters.
 func (uf LengthFactory) FromDecimeters(value float64) (*Length, error) {
 	return newLength(value, LengthDecimeter)
 }
 
-// FromDecameter creates a new Length instance from Decameter.
+// FromDecameters creates a new Length instance from a value in Decameters.
 func (uf LengthFactory) FromDecameters(value float64) (*Length, error) {
 	return newLength(value, LengthDecameter)
 }
 
-// FromHectometer creates a new Length instance from Hectometer.
+// FromHectometers creates a new Length instance from a value in Hectometers.
 func (uf LengthFactory) FromHectometers(value float64) (*Length, error) {
 	return newLength(value, LengthHectometer)
 }
 
-// FromKilometer creates a new Length instance from Kilometer.
+// FromKilometers creates a new Length instance from a value in Kilometers.
 func (uf LengthFactory) FromKilometers(value float64) (*Length, error) {
 	return newLength(value, LengthKilometer)
 }
 
-// FromMegameter creates a new Length instance from Megameter.
+// FromMegameters creates a new Length instance from a value in Megameters.
 func (uf LengthFactory) FromMegameters(value float64) (*Length, error) {
 	return newLength(value, LengthMegameter)
 }
 
-// FromGigameter creates a new Length instance from Gigameter.
+// FromGigameters creates a new Length instance from a value in Gigameters.
 func (uf LengthFactory) FromGigameters(value float64) (*Length, error) {
 	return newLength(value, LengthGigameter)
 }
 
-// FromKiloyard creates a new Length instance from Kiloyard.
+// FromKiloyards creates a new Length instance from a value in Kiloyards.
 func (uf LengthFactory) FromKiloyards(value float64) (*Length, error) {
 	return newLength(value, LengthKiloyard)
 }
 
-// FromKilofoot creates a new Length instance from Kilofoot.
+// FromKilofeet creates a new Length instance from a value in Kilofeet.
 func (uf LengthFactory) FromKilofeet(value float64) (*Length, error) {
 	return newLength(value, LengthKilofoot)
 }
 
-// FromKiloparsec creates a new Length instance from Kiloparsec.
+// FromKiloparsecs creates a new Length instance from a value in Kiloparsecs.
 func (uf LengthFactory) FromKiloparsecs(value float64) (*Length, error) {
 	return newLength(value, LengthKiloparsec)
 }
 
-// FromMegaparsec creates a new Length instance from Megaparsec.
+// FromMegaparsecs creates a new Length instance from a value in Megaparsecs.
 func (uf LengthFactory) FromMegaparsecs(value float64) (*Length, error) {
 	return newLength(value, LengthMegaparsec)
 }
 
-// FromKilolightYear creates a new Length instance from KilolightYear.
+// FromKilolightYears creates a new Length instance from a value in KilolightYears.
 func (uf LengthFactory) FromKilolightYears(value float64) (*Length, error) {
 	return newLength(value, LengthKilolightYear)
 }
 
-// FromMegalightYear creates a new Length instance from MegalightYear.
+// FromMegalightYears creates a new Length instance from a value in MegalightYears.
 func (uf LengthFactory) FromMegalightYears(value float64) (*Length, error) {
 	return newLength(value, LengthMegalightYear)
 }
-
-
 
 
 // newLength creates a new Length.
@@ -427,13 +437,15 @@ func newLength(value float64, fromUnit LengthUnits) (*Length, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Length in Meter.
+// BaseValue returns the base value of Length in Meter unit (the base/default quantity).
 func (a *Length) BaseValue() float64 {
 	return a.value
 }
 
 
-// Meter returns the value in Meter.
+// Meters returns the Length value in Meters.
+//
+// 
 func (a *Length) Meters() float64 {
 	if a.metersLazy != nil {
 		return *a.metersLazy
@@ -443,7 +455,9 @@ func (a *Length) Meters() float64 {
 	return meters
 }
 
-// Mile returns the value in Mile.
+// Miles returns the Length value in Miles.
+//
+// The statute mile was standardised between the British Commonwealth and the United States by an international agreement in 1959, when it was formally redefined with respect to SI units as exactly 1,609.344 metres.
 func (a *Length) Miles() float64 {
 	if a.milesLazy != nil {
 		return *a.milesLazy
@@ -453,7 +467,9 @@ func (a *Length) Miles() float64 {
 	return miles
 }
 
-// Yard returns the value in Yard.
+// Yards returns the Length value in Yards.
+//
+// The yard (symbol: yd) is an English unit of length in both the British imperial and US customary systems of measurement equalling 3 feet (or 36 inches). Since 1959 the yard has been by international agreement standardized as exactly 0.9144 meter. A distance of 1,760 yards is equal to 1 mile.
 func (a *Length) Yards() float64 {
 	if a.yardsLazy != nil {
 		return *a.yardsLazy
@@ -463,7 +479,9 @@ func (a *Length) Yards() float64 {
 	return yards
 }
 
-// Foot returns the value in Foot.
+// Feet returns the Length value in Feet.
+//
+// 
 func (a *Length) Feet() float64 {
 	if a.feetLazy != nil {
 		return *a.feetLazy
@@ -473,7 +491,9 @@ func (a *Length) Feet() float64 {
 	return feet
 }
 
-// UsSurveyFoot returns the value in UsSurveyFoot.
+// UsSurveyFeet returns the Length value in UsSurveyFeet.
+//
+// In the United States, the foot was defined as 12 inches, with the inch being defined by the Mendenhall Order of 1893 as 39.37 inches = 1 m. This makes a U.S. survey foot exactly 1200/3937 meters.
 func (a *Length) UsSurveyFeet() float64 {
 	if a.us_survey_feetLazy != nil {
 		return *a.us_survey_feetLazy
@@ -483,7 +503,9 @@ func (a *Length) UsSurveyFeet() float64 {
 	return us_survey_feet
 }
 
-// Inch returns the value in Inch.
+// Inches returns the Length value in Inches.
+//
+// 
 func (a *Length) Inches() float64 {
 	if a.inchesLazy != nil {
 		return *a.inchesLazy
@@ -493,7 +515,9 @@ func (a *Length) Inches() float64 {
 	return inches
 }
 
-// Mil returns the value in Mil.
+// Mils returns the Length value in Mils.
+//
+// 
 func (a *Length) Mils() float64 {
 	if a.milsLazy != nil {
 		return *a.milsLazy
@@ -503,7 +527,9 @@ func (a *Length) Mils() float64 {
 	return mils
 }
 
-// NauticalMile returns the value in NauticalMile.
+// NauticalMiles returns the Length value in NauticalMiles.
+//
+// 
 func (a *Length) NauticalMiles() float64 {
 	if a.nautical_milesLazy != nil {
 		return *a.nautical_milesLazy
@@ -513,7 +539,9 @@ func (a *Length) NauticalMiles() float64 {
 	return nautical_miles
 }
 
-// Fathom returns the value in Fathom.
+// Fathoms returns the Length value in Fathoms.
+//
+// 
 func (a *Length) Fathoms() float64 {
 	if a.fathomsLazy != nil {
 		return *a.fathomsLazy
@@ -523,7 +551,9 @@ func (a *Length) Fathoms() float64 {
 	return fathoms
 }
 
-// Shackle returns the value in Shackle.
+// Shackles returns the Length value in Shackles.
+//
+// 
 func (a *Length) Shackles() float64 {
 	if a.shacklesLazy != nil {
 		return *a.shacklesLazy
@@ -533,7 +563,9 @@ func (a *Length) Shackles() float64 {
 	return shackles
 }
 
-// Microinch returns the value in Microinch.
+// Microinches returns the Length value in Microinches.
+//
+// 
 func (a *Length) Microinches() float64 {
 	if a.microinchesLazy != nil {
 		return *a.microinchesLazy
@@ -543,7 +575,9 @@ func (a *Length) Microinches() float64 {
 	return microinches
 }
 
-// PrinterPoint returns the value in PrinterPoint.
+// PrinterPoints returns the Length value in PrinterPoints.
+//
+// 
 func (a *Length) PrinterPoints() float64 {
 	if a.printer_pointsLazy != nil {
 		return *a.printer_pointsLazy
@@ -553,7 +587,9 @@ func (a *Length) PrinterPoints() float64 {
 	return printer_points
 }
 
-// DtpPoint returns the value in DtpPoint.
+// DtpPoints returns the Length value in DtpPoints.
+//
+// 
 func (a *Length) DtpPoints() float64 {
 	if a.dtp_pointsLazy != nil {
 		return *a.dtp_pointsLazy
@@ -563,7 +599,9 @@ func (a *Length) DtpPoints() float64 {
 	return dtp_points
 }
 
-// PrinterPica returns the value in PrinterPica.
+// PrinterPicas returns the Length value in PrinterPicas.
+//
+// 
 func (a *Length) PrinterPicas() float64 {
 	if a.printer_picasLazy != nil {
 		return *a.printer_picasLazy
@@ -573,7 +611,9 @@ func (a *Length) PrinterPicas() float64 {
 	return printer_picas
 }
 
-// DtpPica returns the value in DtpPica.
+// DtpPicas returns the Length value in DtpPicas.
+//
+// 
 func (a *Length) DtpPicas() float64 {
 	if a.dtp_picasLazy != nil {
 		return *a.dtp_picasLazy
@@ -583,7 +623,9 @@ func (a *Length) DtpPicas() float64 {
 	return dtp_picas
 }
 
-// Twip returns the value in Twip.
+// Twips returns the Length value in Twips.
+//
+// 
 func (a *Length) Twips() float64 {
 	if a.twipsLazy != nil {
 		return *a.twipsLazy
@@ -593,7 +635,9 @@ func (a *Length) Twips() float64 {
 	return twips
 }
 
-// Hand returns the value in Hand.
+// Hands returns the Length value in Hands.
+//
+// 
 func (a *Length) Hands() float64 {
 	if a.handsLazy != nil {
 		return *a.handsLazy
@@ -603,7 +647,9 @@ func (a *Length) Hands() float64 {
 	return hands
 }
 
-// AstronomicalUnit returns the value in AstronomicalUnit.
+// AstronomicalUnits returns the Length value in AstronomicalUnits.
+//
+// One Astronomical Unit is the distance from the solar system Star, the sun, to planet Earth.
 func (a *Length) AstronomicalUnits() float64 {
 	if a.astronomical_unitsLazy != nil {
 		return *a.astronomical_unitsLazy
@@ -613,7 +659,9 @@ func (a *Length) AstronomicalUnits() float64 {
 	return astronomical_units
 }
 
-// Parsec returns the value in Parsec.
+// Parsecs returns the Length value in Parsecs.
+//
+// A parsec is defined as the distance at which one astronomical unit (AU) subtends an angle of one arcsecond.
 func (a *Length) Parsecs() float64 {
 	if a.parsecsLazy != nil {
 		return *a.parsecsLazy
@@ -623,7 +671,9 @@ func (a *Length) Parsecs() float64 {
 	return parsecs
 }
 
-// LightYear returns the value in LightYear.
+// LightYears returns the Length value in LightYears.
+//
+// A Light Year (ly) is the distance that light travel during an Earth year, ie 365 days.
 func (a *Length) LightYears() float64 {
 	if a.light_yearsLazy != nil {
 		return *a.light_yearsLazy
@@ -633,7 +683,9 @@ func (a *Length) LightYears() float64 {
 	return light_years
 }
 
-// SolarRadius returns the value in SolarRadius.
+// SolarRadiuses returns the Length value in SolarRadiuses.
+//
+// Solar radius is a ratio unit to the radius of the solar system star, the sun.
 func (a *Length) SolarRadiuses() float64 {
 	if a.solar_radiusesLazy != nil {
 		return *a.solar_radiusesLazy
@@ -643,7 +695,9 @@ func (a *Length) SolarRadiuses() float64 {
 	return solar_radiuses
 }
 
-// Chain returns the value in Chain.
+// Chains returns the Length value in Chains.
+//
+// 
 func (a *Length) Chains() float64 {
 	if a.chainsLazy != nil {
 		return *a.chainsLazy
@@ -653,7 +707,9 @@ func (a *Length) Chains() float64 {
 	return chains
 }
 
-// Angstrom returns the value in Angstrom.
+// Angstroms returns the Length value in Angstroms.
+//
+// Angstrom is a metric unit of length equal to 1e-10 meter
 func (a *Length) Angstroms() float64 {
 	if a.angstromsLazy != nil {
 		return *a.angstromsLazy
@@ -663,7 +719,9 @@ func (a *Length) Angstroms() float64 {
 	return angstroms
 }
 
-// DataMile returns the value in DataMile.
+// DataMiles returns the Length value in DataMiles.
+//
+// In radar-related subjects and in JTIDS, a data mile is a unit of distance equal to 6000 feet (1.8288 kilometres or 0.987 nautical miles).
 func (a *Length) DataMiles() float64 {
 	if a.data_milesLazy != nil {
 		return *a.data_milesLazy
@@ -673,7 +731,9 @@ func (a *Length) DataMiles() float64 {
 	return data_miles
 }
 
-// Femtometer returns the value in Femtometer.
+// Femtometers returns the Length value in Femtometers.
+//
+// 
 func (a *Length) Femtometers() float64 {
 	if a.femtometersLazy != nil {
 		return *a.femtometersLazy
@@ -683,7 +743,9 @@ func (a *Length) Femtometers() float64 {
 	return femtometers
 }
 
-// Picometer returns the value in Picometer.
+// Picometers returns the Length value in Picometers.
+//
+// 
 func (a *Length) Picometers() float64 {
 	if a.picometersLazy != nil {
 		return *a.picometersLazy
@@ -693,7 +755,9 @@ func (a *Length) Picometers() float64 {
 	return picometers
 }
 
-// Nanometer returns the value in Nanometer.
+// Nanometers returns the Length value in Nanometers.
+//
+// 
 func (a *Length) Nanometers() float64 {
 	if a.nanometersLazy != nil {
 		return *a.nanometersLazy
@@ -703,7 +767,9 @@ func (a *Length) Nanometers() float64 {
 	return nanometers
 }
 
-// Micrometer returns the value in Micrometer.
+// Micrometers returns the Length value in Micrometers.
+//
+// 
 func (a *Length) Micrometers() float64 {
 	if a.micrometersLazy != nil {
 		return *a.micrometersLazy
@@ -713,7 +779,9 @@ func (a *Length) Micrometers() float64 {
 	return micrometers
 }
 
-// Millimeter returns the value in Millimeter.
+// Millimeters returns the Length value in Millimeters.
+//
+// 
 func (a *Length) Millimeters() float64 {
 	if a.millimetersLazy != nil {
 		return *a.millimetersLazy
@@ -723,7 +791,9 @@ func (a *Length) Millimeters() float64 {
 	return millimeters
 }
 
-// Centimeter returns the value in Centimeter.
+// Centimeters returns the Length value in Centimeters.
+//
+// 
 func (a *Length) Centimeters() float64 {
 	if a.centimetersLazy != nil {
 		return *a.centimetersLazy
@@ -733,7 +803,9 @@ func (a *Length) Centimeters() float64 {
 	return centimeters
 }
 
-// Decimeter returns the value in Decimeter.
+// Decimeters returns the Length value in Decimeters.
+//
+// 
 func (a *Length) Decimeters() float64 {
 	if a.decimetersLazy != nil {
 		return *a.decimetersLazy
@@ -743,7 +815,9 @@ func (a *Length) Decimeters() float64 {
 	return decimeters
 }
 
-// Decameter returns the value in Decameter.
+// Decameters returns the Length value in Decameters.
+//
+// 
 func (a *Length) Decameters() float64 {
 	if a.decametersLazy != nil {
 		return *a.decametersLazy
@@ -753,7 +827,9 @@ func (a *Length) Decameters() float64 {
 	return decameters
 }
 
-// Hectometer returns the value in Hectometer.
+// Hectometers returns the Length value in Hectometers.
+//
+// 
 func (a *Length) Hectometers() float64 {
 	if a.hectometersLazy != nil {
 		return *a.hectometersLazy
@@ -763,7 +839,9 @@ func (a *Length) Hectometers() float64 {
 	return hectometers
 }
 
-// Kilometer returns the value in Kilometer.
+// Kilometers returns the Length value in Kilometers.
+//
+// 
 func (a *Length) Kilometers() float64 {
 	if a.kilometersLazy != nil {
 		return *a.kilometersLazy
@@ -773,7 +851,9 @@ func (a *Length) Kilometers() float64 {
 	return kilometers
 }
 
-// Megameter returns the value in Megameter.
+// Megameters returns the Length value in Megameters.
+//
+// 
 func (a *Length) Megameters() float64 {
 	if a.megametersLazy != nil {
 		return *a.megametersLazy
@@ -783,7 +863,9 @@ func (a *Length) Megameters() float64 {
 	return megameters
 }
 
-// Gigameter returns the value in Gigameter.
+// Gigameters returns the Length value in Gigameters.
+//
+// 
 func (a *Length) Gigameters() float64 {
 	if a.gigametersLazy != nil {
 		return *a.gigametersLazy
@@ -793,7 +875,9 @@ func (a *Length) Gigameters() float64 {
 	return gigameters
 }
 
-// Kiloyard returns the value in Kiloyard.
+// Kiloyards returns the Length value in Kiloyards.
+//
+// 
 func (a *Length) Kiloyards() float64 {
 	if a.kiloyardsLazy != nil {
 		return *a.kiloyardsLazy
@@ -803,7 +887,9 @@ func (a *Length) Kiloyards() float64 {
 	return kiloyards
 }
 
-// Kilofoot returns the value in Kilofoot.
+// Kilofeet returns the Length value in Kilofeet.
+//
+// 
 func (a *Length) Kilofeet() float64 {
 	if a.kilofeetLazy != nil {
 		return *a.kilofeetLazy
@@ -813,7 +899,9 @@ func (a *Length) Kilofeet() float64 {
 	return kilofeet
 }
 
-// Kiloparsec returns the value in Kiloparsec.
+// Kiloparsecs returns the Length value in Kiloparsecs.
+//
+// 
 func (a *Length) Kiloparsecs() float64 {
 	if a.kiloparsecsLazy != nil {
 		return *a.kiloparsecsLazy
@@ -823,7 +911,9 @@ func (a *Length) Kiloparsecs() float64 {
 	return kiloparsecs
 }
 
-// Megaparsec returns the value in Megaparsec.
+// Megaparsecs returns the Length value in Megaparsecs.
+//
+// 
 func (a *Length) Megaparsecs() float64 {
 	if a.megaparsecsLazy != nil {
 		return *a.megaparsecsLazy
@@ -833,7 +923,9 @@ func (a *Length) Megaparsecs() float64 {
 	return megaparsecs
 }
 
-// KilolightYear returns the value in KilolightYear.
+// KilolightYears returns the Length value in KilolightYears.
+//
+// 
 func (a *Length) KilolightYears() float64 {
 	if a.kilolight_yearsLazy != nil {
 		return *a.kilolight_yearsLazy
@@ -843,7 +935,9 @@ func (a *Length) KilolightYears() float64 {
 	return kilolight_years
 }
 
-// MegalightYear returns the value in MegalightYear.
+// MegalightYears returns the Length value in MegalightYears.
+//
+// 
 func (a *Length) MegalightYears() float64 {
 	if a.megalight_yearsLazy != nil {
 		return *a.megalight_yearsLazy
@@ -854,7 +948,9 @@ func (a *Length) MegalightYears() float64 {
 }
 
 
-// ToDto creates an LengthDto representation.
+// ToDto creates a LengthDto representation from the Length instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Meter by default.
 func (a *Length) ToDto(holdInUnit *LengthUnits) LengthDto {
 	if holdInUnit == nil {
 		defaultUnit := LengthMeter // Default value
@@ -867,12 +963,19 @@ func (a *Length) ToDto(holdInUnit *LengthUnits) LengthDto {
 	}
 }
 
-// ToDtoJSON creates an LengthDto representation.
+// ToDtoJSON creates a JSON representation of the Length instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Meter by default.
 func (a *Length) ToDtoJSON(holdInUnit *LengthUnits) ([]byte, error) {
+	// Convert to LengthDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Length to a specific unit value.
+// Convert converts a Length to a specific unit value.
+// The function uses the provided unit type (LengthUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Length) Convert(toUnit LengthUnits) float64 {
 	switch toUnit { 
     case LengthMeter:
@@ -960,7 +1063,7 @@ func (a *Length) Convert(toUnit LengthUnits) float64 {
     case LengthMegalightYear:
 		return a.MegalightYears()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -1147,13 +1250,22 @@ func (a *Length) convertToBase(value float64, fromUnit LengthUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Length in the default unit (Meter),
+// formatted to two decimal places.
 func (a Length) String() string {
 	return a.ToString(LengthMeter, 2)
 }
 
-// ToString formats the Length to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Length value as a string with the specified unit and fractional digits.
+// It converts the Length to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Length value will be converted (e.g., Meter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Length with the unit abbreviation.
 func (a *Length) ToString(unit LengthUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1255,12 +1367,26 @@ func (a *Length) getUnitAbbreviation(unit LengthUnits) string {
 	}
 }
 
-// Check if the given Length are equals to the current Length
+// Equals checks if the given Length is equal to the current Length.
+//
+// Parameters:
+//    other: The Length to compare against.
+//
+// Returns:
+//    bool: Returns true if both Length are equal, false otherwise.
 func (a *Length) Equals(other *Length) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Length are equals to the current Length
+// CompareTo compares the current Length with another Length.
+// It returns -1 if the current Length is less than the other Length, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Length to compare against.
+//
+// Returns:
+//    int: -1 if the current Length is less, 1 if greater, and 0 if equal.
 func (a *Length) CompareTo(other *Length) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1273,22 +1399,50 @@ func (a *Length) CompareTo(other *Length) int {
 	return 0
 }
 
-// Add the given Length to the current Length.
+// Add adds the given Length to the current Length and returns the result.
+// The result is a new Length instance with the sum of the values.
+//
+// Parameters:
+//    other: The Length to add to the current Length.
+//
+// Returns:
+//    *Length: A new Length instance representing the sum of both Length.
 func (a *Length) Add(other *Length) *Length {
 	return &Length{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Length to the current Length.
+// Subtract subtracts the given Length from the current Length and returns the result.
+// The result is a new Length instance with the difference of the values.
+//
+// Parameters:
+//    other: The Length to subtract from the current Length.
+//
+// Returns:
+//    *Length: A new Length instance representing the difference of both Length.
 func (a *Length) Subtract(other *Length) *Length {
 	return &Length{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Length to the current Length.
+// Multiply multiplies the current Length by the given Length and returns the result.
+// The result is a new Length instance with the product of the values.
+//
+// Parameters:
+//    other: The Length to multiply with the current Length.
+//
+// Returns:
+//    *Length: A new Length instance representing the product of both Length.
 func (a *Length) Multiply(other *Length) *Length {
 	return &Length{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Length to the current Length.
+// Divide divides the current Length by the given Length and returns the result.
+// The result is a new Length instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Length to divide the current Length by.
+//
+// Returns:
+//    *Length: A new Length instance representing the quotient of both Length.
 func (a *Length) Divide(other *Length) *Length {
 	return &Length{value: a.value / other.BaseValue()}
 }

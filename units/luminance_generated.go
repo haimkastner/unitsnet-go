@@ -12,7 +12,7 @@ import (
 
 
 
-// LuminanceUnits enumeration
+// LuminanceUnits defines various units of Luminance.
 type LuminanceUnits string
 
 const (
@@ -39,19 +39,24 @@ const (
         LuminanceKilocandelaPerSquareMeter LuminanceUnits = "KilocandelaPerSquareMeter"
 )
 
-// LuminanceDto represents an Luminance
+// LuminanceDto represents a Luminance measurement with a numerical value and its corresponding unit.
 type LuminanceDto struct {
+    // Value is the numerical representation of the Luminance.
 	Value float64
+    // Unit specifies the unit of measurement for the Luminance, as defined in the LuminanceUnits enumeration.
 	Unit  LuminanceUnits
 }
 
-// LuminanceDtoFactory struct to group related functions
+// LuminanceDtoFactory groups methods for creating and serializing LuminanceDto objects.
 type LuminanceDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a LuminanceDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf LuminanceDtoFactory) FromJSON(data []byte) (*LuminanceDto, error) {
 	a := LuminanceDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into LuminanceDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -59,6 +64,9 @@ func (udf LuminanceDtoFactory) FromJSON(data []byte) (*LuminanceDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a LuminanceDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a LuminanceDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -70,10 +78,11 @@ func (a LuminanceDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Luminance struct
+// Luminance represents a measurement in a of Luminance.
+//
+// None
 type Luminance struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     candelas_per_square_meterLazy *float64 
@@ -88,77 +97,78 @@ type Luminance struct {
     kilocandelas_per_square_meterLazy *float64 
 }
 
-// LuminanceFactory struct to group related functions
+// LuminanceFactory groups methods for creating Luminance instances.
 type LuminanceFactory struct{}
 
+// CreateLuminance creates a new Luminance instance from the given value and unit.
 func (uf LuminanceFactory) CreateLuminance(value float64, unit LuminanceUnits) (*Luminance, error) {
 	return newLuminance(value, unit)
 }
 
+// FromDto converts a LuminanceDto to a Luminance instance.
 func (uf LuminanceFactory) FromDto(dto LuminanceDto) (*Luminance, error) {
 	return newLuminance(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Luminance instance.
 func (uf LuminanceFactory) FromDtoJSON(data []byte) (*Luminance, error) {
 	unitDto, err := LuminanceDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse LuminanceDto from JSON: %w", err)
 	}
 	return LuminanceFactory{}.FromDto(*unitDto)
 }
 
 
-// FromCandelaPerSquareMeter creates a new Luminance instance from CandelaPerSquareMeter.
+// FromCandelasPerSquareMeter creates a new Luminance instance from a value in CandelasPerSquareMeter.
 func (uf LuminanceFactory) FromCandelasPerSquareMeter(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceCandelaPerSquareMeter)
 }
 
-// FromCandelaPerSquareFoot creates a new Luminance instance from CandelaPerSquareFoot.
+// FromCandelasPerSquareFoot creates a new Luminance instance from a value in CandelasPerSquareFoot.
 func (uf LuminanceFactory) FromCandelasPerSquareFoot(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceCandelaPerSquareFoot)
 }
 
-// FromCandelaPerSquareInch creates a new Luminance instance from CandelaPerSquareInch.
+// FromCandelasPerSquareInch creates a new Luminance instance from a value in CandelasPerSquareInch.
 func (uf LuminanceFactory) FromCandelasPerSquareInch(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceCandelaPerSquareInch)
 }
 
-// FromNit creates a new Luminance instance from Nit.
+// FromNits creates a new Luminance instance from a value in Nits.
 func (uf LuminanceFactory) FromNits(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceNit)
 }
 
-// FromNanocandelaPerSquareMeter creates a new Luminance instance from NanocandelaPerSquareMeter.
+// FromNanocandelasPerSquareMeter creates a new Luminance instance from a value in NanocandelasPerSquareMeter.
 func (uf LuminanceFactory) FromNanocandelasPerSquareMeter(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceNanocandelaPerSquareMeter)
 }
 
-// FromMicrocandelaPerSquareMeter creates a new Luminance instance from MicrocandelaPerSquareMeter.
+// FromMicrocandelasPerSquareMeter creates a new Luminance instance from a value in MicrocandelasPerSquareMeter.
 func (uf LuminanceFactory) FromMicrocandelasPerSquareMeter(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceMicrocandelaPerSquareMeter)
 }
 
-// FromMillicandelaPerSquareMeter creates a new Luminance instance from MillicandelaPerSquareMeter.
+// FromMillicandelasPerSquareMeter creates a new Luminance instance from a value in MillicandelasPerSquareMeter.
 func (uf LuminanceFactory) FromMillicandelasPerSquareMeter(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceMillicandelaPerSquareMeter)
 }
 
-// FromCenticandelaPerSquareMeter creates a new Luminance instance from CenticandelaPerSquareMeter.
+// FromCenticandelasPerSquareMeter creates a new Luminance instance from a value in CenticandelasPerSquareMeter.
 func (uf LuminanceFactory) FromCenticandelasPerSquareMeter(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceCenticandelaPerSquareMeter)
 }
 
-// FromDecicandelaPerSquareMeter creates a new Luminance instance from DecicandelaPerSquareMeter.
+// FromDecicandelasPerSquareMeter creates a new Luminance instance from a value in DecicandelasPerSquareMeter.
 func (uf LuminanceFactory) FromDecicandelasPerSquareMeter(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceDecicandelaPerSquareMeter)
 }
 
-// FromKilocandelaPerSquareMeter creates a new Luminance instance from KilocandelaPerSquareMeter.
+// FromKilocandelasPerSquareMeter creates a new Luminance instance from a value in KilocandelasPerSquareMeter.
 func (uf LuminanceFactory) FromKilocandelasPerSquareMeter(value float64) (*Luminance, error) {
 	return newLuminance(value, LuminanceKilocandelaPerSquareMeter)
 }
-
-
 
 
 // newLuminance creates a new Luminance.
@@ -171,13 +181,15 @@ func newLuminance(value float64, fromUnit LuminanceUnits) (*Luminance, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Luminance in CandelaPerSquareMeter.
+// BaseValue returns the base value of Luminance in CandelaPerSquareMeter unit (the base/default quantity).
 func (a *Luminance) BaseValue() float64 {
 	return a.value
 }
 
 
-// CandelaPerSquareMeter returns the value in CandelaPerSquareMeter.
+// CandelasPerSquareMeter returns the Luminance value in CandelasPerSquareMeter.
+//
+// 
 func (a *Luminance) CandelasPerSquareMeter() float64 {
 	if a.candelas_per_square_meterLazy != nil {
 		return *a.candelas_per_square_meterLazy
@@ -187,7 +199,9 @@ func (a *Luminance) CandelasPerSquareMeter() float64 {
 	return candelas_per_square_meter
 }
 
-// CandelaPerSquareFoot returns the value in CandelaPerSquareFoot.
+// CandelasPerSquareFoot returns the Luminance value in CandelasPerSquareFoot.
+//
+// 
 func (a *Luminance) CandelasPerSquareFoot() float64 {
 	if a.candelas_per_square_footLazy != nil {
 		return *a.candelas_per_square_footLazy
@@ -197,7 +211,9 @@ func (a *Luminance) CandelasPerSquareFoot() float64 {
 	return candelas_per_square_foot
 }
 
-// CandelaPerSquareInch returns the value in CandelaPerSquareInch.
+// CandelasPerSquareInch returns the Luminance value in CandelasPerSquareInch.
+//
+// 
 func (a *Luminance) CandelasPerSquareInch() float64 {
 	if a.candelas_per_square_inchLazy != nil {
 		return *a.candelas_per_square_inchLazy
@@ -207,7 +223,9 @@ func (a *Luminance) CandelasPerSquareInch() float64 {
 	return candelas_per_square_inch
 }
 
-// Nit returns the value in Nit.
+// Nits returns the Luminance value in Nits.
+//
+// 
 func (a *Luminance) Nits() float64 {
 	if a.nitsLazy != nil {
 		return *a.nitsLazy
@@ -217,7 +235,9 @@ func (a *Luminance) Nits() float64 {
 	return nits
 }
 
-// NanocandelaPerSquareMeter returns the value in NanocandelaPerSquareMeter.
+// NanocandelasPerSquareMeter returns the Luminance value in NanocandelasPerSquareMeter.
+//
+// 
 func (a *Luminance) NanocandelasPerSquareMeter() float64 {
 	if a.nanocandelas_per_square_meterLazy != nil {
 		return *a.nanocandelas_per_square_meterLazy
@@ -227,7 +247,9 @@ func (a *Luminance) NanocandelasPerSquareMeter() float64 {
 	return nanocandelas_per_square_meter
 }
 
-// MicrocandelaPerSquareMeter returns the value in MicrocandelaPerSquareMeter.
+// MicrocandelasPerSquareMeter returns the Luminance value in MicrocandelasPerSquareMeter.
+//
+// 
 func (a *Luminance) MicrocandelasPerSquareMeter() float64 {
 	if a.microcandelas_per_square_meterLazy != nil {
 		return *a.microcandelas_per_square_meterLazy
@@ -237,7 +259,9 @@ func (a *Luminance) MicrocandelasPerSquareMeter() float64 {
 	return microcandelas_per_square_meter
 }
 
-// MillicandelaPerSquareMeter returns the value in MillicandelaPerSquareMeter.
+// MillicandelasPerSquareMeter returns the Luminance value in MillicandelasPerSquareMeter.
+//
+// 
 func (a *Luminance) MillicandelasPerSquareMeter() float64 {
 	if a.millicandelas_per_square_meterLazy != nil {
 		return *a.millicandelas_per_square_meterLazy
@@ -247,7 +271,9 @@ func (a *Luminance) MillicandelasPerSquareMeter() float64 {
 	return millicandelas_per_square_meter
 }
 
-// CenticandelaPerSquareMeter returns the value in CenticandelaPerSquareMeter.
+// CenticandelasPerSquareMeter returns the Luminance value in CenticandelasPerSquareMeter.
+//
+// 
 func (a *Luminance) CenticandelasPerSquareMeter() float64 {
 	if a.centicandelas_per_square_meterLazy != nil {
 		return *a.centicandelas_per_square_meterLazy
@@ -257,7 +283,9 @@ func (a *Luminance) CenticandelasPerSquareMeter() float64 {
 	return centicandelas_per_square_meter
 }
 
-// DecicandelaPerSquareMeter returns the value in DecicandelaPerSquareMeter.
+// DecicandelasPerSquareMeter returns the Luminance value in DecicandelasPerSquareMeter.
+//
+// 
 func (a *Luminance) DecicandelasPerSquareMeter() float64 {
 	if a.decicandelas_per_square_meterLazy != nil {
 		return *a.decicandelas_per_square_meterLazy
@@ -267,7 +295,9 @@ func (a *Luminance) DecicandelasPerSquareMeter() float64 {
 	return decicandelas_per_square_meter
 }
 
-// KilocandelaPerSquareMeter returns the value in KilocandelaPerSquareMeter.
+// KilocandelasPerSquareMeter returns the Luminance value in KilocandelasPerSquareMeter.
+//
+// 
 func (a *Luminance) KilocandelasPerSquareMeter() float64 {
 	if a.kilocandelas_per_square_meterLazy != nil {
 		return *a.kilocandelas_per_square_meterLazy
@@ -278,7 +308,9 @@ func (a *Luminance) KilocandelasPerSquareMeter() float64 {
 }
 
 
-// ToDto creates an LuminanceDto representation.
+// ToDto creates a LuminanceDto representation from the Luminance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CandelaPerSquareMeter by default.
 func (a *Luminance) ToDto(holdInUnit *LuminanceUnits) LuminanceDto {
 	if holdInUnit == nil {
 		defaultUnit := LuminanceCandelaPerSquareMeter // Default value
@@ -291,12 +323,19 @@ func (a *Luminance) ToDto(holdInUnit *LuminanceUnits) LuminanceDto {
 	}
 }
 
-// ToDtoJSON creates an LuminanceDto representation.
+// ToDtoJSON creates a JSON representation of the Luminance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CandelaPerSquareMeter by default.
 func (a *Luminance) ToDtoJSON(holdInUnit *LuminanceUnits) ([]byte, error) {
+	// Convert to LuminanceDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Luminance to a specific unit value.
+// Convert converts a Luminance to a specific unit value.
+// The function uses the provided unit type (LuminanceUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Luminance) Convert(toUnit LuminanceUnits) float64 {
 	switch toUnit { 
     case LuminanceCandelaPerSquareMeter:
@@ -320,7 +359,7 @@ func (a *Luminance) Convert(toUnit LuminanceUnits) float64 {
     case LuminanceKilocandelaPerSquareMeter:
 		return a.KilocandelasPerSquareMeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -379,13 +418,22 @@ func (a *Luminance) convertToBase(value float64, fromUnit LuminanceUnits) float6
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Luminance in the default unit (CandelaPerSquareMeter),
+// formatted to two decimal places.
 func (a Luminance) String() string {
 	return a.ToString(LuminanceCandelaPerSquareMeter, 2)
 }
 
-// ToString formats the Luminance to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Luminance value as a string with the specified unit and fractional digits.
+// It converts the Luminance to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Luminance value will be converted (e.g., CandelaPerSquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Luminance with the unit abbreviation.
 func (a *Luminance) ToString(unit LuminanceUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -423,12 +471,26 @@ func (a *Luminance) getUnitAbbreviation(unit LuminanceUnits) string {
 	}
 }
 
-// Check if the given Luminance are equals to the current Luminance
+// Equals checks if the given Luminance is equal to the current Luminance.
+//
+// Parameters:
+//    other: The Luminance to compare against.
+//
+// Returns:
+//    bool: Returns true if both Luminance are equal, false otherwise.
 func (a *Luminance) Equals(other *Luminance) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Luminance are equals to the current Luminance
+// CompareTo compares the current Luminance with another Luminance.
+// It returns -1 if the current Luminance is less than the other Luminance, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Luminance to compare against.
+//
+// Returns:
+//    int: -1 if the current Luminance is less, 1 if greater, and 0 if equal.
 func (a *Luminance) CompareTo(other *Luminance) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -441,22 +503,50 @@ func (a *Luminance) CompareTo(other *Luminance) int {
 	return 0
 }
 
-// Add the given Luminance to the current Luminance.
+// Add adds the given Luminance to the current Luminance and returns the result.
+// The result is a new Luminance instance with the sum of the values.
+//
+// Parameters:
+//    other: The Luminance to add to the current Luminance.
+//
+// Returns:
+//    *Luminance: A new Luminance instance representing the sum of both Luminance.
 func (a *Luminance) Add(other *Luminance) *Luminance {
 	return &Luminance{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Luminance to the current Luminance.
+// Subtract subtracts the given Luminance from the current Luminance and returns the result.
+// The result is a new Luminance instance with the difference of the values.
+//
+// Parameters:
+//    other: The Luminance to subtract from the current Luminance.
+//
+// Returns:
+//    *Luminance: A new Luminance instance representing the difference of both Luminance.
 func (a *Luminance) Subtract(other *Luminance) *Luminance {
 	return &Luminance{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Luminance to the current Luminance.
+// Multiply multiplies the current Luminance by the given Luminance and returns the result.
+// The result is a new Luminance instance with the product of the values.
+//
+// Parameters:
+//    other: The Luminance to multiply with the current Luminance.
+//
+// Returns:
+//    *Luminance: A new Luminance instance representing the product of both Luminance.
 func (a *Luminance) Multiply(other *Luminance) *Luminance {
 	return &Luminance{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Luminance to the current Luminance.
+// Divide divides the current Luminance by the given Luminance and returns the result.
+// The result is a new Luminance instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Luminance to divide the current Luminance by.
+//
+// Returns:
+//    *Luminance: A new Luminance instance representing the quotient of both Luminance.
 func (a *Luminance) Divide(other *Luminance) *Luminance {
 	return &Luminance{value: a.value / other.BaseValue()}
 }

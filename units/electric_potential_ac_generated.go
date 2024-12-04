@@ -12,7 +12,7 @@ import (
 
 
 
-// ElectricPotentialAcUnits enumeration
+// ElectricPotentialAcUnits defines various units of ElectricPotentialAc.
 type ElectricPotentialAcUnits string
 
 const (
@@ -29,19 +29,24 @@ const (
         ElectricPotentialAcMegavoltAc ElectricPotentialAcUnits = "MegavoltAc"
 )
 
-// ElectricPotentialAcDto represents an ElectricPotentialAc
+// ElectricPotentialAcDto represents a ElectricPotentialAc measurement with a numerical value and its corresponding unit.
 type ElectricPotentialAcDto struct {
+    // Value is the numerical representation of the ElectricPotentialAc.
 	Value float64
+    // Unit specifies the unit of measurement for the ElectricPotentialAc, as defined in the ElectricPotentialAcUnits enumeration.
 	Unit  ElectricPotentialAcUnits
 }
 
-// ElectricPotentialAcDtoFactory struct to group related functions
+// ElectricPotentialAcDtoFactory groups methods for creating and serializing ElectricPotentialAcDto objects.
 type ElectricPotentialAcDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricPotentialAcDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ElectricPotentialAcDtoFactory) FromJSON(data []byte) (*ElectricPotentialAcDto, error) {
 	a := ElectricPotentialAcDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ElectricPotentialAcDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -49,6 +54,9 @@ func (udf ElectricPotentialAcDtoFactory) FromJSON(data []byte) (*ElectricPotenti
 	return &a, nil
 }
 
+// ToJSON serializes a ElectricPotentialAcDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ElectricPotentialAcDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -60,10 +68,11 @@ func (a ElectricPotentialAcDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ElectricPotentialAc struct
+// ElectricPotentialAc represents a measurement in a of ElectricPotentialAc.
+//
+// The Electric Potential of a system known to use Alternating Current.
 type ElectricPotentialAc struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     volts_acLazy *float64 
@@ -73,52 +82,53 @@ type ElectricPotentialAc struct {
     megavolts_acLazy *float64 
 }
 
-// ElectricPotentialAcFactory struct to group related functions
+// ElectricPotentialAcFactory groups methods for creating ElectricPotentialAc instances.
 type ElectricPotentialAcFactory struct{}
 
+// CreateElectricPotentialAc creates a new ElectricPotentialAc instance from the given value and unit.
 func (uf ElectricPotentialAcFactory) CreateElectricPotentialAc(value float64, unit ElectricPotentialAcUnits) (*ElectricPotentialAc, error) {
 	return newElectricPotentialAc(value, unit)
 }
 
+// FromDto converts a ElectricPotentialAcDto to a ElectricPotentialAc instance.
 func (uf ElectricPotentialAcFactory) FromDto(dto ElectricPotentialAcDto) (*ElectricPotentialAc, error) {
 	return newElectricPotentialAc(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricPotentialAc instance.
 func (uf ElectricPotentialAcFactory) FromDtoJSON(data []byte) (*ElectricPotentialAc, error) {
 	unitDto, err := ElectricPotentialAcDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ElectricPotentialAcDto from JSON: %w", err)
 	}
 	return ElectricPotentialAcFactory{}.FromDto(*unitDto)
 }
 
 
-// FromVoltAc creates a new ElectricPotentialAc instance from VoltAc.
+// FromVoltsAc creates a new ElectricPotentialAc instance from a value in VoltsAc.
 func (uf ElectricPotentialAcFactory) FromVoltsAc(value float64) (*ElectricPotentialAc, error) {
 	return newElectricPotentialAc(value, ElectricPotentialAcVoltAc)
 }
 
-// FromMicrovoltAc creates a new ElectricPotentialAc instance from MicrovoltAc.
+// FromMicrovoltsAc creates a new ElectricPotentialAc instance from a value in MicrovoltsAc.
 func (uf ElectricPotentialAcFactory) FromMicrovoltsAc(value float64) (*ElectricPotentialAc, error) {
 	return newElectricPotentialAc(value, ElectricPotentialAcMicrovoltAc)
 }
 
-// FromMillivoltAc creates a new ElectricPotentialAc instance from MillivoltAc.
+// FromMillivoltsAc creates a new ElectricPotentialAc instance from a value in MillivoltsAc.
 func (uf ElectricPotentialAcFactory) FromMillivoltsAc(value float64) (*ElectricPotentialAc, error) {
 	return newElectricPotentialAc(value, ElectricPotentialAcMillivoltAc)
 }
 
-// FromKilovoltAc creates a new ElectricPotentialAc instance from KilovoltAc.
+// FromKilovoltsAc creates a new ElectricPotentialAc instance from a value in KilovoltsAc.
 func (uf ElectricPotentialAcFactory) FromKilovoltsAc(value float64) (*ElectricPotentialAc, error) {
 	return newElectricPotentialAc(value, ElectricPotentialAcKilovoltAc)
 }
 
-// FromMegavoltAc creates a new ElectricPotentialAc instance from MegavoltAc.
+// FromMegavoltsAc creates a new ElectricPotentialAc instance from a value in MegavoltsAc.
 func (uf ElectricPotentialAcFactory) FromMegavoltsAc(value float64) (*ElectricPotentialAc, error) {
 	return newElectricPotentialAc(value, ElectricPotentialAcMegavoltAc)
 }
-
-
 
 
 // newElectricPotentialAc creates a new ElectricPotentialAc.
@@ -131,13 +141,15 @@ func newElectricPotentialAc(value float64, fromUnit ElectricPotentialAcUnits) (*
 	return a, nil
 }
 
-// BaseValue returns the base value of ElectricPotentialAc in VoltAc.
+// BaseValue returns the base value of ElectricPotentialAc in VoltAc unit (the base/default quantity).
 func (a *ElectricPotentialAc) BaseValue() float64 {
 	return a.value
 }
 
 
-// VoltAc returns the value in VoltAc.
+// VoltsAc returns the ElectricPotentialAc value in VoltsAc.
+//
+// 
 func (a *ElectricPotentialAc) VoltsAc() float64 {
 	if a.volts_acLazy != nil {
 		return *a.volts_acLazy
@@ -147,7 +159,9 @@ func (a *ElectricPotentialAc) VoltsAc() float64 {
 	return volts_ac
 }
 
-// MicrovoltAc returns the value in MicrovoltAc.
+// MicrovoltsAc returns the ElectricPotentialAc value in MicrovoltsAc.
+//
+// 
 func (a *ElectricPotentialAc) MicrovoltsAc() float64 {
 	if a.microvolts_acLazy != nil {
 		return *a.microvolts_acLazy
@@ -157,7 +171,9 @@ func (a *ElectricPotentialAc) MicrovoltsAc() float64 {
 	return microvolts_ac
 }
 
-// MillivoltAc returns the value in MillivoltAc.
+// MillivoltsAc returns the ElectricPotentialAc value in MillivoltsAc.
+//
+// 
 func (a *ElectricPotentialAc) MillivoltsAc() float64 {
 	if a.millivolts_acLazy != nil {
 		return *a.millivolts_acLazy
@@ -167,7 +183,9 @@ func (a *ElectricPotentialAc) MillivoltsAc() float64 {
 	return millivolts_ac
 }
 
-// KilovoltAc returns the value in KilovoltAc.
+// KilovoltsAc returns the ElectricPotentialAc value in KilovoltsAc.
+//
+// 
 func (a *ElectricPotentialAc) KilovoltsAc() float64 {
 	if a.kilovolts_acLazy != nil {
 		return *a.kilovolts_acLazy
@@ -177,7 +195,9 @@ func (a *ElectricPotentialAc) KilovoltsAc() float64 {
 	return kilovolts_ac
 }
 
-// MegavoltAc returns the value in MegavoltAc.
+// MegavoltsAc returns the ElectricPotentialAc value in MegavoltsAc.
+//
+// 
 func (a *ElectricPotentialAc) MegavoltsAc() float64 {
 	if a.megavolts_acLazy != nil {
 		return *a.megavolts_acLazy
@@ -188,7 +208,9 @@ func (a *ElectricPotentialAc) MegavoltsAc() float64 {
 }
 
 
-// ToDto creates an ElectricPotentialAcDto representation.
+// ToDto creates a ElectricPotentialAcDto representation from the ElectricPotentialAc instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by VoltAc by default.
 func (a *ElectricPotentialAc) ToDto(holdInUnit *ElectricPotentialAcUnits) ElectricPotentialAcDto {
 	if holdInUnit == nil {
 		defaultUnit := ElectricPotentialAcVoltAc // Default value
@@ -201,12 +223,19 @@ func (a *ElectricPotentialAc) ToDto(holdInUnit *ElectricPotentialAcUnits) Electr
 	}
 }
 
-// ToDtoJSON creates an ElectricPotentialAcDto representation.
+// ToDtoJSON creates a JSON representation of the ElectricPotentialAc instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by VoltAc by default.
 func (a *ElectricPotentialAc) ToDtoJSON(holdInUnit *ElectricPotentialAcUnits) ([]byte, error) {
+	// Convert to ElectricPotentialAcDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ElectricPotentialAc to a specific unit value.
+// Convert converts a ElectricPotentialAc to a specific unit value.
+// The function uses the provided unit type (ElectricPotentialAcUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ElectricPotentialAc) Convert(toUnit ElectricPotentialAcUnits) float64 {
 	switch toUnit { 
     case ElectricPotentialAcVoltAc:
@@ -220,7 +249,7 @@ func (a *ElectricPotentialAc) Convert(toUnit ElectricPotentialAcUnits) float64 {
     case ElectricPotentialAcMegavoltAc:
 		return a.MegavoltsAc()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -259,13 +288,22 @@ func (a *ElectricPotentialAc) convertToBase(value float64, fromUnit ElectricPote
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ElectricPotentialAc in the default unit (VoltAc),
+// formatted to two decimal places.
 func (a ElectricPotentialAc) String() string {
 	return a.ToString(ElectricPotentialAcVoltAc, 2)
 }
 
-// ToString formats the ElectricPotentialAc to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ElectricPotentialAc value as a string with the specified unit and fractional digits.
+// It converts the ElectricPotentialAc to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ElectricPotentialAc value will be converted (e.g., VoltAc))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ElectricPotentialAc with the unit abbreviation.
 func (a *ElectricPotentialAc) ToString(unit ElectricPotentialAcUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -293,12 +331,26 @@ func (a *ElectricPotentialAc) getUnitAbbreviation(unit ElectricPotentialAcUnits)
 	}
 }
 
-// Check if the given ElectricPotentialAc are equals to the current ElectricPotentialAc
+// Equals checks if the given ElectricPotentialAc is equal to the current ElectricPotentialAc.
+//
+// Parameters:
+//    other: The ElectricPotentialAc to compare against.
+//
+// Returns:
+//    bool: Returns true if both ElectricPotentialAc are equal, false otherwise.
 func (a *ElectricPotentialAc) Equals(other *ElectricPotentialAc) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ElectricPotentialAc are equals to the current ElectricPotentialAc
+// CompareTo compares the current ElectricPotentialAc with another ElectricPotentialAc.
+// It returns -1 if the current ElectricPotentialAc is less than the other ElectricPotentialAc, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ElectricPotentialAc to compare against.
+//
+// Returns:
+//    int: -1 if the current ElectricPotentialAc is less, 1 if greater, and 0 if equal.
 func (a *ElectricPotentialAc) CompareTo(other *ElectricPotentialAc) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -311,22 +363,50 @@ func (a *ElectricPotentialAc) CompareTo(other *ElectricPotentialAc) int {
 	return 0
 }
 
-// Add the given ElectricPotentialAc to the current ElectricPotentialAc.
+// Add adds the given ElectricPotentialAc to the current ElectricPotentialAc and returns the result.
+// The result is a new ElectricPotentialAc instance with the sum of the values.
+//
+// Parameters:
+//    other: The ElectricPotentialAc to add to the current ElectricPotentialAc.
+//
+// Returns:
+//    *ElectricPotentialAc: A new ElectricPotentialAc instance representing the sum of both ElectricPotentialAc.
 func (a *ElectricPotentialAc) Add(other *ElectricPotentialAc) *ElectricPotentialAc {
 	return &ElectricPotentialAc{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ElectricPotentialAc to the current ElectricPotentialAc.
+// Subtract subtracts the given ElectricPotentialAc from the current ElectricPotentialAc and returns the result.
+// The result is a new ElectricPotentialAc instance with the difference of the values.
+//
+// Parameters:
+//    other: The ElectricPotentialAc to subtract from the current ElectricPotentialAc.
+//
+// Returns:
+//    *ElectricPotentialAc: A new ElectricPotentialAc instance representing the difference of both ElectricPotentialAc.
 func (a *ElectricPotentialAc) Subtract(other *ElectricPotentialAc) *ElectricPotentialAc {
 	return &ElectricPotentialAc{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ElectricPotentialAc to the current ElectricPotentialAc.
+// Multiply multiplies the current ElectricPotentialAc by the given ElectricPotentialAc and returns the result.
+// The result is a new ElectricPotentialAc instance with the product of the values.
+//
+// Parameters:
+//    other: The ElectricPotentialAc to multiply with the current ElectricPotentialAc.
+//
+// Returns:
+//    *ElectricPotentialAc: A new ElectricPotentialAc instance representing the product of both ElectricPotentialAc.
 func (a *ElectricPotentialAc) Multiply(other *ElectricPotentialAc) *ElectricPotentialAc {
 	return &ElectricPotentialAc{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ElectricPotentialAc to the current ElectricPotentialAc.
+// Divide divides the current ElectricPotentialAc by the given ElectricPotentialAc and returns the result.
+// The result is a new ElectricPotentialAc instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ElectricPotentialAc to divide the current ElectricPotentialAc by.
+//
+// Returns:
+//    *ElectricPotentialAc: A new ElectricPotentialAc instance representing the quotient of both ElectricPotentialAc.
 func (a *ElectricPotentialAc) Divide(other *ElectricPotentialAc) *ElectricPotentialAc {
 	return &ElectricPotentialAc{value: a.value / other.BaseValue()}
 }

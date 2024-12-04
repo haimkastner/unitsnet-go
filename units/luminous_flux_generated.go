@@ -12,7 +12,7 @@ import (
 
 
 
-// LuminousFluxUnits enumeration
+// LuminousFluxUnits defines various units of LuminousFlux.
 type LuminousFluxUnits string
 
 const (
@@ -21,19 +21,24 @@ const (
         LuminousFluxLumen LuminousFluxUnits = "Lumen"
 )
 
-// LuminousFluxDto represents an LuminousFlux
+// LuminousFluxDto represents a LuminousFlux measurement with a numerical value and its corresponding unit.
 type LuminousFluxDto struct {
+    // Value is the numerical representation of the LuminousFlux.
 	Value float64
+    // Unit specifies the unit of measurement for the LuminousFlux, as defined in the LuminousFluxUnits enumeration.
 	Unit  LuminousFluxUnits
 }
 
-// LuminousFluxDtoFactory struct to group related functions
+// LuminousFluxDtoFactory groups methods for creating and serializing LuminousFluxDto objects.
 type LuminousFluxDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a LuminousFluxDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf LuminousFluxDtoFactory) FromJSON(data []byte) (*LuminousFluxDto, error) {
 	a := LuminousFluxDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into LuminousFluxDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -41,6 +46,9 @@ func (udf LuminousFluxDtoFactory) FromJSON(data []byte) (*LuminousFluxDto, error
 	return &a, nil
 }
 
+// ToJSON serializes a LuminousFluxDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a LuminousFluxDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -52,41 +60,43 @@ func (a LuminousFluxDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// LuminousFlux struct
+// LuminousFlux represents a measurement in a of LuminousFlux.
+//
+// In photometry, luminous flux or luminous power is the measure of the perceived power of light.
 type LuminousFlux struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     lumensLazy *float64 
 }
 
-// LuminousFluxFactory struct to group related functions
+// LuminousFluxFactory groups methods for creating LuminousFlux instances.
 type LuminousFluxFactory struct{}
 
+// CreateLuminousFlux creates a new LuminousFlux instance from the given value and unit.
 func (uf LuminousFluxFactory) CreateLuminousFlux(value float64, unit LuminousFluxUnits) (*LuminousFlux, error) {
 	return newLuminousFlux(value, unit)
 }
 
+// FromDto converts a LuminousFluxDto to a LuminousFlux instance.
 func (uf LuminousFluxFactory) FromDto(dto LuminousFluxDto) (*LuminousFlux, error) {
 	return newLuminousFlux(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a LuminousFlux instance.
 func (uf LuminousFluxFactory) FromDtoJSON(data []byte) (*LuminousFlux, error) {
 	unitDto, err := LuminousFluxDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse LuminousFluxDto from JSON: %w", err)
 	}
 	return LuminousFluxFactory{}.FromDto(*unitDto)
 }
 
 
-// FromLumen creates a new LuminousFlux instance from Lumen.
+// FromLumens creates a new LuminousFlux instance from a value in Lumens.
 func (uf LuminousFluxFactory) FromLumens(value float64) (*LuminousFlux, error) {
 	return newLuminousFlux(value, LuminousFluxLumen)
 }
-
-
 
 
 // newLuminousFlux creates a new LuminousFlux.
@@ -99,13 +109,15 @@ func newLuminousFlux(value float64, fromUnit LuminousFluxUnits) (*LuminousFlux, 
 	return a, nil
 }
 
-// BaseValue returns the base value of LuminousFlux in Lumen.
+// BaseValue returns the base value of LuminousFlux in Lumen unit (the base/default quantity).
 func (a *LuminousFlux) BaseValue() float64 {
 	return a.value
 }
 
 
-// Lumen returns the value in Lumen.
+// Lumens returns the LuminousFlux value in Lumens.
+//
+// 
 func (a *LuminousFlux) Lumens() float64 {
 	if a.lumensLazy != nil {
 		return *a.lumensLazy
@@ -116,7 +128,9 @@ func (a *LuminousFlux) Lumens() float64 {
 }
 
 
-// ToDto creates an LuminousFluxDto representation.
+// ToDto creates a LuminousFluxDto representation from the LuminousFlux instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Lumen by default.
 func (a *LuminousFlux) ToDto(holdInUnit *LuminousFluxUnits) LuminousFluxDto {
 	if holdInUnit == nil {
 		defaultUnit := LuminousFluxLumen // Default value
@@ -129,18 +143,25 @@ func (a *LuminousFlux) ToDto(holdInUnit *LuminousFluxUnits) LuminousFluxDto {
 	}
 }
 
-// ToDtoJSON creates an LuminousFluxDto representation.
+// ToDtoJSON creates a JSON representation of the LuminousFlux instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Lumen by default.
 func (a *LuminousFlux) ToDtoJSON(holdInUnit *LuminousFluxUnits) ([]byte, error) {
+	// Convert to LuminousFluxDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts LuminousFlux to a specific unit value.
+// Convert converts a LuminousFlux to a specific unit value.
+// The function uses the provided unit type (LuminousFluxUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *LuminousFlux) Convert(toUnit LuminousFluxUnits) float64 {
 	switch toUnit { 
     case LuminousFluxLumen:
 		return a.Lumens()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -163,13 +184,22 @@ func (a *LuminousFlux) convertToBase(value float64, fromUnit LuminousFluxUnits) 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the LuminousFlux in the default unit (Lumen),
+// formatted to two decimal places.
 func (a LuminousFlux) String() string {
 	return a.ToString(LuminousFluxLumen, 2)
 }
 
-// ToString formats the LuminousFlux to string.
-// fractionalDigits -1 for not mention
+// ToString formats the LuminousFlux value as a string with the specified unit and fractional digits.
+// It converts the LuminousFlux to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the LuminousFlux value will be converted (e.g., Lumen))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the LuminousFlux with the unit abbreviation.
 func (a *LuminousFlux) ToString(unit LuminousFluxUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -189,12 +219,26 @@ func (a *LuminousFlux) getUnitAbbreviation(unit LuminousFluxUnits) string {
 	}
 }
 
-// Check if the given LuminousFlux are equals to the current LuminousFlux
+// Equals checks if the given LuminousFlux is equal to the current LuminousFlux.
+//
+// Parameters:
+//    other: The LuminousFlux to compare against.
+//
+// Returns:
+//    bool: Returns true if both LuminousFlux are equal, false otherwise.
 func (a *LuminousFlux) Equals(other *LuminousFlux) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given LuminousFlux are equals to the current LuminousFlux
+// CompareTo compares the current LuminousFlux with another LuminousFlux.
+// It returns -1 if the current LuminousFlux is less than the other LuminousFlux, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The LuminousFlux to compare against.
+//
+// Returns:
+//    int: -1 if the current LuminousFlux is less, 1 if greater, and 0 if equal.
 func (a *LuminousFlux) CompareTo(other *LuminousFlux) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -207,22 +251,50 @@ func (a *LuminousFlux) CompareTo(other *LuminousFlux) int {
 	return 0
 }
 
-// Add the given LuminousFlux to the current LuminousFlux.
+// Add adds the given LuminousFlux to the current LuminousFlux and returns the result.
+// The result is a new LuminousFlux instance with the sum of the values.
+//
+// Parameters:
+//    other: The LuminousFlux to add to the current LuminousFlux.
+//
+// Returns:
+//    *LuminousFlux: A new LuminousFlux instance representing the sum of both LuminousFlux.
 func (a *LuminousFlux) Add(other *LuminousFlux) *LuminousFlux {
 	return &LuminousFlux{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given LuminousFlux to the current LuminousFlux.
+// Subtract subtracts the given LuminousFlux from the current LuminousFlux and returns the result.
+// The result is a new LuminousFlux instance with the difference of the values.
+//
+// Parameters:
+//    other: The LuminousFlux to subtract from the current LuminousFlux.
+//
+// Returns:
+//    *LuminousFlux: A new LuminousFlux instance representing the difference of both LuminousFlux.
 func (a *LuminousFlux) Subtract(other *LuminousFlux) *LuminousFlux {
 	return &LuminousFlux{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given LuminousFlux to the current LuminousFlux.
+// Multiply multiplies the current LuminousFlux by the given LuminousFlux and returns the result.
+// The result is a new LuminousFlux instance with the product of the values.
+//
+// Parameters:
+//    other: The LuminousFlux to multiply with the current LuminousFlux.
+//
+// Returns:
+//    *LuminousFlux: A new LuminousFlux instance representing the product of both LuminousFlux.
 func (a *LuminousFlux) Multiply(other *LuminousFlux) *LuminousFlux {
 	return &LuminousFlux{value: a.value * other.BaseValue()}
 }
 
-// Divide the given LuminousFlux to the current LuminousFlux.
+// Divide divides the current LuminousFlux by the given LuminousFlux and returns the result.
+// The result is a new LuminousFlux instance with the quotient of the values.
+//
+// Parameters:
+//    other: The LuminousFlux to divide the current LuminousFlux by.
+//
+// Returns:
+//    *LuminousFlux: A new LuminousFlux instance representing the quotient of both LuminousFlux.
 func (a *LuminousFlux) Divide(other *LuminousFlux) *LuminousFlux {
 	return &LuminousFlux{value: a.value / other.BaseValue()}
 }

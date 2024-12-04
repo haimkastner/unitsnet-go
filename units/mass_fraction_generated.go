@@ -12,7 +12,7 @@ import (
 
 
 
-// MassFractionUnits enumeration
+// MassFractionUnits defines various units of MassFraction.
 type MassFractionUnits string
 
 const (
@@ -67,19 +67,24 @@ const (
         MassFractionKilogramPerKilogram MassFractionUnits = "KilogramPerKilogram"
 )
 
-// MassFractionDto represents an MassFraction
+// MassFractionDto represents a MassFraction measurement with a numerical value and its corresponding unit.
 type MassFractionDto struct {
+    // Value is the numerical representation of the MassFraction.
 	Value float64
+    // Unit specifies the unit of measurement for the MassFraction, as defined in the MassFractionUnits enumeration.
 	Unit  MassFractionUnits
 }
 
-// MassFractionDtoFactory struct to group related functions
+// MassFractionDtoFactory groups methods for creating and serializing MassFractionDto objects.
 type MassFractionDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MassFractionDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MassFractionDtoFactory) FromJSON(data []byte) (*MassFractionDto, error) {
 	a := MassFractionDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MassFractionDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -87,6 +92,9 @@ func (udf MassFractionDtoFactory) FromJSON(data []byte) (*MassFractionDto, error
 	return &a, nil
 }
 
+// ToJSON serializes a MassFractionDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MassFractionDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -98,10 +106,11 @@ func (a MassFractionDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// MassFraction struct
+// MassFraction represents a measurement in a of MassFraction.
+//
+// The mass fraction is defined as the mass of a constituent divided by the total mass of the mixture.
 type MassFraction struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     decimal_fractionsLazy *float64 
@@ -130,147 +139,148 @@ type MassFraction struct {
     kilograms_per_kilogramLazy *float64 
 }
 
-// MassFractionFactory struct to group related functions
+// MassFractionFactory groups methods for creating MassFraction instances.
 type MassFractionFactory struct{}
 
+// CreateMassFraction creates a new MassFraction instance from the given value and unit.
 func (uf MassFractionFactory) CreateMassFraction(value float64, unit MassFractionUnits) (*MassFraction, error) {
 	return newMassFraction(value, unit)
 }
 
+// FromDto converts a MassFractionDto to a MassFraction instance.
 func (uf MassFractionFactory) FromDto(dto MassFractionDto) (*MassFraction, error) {
 	return newMassFraction(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a MassFraction instance.
 func (uf MassFractionFactory) FromDtoJSON(data []byte) (*MassFraction, error) {
 	unitDto, err := MassFractionDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MassFractionDto from JSON: %w", err)
 	}
 	return MassFractionFactory{}.FromDto(*unitDto)
 }
 
 
-// FromDecimalFraction creates a new MassFraction instance from DecimalFraction.
+// FromDecimalFractions creates a new MassFraction instance from a value in DecimalFractions.
 func (uf MassFractionFactory) FromDecimalFractions(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionDecimalFraction)
 }
 
-// FromGramPerGram creates a new MassFraction instance from GramPerGram.
+// FromGramsPerGram creates a new MassFraction instance from a value in GramsPerGram.
 func (uf MassFractionFactory) FromGramsPerGram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionGramPerGram)
 }
 
-// FromGramPerKilogram creates a new MassFraction instance from GramPerKilogram.
+// FromGramsPerKilogram creates a new MassFraction instance from a value in GramsPerKilogram.
 func (uf MassFractionFactory) FromGramsPerKilogram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionGramPerKilogram)
 }
 
-// FromPercent creates a new MassFraction instance from Percent.
+// FromPercent creates a new MassFraction instance from a value in Percent.
 func (uf MassFractionFactory) FromPercent(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionPercent)
 }
 
-// FromPartPerThousand creates a new MassFraction instance from PartPerThousand.
+// FromPartsPerThousand creates a new MassFraction instance from a value in PartsPerThousand.
 func (uf MassFractionFactory) FromPartsPerThousand(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionPartPerThousand)
 }
 
-// FromPartPerMillion creates a new MassFraction instance from PartPerMillion.
+// FromPartsPerMillion creates a new MassFraction instance from a value in PartsPerMillion.
 func (uf MassFractionFactory) FromPartsPerMillion(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionPartPerMillion)
 }
 
-// FromPartPerBillion creates a new MassFraction instance from PartPerBillion.
+// FromPartsPerBillion creates a new MassFraction instance from a value in PartsPerBillion.
 func (uf MassFractionFactory) FromPartsPerBillion(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionPartPerBillion)
 }
 
-// FromPartPerTrillion creates a new MassFraction instance from PartPerTrillion.
+// FromPartsPerTrillion creates a new MassFraction instance from a value in PartsPerTrillion.
 func (uf MassFractionFactory) FromPartsPerTrillion(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionPartPerTrillion)
 }
 
-// FromNanogramPerGram creates a new MassFraction instance from NanogramPerGram.
+// FromNanogramsPerGram creates a new MassFraction instance from a value in NanogramsPerGram.
 func (uf MassFractionFactory) FromNanogramsPerGram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionNanogramPerGram)
 }
 
-// FromMicrogramPerGram creates a new MassFraction instance from MicrogramPerGram.
+// FromMicrogramsPerGram creates a new MassFraction instance from a value in MicrogramsPerGram.
 func (uf MassFractionFactory) FromMicrogramsPerGram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionMicrogramPerGram)
 }
 
-// FromMilligramPerGram creates a new MassFraction instance from MilligramPerGram.
+// FromMilligramsPerGram creates a new MassFraction instance from a value in MilligramsPerGram.
 func (uf MassFractionFactory) FromMilligramsPerGram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionMilligramPerGram)
 }
 
-// FromCentigramPerGram creates a new MassFraction instance from CentigramPerGram.
+// FromCentigramsPerGram creates a new MassFraction instance from a value in CentigramsPerGram.
 func (uf MassFractionFactory) FromCentigramsPerGram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionCentigramPerGram)
 }
 
-// FromDecigramPerGram creates a new MassFraction instance from DecigramPerGram.
+// FromDecigramsPerGram creates a new MassFraction instance from a value in DecigramsPerGram.
 func (uf MassFractionFactory) FromDecigramsPerGram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionDecigramPerGram)
 }
 
-// FromDecagramPerGram creates a new MassFraction instance from DecagramPerGram.
+// FromDecagramsPerGram creates a new MassFraction instance from a value in DecagramsPerGram.
 func (uf MassFractionFactory) FromDecagramsPerGram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionDecagramPerGram)
 }
 
-// FromHectogramPerGram creates a new MassFraction instance from HectogramPerGram.
+// FromHectogramsPerGram creates a new MassFraction instance from a value in HectogramsPerGram.
 func (uf MassFractionFactory) FromHectogramsPerGram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionHectogramPerGram)
 }
 
-// FromKilogramPerGram creates a new MassFraction instance from KilogramPerGram.
+// FromKilogramsPerGram creates a new MassFraction instance from a value in KilogramsPerGram.
 func (uf MassFractionFactory) FromKilogramsPerGram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionKilogramPerGram)
 }
 
-// FromNanogramPerKilogram creates a new MassFraction instance from NanogramPerKilogram.
+// FromNanogramsPerKilogram creates a new MassFraction instance from a value in NanogramsPerKilogram.
 func (uf MassFractionFactory) FromNanogramsPerKilogram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionNanogramPerKilogram)
 }
 
-// FromMicrogramPerKilogram creates a new MassFraction instance from MicrogramPerKilogram.
+// FromMicrogramsPerKilogram creates a new MassFraction instance from a value in MicrogramsPerKilogram.
 func (uf MassFractionFactory) FromMicrogramsPerKilogram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionMicrogramPerKilogram)
 }
 
-// FromMilligramPerKilogram creates a new MassFraction instance from MilligramPerKilogram.
+// FromMilligramsPerKilogram creates a new MassFraction instance from a value in MilligramsPerKilogram.
 func (uf MassFractionFactory) FromMilligramsPerKilogram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionMilligramPerKilogram)
 }
 
-// FromCentigramPerKilogram creates a new MassFraction instance from CentigramPerKilogram.
+// FromCentigramsPerKilogram creates a new MassFraction instance from a value in CentigramsPerKilogram.
 func (uf MassFractionFactory) FromCentigramsPerKilogram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionCentigramPerKilogram)
 }
 
-// FromDecigramPerKilogram creates a new MassFraction instance from DecigramPerKilogram.
+// FromDecigramsPerKilogram creates a new MassFraction instance from a value in DecigramsPerKilogram.
 func (uf MassFractionFactory) FromDecigramsPerKilogram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionDecigramPerKilogram)
 }
 
-// FromDecagramPerKilogram creates a new MassFraction instance from DecagramPerKilogram.
+// FromDecagramsPerKilogram creates a new MassFraction instance from a value in DecagramsPerKilogram.
 func (uf MassFractionFactory) FromDecagramsPerKilogram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionDecagramPerKilogram)
 }
 
-// FromHectogramPerKilogram creates a new MassFraction instance from HectogramPerKilogram.
+// FromHectogramsPerKilogram creates a new MassFraction instance from a value in HectogramsPerKilogram.
 func (uf MassFractionFactory) FromHectogramsPerKilogram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionHectogramPerKilogram)
 }
 
-// FromKilogramPerKilogram creates a new MassFraction instance from KilogramPerKilogram.
+// FromKilogramsPerKilogram creates a new MassFraction instance from a value in KilogramsPerKilogram.
 func (uf MassFractionFactory) FromKilogramsPerKilogram(value float64) (*MassFraction, error) {
 	return newMassFraction(value, MassFractionKilogramPerKilogram)
 }
-
-
 
 
 // newMassFraction creates a new MassFraction.
@@ -283,13 +293,15 @@ func newMassFraction(value float64, fromUnit MassFractionUnits) (*MassFraction, 
 	return a, nil
 }
 
-// BaseValue returns the base value of MassFraction in DecimalFraction.
+// BaseValue returns the base value of MassFraction in DecimalFraction unit (the base/default quantity).
 func (a *MassFraction) BaseValue() float64 {
 	return a.value
 }
 
 
-// DecimalFraction returns the value in DecimalFraction.
+// DecimalFractions returns the MassFraction value in DecimalFractions.
+//
+// 
 func (a *MassFraction) DecimalFractions() float64 {
 	if a.decimal_fractionsLazy != nil {
 		return *a.decimal_fractionsLazy
@@ -299,7 +311,9 @@ func (a *MassFraction) DecimalFractions() float64 {
 	return decimal_fractions
 }
 
-// GramPerGram returns the value in GramPerGram.
+// GramsPerGram returns the MassFraction value in GramsPerGram.
+//
+// 
 func (a *MassFraction) GramsPerGram() float64 {
 	if a.grams_per_gramLazy != nil {
 		return *a.grams_per_gramLazy
@@ -309,7 +323,9 @@ func (a *MassFraction) GramsPerGram() float64 {
 	return grams_per_gram
 }
 
-// GramPerKilogram returns the value in GramPerKilogram.
+// GramsPerKilogram returns the MassFraction value in GramsPerKilogram.
+//
+// 
 func (a *MassFraction) GramsPerKilogram() float64 {
 	if a.grams_per_kilogramLazy != nil {
 		return *a.grams_per_kilogramLazy
@@ -319,7 +335,9 @@ func (a *MassFraction) GramsPerKilogram() float64 {
 	return grams_per_kilogram
 }
 
-// Percent returns the value in Percent.
+// Percent returns the MassFraction value in Percent.
+//
+// 
 func (a *MassFraction) Percent() float64 {
 	if a.percentLazy != nil {
 		return *a.percentLazy
@@ -329,7 +347,9 @@ func (a *MassFraction) Percent() float64 {
 	return percent
 }
 
-// PartPerThousand returns the value in PartPerThousand.
+// PartsPerThousand returns the MassFraction value in PartsPerThousand.
+//
+// 
 func (a *MassFraction) PartsPerThousand() float64 {
 	if a.parts_per_thousandLazy != nil {
 		return *a.parts_per_thousandLazy
@@ -339,7 +359,9 @@ func (a *MassFraction) PartsPerThousand() float64 {
 	return parts_per_thousand
 }
 
-// PartPerMillion returns the value in PartPerMillion.
+// PartsPerMillion returns the MassFraction value in PartsPerMillion.
+//
+// 
 func (a *MassFraction) PartsPerMillion() float64 {
 	if a.parts_per_millionLazy != nil {
 		return *a.parts_per_millionLazy
@@ -349,7 +371,9 @@ func (a *MassFraction) PartsPerMillion() float64 {
 	return parts_per_million
 }
 
-// PartPerBillion returns the value in PartPerBillion.
+// PartsPerBillion returns the MassFraction value in PartsPerBillion.
+//
+// 
 func (a *MassFraction) PartsPerBillion() float64 {
 	if a.parts_per_billionLazy != nil {
 		return *a.parts_per_billionLazy
@@ -359,7 +383,9 @@ func (a *MassFraction) PartsPerBillion() float64 {
 	return parts_per_billion
 }
 
-// PartPerTrillion returns the value in PartPerTrillion.
+// PartsPerTrillion returns the MassFraction value in PartsPerTrillion.
+//
+// 
 func (a *MassFraction) PartsPerTrillion() float64 {
 	if a.parts_per_trillionLazy != nil {
 		return *a.parts_per_trillionLazy
@@ -369,7 +395,9 @@ func (a *MassFraction) PartsPerTrillion() float64 {
 	return parts_per_trillion
 }
 
-// NanogramPerGram returns the value in NanogramPerGram.
+// NanogramsPerGram returns the MassFraction value in NanogramsPerGram.
+//
+// 
 func (a *MassFraction) NanogramsPerGram() float64 {
 	if a.nanograms_per_gramLazy != nil {
 		return *a.nanograms_per_gramLazy
@@ -379,7 +407,9 @@ func (a *MassFraction) NanogramsPerGram() float64 {
 	return nanograms_per_gram
 }
 
-// MicrogramPerGram returns the value in MicrogramPerGram.
+// MicrogramsPerGram returns the MassFraction value in MicrogramsPerGram.
+//
+// 
 func (a *MassFraction) MicrogramsPerGram() float64 {
 	if a.micrograms_per_gramLazy != nil {
 		return *a.micrograms_per_gramLazy
@@ -389,7 +419,9 @@ func (a *MassFraction) MicrogramsPerGram() float64 {
 	return micrograms_per_gram
 }
 
-// MilligramPerGram returns the value in MilligramPerGram.
+// MilligramsPerGram returns the MassFraction value in MilligramsPerGram.
+//
+// 
 func (a *MassFraction) MilligramsPerGram() float64 {
 	if a.milligrams_per_gramLazy != nil {
 		return *a.milligrams_per_gramLazy
@@ -399,7 +431,9 @@ func (a *MassFraction) MilligramsPerGram() float64 {
 	return milligrams_per_gram
 }
 
-// CentigramPerGram returns the value in CentigramPerGram.
+// CentigramsPerGram returns the MassFraction value in CentigramsPerGram.
+//
+// 
 func (a *MassFraction) CentigramsPerGram() float64 {
 	if a.centigrams_per_gramLazy != nil {
 		return *a.centigrams_per_gramLazy
@@ -409,7 +443,9 @@ func (a *MassFraction) CentigramsPerGram() float64 {
 	return centigrams_per_gram
 }
 
-// DecigramPerGram returns the value in DecigramPerGram.
+// DecigramsPerGram returns the MassFraction value in DecigramsPerGram.
+//
+// 
 func (a *MassFraction) DecigramsPerGram() float64 {
 	if a.decigrams_per_gramLazy != nil {
 		return *a.decigrams_per_gramLazy
@@ -419,7 +455,9 @@ func (a *MassFraction) DecigramsPerGram() float64 {
 	return decigrams_per_gram
 }
 
-// DecagramPerGram returns the value in DecagramPerGram.
+// DecagramsPerGram returns the MassFraction value in DecagramsPerGram.
+//
+// 
 func (a *MassFraction) DecagramsPerGram() float64 {
 	if a.decagrams_per_gramLazy != nil {
 		return *a.decagrams_per_gramLazy
@@ -429,7 +467,9 @@ func (a *MassFraction) DecagramsPerGram() float64 {
 	return decagrams_per_gram
 }
 
-// HectogramPerGram returns the value in HectogramPerGram.
+// HectogramsPerGram returns the MassFraction value in HectogramsPerGram.
+//
+// 
 func (a *MassFraction) HectogramsPerGram() float64 {
 	if a.hectograms_per_gramLazy != nil {
 		return *a.hectograms_per_gramLazy
@@ -439,7 +479,9 @@ func (a *MassFraction) HectogramsPerGram() float64 {
 	return hectograms_per_gram
 }
 
-// KilogramPerGram returns the value in KilogramPerGram.
+// KilogramsPerGram returns the MassFraction value in KilogramsPerGram.
+//
+// 
 func (a *MassFraction) KilogramsPerGram() float64 {
 	if a.kilograms_per_gramLazy != nil {
 		return *a.kilograms_per_gramLazy
@@ -449,7 +491,9 @@ func (a *MassFraction) KilogramsPerGram() float64 {
 	return kilograms_per_gram
 }
 
-// NanogramPerKilogram returns the value in NanogramPerKilogram.
+// NanogramsPerKilogram returns the MassFraction value in NanogramsPerKilogram.
+//
+// 
 func (a *MassFraction) NanogramsPerKilogram() float64 {
 	if a.nanograms_per_kilogramLazy != nil {
 		return *a.nanograms_per_kilogramLazy
@@ -459,7 +503,9 @@ func (a *MassFraction) NanogramsPerKilogram() float64 {
 	return nanograms_per_kilogram
 }
 
-// MicrogramPerKilogram returns the value in MicrogramPerKilogram.
+// MicrogramsPerKilogram returns the MassFraction value in MicrogramsPerKilogram.
+//
+// 
 func (a *MassFraction) MicrogramsPerKilogram() float64 {
 	if a.micrograms_per_kilogramLazy != nil {
 		return *a.micrograms_per_kilogramLazy
@@ -469,7 +515,9 @@ func (a *MassFraction) MicrogramsPerKilogram() float64 {
 	return micrograms_per_kilogram
 }
 
-// MilligramPerKilogram returns the value in MilligramPerKilogram.
+// MilligramsPerKilogram returns the MassFraction value in MilligramsPerKilogram.
+//
+// 
 func (a *MassFraction) MilligramsPerKilogram() float64 {
 	if a.milligrams_per_kilogramLazy != nil {
 		return *a.milligrams_per_kilogramLazy
@@ -479,7 +527,9 @@ func (a *MassFraction) MilligramsPerKilogram() float64 {
 	return milligrams_per_kilogram
 }
 
-// CentigramPerKilogram returns the value in CentigramPerKilogram.
+// CentigramsPerKilogram returns the MassFraction value in CentigramsPerKilogram.
+//
+// 
 func (a *MassFraction) CentigramsPerKilogram() float64 {
 	if a.centigrams_per_kilogramLazy != nil {
 		return *a.centigrams_per_kilogramLazy
@@ -489,7 +539,9 @@ func (a *MassFraction) CentigramsPerKilogram() float64 {
 	return centigrams_per_kilogram
 }
 
-// DecigramPerKilogram returns the value in DecigramPerKilogram.
+// DecigramsPerKilogram returns the MassFraction value in DecigramsPerKilogram.
+//
+// 
 func (a *MassFraction) DecigramsPerKilogram() float64 {
 	if a.decigrams_per_kilogramLazy != nil {
 		return *a.decigrams_per_kilogramLazy
@@ -499,7 +551,9 @@ func (a *MassFraction) DecigramsPerKilogram() float64 {
 	return decigrams_per_kilogram
 }
 
-// DecagramPerKilogram returns the value in DecagramPerKilogram.
+// DecagramsPerKilogram returns the MassFraction value in DecagramsPerKilogram.
+//
+// 
 func (a *MassFraction) DecagramsPerKilogram() float64 {
 	if a.decagrams_per_kilogramLazy != nil {
 		return *a.decagrams_per_kilogramLazy
@@ -509,7 +563,9 @@ func (a *MassFraction) DecagramsPerKilogram() float64 {
 	return decagrams_per_kilogram
 }
 
-// HectogramPerKilogram returns the value in HectogramPerKilogram.
+// HectogramsPerKilogram returns the MassFraction value in HectogramsPerKilogram.
+//
+// 
 func (a *MassFraction) HectogramsPerKilogram() float64 {
 	if a.hectograms_per_kilogramLazy != nil {
 		return *a.hectograms_per_kilogramLazy
@@ -519,7 +575,9 @@ func (a *MassFraction) HectogramsPerKilogram() float64 {
 	return hectograms_per_kilogram
 }
 
-// KilogramPerKilogram returns the value in KilogramPerKilogram.
+// KilogramsPerKilogram returns the MassFraction value in KilogramsPerKilogram.
+//
+// 
 func (a *MassFraction) KilogramsPerKilogram() float64 {
 	if a.kilograms_per_kilogramLazy != nil {
 		return *a.kilograms_per_kilogramLazy
@@ -530,7 +588,9 @@ func (a *MassFraction) KilogramsPerKilogram() float64 {
 }
 
 
-// ToDto creates an MassFractionDto representation.
+// ToDto creates a MassFractionDto representation from the MassFraction instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DecimalFraction by default.
 func (a *MassFraction) ToDto(holdInUnit *MassFractionUnits) MassFractionDto {
 	if holdInUnit == nil {
 		defaultUnit := MassFractionDecimalFraction // Default value
@@ -543,12 +603,19 @@ func (a *MassFraction) ToDto(holdInUnit *MassFractionUnits) MassFractionDto {
 	}
 }
 
-// ToDtoJSON creates an MassFractionDto representation.
+// ToDtoJSON creates a JSON representation of the MassFraction instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DecimalFraction by default.
 func (a *MassFraction) ToDtoJSON(holdInUnit *MassFractionUnits) ([]byte, error) {
+	// Convert to MassFractionDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts MassFraction to a specific unit value.
+// Convert converts a MassFraction to a specific unit value.
+// The function uses the provided unit type (MassFractionUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *MassFraction) Convert(toUnit MassFractionUnits) float64 {
 	switch toUnit { 
     case MassFractionDecimalFraction:
@@ -600,7 +667,7 @@ func (a *MassFraction) Convert(toUnit MassFractionUnits) float64 {
     case MassFractionKilogramPerKilogram:
 		return a.KilogramsPerKilogram()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -715,13 +782,22 @@ func (a *MassFraction) convertToBase(value float64, fromUnit MassFractionUnits) 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the MassFraction in the default unit (DecimalFraction),
+// formatted to two decimal places.
 func (a MassFraction) String() string {
 	return a.ToString(MassFractionDecimalFraction, 2)
 }
 
-// ToString formats the MassFraction to string.
-// fractionalDigits -1 for not mention
+// ToString formats the MassFraction value as a string with the specified unit and fractional digits.
+// It converts the MassFraction to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the MassFraction value will be converted (e.g., DecimalFraction))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the MassFraction with the unit abbreviation.
 func (a *MassFraction) ToString(unit MassFractionUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -787,12 +863,26 @@ func (a *MassFraction) getUnitAbbreviation(unit MassFractionUnits) string {
 	}
 }
 
-// Check if the given MassFraction are equals to the current MassFraction
+// Equals checks if the given MassFraction is equal to the current MassFraction.
+//
+// Parameters:
+//    other: The MassFraction to compare against.
+//
+// Returns:
+//    bool: Returns true if both MassFraction are equal, false otherwise.
 func (a *MassFraction) Equals(other *MassFraction) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given MassFraction are equals to the current MassFraction
+// CompareTo compares the current MassFraction with another MassFraction.
+// It returns -1 if the current MassFraction is less than the other MassFraction, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MassFraction to compare against.
+//
+// Returns:
+//    int: -1 if the current MassFraction is less, 1 if greater, and 0 if equal.
 func (a *MassFraction) CompareTo(other *MassFraction) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -805,22 +895,50 @@ func (a *MassFraction) CompareTo(other *MassFraction) int {
 	return 0
 }
 
-// Add the given MassFraction to the current MassFraction.
+// Add adds the given MassFraction to the current MassFraction and returns the result.
+// The result is a new MassFraction instance with the sum of the values.
+//
+// Parameters:
+//    other: The MassFraction to add to the current MassFraction.
+//
+// Returns:
+//    *MassFraction: A new MassFraction instance representing the sum of both MassFraction.
 func (a *MassFraction) Add(other *MassFraction) *MassFraction {
 	return &MassFraction{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given MassFraction to the current MassFraction.
+// Subtract subtracts the given MassFraction from the current MassFraction and returns the result.
+// The result is a new MassFraction instance with the difference of the values.
+//
+// Parameters:
+//    other: The MassFraction to subtract from the current MassFraction.
+//
+// Returns:
+//    *MassFraction: A new MassFraction instance representing the difference of both MassFraction.
 func (a *MassFraction) Subtract(other *MassFraction) *MassFraction {
 	return &MassFraction{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given MassFraction to the current MassFraction.
+// Multiply multiplies the current MassFraction by the given MassFraction and returns the result.
+// The result is a new MassFraction instance with the product of the values.
+//
+// Parameters:
+//    other: The MassFraction to multiply with the current MassFraction.
+//
+// Returns:
+//    *MassFraction: A new MassFraction instance representing the product of both MassFraction.
 func (a *MassFraction) Multiply(other *MassFraction) *MassFraction {
 	return &MassFraction{value: a.value * other.BaseValue()}
 }
 
-// Divide the given MassFraction to the current MassFraction.
+// Divide divides the current MassFraction by the given MassFraction and returns the result.
+// The result is a new MassFraction instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MassFraction to divide the current MassFraction by.
+//
+// Returns:
+//    *MassFraction: A new MassFraction instance representing the quotient of both MassFraction.
 func (a *MassFraction) Divide(other *MassFraction) *MassFraction {
 	return &MassFraction{value: a.value / other.BaseValue()}
 }

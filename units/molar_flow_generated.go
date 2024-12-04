@@ -12,7 +12,7 @@ import (
 
 
 
-// MolarFlowUnits enumeration
+// MolarFlowUnits defines various units of MolarFlow.
 type MolarFlowUnits string
 
 const (
@@ -37,19 +37,24 @@ const (
         MolarFlowKilomolePerHour MolarFlowUnits = "KilomolePerHour"
 )
 
-// MolarFlowDto represents an MolarFlow
+// MolarFlowDto represents a MolarFlow measurement with a numerical value and its corresponding unit.
 type MolarFlowDto struct {
+    // Value is the numerical representation of the MolarFlow.
 	Value float64
+    // Unit specifies the unit of measurement for the MolarFlow, as defined in the MolarFlowUnits enumeration.
 	Unit  MolarFlowUnits
 }
 
-// MolarFlowDtoFactory struct to group related functions
+// MolarFlowDtoFactory groups methods for creating and serializing MolarFlowDto objects.
 type MolarFlowDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MolarFlowDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MolarFlowDtoFactory) FromJSON(data []byte) (*MolarFlowDto, error) {
 	a := MolarFlowDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MolarFlowDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -57,6 +62,9 @@ func (udf MolarFlowDtoFactory) FromJSON(data []byte) (*MolarFlowDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a MolarFlowDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MolarFlowDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -68,10 +76,11 @@ func (a MolarFlowDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// MolarFlow struct
+// MolarFlow represents a measurement in a of MolarFlow.
+//
+// Molar flow is the ratio of the amount of substance change to the time during which the change occurred (value of amount of substance changes per unit time).
 type MolarFlow struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     moles_per_secondLazy *float64 
@@ -85,72 +94,73 @@ type MolarFlow struct {
     kilomoles_per_hourLazy *float64 
 }
 
-// MolarFlowFactory struct to group related functions
+// MolarFlowFactory groups methods for creating MolarFlow instances.
 type MolarFlowFactory struct{}
 
+// CreateMolarFlow creates a new MolarFlow instance from the given value and unit.
 func (uf MolarFlowFactory) CreateMolarFlow(value float64, unit MolarFlowUnits) (*MolarFlow, error) {
 	return newMolarFlow(value, unit)
 }
 
+// FromDto converts a MolarFlowDto to a MolarFlow instance.
 func (uf MolarFlowFactory) FromDto(dto MolarFlowDto) (*MolarFlow, error) {
 	return newMolarFlow(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a MolarFlow instance.
 func (uf MolarFlowFactory) FromDtoJSON(data []byte) (*MolarFlow, error) {
 	unitDto, err := MolarFlowDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MolarFlowDto from JSON: %w", err)
 	}
 	return MolarFlowFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMolePerSecond creates a new MolarFlow instance from MolePerSecond.
+// FromMolesPerSecond creates a new MolarFlow instance from a value in MolesPerSecond.
 func (uf MolarFlowFactory) FromMolesPerSecond(value float64) (*MolarFlow, error) {
 	return newMolarFlow(value, MolarFlowMolePerSecond)
 }
 
-// FromMolePerMinute creates a new MolarFlow instance from MolePerMinute.
+// FromMolesPerMinute creates a new MolarFlow instance from a value in MolesPerMinute.
 func (uf MolarFlowFactory) FromMolesPerMinute(value float64) (*MolarFlow, error) {
 	return newMolarFlow(value, MolarFlowMolePerMinute)
 }
 
-// FromMolePerHour creates a new MolarFlow instance from MolePerHour.
+// FromMolesPerHour creates a new MolarFlow instance from a value in MolesPerHour.
 func (uf MolarFlowFactory) FromMolesPerHour(value float64) (*MolarFlow, error) {
 	return newMolarFlow(value, MolarFlowMolePerHour)
 }
 
-// FromPoundMolePerSecond creates a new MolarFlow instance from PoundMolePerSecond.
+// FromPoundMolesPerSecond creates a new MolarFlow instance from a value in PoundMolesPerSecond.
 func (uf MolarFlowFactory) FromPoundMolesPerSecond(value float64) (*MolarFlow, error) {
 	return newMolarFlow(value, MolarFlowPoundMolePerSecond)
 }
 
-// FromPoundMolePerMinute creates a new MolarFlow instance from PoundMolePerMinute.
+// FromPoundMolesPerMinute creates a new MolarFlow instance from a value in PoundMolesPerMinute.
 func (uf MolarFlowFactory) FromPoundMolesPerMinute(value float64) (*MolarFlow, error) {
 	return newMolarFlow(value, MolarFlowPoundMolePerMinute)
 }
 
-// FromPoundMolePerHour creates a new MolarFlow instance from PoundMolePerHour.
+// FromPoundMolesPerHour creates a new MolarFlow instance from a value in PoundMolesPerHour.
 func (uf MolarFlowFactory) FromPoundMolesPerHour(value float64) (*MolarFlow, error) {
 	return newMolarFlow(value, MolarFlowPoundMolePerHour)
 }
 
-// FromKilomolePerSecond creates a new MolarFlow instance from KilomolePerSecond.
+// FromKilomolesPerSecond creates a new MolarFlow instance from a value in KilomolesPerSecond.
 func (uf MolarFlowFactory) FromKilomolesPerSecond(value float64) (*MolarFlow, error) {
 	return newMolarFlow(value, MolarFlowKilomolePerSecond)
 }
 
-// FromKilomolePerMinute creates a new MolarFlow instance from KilomolePerMinute.
+// FromKilomolesPerMinute creates a new MolarFlow instance from a value in KilomolesPerMinute.
 func (uf MolarFlowFactory) FromKilomolesPerMinute(value float64) (*MolarFlow, error) {
 	return newMolarFlow(value, MolarFlowKilomolePerMinute)
 }
 
-// FromKilomolePerHour creates a new MolarFlow instance from KilomolePerHour.
+// FromKilomolesPerHour creates a new MolarFlow instance from a value in KilomolesPerHour.
 func (uf MolarFlowFactory) FromKilomolesPerHour(value float64) (*MolarFlow, error) {
 	return newMolarFlow(value, MolarFlowKilomolePerHour)
 }
-
-
 
 
 // newMolarFlow creates a new MolarFlow.
@@ -163,13 +173,15 @@ func newMolarFlow(value float64, fromUnit MolarFlowUnits) (*MolarFlow, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of MolarFlow in MolePerSecond.
+// BaseValue returns the base value of MolarFlow in MolePerSecond unit (the base/default quantity).
 func (a *MolarFlow) BaseValue() float64 {
 	return a.value
 }
 
 
-// MolePerSecond returns the value in MolePerSecond.
+// MolesPerSecond returns the MolarFlow value in MolesPerSecond.
+//
+// 
 func (a *MolarFlow) MolesPerSecond() float64 {
 	if a.moles_per_secondLazy != nil {
 		return *a.moles_per_secondLazy
@@ -179,7 +191,9 @@ func (a *MolarFlow) MolesPerSecond() float64 {
 	return moles_per_second
 }
 
-// MolePerMinute returns the value in MolePerMinute.
+// MolesPerMinute returns the MolarFlow value in MolesPerMinute.
+//
+// 
 func (a *MolarFlow) MolesPerMinute() float64 {
 	if a.moles_per_minuteLazy != nil {
 		return *a.moles_per_minuteLazy
@@ -189,7 +203,9 @@ func (a *MolarFlow) MolesPerMinute() float64 {
 	return moles_per_minute
 }
 
-// MolePerHour returns the value in MolePerHour.
+// MolesPerHour returns the MolarFlow value in MolesPerHour.
+//
+// 
 func (a *MolarFlow) MolesPerHour() float64 {
 	if a.moles_per_hourLazy != nil {
 		return *a.moles_per_hourLazy
@@ -199,7 +215,9 @@ func (a *MolarFlow) MolesPerHour() float64 {
 	return moles_per_hour
 }
 
-// PoundMolePerSecond returns the value in PoundMolePerSecond.
+// PoundMolesPerSecond returns the MolarFlow value in PoundMolesPerSecond.
+//
+// 
 func (a *MolarFlow) PoundMolesPerSecond() float64 {
 	if a.pound_moles_per_secondLazy != nil {
 		return *a.pound_moles_per_secondLazy
@@ -209,7 +227,9 @@ func (a *MolarFlow) PoundMolesPerSecond() float64 {
 	return pound_moles_per_second
 }
 
-// PoundMolePerMinute returns the value in PoundMolePerMinute.
+// PoundMolesPerMinute returns the MolarFlow value in PoundMolesPerMinute.
+//
+// 
 func (a *MolarFlow) PoundMolesPerMinute() float64 {
 	if a.pound_moles_per_minuteLazy != nil {
 		return *a.pound_moles_per_minuteLazy
@@ -219,7 +239,9 @@ func (a *MolarFlow) PoundMolesPerMinute() float64 {
 	return pound_moles_per_minute
 }
 
-// PoundMolePerHour returns the value in PoundMolePerHour.
+// PoundMolesPerHour returns the MolarFlow value in PoundMolesPerHour.
+//
+// 
 func (a *MolarFlow) PoundMolesPerHour() float64 {
 	if a.pound_moles_per_hourLazy != nil {
 		return *a.pound_moles_per_hourLazy
@@ -229,7 +251,9 @@ func (a *MolarFlow) PoundMolesPerHour() float64 {
 	return pound_moles_per_hour
 }
 
-// KilomolePerSecond returns the value in KilomolePerSecond.
+// KilomolesPerSecond returns the MolarFlow value in KilomolesPerSecond.
+//
+// 
 func (a *MolarFlow) KilomolesPerSecond() float64 {
 	if a.kilomoles_per_secondLazy != nil {
 		return *a.kilomoles_per_secondLazy
@@ -239,7 +263,9 @@ func (a *MolarFlow) KilomolesPerSecond() float64 {
 	return kilomoles_per_second
 }
 
-// KilomolePerMinute returns the value in KilomolePerMinute.
+// KilomolesPerMinute returns the MolarFlow value in KilomolesPerMinute.
+//
+// 
 func (a *MolarFlow) KilomolesPerMinute() float64 {
 	if a.kilomoles_per_minuteLazy != nil {
 		return *a.kilomoles_per_minuteLazy
@@ -249,7 +275,9 @@ func (a *MolarFlow) KilomolesPerMinute() float64 {
 	return kilomoles_per_minute
 }
 
-// KilomolePerHour returns the value in KilomolePerHour.
+// KilomolesPerHour returns the MolarFlow value in KilomolesPerHour.
+//
+// 
 func (a *MolarFlow) KilomolesPerHour() float64 {
 	if a.kilomoles_per_hourLazy != nil {
 		return *a.kilomoles_per_hourLazy
@@ -260,7 +288,9 @@ func (a *MolarFlow) KilomolesPerHour() float64 {
 }
 
 
-// ToDto creates an MolarFlowDto representation.
+// ToDto creates a MolarFlowDto representation from the MolarFlow instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MolePerSecond by default.
 func (a *MolarFlow) ToDto(holdInUnit *MolarFlowUnits) MolarFlowDto {
 	if holdInUnit == nil {
 		defaultUnit := MolarFlowMolePerSecond // Default value
@@ -273,12 +303,19 @@ func (a *MolarFlow) ToDto(holdInUnit *MolarFlowUnits) MolarFlowDto {
 	}
 }
 
-// ToDtoJSON creates an MolarFlowDto representation.
+// ToDtoJSON creates a JSON representation of the MolarFlow instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MolePerSecond by default.
 func (a *MolarFlow) ToDtoJSON(holdInUnit *MolarFlowUnits) ([]byte, error) {
+	// Convert to MolarFlowDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts MolarFlow to a specific unit value.
+// Convert converts a MolarFlow to a specific unit value.
+// The function uses the provided unit type (MolarFlowUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *MolarFlow) Convert(toUnit MolarFlowUnits) float64 {
 	switch toUnit { 
     case MolarFlowMolePerSecond:
@@ -300,7 +337,7 @@ func (a *MolarFlow) Convert(toUnit MolarFlowUnits) float64 {
     case MolarFlowKilomolePerHour:
 		return a.KilomolesPerHour()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -355,13 +392,22 @@ func (a *MolarFlow) convertToBase(value float64, fromUnit MolarFlowUnits) float6
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the MolarFlow in the default unit (MolePerSecond),
+// formatted to two decimal places.
 func (a MolarFlow) String() string {
 	return a.ToString(MolarFlowMolePerSecond, 2)
 }
 
-// ToString formats the MolarFlow to string.
-// fractionalDigits -1 for not mention
+// ToString formats the MolarFlow value as a string with the specified unit and fractional digits.
+// It converts the MolarFlow to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the MolarFlow value will be converted (e.g., MolePerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the MolarFlow with the unit abbreviation.
 func (a *MolarFlow) ToString(unit MolarFlowUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -397,12 +443,26 @@ func (a *MolarFlow) getUnitAbbreviation(unit MolarFlowUnits) string {
 	}
 }
 
-// Check if the given MolarFlow are equals to the current MolarFlow
+// Equals checks if the given MolarFlow is equal to the current MolarFlow.
+//
+// Parameters:
+//    other: The MolarFlow to compare against.
+//
+// Returns:
+//    bool: Returns true if both MolarFlow are equal, false otherwise.
 func (a *MolarFlow) Equals(other *MolarFlow) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given MolarFlow are equals to the current MolarFlow
+// CompareTo compares the current MolarFlow with another MolarFlow.
+// It returns -1 if the current MolarFlow is less than the other MolarFlow, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MolarFlow to compare against.
+//
+// Returns:
+//    int: -1 if the current MolarFlow is less, 1 if greater, and 0 if equal.
 func (a *MolarFlow) CompareTo(other *MolarFlow) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -415,22 +475,50 @@ func (a *MolarFlow) CompareTo(other *MolarFlow) int {
 	return 0
 }
 
-// Add the given MolarFlow to the current MolarFlow.
+// Add adds the given MolarFlow to the current MolarFlow and returns the result.
+// The result is a new MolarFlow instance with the sum of the values.
+//
+// Parameters:
+//    other: The MolarFlow to add to the current MolarFlow.
+//
+// Returns:
+//    *MolarFlow: A new MolarFlow instance representing the sum of both MolarFlow.
 func (a *MolarFlow) Add(other *MolarFlow) *MolarFlow {
 	return &MolarFlow{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given MolarFlow to the current MolarFlow.
+// Subtract subtracts the given MolarFlow from the current MolarFlow and returns the result.
+// The result is a new MolarFlow instance with the difference of the values.
+//
+// Parameters:
+//    other: The MolarFlow to subtract from the current MolarFlow.
+//
+// Returns:
+//    *MolarFlow: A new MolarFlow instance representing the difference of both MolarFlow.
 func (a *MolarFlow) Subtract(other *MolarFlow) *MolarFlow {
 	return &MolarFlow{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given MolarFlow to the current MolarFlow.
+// Multiply multiplies the current MolarFlow by the given MolarFlow and returns the result.
+// The result is a new MolarFlow instance with the product of the values.
+//
+// Parameters:
+//    other: The MolarFlow to multiply with the current MolarFlow.
+//
+// Returns:
+//    *MolarFlow: A new MolarFlow instance representing the product of both MolarFlow.
 func (a *MolarFlow) Multiply(other *MolarFlow) *MolarFlow {
 	return &MolarFlow{value: a.value * other.BaseValue()}
 }
 
-// Divide the given MolarFlow to the current MolarFlow.
+// Divide divides the current MolarFlow by the given MolarFlow and returns the result.
+// The result is a new MolarFlow instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MolarFlow to divide the current MolarFlow by.
+//
+// Returns:
+//    *MolarFlow: A new MolarFlow instance representing the quotient of both MolarFlow.
 func (a *MolarFlow) Divide(other *MolarFlow) *MolarFlow {
 	return &MolarFlow{value: a.value / other.BaseValue()}
 }

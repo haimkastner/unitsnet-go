@@ -12,7 +12,7 @@ import (
 
 
 
-// FrequencyUnits enumeration
+// FrequencyUnits defines various units of Frequency.
 type FrequencyUnits string
 
 const (
@@ -45,19 +45,24 @@ const (
         FrequencyTerahertz FrequencyUnits = "Terahertz"
 )
 
-// FrequencyDto represents an Frequency
+// FrequencyDto represents a Frequency measurement with a numerical value and its corresponding unit.
 type FrequencyDto struct {
+    // Value is the numerical representation of the Frequency.
 	Value float64
+    // Unit specifies the unit of measurement for the Frequency, as defined in the FrequencyUnits enumeration.
 	Unit  FrequencyUnits
 }
 
-// FrequencyDtoFactory struct to group related functions
+// FrequencyDtoFactory groups methods for creating and serializing FrequencyDto objects.
 type FrequencyDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a FrequencyDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf FrequencyDtoFactory) FromJSON(data []byte) (*FrequencyDto, error) {
 	a := FrequencyDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into FrequencyDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -65,6 +70,9 @@ func (udf FrequencyDtoFactory) FromJSON(data []byte) (*FrequencyDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a FrequencyDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a FrequencyDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -76,10 +84,11 @@ func (a FrequencyDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Frequency struct
+// Frequency represents a measurement in a of Frequency.
+//
+// The number of occurrences of a repeating event per unit time.
 type Frequency struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     hertzLazy *float64 
@@ -97,92 +106,93 @@ type Frequency struct {
     terahertzLazy *float64 
 }
 
-// FrequencyFactory struct to group related functions
+// FrequencyFactory groups methods for creating Frequency instances.
 type FrequencyFactory struct{}
 
+// CreateFrequency creates a new Frequency instance from the given value and unit.
 func (uf FrequencyFactory) CreateFrequency(value float64, unit FrequencyUnits) (*Frequency, error) {
 	return newFrequency(value, unit)
 }
 
+// FromDto converts a FrequencyDto to a Frequency instance.
 func (uf FrequencyFactory) FromDto(dto FrequencyDto) (*Frequency, error) {
 	return newFrequency(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Frequency instance.
 func (uf FrequencyFactory) FromDtoJSON(data []byte) (*Frequency, error) {
 	unitDto, err := FrequencyDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse FrequencyDto from JSON: %w", err)
 	}
 	return FrequencyFactory{}.FromDto(*unitDto)
 }
 
 
-// FromHertz creates a new Frequency instance from Hertz.
+// FromHertz creates a new Frequency instance from a value in Hertz.
 func (uf FrequencyFactory) FromHertz(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyHertz)
 }
 
-// FromRadianPerSecond creates a new Frequency instance from RadianPerSecond.
+// FromRadiansPerSecond creates a new Frequency instance from a value in RadiansPerSecond.
 func (uf FrequencyFactory) FromRadiansPerSecond(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyRadianPerSecond)
 }
 
-// FromCyclePerMinute creates a new Frequency instance from CyclePerMinute.
+// FromCyclesPerMinute creates a new Frequency instance from a value in CyclesPerMinute.
 func (uf FrequencyFactory) FromCyclesPerMinute(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyCyclePerMinute)
 }
 
-// FromCyclePerHour creates a new Frequency instance from CyclePerHour.
+// FromCyclesPerHour creates a new Frequency instance from a value in CyclesPerHour.
 func (uf FrequencyFactory) FromCyclesPerHour(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyCyclePerHour)
 }
 
-// FromBeatPerMinute creates a new Frequency instance from BeatPerMinute.
+// FromBeatsPerMinute creates a new Frequency instance from a value in BeatsPerMinute.
 func (uf FrequencyFactory) FromBeatsPerMinute(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyBeatPerMinute)
 }
 
-// FromPerSecond creates a new Frequency instance from PerSecond.
+// FromPerSecond creates a new Frequency instance from a value in PerSecond.
 func (uf FrequencyFactory) FromPerSecond(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyPerSecond)
 }
 
-// FromBUnit creates a new Frequency instance from BUnit.
+// FromBUnits creates a new Frequency instance from a value in BUnits.
 func (uf FrequencyFactory) FromBUnits(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyBUnit)
 }
 
-// FromMicrohertz creates a new Frequency instance from Microhertz.
+// FromMicrohertz creates a new Frequency instance from a value in Microhertz.
 func (uf FrequencyFactory) FromMicrohertz(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyMicrohertz)
 }
 
-// FromMillihertz creates a new Frequency instance from Millihertz.
+// FromMillihertz creates a new Frequency instance from a value in Millihertz.
 func (uf FrequencyFactory) FromMillihertz(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyMillihertz)
 }
 
-// FromKilohertz creates a new Frequency instance from Kilohertz.
+// FromKilohertz creates a new Frequency instance from a value in Kilohertz.
 func (uf FrequencyFactory) FromKilohertz(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyKilohertz)
 }
 
-// FromMegahertz creates a new Frequency instance from Megahertz.
+// FromMegahertz creates a new Frequency instance from a value in Megahertz.
 func (uf FrequencyFactory) FromMegahertz(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyMegahertz)
 }
 
-// FromGigahertz creates a new Frequency instance from Gigahertz.
+// FromGigahertz creates a new Frequency instance from a value in Gigahertz.
 func (uf FrequencyFactory) FromGigahertz(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyGigahertz)
 }
 
-// FromTerahertz creates a new Frequency instance from Terahertz.
+// FromTerahertz creates a new Frequency instance from a value in Terahertz.
 func (uf FrequencyFactory) FromTerahertz(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyTerahertz)
 }
-
-
 
 
 // newFrequency creates a new Frequency.
@@ -195,13 +205,15 @@ func newFrequency(value float64, fromUnit FrequencyUnits) (*Frequency, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Frequency in Hertz.
+// BaseValue returns the base value of Frequency in Hertz unit (the base/default quantity).
 func (a *Frequency) BaseValue() float64 {
 	return a.value
 }
 
 
-// Hertz returns the value in Hertz.
+// Hertz returns the Frequency value in Hertz.
+//
+// 
 func (a *Frequency) Hertz() float64 {
 	if a.hertzLazy != nil {
 		return *a.hertzLazy
@@ -211,7 +223,9 @@ func (a *Frequency) Hertz() float64 {
 	return hertz
 }
 
-// RadianPerSecond returns the value in RadianPerSecond.
+// RadiansPerSecond returns the Frequency value in RadiansPerSecond.
+//
+// 
 func (a *Frequency) RadiansPerSecond() float64 {
 	if a.radians_per_secondLazy != nil {
 		return *a.radians_per_secondLazy
@@ -221,7 +235,9 @@ func (a *Frequency) RadiansPerSecond() float64 {
 	return radians_per_second
 }
 
-// CyclePerMinute returns the value in CyclePerMinute.
+// CyclesPerMinute returns the Frequency value in CyclesPerMinute.
+//
+// 
 func (a *Frequency) CyclesPerMinute() float64 {
 	if a.cycles_per_minuteLazy != nil {
 		return *a.cycles_per_minuteLazy
@@ -231,7 +247,9 @@ func (a *Frequency) CyclesPerMinute() float64 {
 	return cycles_per_minute
 }
 
-// CyclePerHour returns the value in CyclePerHour.
+// CyclesPerHour returns the Frequency value in CyclesPerHour.
+//
+// 
 func (a *Frequency) CyclesPerHour() float64 {
 	if a.cycles_per_hourLazy != nil {
 		return *a.cycles_per_hourLazy
@@ -241,7 +259,9 @@ func (a *Frequency) CyclesPerHour() float64 {
 	return cycles_per_hour
 }
 
-// BeatPerMinute returns the value in BeatPerMinute.
+// BeatsPerMinute returns the Frequency value in BeatsPerMinute.
+//
+// 
 func (a *Frequency) BeatsPerMinute() float64 {
 	if a.beats_per_minuteLazy != nil {
 		return *a.beats_per_minuteLazy
@@ -251,7 +271,9 @@ func (a *Frequency) BeatsPerMinute() float64 {
 	return beats_per_minute
 }
 
-// PerSecond returns the value in PerSecond.
+// PerSecond returns the Frequency value in PerSecond.
+//
+// 
 func (a *Frequency) PerSecond() float64 {
 	if a.per_secondLazy != nil {
 		return *a.per_secondLazy
@@ -261,7 +283,9 @@ func (a *Frequency) PerSecond() float64 {
 	return per_second
 }
 
-// BUnit returns the value in BUnit.
+// BUnits returns the Frequency value in BUnits.
+//
+// 
 func (a *Frequency) BUnits() float64 {
 	if a.b_unitsLazy != nil {
 		return *a.b_unitsLazy
@@ -271,7 +295,9 @@ func (a *Frequency) BUnits() float64 {
 	return b_units
 }
 
-// Microhertz returns the value in Microhertz.
+// Microhertz returns the Frequency value in Microhertz.
+//
+// 
 func (a *Frequency) Microhertz() float64 {
 	if a.microhertzLazy != nil {
 		return *a.microhertzLazy
@@ -281,7 +307,9 @@ func (a *Frequency) Microhertz() float64 {
 	return microhertz
 }
 
-// Millihertz returns the value in Millihertz.
+// Millihertz returns the Frequency value in Millihertz.
+//
+// 
 func (a *Frequency) Millihertz() float64 {
 	if a.millihertzLazy != nil {
 		return *a.millihertzLazy
@@ -291,7 +319,9 @@ func (a *Frequency) Millihertz() float64 {
 	return millihertz
 }
 
-// Kilohertz returns the value in Kilohertz.
+// Kilohertz returns the Frequency value in Kilohertz.
+//
+// 
 func (a *Frequency) Kilohertz() float64 {
 	if a.kilohertzLazy != nil {
 		return *a.kilohertzLazy
@@ -301,7 +331,9 @@ func (a *Frequency) Kilohertz() float64 {
 	return kilohertz
 }
 
-// Megahertz returns the value in Megahertz.
+// Megahertz returns the Frequency value in Megahertz.
+//
+// 
 func (a *Frequency) Megahertz() float64 {
 	if a.megahertzLazy != nil {
 		return *a.megahertzLazy
@@ -311,7 +343,9 @@ func (a *Frequency) Megahertz() float64 {
 	return megahertz
 }
 
-// Gigahertz returns the value in Gigahertz.
+// Gigahertz returns the Frequency value in Gigahertz.
+//
+// 
 func (a *Frequency) Gigahertz() float64 {
 	if a.gigahertzLazy != nil {
 		return *a.gigahertzLazy
@@ -321,7 +355,9 @@ func (a *Frequency) Gigahertz() float64 {
 	return gigahertz
 }
 
-// Terahertz returns the value in Terahertz.
+// Terahertz returns the Frequency value in Terahertz.
+//
+// 
 func (a *Frequency) Terahertz() float64 {
 	if a.terahertzLazy != nil {
 		return *a.terahertzLazy
@@ -332,7 +368,9 @@ func (a *Frequency) Terahertz() float64 {
 }
 
 
-// ToDto creates an FrequencyDto representation.
+// ToDto creates a FrequencyDto representation from the Frequency instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Hertz by default.
 func (a *Frequency) ToDto(holdInUnit *FrequencyUnits) FrequencyDto {
 	if holdInUnit == nil {
 		defaultUnit := FrequencyHertz // Default value
@@ -345,12 +383,19 @@ func (a *Frequency) ToDto(holdInUnit *FrequencyUnits) FrequencyDto {
 	}
 }
 
-// ToDtoJSON creates an FrequencyDto representation.
+// ToDtoJSON creates a JSON representation of the Frequency instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Hertz by default.
 func (a *Frequency) ToDtoJSON(holdInUnit *FrequencyUnits) ([]byte, error) {
+	// Convert to FrequencyDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Frequency to a specific unit value.
+// Convert converts a Frequency to a specific unit value.
+// The function uses the provided unit type (FrequencyUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Frequency) Convert(toUnit FrequencyUnits) float64 {
 	switch toUnit { 
     case FrequencyHertz:
@@ -380,7 +425,7 @@ func (a *Frequency) Convert(toUnit FrequencyUnits) float64 {
     case FrequencyTerahertz:
 		return a.Terahertz()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -451,13 +496,22 @@ func (a *Frequency) convertToBase(value float64, fromUnit FrequencyUnits) float6
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Frequency in the default unit (Hertz),
+// formatted to two decimal places.
 func (a Frequency) String() string {
 	return a.ToString(FrequencyHertz, 2)
 }
 
-// ToString formats the Frequency to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Frequency value as a string with the specified unit and fractional digits.
+// It converts the Frequency to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Frequency value will be converted (e.g., Hertz))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Frequency with the unit abbreviation.
 func (a *Frequency) ToString(unit FrequencyUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -501,12 +555,26 @@ func (a *Frequency) getUnitAbbreviation(unit FrequencyUnits) string {
 	}
 }
 
-// Check if the given Frequency are equals to the current Frequency
+// Equals checks if the given Frequency is equal to the current Frequency.
+//
+// Parameters:
+//    other: The Frequency to compare against.
+//
+// Returns:
+//    bool: Returns true if both Frequency are equal, false otherwise.
 func (a *Frequency) Equals(other *Frequency) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Frequency are equals to the current Frequency
+// CompareTo compares the current Frequency with another Frequency.
+// It returns -1 if the current Frequency is less than the other Frequency, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Frequency to compare against.
+//
+// Returns:
+//    int: -1 if the current Frequency is less, 1 if greater, and 0 if equal.
 func (a *Frequency) CompareTo(other *Frequency) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -519,22 +587,50 @@ func (a *Frequency) CompareTo(other *Frequency) int {
 	return 0
 }
 
-// Add the given Frequency to the current Frequency.
+// Add adds the given Frequency to the current Frequency and returns the result.
+// The result is a new Frequency instance with the sum of the values.
+//
+// Parameters:
+//    other: The Frequency to add to the current Frequency.
+//
+// Returns:
+//    *Frequency: A new Frequency instance representing the sum of both Frequency.
 func (a *Frequency) Add(other *Frequency) *Frequency {
 	return &Frequency{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Frequency to the current Frequency.
+// Subtract subtracts the given Frequency from the current Frequency and returns the result.
+// The result is a new Frequency instance with the difference of the values.
+//
+// Parameters:
+//    other: The Frequency to subtract from the current Frequency.
+//
+// Returns:
+//    *Frequency: A new Frequency instance representing the difference of both Frequency.
 func (a *Frequency) Subtract(other *Frequency) *Frequency {
 	return &Frequency{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Frequency to the current Frequency.
+// Multiply multiplies the current Frequency by the given Frequency and returns the result.
+// The result is a new Frequency instance with the product of the values.
+//
+// Parameters:
+//    other: The Frequency to multiply with the current Frequency.
+//
+// Returns:
+//    *Frequency: A new Frequency instance representing the product of both Frequency.
 func (a *Frequency) Multiply(other *Frequency) *Frequency {
 	return &Frequency{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Frequency to the current Frequency.
+// Divide divides the current Frequency by the given Frequency and returns the result.
+// The result is a new Frequency instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Frequency to divide the current Frequency by.
+//
+// Returns:
+//    *Frequency: A new Frequency instance representing the quotient of both Frequency.
 func (a *Frequency) Divide(other *Frequency) *Frequency {
 	return &Frequency{value: a.value / other.BaseValue()}
 }

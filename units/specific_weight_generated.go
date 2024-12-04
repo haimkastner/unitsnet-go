@@ -12,7 +12,7 @@ import (
 
 
 
-// SpecificWeightUnits enumeration
+// SpecificWeightUnits defines various units of SpecificWeight.
 type SpecificWeightUnits string
 
 const (
@@ -53,19 +53,24 @@ const (
         SpecificWeightKilopoundForcePerCubicFoot SpecificWeightUnits = "KilopoundForcePerCubicFoot"
 )
 
-// SpecificWeightDto represents an SpecificWeight
+// SpecificWeightDto represents a SpecificWeight measurement with a numerical value and its corresponding unit.
 type SpecificWeightDto struct {
+    // Value is the numerical representation of the SpecificWeight.
 	Value float64
+    // Unit specifies the unit of measurement for the SpecificWeight, as defined in the SpecificWeightUnits enumeration.
 	Unit  SpecificWeightUnits
 }
 
-// SpecificWeightDtoFactory struct to group related functions
+// SpecificWeightDtoFactory groups methods for creating and serializing SpecificWeightDto objects.
 type SpecificWeightDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a SpecificWeightDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf SpecificWeightDtoFactory) FromJSON(data []byte) (*SpecificWeightDto, error) {
 	a := SpecificWeightDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into SpecificWeightDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -73,6 +78,9 @@ func (udf SpecificWeightDtoFactory) FromJSON(data []byte) (*SpecificWeightDto, e
 	return &a, nil
 }
 
+// ToJSON serializes a SpecificWeightDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a SpecificWeightDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -84,10 +92,11 @@ func (a SpecificWeightDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// SpecificWeight struct
+// SpecificWeight represents a measurement in a of SpecificWeight.
+//
+// The SpecificWeight, or more precisely, the volumetric weight density, of a substance is its weight per unit volume.
 type SpecificWeight struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     newtons_per_cubic_millimeterLazy *float64 
@@ -109,112 +118,113 @@ type SpecificWeight struct {
     kilopounds_force_per_cubic_footLazy *float64 
 }
 
-// SpecificWeightFactory struct to group related functions
+// SpecificWeightFactory groups methods for creating SpecificWeight instances.
 type SpecificWeightFactory struct{}
 
+// CreateSpecificWeight creates a new SpecificWeight instance from the given value and unit.
 func (uf SpecificWeightFactory) CreateSpecificWeight(value float64, unit SpecificWeightUnits) (*SpecificWeight, error) {
 	return newSpecificWeight(value, unit)
 }
 
+// FromDto converts a SpecificWeightDto to a SpecificWeight instance.
 func (uf SpecificWeightFactory) FromDto(dto SpecificWeightDto) (*SpecificWeight, error) {
 	return newSpecificWeight(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a SpecificWeight instance.
 func (uf SpecificWeightFactory) FromDtoJSON(data []byte) (*SpecificWeight, error) {
 	unitDto, err := SpecificWeightDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse SpecificWeightDto from JSON: %w", err)
 	}
 	return SpecificWeightFactory{}.FromDto(*unitDto)
 }
 
 
-// FromNewtonPerCubicMillimeter creates a new SpecificWeight instance from NewtonPerCubicMillimeter.
+// FromNewtonsPerCubicMillimeter creates a new SpecificWeight instance from a value in NewtonsPerCubicMillimeter.
 func (uf SpecificWeightFactory) FromNewtonsPerCubicMillimeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightNewtonPerCubicMillimeter)
 }
 
-// FromNewtonPerCubicCentimeter creates a new SpecificWeight instance from NewtonPerCubicCentimeter.
+// FromNewtonsPerCubicCentimeter creates a new SpecificWeight instance from a value in NewtonsPerCubicCentimeter.
 func (uf SpecificWeightFactory) FromNewtonsPerCubicCentimeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightNewtonPerCubicCentimeter)
 }
 
-// FromNewtonPerCubicMeter creates a new SpecificWeight instance from NewtonPerCubicMeter.
+// FromNewtonsPerCubicMeter creates a new SpecificWeight instance from a value in NewtonsPerCubicMeter.
 func (uf SpecificWeightFactory) FromNewtonsPerCubicMeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightNewtonPerCubicMeter)
 }
 
-// FromKilogramForcePerCubicMillimeter creates a new SpecificWeight instance from KilogramForcePerCubicMillimeter.
+// FromKilogramsForcePerCubicMillimeter creates a new SpecificWeight instance from a value in KilogramsForcePerCubicMillimeter.
 func (uf SpecificWeightFactory) FromKilogramsForcePerCubicMillimeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightKilogramForcePerCubicMillimeter)
 }
 
-// FromKilogramForcePerCubicCentimeter creates a new SpecificWeight instance from KilogramForcePerCubicCentimeter.
+// FromKilogramsForcePerCubicCentimeter creates a new SpecificWeight instance from a value in KilogramsForcePerCubicCentimeter.
 func (uf SpecificWeightFactory) FromKilogramsForcePerCubicCentimeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightKilogramForcePerCubicCentimeter)
 }
 
-// FromKilogramForcePerCubicMeter creates a new SpecificWeight instance from KilogramForcePerCubicMeter.
+// FromKilogramsForcePerCubicMeter creates a new SpecificWeight instance from a value in KilogramsForcePerCubicMeter.
 func (uf SpecificWeightFactory) FromKilogramsForcePerCubicMeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightKilogramForcePerCubicMeter)
 }
 
-// FromPoundForcePerCubicInch creates a new SpecificWeight instance from PoundForcePerCubicInch.
+// FromPoundsForcePerCubicInch creates a new SpecificWeight instance from a value in PoundsForcePerCubicInch.
 func (uf SpecificWeightFactory) FromPoundsForcePerCubicInch(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightPoundForcePerCubicInch)
 }
 
-// FromPoundForcePerCubicFoot creates a new SpecificWeight instance from PoundForcePerCubicFoot.
+// FromPoundsForcePerCubicFoot creates a new SpecificWeight instance from a value in PoundsForcePerCubicFoot.
 func (uf SpecificWeightFactory) FromPoundsForcePerCubicFoot(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightPoundForcePerCubicFoot)
 }
 
-// FromTonneForcePerCubicMillimeter creates a new SpecificWeight instance from TonneForcePerCubicMillimeter.
+// FromTonnesForcePerCubicMillimeter creates a new SpecificWeight instance from a value in TonnesForcePerCubicMillimeter.
 func (uf SpecificWeightFactory) FromTonnesForcePerCubicMillimeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightTonneForcePerCubicMillimeter)
 }
 
-// FromTonneForcePerCubicCentimeter creates a new SpecificWeight instance from TonneForcePerCubicCentimeter.
+// FromTonnesForcePerCubicCentimeter creates a new SpecificWeight instance from a value in TonnesForcePerCubicCentimeter.
 func (uf SpecificWeightFactory) FromTonnesForcePerCubicCentimeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightTonneForcePerCubicCentimeter)
 }
 
-// FromTonneForcePerCubicMeter creates a new SpecificWeight instance from TonneForcePerCubicMeter.
+// FromTonnesForcePerCubicMeter creates a new SpecificWeight instance from a value in TonnesForcePerCubicMeter.
 func (uf SpecificWeightFactory) FromTonnesForcePerCubicMeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightTonneForcePerCubicMeter)
 }
 
-// FromKilonewtonPerCubicMillimeter creates a new SpecificWeight instance from KilonewtonPerCubicMillimeter.
+// FromKilonewtonsPerCubicMillimeter creates a new SpecificWeight instance from a value in KilonewtonsPerCubicMillimeter.
 func (uf SpecificWeightFactory) FromKilonewtonsPerCubicMillimeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightKilonewtonPerCubicMillimeter)
 }
 
-// FromKilonewtonPerCubicCentimeter creates a new SpecificWeight instance from KilonewtonPerCubicCentimeter.
+// FromKilonewtonsPerCubicCentimeter creates a new SpecificWeight instance from a value in KilonewtonsPerCubicCentimeter.
 func (uf SpecificWeightFactory) FromKilonewtonsPerCubicCentimeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightKilonewtonPerCubicCentimeter)
 }
 
-// FromKilonewtonPerCubicMeter creates a new SpecificWeight instance from KilonewtonPerCubicMeter.
+// FromKilonewtonsPerCubicMeter creates a new SpecificWeight instance from a value in KilonewtonsPerCubicMeter.
 func (uf SpecificWeightFactory) FromKilonewtonsPerCubicMeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightKilonewtonPerCubicMeter)
 }
 
-// FromMeganewtonPerCubicMeter creates a new SpecificWeight instance from MeganewtonPerCubicMeter.
+// FromMeganewtonsPerCubicMeter creates a new SpecificWeight instance from a value in MeganewtonsPerCubicMeter.
 func (uf SpecificWeightFactory) FromMeganewtonsPerCubicMeter(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightMeganewtonPerCubicMeter)
 }
 
-// FromKilopoundForcePerCubicInch creates a new SpecificWeight instance from KilopoundForcePerCubicInch.
+// FromKilopoundsForcePerCubicInch creates a new SpecificWeight instance from a value in KilopoundsForcePerCubicInch.
 func (uf SpecificWeightFactory) FromKilopoundsForcePerCubicInch(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightKilopoundForcePerCubicInch)
 }
 
-// FromKilopoundForcePerCubicFoot creates a new SpecificWeight instance from KilopoundForcePerCubicFoot.
+// FromKilopoundsForcePerCubicFoot creates a new SpecificWeight instance from a value in KilopoundsForcePerCubicFoot.
 func (uf SpecificWeightFactory) FromKilopoundsForcePerCubicFoot(value float64) (*SpecificWeight, error) {
 	return newSpecificWeight(value, SpecificWeightKilopoundForcePerCubicFoot)
 }
-
-
 
 
 // newSpecificWeight creates a new SpecificWeight.
@@ -227,13 +237,15 @@ func newSpecificWeight(value float64, fromUnit SpecificWeightUnits) (*SpecificWe
 	return a, nil
 }
 
-// BaseValue returns the base value of SpecificWeight in NewtonPerCubicMeter.
+// BaseValue returns the base value of SpecificWeight in NewtonPerCubicMeter unit (the base/default quantity).
 func (a *SpecificWeight) BaseValue() float64 {
 	return a.value
 }
 
 
-// NewtonPerCubicMillimeter returns the value in NewtonPerCubicMillimeter.
+// NewtonsPerCubicMillimeter returns the SpecificWeight value in NewtonsPerCubicMillimeter.
+//
+// 
 func (a *SpecificWeight) NewtonsPerCubicMillimeter() float64 {
 	if a.newtons_per_cubic_millimeterLazy != nil {
 		return *a.newtons_per_cubic_millimeterLazy
@@ -243,7 +255,9 @@ func (a *SpecificWeight) NewtonsPerCubicMillimeter() float64 {
 	return newtons_per_cubic_millimeter
 }
 
-// NewtonPerCubicCentimeter returns the value in NewtonPerCubicCentimeter.
+// NewtonsPerCubicCentimeter returns the SpecificWeight value in NewtonsPerCubicCentimeter.
+//
+// 
 func (a *SpecificWeight) NewtonsPerCubicCentimeter() float64 {
 	if a.newtons_per_cubic_centimeterLazy != nil {
 		return *a.newtons_per_cubic_centimeterLazy
@@ -253,7 +267,9 @@ func (a *SpecificWeight) NewtonsPerCubicCentimeter() float64 {
 	return newtons_per_cubic_centimeter
 }
 
-// NewtonPerCubicMeter returns the value in NewtonPerCubicMeter.
+// NewtonsPerCubicMeter returns the SpecificWeight value in NewtonsPerCubicMeter.
+//
+// 
 func (a *SpecificWeight) NewtonsPerCubicMeter() float64 {
 	if a.newtons_per_cubic_meterLazy != nil {
 		return *a.newtons_per_cubic_meterLazy
@@ -263,7 +279,9 @@ func (a *SpecificWeight) NewtonsPerCubicMeter() float64 {
 	return newtons_per_cubic_meter
 }
 
-// KilogramForcePerCubicMillimeter returns the value in KilogramForcePerCubicMillimeter.
+// KilogramsForcePerCubicMillimeter returns the SpecificWeight value in KilogramsForcePerCubicMillimeter.
+//
+// 
 func (a *SpecificWeight) KilogramsForcePerCubicMillimeter() float64 {
 	if a.kilograms_force_per_cubic_millimeterLazy != nil {
 		return *a.kilograms_force_per_cubic_millimeterLazy
@@ -273,7 +291,9 @@ func (a *SpecificWeight) KilogramsForcePerCubicMillimeter() float64 {
 	return kilograms_force_per_cubic_millimeter
 }
 
-// KilogramForcePerCubicCentimeter returns the value in KilogramForcePerCubicCentimeter.
+// KilogramsForcePerCubicCentimeter returns the SpecificWeight value in KilogramsForcePerCubicCentimeter.
+//
+// 
 func (a *SpecificWeight) KilogramsForcePerCubicCentimeter() float64 {
 	if a.kilograms_force_per_cubic_centimeterLazy != nil {
 		return *a.kilograms_force_per_cubic_centimeterLazy
@@ -283,7 +303,9 @@ func (a *SpecificWeight) KilogramsForcePerCubicCentimeter() float64 {
 	return kilograms_force_per_cubic_centimeter
 }
 
-// KilogramForcePerCubicMeter returns the value in KilogramForcePerCubicMeter.
+// KilogramsForcePerCubicMeter returns the SpecificWeight value in KilogramsForcePerCubicMeter.
+//
+// 
 func (a *SpecificWeight) KilogramsForcePerCubicMeter() float64 {
 	if a.kilograms_force_per_cubic_meterLazy != nil {
 		return *a.kilograms_force_per_cubic_meterLazy
@@ -293,7 +315,9 @@ func (a *SpecificWeight) KilogramsForcePerCubicMeter() float64 {
 	return kilograms_force_per_cubic_meter
 }
 
-// PoundForcePerCubicInch returns the value in PoundForcePerCubicInch.
+// PoundsForcePerCubicInch returns the SpecificWeight value in PoundsForcePerCubicInch.
+//
+// 
 func (a *SpecificWeight) PoundsForcePerCubicInch() float64 {
 	if a.pounds_force_per_cubic_inchLazy != nil {
 		return *a.pounds_force_per_cubic_inchLazy
@@ -303,7 +327,9 @@ func (a *SpecificWeight) PoundsForcePerCubicInch() float64 {
 	return pounds_force_per_cubic_inch
 }
 
-// PoundForcePerCubicFoot returns the value in PoundForcePerCubicFoot.
+// PoundsForcePerCubicFoot returns the SpecificWeight value in PoundsForcePerCubicFoot.
+//
+// 
 func (a *SpecificWeight) PoundsForcePerCubicFoot() float64 {
 	if a.pounds_force_per_cubic_footLazy != nil {
 		return *a.pounds_force_per_cubic_footLazy
@@ -313,7 +339,9 @@ func (a *SpecificWeight) PoundsForcePerCubicFoot() float64 {
 	return pounds_force_per_cubic_foot
 }
 
-// TonneForcePerCubicMillimeter returns the value in TonneForcePerCubicMillimeter.
+// TonnesForcePerCubicMillimeter returns the SpecificWeight value in TonnesForcePerCubicMillimeter.
+//
+// 
 func (a *SpecificWeight) TonnesForcePerCubicMillimeter() float64 {
 	if a.tonnes_force_per_cubic_millimeterLazy != nil {
 		return *a.tonnes_force_per_cubic_millimeterLazy
@@ -323,7 +351,9 @@ func (a *SpecificWeight) TonnesForcePerCubicMillimeter() float64 {
 	return tonnes_force_per_cubic_millimeter
 }
 
-// TonneForcePerCubicCentimeter returns the value in TonneForcePerCubicCentimeter.
+// TonnesForcePerCubicCentimeter returns the SpecificWeight value in TonnesForcePerCubicCentimeter.
+//
+// 
 func (a *SpecificWeight) TonnesForcePerCubicCentimeter() float64 {
 	if a.tonnes_force_per_cubic_centimeterLazy != nil {
 		return *a.tonnes_force_per_cubic_centimeterLazy
@@ -333,7 +363,9 @@ func (a *SpecificWeight) TonnesForcePerCubicCentimeter() float64 {
 	return tonnes_force_per_cubic_centimeter
 }
 
-// TonneForcePerCubicMeter returns the value in TonneForcePerCubicMeter.
+// TonnesForcePerCubicMeter returns the SpecificWeight value in TonnesForcePerCubicMeter.
+//
+// 
 func (a *SpecificWeight) TonnesForcePerCubicMeter() float64 {
 	if a.tonnes_force_per_cubic_meterLazy != nil {
 		return *a.tonnes_force_per_cubic_meterLazy
@@ -343,7 +375,9 @@ func (a *SpecificWeight) TonnesForcePerCubicMeter() float64 {
 	return tonnes_force_per_cubic_meter
 }
 
-// KilonewtonPerCubicMillimeter returns the value in KilonewtonPerCubicMillimeter.
+// KilonewtonsPerCubicMillimeter returns the SpecificWeight value in KilonewtonsPerCubicMillimeter.
+//
+// 
 func (a *SpecificWeight) KilonewtonsPerCubicMillimeter() float64 {
 	if a.kilonewtons_per_cubic_millimeterLazy != nil {
 		return *a.kilonewtons_per_cubic_millimeterLazy
@@ -353,7 +387,9 @@ func (a *SpecificWeight) KilonewtonsPerCubicMillimeter() float64 {
 	return kilonewtons_per_cubic_millimeter
 }
 
-// KilonewtonPerCubicCentimeter returns the value in KilonewtonPerCubicCentimeter.
+// KilonewtonsPerCubicCentimeter returns the SpecificWeight value in KilonewtonsPerCubicCentimeter.
+//
+// 
 func (a *SpecificWeight) KilonewtonsPerCubicCentimeter() float64 {
 	if a.kilonewtons_per_cubic_centimeterLazy != nil {
 		return *a.kilonewtons_per_cubic_centimeterLazy
@@ -363,7 +399,9 @@ func (a *SpecificWeight) KilonewtonsPerCubicCentimeter() float64 {
 	return kilonewtons_per_cubic_centimeter
 }
 
-// KilonewtonPerCubicMeter returns the value in KilonewtonPerCubicMeter.
+// KilonewtonsPerCubicMeter returns the SpecificWeight value in KilonewtonsPerCubicMeter.
+//
+// 
 func (a *SpecificWeight) KilonewtonsPerCubicMeter() float64 {
 	if a.kilonewtons_per_cubic_meterLazy != nil {
 		return *a.kilonewtons_per_cubic_meterLazy
@@ -373,7 +411,9 @@ func (a *SpecificWeight) KilonewtonsPerCubicMeter() float64 {
 	return kilonewtons_per_cubic_meter
 }
 
-// MeganewtonPerCubicMeter returns the value in MeganewtonPerCubicMeter.
+// MeganewtonsPerCubicMeter returns the SpecificWeight value in MeganewtonsPerCubicMeter.
+//
+// 
 func (a *SpecificWeight) MeganewtonsPerCubicMeter() float64 {
 	if a.meganewtons_per_cubic_meterLazy != nil {
 		return *a.meganewtons_per_cubic_meterLazy
@@ -383,7 +423,9 @@ func (a *SpecificWeight) MeganewtonsPerCubicMeter() float64 {
 	return meganewtons_per_cubic_meter
 }
 
-// KilopoundForcePerCubicInch returns the value in KilopoundForcePerCubicInch.
+// KilopoundsForcePerCubicInch returns the SpecificWeight value in KilopoundsForcePerCubicInch.
+//
+// 
 func (a *SpecificWeight) KilopoundsForcePerCubicInch() float64 {
 	if a.kilopounds_force_per_cubic_inchLazy != nil {
 		return *a.kilopounds_force_per_cubic_inchLazy
@@ -393,7 +435,9 @@ func (a *SpecificWeight) KilopoundsForcePerCubicInch() float64 {
 	return kilopounds_force_per_cubic_inch
 }
 
-// KilopoundForcePerCubicFoot returns the value in KilopoundForcePerCubicFoot.
+// KilopoundsForcePerCubicFoot returns the SpecificWeight value in KilopoundsForcePerCubicFoot.
+//
+// 
 func (a *SpecificWeight) KilopoundsForcePerCubicFoot() float64 {
 	if a.kilopounds_force_per_cubic_footLazy != nil {
 		return *a.kilopounds_force_per_cubic_footLazy
@@ -404,7 +448,9 @@ func (a *SpecificWeight) KilopoundsForcePerCubicFoot() float64 {
 }
 
 
-// ToDto creates an SpecificWeightDto representation.
+// ToDto creates a SpecificWeightDto representation from the SpecificWeight instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonPerCubicMeter by default.
 func (a *SpecificWeight) ToDto(holdInUnit *SpecificWeightUnits) SpecificWeightDto {
 	if holdInUnit == nil {
 		defaultUnit := SpecificWeightNewtonPerCubicMeter // Default value
@@ -417,12 +463,19 @@ func (a *SpecificWeight) ToDto(holdInUnit *SpecificWeightUnits) SpecificWeightDt
 	}
 }
 
-// ToDtoJSON creates an SpecificWeightDto representation.
+// ToDtoJSON creates a JSON representation of the SpecificWeight instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonPerCubicMeter by default.
 func (a *SpecificWeight) ToDtoJSON(holdInUnit *SpecificWeightUnits) ([]byte, error) {
+	// Convert to SpecificWeightDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts SpecificWeight to a specific unit value.
+// Convert converts a SpecificWeight to a specific unit value.
+// The function uses the provided unit type (SpecificWeightUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *SpecificWeight) Convert(toUnit SpecificWeightUnits) float64 {
 	switch toUnit { 
     case SpecificWeightNewtonPerCubicMillimeter:
@@ -460,7 +513,7 @@ func (a *SpecificWeight) Convert(toUnit SpecificWeightUnits) float64 {
     case SpecificWeightKilopoundForcePerCubicFoot:
 		return a.KilopoundsForcePerCubicFoot()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -547,13 +600,22 @@ func (a *SpecificWeight) convertToBase(value float64, fromUnit SpecificWeightUni
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the SpecificWeight in the default unit (NewtonPerCubicMeter),
+// formatted to two decimal places.
 func (a SpecificWeight) String() string {
 	return a.ToString(SpecificWeightNewtonPerCubicMeter, 2)
 }
 
-// ToString formats the SpecificWeight to string.
-// fractionalDigits -1 for not mention
+// ToString formats the SpecificWeight value as a string with the specified unit and fractional digits.
+// It converts the SpecificWeight to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the SpecificWeight value will be converted (e.g., NewtonPerCubicMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the SpecificWeight with the unit abbreviation.
 func (a *SpecificWeight) ToString(unit SpecificWeightUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -605,12 +667,26 @@ func (a *SpecificWeight) getUnitAbbreviation(unit SpecificWeightUnits) string {
 	}
 }
 
-// Check if the given SpecificWeight are equals to the current SpecificWeight
+// Equals checks if the given SpecificWeight is equal to the current SpecificWeight.
+//
+// Parameters:
+//    other: The SpecificWeight to compare against.
+//
+// Returns:
+//    bool: Returns true if both SpecificWeight are equal, false otherwise.
 func (a *SpecificWeight) Equals(other *SpecificWeight) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given SpecificWeight are equals to the current SpecificWeight
+// CompareTo compares the current SpecificWeight with another SpecificWeight.
+// It returns -1 if the current SpecificWeight is less than the other SpecificWeight, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The SpecificWeight to compare against.
+//
+// Returns:
+//    int: -1 if the current SpecificWeight is less, 1 if greater, and 0 if equal.
 func (a *SpecificWeight) CompareTo(other *SpecificWeight) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -623,22 +699,50 @@ func (a *SpecificWeight) CompareTo(other *SpecificWeight) int {
 	return 0
 }
 
-// Add the given SpecificWeight to the current SpecificWeight.
+// Add adds the given SpecificWeight to the current SpecificWeight and returns the result.
+// The result is a new SpecificWeight instance with the sum of the values.
+//
+// Parameters:
+//    other: The SpecificWeight to add to the current SpecificWeight.
+//
+// Returns:
+//    *SpecificWeight: A new SpecificWeight instance representing the sum of both SpecificWeight.
 func (a *SpecificWeight) Add(other *SpecificWeight) *SpecificWeight {
 	return &SpecificWeight{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given SpecificWeight to the current SpecificWeight.
+// Subtract subtracts the given SpecificWeight from the current SpecificWeight and returns the result.
+// The result is a new SpecificWeight instance with the difference of the values.
+//
+// Parameters:
+//    other: The SpecificWeight to subtract from the current SpecificWeight.
+//
+// Returns:
+//    *SpecificWeight: A new SpecificWeight instance representing the difference of both SpecificWeight.
 func (a *SpecificWeight) Subtract(other *SpecificWeight) *SpecificWeight {
 	return &SpecificWeight{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given SpecificWeight to the current SpecificWeight.
+// Multiply multiplies the current SpecificWeight by the given SpecificWeight and returns the result.
+// The result is a new SpecificWeight instance with the product of the values.
+//
+// Parameters:
+//    other: The SpecificWeight to multiply with the current SpecificWeight.
+//
+// Returns:
+//    *SpecificWeight: A new SpecificWeight instance representing the product of both SpecificWeight.
 func (a *SpecificWeight) Multiply(other *SpecificWeight) *SpecificWeight {
 	return &SpecificWeight{value: a.value * other.BaseValue()}
 }
 
-// Divide the given SpecificWeight to the current SpecificWeight.
+// Divide divides the current SpecificWeight by the given SpecificWeight and returns the result.
+// The result is a new SpecificWeight instance with the quotient of the values.
+//
+// Parameters:
+//    other: The SpecificWeight to divide the current SpecificWeight by.
+//
+// Returns:
+//    *SpecificWeight: A new SpecificWeight instance representing the quotient of both SpecificWeight.
 func (a *SpecificWeight) Divide(other *SpecificWeight) *SpecificWeight {
 	return &SpecificWeight{value: a.value / other.BaseValue()}
 }

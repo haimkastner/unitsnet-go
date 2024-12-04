@@ -12,7 +12,7 @@ import (
 
 
 
-// AreaUnits enumeration
+// AreaUnits defines various units of Area.
 type AreaUnits string
 
 const (
@@ -47,19 +47,24 @@ const (
         AreaSquareNauticalMile AreaUnits = "SquareNauticalMile"
 )
 
-// AreaDto represents an Area
+// AreaDto represents a Area measurement with a numerical value and its corresponding unit.
 type AreaDto struct {
+    // Value is the numerical representation of the Area.
 	Value float64
+    // Unit specifies the unit of measurement for the Area, as defined in the AreaUnits enumeration.
 	Unit  AreaUnits
 }
 
-// AreaDtoFactory struct to group related functions
+// AreaDtoFactory groups methods for creating and serializing AreaDto objects.
 type AreaDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a AreaDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf AreaDtoFactory) FromJSON(data []byte) (*AreaDto, error) {
 	a := AreaDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into AreaDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -67,6 +72,9 @@ func (udf AreaDtoFactory) FromJSON(data []byte) (*AreaDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a AreaDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a AreaDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -78,10 +86,11 @@ func (a AreaDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Area struct
+// Area represents a measurement in a of Area.
+//
+// Area is a quantity that expresses the extent of a two-dimensional surface or shape, or planar lamina, in the plane. Area can be understood as the amount of material with a given thickness that would be necessary to fashion a model of the shape, or the amount of paint necessary to cover the surface with a single coat.[1] It is the two-dimensional analog of the length of a curve (a one-dimensional concept) or the volume of a solid (a three-dimensional concept).
 type Area struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     square_kilometersLazy *float64 
@@ -100,97 +109,98 @@ type Area struct {
     square_nautical_milesLazy *float64 
 }
 
-// AreaFactory struct to group related functions
+// AreaFactory groups methods for creating Area instances.
 type AreaFactory struct{}
 
+// CreateArea creates a new Area instance from the given value and unit.
 func (uf AreaFactory) CreateArea(value float64, unit AreaUnits) (*Area, error) {
 	return newArea(value, unit)
 }
 
+// FromDto converts a AreaDto to a Area instance.
 func (uf AreaFactory) FromDto(dto AreaDto) (*Area, error) {
 	return newArea(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Area instance.
 func (uf AreaFactory) FromDtoJSON(data []byte) (*Area, error) {
 	unitDto, err := AreaDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse AreaDto from JSON: %w", err)
 	}
 	return AreaFactory{}.FromDto(*unitDto)
 }
 
 
-// FromSquareKilometer creates a new Area instance from SquareKilometer.
+// FromSquareKilometers creates a new Area instance from a value in SquareKilometers.
 func (uf AreaFactory) FromSquareKilometers(value float64) (*Area, error) {
 	return newArea(value, AreaSquareKilometer)
 }
 
-// FromSquareMeter creates a new Area instance from SquareMeter.
+// FromSquareMeters creates a new Area instance from a value in SquareMeters.
 func (uf AreaFactory) FromSquareMeters(value float64) (*Area, error) {
 	return newArea(value, AreaSquareMeter)
 }
 
-// FromSquareDecimeter creates a new Area instance from SquareDecimeter.
+// FromSquareDecimeters creates a new Area instance from a value in SquareDecimeters.
 func (uf AreaFactory) FromSquareDecimeters(value float64) (*Area, error) {
 	return newArea(value, AreaSquareDecimeter)
 }
 
-// FromSquareCentimeter creates a new Area instance from SquareCentimeter.
+// FromSquareCentimeters creates a new Area instance from a value in SquareCentimeters.
 func (uf AreaFactory) FromSquareCentimeters(value float64) (*Area, error) {
 	return newArea(value, AreaSquareCentimeter)
 }
 
-// FromSquareMillimeter creates a new Area instance from SquareMillimeter.
+// FromSquareMillimeters creates a new Area instance from a value in SquareMillimeters.
 func (uf AreaFactory) FromSquareMillimeters(value float64) (*Area, error) {
 	return newArea(value, AreaSquareMillimeter)
 }
 
-// FromSquareMicrometer creates a new Area instance from SquareMicrometer.
+// FromSquareMicrometers creates a new Area instance from a value in SquareMicrometers.
 func (uf AreaFactory) FromSquareMicrometers(value float64) (*Area, error) {
 	return newArea(value, AreaSquareMicrometer)
 }
 
-// FromSquareMile creates a new Area instance from SquareMile.
+// FromSquareMiles creates a new Area instance from a value in SquareMiles.
 func (uf AreaFactory) FromSquareMiles(value float64) (*Area, error) {
 	return newArea(value, AreaSquareMile)
 }
 
-// FromSquareYard creates a new Area instance from SquareYard.
+// FromSquareYards creates a new Area instance from a value in SquareYards.
 func (uf AreaFactory) FromSquareYards(value float64) (*Area, error) {
 	return newArea(value, AreaSquareYard)
 }
 
-// FromSquareFoot creates a new Area instance from SquareFoot.
+// FromSquareFeet creates a new Area instance from a value in SquareFeet.
 func (uf AreaFactory) FromSquareFeet(value float64) (*Area, error) {
 	return newArea(value, AreaSquareFoot)
 }
 
-// FromUsSurveySquareFoot creates a new Area instance from UsSurveySquareFoot.
+// FromUsSurveySquareFeet creates a new Area instance from a value in UsSurveySquareFeet.
 func (uf AreaFactory) FromUsSurveySquareFeet(value float64) (*Area, error) {
 	return newArea(value, AreaUsSurveySquareFoot)
 }
 
-// FromSquareInch creates a new Area instance from SquareInch.
+// FromSquareInches creates a new Area instance from a value in SquareInches.
 func (uf AreaFactory) FromSquareInches(value float64) (*Area, error) {
 	return newArea(value, AreaSquareInch)
 }
 
-// FromAcre creates a new Area instance from Acre.
+// FromAcres creates a new Area instance from a value in Acres.
 func (uf AreaFactory) FromAcres(value float64) (*Area, error) {
 	return newArea(value, AreaAcre)
 }
 
-// FromHectare creates a new Area instance from Hectare.
+// FromHectares creates a new Area instance from a value in Hectares.
 func (uf AreaFactory) FromHectares(value float64) (*Area, error) {
 	return newArea(value, AreaHectare)
 }
 
-// FromSquareNauticalMile creates a new Area instance from SquareNauticalMile.
+// FromSquareNauticalMiles creates a new Area instance from a value in SquareNauticalMiles.
 func (uf AreaFactory) FromSquareNauticalMiles(value float64) (*Area, error) {
 	return newArea(value, AreaSquareNauticalMile)
 }
-
-
 
 
 // newArea creates a new Area.
@@ -203,13 +213,15 @@ func newArea(value float64, fromUnit AreaUnits) (*Area, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Area in SquareMeter.
+// BaseValue returns the base value of Area in SquareMeter unit (the base/default quantity).
 func (a *Area) BaseValue() float64 {
 	return a.value
 }
 
 
-// SquareKilometer returns the value in SquareKilometer.
+// SquareKilometers returns the Area value in SquareKilometers.
+//
+// 
 func (a *Area) SquareKilometers() float64 {
 	if a.square_kilometersLazy != nil {
 		return *a.square_kilometersLazy
@@ -219,7 +231,9 @@ func (a *Area) SquareKilometers() float64 {
 	return square_kilometers
 }
 
-// SquareMeter returns the value in SquareMeter.
+// SquareMeters returns the Area value in SquareMeters.
+//
+// 
 func (a *Area) SquareMeters() float64 {
 	if a.square_metersLazy != nil {
 		return *a.square_metersLazy
@@ -229,7 +243,9 @@ func (a *Area) SquareMeters() float64 {
 	return square_meters
 }
 
-// SquareDecimeter returns the value in SquareDecimeter.
+// SquareDecimeters returns the Area value in SquareDecimeters.
+//
+// 
 func (a *Area) SquareDecimeters() float64 {
 	if a.square_decimetersLazy != nil {
 		return *a.square_decimetersLazy
@@ -239,7 +255,9 @@ func (a *Area) SquareDecimeters() float64 {
 	return square_decimeters
 }
 
-// SquareCentimeter returns the value in SquareCentimeter.
+// SquareCentimeters returns the Area value in SquareCentimeters.
+//
+// 
 func (a *Area) SquareCentimeters() float64 {
 	if a.square_centimetersLazy != nil {
 		return *a.square_centimetersLazy
@@ -249,7 +267,9 @@ func (a *Area) SquareCentimeters() float64 {
 	return square_centimeters
 }
 
-// SquareMillimeter returns the value in SquareMillimeter.
+// SquareMillimeters returns the Area value in SquareMillimeters.
+//
+// 
 func (a *Area) SquareMillimeters() float64 {
 	if a.square_millimetersLazy != nil {
 		return *a.square_millimetersLazy
@@ -259,7 +279,9 @@ func (a *Area) SquareMillimeters() float64 {
 	return square_millimeters
 }
 
-// SquareMicrometer returns the value in SquareMicrometer.
+// SquareMicrometers returns the Area value in SquareMicrometers.
+//
+// 
 func (a *Area) SquareMicrometers() float64 {
 	if a.square_micrometersLazy != nil {
 		return *a.square_micrometersLazy
@@ -269,7 +291,9 @@ func (a *Area) SquareMicrometers() float64 {
 	return square_micrometers
 }
 
-// SquareMile returns the value in SquareMile.
+// SquareMiles returns the Area value in SquareMiles.
+//
+// The statute mile was standardised between the British Commonwealth and the United States by an international agreement in 1959, when it was formally redefined with respect to SI units as exactly 1,609.344 metres.
 func (a *Area) SquareMiles() float64 {
 	if a.square_milesLazy != nil {
 		return *a.square_milesLazy
@@ -279,7 +303,9 @@ func (a *Area) SquareMiles() float64 {
 	return square_miles
 }
 
-// SquareYard returns the value in SquareYard.
+// SquareYards returns the Area value in SquareYards.
+//
+// The yard (symbol: yd) is an English unit of length in both the British imperial and US customary systems of measurement equalling 3 feet (or 36 inches). Since 1959 the yard has been by international agreement standardized as exactly 0.9144 meter. A distance of 1,760 yards is equal to 1 mile.
 func (a *Area) SquareYards() float64 {
 	if a.square_yardsLazy != nil {
 		return *a.square_yardsLazy
@@ -289,7 +315,9 @@ func (a *Area) SquareYards() float64 {
 	return square_yards
 }
 
-// SquareFoot returns the value in SquareFoot.
+// SquareFeet returns the Area value in SquareFeet.
+//
+// 
 func (a *Area) SquareFeet() float64 {
 	if a.square_feetLazy != nil {
 		return *a.square_feetLazy
@@ -299,7 +327,9 @@ func (a *Area) SquareFeet() float64 {
 	return square_feet
 }
 
-// UsSurveySquareFoot returns the value in UsSurveySquareFoot.
+// UsSurveySquareFeet returns the Area value in UsSurveySquareFeet.
+//
+// In the United States, the foot was defined as 12 inches, with the inch being defined by the Mendenhall Order of 1893 as 39.37 inches = 1 m. This makes a U.S. survey foot exactly 1200/3937 meters.
 func (a *Area) UsSurveySquareFeet() float64 {
 	if a.us_survey_square_feetLazy != nil {
 		return *a.us_survey_square_feetLazy
@@ -309,7 +339,9 @@ func (a *Area) UsSurveySquareFeet() float64 {
 	return us_survey_square_feet
 }
 
-// SquareInch returns the value in SquareInch.
+// SquareInches returns the Area value in SquareInches.
+//
+// 
 func (a *Area) SquareInches() float64 {
 	if a.square_inchesLazy != nil {
 		return *a.square_inchesLazy
@@ -319,7 +351,9 @@ func (a *Area) SquareInches() float64 {
 	return square_inches
 }
 
-// Acre returns the value in Acre.
+// Acres returns the Area value in Acres.
+//
+// Based upon the international yard and pound agreement of 1959, an acre may be declared as exactly 4,046.8564224 square metres.
 func (a *Area) Acres() float64 {
 	if a.acresLazy != nil {
 		return *a.acresLazy
@@ -329,7 +363,9 @@ func (a *Area) Acres() float64 {
 	return acres
 }
 
-// Hectare returns the value in Hectare.
+// Hectares returns the Area value in Hectares.
+//
+// 
 func (a *Area) Hectares() float64 {
 	if a.hectaresLazy != nil {
 		return *a.hectaresLazy
@@ -339,7 +375,9 @@ func (a *Area) Hectares() float64 {
 	return hectares
 }
 
-// SquareNauticalMile returns the value in SquareNauticalMile.
+// SquareNauticalMiles returns the Area value in SquareNauticalMiles.
+//
+// 
 func (a *Area) SquareNauticalMiles() float64 {
 	if a.square_nautical_milesLazy != nil {
 		return *a.square_nautical_milesLazy
@@ -350,7 +388,9 @@ func (a *Area) SquareNauticalMiles() float64 {
 }
 
 
-// ToDto creates an AreaDto representation.
+// ToDto creates a AreaDto representation from the Area instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by SquareMeter by default.
 func (a *Area) ToDto(holdInUnit *AreaUnits) AreaDto {
 	if holdInUnit == nil {
 		defaultUnit := AreaSquareMeter // Default value
@@ -363,12 +403,19 @@ func (a *Area) ToDto(holdInUnit *AreaUnits) AreaDto {
 	}
 }
 
-// ToDtoJSON creates an AreaDto representation.
+// ToDtoJSON creates a JSON representation of the Area instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by SquareMeter by default.
 func (a *Area) ToDtoJSON(holdInUnit *AreaUnits) ([]byte, error) {
+	// Convert to AreaDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Area to a specific unit value.
+// Convert converts a Area to a specific unit value.
+// The function uses the provided unit type (AreaUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Area) Convert(toUnit AreaUnits) float64 {
 	switch toUnit { 
     case AreaSquareKilometer:
@@ -400,7 +447,7 @@ func (a *Area) Convert(toUnit AreaUnits) float64 {
     case AreaSquareNauticalMile:
 		return a.SquareNauticalMiles()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -475,13 +522,22 @@ func (a *Area) convertToBase(value float64, fromUnit AreaUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Area in the default unit (SquareMeter),
+// formatted to two decimal places.
 func (a Area) String() string {
 	return a.ToString(AreaSquareMeter, 2)
 }
 
-// ToString formats the Area to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Area value as a string with the specified unit and fractional digits.
+// It converts the Area to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Area value will be converted (e.g., SquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Area with the unit abbreviation.
 func (a *Area) ToString(unit AreaUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -527,12 +583,26 @@ func (a *Area) getUnitAbbreviation(unit AreaUnits) string {
 	}
 }
 
-// Check if the given Area are equals to the current Area
+// Equals checks if the given Area is equal to the current Area.
+//
+// Parameters:
+//    other: The Area to compare against.
+//
+// Returns:
+//    bool: Returns true if both Area are equal, false otherwise.
 func (a *Area) Equals(other *Area) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Area are equals to the current Area
+// CompareTo compares the current Area with another Area.
+// It returns -1 if the current Area is less than the other Area, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Area to compare against.
+//
+// Returns:
+//    int: -1 if the current Area is less, 1 if greater, and 0 if equal.
 func (a *Area) CompareTo(other *Area) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -545,22 +615,50 @@ func (a *Area) CompareTo(other *Area) int {
 	return 0
 }
 
-// Add the given Area to the current Area.
+// Add adds the given Area to the current Area and returns the result.
+// The result is a new Area instance with the sum of the values.
+//
+// Parameters:
+//    other: The Area to add to the current Area.
+//
+// Returns:
+//    *Area: A new Area instance representing the sum of both Area.
 func (a *Area) Add(other *Area) *Area {
 	return &Area{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Area to the current Area.
+// Subtract subtracts the given Area from the current Area and returns the result.
+// The result is a new Area instance with the difference of the values.
+//
+// Parameters:
+//    other: The Area to subtract from the current Area.
+//
+// Returns:
+//    *Area: A new Area instance representing the difference of both Area.
 func (a *Area) Subtract(other *Area) *Area {
 	return &Area{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Area to the current Area.
+// Multiply multiplies the current Area by the given Area and returns the result.
+// The result is a new Area instance with the product of the values.
+//
+// Parameters:
+//    other: The Area to multiply with the current Area.
+//
+// Returns:
+//    *Area: A new Area instance representing the product of both Area.
 func (a *Area) Multiply(other *Area) *Area {
 	return &Area{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Area to the current Area.
+// Divide divides the current Area by the given Area and returns the result.
+// The result is a new Area instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Area to divide the current Area by.
+//
+// Returns:
+//    *Area: A new Area instance representing the quotient of both Area.
 func (a *Area) Divide(other *Area) *Area {
 	return &Area{value: a.value / other.BaseValue()}
 }

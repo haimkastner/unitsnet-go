@@ -12,7 +12,7 @@ import (
 
 
 
-// IrradianceUnits enumeration
+// IrradianceUnits defines various units of Irradiance.
 type IrradianceUnits string
 
 const (
@@ -47,19 +47,24 @@ const (
         IrradianceMegawattPerSquareCentimeter IrradianceUnits = "MegawattPerSquareCentimeter"
 )
 
-// IrradianceDto represents an Irradiance
+// IrradianceDto represents a Irradiance measurement with a numerical value and its corresponding unit.
 type IrradianceDto struct {
+    // Value is the numerical representation of the Irradiance.
 	Value float64
+    // Unit specifies the unit of measurement for the Irradiance, as defined in the IrradianceUnits enumeration.
 	Unit  IrradianceUnits
 }
 
-// IrradianceDtoFactory struct to group related functions
+// IrradianceDtoFactory groups methods for creating and serializing IrradianceDto objects.
 type IrradianceDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a IrradianceDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf IrradianceDtoFactory) FromJSON(data []byte) (*IrradianceDto, error) {
 	a := IrradianceDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into IrradianceDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -67,6 +72,9 @@ func (udf IrradianceDtoFactory) FromJSON(data []byte) (*IrradianceDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a IrradianceDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a IrradianceDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -78,10 +86,11 @@ func (a IrradianceDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Irradiance struct
+// Irradiance represents a measurement in a of Irradiance.
+//
+// Irradiance is the intensity of ultraviolet (UV) or visible light incident on a surface.
 type Irradiance struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     watts_per_square_meterLazy *float64 
@@ -100,97 +109,98 @@ type Irradiance struct {
     megawatts_per_square_centimeterLazy *float64 
 }
 
-// IrradianceFactory struct to group related functions
+// IrradianceFactory groups methods for creating Irradiance instances.
 type IrradianceFactory struct{}
 
+// CreateIrradiance creates a new Irradiance instance from the given value and unit.
 func (uf IrradianceFactory) CreateIrradiance(value float64, unit IrradianceUnits) (*Irradiance, error) {
 	return newIrradiance(value, unit)
 }
 
+// FromDto converts a IrradianceDto to a Irradiance instance.
 func (uf IrradianceFactory) FromDto(dto IrradianceDto) (*Irradiance, error) {
 	return newIrradiance(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Irradiance instance.
 func (uf IrradianceFactory) FromDtoJSON(data []byte) (*Irradiance, error) {
 	unitDto, err := IrradianceDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse IrradianceDto from JSON: %w", err)
 	}
 	return IrradianceFactory{}.FromDto(*unitDto)
 }
 
 
-// FromWattPerSquareMeter creates a new Irradiance instance from WattPerSquareMeter.
+// FromWattsPerSquareMeter creates a new Irradiance instance from a value in WattsPerSquareMeter.
 func (uf IrradianceFactory) FromWattsPerSquareMeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceWattPerSquareMeter)
 }
 
-// FromWattPerSquareCentimeter creates a new Irradiance instance from WattPerSquareCentimeter.
+// FromWattsPerSquareCentimeter creates a new Irradiance instance from a value in WattsPerSquareCentimeter.
 func (uf IrradianceFactory) FromWattsPerSquareCentimeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceWattPerSquareCentimeter)
 }
 
-// FromPicowattPerSquareMeter creates a new Irradiance instance from PicowattPerSquareMeter.
+// FromPicowattsPerSquareMeter creates a new Irradiance instance from a value in PicowattsPerSquareMeter.
 func (uf IrradianceFactory) FromPicowattsPerSquareMeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradiancePicowattPerSquareMeter)
 }
 
-// FromNanowattPerSquareMeter creates a new Irradiance instance from NanowattPerSquareMeter.
+// FromNanowattsPerSquareMeter creates a new Irradiance instance from a value in NanowattsPerSquareMeter.
 func (uf IrradianceFactory) FromNanowattsPerSquareMeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceNanowattPerSquareMeter)
 }
 
-// FromMicrowattPerSquareMeter creates a new Irradiance instance from MicrowattPerSquareMeter.
+// FromMicrowattsPerSquareMeter creates a new Irradiance instance from a value in MicrowattsPerSquareMeter.
 func (uf IrradianceFactory) FromMicrowattsPerSquareMeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceMicrowattPerSquareMeter)
 }
 
-// FromMilliwattPerSquareMeter creates a new Irradiance instance from MilliwattPerSquareMeter.
+// FromMilliwattsPerSquareMeter creates a new Irradiance instance from a value in MilliwattsPerSquareMeter.
 func (uf IrradianceFactory) FromMilliwattsPerSquareMeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceMilliwattPerSquareMeter)
 }
 
-// FromKilowattPerSquareMeter creates a new Irradiance instance from KilowattPerSquareMeter.
+// FromKilowattsPerSquareMeter creates a new Irradiance instance from a value in KilowattsPerSquareMeter.
 func (uf IrradianceFactory) FromKilowattsPerSquareMeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceKilowattPerSquareMeter)
 }
 
-// FromMegawattPerSquareMeter creates a new Irradiance instance from MegawattPerSquareMeter.
+// FromMegawattsPerSquareMeter creates a new Irradiance instance from a value in MegawattsPerSquareMeter.
 func (uf IrradianceFactory) FromMegawattsPerSquareMeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceMegawattPerSquareMeter)
 }
 
-// FromPicowattPerSquareCentimeter creates a new Irradiance instance from PicowattPerSquareCentimeter.
+// FromPicowattsPerSquareCentimeter creates a new Irradiance instance from a value in PicowattsPerSquareCentimeter.
 func (uf IrradianceFactory) FromPicowattsPerSquareCentimeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradiancePicowattPerSquareCentimeter)
 }
 
-// FromNanowattPerSquareCentimeter creates a new Irradiance instance from NanowattPerSquareCentimeter.
+// FromNanowattsPerSquareCentimeter creates a new Irradiance instance from a value in NanowattsPerSquareCentimeter.
 func (uf IrradianceFactory) FromNanowattsPerSquareCentimeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceNanowattPerSquareCentimeter)
 }
 
-// FromMicrowattPerSquareCentimeter creates a new Irradiance instance from MicrowattPerSquareCentimeter.
+// FromMicrowattsPerSquareCentimeter creates a new Irradiance instance from a value in MicrowattsPerSquareCentimeter.
 func (uf IrradianceFactory) FromMicrowattsPerSquareCentimeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceMicrowattPerSquareCentimeter)
 }
 
-// FromMilliwattPerSquareCentimeter creates a new Irradiance instance from MilliwattPerSquareCentimeter.
+// FromMilliwattsPerSquareCentimeter creates a new Irradiance instance from a value in MilliwattsPerSquareCentimeter.
 func (uf IrradianceFactory) FromMilliwattsPerSquareCentimeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceMilliwattPerSquareCentimeter)
 }
 
-// FromKilowattPerSquareCentimeter creates a new Irradiance instance from KilowattPerSquareCentimeter.
+// FromKilowattsPerSquareCentimeter creates a new Irradiance instance from a value in KilowattsPerSquareCentimeter.
 func (uf IrradianceFactory) FromKilowattsPerSquareCentimeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceKilowattPerSquareCentimeter)
 }
 
-// FromMegawattPerSquareCentimeter creates a new Irradiance instance from MegawattPerSquareCentimeter.
+// FromMegawattsPerSquareCentimeter creates a new Irradiance instance from a value in MegawattsPerSquareCentimeter.
 func (uf IrradianceFactory) FromMegawattsPerSquareCentimeter(value float64) (*Irradiance, error) {
 	return newIrradiance(value, IrradianceMegawattPerSquareCentimeter)
 }
-
-
 
 
 // newIrradiance creates a new Irradiance.
@@ -203,13 +213,15 @@ func newIrradiance(value float64, fromUnit IrradianceUnits) (*Irradiance, error)
 	return a, nil
 }
 
-// BaseValue returns the base value of Irradiance in WattPerSquareMeter.
+// BaseValue returns the base value of Irradiance in WattPerSquareMeter unit (the base/default quantity).
 func (a *Irradiance) BaseValue() float64 {
 	return a.value
 }
 
 
-// WattPerSquareMeter returns the value in WattPerSquareMeter.
+// WattsPerSquareMeter returns the Irradiance value in WattsPerSquareMeter.
+//
+// 
 func (a *Irradiance) WattsPerSquareMeter() float64 {
 	if a.watts_per_square_meterLazy != nil {
 		return *a.watts_per_square_meterLazy
@@ -219,7 +231,9 @@ func (a *Irradiance) WattsPerSquareMeter() float64 {
 	return watts_per_square_meter
 }
 
-// WattPerSquareCentimeter returns the value in WattPerSquareCentimeter.
+// WattsPerSquareCentimeter returns the Irradiance value in WattsPerSquareCentimeter.
+//
+// 
 func (a *Irradiance) WattsPerSquareCentimeter() float64 {
 	if a.watts_per_square_centimeterLazy != nil {
 		return *a.watts_per_square_centimeterLazy
@@ -229,7 +243,9 @@ func (a *Irradiance) WattsPerSquareCentimeter() float64 {
 	return watts_per_square_centimeter
 }
 
-// PicowattPerSquareMeter returns the value in PicowattPerSquareMeter.
+// PicowattsPerSquareMeter returns the Irradiance value in PicowattsPerSquareMeter.
+//
+// 
 func (a *Irradiance) PicowattsPerSquareMeter() float64 {
 	if a.picowatts_per_square_meterLazy != nil {
 		return *a.picowatts_per_square_meterLazy
@@ -239,7 +255,9 @@ func (a *Irradiance) PicowattsPerSquareMeter() float64 {
 	return picowatts_per_square_meter
 }
 
-// NanowattPerSquareMeter returns the value in NanowattPerSquareMeter.
+// NanowattsPerSquareMeter returns the Irradiance value in NanowattsPerSquareMeter.
+//
+// 
 func (a *Irradiance) NanowattsPerSquareMeter() float64 {
 	if a.nanowatts_per_square_meterLazy != nil {
 		return *a.nanowatts_per_square_meterLazy
@@ -249,7 +267,9 @@ func (a *Irradiance) NanowattsPerSquareMeter() float64 {
 	return nanowatts_per_square_meter
 }
 
-// MicrowattPerSquareMeter returns the value in MicrowattPerSquareMeter.
+// MicrowattsPerSquareMeter returns the Irradiance value in MicrowattsPerSquareMeter.
+//
+// 
 func (a *Irradiance) MicrowattsPerSquareMeter() float64 {
 	if a.microwatts_per_square_meterLazy != nil {
 		return *a.microwatts_per_square_meterLazy
@@ -259,7 +279,9 @@ func (a *Irradiance) MicrowattsPerSquareMeter() float64 {
 	return microwatts_per_square_meter
 }
 
-// MilliwattPerSquareMeter returns the value in MilliwattPerSquareMeter.
+// MilliwattsPerSquareMeter returns the Irradiance value in MilliwattsPerSquareMeter.
+//
+// 
 func (a *Irradiance) MilliwattsPerSquareMeter() float64 {
 	if a.milliwatts_per_square_meterLazy != nil {
 		return *a.milliwatts_per_square_meterLazy
@@ -269,7 +291,9 @@ func (a *Irradiance) MilliwattsPerSquareMeter() float64 {
 	return milliwatts_per_square_meter
 }
 
-// KilowattPerSquareMeter returns the value in KilowattPerSquareMeter.
+// KilowattsPerSquareMeter returns the Irradiance value in KilowattsPerSquareMeter.
+//
+// 
 func (a *Irradiance) KilowattsPerSquareMeter() float64 {
 	if a.kilowatts_per_square_meterLazy != nil {
 		return *a.kilowatts_per_square_meterLazy
@@ -279,7 +303,9 @@ func (a *Irradiance) KilowattsPerSquareMeter() float64 {
 	return kilowatts_per_square_meter
 }
 
-// MegawattPerSquareMeter returns the value in MegawattPerSquareMeter.
+// MegawattsPerSquareMeter returns the Irradiance value in MegawattsPerSquareMeter.
+//
+// 
 func (a *Irradiance) MegawattsPerSquareMeter() float64 {
 	if a.megawatts_per_square_meterLazy != nil {
 		return *a.megawatts_per_square_meterLazy
@@ -289,7 +315,9 @@ func (a *Irradiance) MegawattsPerSquareMeter() float64 {
 	return megawatts_per_square_meter
 }
 
-// PicowattPerSquareCentimeter returns the value in PicowattPerSquareCentimeter.
+// PicowattsPerSquareCentimeter returns the Irradiance value in PicowattsPerSquareCentimeter.
+//
+// 
 func (a *Irradiance) PicowattsPerSquareCentimeter() float64 {
 	if a.picowatts_per_square_centimeterLazy != nil {
 		return *a.picowatts_per_square_centimeterLazy
@@ -299,7 +327,9 @@ func (a *Irradiance) PicowattsPerSquareCentimeter() float64 {
 	return picowatts_per_square_centimeter
 }
 
-// NanowattPerSquareCentimeter returns the value in NanowattPerSquareCentimeter.
+// NanowattsPerSquareCentimeter returns the Irradiance value in NanowattsPerSquareCentimeter.
+//
+// 
 func (a *Irradiance) NanowattsPerSquareCentimeter() float64 {
 	if a.nanowatts_per_square_centimeterLazy != nil {
 		return *a.nanowatts_per_square_centimeterLazy
@@ -309,7 +339,9 @@ func (a *Irradiance) NanowattsPerSquareCentimeter() float64 {
 	return nanowatts_per_square_centimeter
 }
 
-// MicrowattPerSquareCentimeter returns the value in MicrowattPerSquareCentimeter.
+// MicrowattsPerSquareCentimeter returns the Irradiance value in MicrowattsPerSquareCentimeter.
+//
+// 
 func (a *Irradiance) MicrowattsPerSquareCentimeter() float64 {
 	if a.microwatts_per_square_centimeterLazy != nil {
 		return *a.microwatts_per_square_centimeterLazy
@@ -319,7 +351,9 @@ func (a *Irradiance) MicrowattsPerSquareCentimeter() float64 {
 	return microwatts_per_square_centimeter
 }
 
-// MilliwattPerSquareCentimeter returns the value in MilliwattPerSquareCentimeter.
+// MilliwattsPerSquareCentimeter returns the Irradiance value in MilliwattsPerSquareCentimeter.
+//
+// 
 func (a *Irradiance) MilliwattsPerSquareCentimeter() float64 {
 	if a.milliwatts_per_square_centimeterLazy != nil {
 		return *a.milliwatts_per_square_centimeterLazy
@@ -329,7 +363,9 @@ func (a *Irradiance) MilliwattsPerSquareCentimeter() float64 {
 	return milliwatts_per_square_centimeter
 }
 
-// KilowattPerSquareCentimeter returns the value in KilowattPerSquareCentimeter.
+// KilowattsPerSquareCentimeter returns the Irradiance value in KilowattsPerSquareCentimeter.
+//
+// 
 func (a *Irradiance) KilowattsPerSquareCentimeter() float64 {
 	if a.kilowatts_per_square_centimeterLazy != nil {
 		return *a.kilowatts_per_square_centimeterLazy
@@ -339,7 +375,9 @@ func (a *Irradiance) KilowattsPerSquareCentimeter() float64 {
 	return kilowatts_per_square_centimeter
 }
 
-// MegawattPerSquareCentimeter returns the value in MegawattPerSquareCentimeter.
+// MegawattsPerSquareCentimeter returns the Irradiance value in MegawattsPerSquareCentimeter.
+//
+// 
 func (a *Irradiance) MegawattsPerSquareCentimeter() float64 {
 	if a.megawatts_per_square_centimeterLazy != nil {
 		return *a.megawatts_per_square_centimeterLazy
@@ -350,7 +388,9 @@ func (a *Irradiance) MegawattsPerSquareCentimeter() float64 {
 }
 
 
-// ToDto creates an IrradianceDto representation.
+// ToDto creates a IrradianceDto representation from the Irradiance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerSquareMeter by default.
 func (a *Irradiance) ToDto(holdInUnit *IrradianceUnits) IrradianceDto {
 	if holdInUnit == nil {
 		defaultUnit := IrradianceWattPerSquareMeter // Default value
@@ -363,12 +403,19 @@ func (a *Irradiance) ToDto(holdInUnit *IrradianceUnits) IrradianceDto {
 	}
 }
 
-// ToDtoJSON creates an IrradianceDto representation.
+// ToDtoJSON creates a JSON representation of the Irradiance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerSquareMeter by default.
 func (a *Irradiance) ToDtoJSON(holdInUnit *IrradianceUnits) ([]byte, error) {
+	// Convert to IrradianceDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Irradiance to a specific unit value.
+// Convert converts a Irradiance to a specific unit value.
+// The function uses the provided unit type (IrradianceUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Irradiance) Convert(toUnit IrradianceUnits) float64 {
 	switch toUnit { 
     case IrradianceWattPerSquareMeter:
@@ -400,7 +447,7 @@ func (a *Irradiance) Convert(toUnit IrradianceUnits) float64 {
     case IrradianceMegawattPerSquareCentimeter:
 		return a.MegawattsPerSquareCentimeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -475,13 +522,22 @@ func (a *Irradiance) convertToBase(value float64, fromUnit IrradianceUnits) floa
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Irradiance in the default unit (WattPerSquareMeter),
+// formatted to two decimal places.
 func (a Irradiance) String() string {
 	return a.ToString(IrradianceWattPerSquareMeter, 2)
 }
 
-// ToString formats the Irradiance to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Irradiance value as a string with the specified unit and fractional digits.
+// It converts the Irradiance to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Irradiance value will be converted (e.g., WattPerSquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Irradiance with the unit abbreviation.
 func (a *Irradiance) ToString(unit IrradianceUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -527,12 +583,26 @@ func (a *Irradiance) getUnitAbbreviation(unit IrradianceUnits) string {
 	}
 }
 
-// Check if the given Irradiance are equals to the current Irradiance
+// Equals checks if the given Irradiance is equal to the current Irradiance.
+//
+// Parameters:
+//    other: The Irradiance to compare against.
+//
+// Returns:
+//    bool: Returns true if both Irradiance are equal, false otherwise.
 func (a *Irradiance) Equals(other *Irradiance) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Irradiance are equals to the current Irradiance
+// CompareTo compares the current Irradiance with another Irradiance.
+// It returns -1 if the current Irradiance is less than the other Irradiance, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Irradiance to compare against.
+//
+// Returns:
+//    int: -1 if the current Irradiance is less, 1 if greater, and 0 if equal.
 func (a *Irradiance) CompareTo(other *Irradiance) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -545,22 +615,50 @@ func (a *Irradiance) CompareTo(other *Irradiance) int {
 	return 0
 }
 
-// Add the given Irradiance to the current Irradiance.
+// Add adds the given Irradiance to the current Irradiance and returns the result.
+// The result is a new Irradiance instance with the sum of the values.
+//
+// Parameters:
+//    other: The Irradiance to add to the current Irradiance.
+//
+// Returns:
+//    *Irradiance: A new Irradiance instance representing the sum of both Irradiance.
 func (a *Irradiance) Add(other *Irradiance) *Irradiance {
 	return &Irradiance{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Irradiance to the current Irradiance.
+// Subtract subtracts the given Irradiance from the current Irradiance and returns the result.
+// The result is a new Irradiance instance with the difference of the values.
+//
+// Parameters:
+//    other: The Irradiance to subtract from the current Irradiance.
+//
+// Returns:
+//    *Irradiance: A new Irradiance instance representing the difference of both Irradiance.
 func (a *Irradiance) Subtract(other *Irradiance) *Irradiance {
 	return &Irradiance{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Irradiance to the current Irradiance.
+// Multiply multiplies the current Irradiance by the given Irradiance and returns the result.
+// The result is a new Irradiance instance with the product of the values.
+//
+// Parameters:
+//    other: The Irradiance to multiply with the current Irradiance.
+//
+// Returns:
+//    *Irradiance: A new Irradiance instance representing the product of both Irradiance.
 func (a *Irradiance) Multiply(other *Irradiance) *Irradiance {
 	return &Irradiance{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Irradiance to the current Irradiance.
+// Divide divides the current Irradiance by the given Irradiance and returns the result.
+// The result is a new Irradiance instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Irradiance to divide the current Irradiance by.
+//
+// Returns:
+//    *Irradiance: A new Irradiance instance representing the quotient of both Irradiance.
 func (a *Irradiance) Divide(other *Irradiance) *Irradiance {
 	return &Irradiance{value: a.value / other.BaseValue()}
 }

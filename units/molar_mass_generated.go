@@ -12,7 +12,7 @@ import (
 
 
 
-// MolarMassUnits enumeration
+// MolarMassUnits defines various units of MolarMass.
 type MolarMassUnits string
 
 const (
@@ -45,19 +45,24 @@ const (
         MolarMassMegapoundPerMole MolarMassUnits = "MegapoundPerMole"
 )
 
-// MolarMassDto represents an MolarMass
+// MolarMassDto represents a MolarMass measurement with a numerical value and its corresponding unit.
 type MolarMassDto struct {
+    // Value is the numerical representation of the MolarMass.
 	Value float64
+    // Unit specifies the unit of measurement for the MolarMass, as defined in the MolarMassUnits enumeration.
 	Unit  MolarMassUnits
 }
 
-// MolarMassDtoFactory struct to group related functions
+// MolarMassDtoFactory groups methods for creating and serializing MolarMassDto objects.
 type MolarMassDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MolarMassDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MolarMassDtoFactory) FromJSON(data []byte) (*MolarMassDto, error) {
 	a := MolarMassDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MolarMassDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -65,6 +70,9 @@ func (udf MolarMassDtoFactory) FromJSON(data []byte) (*MolarMassDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a MolarMassDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MolarMassDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -76,10 +84,11 @@ func (a MolarMassDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// MolarMass struct
+// MolarMass represents a measurement in a of MolarMass.
+//
+// In chemistry, the molar mass M is a physical property defined as the mass of a given substance (chemical element or chemical compound) divided by the amount of substance.
 type MolarMass struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     grams_per_moleLazy *float64 
@@ -97,92 +106,93 @@ type MolarMass struct {
     megapounds_per_moleLazy *float64 
 }
 
-// MolarMassFactory struct to group related functions
+// MolarMassFactory groups methods for creating MolarMass instances.
 type MolarMassFactory struct{}
 
+// CreateMolarMass creates a new MolarMass instance from the given value and unit.
 func (uf MolarMassFactory) CreateMolarMass(value float64, unit MolarMassUnits) (*MolarMass, error) {
 	return newMolarMass(value, unit)
 }
 
+// FromDto converts a MolarMassDto to a MolarMass instance.
 func (uf MolarMassFactory) FromDto(dto MolarMassDto) (*MolarMass, error) {
 	return newMolarMass(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a MolarMass instance.
 func (uf MolarMassFactory) FromDtoJSON(data []byte) (*MolarMass, error) {
 	unitDto, err := MolarMassDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MolarMassDto from JSON: %w", err)
 	}
 	return MolarMassFactory{}.FromDto(*unitDto)
 }
 
 
-// FromGramPerMole creates a new MolarMass instance from GramPerMole.
+// FromGramsPerMole creates a new MolarMass instance from a value in GramsPerMole.
 func (uf MolarMassFactory) FromGramsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassGramPerMole)
 }
 
-// FromKilogramPerKilomole creates a new MolarMass instance from KilogramPerKilomole.
+// FromKilogramsPerKilomole creates a new MolarMass instance from a value in KilogramsPerKilomole.
 func (uf MolarMassFactory) FromKilogramsPerKilomole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassKilogramPerKilomole)
 }
 
-// FromPoundPerMole creates a new MolarMass instance from PoundPerMole.
+// FromPoundsPerMole creates a new MolarMass instance from a value in PoundsPerMole.
 func (uf MolarMassFactory) FromPoundsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassPoundPerMole)
 }
 
-// FromNanogramPerMole creates a new MolarMass instance from NanogramPerMole.
+// FromNanogramsPerMole creates a new MolarMass instance from a value in NanogramsPerMole.
 func (uf MolarMassFactory) FromNanogramsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassNanogramPerMole)
 }
 
-// FromMicrogramPerMole creates a new MolarMass instance from MicrogramPerMole.
+// FromMicrogramsPerMole creates a new MolarMass instance from a value in MicrogramsPerMole.
 func (uf MolarMassFactory) FromMicrogramsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassMicrogramPerMole)
 }
 
-// FromMilligramPerMole creates a new MolarMass instance from MilligramPerMole.
+// FromMilligramsPerMole creates a new MolarMass instance from a value in MilligramsPerMole.
 func (uf MolarMassFactory) FromMilligramsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassMilligramPerMole)
 }
 
-// FromCentigramPerMole creates a new MolarMass instance from CentigramPerMole.
+// FromCentigramsPerMole creates a new MolarMass instance from a value in CentigramsPerMole.
 func (uf MolarMassFactory) FromCentigramsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassCentigramPerMole)
 }
 
-// FromDecigramPerMole creates a new MolarMass instance from DecigramPerMole.
+// FromDecigramsPerMole creates a new MolarMass instance from a value in DecigramsPerMole.
 func (uf MolarMassFactory) FromDecigramsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassDecigramPerMole)
 }
 
-// FromDecagramPerMole creates a new MolarMass instance from DecagramPerMole.
+// FromDecagramsPerMole creates a new MolarMass instance from a value in DecagramsPerMole.
 func (uf MolarMassFactory) FromDecagramsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassDecagramPerMole)
 }
 
-// FromHectogramPerMole creates a new MolarMass instance from HectogramPerMole.
+// FromHectogramsPerMole creates a new MolarMass instance from a value in HectogramsPerMole.
 func (uf MolarMassFactory) FromHectogramsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassHectogramPerMole)
 }
 
-// FromKilogramPerMole creates a new MolarMass instance from KilogramPerMole.
+// FromKilogramsPerMole creates a new MolarMass instance from a value in KilogramsPerMole.
 func (uf MolarMassFactory) FromKilogramsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassKilogramPerMole)
 }
 
-// FromKilopoundPerMole creates a new MolarMass instance from KilopoundPerMole.
+// FromKilopoundsPerMole creates a new MolarMass instance from a value in KilopoundsPerMole.
 func (uf MolarMassFactory) FromKilopoundsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassKilopoundPerMole)
 }
 
-// FromMegapoundPerMole creates a new MolarMass instance from MegapoundPerMole.
+// FromMegapoundsPerMole creates a new MolarMass instance from a value in MegapoundsPerMole.
 func (uf MolarMassFactory) FromMegapoundsPerMole(value float64) (*MolarMass, error) {
 	return newMolarMass(value, MolarMassMegapoundPerMole)
 }
-
-
 
 
 // newMolarMass creates a new MolarMass.
@@ -195,13 +205,15 @@ func newMolarMass(value float64, fromUnit MolarMassUnits) (*MolarMass, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of MolarMass in KilogramPerMole.
+// BaseValue returns the base value of MolarMass in KilogramPerMole unit (the base/default quantity).
 func (a *MolarMass) BaseValue() float64 {
 	return a.value
 }
 
 
-// GramPerMole returns the value in GramPerMole.
+// GramsPerMole returns the MolarMass value in GramsPerMole.
+//
+// 
 func (a *MolarMass) GramsPerMole() float64 {
 	if a.grams_per_moleLazy != nil {
 		return *a.grams_per_moleLazy
@@ -211,7 +223,9 @@ func (a *MolarMass) GramsPerMole() float64 {
 	return grams_per_mole
 }
 
-// KilogramPerKilomole returns the value in KilogramPerKilomole.
+// KilogramsPerKilomole returns the MolarMass value in KilogramsPerKilomole.
+//
+// 
 func (a *MolarMass) KilogramsPerKilomole() float64 {
 	if a.kilograms_per_kilomoleLazy != nil {
 		return *a.kilograms_per_kilomoleLazy
@@ -221,7 +235,9 @@ func (a *MolarMass) KilogramsPerKilomole() float64 {
 	return kilograms_per_kilomole
 }
 
-// PoundPerMole returns the value in PoundPerMole.
+// PoundsPerMole returns the MolarMass value in PoundsPerMole.
+//
+// 
 func (a *MolarMass) PoundsPerMole() float64 {
 	if a.pounds_per_moleLazy != nil {
 		return *a.pounds_per_moleLazy
@@ -231,7 +247,9 @@ func (a *MolarMass) PoundsPerMole() float64 {
 	return pounds_per_mole
 }
 
-// NanogramPerMole returns the value in NanogramPerMole.
+// NanogramsPerMole returns the MolarMass value in NanogramsPerMole.
+//
+// 
 func (a *MolarMass) NanogramsPerMole() float64 {
 	if a.nanograms_per_moleLazy != nil {
 		return *a.nanograms_per_moleLazy
@@ -241,7 +259,9 @@ func (a *MolarMass) NanogramsPerMole() float64 {
 	return nanograms_per_mole
 }
 
-// MicrogramPerMole returns the value in MicrogramPerMole.
+// MicrogramsPerMole returns the MolarMass value in MicrogramsPerMole.
+//
+// 
 func (a *MolarMass) MicrogramsPerMole() float64 {
 	if a.micrograms_per_moleLazy != nil {
 		return *a.micrograms_per_moleLazy
@@ -251,7 +271,9 @@ func (a *MolarMass) MicrogramsPerMole() float64 {
 	return micrograms_per_mole
 }
 
-// MilligramPerMole returns the value in MilligramPerMole.
+// MilligramsPerMole returns the MolarMass value in MilligramsPerMole.
+//
+// 
 func (a *MolarMass) MilligramsPerMole() float64 {
 	if a.milligrams_per_moleLazy != nil {
 		return *a.milligrams_per_moleLazy
@@ -261,7 +283,9 @@ func (a *MolarMass) MilligramsPerMole() float64 {
 	return milligrams_per_mole
 }
 
-// CentigramPerMole returns the value in CentigramPerMole.
+// CentigramsPerMole returns the MolarMass value in CentigramsPerMole.
+//
+// 
 func (a *MolarMass) CentigramsPerMole() float64 {
 	if a.centigrams_per_moleLazy != nil {
 		return *a.centigrams_per_moleLazy
@@ -271,7 +295,9 @@ func (a *MolarMass) CentigramsPerMole() float64 {
 	return centigrams_per_mole
 }
 
-// DecigramPerMole returns the value in DecigramPerMole.
+// DecigramsPerMole returns the MolarMass value in DecigramsPerMole.
+//
+// 
 func (a *MolarMass) DecigramsPerMole() float64 {
 	if a.decigrams_per_moleLazy != nil {
 		return *a.decigrams_per_moleLazy
@@ -281,7 +307,9 @@ func (a *MolarMass) DecigramsPerMole() float64 {
 	return decigrams_per_mole
 }
 
-// DecagramPerMole returns the value in DecagramPerMole.
+// DecagramsPerMole returns the MolarMass value in DecagramsPerMole.
+//
+// 
 func (a *MolarMass) DecagramsPerMole() float64 {
 	if a.decagrams_per_moleLazy != nil {
 		return *a.decagrams_per_moleLazy
@@ -291,7 +319,9 @@ func (a *MolarMass) DecagramsPerMole() float64 {
 	return decagrams_per_mole
 }
 
-// HectogramPerMole returns the value in HectogramPerMole.
+// HectogramsPerMole returns the MolarMass value in HectogramsPerMole.
+//
+// 
 func (a *MolarMass) HectogramsPerMole() float64 {
 	if a.hectograms_per_moleLazy != nil {
 		return *a.hectograms_per_moleLazy
@@ -301,7 +331,9 @@ func (a *MolarMass) HectogramsPerMole() float64 {
 	return hectograms_per_mole
 }
 
-// KilogramPerMole returns the value in KilogramPerMole.
+// KilogramsPerMole returns the MolarMass value in KilogramsPerMole.
+//
+// 
 func (a *MolarMass) KilogramsPerMole() float64 {
 	if a.kilograms_per_moleLazy != nil {
 		return *a.kilograms_per_moleLazy
@@ -311,7 +343,9 @@ func (a *MolarMass) KilogramsPerMole() float64 {
 	return kilograms_per_mole
 }
 
-// KilopoundPerMole returns the value in KilopoundPerMole.
+// KilopoundsPerMole returns the MolarMass value in KilopoundsPerMole.
+//
+// 
 func (a *MolarMass) KilopoundsPerMole() float64 {
 	if a.kilopounds_per_moleLazy != nil {
 		return *a.kilopounds_per_moleLazy
@@ -321,7 +355,9 @@ func (a *MolarMass) KilopoundsPerMole() float64 {
 	return kilopounds_per_mole
 }
 
-// MegapoundPerMole returns the value in MegapoundPerMole.
+// MegapoundsPerMole returns the MolarMass value in MegapoundsPerMole.
+//
+// 
 func (a *MolarMass) MegapoundsPerMole() float64 {
 	if a.megapounds_per_moleLazy != nil {
 		return *a.megapounds_per_moleLazy
@@ -332,7 +368,9 @@ func (a *MolarMass) MegapoundsPerMole() float64 {
 }
 
 
-// ToDto creates an MolarMassDto representation.
+// ToDto creates a MolarMassDto representation from the MolarMass instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerMole by default.
 func (a *MolarMass) ToDto(holdInUnit *MolarMassUnits) MolarMassDto {
 	if holdInUnit == nil {
 		defaultUnit := MolarMassKilogramPerMole // Default value
@@ -345,12 +383,19 @@ func (a *MolarMass) ToDto(holdInUnit *MolarMassUnits) MolarMassDto {
 	}
 }
 
-// ToDtoJSON creates an MolarMassDto representation.
+// ToDtoJSON creates a JSON representation of the MolarMass instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerMole by default.
 func (a *MolarMass) ToDtoJSON(holdInUnit *MolarMassUnits) ([]byte, error) {
+	// Convert to MolarMassDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts MolarMass to a specific unit value.
+// Convert converts a MolarMass to a specific unit value.
+// The function uses the provided unit type (MolarMassUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *MolarMass) Convert(toUnit MolarMassUnits) float64 {
 	switch toUnit { 
     case MolarMassGramPerMole:
@@ -380,7 +425,7 @@ func (a *MolarMass) Convert(toUnit MolarMassUnits) float64 {
     case MolarMassMegapoundPerMole:
 		return a.MegapoundsPerMole()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -451,13 +496,22 @@ func (a *MolarMass) convertToBase(value float64, fromUnit MolarMassUnits) float6
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the MolarMass in the default unit (KilogramPerMole),
+// formatted to two decimal places.
 func (a MolarMass) String() string {
 	return a.ToString(MolarMassKilogramPerMole, 2)
 }
 
-// ToString formats the MolarMass to string.
-// fractionalDigits -1 for not mention
+// ToString formats the MolarMass value as a string with the specified unit and fractional digits.
+// It converts the MolarMass to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the MolarMass value will be converted (e.g., KilogramPerMole))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the MolarMass with the unit abbreviation.
 func (a *MolarMass) ToString(unit MolarMassUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -501,12 +555,26 @@ func (a *MolarMass) getUnitAbbreviation(unit MolarMassUnits) string {
 	}
 }
 
-// Check if the given MolarMass are equals to the current MolarMass
+// Equals checks if the given MolarMass is equal to the current MolarMass.
+//
+// Parameters:
+//    other: The MolarMass to compare against.
+//
+// Returns:
+//    bool: Returns true if both MolarMass are equal, false otherwise.
 func (a *MolarMass) Equals(other *MolarMass) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given MolarMass are equals to the current MolarMass
+// CompareTo compares the current MolarMass with another MolarMass.
+// It returns -1 if the current MolarMass is less than the other MolarMass, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MolarMass to compare against.
+//
+// Returns:
+//    int: -1 if the current MolarMass is less, 1 if greater, and 0 if equal.
 func (a *MolarMass) CompareTo(other *MolarMass) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -519,22 +587,50 @@ func (a *MolarMass) CompareTo(other *MolarMass) int {
 	return 0
 }
 
-// Add the given MolarMass to the current MolarMass.
+// Add adds the given MolarMass to the current MolarMass and returns the result.
+// The result is a new MolarMass instance with the sum of the values.
+//
+// Parameters:
+//    other: The MolarMass to add to the current MolarMass.
+//
+// Returns:
+//    *MolarMass: A new MolarMass instance representing the sum of both MolarMass.
 func (a *MolarMass) Add(other *MolarMass) *MolarMass {
 	return &MolarMass{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given MolarMass to the current MolarMass.
+// Subtract subtracts the given MolarMass from the current MolarMass and returns the result.
+// The result is a new MolarMass instance with the difference of the values.
+//
+// Parameters:
+//    other: The MolarMass to subtract from the current MolarMass.
+//
+// Returns:
+//    *MolarMass: A new MolarMass instance representing the difference of both MolarMass.
 func (a *MolarMass) Subtract(other *MolarMass) *MolarMass {
 	return &MolarMass{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given MolarMass to the current MolarMass.
+// Multiply multiplies the current MolarMass by the given MolarMass and returns the result.
+// The result is a new MolarMass instance with the product of the values.
+//
+// Parameters:
+//    other: The MolarMass to multiply with the current MolarMass.
+//
+// Returns:
+//    *MolarMass: A new MolarMass instance representing the product of both MolarMass.
 func (a *MolarMass) Multiply(other *MolarMass) *MolarMass {
 	return &MolarMass{value: a.value * other.BaseValue()}
 }
 
-// Divide the given MolarMass to the current MolarMass.
+// Divide divides the current MolarMass by the given MolarMass and returns the result.
+// The result is a new MolarMass instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MolarMass to divide the current MolarMass by.
+//
+// Returns:
+//    *MolarMass: A new MolarMass instance representing the quotient of both MolarMass.
 func (a *MolarMass) Divide(other *MolarMass) *MolarMass {
 	return &MolarMass{value: a.value / other.BaseValue()}
 }

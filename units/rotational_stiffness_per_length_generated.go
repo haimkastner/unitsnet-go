@@ -12,7 +12,7 @@ import (
 
 
 
-// RotationalStiffnessPerLengthUnits enumeration
+// RotationalStiffnessPerLengthUnits defines various units of RotationalStiffnessPerLength.
 type RotationalStiffnessPerLengthUnits string
 
 const (
@@ -29,19 +29,24 @@ const (
         RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter RotationalStiffnessPerLengthUnits = "MeganewtonMeterPerRadianPerMeter"
 )
 
-// RotationalStiffnessPerLengthDto represents an RotationalStiffnessPerLength
+// RotationalStiffnessPerLengthDto represents a RotationalStiffnessPerLength measurement with a numerical value and its corresponding unit.
 type RotationalStiffnessPerLengthDto struct {
+    // Value is the numerical representation of the RotationalStiffnessPerLength.
 	Value float64
+    // Unit specifies the unit of measurement for the RotationalStiffnessPerLength, as defined in the RotationalStiffnessPerLengthUnits enumeration.
 	Unit  RotationalStiffnessPerLengthUnits
 }
 
-// RotationalStiffnessPerLengthDtoFactory struct to group related functions
+// RotationalStiffnessPerLengthDtoFactory groups methods for creating and serializing RotationalStiffnessPerLengthDto objects.
 type RotationalStiffnessPerLengthDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a RotationalStiffnessPerLengthDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf RotationalStiffnessPerLengthDtoFactory) FromJSON(data []byte) (*RotationalStiffnessPerLengthDto, error) {
 	a := RotationalStiffnessPerLengthDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into RotationalStiffnessPerLengthDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -49,6 +54,9 @@ func (udf RotationalStiffnessPerLengthDtoFactory) FromJSON(data []byte) (*Rotati
 	return &a, nil
 }
 
+// ToJSON serializes a RotationalStiffnessPerLengthDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a RotationalStiffnessPerLengthDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -60,10 +68,11 @@ func (a RotationalStiffnessPerLengthDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// RotationalStiffnessPerLength struct
+// RotationalStiffnessPerLength represents a measurement in a of RotationalStiffnessPerLength.
+//
+// https://en.wikipedia.org/wiki/Stiffness#Rotational_stiffness
 type RotationalStiffnessPerLength struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     newton_meters_per_radian_per_meterLazy *float64 
@@ -73,52 +82,53 @@ type RotationalStiffnessPerLength struct {
     meganewton_meters_per_radian_per_meterLazy *float64 
 }
 
-// RotationalStiffnessPerLengthFactory struct to group related functions
+// RotationalStiffnessPerLengthFactory groups methods for creating RotationalStiffnessPerLength instances.
 type RotationalStiffnessPerLengthFactory struct{}
 
+// CreateRotationalStiffnessPerLength creates a new RotationalStiffnessPerLength instance from the given value and unit.
 func (uf RotationalStiffnessPerLengthFactory) CreateRotationalStiffnessPerLength(value float64, unit RotationalStiffnessPerLengthUnits) (*RotationalStiffnessPerLength, error) {
 	return newRotationalStiffnessPerLength(value, unit)
 }
 
+// FromDto converts a RotationalStiffnessPerLengthDto to a RotationalStiffnessPerLength instance.
 func (uf RotationalStiffnessPerLengthFactory) FromDto(dto RotationalStiffnessPerLengthDto) (*RotationalStiffnessPerLength, error) {
 	return newRotationalStiffnessPerLength(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a RotationalStiffnessPerLength instance.
 func (uf RotationalStiffnessPerLengthFactory) FromDtoJSON(data []byte) (*RotationalStiffnessPerLength, error) {
 	unitDto, err := RotationalStiffnessPerLengthDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse RotationalStiffnessPerLengthDto from JSON: %w", err)
 	}
 	return RotationalStiffnessPerLengthFactory{}.FromDto(*unitDto)
 }
 
 
-// FromNewtonMeterPerRadianPerMeter creates a new RotationalStiffnessPerLength instance from NewtonMeterPerRadianPerMeter.
+// FromNewtonMetersPerRadianPerMeter creates a new RotationalStiffnessPerLength instance from a value in NewtonMetersPerRadianPerMeter.
 func (uf RotationalStiffnessPerLengthFactory) FromNewtonMetersPerRadianPerMeter(value float64) (*RotationalStiffnessPerLength, error) {
 	return newRotationalStiffnessPerLength(value, RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter)
 }
 
-// FromPoundForceFootPerDegreesPerFoot creates a new RotationalStiffnessPerLength instance from PoundForceFootPerDegreesPerFoot.
+// FromPoundForceFeetPerDegreesPerFeet creates a new RotationalStiffnessPerLength instance from a value in PoundForceFeetPerDegreesPerFeet.
 func (uf RotationalStiffnessPerLengthFactory) FromPoundForceFeetPerDegreesPerFeet(value float64) (*RotationalStiffnessPerLength, error) {
 	return newRotationalStiffnessPerLength(value, RotationalStiffnessPerLengthPoundForceFootPerDegreesPerFoot)
 }
 
-// FromKilopoundForceFootPerDegreesPerFoot creates a new RotationalStiffnessPerLength instance from KilopoundForceFootPerDegreesPerFoot.
+// FromKilopoundForceFeetPerDegreesPerFeet creates a new RotationalStiffnessPerLength instance from a value in KilopoundForceFeetPerDegreesPerFeet.
 func (uf RotationalStiffnessPerLengthFactory) FromKilopoundForceFeetPerDegreesPerFeet(value float64) (*RotationalStiffnessPerLength, error) {
 	return newRotationalStiffnessPerLength(value, RotationalStiffnessPerLengthKilopoundForceFootPerDegreesPerFoot)
 }
 
-// FromKilonewtonMeterPerRadianPerMeter creates a new RotationalStiffnessPerLength instance from KilonewtonMeterPerRadianPerMeter.
+// FromKilonewtonMetersPerRadianPerMeter creates a new RotationalStiffnessPerLength instance from a value in KilonewtonMetersPerRadianPerMeter.
 func (uf RotationalStiffnessPerLengthFactory) FromKilonewtonMetersPerRadianPerMeter(value float64) (*RotationalStiffnessPerLength, error) {
 	return newRotationalStiffnessPerLength(value, RotationalStiffnessPerLengthKilonewtonMeterPerRadianPerMeter)
 }
 
-// FromMeganewtonMeterPerRadianPerMeter creates a new RotationalStiffnessPerLength instance from MeganewtonMeterPerRadianPerMeter.
+// FromMeganewtonMetersPerRadianPerMeter creates a new RotationalStiffnessPerLength instance from a value in MeganewtonMetersPerRadianPerMeter.
 func (uf RotationalStiffnessPerLengthFactory) FromMeganewtonMetersPerRadianPerMeter(value float64) (*RotationalStiffnessPerLength, error) {
 	return newRotationalStiffnessPerLength(value, RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter)
 }
-
-
 
 
 // newRotationalStiffnessPerLength creates a new RotationalStiffnessPerLength.
@@ -131,13 +141,15 @@ func newRotationalStiffnessPerLength(value float64, fromUnit RotationalStiffness
 	return a, nil
 }
 
-// BaseValue returns the base value of RotationalStiffnessPerLength in NewtonMeterPerRadianPerMeter.
+// BaseValue returns the base value of RotationalStiffnessPerLength in NewtonMeterPerRadianPerMeter unit (the base/default quantity).
 func (a *RotationalStiffnessPerLength) BaseValue() float64 {
 	return a.value
 }
 
 
-// NewtonMeterPerRadianPerMeter returns the value in NewtonMeterPerRadianPerMeter.
+// NewtonMetersPerRadianPerMeter returns the RotationalStiffnessPerLength value in NewtonMetersPerRadianPerMeter.
+//
+// 
 func (a *RotationalStiffnessPerLength) NewtonMetersPerRadianPerMeter() float64 {
 	if a.newton_meters_per_radian_per_meterLazy != nil {
 		return *a.newton_meters_per_radian_per_meterLazy
@@ -147,7 +159,9 @@ func (a *RotationalStiffnessPerLength) NewtonMetersPerRadianPerMeter() float64 {
 	return newton_meters_per_radian_per_meter
 }
 
-// PoundForceFootPerDegreesPerFoot returns the value in PoundForceFootPerDegreesPerFoot.
+// PoundForceFeetPerDegreesPerFeet returns the RotationalStiffnessPerLength value in PoundForceFeetPerDegreesPerFeet.
+//
+// 
 func (a *RotationalStiffnessPerLength) PoundForceFeetPerDegreesPerFeet() float64 {
 	if a.pound_force_feet_per_degrees_per_feetLazy != nil {
 		return *a.pound_force_feet_per_degrees_per_feetLazy
@@ -157,7 +171,9 @@ func (a *RotationalStiffnessPerLength) PoundForceFeetPerDegreesPerFeet() float64
 	return pound_force_feet_per_degrees_per_feet
 }
 
-// KilopoundForceFootPerDegreesPerFoot returns the value in KilopoundForceFootPerDegreesPerFoot.
+// KilopoundForceFeetPerDegreesPerFeet returns the RotationalStiffnessPerLength value in KilopoundForceFeetPerDegreesPerFeet.
+//
+// 
 func (a *RotationalStiffnessPerLength) KilopoundForceFeetPerDegreesPerFeet() float64 {
 	if a.kilopound_force_feet_per_degrees_per_feetLazy != nil {
 		return *a.kilopound_force_feet_per_degrees_per_feetLazy
@@ -167,7 +183,9 @@ func (a *RotationalStiffnessPerLength) KilopoundForceFeetPerDegreesPerFeet() flo
 	return kilopound_force_feet_per_degrees_per_feet
 }
 
-// KilonewtonMeterPerRadianPerMeter returns the value in KilonewtonMeterPerRadianPerMeter.
+// KilonewtonMetersPerRadianPerMeter returns the RotationalStiffnessPerLength value in KilonewtonMetersPerRadianPerMeter.
+//
+// 
 func (a *RotationalStiffnessPerLength) KilonewtonMetersPerRadianPerMeter() float64 {
 	if a.kilonewton_meters_per_radian_per_meterLazy != nil {
 		return *a.kilonewton_meters_per_radian_per_meterLazy
@@ -177,7 +195,9 @@ func (a *RotationalStiffnessPerLength) KilonewtonMetersPerRadianPerMeter() float
 	return kilonewton_meters_per_radian_per_meter
 }
 
-// MeganewtonMeterPerRadianPerMeter returns the value in MeganewtonMeterPerRadianPerMeter.
+// MeganewtonMetersPerRadianPerMeter returns the RotationalStiffnessPerLength value in MeganewtonMetersPerRadianPerMeter.
+//
+// 
 func (a *RotationalStiffnessPerLength) MeganewtonMetersPerRadianPerMeter() float64 {
 	if a.meganewton_meters_per_radian_per_meterLazy != nil {
 		return *a.meganewton_meters_per_radian_per_meterLazy
@@ -188,7 +208,9 @@ func (a *RotationalStiffnessPerLength) MeganewtonMetersPerRadianPerMeter() float
 }
 
 
-// ToDto creates an RotationalStiffnessPerLengthDto representation.
+// ToDto creates a RotationalStiffnessPerLengthDto representation from the RotationalStiffnessPerLength instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonMeterPerRadianPerMeter by default.
 func (a *RotationalStiffnessPerLength) ToDto(holdInUnit *RotationalStiffnessPerLengthUnits) RotationalStiffnessPerLengthDto {
 	if holdInUnit == nil {
 		defaultUnit := RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter // Default value
@@ -201,12 +223,19 @@ func (a *RotationalStiffnessPerLength) ToDto(holdInUnit *RotationalStiffnessPerL
 	}
 }
 
-// ToDtoJSON creates an RotationalStiffnessPerLengthDto representation.
+// ToDtoJSON creates a JSON representation of the RotationalStiffnessPerLength instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonMeterPerRadianPerMeter by default.
 func (a *RotationalStiffnessPerLength) ToDtoJSON(holdInUnit *RotationalStiffnessPerLengthUnits) ([]byte, error) {
+	// Convert to RotationalStiffnessPerLengthDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts RotationalStiffnessPerLength to a specific unit value.
+// Convert converts a RotationalStiffnessPerLength to a specific unit value.
+// The function uses the provided unit type (RotationalStiffnessPerLengthUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *RotationalStiffnessPerLength) Convert(toUnit RotationalStiffnessPerLengthUnits) float64 {
 	switch toUnit { 
     case RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter:
@@ -220,7 +249,7 @@ func (a *RotationalStiffnessPerLength) Convert(toUnit RotationalStiffnessPerLeng
     case RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter:
 		return a.MeganewtonMetersPerRadianPerMeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -259,13 +288,22 @@ func (a *RotationalStiffnessPerLength) convertToBase(value float64, fromUnit Rot
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the RotationalStiffnessPerLength in the default unit (NewtonMeterPerRadianPerMeter),
+// formatted to two decimal places.
 func (a RotationalStiffnessPerLength) String() string {
 	return a.ToString(RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter, 2)
 }
 
-// ToString formats the RotationalStiffnessPerLength to string.
-// fractionalDigits -1 for not mention
+// ToString formats the RotationalStiffnessPerLength value as a string with the specified unit and fractional digits.
+// It converts the RotationalStiffnessPerLength to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the RotationalStiffnessPerLength value will be converted (e.g., NewtonMeterPerRadianPerMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the RotationalStiffnessPerLength with the unit abbreviation.
 func (a *RotationalStiffnessPerLength) ToString(unit RotationalStiffnessPerLengthUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -293,12 +331,26 @@ func (a *RotationalStiffnessPerLength) getUnitAbbreviation(unit RotationalStiffn
 	}
 }
 
-// Check if the given RotationalStiffnessPerLength are equals to the current RotationalStiffnessPerLength
+// Equals checks if the given RotationalStiffnessPerLength is equal to the current RotationalStiffnessPerLength.
+//
+// Parameters:
+//    other: The RotationalStiffnessPerLength to compare against.
+//
+// Returns:
+//    bool: Returns true if both RotationalStiffnessPerLength are equal, false otherwise.
 func (a *RotationalStiffnessPerLength) Equals(other *RotationalStiffnessPerLength) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given RotationalStiffnessPerLength are equals to the current RotationalStiffnessPerLength
+// CompareTo compares the current RotationalStiffnessPerLength with another RotationalStiffnessPerLength.
+// It returns -1 if the current RotationalStiffnessPerLength is less than the other RotationalStiffnessPerLength, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The RotationalStiffnessPerLength to compare against.
+//
+// Returns:
+//    int: -1 if the current RotationalStiffnessPerLength is less, 1 if greater, and 0 if equal.
 func (a *RotationalStiffnessPerLength) CompareTo(other *RotationalStiffnessPerLength) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -311,22 +363,50 @@ func (a *RotationalStiffnessPerLength) CompareTo(other *RotationalStiffnessPerLe
 	return 0
 }
 
-// Add the given RotationalStiffnessPerLength to the current RotationalStiffnessPerLength.
+// Add adds the given RotationalStiffnessPerLength to the current RotationalStiffnessPerLength and returns the result.
+// The result is a new RotationalStiffnessPerLength instance with the sum of the values.
+//
+// Parameters:
+//    other: The RotationalStiffnessPerLength to add to the current RotationalStiffnessPerLength.
+//
+// Returns:
+//    *RotationalStiffnessPerLength: A new RotationalStiffnessPerLength instance representing the sum of both RotationalStiffnessPerLength.
 func (a *RotationalStiffnessPerLength) Add(other *RotationalStiffnessPerLength) *RotationalStiffnessPerLength {
 	return &RotationalStiffnessPerLength{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given RotationalStiffnessPerLength to the current RotationalStiffnessPerLength.
+// Subtract subtracts the given RotationalStiffnessPerLength from the current RotationalStiffnessPerLength and returns the result.
+// The result is a new RotationalStiffnessPerLength instance with the difference of the values.
+//
+// Parameters:
+//    other: The RotationalStiffnessPerLength to subtract from the current RotationalStiffnessPerLength.
+//
+// Returns:
+//    *RotationalStiffnessPerLength: A new RotationalStiffnessPerLength instance representing the difference of both RotationalStiffnessPerLength.
 func (a *RotationalStiffnessPerLength) Subtract(other *RotationalStiffnessPerLength) *RotationalStiffnessPerLength {
 	return &RotationalStiffnessPerLength{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given RotationalStiffnessPerLength to the current RotationalStiffnessPerLength.
+// Multiply multiplies the current RotationalStiffnessPerLength by the given RotationalStiffnessPerLength and returns the result.
+// The result is a new RotationalStiffnessPerLength instance with the product of the values.
+//
+// Parameters:
+//    other: The RotationalStiffnessPerLength to multiply with the current RotationalStiffnessPerLength.
+//
+// Returns:
+//    *RotationalStiffnessPerLength: A new RotationalStiffnessPerLength instance representing the product of both RotationalStiffnessPerLength.
 func (a *RotationalStiffnessPerLength) Multiply(other *RotationalStiffnessPerLength) *RotationalStiffnessPerLength {
 	return &RotationalStiffnessPerLength{value: a.value * other.BaseValue()}
 }
 
-// Divide the given RotationalStiffnessPerLength to the current RotationalStiffnessPerLength.
+// Divide divides the current RotationalStiffnessPerLength by the given RotationalStiffnessPerLength and returns the result.
+// The result is a new RotationalStiffnessPerLength instance with the quotient of the values.
+//
+// Parameters:
+//    other: The RotationalStiffnessPerLength to divide the current RotationalStiffnessPerLength by.
+//
+// Returns:
+//    *RotationalStiffnessPerLength: A new RotationalStiffnessPerLength instance representing the quotient of both RotationalStiffnessPerLength.
 func (a *RotationalStiffnessPerLength) Divide(other *RotationalStiffnessPerLength) *RotationalStiffnessPerLength {
 	return &RotationalStiffnessPerLength{value: a.value / other.BaseValue()}
 }

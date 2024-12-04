@@ -12,7 +12,7 @@ import (
 
 
 
-// MassUnits enumeration
+// MassUnits defines various units of Mass.
 type MassUnits string
 
 const (
@@ -73,19 +73,24 @@ const (
         MassMegapound MassUnits = "Megapound"
 )
 
-// MassDto represents an Mass
+// MassDto represents a Mass measurement with a numerical value and its corresponding unit.
 type MassDto struct {
+    // Value is the numerical representation of the Mass.
 	Value float64
+    // Unit specifies the unit of measurement for the Mass, as defined in the MassUnits enumeration.
 	Unit  MassUnits
 }
 
-// MassDtoFactory struct to group related functions
+// MassDtoFactory groups methods for creating and serializing MassDto objects.
 type MassDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MassDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MassDtoFactory) FromJSON(data []byte) (*MassDto, error) {
 	a := MassDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MassDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -93,6 +98,9 @@ func (udf MassDtoFactory) FromJSON(data []byte) (*MassDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a MassDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MassDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -104,10 +112,11 @@ func (a MassDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Mass struct
+// Mass represents a measurement in a of Mass.
+//
+// In physics, mass (from Greek μᾶζα "barley cake, lump [of dough]") is a property of a physical system or body, giving rise to the phenomena of the body's resistance to being accelerated by a force and the strength of its mutual gravitational attraction with other bodies. Instruments such as mass balances or scales use those phenomena to measure mass. The SI unit of mass is the kilogram (kg).
 type Mass struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     gramsLazy *float64 
@@ -139,162 +148,163 @@ type Mass struct {
     megapoundsLazy *float64 
 }
 
-// MassFactory struct to group related functions
+// MassFactory groups methods for creating Mass instances.
 type MassFactory struct{}
 
+// CreateMass creates a new Mass instance from the given value and unit.
 func (uf MassFactory) CreateMass(value float64, unit MassUnits) (*Mass, error) {
 	return newMass(value, unit)
 }
 
+// FromDto converts a MassDto to a Mass instance.
 func (uf MassFactory) FromDto(dto MassDto) (*Mass, error) {
 	return newMass(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Mass instance.
 func (uf MassFactory) FromDtoJSON(data []byte) (*Mass, error) {
 	unitDto, err := MassDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MassDto from JSON: %w", err)
 	}
 	return MassFactory{}.FromDto(*unitDto)
 }
 
 
-// FromGram creates a new Mass instance from Gram.
+// FromGrams creates a new Mass instance from a value in Grams.
 func (uf MassFactory) FromGrams(value float64) (*Mass, error) {
 	return newMass(value, MassGram)
 }
 
-// FromTonne creates a new Mass instance from Tonne.
+// FromTonnes creates a new Mass instance from a value in Tonnes.
 func (uf MassFactory) FromTonnes(value float64) (*Mass, error) {
 	return newMass(value, MassTonne)
 }
 
-// FromShortTon creates a new Mass instance from ShortTon.
+// FromShortTons creates a new Mass instance from a value in ShortTons.
 func (uf MassFactory) FromShortTons(value float64) (*Mass, error) {
 	return newMass(value, MassShortTon)
 }
 
-// FromLongTon creates a new Mass instance from LongTon.
+// FromLongTons creates a new Mass instance from a value in LongTons.
 func (uf MassFactory) FromLongTons(value float64) (*Mass, error) {
 	return newMass(value, MassLongTon)
 }
 
-// FromPound creates a new Mass instance from Pound.
+// FromPounds creates a new Mass instance from a value in Pounds.
 func (uf MassFactory) FromPounds(value float64) (*Mass, error) {
 	return newMass(value, MassPound)
 }
 
-// FromOunce creates a new Mass instance from Ounce.
+// FromOunces creates a new Mass instance from a value in Ounces.
 func (uf MassFactory) FromOunces(value float64) (*Mass, error) {
 	return newMass(value, MassOunce)
 }
 
-// FromSlug creates a new Mass instance from Slug.
+// FromSlugs creates a new Mass instance from a value in Slugs.
 func (uf MassFactory) FromSlugs(value float64) (*Mass, error) {
 	return newMass(value, MassSlug)
 }
 
-// FromStone creates a new Mass instance from Stone.
+// FromStone creates a new Mass instance from a value in Stone.
 func (uf MassFactory) FromStone(value float64) (*Mass, error) {
 	return newMass(value, MassStone)
 }
 
-// FromShortHundredweight creates a new Mass instance from ShortHundredweight.
+// FromShortHundredweight creates a new Mass instance from a value in ShortHundredweight.
 func (uf MassFactory) FromShortHundredweight(value float64) (*Mass, error) {
 	return newMass(value, MassShortHundredweight)
 }
 
-// FromLongHundredweight creates a new Mass instance from LongHundredweight.
+// FromLongHundredweight creates a new Mass instance from a value in LongHundredweight.
 func (uf MassFactory) FromLongHundredweight(value float64) (*Mass, error) {
 	return newMass(value, MassLongHundredweight)
 }
 
-// FromGrain creates a new Mass instance from Grain.
+// FromGrains creates a new Mass instance from a value in Grains.
 func (uf MassFactory) FromGrains(value float64) (*Mass, error) {
 	return newMass(value, MassGrain)
 }
 
-// FromSolarMass creates a new Mass instance from SolarMass.
+// FromSolarMasses creates a new Mass instance from a value in SolarMasses.
 func (uf MassFactory) FromSolarMasses(value float64) (*Mass, error) {
 	return newMass(value, MassSolarMass)
 }
 
-// FromEarthMass creates a new Mass instance from EarthMass.
+// FromEarthMasses creates a new Mass instance from a value in EarthMasses.
 func (uf MassFactory) FromEarthMasses(value float64) (*Mass, error) {
 	return newMass(value, MassEarthMass)
 }
 
-// FromFemtogram creates a new Mass instance from Femtogram.
+// FromFemtograms creates a new Mass instance from a value in Femtograms.
 func (uf MassFactory) FromFemtograms(value float64) (*Mass, error) {
 	return newMass(value, MassFemtogram)
 }
 
-// FromPicogram creates a new Mass instance from Picogram.
+// FromPicograms creates a new Mass instance from a value in Picograms.
 func (uf MassFactory) FromPicograms(value float64) (*Mass, error) {
 	return newMass(value, MassPicogram)
 }
 
-// FromNanogram creates a new Mass instance from Nanogram.
+// FromNanograms creates a new Mass instance from a value in Nanograms.
 func (uf MassFactory) FromNanograms(value float64) (*Mass, error) {
 	return newMass(value, MassNanogram)
 }
 
-// FromMicrogram creates a new Mass instance from Microgram.
+// FromMicrograms creates a new Mass instance from a value in Micrograms.
 func (uf MassFactory) FromMicrograms(value float64) (*Mass, error) {
 	return newMass(value, MassMicrogram)
 }
 
-// FromMilligram creates a new Mass instance from Milligram.
+// FromMilligrams creates a new Mass instance from a value in Milligrams.
 func (uf MassFactory) FromMilligrams(value float64) (*Mass, error) {
 	return newMass(value, MassMilligram)
 }
 
-// FromCentigram creates a new Mass instance from Centigram.
+// FromCentigrams creates a new Mass instance from a value in Centigrams.
 func (uf MassFactory) FromCentigrams(value float64) (*Mass, error) {
 	return newMass(value, MassCentigram)
 }
 
-// FromDecigram creates a new Mass instance from Decigram.
+// FromDecigrams creates a new Mass instance from a value in Decigrams.
 func (uf MassFactory) FromDecigrams(value float64) (*Mass, error) {
 	return newMass(value, MassDecigram)
 }
 
-// FromDecagram creates a new Mass instance from Decagram.
+// FromDecagrams creates a new Mass instance from a value in Decagrams.
 func (uf MassFactory) FromDecagrams(value float64) (*Mass, error) {
 	return newMass(value, MassDecagram)
 }
 
-// FromHectogram creates a new Mass instance from Hectogram.
+// FromHectograms creates a new Mass instance from a value in Hectograms.
 func (uf MassFactory) FromHectograms(value float64) (*Mass, error) {
 	return newMass(value, MassHectogram)
 }
 
-// FromKilogram creates a new Mass instance from Kilogram.
+// FromKilograms creates a new Mass instance from a value in Kilograms.
 func (uf MassFactory) FromKilograms(value float64) (*Mass, error) {
 	return newMass(value, MassKilogram)
 }
 
-// FromKilotonne creates a new Mass instance from Kilotonne.
+// FromKilotonnes creates a new Mass instance from a value in Kilotonnes.
 func (uf MassFactory) FromKilotonnes(value float64) (*Mass, error) {
 	return newMass(value, MassKilotonne)
 }
 
-// FromMegatonne creates a new Mass instance from Megatonne.
+// FromMegatonnes creates a new Mass instance from a value in Megatonnes.
 func (uf MassFactory) FromMegatonnes(value float64) (*Mass, error) {
 	return newMass(value, MassMegatonne)
 }
 
-// FromKilopound creates a new Mass instance from Kilopound.
+// FromKilopounds creates a new Mass instance from a value in Kilopounds.
 func (uf MassFactory) FromKilopounds(value float64) (*Mass, error) {
 	return newMass(value, MassKilopound)
 }
 
-// FromMegapound creates a new Mass instance from Megapound.
+// FromMegapounds creates a new Mass instance from a value in Megapounds.
 func (uf MassFactory) FromMegapounds(value float64) (*Mass, error) {
 	return newMass(value, MassMegapound)
 }
-
-
 
 
 // newMass creates a new Mass.
@@ -307,13 +317,15 @@ func newMass(value float64, fromUnit MassUnits) (*Mass, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Mass in Kilogram.
+// BaseValue returns the base value of Mass in Kilogram unit (the base/default quantity).
 func (a *Mass) BaseValue() float64 {
 	return a.value
 }
 
 
-// Gram returns the value in Gram.
+// Grams returns the Mass value in Grams.
+//
+// 
 func (a *Mass) Grams() float64 {
 	if a.gramsLazy != nil {
 		return *a.gramsLazy
@@ -323,7 +335,9 @@ func (a *Mass) Grams() float64 {
 	return grams
 }
 
-// Tonne returns the value in Tonne.
+// Tonnes returns the Mass value in Tonnes.
+//
+// 
 func (a *Mass) Tonnes() float64 {
 	if a.tonnesLazy != nil {
 		return *a.tonnesLazy
@@ -333,7 +347,9 @@ func (a *Mass) Tonnes() float64 {
 	return tonnes
 }
 
-// ShortTon returns the value in ShortTon.
+// ShortTons returns the Mass value in ShortTons.
+//
+// The short ton is a unit of mass equal to 2,000 pounds (907.18474 kg), that is most commonly used in the United States – known there simply as the ton.
 func (a *Mass) ShortTons() float64 {
 	if a.short_tonsLazy != nil {
 		return *a.short_tonsLazy
@@ -343,7 +359,9 @@ func (a *Mass) ShortTons() float64 {
 	return short_tons
 }
 
-// LongTon returns the value in LongTon.
+// LongTons returns the Mass value in LongTons.
+//
+// Long ton (weight ton or Imperial ton) is a unit of mass equal to 2,240 pounds (1,016 kg) and is the name for the unit called the "ton" in the avoirdupois or Imperial system of measurements that was used in the United Kingdom and several other Commonwealth countries before metrication.
 func (a *Mass) LongTons() float64 {
 	if a.long_tonsLazy != nil {
 		return *a.long_tonsLazy
@@ -353,7 +371,9 @@ func (a *Mass) LongTons() float64 {
 	return long_tons
 }
 
-// Pound returns the value in Pound.
+// Pounds returns the Mass value in Pounds.
+//
+// The pound or pound-mass (abbreviations: lb, lbm) is a unit of mass used in the imperial, United States customary and other systems of measurement. A number of different definitions have been used, the most common today being the international avoirdupois pound which is legally defined as exactly 0.45359237 kilograms, and which is divided into 16 avoirdupois ounces.
 func (a *Mass) Pounds() float64 {
 	if a.poundsLazy != nil {
 		return *a.poundsLazy
@@ -363,7 +383,9 @@ func (a *Mass) Pounds() float64 {
 	return pounds
 }
 
-// Ounce returns the value in Ounce.
+// Ounces returns the Mass value in Ounces.
+//
+// The international avoirdupois ounce (abbreviated oz) is defined as exactly 28.349523125 g under the international yard and pound agreement of 1959, signed by the United States and countries of the Commonwealth of Nations. 16 oz make up an avoirdupois pound.
 func (a *Mass) Ounces() float64 {
 	if a.ouncesLazy != nil {
 		return *a.ouncesLazy
@@ -373,7 +395,9 @@ func (a *Mass) Ounces() float64 {
 	return ounces
 }
 
-// Slug returns the value in Slug.
+// Slugs returns the Mass value in Slugs.
+//
+// The slug (abbreviation slug) is a unit of mass that is accelerated by 1 ft/s² when a force of one pound (lbf) is exerted on it.
 func (a *Mass) Slugs() float64 {
 	if a.slugsLazy != nil {
 		return *a.slugsLazy
@@ -383,7 +407,9 @@ func (a *Mass) Slugs() float64 {
 	return slugs
 }
 
-// Stone returns the value in Stone.
+// Stone returns the Mass value in Stone.
+//
+// The stone (abbreviation st) is a unit of mass equal to 14 pounds avoirdupois (about 6.35 kilograms) used in Great Britain and Ireland for measuring human body weight.
 func (a *Mass) Stone() float64 {
 	if a.stoneLazy != nil {
 		return *a.stoneLazy
@@ -393,7 +419,9 @@ func (a *Mass) Stone() float64 {
 	return stone
 }
 
-// ShortHundredweight returns the value in ShortHundredweight.
+// ShortHundredweight returns the Mass value in ShortHundredweight.
+//
+// The short hundredweight (abbreviation cwt) is a unit of mass equal to 100 pounds in US and Canada. In British English, the short hundredweight is referred to as the "cental".
 func (a *Mass) ShortHundredweight() float64 {
 	if a.short_hundredweightLazy != nil {
 		return *a.short_hundredweightLazy
@@ -403,7 +431,9 @@ func (a *Mass) ShortHundredweight() float64 {
 	return short_hundredweight
 }
 
-// LongHundredweight returns the value in LongHundredweight.
+// LongHundredweight returns the Mass value in LongHundredweight.
+//
+// The long or imperial hundredweight (abbreviation cwt) is a unit of mass equal to 112 pounds in US and Canada.
 func (a *Mass) LongHundredweight() float64 {
 	if a.long_hundredweightLazy != nil {
 		return *a.long_hundredweightLazy
@@ -413,7 +443,9 @@ func (a *Mass) LongHundredweight() float64 {
 	return long_hundredweight
 }
 
-// Grain returns the value in Grain.
+// Grains returns the Mass value in Grains.
+//
+// A grain is a unit of measurement of mass, and in the troy weight, avoirdupois, and Apothecaries' system, equal to exactly 64.79891 milligrams.
 func (a *Mass) Grains() float64 {
 	if a.grainsLazy != nil {
 		return *a.grainsLazy
@@ -423,7 +455,9 @@ func (a *Mass) Grains() float64 {
 	return grains
 }
 
-// SolarMass returns the value in SolarMass.
+// SolarMasses returns the Mass value in SolarMasses.
+//
+// Solar mass is a ratio unit to the mass of the solar system star, the sun.
 func (a *Mass) SolarMasses() float64 {
 	if a.solar_massesLazy != nil {
 		return *a.solar_massesLazy
@@ -433,7 +467,9 @@ func (a *Mass) SolarMasses() float64 {
 	return solar_masses
 }
 
-// EarthMass returns the value in EarthMass.
+// EarthMasses returns the Mass value in EarthMasses.
+//
+// Earth mass is a ratio unit to the mass of planet Earth.
 func (a *Mass) EarthMasses() float64 {
 	if a.earth_massesLazy != nil {
 		return *a.earth_massesLazy
@@ -443,7 +479,9 @@ func (a *Mass) EarthMasses() float64 {
 	return earth_masses
 }
 
-// Femtogram returns the value in Femtogram.
+// Femtograms returns the Mass value in Femtograms.
+//
+// 
 func (a *Mass) Femtograms() float64 {
 	if a.femtogramsLazy != nil {
 		return *a.femtogramsLazy
@@ -453,7 +491,9 @@ func (a *Mass) Femtograms() float64 {
 	return femtograms
 }
 
-// Picogram returns the value in Picogram.
+// Picograms returns the Mass value in Picograms.
+//
+// 
 func (a *Mass) Picograms() float64 {
 	if a.picogramsLazy != nil {
 		return *a.picogramsLazy
@@ -463,7 +503,9 @@ func (a *Mass) Picograms() float64 {
 	return picograms
 }
 
-// Nanogram returns the value in Nanogram.
+// Nanograms returns the Mass value in Nanograms.
+//
+// 
 func (a *Mass) Nanograms() float64 {
 	if a.nanogramsLazy != nil {
 		return *a.nanogramsLazy
@@ -473,7 +515,9 @@ func (a *Mass) Nanograms() float64 {
 	return nanograms
 }
 
-// Microgram returns the value in Microgram.
+// Micrograms returns the Mass value in Micrograms.
+//
+// 
 func (a *Mass) Micrograms() float64 {
 	if a.microgramsLazy != nil {
 		return *a.microgramsLazy
@@ -483,7 +527,9 @@ func (a *Mass) Micrograms() float64 {
 	return micrograms
 }
 
-// Milligram returns the value in Milligram.
+// Milligrams returns the Mass value in Milligrams.
+//
+// 
 func (a *Mass) Milligrams() float64 {
 	if a.milligramsLazy != nil {
 		return *a.milligramsLazy
@@ -493,7 +539,9 @@ func (a *Mass) Milligrams() float64 {
 	return milligrams
 }
 
-// Centigram returns the value in Centigram.
+// Centigrams returns the Mass value in Centigrams.
+//
+// 
 func (a *Mass) Centigrams() float64 {
 	if a.centigramsLazy != nil {
 		return *a.centigramsLazy
@@ -503,7 +551,9 @@ func (a *Mass) Centigrams() float64 {
 	return centigrams
 }
 
-// Decigram returns the value in Decigram.
+// Decigrams returns the Mass value in Decigrams.
+//
+// 
 func (a *Mass) Decigrams() float64 {
 	if a.decigramsLazy != nil {
 		return *a.decigramsLazy
@@ -513,7 +563,9 @@ func (a *Mass) Decigrams() float64 {
 	return decigrams
 }
 
-// Decagram returns the value in Decagram.
+// Decagrams returns the Mass value in Decagrams.
+//
+// 
 func (a *Mass) Decagrams() float64 {
 	if a.decagramsLazy != nil {
 		return *a.decagramsLazy
@@ -523,7 +575,9 @@ func (a *Mass) Decagrams() float64 {
 	return decagrams
 }
 
-// Hectogram returns the value in Hectogram.
+// Hectograms returns the Mass value in Hectograms.
+//
+// 
 func (a *Mass) Hectograms() float64 {
 	if a.hectogramsLazy != nil {
 		return *a.hectogramsLazy
@@ -533,7 +587,9 @@ func (a *Mass) Hectograms() float64 {
 	return hectograms
 }
 
-// Kilogram returns the value in Kilogram.
+// Kilograms returns the Mass value in Kilograms.
+//
+// 
 func (a *Mass) Kilograms() float64 {
 	if a.kilogramsLazy != nil {
 		return *a.kilogramsLazy
@@ -543,7 +599,9 @@ func (a *Mass) Kilograms() float64 {
 	return kilograms
 }
 
-// Kilotonne returns the value in Kilotonne.
+// Kilotonnes returns the Mass value in Kilotonnes.
+//
+// 
 func (a *Mass) Kilotonnes() float64 {
 	if a.kilotonnesLazy != nil {
 		return *a.kilotonnesLazy
@@ -553,7 +611,9 @@ func (a *Mass) Kilotonnes() float64 {
 	return kilotonnes
 }
 
-// Megatonne returns the value in Megatonne.
+// Megatonnes returns the Mass value in Megatonnes.
+//
+// 
 func (a *Mass) Megatonnes() float64 {
 	if a.megatonnesLazy != nil {
 		return *a.megatonnesLazy
@@ -563,7 +623,9 @@ func (a *Mass) Megatonnes() float64 {
 	return megatonnes
 }
 
-// Kilopound returns the value in Kilopound.
+// Kilopounds returns the Mass value in Kilopounds.
+//
+// 
 func (a *Mass) Kilopounds() float64 {
 	if a.kilopoundsLazy != nil {
 		return *a.kilopoundsLazy
@@ -573,7 +635,9 @@ func (a *Mass) Kilopounds() float64 {
 	return kilopounds
 }
 
-// Megapound returns the value in Megapound.
+// Megapounds returns the Mass value in Megapounds.
+//
+// 
 func (a *Mass) Megapounds() float64 {
 	if a.megapoundsLazy != nil {
 		return *a.megapoundsLazy
@@ -584,7 +648,9 @@ func (a *Mass) Megapounds() float64 {
 }
 
 
-// ToDto creates an MassDto representation.
+// ToDto creates a MassDto representation from the Mass instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Kilogram by default.
 func (a *Mass) ToDto(holdInUnit *MassUnits) MassDto {
 	if holdInUnit == nil {
 		defaultUnit := MassKilogram // Default value
@@ -597,12 +663,19 @@ func (a *Mass) ToDto(holdInUnit *MassUnits) MassDto {
 	}
 }
 
-// ToDtoJSON creates an MassDto representation.
+// ToDtoJSON creates a JSON representation of the Mass instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Kilogram by default.
 func (a *Mass) ToDtoJSON(holdInUnit *MassUnits) ([]byte, error) {
+	// Convert to MassDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Mass to a specific unit value.
+// Convert converts a Mass to a specific unit value.
+// The function uses the provided unit type (MassUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Mass) Convert(toUnit MassUnits) float64 {
 	switch toUnit { 
     case MassGram:
@@ -660,7 +733,7 @@ func (a *Mass) Convert(toUnit MassUnits) float64 {
     case MassMegapound:
 		return a.Megapounds()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -787,13 +860,22 @@ func (a *Mass) convertToBase(value float64, fromUnit MassUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Mass in the default unit (Kilogram),
+// formatted to two decimal places.
 func (a Mass) String() string {
 	return a.ToString(MassKilogram, 2)
 }
 
-// ToString formats the Mass to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Mass value as a string with the specified unit and fractional digits.
+// It converts the Mass to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Mass value will be converted (e.g., Kilogram))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Mass with the unit abbreviation.
 func (a *Mass) ToString(unit MassUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -865,12 +947,26 @@ func (a *Mass) getUnitAbbreviation(unit MassUnits) string {
 	}
 }
 
-// Check if the given Mass are equals to the current Mass
+// Equals checks if the given Mass is equal to the current Mass.
+//
+// Parameters:
+//    other: The Mass to compare against.
+//
+// Returns:
+//    bool: Returns true if both Mass are equal, false otherwise.
 func (a *Mass) Equals(other *Mass) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Mass are equals to the current Mass
+// CompareTo compares the current Mass with another Mass.
+// It returns -1 if the current Mass is less than the other Mass, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Mass to compare against.
+//
+// Returns:
+//    int: -1 if the current Mass is less, 1 if greater, and 0 if equal.
 func (a *Mass) CompareTo(other *Mass) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -883,22 +979,50 @@ func (a *Mass) CompareTo(other *Mass) int {
 	return 0
 }
 
-// Add the given Mass to the current Mass.
+// Add adds the given Mass to the current Mass and returns the result.
+// The result is a new Mass instance with the sum of the values.
+//
+// Parameters:
+//    other: The Mass to add to the current Mass.
+//
+// Returns:
+//    *Mass: A new Mass instance representing the sum of both Mass.
 func (a *Mass) Add(other *Mass) *Mass {
 	return &Mass{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Mass to the current Mass.
+// Subtract subtracts the given Mass from the current Mass and returns the result.
+// The result is a new Mass instance with the difference of the values.
+//
+// Parameters:
+//    other: The Mass to subtract from the current Mass.
+//
+// Returns:
+//    *Mass: A new Mass instance representing the difference of both Mass.
 func (a *Mass) Subtract(other *Mass) *Mass {
 	return &Mass{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Mass to the current Mass.
+// Multiply multiplies the current Mass by the given Mass and returns the result.
+// The result is a new Mass instance with the product of the values.
+//
+// Parameters:
+//    other: The Mass to multiply with the current Mass.
+//
+// Returns:
+//    *Mass: A new Mass instance representing the product of both Mass.
 func (a *Mass) Multiply(other *Mass) *Mass {
 	return &Mass{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Mass to the current Mass.
+// Divide divides the current Mass by the given Mass and returns the result.
+// The result is a new Mass instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Mass to divide the current Mass by.
+//
+// Returns:
+//    *Mass: A new Mass instance representing the quotient of both Mass.
 func (a *Mass) Divide(other *Mass) *Mass {
 	return &Mass{value: a.value / other.BaseValue()}
 }

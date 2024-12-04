@@ -12,7 +12,7 @@ import (
 
 
 
-// MassFluxUnits enumeration
+// MassFluxUnits defines various units of MassFlux.
 type MassFluxUnits string
 
 const (
@@ -43,19 +43,24 @@ const (
         MassFluxKilogramPerHourPerSquareMillimeter MassFluxUnits = "KilogramPerHourPerSquareMillimeter"
 )
 
-// MassFluxDto represents an MassFlux
+// MassFluxDto represents a MassFlux measurement with a numerical value and its corresponding unit.
 type MassFluxDto struct {
+    // Value is the numerical representation of the MassFlux.
 	Value float64
+    // Unit specifies the unit of measurement for the MassFlux, as defined in the MassFluxUnits enumeration.
 	Unit  MassFluxUnits
 }
 
-// MassFluxDtoFactory struct to group related functions
+// MassFluxDtoFactory groups methods for creating and serializing MassFluxDto objects.
 type MassFluxDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MassFluxDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MassFluxDtoFactory) FromJSON(data []byte) (*MassFluxDto, error) {
 	a := MassFluxDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MassFluxDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -63,6 +68,9 @@ func (udf MassFluxDtoFactory) FromJSON(data []byte) (*MassFluxDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a MassFluxDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MassFluxDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -74,10 +82,11 @@ func (a MassFluxDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// MassFlux struct
+// MassFlux represents a measurement in a of MassFlux.
+//
+// Mass flux is the mass flow rate per unit area.
 type MassFlux struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     grams_per_second_per_square_meterLazy *float64 
@@ -94,87 +103,88 @@ type MassFlux struct {
     kilograms_per_hour_per_square_millimeterLazy *float64 
 }
 
-// MassFluxFactory struct to group related functions
+// MassFluxFactory groups methods for creating MassFlux instances.
 type MassFluxFactory struct{}
 
+// CreateMassFlux creates a new MassFlux instance from the given value and unit.
 func (uf MassFluxFactory) CreateMassFlux(value float64, unit MassFluxUnits) (*MassFlux, error) {
 	return newMassFlux(value, unit)
 }
 
+// FromDto converts a MassFluxDto to a MassFlux instance.
 func (uf MassFluxFactory) FromDto(dto MassFluxDto) (*MassFlux, error) {
 	return newMassFlux(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a MassFlux instance.
 func (uf MassFluxFactory) FromDtoJSON(data []byte) (*MassFlux, error) {
 	unitDto, err := MassFluxDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MassFluxDto from JSON: %w", err)
 	}
 	return MassFluxFactory{}.FromDto(*unitDto)
 }
 
 
-// FromGramPerSecondPerSquareMeter creates a new MassFlux instance from GramPerSecondPerSquareMeter.
+// FromGramsPerSecondPerSquareMeter creates a new MassFlux instance from a value in GramsPerSecondPerSquareMeter.
 func (uf MassFluxFactory) FromGramsPerSecondPerSquareMeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxGramPerSecondPerSquareMeter)
 }
 
-// FromGramPerSecondPerSquareCentimeter creates a new MassFlux instance from GramPerSecondPerSquareCentimeter.
+// FromGramsPerSecondPerSquareCentimeter creates a new MassFlux instance from a value in GramsPerSecondPerSquareCentimeter.
 func (uf MassFluxFactory) FromGramsPerSecondPerSquareCentimeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxGramPerSecondPerSquareCentimeter)
 }
 
-// FromGramPerSecondPerSquareMillimeter creates a new MassFlux instance from GramPerSecondPerSquareMillimeter.
+// FromGramsPerSecondPerSquareMillimeter creates a new MassFlux instance from a value in GramsPerSecondPerSquareMillimeter.
 func (uf MassFluxFactory) FromGramsPerSecondPerSquareMillimeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxGramPerSecondPerSquareMillimeter)
 }
 
-// FromGramPerHourPerSquareMeter creates a new MassFlux instance from GramPerHourPerSquareMeter.
+// FromGramsPerHourPerSquareMeter creates a new MassFlux instance from a value in GramsPerHourPerSquareMeter.
 func (uf MassFluxFactory) FromGramsPerHourPerSquareMeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxGramPerHourPerSquareMeter)
 }
 
-// FromGramPerHourPerSquareCentimeter creates a new MassFlux instance from GramPerHourPerSquareCentimeter.
+// FromGramsPerHourPerSquareCentimeter creates a new MassFlux instance from a value in GramsPerHourPerSquareCentimeter.
 func (uf MassFluxFactory) FromGramsPerHourPerSquareCentimeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxGramPerHourPerSquareCentimeter)
 }
 
-// FromGramPerHourPerSquareMillimeter creates a new MassFlux instance from GramPerHourPerSquareMillimeter.
+// FromGramsPerHourPerSquareMillimeter creates a new MassFlux instance from a value in GramsPerHourPerSquareMillimeter.
 func (uf MassFluxFactory) FromGramsPerHourPerSquareMillimeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxGramPerHourPerSquareMillimeter)
 }
 
-// FromKilogramPerSecondPerSquareMeter creates a new MassFlux instance from KilogramPerSecondPerSquareMeter.
+// FromKilogramsPerSecondPerSquareMeter creates a new MassFlux instance from a value in KilogramsPerSecondPerSquareMeter.
 func (uf MassFluxFactory) FromKilogramsPerSecondPerSquareMeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxKilogramPerSecondPerSquareMeter)
 }
 
-// FromKilogramPerSecondPerSquareCentimeter creates a new MassFlux instance from KilogramPerSecondPerSquareCentimeter.
+// FromKilogramsPerSecondPerSquareCentimeter creates a new MassFlux instance from a value in KilogramsPerSecondPerSquareCentimeter.
 func (uf MassFluxFactory) FromKilogramsPerSecondPerSquareCentimeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxKilogramPerSecondPerSquareCentimeter)
 }
 
-// FromKilogramPerSecondPerSquareMillimeter creates a new MassFlux instance from KilogramPerSecondPerSquareMillimeter.
+// FromKilogramsPerSecondPerSquareMillimeter creates a new MassFlux instance from a value in KilogramsPerSecondPerSquareMillimeter.
 func (uf MassFluxFactory) FromKilogramsPerSecondPerSquareMillimeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxKilogramPerSecondPerSquareMillimeter)
 }
 
-// FromKilogramPerHourPerSquareMeter creates a new MassFlux instance from KilogramPerHourPerSquareMeter.
+// FromKilogramsPerHourPerSquareMeter creates a new MassFlux instance from a value in KilogramsPerHourPerSquareMeter.
 func (uf MassFluxFactory) FromKilogramsPerHourPerSquareMeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxKilogramPerHourPerSquareMeter)
 }
 
-// FromKilogramPerHourPerSquareCentimeter creates a new MassFlux instance from KilogramPerHourPerSquareCentimeter.
+// FromKilogramsPerHourPerSquareCentimeter creates a new MassFlux instance from a value in KilogramsPerHourPerSquareCentimeter.
 func (uf MassFluxFactory) FromKilogramsPerHourPerSquareCentimeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxKilogramPerHourPerSquareCentimeter)
 }
 
-// FromKilogramPerHourPerSquareMillimeter creates a new MassFlux instance from KilogramPerHourPerSquareMillimeter.
+// FromKilogramsPerHourPerSquareMillimeter creates a new MassFlux instance from a value in KilogramsPerHourPerSquareMillimeter.
 func (uf MassFluxFactory) FromKilogramsPerHourPerSquareMillimeter(value float64) (*MassFlux, error) {
 	return newMassFlux(value, MassFluxKilogramPerHourPerSquareMillimeter)
 }
-
-
 
 
 // newMassFlux creates a new MassFlux.
@@ -187,13 +197,15 @@ func newMassFlux(value float64, fromUnit MassFluxUnits) (*MassFlux, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of MassFlux in KilogramPerSecondPerSquareMeter.
+// BaseValue returns the base value of MassFlux in KilogramPerSecondPerSquareMeter unit (the base/default quantity).
 func (a *MassFlux) BaseValue() float64 {
 	return a.value
 }
 
 
-// GramPerSecondPerSquareMeter returns the value in GramPerSecondPerSquareMeter.
+// GramsPerSecondPerSquareMeter returns the MassFlux value in GramsPerSecondPerSquareMeter.
+//
+// 
 func (a *MassFlux) GramsPerSecondPerSquareMeter() float64 {
 	if a.grams_per_second_per_square_meterLazy != nil {
 		return *a.grams_per_second_per_square_meterLazy
@@ -203,7 +215,9 @@ func (a *MassFlux) GramsPerSecondPerSquareMeter() float64 {
 	return grams_per_second_per_square_meter
 }
 
-// GramPerSecondPerSquareCentimeter returns the value in GramPerSecondPerSquareCentimeter.
+// GramsPerSecondPerSquareCentimeter returns the MassFlux value in GramsPerSecondPerSquareCentimeter.
+//
+// 
 func (a *MassFlux) GramsPerSecondPerSquareCentimeter() float64 {
 	if a.grams_per_second_per_square_centimeterLazy != nil {
 		return *a.grams_per_second_per_square_centimeterLazy
@@ -213,7 +227,9 @@ func (a *MassFlux) GramsPerSecondPerSquareCentimeter() float64 {
 	return grams_per_second_per_square_centimeter
 }
 
-// GramPerSecondPerSquareMillimeter returns the value in GramPerSecondPerSquareMillimeter.
+// GramsPerSecondPerSquareMillimeter returns the MassFlux value in GramsPerSecondPerSquareMillimeter.
+//
+// 
 func (a *MassFlux) GramsPerSecondPerSquareMillimeter() float64 {
 	if a.grams_per_second_per_square_millimeterLazy != nil {
 		return *a.grams_per_second_per_square_millimeterLazy
@@ -223,7 +239,9 @@ func (a *MassFlux) GramsPerSecondPerSquareMillimeter() float64 {
 	return grams_per_second_per_square_millimeter
 }
 
-// GramPerHourPerSquareMeter returns the value in GramPerHourPerSquareMeter.
+// GramsPerHourPerSquareMeter returns the MassFlux value in GramsPerHourPerSquareMeter.
+//
+// 
 func (a *MassFlux) GramsPerHourPerSquareMeter() float64 {
 	if a.grams_per_hour_per_square_meterLazy != nil {
 		return *a.grams_per_hour_per_square_meterLazy
@@ -233,7 +251,9 @@ func (a *MassFlux) GramsPerHourPerSquareMeter() float64 {
 	return grams_per_hour_per_square_meter
 }
 
-// GramPerHourPerSquareCentimeter returns the value in GramPerHourPerSquareCentimeter.
+// GramsPerHourPerSquareCentimeter returns the MassFlux value in GramsPerHourPerSquareCentimeter.
+//
+// 
 func (a *MassFlux) GramsPerHourPerSquareCentimeter() float64 {
 	if a.grams_per_hour_per_square_centimeterLazy != nil {
 		return *a.grams_per_hour_per_square_centimeterLazy
@@ -243,7 +263,9 @@ func (a *MassFlux) GramsPerHourPerSquareCentimeter() float64 {
 	return grams_per_hour_per_square_centimeter
 }
 
-// GramPerHourPerSquareMillimeter returns the value in GramPerHourPerSquareMillimeter.
+// GramsPerHourPerSquareMillimeter returns the MassFlux value in GramsPerHourPerSquareMillimeter.
+//
+// 
 func (a *MassFlux) GramsPerHourPerSquareMillimeter() float64 {
 	if a.grams_per_hour_per_square_millimeterLazy != nil {
 		return *a.grams_per_hour_per_square_millimeterLazy
@@ -253,7 +275,9 @@ func (a *MassFlux) GramsPerHourPerSquareMillimeter() float64 {
 	return grams_per_hour_per_square_millimeter
 }
 
-// KilogramPerSecondPerSquareMeter returns the value in KilogramPerSecondPerSquareMeter.
+// KilogramsPerSecondPerSquareMeter returns the MassFlux value in KilogramsPerSecondPerSquareMeter.
+//
+// 
 func (a *MassFlux) KilogramsPerSecondPerSquareMeter() float64 {
 	if a.kilograms_per_second_per_square_meterLazy != nil {
 		return *a.kilograms_per_second_per_square_meterLazy
@@ -263,7 +287,9 @@ func (a *MassFlux) KilogramsPerSecondPerSquareMeter() float64 {
 	return kilograms_per_second_per_square_meter
 }
 
-// KilogramPerSecondPerSquareCentimeter returns the value in KilogramPerSecondPerSquareCentimeter.
+// KilogramsPerSecondPerSquareCentimeter returns the MassFlux value in KilogramsPerSecondPerSquareCentimeter.
+//
+// 
 func (a *MassFlux) KilogramsPerSecondPerSquareCentimeter() float64 {
 	if a.kilograms_per_second_per_square_centimeterLazy != nil {
 		return *a.kilograms_per_second_per_square_centimeterLazy
@@ -273,7 +299,9 @@ func (a *MassFlux) KilogramsPerSecondPerSquareCentimeter() float64 {
 	return kilograms_per_second_per_square_centimeter
 }
 
-// KilogramPerSecondPerSquareMillimeter returns the value in KilogramPerSecondPerSquareMillimeter.
+// KilogramsPerSecondPerSquareMillimeter returns the MassFlux value in KilogramsPerSecondPerSquareMillimeter.
+//
+// 
 func (a *MassFlux) KilogramsPerSecondPerSquareMillimeter() float64 {
 	if a.kilograms_per_second_per_square_millimeterLazy != nil {
 		return *a.kilograms_per_second_per_square_millimeterLazy
@@ -283,7 +311,9 @@ func (a *MassFlux) KilogramsPerSecondPerSquareMillimeter() float64 {
 	return kilograms_per_second_per_square_millimeter
 }
 
-// KilogramPerHourPerSquareMeter returns the value in KilogramPerHourPerSquareMeter.
+// KilogramsPerHourPerSquareMeter returns the MassFlux value in KilogramsPerHourPerSquareMeter.
+//
+// 
 func (a *MassFlux) KilogramsPerHourPerSquareMeter() float64 {
 	if a.kilograms_per_hour_per_square_meterLazy != nil {
 		return *a.kilograms_per_hour_per_square_meterLazy
@@ -293,7 +323,9 @@ func (a *MassFlux) KilogramsPerHourPerSquareMeter() float64 {
 	return kilograms_per_hour_per_square_meter
 }
 
-// KilogramPerHourPerSquareCentimeter returns the value in KilogramPerHourPerSquareCentimeter.
+// KilogramsPerHourPerSquareCentimeter returns the MassFlux value in KilogramsPerHourPerSquareCentimeter.
+//
+// 
 func (a *MassFlux) KilogramsPerHourPerSquareCentimeter() float64 {
 	if a.kilograms_per_hour_per_square_centimeterLazy != nil {
 		return *a.kilograms_per_hour_per_square_centimeterLazy
@@ -303,7 +335,9 @@ func (a *MassFlux) KilogramsPerHourPerSquareCentimeter() float64 {
 	return kilograms_per_hour_per_square_centimeter
 }
 
-// KilogramPerHourPerSquareMillimeter returns the value in KilogramPerHourPerSquareMillimeter.
+// KilogramsPerHourPerSquareMillimeter returns the MassFlux value in KilogramsPerHourPerSquareMillimeter.
+//
+// 
 func (a *MassFlux) KilogramsPerHourPerSquareMillimeter() float64 {
 	if a.kilograms_per_hour_per_square_millimeterLazy != nil {
 		return *a.kilograms_per_hour_per_square_millimeterLazy
@@ -314,7 +348,9 @@ func (a *MassFlux) KilogramsPerHourPerSquareMillimeter() float64 {
 }
 
 
-// ToDto creates an MassFluxDto representation.
+// ToDto creates a MassFluxDto representation from the MassFlux instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerSecondPerSquareMeter by default.
 func (a *MassFlux) ToDto(holdInUnit *MassFluxUnits) MassFluxDto {
 	if holdInUnit == nil {
 		defaultUnit := MassFluxKilogramPerSecondPerSquareMeter // Default value
@@ -327,12 +363,19 @@ func (a *MassFlux) ToDto(holdInUnit *MassFluxUnits) MassFluxDto {
 	}
 }
 
-// ToDtoJSON creates an MassFluxDto representation.
+// ToDtoJSON creates a JSON representation of the MassFlux instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerSecondPerSquareMeter by default.
 func (a *MassFlux) ToDtoJSON(holdInUnit *MassFluxUnits) ([]byte, error) {
+	// Convert to MassFluxDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts MassFlux to a specific unit value.
+// Convert converts a MassFlux to a specific unit value.
+// The function uses the provided unit type (MassFluxUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *MassFlux) Convert(toUnit MassFluxUnits) float64 {
 	switch toUnit { 
     case MassFluxGramPerSecondPerSquareMeter:
@@ -360,7 +403,7 @@ func (a *MassFlux) Convert(toUnit MassFluxUnits) float64 {
     case MassFluxKilogramPerHourPerSquareMillimeter:
 		return a.KilogramsPerHourPerSquareMillimeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -427,13 +470,22 @@ func (a *MassFlux) convertToBase(value float64, fromUnit MassFluxUnits) float64 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the MassFlux in the default unit (KilogramPerSecondPerSquareMeter),
+// formatted to two decimal places.
 func (a MassFlux) String() string {
 	return a.ToString(MassFluxKilogramPerSecondPerSquareMeter, 2)
 }
 
-// ToString formats the MassFlux to string.
-// fractionalDigits -1 for not mention
+// ToString formats the MassFlux value as a string with the specified unit and fractional digits.
+// It converts the MassFlux to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the MassFlux value will be converted (e.g., KilogramPerSecondPerSquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the MassFlux with the unit abbreviation.
 func (a *MassFlux) ToString(unit MassFluxUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -475,12 +527,26 @@ func (a *MassFlux) getUnitAbbreviation(unit MassFluxUnits) string {
 	}
 }
 
-// Check if the given MassFlux are equals to the current MassFlux
+// Equals checks if the given MassFlux is equal to the current MassFlux.
+//
+// Parameters:
+//    other: The MassFlux to compare against.
+//
+// Returns:
+//    bool: Returns true if both MassFlux are equal, false otherwise.
 func (a *MassFlux) Equals(other *MassFlux) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given MassFlux are equals to the current MassFlux
+// CompareTo compares the current MassFlux with another MassFlux.
+// It returns -1 if the current MassFlux is less than the other MassFlux, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MassFlux to compare against.
+//
+// Returns:
+//    int: -1 if the current MassFlux is less, 1 if greater, and 0 if equal.
 func (a *MassFlux) CompareTo(other *MassFlux) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -493,22 +559,50 @@ func (a *MassFlux) CompareTo(other *MassFlux) int {
 	return 0
 }
 
-// Add the given MassFlux to the current MassFlux.
+// Add adds the given MassFlux to the current MassFlux and returns the result.
+// The result is a new MassFlux instance with the sum of the values.
+//
+// Parameters:
+//    other: The MassFlux to add to the current MassFlux.
+//
+// Returns:
+//    *MassFlux: A new MassFlux instance representing the sum of both MassFlux.
 func (a *MassFlux) Add(other *MassFlux) *MassFlux {
 	return &MassFlux{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given MassFlux to the current MassFlux.
+// Subtract subtracts the given MassFlux from the current MassFlux and returns the result.
+// The result is a new MassFlux instance with the difference of the values.
+//
+// Parameters:
+//    other: The MassFlux to subtract from the current MassFlux.
+//
+// Returns:
+//    *MassFlux: A new MassFlux instance representing the difference of both MassFlux.
 func (a *MassFlux) Subtract(other *MassFlux) *MassFlux {
 	return &MassFlux{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given MassFlux to the current MassFlux.
+// Multiply multiplies the current MassFlux by the given MassFlux and returns the result.
+// The result is a new MassFlux instance with the product of the values.
+//
+// Parameters:
+//    other: The MassFlux to multiply with the current MassFlux.
+//
+// Returns:
+//    *MassFlux: A new MassFlux instance representing the product of both MassFlux.
 func (a *MassFlux) Multiply(other *MassFlux) *MassFlux {
 	return &MassFlux{value: a.value * other.BaseValue()}
 }
 
-// Divide the given MassFlux to the current MassFlux.
+// Divide divides the current MassFlux by the given MassFlux and returns the result.
+// The result is a new MassFlux instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MassFlux to divide the current MassFlux by.
+//
+// Returns:
+//    *MassFlux: A new MassFlux instance representing the quotient of both MassFlux.
 func (a *MassFlux) Divide(other *MassFlux) *MassFlux {
 	return &MassFlux{value: a.value / other.BaseValue()}
 }

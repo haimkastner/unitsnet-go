@@ -12,7 +12,7 @@ import (
 
 
 
-// TorqueUnits enumeration
+// TorqueUnits defines various units of Torque.
 type TorqueUnits string
 
 const (
@@ -69,19 +69,24 @@ const (
         TorqueMegapoundForceFoot TorqueUnits = "MegapoundForceFoot"
 )
 
-// TorqueDto represents an Torque
+// TorqueDto represents a Torque measurement with a numerical value and its corresponding unit.
 type TorqueDto struct {
+    // Value is the numerical representation of the Torque.
 	Value float64
+    // Unit specifies the unit of measurement for the Torque, as defined in the TorqueUnits enumeration.
 	Unit  TorqueUnits
 }
 
-// TorqueDtoFactory struct to group related functions
+// TorqueDtoFactory groups methods for creating and serializing TorqueDto objects.
 type TorqueDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a TorqueDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf TorqueDtoFactory) FromJSON(data []byte) (*TorqueDto, error) {
 	a := TorqueDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into TorqueDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -89,6 +94,9 @@ func (udf TorqueDtoFactory) FromJSON(data []byte) (*TorqueDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a TorqueDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a TorqueDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -100,10 +108,11 @@ func (a TorqueDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Torque struct
+// Torque represents a measurement in a of Torque.
+//
+// Torque, moment or moment of force (see the terminology below), is the tendency of a force to rotate an object about an axis,[1] fulcrum, or pivot. Just as a force is a push or a pull, a torque can be thought of as a twist to an object. Mathematically, torque is defined as the cross product of the lever-arm distance and force, which tends to produce rotation. Loosely speaking, torque is a measure of the turning force on an object such as a bolt or a flywheel. For example, pushing or pulling the handle of a wrench connected to a nut or bolt produces a torque (turning force) that loosens or tightens the nut or bolt.
 type Torque struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     newton_millimetersLazy *float64 
@@ -133,152 +142,153 @@ type Torque struct {
     megapound_force_feetLazy *float64 
 }
 
-// TorqueFactory struct to group related functions
+// TorqueFactory groups methods for creating Torque instances.
 type TorqueFactory struct{}
 
+// CreateTorque creates a new Torque instance from the given value and unit.
 func (uf TorqueFactory) CreateTorque(value float64, unit TorqueUnits) (*Torque, error) {
 	return newTorque(value, unit)
 }
 
+// FromDto converts a TorqueDto to a Torque instance.
 func (uf TorqueFactory) FromDto(dto TorqueDto) (*Torque, error) {
 	return newTorque(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Torque instance.
 func (uf TorqueFactory) FromDtoJSON(data []byte) (*Torque, error) {
 	unitDto, err := TorqueDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse TorqueDto from JSON: %w", err)
 	}
 	return TorqueFactory{}.FromDto(*unitDto)
 }
 
 
-// FromNewtonMillimeter creates a new Torque instance from NewtonMillimeter.
+// FromNewtonMillimeters creates a new Torque instance from a value in NewtonMillimeters.
 func (uf TorqueFactory) FromNewtonMillimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueNewtonMillimeter)
 }
 
-// FromNewtonCentimeter creates a new Torque instance from NewtonCentimeter.
+// FromNewtonCentimeters creates a new Torque instance from a value in NewtonCentimeters.
 func (uf TorqueFactory) FromNewtonCentimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueNewtonCentimeter)
 }
 
-// FromNewtonMeter creates a new Torque instance from NewtonMeter.
+// FromNewtonMeters creates a new Torque instance from a value in NewtonMeters.
 func (uf TorqueFactory) FromNewtonMeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueNewtonMeter)
 }
 
-// FromPoundalFoot creates a new Torque instance from PoundalFoot.
+// FromPoundalFeet creates a new Torque instance from a value in PoundalFeet.
 func (uf TorqueFactory) FromPoundalFeet(value float64) (*Torque, error) {
 	return newTorque(value, TorquePoundalFoot)
 }
 
-// FromPoundForceInch creates a new Torque instance from PoundForceInch.
+// FromPoundForceInches creates a new Torque instance from a value in PoundForceInches.
 func (uf TorqueFactory) FromPoundForceInches(value float64) (*Torque, error) {
 	return newTorque(value, TorquePoundForceInch)
 }
 
-// FromPoundForceFoot creates a new Torque instance from PoundForceFoot.
+// FromPoundForceFeet creates a new Torque instance from a value in PoundForceFeet.
 func (uf TorqueFactory) FromPoundForceFeet(value float64) (*Torque, error) {
 	return newTorque(value, TorquePoundForceFoot)
 }
 
-// FromGramForceMillimeter creates a new Torque instance from GramForceMillimeter.
+// FromGramForceMillimeters creates a new Torque instance from a value in GramForceMillimeters.
 func (uf TorqueFactory) FromGramForceMillimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueGramForceMillimeter)
 }
 
-// FromGramForceCentimeter creates a new Torque instance from GramForceCentimeter.
+// FromGramForceCentimeters creates a new Torque instance from a value in GramForceCentimeters.
 func (uf TorqueFactory) FromGramForceCentimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueGramForceCentimeter)
 }
 
-// FromGramForceMeter creates a new Torque instance from GramForceMeter.
+// FromGramForceMeters creates a new Torque instance from a value in GramForceMeters.
 func (uf TorqueFactory) FromGramForceMeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueGramForceMeter)
 }
 
-// FromKilogramForceMillimeter creates a new Torque instance from KilogramForceMillimeter.
+// FromKilogramForceMillimeters creates a new Torque instance from a value in KilogramForceMillimeters.
 func (uf TorqueFactory) FromKilogramForceMillimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueKilogramForceMillimeter)
 }
 
-// FromKilogramForceCentimeter creates a new Torque instance from KilogramForceCentimeter.
+// FromKilogramForceCentimeters creates a new Torque instance from a value in KilogramForceCentimeters.
 func (uf TorqueFactory) FromKilogramForceCentimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueKilogramForceCentimeter)
 }
 
-// FromKilogramForceMeter creates a new Torque instance from KilogramForceMeter.
+// FromKilogramForceMeters creates a new Torque instance from a value in KilogramForceMeters.
 func (uf TorqueFactory) FromKilogramForceMeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueKilogramForceMeter)
 }
 
-// FromTonneForceMillimeter creates a new Torque instance from TonneForceMillimeter.
+// FromTonneForceMillimeters creates a new Torque instance from a value in TonneForceMillimeters.
 func (uf TorqueFactory) FromTonneForceMillimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueTonneForceMillimeter)
 }
 
-// FromTonneForceCentimeter creates a new Torque instance from TonneForceCentimeter.
+// FromTonneForceCentimeters creates a new Torque instance from a value in TonneForceCentimeters.
 func (uf TorqueFactory) FromTonneForceCentimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueTonneForceCentimeter)
 }
 
-// FromTonneForceMeter creates a new Torque instance from TonneForceMeter.
+// FromTonneForceMeters creates a new Torque instance from a value in TonneForceMeters.
 func (uf TorqueFactory) FromTonneForceMeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueTonneForceMeter)
 }
 
-// FromKilonewtonMillimeter creates a new Torque instance from KilonewtonMillimeter.
+// FromKilonewtonMillimeters creates a new Torque instance from a value in KilonewtonMillimeters.
 func (uf TorqueFactory) FromKilonewtonMillimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueKilonewtonMillimeter)
 }
 
-// FromMeganewtonMillimeter creates a new Torque instance from MeganewtonMillimeter.
+// FromMeganewtonMillimeters creates a new Torque instance from a value in MeganewtonMillimeters.
 func (uf TorqueFactory) FromMeganewtonMillimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueMeganewtonMillimeter)
 }
 
-// FromKilonewtonCentimeter creates a new Torque instance from KilonewtonCentimeter.
+// FromKilonewtonCentimeters creates a new Torque instance from a value in KilonewtonCentimeters.
 func (uf TorqueFactory) FromKilonewtonCentimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueKilonewtonCentimeter)
 }
 
-// FromMeganewtonCentimeter creates a new Torque instance from MeganewtonCentimeter.
+// FromMeganewtonCentimeters creates a new Torque instance from a value in MeganewtonCentimeters.
 func (uf TorqueFactory) FromMeganewtonCentimeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueMeganewtonCentimeter)
 }
 
-// FromKilonewtonMeter creates a new Torque instance from KilonewtonMeter.
+// FromKilonewtonMeters creates a new Torque instance from a value in KilonewtonMeters.
 func (uf TorqueFactory) FromKilonewtonMeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueKilonewtonMeter)
 }
 
-// FromMeganewtonMeter creates a new Torque instance from MeganewtonMeter.
+// FromMeganewtonMeters creates a new Torque instance from a value in MeganewtonMeters.
 func (uf TorqueFactory) FromMeganewtonMeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueMeganewtonMeter)
 }
 
-// FromKilopoundForceInch creates a new Torque instance from KilopoundForceInch.
+// FromKilopoundForceInches creates a new Torque instance from a value in KilopoundForceInches.
 func (uf TorqueFactory) FromKilopoundForceInches(value float64) (*Torque, error) {
 	return newTorque(value, TorqueKilopoundForceInch)
 }
 
-// FromMegapoundForceInch creates a new Torque instance from MegapoundForceInch.
+// FromMegapoundForceInches creates a new Torque instance from a value in MegapoundForceInches.
 func (uf TorqueFactory) FromMegapoundForceInches(value float64) (*Torque, error) {
 	return newTorque(value, TorqueMegapoundForceInch)
 }
 
-// FromKilopoundForceFoot creates a new Torque instance from KilopoundForceFoot.
+// FromKilopoundForceFeet creates a new Torque instance from a value in KilopoundForceFeet.
 func (uf TorqueFactory) FromKilopoundForceFeet(value float64) (*Torque, error) {
 	return newTorque(value, TorqueKilopoundForceFoot)
 }
 
-// FromMegapoundForceFoot creates a new Torque instance from MegapoundForceFoot.
+// FromMegapoundForceFeet creates a new Torque instance from a value in MegapoundForceFeet.
 func (uf TorqueFactory) FromMegapoundForceFeet(value float64) (*Torque, error) {
 	return newTorque(value, TorqueMegapoundForceFoot)
 }
-
-
 
 
 // newTorque creates a new Torque.
@@ -291,13 +301,15 @@ func newTorque(value float64, fromUnit TorqueUnits) (*Torque, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Torque in NewtonMeter.
+// BaseValue returns the base value of Torque in NewtonMeter unit (the base/default quantity).
 func (a *Torque) BaseValue() float64 {
 	return a.value
 }
 
 
-// NewtonMillimeter returns the value in NewtonMillimeter.
+// NewtonMillimeters returns the Torque value in NewtonMillimeters.
+//
+// 
 func (a *Torque) NewtonMillimeters() float64 {
 	if a.newton_millimetersLazy != nil {
 		return *a.newton_millimetersLazy
@@ -307,7 +319,9 @@ func (a *Torque) NewtonMillimeters() float64 {
 	return newton_millimeters
 }
 
-// NewtonCentimeter returns the value in NewtonCentimeter.
+// NewtonCentimeters returns the Torque value in NewtonCentimeters.
+//
+// 
 func (a *Torque) NewtonCentimeters() float64 {
 	if a.newton_centimetersLazy != nil {
 		return *a.newton_centimetersLazy
@@ -317,7 +331,9 @@ func (a *Torque) NewtonCentimeters() float64 {
 	return newton_centimeters
 }
 
-// NewtonMeter returns the value in NewtonMeter.
+// NewtonMeters returns the Torque value in NewtonMeters.
+//
+// 
 func (a *Torque) NewtonMeters() float64 {
 	if a.newton_metersLazy != nil {
 		return *a.newton_metersLazy
@@ -327,7 +343,9 @@ func (a *Torque) NewtonMeters() float64 {
 	return newton_meters
 }
 
-// PoundalFoot returns the value in PoundalFoot.
+// PoundalFeet returns the Torque value in PoundalFeet.
+//
+// 
 func (a *Torque) PoundalFeet() float64 {
 	if a.poundal_feetLazy != nil {
 		return *a.poundal_feetLazy
@@ -337,7 +355,9 @@ func (a *Torque) PoundalFeet() float64 {
 	return poundal_feet
 }
 
-// PoundForceInch returns the value in PoundForceInch.
+// PoundForceInches returns the Torque value in PoundForceInches.
+//
+// 
 func (a *Torque) PoundForceInches() float64 {
 	if a.pound_force_inchesLazy != nil {
 		return *a.pound_force_inchesLazy
@@ -347,7 +367,9 @@ func (a *Torque) PoundForceInches() float64 {
 	return pound_force_inches
 }
 
-// PoundForceFoot returns the value in PoundForceFoot.
+// PoundForceFeet returns the Torque value in PoundForceFeet.
+//
+// 
 func (a *Torque) PoundForceFeet() float64 {
 	if a.pound_force_feetLazy != nil {
 		return *a.pound_force_feetLazy
@@ -357,7 +379,9 @@ func (a *Torque) PoundForceFeet() float64 {
 	return pound_force_feet
 }
 
-// GramForceMillimeter returns the value in GramForceMillimeter.
+// GramForceMillimeters returns the Torque value in GramForceMillimeters.
+//
+// 
 func (a *Torque) GramForceMillimeters() float64 {
 	if a.gram_force_millimetersLazy != nil {
 		return *a.gram_force_millimetersLazy
@@ -367,7 +391,9 @@ func (a *Torque) GramForceMillimeters() float64 {
 	return gram_force_millimeters
 }
 
-// GramForceCentimeter returns the value in GramForceCentimeter.
+// GramForceCentimeters returns the Torque value in GramForceCentimeters.
+//
+// 
 func (a *Torque) GramForceCentimeters() float64 {
 	if a.gram_force_centimetersLazy != nil {
 		return *a.gram_force_centimetersLazy
@@ -377,7 +403,9 @@ func (a *Torque) GramForceCentimeters() float64 {
 	return gram_force_centimeters
 }
 
-// GramForceMeter returns the value in GramForceMeter.
+// GramForceMeters returns the Torque value in GramForceMeters.
+//
+// 
 func (a *Torque) GramForceMeters() float64 {
 	if a.gram_force_metersLazy != nil {
 		return *a.gram_force_metersLazy
@@ -387,7 +415,9 @@ func (a *Torque) GramForceMeters() float64 {
 	return gram_force_meters
 }
 
-// KilogramForceMillimeter returns the value in KilogramForceMillimeter.
+// KilogramForceMillimeters returns the Torque value in KilogramForceMillimeters.
+//
+// 
 func (a *Torque) KilogramForceMillimeters() float64 {
 	if a.kilogram_force_millimetersLazy != nil {
 		return *a.kilogram_force_millimetersLazy
@@ -397,7 +427,9 @@ func (a *Torque) KilogramForceMillimeters() float64 {
 	return kilogram_force_millimeters
 }
 
-// KilogramForceCentimeter returns the value in KilogramForceCentimeter.
+// KilogramForceCentimeters returns the Torque value in KilogramForceCentimeters.
+//
+// 
 func (a *Torque) KilogramForceCentimeters() float64 {
 	if a.kilogram_force_centimetersLazy != nil {
 		return *a.kilogram_force_centimetersLazy
@@ -407,7 +439,9 @@ func (a *Torque) KilogramForceCentimeters() float64 {
 	return kilogram_force_centimeters
 }
 
-// KilogramForceMeter returns the value in KilogramForceMeter.
+// KilogramForceMeters returns the Torque value in KilogramForceMeters.
+//
+// 
 func (a *Torque) KilogramForceMeters() float64 {
 	if a.kilogram_force_metersLazy != nil {
 		return *a.kilogram_force_metersLazy
@@ -417,7 +451,9 @@ func (a *Torque) KilogramForceMeters() float64 {
 	return kilogram_force_meters
 }
 
-// TonneForceMillimeter returns the value in TonneForceMillimeter.
+// TonneForceMillimeters returns the Torque value in TonneForceMillimeters.
+//
+// 
 func (a *Torque) TonneForceMillimeters() float64 {
 	if a.tonne_force_millimetersLazy != nil {
 		return *a.tonne_force_millimetersLazy
@@ -427,7 +463,9 @@ func (a *Torque) TonneForceMillimeters() float64 {
 	return tonne_force_millimeters
 }
 
-// TonneForceCentimeter returns the value in TonneForceCentimeter.
+// TonneForceCentimeters returns the Torque value in TonneForceCentimeters.
+//
+// 
 func (a *Torque) TonneForceCentimeters() float64 {
 	if a.tonne_force_centimetersLazy != nil {
 		return *a.tonne_force_centimetersLazy
@@ -437,7 +475,9 @@ func (a *Torque) TonneForceCentimeters() float64 {
 	return tonne_force_centimeters
 }
 
-// TonneForceMeter returns the value in TonneForceMeter.
+// TonneForceMeters returns the Torque value in TonneForceMeters.
+//
+// 
 func (a *Torque) TonneForceMeters() float64 {
 	if a.tonne_force_metersLazy != nil {
 		return *a.tonne_force_metersLazy
@@ -447,7 +487,9 @@ func (a *Torque) TonneForceMeters() float64 {
 	return tonne_force_meters
 }
 
-// KilonewtonMillimeter returns the value in KilonewtonMillimeter.
+// KilonewtonMillimeters returns the Torque value in KilonewtonMillimeters.
+//
+// 
 func (a *Torque) KilonewtonMillimeters() float64 {
 	if a.kilonewton_millimetersLazy != nil {
 		return *a.kilonewton_millimetersLazy
@@ -457,7 +499,9 @@ func (a *Torque) KilonewtonMillimeters() float64 {
 	return kilonewton_millimeters
 }
 
-// MeganewtonMillimeter returns the value in MeganewtonMillimeter.
+// MeganewtonMillimeters returns the Torque value in MeganewtonMillimeters.
+//
+// 
 func (a *Torque) MeganewtonMillimeters() float64 {
 	if a.meganewton_millimetersLazy != nil {
 		return *a.meganewton_millimetersLazy
@@ -467,7 +511,9 @@ func (a *Torque) MeganewtonMillimeters() float64 {
 	return meganewton_millimeters
 }
 
-// KilonewtonCentimeter returns the value in KilonewtonCentimeter.
+// KilonewtonCentimeters returns the Torque value in KilonewtonCentimeters.
+//
+// 
 func (a *Torque) KilonewtonCentimeters() float64 {
 	if a.kilonewton_centimetersLazy != nil {
 		return *a.kilonewton_centimetersLazy
@@ -477,7 +523,9 @@ func (a *Torque) KilonewtonCentimeters() float64 {
 	return kilonewton_centimeters
 }
 
-// MeganewtonCentimeter returns the value in MeganewtonCentimeter.
+// MeganewtonCentimeters returns the Torque value in MeganewtonCentimeters.
+//
+// 
 func (a *Torque) MeganewtonCentimeters() float64 {
 	if a.meganewton_centimetersLazy != nil {
 		return *a.meganewton_centimetersLazy
@@ -487,7 +535,9 @@ func (a *Torque) MeganewtonCentimeters() float64 {
 	return meganewton_centimeters
 }
 
-// KilonewtonMeter returns the value in KilonewtonMeter.
+// KilonewtonMeters returns the Torque value in KilonewtonMeters.
+//
+// 
 func (a *Torque) KilonewtonMeters() float64 {
 	if a.kilonewton_metersLazy != nil {
 		return *a.kilonewton_metersLazy
@@ -497,7 +547,9 @@ func (a *Torque) KilonewtonMeters() float64 {
 	return kilonewton_meters
 }
 
-// MeganewtonMeter returns the value in MeganewtonMeter.
+// MeganewtonMeters returns the Torque value in MeganewtonMeters.
+//
+// 
 func (a *Torque) MeganewtonMeters() float64 {
 	if a.meganewton_metersLazy != nil {
 		return *a.meganewton_metersLazy
@@ -507,7 +559,9 @@ func (a *Torque) MeganewtonMeters() float64 {
 	return meganewton_meters
 }
 
-// KilopoundForceInch returns the value in KilopoundForceInch.
+// KilopoundForceInches returns the Torque value in KilopoundForceInches.
+//
+// 
 func (a *Torque) KilopoundForceInches() float64 {
 	if a.kilopound_force_inchesLazy != nil {
 		return *a.kilopound_force_inchesLazy
@@ -517,7 +571,9 @@ func (a *Torque) KilopoundForceInches() float64 {
 	return kilopound_force_inches
 }
 
-// MegapoundForceInch returns the value in MegapoundForceInch.
+// MegapoundForceInches returns the Torque value in MegapoundForceInches.
+//
+// 
 func (a *Torque) MegapoundForceInches() float64 {
 	if a.megapound_force_inchesLazy != nil {
 		return *a.megapound_force_inchesLazy
@@ -527,7 +583,9 @@ func (a *Torque) MegapoundForceInches() float64 {
 	return megapound_force_inches
 }
 
-// KilopoundForceFoot returns the value in KilopoundForceFoot.
+// KilopoundForceFeet returns the Torque value in KilopoundForceFeet.
+//
+// 
 func (a *Torque) KilopoundForceFeet() float64 {
 	if a.kilopound_force_feetLazy != nil {
 		return *a.kilopound_force_feetLazy
@@ -537,7 +595,9 @@ func (a *Torque) KilopoundForceFeet() float64 {
 	return kilopound_force_feet
 }
 
-// MegapoundForceFoot returns the value in MegapoundForceFoot.
+// MegapoundForceFeet returns the Torque value in MegapoundForceFeet.
+//
+// 
 func (a *Torque) MegapoundForceFeet() float64 {
 	if a.megapound_force_feetLazy != nil {
 		return *a.megapound_force_feetLazy
@@ -548,7 +608,9 @@ func (a *Torque) MegapoundForceFeet() float64 {
 }
 
 
-// ToDto creates an TorqueDto representation.
+// ToDto creates a TorqueDto representation from the Torque instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonMeter by default.
 func (a *Torque) ToDto(holdInUnit *TorqueUnits) TorqueDto {
 	if holdInUnit == nil {
 		defaultUnit := TorqueNewtonMeter // Default value
@@ -561,12 +623,19 @@ func (a *Torque) ToDto(holdInUnit *TorqueUnits) TorqueDto {
 	}
 }
 
-// ToDtoJSON creates an TorqueDto representation.
+// ToDtoJSON creates a JSON representation of the Torque instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonMeter by default.
 func (a *Torque) ToDtoJSON(holdInUnit *TorqueUnits) ([]byte, error) {
+	// Convert to TorqueDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Torque to a specific unit value.
+// Convert converts a Torque to a specific unit value.
+// The function uses the provided unit type (TorqueUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Torque) Convert(toUnit TorqueUnits) float64 {
 	switch toUnit { 
     case TorqueNewtonMillimeter:
@@ -620,7 +689,7 @@ func (a *Torque) Convert(toUnit TorqueUnits) float64 {
     case TorqueMegapoundForceFoot:
 		return a.MegapoundForceFeet()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -739,13 +808,22 @@ func (a *Torque) convertToBase(value float64, fromUnit TorqueUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Torque in the default unit (NewtonMeter),
+// formatted to two decimal places.
 func (a Torque) String() string {
 	return a.ToString(TorqueNewtonMeter, 2)
 }
 
-// ToString formats the Torque to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Torque value as a string with the specified unit and fractional digits.
+// It converts the Torque to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Torque value will be converted (e.g., NewtonMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Torque with the unit abbreviation.
 func (a *Torque) ToString(unit TorqueUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -813,12 +891,26 @@ func (a *Torque) getUnitAbbreviation(unit TorqueUnits) string {
 	}
 }
 
-// Check if the given Torque are equals to the current Torque
+// Equals checks if the given Torque is equal to the current Torque.
+//
+// Parameters:
+//    other: The Torque to compare against.
+//
+// Returns:
+//    bool: Returns true if both Torque are equal, false otherwise.
 func (a *Torque) Equals(other *Torque) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Torque are equals to the current Torque
+// CompareTo compares the current Torque with another Torque.
+// It returns -1 if the current Torque is less than the other Torque, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Torque to compare against.
+//
+// Returns:
+//    int: -1 if the current Torque is less, 1 if greater, and 0 if equal.
 func (a *Torque) CompareTo(other *Torque) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -831,22 +923,50 @@ func (a *Torque) CompareTo(other *Torque) int {
 	return 0
 }
 
-// Add the given Torque to the current Torque.
+// Add adds the given Torque to the current Torque and returns the result.
+// The result is a new Torque instance with the sum of the values.
+//
+// Parameters:
+//    other: The Torque to add to the current Torque.
+//
+// Returns:
+//    *Torque: A new Torque instance representing the sum of both Torque.
 func (a *Torque) Add(other *Torque) *Torque {
 	return &Torque{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Torque to the current Torque.
+// Subtract subtracts the given Torque from the current Torque and returns the result.
+// The result is a new Torque instance with the difference of the values.
+//
+// Parameters:
+//    other: The Torque to subtract from the current Torque.
+//
+// Returns:
+//    *Torque: A new Torque instance representing the difference of both Torque.
 func (a *Torque) Subtract(other *Torque) *Torque {
 	return &Torque{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Torque to the current Torque.
+// Multiply multiplies the current Torque by the given Torque and returns the result.
+// The result is a new Torque instance with the product of the values.
+//
+// Parameters:
+//    other: The Torque to multiply with the current Torque.
+//
+// Returns:
+//    *Torque: A new Torque instance representing the product of both Torque.
 func (a *Torque) Multiply(other *Torque) *Torque {
 	return &Torque{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Torque to the current Torque.
+// Divide divides the current Torque by the given Torque and returns the result.
+// The result is a new Torque instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Torque to divide the current Torque by.
+//
+// Returns:
+//    *Torque: A new Torque instance representing the quotient of both Torque.
 func (a *Torque) Divide(other *Torque) *Torque {
 	return &Torque{value: a.value / other.BaseValue()}
 }

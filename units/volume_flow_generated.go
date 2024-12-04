@@ -12,7 +12,7 @@ import (
 
 
 
-// VolumeFlowUnits enumeration
+// VolumeFlowUnits defines various units of VolumeFlow.
 type VolumeFlowUnits string
 
 const (
@@ -169,19 +169,24 @@ const (
         VolumeFlowMegaukGallonPerSecond VolumeFlowUnits = "MegaukGallonPerSecond"
 )
 
-// VolumeFlowDto represents an VolumeFlow
+// VolumeFlowDto represents a VolumeFlow measurement with a numerical value and its corresponding unit.
 type VolumeFlowDto struct {
+    // Value is the numerical representation of the VolumeFlow.
 	Value float64
+    // Unit specifies the unit of measurement for the VolumeFlow, as defined in the VolumeFlowUnits enumeration.
 	Unit  VolumeFlowUnits
 }
 
-// VolumeFlowDtoFactory struct to group related functions
+// VolumeFlowDtoFactory groups methods for creating and serializing VolumeFlowDto objects.
 type VolumeFlowDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a VolumeFlowDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf VolumeFlowDtoFactory) FromJSON(data []byte) (*VolumeFlowDto, error) {
 	a := VolumeFlowDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into VolumeFlowDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -189,6 +194,9 @@ func (udf VolumeFlowDtoFactory) FromJSON(data []byte) (*VolumeFlowDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a VolumeFlowDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a VolumeFlowDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -200,10 +208,11 @@ func (a VolumeFlowDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// VolumeFlow struct
+// VolumeFlow represents a measurement in a of VolumeFlow.
+//
+// In physics and engineering, in particular fluid dynamics and hydrometry, the volumetric flow rate, (also known as volume flow rate, rate of fluid flow or volume velocity) is the volume of fluid which passes through a given surface per unit time. The SI unit is m³/s (cubic meters per second). In US Customary Units and British Imperial Units, volumetric flow rate is often expressed as ft³/s (cubic feet per second). It is usually represented by the symbol Q.
 type VolumeFlow struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     cubic_meters_per_secondLazy *float64 
@@ -283,402 +292,403 @@ type VolumeFlow struct {
     megauk_gallons_per_secondLazy *float64 
 }
 
-// VolumeFlowFactory struct to group related functions
+// VolumeFlowFactory groups methods for creating VolumeFlow instances.
 type VolumeFlowFactory struct{}
 
+// CreateVolumeFlow creates a new VolumeFlow instance from the given value and unit.
 func (uf VolumeFlowFactory) CreateVolumeFlow(value float64, unit VolumeFlowUnits) (*VolumeFlow, error) {
 	return newVolumeFlow(value, unit)
 }
 
+// FromDto converts a VolumeFlowDto to a VolumeFlow instance.
 func (uf VolumeFlowFactory) FromDto(dto VolumeFlowDto) (*VolumeFlow, error) {
 	return newVolumeFlow(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a VolumeFlow instance.
 func (uf VolumeFlowFactory) FromDtoJSON(data []byte) (*VolumeFlow, error) {
 	unitDto, err := VolumeFlowDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse VolumeFlowDto from JSON: %w", err)
 	}
 	return VolumeFlowFactory{}.FromDto(*unitDto)
 }
 
 
-// FromCubicMeterPerSecond creates a new VolumeFlow instance from CubicMeterPerSecond.
+// FromCubicMetersPerSecond creates a new VolumeFlow instance from a value in CubicMetersPerSecond.
 func (uf VolumeFlowFactory) FromCubicMetersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicMeterPerSecond)
 }
 
-// FromCubicMeterPerMinute creates a new VolumeFlow instance from CubicMeterPerMinute.
+// FromCubicMetersPerMinute creates a new VolumeFlow instance from a value in CubicMetersPerMinute.
 func (uf VolumeFlowFactory) FromCubicMetersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicMeterPerMinute)
 }
 
-// FromCubicMeterPerHour creates a new VolumeFlow instance from CubicMeterPerHour.
+// FromCubicMetersPerHour creates a new VolumeFlow instance from a value in CubicMetersPerHour.
 func (uf VolumeFlowFactory) FromCubicMetersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicMeterPerHour)
 }
 
-// FromCubicMeterPerDay creates a new VolumeFlow instance from CubicMeterPerDay.
+// FromCubicMetersPerDay creates a new VolumeFlow instance from a value in CubicMetersPerDay.
 func (uf VolumeFlowFactory) FromCubicMetersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicMeterPerDay)
 }
 
-// FromCubicFootPerSecond creates a new VolumeFlow instance from CubicFootPerSecond.
+// FromCubicFeetPerSecond creates a new VolumeFlow instance from a value in CubicFeetPerSecond.
 func (uf VolumeFlowFactory) FromCubicFeetPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicFootPerSecond)
 }
 
-// FromCubicFootPerMinute creates a new VolumeFlow instance from CubicFootPerMinute.
+// FromCubicFeetPerMinute creates a new VolumeFlow instance from a value in CubicFeetPerMinute.
 func (uf VolumeFlowFactory) FromCubicFeetPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicFootPerMinute)
 }
 
-// FromCubicFootPerHour creates a new VolumeFlow instance from CubicFootPerHour.
+// FromCubicFeetPerHour creates a new VolumeFlow instance from a value in CubicFeetPerHour.
 func (uf VolumeFlowFactory) FromCubicFeetPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicFootPerHour)
 }
 
-// FromCubicYardPerSecond creates a new VolumeFlow instance from CubicYardPerSecond.
+// FromCubicYardsPerSecond creates a new VolumeFlow instance from a value in CubicYardsPerSecond.
 func (uf VolumeFlowFactory) FromCubicYardsPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicYardPerSecond)
 }
 
-// FromCubicYardPerMinute creates a new VolumeFlow instance from CubicYardPerMinute.
+// FromCubicYardsPerMinute creates a new VolumeFlow instance from a value in CubicYardsPerMinute.
 func (uf VolumeFlowFactory) FromCubicYardsPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicYardPerMinute)
 }
 
-// FromCubicYardPerHour creates a new VolumeFlow instance from CubicYardPerHour.
+// FromCubicYardsPerHour creates a new VolumeFlow instance from a value in CubicYardsPerHour.
 func (uf VolumeFlowFactory) FromCubicYardsPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicYardPerHour)
 }
 
-// FromCubicYardPerDay creates a new VolumeFlow instance from CubicYardPerDay.
+// FromCubicYardsPerDay creates a new VolumeFlow instance from a value in CubicYardsPerDay.
 func (uf VolumeFlowFactory) FromCubicYardsPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicYardPerDay)
 }
 
-// FromMillionUsGallonPerDay creates a new VolumeFlow instance from MillionUsGallonPerDay.
+// FromMillionUsGallonsPerDay creates a new VolumeFlow instance from a value in MillionUsGallonsPerDay.
 func (uf VolumeFlowFactory) FromMillionUsGallonsPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMillionUsGallonPerDay)
 }
 
-// FromUsGallonPerDay creates a new VolumeFlow instance from UsGallonPerDay.
+// FromUsGallonsPerDay creates a new VolumeFlow instance from a value in UsGallonsPerDay.
 func (uf VolumeFlowFactory) FromUsGallonsPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowUsGallonPerDay)
 }
 
-// FromLiterPerSecond creates a new VolumeFlow instance from LiterPerSecond.
+// FromLitersPerSecond creates a new VolumeFlow instance from a value in LitersPerSecond.
 func (uf VolumeFlowFactory) FromLitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowLiterPerSecond)
 }
 
-// FromLiterPerMinute creates a new VolumeFlow instance from LiterPerMinute.
+// FromLitersPerMinute creates a new VolumeFlow instance from a value in LitersPerMinute.
 func (uf VolumeFlowFactory) FromLitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowLiterPerMinute)
 }
 
-// FromLiterPerHour creates a new VolumeFlow instance from LiterPerHour.
+// FromLitersPerHour creates a new VolumeFlow instance from a value in LitersPerHour.
 func (uf VolumeFlowFactory) FromLitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowLiterPerHour)
 }
 
-// FromLiterPerDay creates a new VolumeFlow instance from LiterPerDay.
+// FromLitersPerDay creates a new VolumeFlow instance from a value in LitersPerDay.
 func (uf VolumeFlowFactory) FromLitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowLiterPerDay)
 }
 
-// FromUsGallonPerSecond creates a new VolumeFlow instance from UsGallonPerSecond.
+// FromUsGallonsPerSecond creates a new VolumeFlow instance from a value in UsGallonsPerSecond.
 func (uf VolumeFlowFactory) FromUsGallonsPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowUsGallonPerSecond)
 }
 
-// FromUsGallonPerMinute creates a new VolumeFlow instance from UsGallonPerMinute.
+// FromUsGallonsPerMinute creates a new VolumeFlow instance from a value in UsGallonsPerMinute.
 func (uf VolumeFlowFactory) FromUsGallonsPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowUsGallonPerMinute)
 }
 
-// FromUkGallonPerDay creates a new VolumeFlow instance from UkGallonPerDay.
+// FromUkGallonsPerDay creates a new VolumeFlow instance from a value in UkGallonsPerDay.
 func (uf VolumeFlowFactory) FromUkGallonsPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowUkGallonPerDay)
 }
 
-// FromUkGallonPerHour creates a new VolumeFlow instance from UkGallonPerHour.
+// FromUkGallonsPerHour creates a new VolumeFlow instance from a value in UkGallonsPerHour.
 func (uf VolumeFlowFactory) FromUkGallonsPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowUkGallonPerHour)
 }
 
-// FromUkGallonPerMinute creates a new VolumeFlow instance from UkGallonPerMinute.
+// FromUkGallonsPerMinute creates a new VolumeFlow instance from a value in UkGallonsPerMinute.
 func (uf VolumeFlowFactory) FromUkGallonsPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowUkGallonPerMinute)
 }
 
-// FromUkGallonPerSecond creates a new VolumeFlow instance from UkGallonPerSecond.
+// FromUkGallonsPerSecond creates a new VolumeFlow instance from a value in UkGallonsPerSecond.
 func (uf VolumeFlowFactory) FromUkGallonsPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowUkGallonPerSecond)
 }
 
-// FromKilousGallonPerMinute creates a new VolumeFlow instance from KilousGallonPerMinute.
+// FromKilousGallonsPerMinute creates a new VolumeFlow instance from a value in KilousGallonsPerMinute.
 func (uf VolumeFlowFactory) FromKilousGallonsPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowKilousGallonPerMinute)
 }
 
-// FromUsGallonPerHour creates a new VolumeFlow instance from UsGallonPerHour.
+// FromUsGallonsPerHour creates a new VolumeFlow instance from a value in UsGallonsPerHour.
 func (uf VolumeFlowFactory) FromUsGallonsPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowUsGallonPerHour)
 }
 
-// FromCubicDecimeterPerMinute creates a new VolumeFlow instance from CubicDecimeterPerMinute.
+// FromCubicDecimetersPerMinute creates a new VolumeFlow instance from a value in CubicDecimetersPerMinute.
 func (uf VolumeFlowFactory) FromCubicDecimetersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicDecimeterPerMinute)
 }
 
-// FromOilBarrelPerDay creates a new VolumeFlow instance from OilBarrelPerDay.
+// FromOilBarrelsPerDay creates a new VolumeFlow instance from a value in OilBarrelsPerDay.
 func (uf VolumeFlowFactory) FromOilBarrelsPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowOilBarrelPerDay)
 }
 
-// FromOilBarrelPerMinute creates a new VolumeFlow instance from OilBarrelPerMinute.
+// FromOilBarrelsPerMinute creates a new VolumeFlow instance from a value in OilBarrelsPerMinute.
 func (uf VolumeFlowFactory) FromOilBarrelsPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowOilBarrelPerMinute)
 }
 
-// FromOilBarrelPerHour creates a new VolumeFlow instance from OilBarrelPerHour.
+// FromOilBarrelsPerHour creates a new VolumeFlow instance from a value in OilBarrelsPerHour.
 func (uf VolumeFlowFactory) FromOilBarrelsPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowOilBarrelPerHour)
 }
 
-// FromOilBarrelPerSecond creates a new VolumeFlow instance from OilBarrelPerSecond.
+// FromOilBarrelsPerSecond creates a new VolumeFlow instance from a value in OilBarrelsPerSecond.
 func (uf VolumeFlowFactory) FromOilBarrelsPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowOilBarrelPerSecond)
 }
 
-// FromCubicMillimeterPerSecond creates a new VolumeFlow instance from CubicMillimeterPerSecond.
+// FromCubicMillimetersPerSecond creates a new VolumeFlow instance from a value in CubicMillimetersPerSecond.
 func (uf VolumeFlowFactory) FromCubicMillimetersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicMillimeterPerSecond)
 }
 
-// FromAcreFootPerSecond creates a new VolumeFlow instance from AcreFootPerSecond.
+// FromAcreFeetPerSecond creates a new VolumeFlow instance from a value in AcreFeetPerSecond.
 func (uf VolumeFlowFactory) FromAcreFeetPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowAcreFootPerSecond)
 }
 
-// FromAcreFootPerMinute creates a new VolumeFlow instance from AcreFootPerMinute.
+// FromAcreFeetPerMinute creates a new VolumeFlow instance from a value in AcreFeetPerMinute.
 func (uf VolumeFlowFactory) FromAcreFeetPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowAcreFootPerMinute)
 }
 
-// FromAcreFootPerHour creates a new VolumeFlow instance from AcreFootPerHour.
+// FromAcreFeetPerHour creates a new VolumeFlow instance from a value in AcreFeetPerHour.
 func (uf VolumeFlowFactory) FromAcreFeetPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowAcreFootPerHour)
 }
 
-// FromAcreFootPerDay creates a new VolumeFlow instance from AcreFootPerDay.
+// FromAcreFeetPerDay creates a new VolumeFlow instance from a value in AcreFeetPerDay.
 func (uf VolumeFlowFactory) FromAcreFeetPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowAcreFootPerDay)
 }
 
-// FromCubicCentimeterPerMinute creates a new VolumeFlow instance from CubicCentimeterPerMinute.
+// FromCubicCentimetersPerMinute creates a new VolumeFlow instance from a value in CubicCentimetersPerMinute.
 func (uf VolumeFlowFactory) FromCubicCentimetersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCubicCentimeterPerMinute)
 }
 
-// FromMegausGallonPerDay creates a new VolumeFlow instance from MegausGallonPerDay.
+// FromMegausGallonsPerDay creates a new VolumeFlow instance from a value in MegausGallonsPerDay.
 func (uf VolumeFlowFactory) FromMegausGallonsPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMegausGallonPerDay)
 }
 
-// FromNanoliterPerSecond creates a new VolumeFlow instance from NanoliterPerSecond.
+// FromNanolitersPerSecond creates a new VolumeFlow instance from a value in NanolitersPerSecond.
 func (uf VolumeFlowFactory) FromNanolitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowNanoliterPerSecond)
 }
 
-// FromMicroliterPerSecond creates a new VolumeFlow instance from MicroliterPerSecond.
+// FromMicrolitersPerSecond creates a new VolumeFlow instance from a value in MicrolitersPerSecond.
 func (uf VolumeFlowFactory) FromMicrolitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMicroliterPerSecond)
 }
 
-// FromMilliliterPerSecond creates a new VolumeFlow instance from MilliliterPerSecond.
+// FromMillilitersPerSecond creates a new VolumeFlow instance from a value in MillilitersPerSecond.
 func (uf VolumeFlowFactory) FromMillilitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMilliliterPerSecond)
 }
 
-// FromCentiliterPerSecond creates a new VolumeFlow instance from CentiliterPerSecond.
+// FromCentilitersPerSecond creates a new VolumeFlow instance from a value in CentilitersPerSecond.
 func (uf VolumeFlowFactory) FromCentilitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCentiliterPerSecond)
 }
 
-// FromDeciliterPerSecond creates a new VolumeFlow instance from DeciliterPerSecond.
+// FromDecilitersPerSecond creates a new VolumeFlow instance from a value in DecilitersPerSecond.
 func (uf VolumeFlowFactory) FromDecilitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowDeciliterPerSecond)
 }
 
-// FromDecaliterPerSecond creates a new VolumeFlow instance from DecaliterPerSecond.
+// FromDecalitersPerSecond creates a new VolumeFlow instance from a value in DecalitersPerSecond.
 func (uf VolumeFlowFactory) FromDecalitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowDecaliterPerSecond)
 }
 
-// FromHectoliterPerSecond creates a new VolumeFlow instance from HectoliterPerSecond.
+// FromHectolitersPerSecond creates a new VolumeFlow instance from a value in HectolitersPerSecond.
 func (uf VolumeFlowFactory) FromHectolitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowHectoliterPerSecond)
 }
 
-// FromKiloliterPerSecond creates a new VolumeFlow instance from KiloliterPerSecond.
+// FromKilolitersPerSecond creates a new VolumeFlow instance from a value in KilolitersPerSecond.
 func (uf VolumeFlowFactory) FromKilolitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowKiloliterPerSecond)
 }
 
-// FromMegaliterPerSecond creates a new VolumeFlow instance from MegaliterPerSecond.
+// FromMegalitersPerSecond creates a new VolumeFlow instance from a value in MegalitersPerSecond.
 func (uf VolumeFlowFactory) FromMegalitersPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMegaliterPerSecond)
 }
 
-// FromNanoliterPerMinute creates a new VolumeFlow instance from NanoliterPerMinute.
+// FromNanolitersPerMinute creates a new VolumeFlow instance from a value in NanolitersPerMinute.
 func (uf VolumeFlowFactory) FromNanolitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowNanoliterPerMinute)
 }
 
-// FromMicroliterPerMinute creates a new VolumeFlow instance from MicroliterPerMinute.
+// FromMicrolitersPerMinute creates a new VolumeFlow instance from a value in MicrolitersPerMinute.
 func (uf VolumeFlowFactory) FromMicrolitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMicroliterPerMinute)
 }
 
-// FromMilliliterPerMinute creates a new VolumeFlow instance from MilliliterPerMinute.
+// FromMillilitersPerMinute creates a new VolumeFlow instance from a value in MillilitersPerMinute.
 func (uf VolumeFlowFactory) FromMillilitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMilliliterPerMinute)
 }
 
-// FromCentiliterPerMinute creates a new VolumeFlow instance from CentiliterPerMinute.
+// FromCentilitersPerMinute creates a new VolumeFlow instance from a value in CentilitersPerMinute.
 func (uf VolumeFlowFactory) FromCentilitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCentiliterPerMinute)
 }
 
-// FromDeciliterPerMinute creates a new VolumeFlow instance from DeciliterPerMinute.
+// FromDecilitersPerMinute creates a new VolumeFlow instance from a value in DecilitersPerMinute.
 func (uf VolumeFlowFactory) FromDecilitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowDeciliterPerMinute)
 }
 
-// FromDecaliterPerMinute creates a new VolumeFlow instance from DecaliterPerMinute.
+// FromDecalitersPerMinute creates a new VolumeFlow instance from a value in DecalitersPerMinute.
 func (uf VolumeFlowFactory) FromDecalitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowDecaliterPerMinute)
 }
 
-// FromHectoliterPerMinute creates a new VolumeFlow instance from HectoliterPerMinute.
+// FromHectolitersPerMinute creates a new VolumeFlow instance from a value in HectolitersPerMinute.
 func (uf VolumeFlowFactory) FromHectolitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowHectoliterPerMinute)
 }
 
-// FromKiloliterPerMinute creates a new VolumeFlow instance from KiloliterPerMinute.
+// FromKilolitersPerMinute creates a new VolumeFlow instance from a value in KilolitersPerMinute.
 func (uf VolumeFlowFactory) FromKilolitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowKiloliterPerMinute)
 }
 
-// FromMegaliterPerMinute creates a new VolumeFlow instance from MegaliterPerMinute.
+// FromMegalitersPerMinute creates a new VolumeFlow instance from a value in MegalitersPerMinute.
 func (uf VolumeFlowFactory) FromMegalitersPerMinute(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMegaliterPerMinute)
 }
 
-// FromNanoliterPerHour creates a new VolumeFlow instance from NanoliterPerHour.
+// FromNanolitersPerHour creates a new VolumeFlow instance from a value in NanolitersPerHour.
 func (uf VolumeFlowFactory) FromNanolitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowNanoliterPerHour)
 }
 
-// FromMicroliterPerHour creates a new VolumeFlow instance from MicroliterPerHour.
+// FromMicrolitersPerHour creates a new VolumeFlow instance from a value in MicrolitersPerHour.
 func (uf VolumeFlowFactory) FromMicrolitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMicroliterPerHour)
 }
 
-// FromMilliliterPerHour creates a new VolumeFlow instance from MilliliterPerHour.
+// FromMillilitersPerHour creates a new VolumeFlow instance from a value in MillilitersPerHour.
 func (uf VolumeFlowFactory) FromMillilitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMilliliterPerHour)
 }
 
-// FromCentiliterPerHour creates a new VolumeFlow instance from CentiliterPerHour.
+// FromCentilitersPerHour creates a new VolumeFlow instance from a value in CentilitersPerHour.
 func (uf VolumeFlowFactory) FromCentilitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCentiliterPerHour)
 }
 
-// FromDeciliterPerHour creates a new VolumeFlow instance from DeciliterPerHour.
+// FromDecilitersPerHour creates a new VolumeFlow instance from a value in DecilitersPerHour.
 func (uf VolumeFlowFactory) FromDecilitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowDeciliterPerHour)
 }
 
-// FromDecaliterPerHour creates a new VolumeFlow instance from DecaliterPerHour.
+// FromDecalitersPerHour creates a new VolumeFlow instance from a value in DecalitersPerHour.
 func (uf VolumeFlowFactory) FromDecalitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowDecaliterPerHour)
 }
 
-// FromHectoliterPerHour creates a new VolumeFlow instance from HectoliterPerHour.
+// FromHectolitersPerHour creates a new VolumeFlow instance from a value in HectolitersPerHour.
 func (uf VolumeFlowFactory) FromHectolitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowHectoliterPerHour)
 }
 
-// FromKiloliterPerHour creates a new VolumeFlow instance from KiloliterPerHour.
+// FromKilolitersPerHour creates a new VolumeFlow instance from a value in KilolitersPerHour.
 func (uf VolumeFlowFactory) FromKilolitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowKiloliterPerHour)
 }
 
-// FromMegaliterPerHour creates a new VolumeFlow instance from MegaliterPerHour.
+// FromMegalitersPerHour creates a new VolumeFlow instance from a value in MegalitersPerHour.
 func (uf VolumeFlowFactory) FromMegalitersPerHour(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMegaliterPerHour)
 }
 
-// FromNanoliterPerDay creates a new VolumeFlow instance from NanoliterPerDay.
+// FromNanolitersPerDay creates a new VolumeFlow instance from a value in NanolitersPerDay.
 func (uf VolumeFlowFactory) FromNanolitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowNanoliterPerDay)
 }
 
-// FromMicroliterPerDay creates a new VolumeFlow instance from MicroliterPerDay.
+// FromMicrolitersPerDay creates a new VolumeFlow instance from a value in MicrolitersPerDay.
 func (uf VolumeFlowFactory) FromMicrolitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMicroliterPerDay)
 }
 
-// FromMilliliterPerDay creates a new VolumeFlow instance from MilliliterPerDay.
+// FromMillilitersPerDay creates a new VolumeFlow instance from a value in MillilitersPerDay.
 func (uf VolumeFlowFactory) FromMillilitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMilliliterPerDay)
 }
 
-// FromCentiliterPerDay creates a new VolumeFlow instance from CentiliterPerDay.
+// FromCentilitersPerDay creates a new VolumeFlow instance from a value in CentilitersPerDay.
 func (uf VolumeFlowFactory) FromCentilitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowCentiliterPerDay)
 }
 
-// FromDeciliterPerDay creates a new VolumeFlow instance from DeciliterPerDay.
+// FromDecilitersPerDay creates a new VolumeFlow instance from a value in DecilitersPerDay.
 func (uf VolumeFlowFactory) FromDecilitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowDeciliterPerDay)
 }
 
-// FromDecaliterPerDay creates a new VolumeFlow instance from DecaliterPerDay.
+// FromDecalitersPerDay creates a new VolumeFlow instance from a value in DecalitersPerDay.
 func (uf VolumeFlowFactory) FromDecalitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowDecaliterPerDay)
 }
 
-// FromHectoliterPerDay creates a new VolumeFlow instance from HectoliterPerDay.
+// FromHectolitersPerDay creates a new VolumeFlow instance from a value in HectolitersPerDay.
 func (uf VolumeFlowFactory) FromHectolitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowHectoliterPerDay)
 }
 
-// FromKiloliterPerDay creates a new VolumeFlow instance from KiloliterPerDay.
+// FromKilolitersPerDay creates a new VolumeFlow instance from a value in KilolitersPerDay.
 func (uf VolumeFlowFactory) FromKilolitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowKiloliterPerDay)
 }
 
-// FromMegaliterPerDay creates a new VolumeFlow instance from MegaliterPerDay.
+// FromMegalitersPerDay creates a new VolumeFlow instance from a value in MegalitersPerDay.
 func (uf VolumeFlowFactory) FromMegalitersPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMegaliterPerDay)
 }
 
-// FromMegaukGallonPerDay creates a new VolumeFlow instance from MegaukGallonPerDay.
+// FromMegaukGallonsPerDay creates a new VolumeFlow instance from a value in MegaukGallonsPerDay.
 func (uf VolumeFlowFactory) FromMegaukGallonsPerDay(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMegaukGallonPerDay)
 }
 
-// FromMegaukGallonPerSecond creates a new VolumeFlow instance from MegaukGallonPerSecond.
+// FromMegaukGallonsPerSecond creates a new VolumeFlow instance from a value in MegaukGallonsPerSecond.
 func (uf VolumeFlowFactory) FromMegaukGallonsPerSecond(value float64) (*VolumeFlow, error) {
 	return newVolumeFlow(value, VolumeFlowMegaukGallonPerSecond)
 }
-
-
 
 
 // newVolumeFlow creates a new VolumeFlow.
@@ -691,13 +701,15 @@ func newVolumeFlow(value float64, fromUnit VolumeFlowUnits) (*VolumeFlow, error)
 	return a, nil
 }
 
-// BaseValue returns the base value of VolumeFlow in CubicMeterPerSecond.
+// BaseValue returns the base value of VolumeFlow in CubicMeterPerSecond unit (the base/default quantity).
 func (a *VolumeFlow) BaseValue() float64 {
 	return a.value
 }
 
 
-// CubicMeterPerSecond returns the value in CubicMeterPerSecond.
+// CubicMetersPerSecond returns the VolumeFlow value in CubicMetersPerSecond.
+//
+// 
 func (a *VolumeFlow) CubicMetersPerSecond() float64 {
 	if a.cubic_meters_per_secondLazy != nil {
 		return *a.cubic_meters_per_secondLazy
@@ -707,7 +719,9 @@ func (a *VolumeFlow) CubicMetersPerSecond() float64 {
 	return cubic_meters_per_second
 }
 
-// CubicMeterPerMinute returns the value in CubicMeterPerMinute.
+// CubicMetersPerMinute returns the VolumeFlow value in CubicMetersPerMinute.
+//
+// 
 func (a *VolumeFlow) CubicMetersPerMinute() float64 {
 	if a.cubic_meters_per_minuteLazy != nil {
 		return *a.cubic_meters_per_minuteLazy
@@ -717,7 +731,9 @@ func (a *VolumeFlow) CubicMetersPerMinute() float64 {
 	return cubic_meters_per_minute
 }
 
-// CubicMeterPerHour returns the value in CubicMeterPerHour.
+// CubicMetersPerHour returns the VolumeFlow value in CubicMetersPerHour.
+//
+// 
 func (a *VolumeFlow) CubicMetersPerHour() float64 {
 	if a.cubic_meters_per_hourLazy != nil {
 		return *a.cubic_meters_per_hourLazy
@@ -727,7 +743,9 @@ func (a *VolumeFlow) CubicMetersPerHour() float64 {
 	return cubic_meters_per_hour
 }
 
-// CubicMeterPerDay returns the value in CubicMeterPerDay.
+// CubicMetersPerDay returns the VolumeFlow value in CubicMetersPerDay.
+//
+// 
 func (a *VolumeFlow) CubicMetersPerDay() float64 {
 	if a.cubic_meters_per_dayLazy != nil {
 		return *a.cubic_meters_per_dayLazy
@@ -737,7 +755,9 @@ func (a *VolumeFlow) CubicMetersPerDay() float64 {
 	return cubic_meters_per_day
 }
 
-// CubicFootPerSecond returns the value in CubicFootPerSecond.
+// CubicFeetPerSecond returns the VolumeFlow value in CubicFeetPerSecond.
+//
+// 
 func (a *VolumeFlow) CubicFeetPerSecond() float64 {
 	if a.cubic_feet_per_secondLazy != nil {
 		return *a.cubic_feet_per_secondLazy
@@ -747,7 +767,9 @@ func (a *VolumeFlow) CubicFeetPerSecond() float64 {
 	return cubic_feet_per_second
 }
 
-// CubicFootPerMinute returns the value in CubicFootPerMinute.
+// CubicFeetPerMinute returns the VolumeFlow value in CubicFeetPerMinute.
+//
+// 
 func (a *VolumeFlow) CubicFeetPerMinute() float64 {
 	if a.cubic_feet_per_minuteLazy != nil {
 		return *a.cubic_feet_per_minuteLazy
@@ -757,7 +779,9 @@ func (a *VolumeFlow) CubicFeetPerMinute() float64 {
 	return cubic_feet_per_minute
 }
 
-// CubicFootPerHour returns the value in CubicFootPerHour.
+// CubicFeetPerHour returns the VolumeFlow value in CubicFeetPerHour.
+//
+// 
 func (a *VolumeFlow) CubicFeetPerHour() float64 {
 	if a.cubic_feet_per_hourLazy != nil {
 		return *a.cubic_feet_per_hourLazy
@@ -767,7 +791,9 @@ func (a *VolumeFlow) CubicFeetPerHour() float64 {
 	return cubic_feet_per_hour
 }
 
-// CubicYardPerSecond returns the value in CubicYardPerSecond.
+// CubicYardsPerSecond returns the VolumeFlow value in CubicYardsPerSecond.
+//
+// 
 func (a *VolumeFlow) CubicYardsPerSecond() float64 {
 	if a.cubic_yards_per_secondLazy != nil {
 		return *a.cubic_yards_per_secondLazy
@@ -777,7 +803,9 @@ func (a *VolumeFlow) CubicYardsPerSecond() float64 {
 	return cubic_yards_per_second
 }
 
-// CubicYardPerMinute returns the value in CubicYardPerMinute.
+// CubicYardsPerMinute returns the VolumeFlow value in CubicYardsPerMinute.
+//
+// 
 func (a *VolumeFlow) CubicYardsPerMinute() float64 {
 	if a.cubic_yards_per_minuteLazy != nil {
 		return *a.cubic_yards_per_minuteLazy
@@ -787,7 +815,9 @@ func (a *VolumeFlow) CubicYardsPerMinute() float64 {
 	return cubic_yards_per_minute
 }
 
-// CubicYardPerHour returns the value in CubicYardPerHour.
+// CubicYardsPerHour returns the VolumeFlow value in CubicYardsPerHour.
+//
+// 
 func (a *VolumeFlow) CubicYardsPerHour() float64 {
 	if a.cubic_yards_per_hourLazy != nil {
 		return *a.cubic_yards_per_hourLazy
@@ -797,7 +827,9 @@ func (a *VolumeFlow) CubicYardsPerHour() float64 {
 	return cubic_yards_per_hour
 }
 
-// CubicYardPerDay returns the value in CubicYardPerDay.
+// CubicYardsPerDay returns the VolumeFlow value in CubicYardsPerDay.
+//
+// 
 func (a *VolumeFlow) CubicYardsPerDay() float64 {
 	if a.cubic_yards_per_dayLazy != nil {
 		return *a.cubic_yards_per_dayLazy
@@ -807,7 +839,9 @@ func (a *VolumeFlow) CubicYardsPerDay() float64 {
 	return cubic_yards_per_day
 }
 
-// MillionUsGallonPerDay returns the value in MillionUsGallonPerDay.
+// MillionUsGallonsPerDay returns the VolumeFlow value in MillionUsGallonsPerDay.
+//
+// 
 func (a *VolumeFlow) MillionUsGallonsPerDay() float64 {
 	if a.million_us_gallons_per_dayLazy != nil {
 		return *a.million_us_gallons_per_dayLazy
@@ -817,7 +851,9 @@ func (a *VolumeFlow) MillionUsGallonsPerDay() float64 {
 	return million_us_gallons_per_day
 }
 
-// UsGallonPerDay returns the value in UsGallonPerDay.
+// UsGallonsPerDay returns the VolumeFlow value in UsGallonsPerDay.
+//
+// 
 func (a *VolumeFlow) UsGallonsPerDay() float64 {
 	if a.us_gallons_per_dayLazy != nil {
 		return *a.us_gallons_per_dayLazy
@@ -827,7 +863,9 @@ func (a *VolumeFlow) UsGallonsPerDay() float64 {
 	return us_gallons_per_day
 }
 
-// LiterPerSecond returns the value in LiterPerSecond.
+// LitersPerSecond returns the VolumeFlow value in LitersPerSecond.
+//
+// 
 func (a *VolumeFlow) LitersPerSecond() float64 {
 	if a.liters_per_secondLazy != nil {
 		return *a.liters_per_secondLazy
@@ -837,7 +875,9 @@ func (a *VolumeFlow) LitersPerSecond() float64 {
 	return liters_per_second
 }
 
-// LiterPerMinute returns the value in LiterPerMinute.
+// LitersPerMinute returns the VolumeFlow value in LitersPerMinute.
+//
+// 
 func (a *VolumeFlow) LitersPerMinute() float64 {
 	if a.liters_per_minuteLazy != nil {
 		return *a.liters_per_minuteLazy
@@ -847,7 +887,9 @@ func (a *VolumeFlow) LitersPerMinute() float64 {
 	return liters_per_minute
 }
 
-// LiterPerHour returns the value in LiterPerHour.
+// LitersPerHour returns the VolumeFlow value in LitersPerHour.
+//
+// 
 func (a *VolumeFlow) LitersPerHour() float64 {
 	if a.liters_per_hourLazy != nil {
 		return *a.liters_per_hourLazy
@@ -857,7 +899,9 @@ func (a *VolumeFlow) LitersPerHour() float64 {
 	return liters_per_hour
 }
 
-// LiterPerDay returns the value in LiterPerDay.
+// LitersPerDay returns the VolumeFlow value in LitersPerDay.
+//
+// 
 func (a *VolumeFlow) LitersPerDay() float64 {
 	if a.liters_per_dayLazy != nil {
 		return *a.liters_per_dayLazy
@@ -867,7 +911,9 @@ func (a *VolumeFlow) LitersPerDay() float64 {
 	return liters_per_day
 }
 
-// UsGallonPerSecond returns the value in UsGallonPerSecond.
+// UsGallonsPerSecond returns the VolumeFlow value in UsGallonsPerSecond.
+//
+// 
 func (a *VolumeFlow) UsGallonsPerSecond() float64 {
 	if a.us_gallons_per_secondLazy != nil {
 		return *a.us_gallons_per_secondLazy
@@ -877,7 +923,9 @@ func (a *VolumeFlow) UsGallonsPerSecond() float64 {
 	return us_gallons_per_second
 }
 
-// UsGallonPerMinute returns the value in UsGallonPerMinute.
+// UsGallonsPerMinute returns the VolumeFlow value in UsGallonsPerMinute.
+//
+// 
 func (a *VolumeFlow) UsGallonsPerMinute() float64 {
 	if a.us_gallons_per_minuteLazy != nil {
 		return *a.us_gallons_per_minuteLazy
@@ -887,7 +935,9 @@ func (a *VolumeFlow) UsGallonsPerMinute() float64 {
 	return us_gallons_per_minute
 }
 
-// UkGallonPerDay returns the value in UkGallonPerDay.
+// UkGallonsPerDay returns the VolumeFlow value in UkGallonsPerDay.
+//
+// 
 func (a *VolumeFlow) UkGallonsPerDay() float64 {
 	if a.uk_gallons_per_dayLazy != nil {
 		return *a.uk_gallons_per_dayLazy
@@ -897,7 +947,9 @@ func (a *VolumeFlow) UkGallonsPerDay() float64 {
 	return uk_gallons_per_day
 }
 
-// UkGallonPerHour returns the value in UkGallonPerHour.
+// UkGallonsPerHour returns the VolumeFlow value in UkGallonsPerHour.
+//
+// 
 func (a *VolumeFlow) UkGallonsPerHour() float64 {
 	if a.uk_gallons_per_hourLazy != nil {
 		return *a.uk_gallons_per_hourLazy
@@ -907,7 +959,9 @@ func (a *VolumeFlow) UkGallonsPerHour() float64 {
 	return uk_gallons_per_hour
 }
 
-// UkGallonPerMinute returns the value in UkGallonPerMinute.
+// UkGallonsPerMinute returns the VolumeFlow value in UkGallonsPerMinute.
+//
+// 
 func (a *VolumeFlow) UkGallonsPerMinute() float64 {
 	if a.uk_gallons_per_minuteLazy != nil {
 		return *a.uk_gallons_per_minuteLazy
@@ -917,7 +971,9 @@ func (a *VolumeFlow) UkGallonsPerMinute() float64 {
 	return uk_gallons_per_minute
 }
 
-// UkGallonPerSecond returns the value in UkGallonPerSecond.
+// UkGallonsPerSecond returns the VolumeFlow value in UkGallonsPerSecond.
+//
+// 
 func (a *VolumeFlow) UkGallonsPerSecond() float64 {
 	if a.uk_gallons_per_secondLazy != nil {
 		return *a.uk_gallons_per_secondLazy
@@ -927,7 +983,9 @@ func (a *VolumeFlow) UkGallonsPerSecond() float64 {
 	return uk_gallons_per_second
 }
 
-// KilousGallonPerMinute returns the value in KilousGallonPerMinute.
+// KilousGallonsPerMinute returns the VolumeFlow value in KilousGallonsPerMinute.
+//
+// 
 func (a *VolumeFlow) KilousGallonsPerMinute() float64 {
 	if a.kilous_gallons_per_minuteLazy != nil {
 		return *a.kilous_gallons_per_minuteLazy
@@ -937,7 +995,9 @@ func (a *VolumeFlow) KilousGallonsPerMinute() float64 {
 	return kilous_gallons_per_minute
 }
 
-// UsGallonPerHour returns the value in UsGallonPerHour.
+// UsGallonsPerHour returns the VolumeFlow value in UsGallonsPerHour.
+//
+// 
 func (a *VolumeFlow) UsGallonsPerHour() float64 {
 	if a.us_gallons_per_hourLazy != nil {
 		return *a.us_gallons_per_hourLazy
@@ -947,7 +1007,9 @@ func (a *VolumeFlow) UsGallonsPerHour() float64 {
 	return us_gallons_per_hour
 }
 
-// CubicDecimeterPerMinute returns the value in CubicDecimeterPerMinute.
+// CubicDecimetersPerMinute returns the VolumeFlow value in CubicDecimetersPerMinute.
+//
+// 
 func (a *VolumeFlow) CubicDecimetersPerMinute() float64 {
 	if a.cubic_decimeters_per_minuteLazy != nil {
 		return *a.cubic_decimeters_per_minuteLazy
@@ -957,7 +1019,9 @@ func (a *VolumeFlow) CubicDecimetersPerMinute() float64 {
 	return cubic_decimeters_per_minute
 }
 
-// OilBarrelPerDay returns the value in OilBarrelPerDay.
+// OilBarrelsPerDay returns the VolumeFlow value in OilBarrelsPerDay.
+//
+// 
 func (a *VolumeFlow) OilBarrelsPerDay() float64 {
 	if a.oil_barrels_per_dayLazy != nil {
 		return *a.oil_barrels_per_dayLazy
@@ -967,7 +1031,9 @@ func (a *VolumeFlow) OilBarrelsPerDay() float64 {
 	return oil_barrels_per_day
 }
 
-// OilBarrelPerMinute returns the value in OilBarrelPerMinute.
+// OilBarrelsPerMinute returns the VolumeFlow value in OilBarrelsPerMinute.
+//
+// 
 func (a *VolumeFlow) OilBarrelsPerMinute() float64 {
 	if a.oil_barrels_per_minuteLazy != nil {
 		return *a.oil_barrels_per_minuteLazy
@@ -977,7 +1043,9 @@ func (a *VolumeFlow) OilBarrelsPerMinute() float64 {
 	return oil_barrels_per_minute
 }
 
-// OilBarrelPerHour returns the value in OilBarrelPerHour.
+// OilBarrelsPerHour returns the VolumeFlow value in OilBarrelsPerHour.
+//
+// 
 func (a *VolumeFlow) OilBarrelsPerHour() float64 {
 	if a.oil_barrels_per_hourLazy != nil {
 		return *a.oil_barrels_per_hourLazy
@@ -987,7 +1055,9 @@ func (a *VolumeFlow) OilBarrelsPerHour() float64 {
 	return oil_barrels_per_hour
 }
 
-// OilBarrelPerSecond returns the value in OilBarrelPerSecond.
+// OilBarrelsPerSecond returns the VolumeFlow value in OilBarrelsPerSecond.
+//
+// 
 func (a *VolumeFlow) OilBarrelsPerSecond() float64 {
 	if a.oil_barrels_per_secondLazy != nil {
 		return *a.oil_barrels_per_secondLazy
@@ -997,7 +1067,9 @@ func (a *VolumeFlow) OilBarrelsPerSecond() float64 {
 	return oil_barrels_per_second
 }
 
-// CubicMillimeterPerSecond returns the value in CubicMillimeterPerSecond.
+// CubicMillimetersPerSecond returns the VolumeFlow value in CubicMillimetersPerSecond.
+//
+// 
 func (a *VolumeFlow) CubicMillimetersPerSecond() float64 {
 	if a.cubic_millimeters_per_secondLazy != nil {
 		return *a.cubic_millimeters_per_secondLazy
@@ -1007,7 +1079,9 @@ func (a *VolumeFlow) CubicMillimetersPerSecond() float64 {
 	return cubic_millimeters_per_second
 }
 
-// AcreFootPerSecond returns the value in AcreFootPerSecond.
+// AcreFeetPerSecond returns the VolumeFlow value in AcreFeetPerSecond.
+//
+// 
 func (a *VolumeFlow) AcreFeetPerSecond() float64 {
 	if a.acre_feet_per_secondLazy != nil {
 		return *a.acre_feet_per_secondLazy
@@ -1017,7 +1091,9 @@ func (a *VolumeFlow) AcreFeetPerSecond() float64 {
 	return acre_feet_per_second
 }
 
-// AcreFootPerMinute returns the value in AcreFootPerMinute.
+// AcreFeetPerMinute returns the VolumeFlow value in AcreFeetPerMinute.
+//
+// 
 func (a *VolumeFlow) AcreFeetPerMinute() float64 {
 	if a.acre_feet_per_minuteLazy != nil {
 		return *a.acre_feet_per_minuteLazy
@@ -1027,7 +1103,9 @@ func (a *VolumeFlow) AcreFeetPerMinute() float64 {
 	return acre_feet_per_minute
 }
 
-// AcreFootPerHour returns the value in AcreFootPerHour.
+// AcreFeetPerHour returns the VolumeFlow value in AcreFeetPerHour.
+//
+// 
 func (a *VolumeFlow) AcreFeetPerHour() float64 {
 	if a.acre_feet_per_hourLazy != nil {
 		return *a.acre_feet_per_hourLazy
@@ -1037,7 +1115,9 @@ func (a *VolumeFlow) AcreFeetPerHour() float64 {
 	return acre_feet_per_hour
 }
 
-// AcreFootPerDay returns the value in AcreFootPerDay.
+// AcreFeetPerDay returns the VolumeFlow value in AcreFeetPerDay.
+//
+// 
 func (a *VolumeFlow) AcreFeetPerDay() float64 {
 	if a.acre_feet_per_dayLazy != nil {
 		return *a.acre_feet_per_dayLazy
@@ -1047,7 +1127,9 @@ func (a *VolumeFlow) AcreFeetPerDay() float64 {
 	return acre_feet_per_day
 }
 
-// CubicCentimeterPerMinute returns the value in CubicCentimeterPerMinute.
+// CubicCentimetersPerMinute returns the VolumeFlow value in CubicCentimetersPerMinute.
+//
+// 
 func (a *VolumeFlow) CubicCentimetersPerMinute() float64 {
 	if a.cubic_centimeters_per_minuteLazy != nil {
 		return *a.cubic_centimeters_per_minuteLazy
@@ -1057,7 +1139,9 @@ func (a *VolumeFlow) CubicCentimetersPerMinute() float64 {
 	return cubic_centimeters_per_minute
 }
 
-// MegausGallonPerDay returns the value in MegausGallonPerDay.
+// MegausGallonsPerDay returns the VolumeFlow value in MegausGallonsPerDay.
+//
+// 
 func (a *VolumeFlow) MegausGallonsPerDay() float64 {
 	if a.megaus_gallons_per_dayLazy != nil {
 		return *a.megaus_gallons_per_dayLazy
@@ -1067,7 +1151,9 @@ func (a *VolumeFlow) MegausGallonsPerDay() float64 {
 	return megaus_gallons_per_day
 }
 
-// NanoliterPerSecond returns the value in NanoliterPerSecond.
+// NanolitersPerSecond returns the VolumeFlow value in NanolitersPerSecond.
+//
+// 
 func (a *VolumeFlow) NanolitersPerSecond() float64 {
 	if a.nanoliters_per_secondLazy != nil {
 		return *a.nanoliters_per_secondLazy
@@ -1077,7 +1163,9 @@ func (a *VolumeFlow) NanolitersPerSecond() float64 {
 	return nanoliters_per_second
 }
 
-// MicroliterPerSecond returns the value in MicroliterPerSecond.
+// MicrolitersPerSecond returns the VolumeFlow value in MicrolitersPerSecond.
+//
+// 
 func (a *VolumeFlow) MicrolitersPerSecond() float64 {
 	if a.microliters_per_secondLazy != nil {
 		return *a.microliters_per_secondLazy
@@ -1087,7 +1175,9 @@ func (a *VolumeFlow) MicrolitersPerSecond() float64 {
 	return microliters_per_second
 }
 
-// MilliliterPerSecond returns the value in MilliliterPerSecond.
+// MillilitersPerSecond returns the VolumeFlow value in MillilitersPerSecond.
+//
+// 
 func (a *VolumeFlow) MillilitersPerSecond() float64 {
 	if a.milliliters_per_secondLazy != nil {
 		return *a.milliliters_per_secondLazy
@@ -1097,7 +1187,9 @@ func (a *VolumeFlow) MillilitersPerSecond() float64 {
 	return milliliters_per_second
 }
 
-// CentiliterPerSecond returns the value in CentiliterPerSecond.
+// CentilitersPerSecond returns the VolumeFlow value in CentilitersPerSecond.
+//
+// 
 func (a *VolumeFlow) CentilitersPerSecond() float64 {
 	if a.centiliters_per_secondLazy != nil {
 		return *a.centiliters_per_secondLazy
@@ -1107,7 +1199,9 @@ func (a *VolumeFlow) CentilitersPerSecond() float64 {
 	return centiliters_per_second
 }
 
-// DeciliterPerSecond returns the value in DeciliterPerSecond.
+// DecilitersPerSecond returns the VolumeFlow value in DecilitersPerSecond.
+//
+// 
 func (a *VolumeFlow) DecilitersPerSecond() float64 {
 	if a.deciliters_per_secondLazy != nil {
 		return *a.deciliters_per_secondLazy
@@ -1117,7 +1211,9 @@ func (a *VolumeFlow) DecilitersPerSecond() float64 {
 	return deciliters_per_second
 }
 
-// DecaliterPerSecond returns the value in DecaliterPerSecond.
+// DecalitersPerSecond returns the VolumeFlow value in DecalitersPerSecond.
+//
+// 
 func (a *VolumeFlow) DecalitersPerSecond() float64 {
 	if a.decaliters_per_secondLazy != nil {
 		return *a.decaliters_per_secondLazy
@@ -1127,7 +1223,9 @@ func (a *VolumeFlow) DecalitersPerSecond() float64 {
 	return decaliters_per_second
 }
 
-// HectoliterPerSecond returns the value in HectoliterPerSecond.
+// HectolitersPerSecond returns the VolumeFlow value in HectolitersPerSecond.
+//
+// 
 func (a *VolumeFlow) HectolitersPerSecond() float64 {
 	if a.hectoliters_per_secondLazy != nil {
 		return *a.hectoliters_per_secondLazy
@@ -1137,7 +1235,9 @@ func (a *VolumeFlow) HectolitersPerSecond() float64 {
 	return hectoliters_per_second
 }
 
-// KiloliterPerSecond returns the value in KiloliterPerSecond.
+// KilolitersPerSecond returns the VolumeFlow value in KilolitersPerSecond.
+//
+// 
 func (a *VolumeFlow) KilolitersPerSecond() float64 {
 	if a.kiloliters_per_secondLazy != nil {
 		return *a.kiloliters_per_secondLazy
@@ -1147,7 +1247,9 @@ func (a *VolumeFlow) KilolitersPerSecond() float64 {
 	return kiloliters_per_second
 }
 
-// MegaliterPerSecond returns the value in MegaliterPerSecond.
+// MegalitersPerSecond returns the VolumeFlow value in MegalitersPerSecond.
+//
+// 
 func (a *VolumeFlow) MegalitersPerSecond() float64 {
 	if a.megaliters_per_secondLazy != nil {
 		return *a.megaliters_per_secondLazy
@@ -1157,7 +1259,9 @@ func (a *VolumeFlow) MegalitersPerSecond() float64 {
 	return megaliters_per_second
 }
 
-// NanoliterPerMinute returns the value in NanoliterPerMinute.
+// NanolitersPerMinute returns the VolumeFlow value in NanolitersPerMinute.
+//
+// 
 func (a *VolumeFlow) NanolitersPerMinute() float64 {
 	if a.nanoliters_per_minuteLazy != nil {
 		return *a.nanoliters_per_minuteLazy
@@ -1167,7 +1271,9 @@ func (a *VolumeFlow) NanolitersPerMinute() float64 {
 	return nanoliters_per_minute
 }
 
-// MicroliterPerMinute returns the value in MicroliterPerMinute.
+// MicrolitersPerMinute returns the VolumeFlow value in MicrolitersPerMinute.
+//
+// 
 func (a *VolumeFlow) MicrolitersPerMinute() float64 {
 	if a.microliters_per_minuteLazy != nil {
 		return *a.microliters_per_minuteLazy
@@ -1177,7 +1283,9 @@ func (a *VolumeFlow) MicrolitersPerMinute() float64 {
 	return microliters_per_minute
 }
 
-// MilliliterPerMinute returns the value in MilliliterPerMinute.
+// MillilitersPerMinute returns the VolumeFlow value in MillilitersPerMinute.
+//
+// 
 func (a *VolumeFlow) MillilitersPerMinute() float64 {
 	if a.milliliters_per_minuteLazy != nil {
 		return *a.milliliters_per_minuteLazy
@@ -1187,7 +1295,9 @@ func (a *VolumeFlow) MillilitersPerMinute() float64 {
 	return milliliters_per_minute
 }
 
-// CentiliterPerMinute returns the value in CentiliterPerMinute.
+// CentilitersPerMinute returns the VolumeFlow value in CentilitersPerMinute.
+//
+// 
 func (a *VolumeFlow) CentilitersPerMinute() float64 {
 	if a.centiliters_per_minuteLazy != nil {
 		return *a.centiliters_per_minuteLazy
@@ -1197,7 +1307,9 @@ func (a *VolumeFlow) CentilitersPerMinute() float64 {
 	return centiliters_per_minute
 }
 
-// DeciliterPerMinute returns the value in DeciliterPerMinute.
+// DecilitersPerMinute returns the VolumeFlow value in DecilitersPerMinute.
+//
+// 
 func (a *VolumeFlow) DecilitersPerMinute() float64 {
 	if a.deciliters_per_minuteLazy != nil {
 		return *a.deciliters_per_minuteLazy
@@ -1207,7 +1319,9 @@ func (a *VolumeFlow) DecilitersPerMinute() float64 {
 	return deciliters_per_minute
 }
 
-// DecaliterPerMinute returns the value in DecaliterPerMinute.
+// DecalitersPerMinute returns the VolumeFlow value in DecalitersPerMinute.
+//
+// 
 func (a *VolumeFlow) DecalitersPerMinute() float64 {
 	if a.decaliters_per_minuteLazy != nil {
 		return *a.decaliters_per_minuteLazy
@@ -1217,7 +1331,9 @@ func (a *VolumeFlow) DecalitersPerMinute() float64 {
 	return decaliters_per_minute
 }
 
-// HectoliterPerMinute returns the value in HectoliterPerMinute.
+// HectolitersPerMinute returns the VolumeFlow value in HectolitersPerMinute.
+//
+// 
 func (a *VolumeFlow) HectolitersPerMinute() float64 {
 	if a.hectoliters_per_minuteLazy != nil {
 		return *a.hectoliters_per_minuteLazy
@@ -1227,7 +1343,9 @@ func (a *VolumeFlow) HectolitersPerMinute() float64 {
 	return hectoliters_per_minute
 }
 
-// KiloliterPerMinute returns the value in KiloliterPerMinute.
+// KilolitersPerMinute returns the VolumeFlow value in KilolitersPerMinute.
+//
+// 
 func (a *VolumeFlow) KilolitersPerMinute() float64 {
 	if a.kiloliters_per_minuteLazy != nil {
 		return *a.kiloliters_per_minuteLazy
@@ -1237,7 +1355,9 @@ func (a *VolumeFlow) KilolitersPerMinute() float64 {
 	return kiloliters_per_minute
 }
 
-// MegaliterPerMinute returns the value in MegaliterPerMinute.
+// MegalitersPerMinute returns the VolumeFlow value in MegalitersPerMinute.
+//
+// 
 func (a *VolumeFlow) MegalitersPerMinute() float64 {
 	if a.megaliters_per_minuteLazy != nil {
 		return *a.megaliters_per_minuteLazy
@@ -1247,7 +1367,9 @@ func (a *VolumeFlow) MegalitersPerMinute() float64 {
 	return megaliters_per_minute
 }
 
-// NanoliterPerHour returns the value in NanoliterPerHour.
+// NanolitersPerHour returns the VolumeFlow value in NanolitersPerHour.
+//
+// 
 func (a *VolumeFlow) NanolitersPerHour() float64 {
 	if a.nanoliters_per_hourLazy != nil {
 		return *a.nanoliters_per_hourLazy
@@ -1257,7 +1379,9 @@ func (a *VolumeFlow) NanolitersPerHour() float64 {
 	return nanoliters_per_hour
 }
 
-// MicroliterPerHour returns the value in MicroliterPerHour.
+// MicrolitersPerHour returns the VolumeFlow value in MicrolitersPerHour.
+//
+// 
 func (a *VolumeFlow) MicrolitersPerHour() float64 {
 	if a.microliters_per_hourLazy != nil {
 		return *a.microliters_per_hourLazy
@@ -1267,7 +1391,9 @@ func (a *VolumeFlow) MicrolitersPerHour() float64 {
 	return microliters_per_hour
 }
 
-// MilliliterPerHour returns the value in MilliliterPerHour.
+// MillilitersPerHour returns the VolumeFlow value in MillilitersPerHour.
+//
+// 
 func (a *VolumeFlow) MillilitersPerHour() float64 {
 	if a.milliliters_per_hourLazy != nil {
 		return *a.milliliters_per_hourLazy
@@ -1277,7 +1403,9 @@ func (a *VolumeFlow) MillilitersPerHour() float64 {
 	return milliliters_per_hour
 }
 
-// CentiliterPerHour returns the value in CentiliterPerHour.
+// CentilitersPerHour returns the VolumeFlow value in CentilitersPerHour.
+//
+// 
 func (a *VolumeFlow) CentilitersPerHour() float64 {
 	if a.centiliters_per_hourLazy != nil {
 		return *a.centiliters_per_hourLazy
@@ -1287,7 +1415,9 @@ func (a *VolumeFlow) CentilitersPerHour() float64 {
 	return centiliters_per_hour
 }
 
-// DeciliterPerHour returns the value in DeciliterPerHour.
+// DecilitersPerHour returns the VolumeFlow value in DecilitersPerHour.
+//
+// 
 func (a *VolumeFlow) DecilitersPerHour() float64 {
 	if a.deciliters_per_hourLazy != nil {
 		return *a.deciliters_per_hourLazy
@@ -1297,7 +1427,9 @@ func (a *VolumeFlow) DecilitersPerHour() float64 {
 	return deciliters_per_hour
 }
 
-// DecaliterPerHour returns the value in DecaliterPerHour.
+// DecalitersPerHour returns the VolumeFlow value in DecalitersPerHour.
+//
+// 
 func (a *VolumeFlow) DecalitersPerHour() float64 {
 	if a.decaliters_per_hourLazy != nil {
 		return *a.decaliters_per_hourLazy
@@ -1307,7 +1439,9 @@ func (a *VolumeFlow) DecalitersPerHour() float64 {
 	return decaliters_per_hour
 }
 
-// HectoliterPerHour returns the value in HectoliterPerHour.
+// HectolitersPerHour returns the VolumeFlow value in HectolitersPerHour.
+//
+// 
 func (a *VolumeFlow) HectolitersPerHour() float64 {
 	if a.hectoliters_per_hourLazy != nil {
 		return *a.hectoliters_per_hourLazy
@@ -1317,7 +1451,9 @@ func (a *VolumeFlow) HectolitersPerHour() float64 {
 	return hectoliters_per_hour
 }
 
-// KiloliterPerHour returns the value in KiloliterPerHour.
+// KilolitersPerHour returns the VolumeFlow value in KilolitersPerHour.
+//
+// 
 func (a *VolumeFlow) KilolitersPerHour() float64 {
 	if a.kiloliters_per_hourLazy != nil {
 		return *a.kiloliters_per_hourLazy
@@ -1327,7 +1463,9 @@ func (a *VolumeFlow) KilolitersPerHour() float64 {
 	return kiloliters_per_hour
 }
 
-// MegaliterPerHour returns the value in MegaliterPerHour.
+// MegalitersPerHour returns the VolumeFlow value in MegalitersPerHour.
+//
+// 
 func (a *VolumeFlow) MegalitersPerHour() float64 {
 	if a.megaliters_per_hourLazy != nil {
 		return *a.megaliters_per_hourLazy
@@ -1337,7 +1475,9 @@ func (a *VolumeFlow) MegalitersPerHour() float64 {
 	return megaliters_per_hour
 }
 
-// NanoliterPerDay returns the value in NanoliterPerDay.
+// NanolitersPerDay returns the VolumeFlow value in NanolitersPerDay.
+//
+// 
 func (a *VolumeFlow) NanolitersPerDay() float64 {
 	if a.nanoliters_per_dayLazy != nil {
 		return *a.nanoliters_per_dayLazy
@@ -1347,7 +1487,9 @@ func (a *VolumeFlow) NanolitersPerDay() float64 {
 	return nanoliters_per_day
 }
 
-// MicroliterPerDay returns the value in MicroliterPerDay.
+// MicrolitersPerDay returns the VolumeFlow value in MicrolitersPerDay.
+//
+// 
 func (a *VolumeFlow) MicrolitersPerDay() float64 {
 	if a.microliters_per_dayLazy != nil {
 		return *a.microliters_per_dayLazy
@@ -1357,7 +1499,9 @@ func (a *VolumeFlow) MicrolitersPerDay() float64 {
 	return microliters_per_day
 }
 
-// MilliliterPerDay returns the value in MilliliterPerDay.
+// MillilitersPerDay returns the VolumeFlow value in MillilitersPerDay.
+//
+// 
 func (a *VolumeFlow) MillilitersPerDay() float64 {
 	if a.milliliters_per_dayLazy != nil {
 		return *a.milliliters_per_dayLazy
@@ -1367,7 +1511,9 @@ func (a *VolumeFlow) MillilitersPerDay() float64 {
 	return milliliters_per_day
 }
 
-// CentiliterPerDay returns the value in CentiliterPerDay.
+// CentilitersPerDay returns the VolumeFlow value in CentilitersPerDay.
+//
+// 
 func (a *VolumeFlow) CentilitersPerDay() float64 {
 	if a.centiliters_per_dayLazy != nil {
 		return *a.centiliters_per_dayLazy
@@ -1377,7 +1523,9 @@ func (a *VolumeFlow) CentilitersPerDay() float64 {
 	return centiliters_per_day
 }
 
-// DeciliterPerDay returns the value in DeciliterPerDay.
+// DecilitersPerDay returns the VolumeFlow value in DecilitersPerDay.
+//
+// 
 func (a *VolumeFlow) DecilitersPerDay() float64 {
 	if a.deciliters_per_dayLazy != nil {
 		return *a.deciliters_per_dayLazy
@@ -1387,7 +1535,9 @@ func (a *VolumeFlow) DecilitersPerDay() float64 {
 	return deciliters_per_day
 }
 
-// DecaliterPerDay returns the value in DecaliterPerDay.
+// DecalitersPerDay returns the VolumeFlow value in DecalitersPerDay.
+//
+// 
 func (a *VolumeFlow) DecalitersPerDay() float64 {
 	if a.decaliters_per_dayLazy != nil {
 		return *a.decaliters_per_dayLazy
@@ -1397,7 +1547,9 @@ func (a *VolumeFlow) DecalitersPerDay() float64 {
 	return decaliters_per_day
 }
 
-// HectoliterPerDay returns the value in HectoliterPerDay.
+// HectolitersPerDay returns the VolumeFlow value in HectolitersPerDay.
+//
+// 
 func (a *VolumeFlow) HectolitersPerDay() float64 {
 	if a.hectoliters_per_dayLazy != nil {
 		return *a.hectoliters_per_dayLazy
@@ -1407,7 +1559,9 @@ func (a *VolumeFlow) HectolitersPerDay() float64 {
 	return hectoliters_per_day
 }
 
-// KiloliterPerDay returns the value in KiloliterPerDay.
+// KilolitersPerDay returns the VolumeFlow value in KilolitersPerDay.
+//
+// 
 func (a *VolumeFlow) KilolitersPerDay() float64 {
 	if a.kiloliters_per_dayLazy != nil {
 		return *a.kiloliters_per_dayLazy
@@ -1417,7 +1571,9 @@ func (a *VolumeFlow) KilolitersPerDay() float64 {
 	return kiloliters_per_day
 }
 
-// MegaliterPerDay returns the value in MegaliterPerDay.
+// MegalitersPerDay returns the VolumeFlow value in MegalitersPerDay.
+//
+// 
 func (a *VolumeFlow) MegalitersPerDay() float64 {
 	if a.megaliters_per_dayLazy != nil {
 		return *a.megaliters_per_dayLazy
@@ -1427,7 +1583,9 @@ func (a *VolumeFlow) MegalitersPerDay() float64 {
 	return megaliters_per_day
 }
 
-// MegaukGallonPerDay returns the value in MegaukGallonPerDay.
+// MegaukGallonsPerDay returns the VolumeFlow value in MegaukGallonsPerDay.
+//
+// 
 func (a *VolumeFlow) MegaukGallonsPerDay() float64 {
 	if a.megauk_gallons_per_dayLazy != nil {
 		return *a.megauk_gallons_per_dayLazy
@@ -1437,7 +1595,9 @@ func (a *VolumeFlow) MegaukGallonsPerDay() float64 {
 	return megauk_gallons_per_day
 }
 
-// MegaukGallonPerSecond returns the value in MegaukGallonPerSecond.
+// MegaukGallonsPerSecond returns the VolumeFlow value in MegaukGallonsPerSecond.
+//
+// 
 func (a *VolumeFlow) MegaukGallonsPerSecond() float64 {
 	if a.megauk_gallons_per_secondLazy != nil {
 		return *a.megauk_gallons_per_secondLazy
@@ -1448,7 +1608,9 @@ func (a *VolumeFlow) MegaukGallonsPerSecond() float64 {
 }
 
 
-// ToDto creates an VolumeFlowDto representation.
+// ToDto creates a VolumeFlowDto representation from the VolumeFlow instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CubicMeterPerSecond by default.
 func (a *VolumeFlow) ToDto(holdInUnit *VolumeFlowUnits) VolumeFlowDto {
 	if holdInUnit == nil {
 		defaultUnit := VolumeFlowCubicMeterPerSecond // Default value
@@ -1461,12 +1623,19 @@ func (a *VolumeFlow) ToDto(holdInUnit *VolumeFlowUnits) VolumeFlowDto {
 	}
 }
 
-// ToDtoJSON creates an VolumeFlowDto representation.
+// ToDtoJSON creates a JSON representation of the VolumeFlow instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CubicMeterPerSecond by default.
 func (a *VolumeFlow) ToDtoJSON(holdInUnit *VolumeFlowUnits) ([]byte, error) {
+	// Convert to VolumeFlowDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts VolumeFlow to a specific unit value.
+// Convert converts a VolumeFlow to a specific unit value.
+// The function uses the provided unit type (VolumeFlowUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *VolumeFlow) Convert(toUnit VolumeFlowUnits) float64 {
 	switch toUnit { 
     case VolumeFlowCubicMeterPerSecond:
@@ -1620,7 +1789,7 @@ func (a *VolumeFlow) Convert(toUnit VolumeFlowUnits) float64 {
     case VolumeFlowMegaukGallonPerSecond:
 		return a.MegaukGallonsPerSecond()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -1939,13 +2108,22 @@ func (a *VolumeFlow) convertToBase(value float64, fromUnit VolumeFlowUnits) floa
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the VolumeFlow in the default unit (CubicMeterPerSecond),
+// formatted to two decimal places.
 func (a VolumeFlow) String() string {
 	return a.ToString(VolumeFlowCubicMeterPerSecond, 2)
 }
 
-// ToString formats the VolumeFlow to string.
-// fractionalDigits -1 for not mention
+// ToString formats the VolumeFlow value as a string with the specified unit and fractional digits.
+// It converts the VolumeFlow to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the VolumeFlow value will be converted (e.g., CubicMeterPerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the VolumeFlow with the unit abbreviation.
 func (a *VolumeFlow) ToString(unit VolumeFlowUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -2113,12 +2291,26 @@ func (a *VolumeFlow) getUnitAbbreviation(unit VolumeFlowUnits) string {
 	}
 }
 
-// Check if the given VolumeFlow are equals to the current VolumeFlow
+// Equals checks if the given VolumeFlow is equal to the current VolumeFlow.
+//
+// Parameters:
+//    other: The VolumeFlow to compare against.
+//
+// Returns:
+//    bool: Returns true if both VolumeFlow are equal, false otherwise.
 func (a *VolumeFlow) Equals(other *VolumeFlow) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given VolumeFlow are equals to the current VolumeFlow
+// CompareTo compares the current VolumeFlow with another VolumeFlow.
+// It returns -1 if the current VolumeFlow is less than the other VolumeFlow, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The VolumeFlow to compare against.
+//
+// Returns:
+//    int: -1 if the current VolumeFlow is less, 1 if greater, and 0 if equal.
 func (a *VolumeFlow) CompareTo(other *VolumeFlow) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -2131,22 +2323,50 @@ func (a *VolumeFlow) CompareTo(other *VolumeFlow) int {
 	return 0
 }
 
-// Add the given VolumeFlow to the current VolumeFlow.
+// Add adds the given VolumeFlow to the current VolumeFlow and returns the result.
+// The result is a new VolumeFlow instance with the sum of the values.
+//
+// Parameters:
+//    other: The VolumeFlow to add to the current VolumeFlow.
+//
+// Returns:
+//    *VolumeFlow: A new VolumeFlow instance representing the sum of both VolumeFlow.
 func (a *VolumeFlow) Add(other *VolumeFlow) *VolumeFlow {
 	return &VolumeFlow{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given VolumeFlow to the current VolumeFlow.
+// Subtract subtracts the given VolumeFlow from the current VolumeFlow and returns the result.
+// The result is a new VolumeFlow instance with the difference of the values.
+//
+// Parameters:
+//    other: The VolumeFlow to subtract from the current VolumeFlow.
+//
+// Returns:
+//    *VolumeFlow: A new VolumeFlow instance representing the difference of both VolumeFlow.
 func (a *VolumeFlow) Subtract(other *VolumeFlow) *VolumeFlow {
 	return &VolumeFlow{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given VolumeFlow to the current VolumeFlow.
+// Multiply multiplies the current VolumeFlow by the given VolumeFlow and returns the result.
+// The result is a new VolumeFlow instance with the product of the values.
+//
+// Parameters:
+//    other: The VolumeFlow to multiply with the current VolumeFlow.
+//
+// Returns:
+//    *VolumeFlow: A new VolumeFlow instance representing the product of both VolumeFlow.
 func (a *VolumeFlow) Multiply(other *VolumeFlow) *VolumeFlow {
 	return &VolumeFlow{value: a.value * other.BaseValue()}
 }
 
-// Divide the given VolumeFlow to the current VolumeFlow.
+// Divide divides the current VolumeFlow by the given VolumeFlow and returns the result.
+// The result is a new VolumeFlow instance with the quotient of the values.
+//
+// Parameters:
+//    other: The VolumeFlow to divide the current VolumeFlow by.
+//
+// Returns:
+//    *VolumeFlow: A new VolumeFlow instance representing the quotient of both VolumeFlow.
 func (a *VolumeFlow) Divide(other *VolumeFlow) *VolumeFlow {
 	return &VolumeFlow{value: a.value / other.BaseValue()}
 }

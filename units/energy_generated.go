@@ -12,7 +12,7 @@ import (
 
 
 
-// EnergyUnits enumeration
+// EnergyUnits defines various units of Energy.
 type EnergyUnits string
 
 const (
@@ -99,19 +99,24 @@ const (
         EnergyDecathermImperial EnergyUnits = "DecathermImperial"
 )
 
-// EnergyDto represents an Energy
+// EnergyDto represents a Energy measurement with a numerical value and its corresponding unit.
 type EnergyDto struct {
+    // Value is the numerical representation of the Energy.
 	Value float64
+    // Unit specifies the unit of measurement for the Energy, as defined in the EnergyUnits enumeration.
 	Unit  EnergyUnits
 }
 
-// EnergyDtoFactory struct to group related functions
+// EnergyDtoFactory groups methods for creating and serializing EnergyDto objects.
 type EnergyDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a EnergyDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf EnergyDtoFactory) FromJSON(data []byte) (*EnergyDto, error) {
 	a := EnergyDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into EnergyDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -119,6 +124,9 @@ func (udf EnergyDtoFactory) FromJSON(data []byte) (*EnergyDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a EnergyDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a EnergyDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -130,10 +138,11 @@ func (a EnergyDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Energy struct
+// Energy represents a measurement in a of Energy.
+//
+// The joule, symbol J, is a derived unit of energy, work, or amount of heat in the International System of Units. It is equal to the energy transferred (or work done) when applying a force of one newton through a distance of one metre (1 newton metre or N·m), or in passing an electric current of one ampere through a resistance of one ohm for one second. Many other units of energy are included. Please do not confuse this definition of the calorie with the one colloquially used by the food industry, the large calorie, which is equivalent to 1 kcal. Thermochemical definition of the calorie is used. For BTU, the IT definition is used.
 type Energy struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     joulesLazy *float64 
@@ -178,227 +187,228 @@ type Energy struct {
     decatherms_imperialLazy *float64 
 }
 
-// EnergyFactory struct to group related functions
+// EnergyFactory groups methods for creating Energy instances.
 type EnergyFactory struct{}
 
+// CreateEnergy creates a new Energy instance from the given value and unit.
 func (uf EnergyFactory) CreateEnergy(value float64, unit EnergyUnits) (*Energy, error) {
 	return newEnergy(value, unit)
 }
 
+// FromDto converts a EnergyDto to a Energy instance.
 func (uf EnergyFactory) FromDto(dto EnergyDto) (*Energy, error) {
 	return newEnergy(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Energy instance.
 func (uf EnergyFactory) FromDtoJSON(data []byte) (*Energy, error) {
 	unitDto, err := EnergyDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse EnergyDto from JSON: %w", err)
 	}
 	return EnergyFactory{}.FromDto(*unitDto)
 }
 
 
-// FromJoule creates a new Energy instance from Joule.
+// FromJoules creates a new Energy instance from a value in Joules.
 func (uf EnergyFactory) FromJoules(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyJoule)
 }
 
-// FromCalorie creates a new Energy instance from Calorie.
+// FromCalories creates a new Energy instance from a value in Calories.
 func (uf EnergyFactory) FromCalories(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyCalorie)
 }
 
-// FromBritishThermalUnit creates a new Energy instance from BritishThermalUnit.
+// FromBritishThermalUnits creates a new Energy instance from a value in BritishThermalUnits.
 func (uf EnergyFactory) FromBritishThermalUnits(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyBritishThermalUnit)
 }
 
-// FromElectronVolt creates a new Energy instance from ElectronVolt.
+// FromElectronVolts creates a new Energy instance from a value in ElectronVolts.
 func (uf EnergyFactory) FromElectronVolts(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyElectronVolt)
 }
 
-// FromFootPound creates a new Energy instance from FootPound.
+// FromFootPounds creates a new Energy instance from a value in FootPounds.
 func (uf EnergyFactory) FromFootPounds(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyFootPound)
 }
 
-// FromErg creates a new Energy instance from Erg.
+// FromErgs creates a new Energy instance from a value in Ergs.
 func (uf EnergyFactory) FromErgs(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyErg)
 }
 
-// FromWattHour creates a new Energy instance from WattHour.
+// FromWattHours creates a new Energy instance from a value in WattHours.
 func (uf EnergyFactory) FromWattHours(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyWattHour)
 }
 
-// FromWattDay creates a new Energy instance from WattDay.
+// FromWattDays creates a new Energy instance from a value in WattDays.
 func (uf EnergyFactory) FromWattDays(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyWattDay)
 }
 
-// FromThermEc creates a new Energy instance from ThermEc.
+// FromThermsEc creates a new Energy instance from a value in ThermsEc.
 func (uf EnergyFactory) FromThermsEc(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyThermEc)
 }
 
-// FromThermUs creates a new Energy instance from ThermUs.
+// FromThermsUs creates a new Energy instance from a value in ThermsUs.
 func (uf EnergyFactory) FromThermsUs(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyThermUs)
 }
 
-// FromThermImperial creates a new Energy instance from ThermImperial.
+// FromThermsImperial creates a new Energy instance from a value in ThermsImperial.
 func (uf EnergyFactory) FromThermsImperial(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyThermImperial)
 }
 
-// FromHorsepowerHour creates a new Energy instance from HorsepowerHour.
+// FromHorsepowerHours creates a new Energy instance from a value in HorsepowerHours.
 func (uf EnergyFactory) FromHorsepowerHours(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyHorsepowerHour)
 }
 
-// FromNanojoule creates a new Energy instance from Nanojoule.
+// FromNanojoules creates a new Energy instance from a value in Nanojoules.
 func (uf EnergyFactory) FromNanojoules(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyNanojoule)
 }
 
-// FromMicrojoule creates a new Energy instance from Microjoule.
+// FromMicrojoules creates a new Energy instance from a value in Microjoules.
 func (uf EnergyFactory) FromMicrojoules(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyMicrojoule)
 }
 
-// FromMillijoule creates a new Energy instance from Millijoule.
+// FromMillijoules creates a new Energy instance from a value in Millijoules.
 func (uf EnergyFactory) FromMillijoules(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyMillijoule)
 }
 
-// FromKilojoule creates a new Energy instance from Kilojoule.
+// FromKilojoules creates a new Energy instance from a value in Kilojoules.
 func (uf EnergyFactory) FromKilojoules(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyKilojoule)
 }
 
-// FromMegajoule creates a new Energy instance from Megajoule.
+// FromMegajoules creates a new Energy instance from a value in Megajoules.
 func (uf EnergyFactory) FromMegajoules(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyMegajoule)
 }
 
-// FromGigajoule creates a new Energy instance from Gigajoule.
+// FromGigajoules creates a new Energy instance from a value in Gigajoules.
 func (uf EnergyFactory) FromGigajoules(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyGigajoule)
 }
 
-// FromTerajoule creates a new Energy instance from Terajoule.
+// FromTerajoules creates a new Energy instance from a value in Terajoules.
 func (uf EnergyFactory) FromTerajoules(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyTerajoule)
 }
 
-// FromPetajoule creates a new Energy instance from Petajoule.
+// FromPetajoules creates a new Energy instance from a value in Petajoules.
 func (uf EnergyFactory) FromPetajoules(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyPetajoule)
 }
 
-// FromKilocalorie creates a new Energy instance from Kilocalorie.
+// FromKilocalories creates a new Energy instance from a value in Kilocalories.
 func (uf EnergyFactory) FromKilocalories(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyKilocalorie)
 }
 
-// FromMegacalorie creates a new Energy instance from Megacalorie.
+// FromMegacalories creates a new Energy instance from a value in Megacalories.
 func (uf EnergyFactory) FromMegacalories(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyMegacalorie)
 }
 
-// FromKilobritishThermalUnit creates a new Energy instance from KilobritishThermalUnit.
+// FromKilobritishThermalUnits creates a new Energy instance from a value in KilobritishThermalUnits.
 func (uf EnergyFactory) FromKilobritishThermalUnits(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyKilobritishThermalUnit)
 }
 
-// FromMegabritishThermalUnit creates a new Energy instance from MegabritishThermalUnit.
+// FromMegabritishThermalUnits creates a new Energy instance from a value in MegabritishThermalUnits.
 func (uf EnergyFactory) FromMegabritishThermalUnits(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyMegabritishThermalUnit)
 }
 
-// FromGigabritishThermalUnit creates a new Energy instance from GigabritishThermalUnit.
+// FromGigabritishThermalUnits creates a new Energy instance from a value in GigabritishThermalUnits.
 func (uf EnergyFactory) FromGigabritishThermalUnits(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyGigabritishThermalUnit)
 }
 
-// FromKiloelectronVolt creates a new Energy instance from KiloelectronVolt.
+// FromKiloelectronVolts creates a new Energy instance from a value in KiloelectronVolts.
 func (uf EnergyFactory) FromKiloelectronVolts(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyKiloelectronVolt)
 }
 
-// FromMegaelectronVolt creates a new Energy instance from MegaelectronVolt.
+// FromMegaelectronVolts creates a new Energy instance from a value in MegaelectronVolts.
 func (uf EnergyFactory) FromMegaelectronVolts(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyMegaelectronVolt)
 }
 
-// FromGigaelectronVolt creates a new Energy instance from GigaelectronVolt.
+// FromGigaelectronVolts creates a new Energy instance from a value in GigaelectronVolts.
 func (uf EnergyFactory) FromGigaelectronVolts(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyGigaelectronVolt)
 }
 
-// FromTeraelectronVolt creates a new Energy instance from TeraelectronVolt.
+// FromTeraelectronVolts creates a new Energy instance from a value in TeraelectronVolts.
 func (uf EnergyFactory) FromTeraelectronVolts(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyTeraelectronVolt)
 }
 
-// FromKilowattHour creates a new Energy instance from KilowattHour.
+// FromKilowattHours creates a new Energy instance from a value in KilowattHours.
 func (uf EnergyFactory) FromKilowattHours(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyKilowattHour)
 }
 
-// FromMegawattHour creates a new Energy instance from MegawattHour.
+// FromMegawattHours creates a new Energy instance from a value in MegawattHours.
 func (uf EnergyFactory) FromMegawattHours(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyMegawattHour)
 }
 
-// FromGigawattHour creates a new Energy instance from GigawattHour.
+// FromGigawattHours creates a new Energy instance from a value in GigawattHours.
 func (uf EnergyFactory) FromGigawattHours(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyGigawattHour)
 }
 
-// FromTerawattHour creates a new Energy instance from TerawattHour.
+// FromTerawattHours creates a new Energy instance from a value in TerawattHours.
 func (uf EnergyFactory) FromTerawattHours(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyTerawattHour)
 }
 
-// FromKilowattDay creates a new Energy instance from KilowattDay.
+// FromKilowattDays creates a new Energy instance from a value in KilowattDays.
 func (uf EnergyFactory) FromKilowattDays(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyKilowattDay)
 }
 
-// FromMegawattDay creates a new Energy instance from MegawattDay.
+// FromMegawattDays creates a new Energy instance from a value in MegawattDays.
 func (uf EnergyFactory) FromMegawattDays(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyMegawattDay)
 }
 
-// FromGigawattDay creates a new Energy instance from GigawattDay.
+// FromGigawattDays creates a new Energy instance from a value in GigawattDays.
 func (uf EnergyFactory) FromGigawattDays(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyGigawattDay)
 }
 
-// FromTerawattDay creates a new Energy instance from TerawattDay.
+// FromTerawattDays creates a new Energy instance from a value in TerawattDays.
 func (uf EnergyFactory) FromTerawattDays(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyTerawattDay)
 }
 
-// FromDecathermEc creates a new Energy instance from DecathermEc.
+// FromDecathermsEc creates a new Energy instance from a value in DecathermsEc.
 func (uf EnergyFactory) FromDecathermsEc(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyDecathermEc)
 }
 
-// FromDecathermUs creates a new Energy instance from DecathermUs.
+// FromDecathermsUs creates a new Energy instance from a value in DecathermsUs.
 func (uf EnergyFactory) FromDecathermsUs(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyDecathermUs)
 }
 
-// FromDecathermImperial creates a new Energy instance from DecathermImperial.
+// FromDecathermsImperial creates a new Energy instance from a value in DecathermsImperial.
 func (uf EnergyFactory) FromDecathermsImperial(value float64) (*Energy, error) {
 	return newEnergy(value, EnergyDecathermImperial)
 }
-
-
 
 
 // newEnergy creates a new Energy.
@@ -411,13 +421,15 @@ func newEnergy(value float64, fromUnit EnergyUnits) (*Energy, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Energy in Joule.
+// BaseValue returns the base value of Energy in Joule unit (the base/default quantity).
 func (a *Energy) BaseValue() float64 {
 	return a.value
 }
 
 
-// Joule returns the value in Joule.
+// Joules returns the Energy value in Joules.
+//
+// 
 func (a *Energy) Joules() float64 {
 	if a.joulesLazy != nil {
 		return *a.joulesLazy
@@ -427,7 +439,9 @@ func (a *Energy) Joules() float64 {
 	return joules
 }
 
-// Calorie returns the value in Calorie.
+// Calories returns the Energy value in Calories.
+//
+// 
 func (a *Energy) Calories() float64 {
 	if a.caloriesLazy != nil {
 		return *a.caloriesLazy
@@ -437,7 +451,9 @@ func (a *Energy) Calories() float64 {
 	return calories
 }
 
-// BritishThermalUnit returns the value in BritishThermalUnit.
+// BritishThermalUnits returns the Energy value in BritishThermalUnits.
+//
+// 
 func (a *Energy) BritishThermalUnits() float64 {
 	if a.british_thermal_unitsLazy != nil {
 		return *a.british_thermal_unitsLazy
@@ -447,7 +463,9 @@ func (a *Energy) BritishThermalUnits() float64 {
 	return british_thermal_units
 }
 
-// ElectronVolt returns the value in ElectronVolt.
+// ElectronVolts returns the Energy value in ElectronVolts.
+//
+// 
 func (a *Energy) ElectronVolts() float64 {
 	if a.electron_voltsLazy != nil {
 		return *a.electron_voltsLazy
@@ -457,7 +475,9 @@ func (a *Energy) ElectronVolts() float64 {
 	return electron_volts
 }
 
-// FootPound returns the value in FootPound.
+// FootPounds returns the Energy value in FootPounds.
+//
+// 
 func (a *Energy) FootPounds() float64 {
 	if a.foot_poundsLazy != nil {
 		return *a.foot_poundsLazy
@@ -467,7 +487,9 @@ func (a *Energy) FootPounds() float64 {
 	return foot_pounds
 }
 
-// Erg returns the value in Erg.
+// Ergs returns the Energy value in Ergs.
+//
+// 
 func (a *Energy) Ergs() float64 {
 	if a.ergsLazy != nil {
 		return *a.ergsLazy
@@ -477,7 +499,9 @@ func (a *Energy) Ergs() float64 {
 	return ergs
 }
 
-// WattHour returns the value in WattHour.
+// WattHours returns the Energy value in WattHours.
+//
+// 
 func (a *Energy) WattHours() float64 {
 	if a.watt_hoursLazy != nil {
 		return *a.watt_hoursLazy
@@ -487,7 +511,9 @@ func (a *Energy) WattHours() float64 {
 	return watt_hours
 }
 
-// WattDay returns the value in WattDay.
+// WattDays returns the Energy value in WattDays.
+//
+// 
 func (a *Energy) WattDays() float64 {
 	if a.watt_daysLazy != nil {
 		return *a.watt_daysLazy
@@ -497,7 +523,9 @@ func (a *Energy) WattDays() float64 {
 	return watt_days
 }
 
-// ThermEc returns the value in ThermEc.
+// ThermsEc returns the Energy value in ThermsEc.
+//
+// 
 func (a *Energy) ThermsEc() float64 {
 	if a.therms_ecLazy != nil {
 		return *a.therms_ecLazy
@@ -507,7 +535,9 @@ func (a *Energy) ThermsEc() float64 {
 	return therms_ec
 }
 
-// ThermUs returns the value in ThermUs.
+// ThermsUs returns the Energy value in ThermsUs.
+//
+// 
 func (a *Energy) ThermsUs() float64 {
 	if a.therms_usLazy != nil {
 		return *a.therms_usLazy
@@ -517,7 +547,9 @@ func (a *Energy) ThermsUs() float64 {
 	return therms_us
 }
 
-// ThermImperial returns the value in ThermImperial.
+// ThermsImperial returns the Energy value in ThermsImperial.
+//
+// 
 func (a *Energy) ThermsImperial() float64 {
 	if a.therms_imperialLazy != nil {
 		return *a.therms_imperialLazy
@@ -527,7 +559,9 @@ func (a *Energy) ThermsImperial() float64 {
 	return therms_imperial
 }
 
-// HorsepowerHour returns the value in HorsepowerHour.
+// HorsepowerHours returns the Energy value in HorsepowerHours.
+//
+// 
 func (a *Energy) HorsepowerHours() float64 {
 	if a.horsepower_hoursLazy != nil {
 		return *a.horsepower_hoursLazy
@@ -537,7 +571,9 @@ func (a *Energy) HorsepowerHours() float64 {
 	return horsepower_hours
 }
 
-// Nanojoule returns the value in Nanojoule.
+// Nanojoules returns the Energy value in Nanojoules.
+//
+// 
 func (a *Energy) Nanojoules() float64 {
 	if a.nanojoulesLazy != nil {
 		return *a.nanojoulesLazy
@@ -547,7 +583,9 @@ func (a *Energy) Nanojoules() float64 {
 	return nanojoules
 }
 
-// Microjoule returns the value in Microjoule.
+// Microjoules returns the Energy value in Microjoules.
+//
+// 
 func (a *Energy) Microjoules() float64 {
 	if a.microjoulesLazy != nil {
 		return *a.microjoulesLazy
@@ -557,7 +595,9 @@ func (a *Energy) Microjoules() float64 {
 	return microjoules
 }
 
-// Millijoule returns the value in Millijoule.
+// Millijoules returns the Energy value in Millijoules.
+//
+// 
 func (a *Energy) Millijoules() float64 {
 	if a.millijoulesLazy != nil {
 		return *a.millijoulesLazy
@@ -567,7 +607,9 @@ func (a *Energy) Millijoules() float64 {
 	return millijoules
 }
 
-// Kilojoule returns the value in Kilojoule.
+// Kilojoules returns the Energy value in Kilojoules.
+//
+// 
 func (a *Energy) Kilojoules() float64 {
 	if a.kilojoulesLazy != nil {
 		return *a.kilojoulesLazy
@@ -577,7 +619,9 @@ func (a *Energy) Kilojoules() float64 {
 	return kilojoules
 }
 
-// Megajoule returns the value in Megajoule.
+// Megajoules returns the Energy value in Megajoules.
+//
+// 
 func (a *Energy) Megajoules() float64 {
 	if a.megajoulesLazy != nil {
 		return *a.megajoulesLazy
@@ -587,7 +631,9 @@ func (a *Energy) Megajoules() float64 {
 	return megajoules
 }
 
-// Gigajoule returns the value in Gigajoule.
+// Gigajoules returns the Energy value in Gigajoules.
+//
+// 
 func (a *Energy) Gigajoules() float64 {
 	if a.gigajoulesLazy != nil {
 		return *a.gigajoulesLazy
@@ -597,7 +643,9 @@ func (a *Energy) Gigajoules() float64 {
 	return gigajoules
 }
 
-// Terajoule returns the value in Terajoule.
+// Terajoules returns the Energy value in Terajoules.
+//
+// 
 func (a *Energy) Terajoules() float64 {
 	if a.terajoulesLazy != nil {
 		return *a.terajoulesLazy
@@ -607,7 +655,9 @@ func (a *Energy) Terajoules() float64 {
 	return terajoules
 }
 
-// Petajoule returns the value in Petajoule.
+// Petajoules returns the Energy value in Petajoules.
+//
+// 
 func (a *Energy) Petajoules() float64 {
 	if a.petajoulesLazy != nil {
 		return *a.petajoulesLazy
@@ -617,7 +667,9 @@ func (a *Energy) Petajoules() float64 {
 	return petajoules
 }
 
-// Kilocalorie returns the value in Kilocalorie.
+// Kilocalories returns the Energy value in Kilocalories.
+//
+// 
 func (a *Energy) Kilocalories() float64 {
 	if a.kilocaloriesLazy != nil {
 		return *a.kilocaloriesLazy
@@ -627,7 +679,9 @@ func (a *Energy) Kilocalories() float64 {
 	return kilocalories
 }
 
-// Megacalorie returns the value in Megacalorie.
+// Megacalories returns the Energy value in Megacalories.
+//
+// 
 func (a *Energy) Megacalories() float64 {
 	if a.megacaloriesLazy != nil {
 		return *a.megacaloriesLazy
@@ -637,7 +691,9 @@ func (a *Energy) Megacalories() float64 {
 	return megacalories
 }
 
-// KilobritishThermalUnit returns the value in KilobritishThermalUnit.
+// KilobritishThermalUnits returns the Energy value in KilobritishThermalUnits.
+//
+// 
 func (a *Energy) KilobritishThermalUnits() float64 {
 	if a.kilobritish_thermal_unitsLazy != nil {
 		return *a.kilobritish_thermal_unitsLazy
@@ -647,7 +703,9 @@ func (a *Energy) KilobritishThermalUnits() float64 {
 	return kilobritish_thermal_units
 }
 
-// MegabritishThermalUnit returns the value in MegabritishThermalUnit.
+// MegabritishThermalUnits returns the Energy value in MegabritishThermalUnits.
+//
+// 
 func (a *Energy) MegabritishThermalUnits() float64 {
 	if a.megabritish_thermal_unitsLazy != nil {
 		return *a.megabritish_thermal_unitsLazy
@@ -657,7 +715,9 @@ func (a *Energy) MegabritishThermalUnits() float64 {
 	return megabritish_thermal_units
 }
 
-// GigabritishThermalUnit returns the value in GigabritishThermalUnit.
+// GigabritishThermalUnits returns the Energy value in GigabritishThermalUnits.
+//
+// 
 func (a *Energy) GigabritishThermalUnits() float64 {
 	if a.gigabritish_thermal_unitsLazy != nil {
 		return *a.gigabritish_thermal_unitsLazy
@@ -667,7 +727,9 @@ func (a *Energy) GigabritishThermalUnits() float64 {
 	return gigabritish_thermal_units
 }
 
-// KiloelectronVolt returns the value in KiloelectronVolt.
+// KiloelectronVolts returns the Energy value in KiloelectronVolts.
+//
+// 
 func (a *Energy) KiloelectronVolts() float64 {
 	if a.kiloelectron_voltsLazy != nil {
 		return *a.kiloelectron_voltsLazy
@@ -677,7 +739,9 @@ func (a *Energy) KiloelectronVolts() float64 {
 	return kiloelectron_volts
 }
 
-// MegaelectronVolt returns the value in MegaelectronVolt.
+// MegaelectronVolts returns the Energy value in MegaelectronVolts.
+//
+// 
 func (a *Energy) MegaelectronVolts() float64 {
 	if a.megaelectron_voltsLazy != nil {
 		return *a.megaelectron_voltsLazy
@@ -687,7 +751,9 @@ func (a *Energy) MegaelectronVolts() float64 {
 	return megaelectron_volts
 }
 
-// GigaelectronVolt returns the value in GigaelectronVolt.
+// GigaelectronVolts returns the Energy value in GigaelectronVolts.
+//
+// 
 func (a *Energy) GigaelectronVolts() float64 {
 	if a.gigaelectron_voltsLazy != nil {
 		return *a.gigaelectron_voltsLazy
@@ -697,7 +763,9 @@ func (a *Energy) GigaelectronVolts() float64 {
 	return gigaelectron_volts
 }
 
-// TeraelectronVolt returns the value in TeraelectronVolt.
+// TeraelectronVolts returns the Energy value in TeraelectronVolts.
+//
+// 
 func (a *Energy) TeraelectronVolts() float64 {
 	if a.teraelectron_voltsLazy != nil {
 		return *a.teraelectron_voltsLazy
@@ -707,7 +775,9 @@ func (a *Energy) TeraelectronVolts() float64 {
 	return teraelectron_volts
 }
 
-// KilowattHour returns the value in KilowattHour.
+// KilowattHours returns the Energy value in KilowattHours.
+//
+// 
 func (a *Energy) KilowattHours() float64 {
 	if a.kilowatt_hoursLazy != nil {
 		return *a.kilowatt_hoursLazy
@@ -717,7 +787,9 @@ func (a *Energy) KilowattHours() float64 {
 	return kilowatt_hours
 }
 
-// MegawattHour returns the value in MegawattHour.
+// MegawattHours returns the Energy value in MegawattHours.
+//
+// 
 func (a *Energy) MegawattHours() float64 {
 	if a.megawatt_hoursLazy != nil {
 		return *a.megawatt_hoursLazy
@@ -727,7 +799,9 @@ func (a *Energy) MegawattHours() float64 {
 	return megawatt_hours
 }
 
-// GigawattHour returns the value in GigawattHour.
+// GigawattHours returns the Energy value in GigawattHours.
+//
+// 
 func (a *Energy) GigawattHours() float64 {
 	if a.gigawatt_hoursLazy != nil {
 		return *a.gigawatt_hoursLazy
@@ -737,7 +811,9 @@ func (a *Energy) GigawattHours() float64 {
 	return gigawatt_hours
 }
 
-// TerawattHour returns the value in TerawattHour.
+// TerawattHours returns the Energy value in TerawattHours.
+//
+// 
 func (a *Energy) TerawattHours() float64 {
 	if a.terawatt_hoursLazy != nil {
 		return *a.terawatt_hoursLazy
@@ -747,7 +823,9 @@ func (a *Energy) TerawattHours() float64 {
 	return terawatt_hours
 }
 
-// KilowattDay returns the value in KilowattDay.
+// KilowattDays returns the Energy value in KilowattDays.
+//
+// 
 func (a *Energy) KilowattDays() float64 {
 	if a.kilowatt_daysLazy != nil {
 		return *a.kilowatt_daysLazy
@@ -757,7 +835,9 @@ func (a *Energy) KilowattDays() float64 {
 	return kilowatt_days
 }
 
-// MegawattDay returns the value in MegawattDay.
+// MegawattDays returns the Energy value in MegawattDays.
+//
+// 
 func (a *Energy) MegawattDays() float64 {
 	if a.megawatt_daysLazy != nil {
 		return *a.megawatt_daysLazy
@@ -767,7 +847,9 @@ func (a *Energy) MegawattDays() float64 {
 	return megawatt_days
 }
 
-// GigawattDay returns the value in GigawattDay.
+// GigawattDays returns the Energy value in GigawattDays.
+//
+// 
 func (a *Energy) GigawattDays() float64 {
 	if a.gigawatt_daysLazy != nil {
 		return *a.gigawatt_daysLazy
@@ -777,7 +859,9 @@ func (a *Energy) GigawattDays() float64 {
 	return gigawatt_days
 }
 
-// TerawattDay returns the value in TerawattDay.
+// TerawattDays returns the Energy value in TerawattDays.
+//
+// 
 func (a *Energy) TerawattDays() float64 {
 	if a.terawatt_daysLazy != nil {
 		return *a.terawatt_daysLazy
@@ -787,7 +871,9 @@ func (a *Energy) TerawattDays() float64 {
 	return terawatt_days
 }
 
-// DecathermEc returns the value in DecathermEc.
+// DecathermsEc returns the Energy value in DecathermsEc.
+//
+// 
 func (a *Energy) DecathermsEc() float64 {
 	if a.decatherms_ecLazy != nil {
 		return *a.decatherms_ecLazy
@@ -797,7 +883,9 @@ func (a *Energy) DecathermsEc() float64 {
 	return decatherms_ec
 }
 
-// DecathermUs returns the value in DecathermUs.
+// DecathermsUs returns the Energy value in DecathermsUs.
+//
+// 
 func (a *Energy) DecathermsUs() float64 {
 	if a.decatherms_usLazy != nil {
 		return *a.decatherms_usLazy
@@ -807,7 +895,9 @@ func (a *Energy) DecathermsUs() float64 {
 	return decatherms_us
 }
 
-// DecathermImperial returns the value in DecathermImperial.
+// DecathermsImperial returns the Energy value in DecathermsImperial.
+//
+// 
 func (a *Energy) DecathermsImperial() float64 {
 	if a.decatherms_imperialLazy != nil {
 		return *a.decatherms_imperialLazy
@@ -818,7 +908,9 @@ func (a *Energy) DecathermsImperial() float64 {
 }
 
 
-// ToDto creates an EnergyDto representation.
+// ToDto creates a EnergyDto representation from the Energy instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Joule by default.
 func (a *Energy) ToDto(holdInUnit *EnergyUnits) EnergyDto {
 	if holdInUnit == nil {
 		defaultUnit := EnergyJoule // Default value
@@ -831,12 +923,19 @@ func (a *Energy) ToDto(holdInUnit *EnergyUnits) EnergyDto {
 	}
 }
 
-// ToDtoJSON creates an EnergyDto representation.
+// ToDtoJSON creates a JSON representation of the Energy instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Joule by default.
 func (a *Energy) ToDtoJSON(holdInUnit *EnergyUnits) ([]byte, error) {
+	// Convert to EnergyDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Energy to a specific unit value.
+// Convert converts a Energy to a specific unit value.
+// The function uses the provided unit type (EnergyUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Energy) Convert(toUnit EnergyUnits) float64 {
 	switch toUnit { 
     case EnergyJoule:
@@ -920,7 +1019,7 @@ func (a *Energy) Convert(toUnit EnergyUnits) float64 {
     case EnergyDecathermImperial:
 		return a.DecathermsImperial()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -1099,13 +1198,22 @@ func (a *Energy) convertToBase(value float64, fromUnit EnergyUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Energy in the default unit (Joule),
+// formatted to two decimal places.
 func (a Energy) String() string {
 	return a.ToString(EnergyJoule, 2)
 }
 
-// ToString formats the Energy to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Energy value as a string with the specified unit and fractional digits.
+// It converts the Energy to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Energy value will be converted (e.g., Joule))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Energy with the unit abbreviation.
 func (a *Energy) ToString(unit EnergyUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1203,12 +1311,26 @@ func (a *Energy) getUnitAbbreviation(unit EnergyUnits) string {
 	}
 }
 
-// Check if the given Energy are equals to the current Energy
+// Equals checks if the given Energy is equal to the current Energy.
+//
+// Parameters:
+//    other: The Energy to compare against.
+//
+// Returns:
+//    bool: Returns true if both Energy are equal, false otherwise.
 func (a *Energy) Equals(other *Energy) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Energy are equals to the current Energy
+// CompareTo compares the current Energy with another Energy.
+// It returns -1 if the current Energy is less than the other Energy, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Energy to compare against.
+//
+// Returns:
+//    int: -1 if the current Energy is less, 1 if greater, and 0 if equal.
 func (a *Energy) CompareTo(other *Energy) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1221,22 +1343,50 @@ func (a *Energy) CompareTo(other *Energy) int {
 	return 0
 }
 
-// Add the given Energy to the current Energy.
+// Add adds the given Energy to the current Energy and returns the result.
+// The result is a new Energy instance with the sum of the values.
+//
+// Parameters:
+//    other: The Energy to add to the current Energy.
+//
+// Returns:
+//    *Energy: A new Energy instance representing the sum of both Energy.
 func (a *Energy) Add(other *Energy) *Energy {
 	return &Energy{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Energy to the current Energy.
+// Subtract subtracts the given Energy from the current Energy and returns the result.
+// The result is a new Energy instance with the difference of the values.
+//
+// Parameters:
+//    other: The Energy to subtract from the current Energy.
+//
+// Returns:
+//    *Energy: A new Energy instance representing the difference of both Energy.
 func (a *Energy) Subtract(other *Energy) *Energy {
 	return &Energy{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Energy to the current Energy.
+// Multiply multiplies the current Energy by the given Energy and returns the result.
+// The result is a new Energy instance with the product of the values.
+//
+// Parameters:
+//    other: The Energy to multiply with the current Energy.
+//
+// Returns:
+//    *Energy: A new Energy instance representing the product of both Energy.
 func (a *Energy) Multiply(other *Energy) *Energy {
 	return &Energy{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Energy to the current Energy.
+// Divide divides the current Energy by the given Energy and returns the result.
+// The result is a new Energy instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Energy to divide the current Energy by.
+//
+// Returns:
+//    *Energy: A new Energy instance representing the quotient of both Energy.
 func (a *Energy) Divide(other *Energy) *Energy {
 	return &Energy{value: a.value / other.BaseValue()}
 }

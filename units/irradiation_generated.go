@@ -12,7 +12,7 @@ import (
 
 
 
-// IrradiationUnits enumeration
+// IrradiationUnits defines various units of Irradiation.
 type IrradiationUnits string
 
 const (
@@ -37,19 +37,24 @@ const (
         IrradiationKilobtuPerSquareFoot IrradiationUnits = "KilobtuPerSquareFoot"
 )
 
-// IrradiationDto represents an Irradiation
+// IrradiationDto represents a Irradiation measurement with a numerical value and its corresponding unit.
 type IrradiationDto struct {
+    // Value is the numerical representation of the Irradiation.
 	Value float64
+    // Unit specifies the unit of measurement for the Irradiation, as defined in the IrradiationUnits enumeration.
 	Unit  IrradiationUnits
 }
 
-// IrradiationDtoFactory struct to group related functions
+// IrradiationDtoFactory groups methods for creating and serializing IrradiationDto objects.
 type IrradiationDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a IrradiationDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf IrradiationDtoFactory) FromJSON(data []byte) (*IrradiationDto, error) {
 	a := IrradiationDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into IrradiationDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -57,6 +62,9 @@ func (udf IrradiationDtoFactory) FromJSON(data []byte) (*IrradiationDto, error) 
 	return &a, nil
 }
 
+// ToJSON serializes a IrradiationDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a IrradiationDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -68,10 +76,11 @@ func (a IrradiationDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Irradiation struct
+// Irradiation represents a measurement in a of Irradiation.
+//
+// Irradiation is the process by which an object is exposed to radiation. The exposure can originate from various sources, including natural sources.
 type Irradiation struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     joules_per_square_meterLazy *float64 
@@ -85,72 +94,73 @@ type Irradiation struct {
     kilobtus_per_square_footLazy *float64 
 }
 
-// IrradiationFactory struct to group related functions
+// IrradiationFactory groups methods for creating Irradiation instances.
 type IrradiationFactory struct{}
 
+// CreateIrradiation creates a new Irradiation instance from the given value and unit.
 func (uf IrradiationFactory) CreateIrradiation(value float64, unit IrradiationUnits) (*Irradiation, error) {
 	return newIrradiation(value, unit)
 }
 
+// FromDto converts a IrradiationDto to a Irradiation instance.
 func (uf IrradiationFactory) FromDto(dto IrradiationDto) (*Irradiation, error) {
 	return newIrradiation(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Irradiation instance.
 func (uf IrradiationFactory) FromDtoJSON(data []byte) (*Irradiation, error) {
 	unitDto, err := IrradiationDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse IrradiationDto from JSON: %w", err)
 	}
 	return IrradiationFactory{}.FromDto(*unitDto)
 }
 
 
-// FromJoulePerSquareMeter creates a new Irradiation instance from JoulePerSquareMeter.
+// FromJoulesPerSquareMeter creates a new Irradiation instance from a value in JoulesPerSquareMeter.
 func (uf IrradiationFactory) FromJoulesPerSquareMeter(value float64) (*Irradiation, error) {
 	return newIrradiation(value, IrradiationJoulePerSquareMeter)
 }
 
-// FromJoulePerSquareCentimeter creates a new Irradiation instance from JoulePerSquareCentimeter.
+// FromJoulesPerSquareCentimeter creates a new Irradiation instance from a value in JoulesPerSquareCentimeter.
 func (uf IrradiationFactory) FromJoulesPerSquareCentimeter(value float64) (*Irradiation, error) {
 	return newIrradiation(value, IrradiationJoulePerSquareCentimeter)
 }
 
-// FromJoulePerSquareMillimeter creates a new Irradiation instance from JoulePerSquareMillimeter.
+// FromJoulesPerSquareMillimeter creates a new Irradiation instance from a value in JoulesPerSquareMillimeter.
 func (uf IrradiationFactory) FromJoulesPerSquareMillimeter(value float64) (*Irradiation, error) {
 	return newIrradiation(value, IrradiationJoulePerSquareMillimeter)
 }
 
-// FromWattHourPerSquareMeter creates a new Irradiation instance from WattHourPerSquareMeter.
+// FromWattHoursPerSquareMeter creates a new Irradiation instance from a value in WattHoursPerSquareMeter.
 func (uf IrradiationFactory) FromWattHoursPerSquareMeter(value float64) (*Irradiation, error) {
 	return newIrradiation(value, IrradiationWattHourPerSquareMeter)
 }
 
-// FromBtuPerSquareFoot creates a new Irradiation instance from BtuPerSquareFoot.
+// FromBtusPerSquareFoot creates a new Irradiation instance from a value in BtusPerSquareFoot.
 func (uf IrradiationFactory) FromBtusPerSquareFoot(value float64) (*Irradiation, error) {
 	return newIrradiation(value, IrradiationBtuPerSquareFoot)
 }
 
-// FromKilojoulePerSquareMeter creates a new Irradiation instance from KilojoulePerSquareMeter.
+// FromKilojoulesPerSquareMeter creates a new Irradiation instance from a value in KilojoulesPerSquareMeter.
 func (uf IrradiationFactory) FromKilojoulesPerSquareMeter(value float64) (*Irradiation, error) {
 	return newIrradiation(value, IrradiationKilojoulePerSquareMeter)
 }
 
-// FromMillijoulePerSquareCentimeter creates a new Irradiation instance from MillijoulePerSquareCentimeter.
+// FromMillijoulesPerSquareCentimeter creates a new Irradiation instance from a value in MillijoulesPerSquareCentimeter.
 func (uf IrradiationFactory) FromMillijoulesPerSquareCentimeter(value float64) (*Irradiation, error) {
 	return newIrradiation(value, IrradiationMillijoulePerSquareCentimeter)
 }
 
-// FromKilowattHourPerSquareMeter creates a new Irradiation instance from KilowattHourPerSquareMeter.
+// FromKilowattHoursPerSquareMeter creates a new Irradiation instance from a value in KilowattHoursPerSquareMeter.
 func (uf IrradiationFactory) FromKilowattHoursPerSquareMeter(value float64) (*Irradiation, error) {
 	return newIrradiation(value, IrradiationKilowattHourPerSquareMeter)
 }
 
-// FromKilobtuPerSquareFoot creates a new Irradiation instance from KilobtuPerSquareFoot.
+// FromKilobtusPerSquareFoot creates a new Irradiation instance from a value in KilobtusPerSquareFoot.
 func (uf IrradiationFactory) FromKilobtusPerSquareFoot(value float64) (*Irradiation, error) {
 	return newIrradiation(value, IrradiationKilobtuPerSquareFoot)
 }
-
-
 
 
 // newIrradiation creates a new Irradiation.
@@ -163,13 +173,15 @@ func newIrradiation(value float64, fromUnit IrradiationUnits) (*Irradiation, err
 	return a, nil
 }
 
-// BaseValue returns the base value of Irradiation in JoulePerSquareMeter.
+// BaseValue returns the base value of Irradiation in JoulePerSquareMeter unit (the base/default quantity).
 func (a *Irradiation) BaseValue() float64 {
 	return a.value
 }
 
 
-// JoulePerSquareMeter returns the value in JoulePerSquareMeter.
+// JoulesPerSquareMeter returns the Irradiation value in JoulesPerSquareMeter.
+//
+// 
 func (a *Irradiation) JoulesPerSquareMeter() float64 {
 	if a.joules_per_square_meterLazy != nil {
 		return *a.joules_per_square_meterLazy
@@ -179,7 +191,9 @@ func (a *Irradiation) JoulesPerSquareMeter() float64 {
 	return joules_per_square_meter
 }
 
-// JoulePerSquareCentimeter returns the value in JoulePerSquareCentimeter.
+// JoulesPerSquareCentimeter returns the Irradiation value in JoulesPerSquareCentimeter.
+//
+// 
 func (a *Irradiation) JoulesPerSquareCentimeter() float64 {
 	if a.joules_per_square_centimeterLazy != nil {
 		return *a.joules_per_square_centimeterLazy
@@ -189,7 +203,9 @@ func (a *Irradiation) JoulesPerSquareCentimeter() float64 {
 	return joules_per_square_centimeter
 }
 
-// JoulePerSquareMillimeter returns the value in JoulePerSquareMillimeter.
+// JoulesPerSquareMillimeter returns the Irradiation value in JoulesPerSquareMillimeter.
+//
+// 
 func (a *Irradiation) JoulesPerSquareMillimeter() float64 {
 	if a.joules_per_square_millimeterLazy != nil {
 		return *a.joules_per_square_millimeterLazy
@@ -199,7 +215,9 @@ func (a *Irradiation) JoulesPerSquareMillimeter() float64 {
 	return joules_per_square_millimeter
 }
 
-// WattHourPerSquareMeter returns the value in WattHourPerSquareMeter.
+// WattHoursPerSquareMeter returns the Irradiation value in WattHoursPerSquareMeter.
+//
+// 
 func (a *Irradiation) WattHoursPerSquareMeter() float64 {
 	if a.watt_hours_per_square_meterLazy != nil {
 		return *a.watt_hours_per_square_meterLazy
@@ -209,7 +227,9 @@ func (a *Irradiation) WattHoursPerSquareMeter() float64 {
 	return watt_hours_per_square_meter
 }
 
-// BtuPerSquareFoot returns the value in BtuPerSquareFoot.
+// BtusPerSquareFoot returns the Irradiation value in BtusPerSquareFoot.
+//
+// 
 func (a *Irradiation) BtusPerSquareFoot() float64 {
 	if a.btus_per_square_footLazy != nil {
 		return *a.btus_per_square_footLazy
@@ -219,7 +239,9 @@ func (a *Irradiation) BtusPerSquareFoot() float64 {
 	return btus_per_square_foot
 }
 
-// KilojoulePerSquareMeter returns the value in KilojoulePerSquareMeter.
+// KilojoulesPerSquareMeter returns the Irradiation value in KilojoulesPerSquareMeter.
+//
+// 
 func (a *Irradiation) KilojoulesPerSquareMeter() float64 {
 	if a.kilojoules_per_square_meterLazy != nil {
 		return *a.kilojoules_per_square_meterLazy
@@ -229,7 +251,9 @@ func (a *Irradiation) KilojoulesPerSquareMeter() float64 {
 	return kilojoules_per_square_meter
 }
 
-// MillijoulePerSquareCentimeter returns the value in MillijoulePerSquareCentimeter.
+// MillijoulesPerSquareCentimeter returns the Irradiation value in MillijoulesPerSquareCentimeter.
+//
+// 
 func (a *Irradiation) MillijoulesPerSquareCentimeter() float64 {
 	if a.millijoules_per_square_centimeterLazy != nil {
 		return *a.millijoules_per_square_centimeterLazy
@@ -239,7 +263,9 @@ func (a *Irradiation) MillijoulesPerSquareCentimeter() float64 {
 	return millijoules_per_square_centimeter
 }
 
-// KilowattHourPerSquareMeter returns the value in KilowattHourPerSquareMeter.
+// KilowattHoursPerSquareMeter returns the Irradiation value in KilowattHoursPerSquareMeter.
+//
+// 
 func (a *Irradiation) KilowattHoursPerSquareMeter() float64 {
 	if a.kilowatt_hours_per_square_meterLazy != nil {
 		return *a.kilowatt_hours_per_square_meterLazy
@@ -249,7 +275,9 @@ func (a *Irradiation) KilowattHoursPerSquareMeter() float64 {
 	return kilowatt_hours_per_square_meter
 }
 
-// KilobtuPerSquareFoot returns the value in KilobtuPerSquareFoot.
+// KilobtusPerSquareFoot returns the Irradiation value in KilobtusPerSquareFoot.
+//
+// 
 func (a *Irradiation) KilobtusPerSquareFoot() float64 {
 	if a.kilobtus_per_square_footLazy != nil {
 		return *a.kilobtus_per_square_footLazy
@@ -260,7 +288,9 @@ func (a *Irradiation) KilobtusPerSquareFoot() float64 {
 }
 
 
-// ToDto creates an IrradiationDto representation.
+// ToDto creates a IrradiationDto representation from the Irradiation instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerSquareMeter by default.
 func (a *Irradiation) ToDto(holdInUnit *IrradiationUnits) IrradiationDto {
 	if holdInUnit == nil {
 		defaultUnit := IrradiationJoulePerSquareMeter // Default value
@@ -273,12 +303,19 @@ func (a *Irradiation) ToDto(holdInUnit *IrradiationUnits) IrradiationDto {
 	}
 }
 
-// ToDtoJSON creates an IrradiationDto representation.
+// ToDtoJSON creates a JSON representation of the Irradiation instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerSquareMeter by default.
 func (a *Irradiation) ToDtoJSON(holdInUnit *IrradiationUnits) ([]byte, error) {
+	// Convert to IrradiationDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Irradiation to a specific unit value.
+// Convert converts a Irradiation to a specific unit value.
+// The function uses the provided unit type (IrradiationUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Irradiation) Convert(toUnit IrradiationUnits) float64 {
 	switch toUnit { 
     case IrradiationJoulePerSquareMeter:
@@ -300,7 +337,7 @@ func (a *Irradiation) Convert(toUnit IrradiationUnits) float64 {
     case IrradiationKilobtuPerSquareFoot:
 		return a.KilobtusPerSquareFoot()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -355,13 +392,22 @@ func (a *Irradiation) convertToBase(value float64, fromUnit IrradiationUnits) fl
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Irradiation in the default unit (JoulePerSquareMeter),
+// formatted to two decimal places.
 func (a Irradiation) String() string {
 	return a.ToString(IrradiationJoulePerSquareMeter, 2)
 }
 
-// ToString formats the Irradiation to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Irradiation value as a string with the specified unit and fractional digits.
+// It converts the Irradiation to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Irradiation value will be converted (e.g., JoulePerSquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Irradiation with the unit abbreviation.
 func (a *Irradiation) ToString(unit IrradiationUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -397,12 +443,26 @@ func (a *Irradiation) getUnitAbbreviation(unit IrradiationUnits) string {
 	}
 }
 
-// Check if the given Irradiation are equals to the current Irradiation
+// Equals checks if the given Irradiation is equal to the current Irradiation.
+//
+// Parameters:
+//    other: The Irradiation to compare against.
+//
+// Returns:
+//    bool: Returns true if both Irradiation are equal, false otherwise.
 func (a *Irradiation) Equals(other *Irradiation) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Irradiation are equals to the current Irradiation
+// CompareTo compares the current Irradiation with another Irradiation.
+// It returns -1 if the current Irradiation is less than the other Irradiation, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Irradiation to compare against.
+//
+// Returns:
+//    int: -1 if the current Irradiation is less, 1 if greater, and 0 if equal.
 func (a *Irradiation) CompareTo(other *Irradiation) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -415,22 +475,50 @@ func (a *Irradiation) CompareTo(other *Irradiation) int {
 	return 0
 }
 
-// Add the given Irradiation to the current Irradiation.
+// Add adds the given Irradiation to the current Irradiation and returns the result.
+// The result is a new Irradiation instance with the sum of the values.
+//
+// Parameters:
+//    other: The Irradiation to add to the current Irradiation.
+//
+// Returns:
+//    *Irradiation: A new Irradiation instance representing the sum of both Irradiation.
 func (a *Irradiation) Add(other *Irradiation) *Irradiation {
 	return &Irradiation{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Irradiation to the current Irradiation.
+// Subtract subtracts the given Irradiation from the current Irradiation and returns the result.
+// The result is a new Irradiation instance with the difference of the values.
+//
+// Parameters:
+//    other: The Irradiation to subtract from the current Irradiation.
+//
+// Returns:
+//    *Irradiation: A new Irradiation instance representing the difference of both Irradiation.
 func (a *Irradiation) Subtract(other *Irradiation) *Irradiation {
 	return &Irradiation{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Irradiation to the current Irradiation.
+// Multiply multiplies the current Irradiation by the given Irradiation and returns the result.
+// The result is a new Irradiation instance with the product of the values.
+//
+// Parameters:
+//    other: The Irradiation to multiply with the current Irradiation.
+//
+// Returns:
+//    *Irradiation: A new Irradiation instance representing the product of both Irradiation.
 func (a *Irradiation) Multiply(other *Irradiation) *Irradiation {
 	return &Irradiation{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Irradiation to the current Irradiation.
+// Divide divides the current Irradiation by the given Irradiation and returns the result.
+// The result is a new Irradiation instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Irradiation to divide the current Irradiation by.
+//
+// Returns:
+//    *Irradiation: A new Irradiation instance representing the quotient of both Irradiation.
 func (a *Irradiation) Divide(other *Irradiation) *Irradiation {
 	return &Irradiation{value: a.value / other.BaseValue()}
 }

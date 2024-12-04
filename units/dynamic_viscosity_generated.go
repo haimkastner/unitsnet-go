@@ -12,7 +12,7 @@ import (
 
 
 
-// DynamicViscosityUnits enumeration
+// DynamicViscosityUnits defines various units of DynamicViscosity.
 type DynamicViscosityUnits string
 
 const (
@@ -39,19 +39,24 @@ const (
         DynamicViscosityCentipoise DynamicViscosityUnits = "Centipoise"
 )
 
-// DynamicViscosityDto represents an DynamicViscosity
+// DynamicViscosityDto represents a DynamicViscosity measurement with a numerical value and its corresponding unit.
 type DynamicViscosityDto struct {
+    // Value is the numerical representation of the DynamicViscosity.
 	Value float64
+    // Unit specifies the unit of measurement for the DynamicViscosity, as defined in the DynamicViscosityUnits enumeration.
 	Unit  DynamicViscosityUnits
 }
 
-// DynamicViscosityDtoFactory struct to group related functions
+// DynamicViscosityDtoFactory groups methods for creating and serializing DynamicViscosityDto objects.
 type DynamicViscosityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a DynamicViscosityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf DynamicViscosityDtoFactory) FromJSON(data []byte) (*DynamicViscosityDto, error) {
 	a := DynamicViscosityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into DynamicViscosityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -59,6 +64,9 @@ func (udf DynamicViscosityDtoFactory) FromJSON(data []byte) (*DynamicViscosityDt
 	return &a, nil
 }
 
+// ToJSON serializes a DynamicViscosityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a DynamicViscosityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -70,10 +78,11 @@ func (a DynamicViscosityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// DynamicViscosity struct
+// DynamicViscosity represents a measurement in a of DynamicViscosity.
+//
+// The dynamic (shear) viscosity of a fluid expresses its resistance to shearing flows, where adjacent layers move parallel to each other with different speeds
 type DynamicViscosity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     newton_seconds_per_meter_squaredLazy *float64 
@@ -88,77 +97,78 @@ type DynamicViscosity struct {
     centipoiseLazy *float64 
 }
 
-// DynamicViscosityFactory struct to group related functions
+// DynamicViscosityFactory groups methods for creating DynamicViscosity instances.
 type DynamicViscosityFactory struct{}
 
+// CreateDynamicViscosity creates a new DynamicViscosity instance from the given value and unit.
 func (uf DynamicViscosityFactory) CreateDynamicViscosity(value float64, unit DynamicViscosityUnits) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, unit)
 }
 
+// FromDto converts a DynamicViscosityDto to a DynamicViscosity instance.
 func (uf DynamicViscosityFactory) FromDto(dto DynamicViscosityDto) (*DynamicViscosity, error) {
 	return newDynamicViscosity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a DynamicViscosity instance.
 func (uf DynamicViscosityFactory) FromDtoJSON(data []byte) (*DynamicViscosity, error) {
 	unitDto, err := DynamicViscosityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse DynamicViscosityDto from JSON: %w", err)
 	}
 	return DynamicViscosityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromNewtonSecondPerMeterSquared creates a new DynamicViscosity instance from NewtonSecondPerMeterSquared.
+// FromNewtonSecondsPerMeterSquared creates a new DynamicViscosity instance from a value in NewtonSecondsPerMeterSquared.
 func (uf DynamicViscosityFactory) FromNewtonSecondsPerMeterSquared(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityNewtonSecondPerMeterSquared)
 }
 
-// FromPascalSecond creates a new DynamicViscosity instance from PascalSecond.
+// FromPascalSeconds creates a new DynamicViscosity instance from a value in PascalSeconds.
 func (uf DynamicViscosityFactory) FromPascalSeconds(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityPascalSecond)
 }
 
-// FromPoise creates a new DynamicViscosity instance from Poise.
+// FromPoise creates a new DynamicViscosity instance from a value in Poise.
 func (uf DynamicViscosityFactory) FromPoise(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityPoise)
 }
 
-// FromReyn creates a new DynamicViscosity instance from Reyn.
+// FromReyns creates a new DynamicViscosity instance from a value in Reyns.
 func (uf DynamicViscosityFactory) FromReyns(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityReyn)
 }
 
-// FromPoundForceSecondPerSquareInch creates a new DynamicViscosity instance from PoundForceSecondPerSquareInch.
+// FromPoundsForceSecondPerSquareInch creates a new DynamicViscosity instance from a value in PoundsForceSecondPerSquareInch.
 func (uf DynamicViscosityFactory) FromPoundsForceSecondPerSquareInch(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityPoundForceSecondPerSquareInch)
 }
 
-// FromPoundForceSecondPerSquareFoot creates a new DynamicViscosity instance from PoundForceSecondPerSquareFoot.
+// FromPoundsForceSecondPerSquareFoot creates a new DynamicViscosity instance from a value in PoundsForceSecondPerSquareFoot.
 func (uf DynamicViscosityFactory) FromPoundsForceSecondPerSquareFoot(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityPoundForceSecondPerSquareFoot)
 }
 
-// FromPoundPerFootSecond creates a new DynamicViscosity instance from PoundPerFootSecond.
+// FromPoundsPerFootSecond creates a new DynamicViscosity instance from a value in PoundsPerFootSecond.
 func (uf DynamicViscosityFactory) FromPoundsPerFootSecond(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityPoundPerFootSecond)
 }
 
-// FromMillipascalSecond creates a new DynamicViscosity instance from MillipascalSecond.
+// FromMillipascalSeconds creates a new DynamicViscosity instance from a value in MillipascalSeconds.
 func (uf DynamicViscosityFactory) FromMillipascalSeconds(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityMillipascalSecond)
 }
 
-// FromMicropascalSecond creates a new DynamicViscosity instance from MicropascalSecond.
+// FromMicropascalSeconds creates a new DynamicViscosity instance from a value in MicropascalSeconds.
 func (uf DynamicViscosityFactory) FromMicropascalSeconds(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityMicropascalSecond)
 }
 
-// FromCentipoise creates a new DynamicViscosity instance from Centipoise.
+// FromCentipoise creates a new DynamicViscosity instance from a value in Centipoise.
 func (uf DynamicViscosityFactory) FromCentipoise(value float64) (*DynamicViscosity, error) {
 	return newDynamicViscosity(value, DynamicViscosityCentipoise)
 }
-
-
 
 
 // newDynamicViscosity creates a new DynamicViscosity.
@@ -171,13 +181,15 @@ func newDynamicViscosity(value float64, fromUnit DynamicViscosityUnits) (*Dynami
 	return a, nil
 }
 
-// BaseValue returns the base value of DynamicViscosity in NewtonSecondPerMeterSquared.
+// BaseValue returns the base value of DynamicViscosity in NewtonSecondPerMeterSquared unit (the base/default quantity).
 func (a *DynamicViscosity) BaseValue() float64 {
 	return a.value
 }
 
 
-// NewtonSecondPerMeterSquared returns the value in NewtonSecondPerMeterSquared.
+// NewtonSecondsPerMeterSquared returns the DynamicViscosity value in NewtonSecondsPerMeterSquared.
+//
+// 
 func (a *DynamicViscosity) NewtonSecondsPerMeterSquared() float64 {
 	if a.newton_seconds_per_meter_squaredLazy != nil {
 		return *a.newton_seconds_per_meter_squaredLazy
@@ -187,7 +199,9 @@ func (a *DynamicViscosity) NewtonSecondsPerMeterSquared() float64 {
 	return newton_seconds_per_meter_squared
 }
 
-// PascalSecond returns the value in PascalSecond.
+// PascalSeconds returns the DynamicViscosity value in PascalSeconds.
+//
+// 
 func (a *DynamicViscosity) PascalSeconds() float64 {
 	if a.pascal_secondsLazy != nil {
 		return *a.pascal_secondsLazy
@@ -197,7 +211,9 @@ func (a *DynamicViscosity) PascalSeconds() float64 {
 	return pascal_seconds
 }
 
-// Poise returns the value in Poise.
+// Poise returns the DynamicViscosity value in Poise.
+//
+// 
 func (a *DynamicViscosity) Poise() float64 {
 	if a.poiseLazy != nil {
 		return *a.poiseLazy
@@ -207,7 +223,9 @@ func (a *DynamicViscosity) Poise() float64 {
 	return poise
 }
 
-// Reyn returns the value in Reyn.
+// Reyns returns the DynamicViscosity value in Reyns.
+//
+// 
 func (a *DynamicViscosity) Reyns() float64 {
 	if a.reynsLazy != nil {
 		return *a.reynsLazy
@@ -217,7 +235,9 @@ func (a *DynamicViscosity) Reyns() float64 {
 	return reyns
 }
 
-// PoundForceSecondPerSquareInch returns the value in PoundForceSecondPerSquareInch.
+// PoundsForceSecondPerSquareInch returns the DynamicViscosity value in PoundsForceSecondPerSquareInch.
+//
+// 
 func (a *DynamicViscosity) PoundsForceSecondPerSquareInch() float64 {
 	if a.pounds_force_second_per_square_inchLazy != nil {
 		return *a.pounds_force_second_per_square_inchLazy
@@ -227,7 +247,9 @@ func (a *DynamicViscosity) PoundsForceSecondPerSquareInch() float64 {
 	return pounds_force_second_per_square_inch
 }
 
-// PoundForceSecondPerSquareFoot returns the value in PoundForceSecondPerSquareFoot.
+// PoundsForceSecondPerSquareFoot returns the DynamicViscosity value in PoundsForceSecondPerSquareFoot.
+//
+// 
 func (a *DynamicViscosity) PoundsForceSecondPerSquareFoot() float64 {
 	if a.pounds_force_second_per_square_footLazy != nil {
 		return *a.pounds_force_second_per_square_footLazy
@@ -237,7 +259,9 @@ func (a *DynamicViscosity) PoundsForceSecondPerSquareFoot() float64 {
 	return pounds_force_second_per_square_foot
 }
 
-// PoundPerFootSecond returns the value in PoundPerFootSecond.
+// PoundsPerFootSecond returns the DynamicViscosity value in PoundsPerFootSecond.
+//
+// 
 func (a *DynamicViscosity) PoundsPerFootSecond() float64 {
 	if a.pounds_per_foot_secondLazy != nil {
 		return *a.pounds_per_foot_secondLazy
@@ -247,7 +271,9 @@ func (a *DynamicViscosity) PoundsPerFootSecond() float64 {
 	return pounds_per_foot_second
 }
 
-// MillipascalSecond returns the value in MillipascalSecond.
+// MillipascalSeconds returns the DynamicViscosity value in MillipascalSeconds.
+//
+// 
 func (a *DynamicViscosity) MillipascalSeconds() float64 {
 	if a.millipascal_secondsLazy != nil {
 		return *a.millipascal_secondsLazy
@@ -257,7 +283,9 @@ func (a *DynamicViscosity) MillipascalSeconds() float64 {
 	return millipascal_seconds
 }
 
-// MicropascalSecond returns the value in MicropascalSecond.
+// MicropascalSeconds returns the DynamicViscosity value in MicropascalSeconds.
+//
+// 
 func (a *DynamicViscosity) MicropascalSeconds() float64 {
 	if a.micropascal_secondsLazy != nil {
 		return *a.micropascal_secondsLazy
@@ -267,7 +295,9 @@ func (a *DynamicViscosity) MicropascalSeconds() float64 {
 	return micropascal_seconds
 }
 
-// Centipoise returns the value in Centipoise.
+// Centipoise returns the DynamicViscosity value in Centipoise.
+//
+// 
 func (a *DynamicViscosity) Centipoise() float64 {
 	if a.centipoiseLazy != nil {
 		return *a.centipoiseLazy
@@ -278,7 +308,9 @@ func (a *DynamicViscosity) Centipoise() float64 {
 }
 
 
-// ToDto creates an DynamicViscosityDto representation.
+// ToDto creates a DynamicViscosityDto representation from the DynamicViscosity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonSecondPerMeterSquared by default.
 func (a *DynamicViscosity) ToDto(holdInUnit *DynamicViscosityUnits) DynamicViscosityDto {
 	if holdInUnit == nil {
 		defaultUnit := DynamicViscosityNewtonSecondPerMeterSquared // Default value
@@ -291,12 +323,19 @@ func (a *DynamicViscosity) ToDto(holdInUnit *DynamicViscosityUnits) DynamicVisco
 	}
 }
 
-// ToDtoJSON creates an DynamicViscosityDto representation.
+// ToDtoJSON creates a JSON representation of the DynamicViscosity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonSecondPerMeterSquared by default.
 func (a *DynamicViscosity) ToDtoJSON(holdInUnit *DynamicViscosityUnits) ([]byte, error) {
+	// Convert to DynamicViscosityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts DynamicViscosity to a specific unit value.
+// Convert converts a DynamicViscosity to a specific unit value.
+// The function uses the provided unit type (DynamicViscosityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *DynamicViscosity) Convert(toUnit DynamicViscosityUnits) float64 {
 	switch toUnit { 
     case DynamicViscosityNewtonSecondPerMeterSquared:
@@ -320,7 +359,7 @@ func (a *DynamicViscosity) Convert(toUnit DynamicViscosityUnits) float64 {
     case DynamicViscosityCentipoise:
 		return a.Centipoise()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -379,13 +418,22 @@ func (a *DynamicViscosity) convertToBase(value float64, fromUnit DynamicViscosit
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the DynamicViscosity in the default unit (NewtonSecondPerMeterSquared),
+// formatted to two decimal places.
 func (a DynamicViscosity) String() string {
 	return a.ToString(DynamicViscosityNewtonSecondPerMeterSquared, 2)
 }
 
-// ToString formats the DynamicViscosity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the DynamicViscosity value as a string with the specified unit and fractional digits.
+// It converts the DynamicViscosity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the DynamicViscosity value will be converted (e.g., NewtonSecondPerMeterSquared))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the DynamicViscosity with the unit abbreviation.
 func (a *DynamicViscosity) ToString(unit DynamicViscosityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -423,12 +471,26 @@ func (a *DynamicViscosity) getUnitAbbreviation(unit DynamicViscosityUnits) strin
 	}
 }
 
-// Check if the given DynamicViscosity are equals to the current DynamicViscosity
+// Equals checks if the given DynamicViscosity is equal to the current DynamicViscosity.
+//
+// Parameters:
+//    other: The DynamicViscosity to compare against.
+//
+// Returns:
+//    bool: Returns true if both DynamicViscosity are equal, false otherwise.
 func (a *DynamicViscosity) Equals(other *DynamicViscosity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given DynamicViscosity are equals to the current DynamicViscosity
+// CompareTo compares the current DynamicViscosity with another DynamicViscosity.
+// It returns -1 if the current DynamicViscosity is less than the other DynamicViscosity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The DynamicViscosity to compare against.
+//
+// Returns:
+//    int: -1 if the current DynamicViscosity is less, 1 if greater, and 0 if equal.
 func (a *DynamicViscosity) CompareTo(other *DynamicViscosity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -441,22 +503,50 @@ func (a *DynamicViscosity) CompareTo(other *DynamicViscosity) int {
 	return 0
 }
 
-// Add the given DynamicViscosity to the current DynamicViscosity.
+// Add adds the given DynamicViscosity to the current DynamicViscosity and returns the result.
+// The result is a new DynamicViscosity instance with the sum of the values.
+//
+// Parameters:
+//    other: The DynamicViscosity to add to the current DynamicViscosity.
+//
+// Returns:
+//    *DynamicViscosity: A new DynamicViscosity instance representing the sum of both DynamicViscosity.
 func (a *DynamicViscosity) Add(other *DynamicViscosity) *DynamicViscosity {
 	return &DynamicViscosity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given DynamicViscosity to the current DynamicViscosity.
+// Subtract subtracts the given DynamicViscosity from the current DynamicViscosity and returns the result.
+// The result is a new DynamicViscosity instance with the difference of the values.
+//
+// Parameters:
+//    other: The DynamicViscosity to subtract from the current DynamicViscosity.
+//
+// Returns:
+//    *DynamicViscosity: A new DynamicViscosity instance representing the difference of both DynamicViscosity.
 func (a *DynamicViscosity) Subtract(other *DynamicViscosity) *DynamicViscosity {
 	return &DynamicViscosity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given DynamicViscosity to the current DynamicViscosity.
+// Multiply multiplies the current DynamicViscosity by the given DynamicViscosity and returns the result.
+// The result is a new DynamicViscosity instance with the product of the values.
+//
+// Parameters:
+//    other: The DynamicViscosity to multiply with the current DynamicViscosity.
+//
+// Returns:
+//    *DynamicViscosity: A new DynamicViscosity instance representing the product of both DynamicViscosity.
 func (a *DynamicViscosity) Multiply(other *DynamicViscosity) *DynamicViscosity {
 	return &DynamicViscosity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given DynamicViscosity to the current DynamicViscosity.
+// Divide divides the current DynamicViscosity by the given DynamicViscosity and returns the result.
+// The result is a new DynamicViscosity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The DynamicViscosity to divide the current DynamicViscosity by.
+//
+// Returns:
+//    *DynamicViscosity: A new DynamicViscosity instance representing the quotient of both DynamicViscosity.
 func (a *DynamicViscosity) Divide(other *DynamicViscosity) *DynamicViscosity {
 	return &DynamicViscosity{value: a.value / other.BaseValue()}
 }

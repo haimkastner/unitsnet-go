@@ -12,7 +12,7 @@ import (
 
 
 
-// ElectricChargeDensityUnits enumeration
+// ElectricChargeDensityUnits defines various units of ElectricChargeDensity.
 type ElectricChargeDensityUnits string
 
 const (
@@ -21,19 +21,24 @@ const (
         ElectricChargeDensityCoulombPerCubicMeter ElectricChargeDensityUnits = "CoulombPerCubicMeter"
 )
 
-// ElectricChargeDensityDto represents an ElectricChargeDensity
+// ElectricChargeDensityDto represents a ElectricChargeDensity measurement with a numerical value and its corresponding unit.
 type ElectricChargeDensityDto struct {
+    // Value is the numerical representation of the ElectricChargeDensity.
 	Value float64
+    // Unit specifies the unit of measurement for the ElectricChargeDensity, as defined in the ElectricChargeDensityUnits enumeration.
 	Unit  ElectricChargeDensityUnits
 }
 
-// ElectricChargeDensityDtoFactory struct to group related functions
+// ElectricChargeDensityDtoFactory groups methods for creating and serializing ElectricChargeDensityDto objects.
 type ElectricChargeDensityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricChargeDensityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ElectricChargeDensityDtoFactory) FromJSON(data []byte) (*ElectricChargeDensityDto, error) {
 	a := ElectricChargeDensityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ElectricChargeDensityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -41,6 +46,9 @@ func (udf ElectricChargeDensityDtoFactory) FromJSON(data []byte) (*ElectricCharg
 	return &a, nil
 }
 
+// ToJSON serializes a ElectricChargeDensityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ElectricChargeDensityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -52,41 +60,43 @@ func (a ElectricChargeDensityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ElectricChargeDensity struct
+// ElectricChargeDensity represents a measurement in a of ElectricChargeDensity.
+//
+// In electromagnetism, charge density is a measure of the amount of electric charge per volume.
 type ElectricChargeDensity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     coulombs_per_cubic_meterLazy *float64 
 }
 
-// ElectricChargeDensityFactory struct to group related functions
+// ElectricChargeDensityFactory groups methods for creating ElectricChargeDensity instances.
 type ElectricChargeDensityFactory struct{}
 
+// CreateElectricChargeDensity creates a new ElectricChargeDensity instance from the given value and unit.
 func (uf ElectricChargeDensityFactory) CreateElectricChargeDensity(value float64, unit ElectricChargeDensityUnits) (*ElectricChargeDensity, error) {
 	return newElectricChargeDensity(value, unit)
 }
 
+// FromDto converts a ElectricChargeDensityDto to a ElectricChargeDensity instance.
 func (uf ElectricChargeDensityFactory) FromDto(dto ElectricChargeDensityDto) (*ElectricChargeDensity, error) {
 	return newElectricChargeDensity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricChargeDensity instance.
 func (uf ElectricChargeDensityFactory) FromDtoJSON(data []byte) (*ElectricChargeDensity, error) {
 	unitDto, err := ElectricChargeDensityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ElectricChargeDensityDto from JSON: %w", err)
 	}
 	return ElectricChargeDensityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromCoulombPerCubicMeter creates a new ElectricChargeDensity instance from CoulombPerCubicMeter.
+// FromCoulombsPerCubicMeter creates a new ElectricChargeDensity instance from a value in CoulombsPerCubicMeter.
 func (uf ElectricChargeDensityFactory) FromCoulombsPerCubicMeter(value float64) (*ElectricChargeDensity, error) {
 	return newElectricChargeDensity(value, ElectricChargeDensityCoulombPerCubicMeter)
 }
-
-
 
 
 // newElectricChargeDensity creates a new ElectricChargeDensity.
@@ -99,13 +109,15 @@ func newElectricChargeDensity(value float64, fromUnit ElectricChargeDensityUnits
 	return a, nil
 }
 
-// BaseValue returns the base value of ElectricChargeDensity in CoulombPerCubicMeter.
+// BaseValue returns the base value of ElectricChargeDensity in CoulombPerCubicMeter unit (the base/default quantity).
 func (a *ElectricChargeDensity) BaseValue() float64 {
 	return a.value
 }
 
 
-// CoulombPerCubicMeter returns the value in CoulombPerCubicMeter.
+// CoulombsPerCubicMeter returns the ElectricChargeDensity value in CoulombsPerCubicMeter.
+//
+// 
 func (a *ElectricChargeDensity) CoulombsPerCubicMeter() float64 {
 	if a.coulombs_per_cubic_meterLazy != nil {
 		return *a.coulombs_per_cubic_meterLazy
@@ -116,7 +128,9 @@ func (a *ElectricChargeDensity) CoulombsPerCubicMeter() float64 {
 }
 
 
-// ToDto creates an ElectricChargeDensityDto representation.
+// ToDto creates a ElectricChargeDensityDto representation from the ElectricChargeDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CoulombPerCubicMeter by default.
 func (a *ElectricChargeDensity) ToDto(holdInUnit *ElectricChargeDensityUnits) ElectricChargeDensityDto {
 	if holdInUnit == nil {
 		defaultUnit := ElectricChargeDensityCoulombPerCubicMeter // Default value
@@ -129,18 +143,25 @@ func (a *ElectricChargeDensity) ToDto(holdInUnit *ElectricChargeDensityUnits) El
 	}
 }
 
-// ToDtoJSON creates an ElectricChargeDensityDto representation.
+// ToDtoJSON creates a JSON representation of the ElectricChargeDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CoulombPerCubicMeter by default.
 func (a *ElectricChargeDensity) ToDtoJSON(holdInUnit *ElectricChargeDensityUnits) ([]byte, error) {
+	// Convert to ElectricChargeDensityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ElectricChargeDensity to a specific unit value.
+// Convert converts a ElectricChargeDensity to a specific unit value.
+// The function uses the provided unit type (ElectricChargeDensityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ElectricChargeDensity) Convert(toUnit ElectricChargeDensityUnits) float64 {
 	switch toUnit { 
     case ElectricChargeDensityCoulombPerCubicMeter:
 		return a.CoulombsPerCubicMeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -163,13 +184,22 @@ func (a *ElectricChargeDensity) convertToBase(value float64, fromUnit ElectricCh
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ElectricChargeDensity in the default unit (CoulombPerCubicMeter),
+// formatted to two decimal places.
 func (a ElectricChargeDensity) String() string {
 	return a.ToString(ElectricChargeDensityCoulombPerCubicMeter, 2)
 }
 
-// ToString formats the ElectricChargeDensity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ElectricChargeDensity value as a string with the specified unit and fractional digits.
+// It converts the ElectricChargeDensity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ElectricChargeDensity value will be converted (e.g., CoulombPerCubicMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ElectricChargeDensity with the unit abbreviation.
 func (a *ElectricChargeDensity) ToString(unit ElectricChargeDensityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -189,12 +219,26 @@ func (a *ElectricChargeDensity) getUnitAbbreviation(unit ElectricChargeDensityUn
 	}
 }
 
-// Check if the given ElectricChargeDensity are equals to the current ElectricChargeDensity
+// Equals checks if the given ElectricChargeDensity is equal to the current ElectricChargeDensity.
+//
+// Parameters:
+//    other: The ElectricChargeDensity to compare against.
+//
+// Returns:
+//    bool: Returns true if both ElectricChargeDensity are equal, false otherwise.
 func (a *ElectricChargeDensity) Equals(other *ElectricChargeDensity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ElectricChargeDensity are equals to the current ElectricChargeDensity
+// CompareTo compares the current ElectricChargeDensity with another ElectricChargeDensity.
+// It returns -1 if the current ElectricChargeDensity is less than the other ElectricChargeDensity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ElectricChargeDensity to compare against.
+//
+// Returns:
+//    int: -1 if the current ElectricChargeDensity is less, 1 if greater, and 0 if equal.
 func (a *ElectricChargeDensity) CompareTo(other *ElectricChargeDensity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -207,22 +251,50 @@ func (a *ElectricChargeDensity) CompareTo(other *ElectricChargeDensity) int {
 	return 0
 }
 
-// Add the given ElectricChargeDensity to the current ElectricChargeDensity.
+// Add adds the given ElectricChargeDensity to the current ElectricChargeDensity and returns the result.
+// The result is a new ElectricChargeDensity instance with the sum of the values.
+//
+// Parameters:
+//    other: The ElectricChargeDensity to add to the current ElectricChargeDensity.
+//
+// Returns:
+//    *ElectricChargeDensity: A new ElectricChargeDensity instance representing the sum of both ElectricChargeDensity.
 func (a *ElectricChargeDensity) Add(other *ElectricChargeDensity) *ElectricChargeDensity {
 	return &ElectricChargeDensity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ElectricChargeDensity to the current ElectricChargeDensity.
+// Subtract subtracts the given ElectricChargeDensity from the current ElectricChargeDensity and returns the result.
+// The result is a new ElectricChargeDensity instance with the difference of the values.
+//
+// Parameters:
+//    other: The ElectricChargeDensity to subtract from the current ElectricChargeDensity.
+//
+// Returns:
+//    *ElectricChargeDensity: A new ElectricChargeDensity instance representing the difference of both ElectricChargeDensity.
 func (a *ElectricChargeDensity) Subtract(other *ElectricChargeDensity) *ElectricChargeDensity {
 	return &ElectricChargeDensity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ElectricChargeDensity to the current ElectricChargeDensity.
+// Multiply multiplies the current ElectricChargeDensity by the given ElectricChargeDensity and returns the result.
+// The result is a new ElectricChargeDensity instance with the product of the values.
+//
+// Parameters:
+//    other: The ElectricChargeDensity to multiply with the current ElectricChargeDensity.
+//
+// Returns:
+//    *ElectricChargeDensity: A new ElectricChargeDensity instance representing the product of both ElectricChargeDensity.
 func (a *ElectricChargeDensity) Multiply(other *ElectricChargeDensity) *ElectricChargeDensity {
 	return &ElectricChargeDensity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ElectricChargeDensity to the current ElectricChargeDensity.
+// Divide divides the current ElectricChargeDensity by the given ElectricChargeDensity and returns the result.
+// The result is a new ElectricChargeDensity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ElectricChargeDensity to divide the current ElectricChargeDensity by.
+//
+// Returns:
+//    *ElectricChargeDensity: A new ElectricChargeDensity instance representing the quotient of both ElectricChargeDensity.
 func (a *ElectricChargeDensity) Divide(other *ElectricChargeDensity) *ElectricChargeDensity {
 	return &ElectricChargeDensity{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// MolarEnergyUnits enumeration
+// MolarEnergyUnits defines various units of MolarEnergy.
 type MolarEnergyUnits string
 
 const (
@@ -25,19 +25,24 @@ const (
         MolarEnergyMegajoulePerMole MolarEnergyUnits = "MegajoulePerMole"
 )
 
-// MolarEnergyDto represents an MolarEnergy
+// MolarEnergyDto represents a MolarEnergy measurement with a numerical value and its corresponding unit.
 type MolarEnergyDto struct {
+    // Value is the numerical representation of the MolarEnergy.
 	Value float64
+    // Unit specifies the unit of measurement for the MolarEnergy, as defined in the MolarEnergyUnits enumeration.
 	Unit  MolarEnergyUnits
 }
 
-// MolarEnergyDtoFactory struct to group related functions
+// MolarEnergyDtoFactory groups methods for creating and serializing MolarEnergyDto objects.
 type MolarEnergyDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MolarEnergyDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MolarEnergyDtoFactory) FromJSON(data []byte) (*MolarEnergyDto, error) {
 	a := MolarEnergyDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MolarEnergyDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -45,6 +50,9 @@ func (udf MolarEnergyDtoFactory) FromJSON(data []byte) (*MolarEnergyDto, error) 
 	return &a, nil
 }
 
+// ToJSON serializes a MolarEnergyDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MolarEnergyDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -56,10 +64,11 @@ func (a MolarEnergyDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// MolarEnergy struct
+// MolarEnergy represents a measurement in a of MolarEnergy.
+//
+// Molar energy is the amount of energy stored in 1 mole of a substance.
 type MolarEnergy struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     joules_per_moleLazy *float64 
@@ -67,42 +76,43 @@ type MolarEnergy struct {
     megajoules_per_moleLazy *float64 
 }
 
-// MolarEnergyFactory struct to group related functions
+// MolarEnergyFactory groups methods for creating MolarEnergy instances.
 type MolarEnergyFactory struct{}
 
+// CreateMolarEnergy creates a new MolarEnergy instance from the given value and unit.
 func (uf MolarEnergyFactory) CreateMolarEnergy(value float64, unit MolarEnergyUnits) (*MolarEnergy, error) {
 	return newMolarEnergy(value, unit)
 }
 
+// FromDto converts a MolarEnergyDto to a MolarEnergy instance.
 func (uf MolarEnergyFactory) FromDto(dto MolarEnergyDto) (*MolarEnergy, error) {
 	return newMolarEnergy(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a MolarEnergy instance.
 func (uf MolarEnergyFactory) FromDtoJSON(data []byte) (*MolarEnergy, error) {
 	unitDto, err := MolarEnergyDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MolarEnergyDto from JSON: %w", err)
 	}
 	return MolarEnergyFactory{}.FromDto(*unitDto)
 }
 
 
-// FromJoulePerMole creates a new MolarEnergy instance from JoulePerMole.
+// FromJoulesPerMole creates a new MolarEnergy instance from a value in JoulesPerMole.
 func (uf MolarEnergyFactory) FromJoulesPerMole(value float64) (*MolarEnergy, error) {
 	return newMolarEnergy(value, MolarEnergyJoulePerMole)
 }
 
-// FromKilojoulePerMole creates a new MolarEnergy instance from KilojoulePerMole.
+// FromKilojoulesPerMole creates a new MolarEnergy instance from a value in KilojoulesPerMole.
 func (uf MolarEnergyFactory) FromKilojoulesPerMole(value float64) (*MolarEnergy, error) {
 	return newMolarEnergy(value, MolarEnergyKilojoulePerMole)
 }
 
-// FromMegajoulePerMole creates a new MolarEnergy instance from MegajoulePerMole.
+// FromMegajoulesPerMole creates a new MolarEnergy instance from a value in MegajoulesPerMole.
 func (uf MolarEnergyFactory) FromMegajoulesPerMole(value float64) (*MolarEnergy, error) {
 	return newMolarEnergy(value, MolarEnergyMegajoulePerMole)
 }
-
-
 
 
 // newMolarEnergy creates a new MolarEnergy.
@@ -115,13 +125,15 @@ func newMolarEnergy(value float64, fromUnit MolarEnergyUnits) (*MolarEnergy, err
 	return a, nil
 }
 
-// BaseValue returns the base value of MolarEnergy in JoulePerMole.
+// BaseValue returns the base value of MolarEnergy in JoulePerMole unit (the base/default quantity).
 func (a *MolarEnergy) BaseValue() float64 {
 	return a.value
 }
 
 
-// JoulePerMole returns the value in JoulePerMole.
+// JoulesPerMole returns the MolarEnergy value in JoulesPerMole.
+//
+// 
 func (a *MolarEnergy) JoulesPerMole() float64 {
 	if a.joules_per_moleLazy != nil {
 		return *a.joules_per_moleLazy
@@ -131,7 +143,9 @@ func (a *MolarEnergy) JoulesPerMole() float64 {
 	return joules_per_mole
 }
 
-// KilojoulePerMole returns the value in KilojoulePerMole.
+// KilojoulesPerMole returns the MolarEnergy value in KilojoulesPerMole.
+//
+// 
 func (a *MolarEnergy) KilojoulesPerMole() float64 {
 	if a.kilojoules_per_moleLazy != nil {
 		return *a.kilojoules_per_moleLazy
@@ -141,7 +155,9 @@ func (a *MolarEnergy) KilojoulesPerMole() float64 {
 	return kilojoules_per_mole
 }
 
-// MegajoulePerMole returns the value in MegajoulePerMole.
+// MegajoulesPerMole returns the MolarEnergy value in MegajoulesPerMole.
+//
+// 
 func (a *MolarEnergy) MegajoulesPerMole() float64 {
 	if a.megajoules_per_moleLazy != nil {
 		return *a.megajoules_per_moleLazy
@@ -152,7 +168,9 @@ func (a *MolarEnergy) MegajoulesPerMole() float64 {
 }
 
 
-// ToDto creates an MolarEnergyDto representation.
+// ToDto creates a MolarEnergyDto representation from the MolarEnergy instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerMole by default.
 func (a *MolarEnergy) ToDto(holdInUnit *MolarEnergyUnits) MolarEnergyDto {
 	if holdInUnit == nil {
 		defaultUnit := MolarEnergyJoulePerMole // Default value
@@ -165,12 +183,19 @@ func (a *MolarEnergy) ToDto(holdInUnit *MolarEnergyUnits) MolarEnergyDto {
 	}
 }
 
-// ToDtoJSON creates an MolarEnergyDto representation.
+// ToDtoJSON creates a JSON representation of the MolarEnergy instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerMole by default.
 func (a *MolarEnergy) ToDtoJSON(holdInUnit *MolarEnergyUnits) ([]byte, error) {
+	// Convert to MolarEnergyDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts MolarEnergy to a specific unit value.
+// Convert converts a MolarEnergy to a specific unit value.
+// The function uses the provided unit type (MolarEnergyUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *MolarEnergy) Convert(toUnit MolarEnergyUnits) float64 {
 	switch toUnit { 
     case MolarEnergyJoulePerMole:
@@ -180,7 +205,7 @@ func (a *MolarEnergy) Convert(toUnit MolarEnergyUnits) float64 {
     case MolarEnergyMegajoulePerMole:
 		return a.MegajoulesPerMole()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -211,13 +236,22 @@ func (a *MolarEnergy) convertToBase(value float64, fromUnit MolarEnergyUnits) fl
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the MolarEnergy in the default unit (JoulePerMole),
+// formatted to two decimal places.
 func (a MolarEnergy) String() string {
 	return a.ToString(MolarEnergyJoulePerMole, 2)
 }
 
-// ToString formats the MolarEnergy to string.
-// fractionalDigits -1 for not mention
+// ToString formats the MolarEnergy value as a string with the specified unit and fractional digits.
+// It converts the MolarEnergy to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the MolarEnergy value will be converted (e.g., JoulePerMole))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the MolarEnergy with the unit abbreviation.
 func (a *MolarEnergy) ToString(unit MolarEnergyUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -241,12 +275,26 @@ func (a *MolarEnergy) getUnitAbbreviation(unit MolarEnergyUnits) string {
 	}
 }
 
-// Check if the given MolarEnergy are equals to the current MolarEnergy
+// Equals checks if the given MolarEnergy is equal to the current MolarEnergy.
+//
+// Parameters:
+//    other: The MolarEnergy to compare against.
+//
+// Returns:
+//    bool: Returns true if both MolarEnergy are equal, false otherwise.
 func (a *MolarEnergy) Equals(other *MolarEnergy) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given MolarEnergy are equals to the current MolarEnergy
+// CompareTo compares the current MolarEnergy with another MolarEnergy.
+// It returns -1 if the current MolarEnergy is less than the other MolarEnergy, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MolarEnergy to compare against.
+//
+// Returns:
+//    int: -1 if the current MolarEnergy is less, 1 if greater, and 0 if equal.
 func (a *MolarEnergy) CompareTo(other *MolarEnergy) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -259,22 +307,50 @@ func (a *MolarEnergy) CompareTo(other *MolarEnergy) int {
 	return 0
 }
 
-// Add the given MolarEnergy to the current MolarEnergy.
+// Add adds the given MolarEnergy to the current MolarEnergy and returns the result.
+// The result is a new MolarEnergy instance with the sum of the values.
+//
+// Parameters:
+//    other: The MolarEnergy to add to the current MolarEnergy.
+//
+// Returns:
+//    *MolarEnergy: A new MolarEnergy instance representing the sum of both MolarEnergy.
 func (a *MolarEnergy) Add(other *MolarEnergy) *MolarEnergy {
 	return &MolarEnergy{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given MolarEnergy to the current MolarEnergy.
+// Subtract subtracts the given MolarEnergy from the current MolarEnergy and returns the result.
+// The result is a new MolarEnergy instance with the difference of the values.
+//
+// Parameters:
+//    other: The MolarEnergy to subtract from the current MolarEnergy.
+//
+// Returns:
+//    *MolarEnergy: A new MolarEnergy instance representing the difference of both MolarEnergy.
 func (a *MolarEnergy) Subtract(other *MolarEnergy) *MolarEnergy {
 	return &MolarEnergy{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given MolarEnergy to the current MolarEnergy.
+// Multiply multiplies the current MolarEnergy by the given MolarEnergy and returns the result.
+// The result is a new MolarEnergy instance with the product of the values.
+//
+// Parameters:
+//    other: The MolarEnergy to multiply with the current MolarEnergy.
+//
+// Returns:
+//    *MolarEnergy: A new MolarEnergy instance representing the product of both MolarEnergy.
 func (a *MolarEnergy) Multiply(other *MolarEnergy) *MolarEnergy {
 	return &MolarEnergy{value: a.value * other.BaseValue()}
 }
 
-// Divide the given MolarEnergy to the current MolarEnergy.
+// Divide divides the current MolarEnergy by the given MolarEnergy and returns the result.
+// The result is a new MolarEnergy instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MolarEnergy to divide the current MolarEnergy by.
+//
+// Returns:
+//    *MolarEnergy: A new MolarEnergy instance representing the quotient of both MolarEnergy.
 func (a *MolarEnergy) Divide(other *MolarEnergy) *MolarEnergy {
 	return &MolarEnergy{value: a.value / other.BaseValue()}
 }

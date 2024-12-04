@@ -12,7 +12,7 @@ import (
 
 
 
-// MassConcentrationUnits enumeration
+// MassConcentrationUnits defines various units of MassConcentration.
 type MassConcentrationUnits string
 
 const (
@@ -117,19 +117,24 @@ const (
         MassConcentrationKilopoundPerCubicFoot MassConcentrationUnits = "KilopoundPerCubicFoot"
 )
 
-// MassConcentrationDto represents an MassConcentration
+// MassConcentrationDto represents a MassConcentration measurement with a numerical value and its corresponding unit.
 type MassConcentrationDto struct {
+    // Value is the numerical representation of the MassConcentration.
 	Value float64
+    // Unit specifies the unit of measurement for the MassConcentration, as defined in the MassConcentrationUnits enumeration.
 	Unit  MassConcentrationUnits
 }
 
-// MassConcentrationDtoFactory struct to group related functions
+// MassConcentrationDtoFactory groups methods for creating and serializing MassConcentrationDto objects.
 type MassConcentrationDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a MassConcentrationDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf MassConcentrationDtoFactory) FromJSON(data []byte) (*MassConcentrationDto, error) {
 	a := MassConcentrationDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into MassConcentrationDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -137,6 +142,9 @@ func (udf MassConcentrationDtoFactory) FromJSON(data []byte) (*MassConcentration
 	return &a, nil
 }
 
+// ToJSON serializes a MassConcentrationDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a MassConcentrationDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -148,10 +156,11 @@ func (a MassConcentrationDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// MassConcentration struct
+// MassConcentration represents a measurement in a of MassConcentration.
+//
+// In chemistry, the mass concentration ρi (or γi) is defined as the mass of a constituent mi divided by the volume of the mixture V
 type MassConcentration struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     grams_per_cubic_millimeterLazy *float64 
@@ -205,272 +214,273 @@ type MassConcentration struct {
     kilopounds_per_cubic_footLazy *float64 
 }
 
-// MassConcentrationFactory struct to group related functions
+// MassConcentrationFactory groups methods for creating MassConcentration instances.
 type MassConcentrationFactory struct{}
 
+// CreateMassConcentration creates a new MassConcentration instance from the given value and unit.
 func (uf MassConcentrationFactory) CreateMassConcentration(value float64, unit MassConcentrationUnits) (*MassConcentration, error) {
 	return newMassConcentration(value, unit)
 }
 
+// FromDto converts a MassConcentrationDto to a MassConcentration instance.
 func (uf MassConcentrationFactory) FromDto(dto MassConcentrationDto) (*MassConcentration, error) {
 	return newMassConcentration(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a MassConcentration instance.
 func (uf MassConcentrationFactory) FromDtoJSON(data []byte) (*MassConcentration, error) {
 	unitDto, err := MassConcentrationDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse MassConcentrationDto from JSON: %w", err)
 	}
 	return MassConcentrationFactory{}.FromDto(*unitDto)
 }
 
 
-// FromGramPerCubicMillimeter creates a new MassConcentration instance from GramPerCubicMillimeter.
+// FromGramsPerCubicMillimeter creates a new MassConcentration instance from a value in GramsPerCubicMillimeter.
 func (uf MassConcentrationFactory) FromGramsPerCubicMillimeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationGramPerCubicMillimeter)
 }
 
-// FromGramPerCubicCentimeter creates a new MassConcentration instance from GramPerCubicCentimeter.
+// FromGramsPerCubicCentimeter creates a new MassConcentration instance from a value in GramsPerCubicCentimeter.
 func (uf MassConcentrationFactory) FromGramsPerCubicCentimeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationGramPerCubicCentimeter)
 }
 
-// FromGramPerCubicMeter creates a new MassConcentration instance from GramPerCubicMeter.
+// FromGramsPerCubicMeter creates a new MassConcentration instance from a value in GramsPerCubicMeter.
 func (uf MassConcentrationFactory) FromGramsPerCubicMeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationGramPerCubicMeter)
 }
 
-// FromGramPerMicroliter creates a new MassConcentration instance from GramPerMicroliter.
+// FromGramsPerMicroliter creates a new MassConcentration instance from a value in GramsPerMicroliter.
 func (uf MassConcentrationFactory) FromGramsPerMicroliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationGramPerMicroliter)
 }
 
-// FromGramPerMilliliter creates a new MassConcentration instance from GramPerMilliliter.
+// FromGramsPerMilliliter creates a new MassConcentration instance from a value in GramsPerMilliliter.
 func (uf MassConcentrationFactory) FromGramsPerMilliliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationGramPerMilliliter)
 }
 
-// FromGramPerDeciliter creates a new MassConcentration instance from GramPerDeciliter.
+// FromGramsPerDeciliter creates a new MassConcentration instance from a value in GramsPerDeciliter.
 func (uf MassConcentrationFactory) FromGramsPerDeciliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationGramPerDeciliter)
 }
 
-// FromGramPerLiter creates a new MassConcentration instance from GramPerLiter.
+// FromGramsPerLiter creates a new MassConcentration instance from a value in GramsPerLiter.
 func (uf MassConcentrationFactory) FromGramsPerLiter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationGramPerLiter)
 }
 
-// FromTonnePerCubicMillimeter creates a new MassConcentration instance from TonnePerCubicMillimeter.
+// FromTonnesPerCubicMillimeter creates a new MassConcentration instance from a value in TonnesPerCubicMillimeter.
 func (uf MassConcentrationFactory) FromTonnesPerCubicMillimeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationTonnePerCubicMillimeter)
 }
 
-// FromTonnePerCubicCentimeter creates a new MassConcentration instance from TonnePerCubicCentimeter.
+// FromTonnesPerCubicCentimeter creates a new MassConcentration instance from a value in TonnesPerCubicCentimeter.
 func (uf MassConcentrationFactory) FromTonnesPerCubicCentimeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationTonnePerCubicCentimeter)
 }
 
-// FromTonnePerCubicMeter creates a new MassConcentration instance from TonnePerCubicMeter.
+// FromTonnesPerCubicMeter creates a new MassConcentration instance from a value in TonnesPerCubicMeter.
 func (uf MassConcentrationFactory) FromTonnesPerCubicMeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationTonnePerCubicMeter)
 }
 
-// FromPoundPerCubicInch creates a new MassConcentration instance from PoundPerCubicInch.
+// FromPoundsPerCubicInch creates a new MassConcentration instance from a value in PoundsPerCubicInch.
 func (uf MassConcentrationFactory) FromPoundsPerCubicInch(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationPoundPerCubicInch)
 }
 
-// FromPoundPerCubicFoot creates a new MassConcentration instance from PoundPerCubicFoot.
+// FromPoundsPerCubicFoot creates a new MassConcentration instance from a value in PoundsPerCubicFoot.
 func (uf MassConcentrationFactory) FromPoundsPerCubicFoot(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationPoundPerCubicFoot)
 }
 
-// FromSlugPerCubicFoot creates a new MassConcentration instance from SlugPerCubicFoot.
+// FromSlugsPerCubicFoot creates a new MassConcentration instance from a value in SlugsPerCubicFoot.
 func (uf MassConcentrationFactory) FromSlugsPerCubicFoot(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationSlugPerCubicFoot)
 }
 
-// FromPoundPerUSGallon creates a new MassConcentration instance from PoundPerUSGallon.
+// FromPoundsPerUSGallon creates a new MassConcentration instance from a value in PoundsPerUSGallon.
 func (uf MassConcentrationFactory) FromPoundsPerUSGallon(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationPoundPerUSGallon)
 }
 
-// FromOuncePerUSGallon creates a new MassConcentration instance from OuncePerUSGallon.
+// FromOuncesPerUSGallon creates a new MassConcentration instance from a value in OuncesPerUSGallon.
 func (uf MassConcentrationFactory) FromOuncesPerUSGallon(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationOuncePerUSGallon)
 }
 
-// FromOuncePerImperialGallon creates a new MassConcentration instance from OuncePerImperialGallon.
+// FromOuncesPerImperialGallon creates a new MassConcentration instance from a value in OuncesPerImperialGallon.
 func (uf MassConcentrationFactory) FromOuncesPerImperialGallon(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationOuncePerImperialGallon)
 }
 
-// FromPoundPerImperialGallon creates a new MassConcentration instance from PoundPerImperialGallon.
+// FromPoundsPerImperialGallon creates a new MassConcentration instance from a value in PoundsPerImperialGallon.
 func (uf MassConcentrationFactory) FromPoundsPerImperialGallon(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationPoundPerImperialGallon)
 }
 
-// FromKilogramPerCubicMillimeter creates a new MassConcentration instance from KilogramPerCubicMillimeter.
+// FromKilogramsPerCubicMillimeter creates a new MassConcentration instance from a value in KilogramsPerCubicMillimeter.
 func (uf MassConcentrationFactory) FromKilogramsPerCubicMillimeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationKilogramPerCubicMillimeter)
 }
 
-// FromKilogramPerCubicCentimeter creates a new MassConcentration instance from KilogramPerCubicCentimeter.
+// FromKilogramsPerCubicCentimeter creates a new MassConcentration instance from a value in KilogramsPerCubicCentimeter.
 func (uf MassConcentrationFactory) FromKilogramsPerCubicCentimeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationKilogramPerCubicCentimeter)
 }
 
-// FromKilogramPerCubicMeter creates a new MassConcentration instance from KilogramPerCubicMeter.
+// FromKilogramsPerCubicMeter creates a new MassConcentration instance from a value in KilogramsPerCubicMeter.
 func (uf MassConcentrationFactory) FromKilogramsPerCubicMeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationKilogramPerCubicMeter)
 }
 
-// FromMilligramPerCubicMeter creates a new MassConcentration instance from MilligramPerCubicMeter.
+// FromMilligramsPerCubicMeter creates a new MassConcentration instance from a value in MilligramsPerCubicMeter.
 func (uf MassConcentrationFactory) FromMilligramsPerCubicMeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMilligramPerCubicMeter)
 }
 
-// FromMicrogramPerCubicMeter creates a new MassConcentration instance from MicrogramPerCubicMeter.
+// FromMicrogramsPerCubicMeter creates a new MassConcentration instance from a value in MicrogramsPerCubicMeter.
 func (uf MassConcentrationFactory) FromMicrogramsPerCubicMeter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMicrogramPerCubicMeter)
 }
 
-// FromPicogramPerMicroliter creates a new MassConcentration instance from PicogramPerMicroliter.
+// FromPicogramsPerMicroliter creates a new MassConcentration instance from a value in PicogramsPerMicroliter.
 func (uf MassConcentrationFactory) FromPicogramsPerMicroliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationPicogramPerMicroliter)
 }
 
-// FromNanogramPerMicroliter creates a new MassConcentration instance from NanogramPerMicroliter.
+// FromNanogramsPerMicroliter creates a new MassConcentration instance from a value in NanogramsPerMicroliter.
 func (uf MassConcentrationFactory) FromNanogramsPerMicroliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationNanogramPerMicroliter)
 }
 
-// FromMicrogramPerMicroliter creates a new MassConcentration instance from MicrogramPerMicroliter.
+// FromMicrogramsPerMicroliter creates a new MassConcentration instance from a value in MicrogramsPerMicroliter.
 func (uf MassConcentrationFactory) FromMicrogramsPerMicroliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMicrogramPerMicroliter)
 }
 
-// FromMilligramPerMicroliter creates a new MassConcentration instance from MilligramPerMicroliter.
+// FromMilligramsPerMicroliter creates a new MassConcentration instance from a value in MilligramsPerMicroliter.
 func (uf MassConcentrationFactory) FromMilligramsPerMicroliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMilligramPerMicroliter)
 }
 
-// FromCentigramPerMicroliter creates a new MassConcentration instance from CentigramPerMicroliter.
+// FromCentigramsPerMicroliter creates a new MassConcentration instance from a value in CentigramsPerMicroliter.
 func (uf MassConcentrationFactory) FromCentigramsPerMicroliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationCentigramPerMicroliter)
 }
 
-// FromDecigramPerMicroliter creates a new MassConcentration instance from DecigramPerMicroliter.
+// FromDecigramsPerMicroliter creates a new MassConcentration instance from a value in DecigramsPerMicroliter.
 func (uf MassConcentrationFactory) FromDecigramsPerMicroliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationDecigramPerMicroliter)
 }
 
-// FromPicogramPerMilliliter creates a new MassConcentration instance from PicogramPerMilliliter.
+// FromPicogramsPerMilliliter creates a new MassConcentration instance from a value in PicogramsPerMilliliter.
 func (uf MassConcentrationFactory) FromPicogramsPerMilliliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationPicogramPerMilliliter)
 }
 
-// FromNanogramPerMilliliter creates a new MassConcentration instance from NanogramPerMilliliter.
+// FromNanogramsPerMilliliter creates a new MassConcentration instance from a value in NanogramsPerMilliliter.
 func (uf MassConcentrationFactory) FromNanogramsPerMilliliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationNanogramPerMilliliter)
 }
 
-// FromMicrogramPerMilliliter creates a new MassConcentration instance from MicrogramPerMilliliter.
+// FromMicrogramsPerMilliliter creates a new MassConcentration instance from a value in MicrogramsPerMilliliter.
 func (uf MassConcentrationFactory) FromMicrogramsPerMilliliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMicrogramPerMilliliter)
 }
 
-// FromMilligramPerMilliliter creates a new MassConcentration instance from MilligramPerMilliliter.
+// FromMilligramsPerMilliliter creates a new MassConcentration instance from a value in MilligramsPerMilliliter.
 func (uf MassConcentrationFactory) FromMilligramsPerMilliliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMilligramPerMilliliter)
 }
 
-// FromCentigramPerMilliliter creates a new MassConcentration instance from CentigramPerMilliliter.
+// FromCentigramsPerMilliliter creates a new MassConcentration instance from a value in CentigramsPerMilliliter.
 func (uf MassConcentrationFactory) FromCentigramsPerMilliliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationCentigramPerMilliliter)
 }
 
-// FromDecigramPerMilliliter creates a new MassConcentration instance from DecigramPerMilliliter.
+// FromDecigramsPerMilliliter creates a new MassConcentration instance from a value in DecigramsPerMilliliter.
 func (uf MassConcentrationFactory) FromDecigramsPerMilliliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationDecigramPerMilliliter)
 }
 
-// FromPicogramPerDeciliter creates a new MassConcentration instance from PicogramPerDeciliter.
+// FromPicogramsPerDeciliter creates a new MassConcentration instance from a value in PicogramsPerDeciliter.
 func (uf MassConcentrationFactory) FromPicogramsPerDeciliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationPicogramPerDeciliter)
 }
 
-// FromNanogramPerDeciliter creates a new MassConcentration instance from NanogramPerDeciliter.
+// FromNanogramsPerDeciliter creates a new MassConcentration instance from a value in NanogramsPerDeciliter.
 func (uf MassConcentrationFactory) FromNanogramsPerDeciliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationNanogramPerDeciliter)
 }
 
-// FromMicrogramPerDeciliter creates a new MassConcentration instance from MicrogramPerDeciliter.
+// FromMicrogramsPerDeciliter creates a new MassConcentration instance from a value in MicrogramsPerDeciliter.
 func (uf MassConcentrationFactory) FromMicrogramsPerDeciliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMicrogramPerDeciliter)
 }
 
-// FromMilligramPerDeciliter creates a new MassConcentration instance from MilligramPerDeciliter.
+// FromMilligramsPerDeciliter creates a new MassConcentration instance from a value in MilligramsPerDeciliter.
 func (uf MassConcentrationFactory) FromMilligramsPerDeciliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMilligramPerDeciliter)
 }
 
-// FromCentigramPerDeciliter creates a new MassConcentration instance from CentigramPerDeciliter.
+// FromCentigramsPerDeciliter creates a new MassConcentration instance from a value in CentigramsPerDeciliter.
 func (uf MassConcentrationFactory) FromCentigramsPerDeciliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationCentigramPerDeciliter)
 }
 
-// FromDecigramPerDeciliter creates a new MassConcentration instance from DecigramPerDeciliter.
+// FromDecigramsPerDeciliter creates a new MassConcentration instance from a value in DecigramsPerDeciliter.
 func (uf MassConcentrationFactory) FromDecigramsPerDeciliter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationDecigramPerDeciliter)
 }
 
-// FromPicogramPerLiter creates a new MassConcentration instance from PicogramPerLiter.
+// FromPicogramsPerLiter creates a new MassConcentration instance from a value in PicogramsPerLiter.
 func (uf MassConcentrationFactory) FromPicogramsPerLiter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationPicogramPerLiter)
 }
 
-// FromNanogramPerLiter creates a new MassConcentration instance from NanogramPerLiter.
+// FromNanogramsPerLiter creates a new MassConcentration instance from a value in NanogramsPerLiter.
 func (uf MassConcentrationFactory) FromNanogramsPerLiter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationNanogramPerLiter)
 }
 
-// FromMicrogramPerLiter creates a new MassConcentration instance from MicrogramPerLiter.
+// FromMicrogramsPerLiter creates a new MassConcentration instance from a value in MicrogramsPerLiter.
 func (uf MassConcentrationFactory) FromMicrogramsPerLiter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMicrogramPerLiter)
 }
 
-// FromMilligramPerLiter creates a new MassConcentration instance from MilligramPerLiter.
+// FromMilligramsPerLiter creates a new MassConcentration instance from a value in MilligramsPerLiter.
 func (uf MassConcentrationFactory) FromMilligramsPerLiter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationMilligramPerLiter)
 }
 
-// FromCentigramPerLiter creates a new MassConcentration instance from CentigramPerLiter.
+// FromCentigramsPerLiter creates a new MassConcentration instance from a value in CentigramsPerLiter.
 func (uf MassConcentrationFactory) FromCentigramsPerLiter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationCentigramPerLiter)
 }
 
-// FromDecigramPerLiter creates a new MassConcentration instance from DecigramPerLiter.
+// FromDecigramsPerLiter creates a new MassConcentration instance from a value in DecigramsPerLiter.
 func (uf MassConcentrationFactory) FromDecigramsPerLiter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationDecigramPerLiter)
 }
 
-// FromKilogramPerLiter creates a new MassConcentration instance from KilogramPerLiter.
+// FromKilogramsPerLiter creates a new MassConcentration instance from a value in KilogramsPerLiter.
 func (uf MassConcentrationFactory) FromKilogramsPerLiter(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationKilogramPerLiter)
 }
 
-// FromKilopoundPerCubicInch creates a new MassConcentration instance from KilopoundPerCubicInch.
+// FromKilopoundsPerCubicInch creates a new MassConcentration instance from a value in KilopoundsPerCubicInch.
 func (uf MassConcentrationFactory) FromKilopoundsPerCubicInch(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationKilopoundPerCubicInch)
 }
 
-// FromKilopoundPerCubicFoot creates a new MassConcentration instance from KilopoundPerCubicFoot.
+// FromKilopoundsPerCubicFoot creates a new MassConcentration instance from a value in KilopoundsPerCubicFoot.
 func (uf MassConcentrationFactory) FromKilopoundsPerCubicFoot(value float64) (*MassConcentration, error) {
 	return newMassConcentration(value, MassConcentrationKilopoundPerCubicFoot)
 }
-
-
 
 
 // newMassConcentration creates a new MassConcentration.
@@ -483,13 +493,15 @@ func newMassConcentration(value float64, fromUnit MassConcentrationUnits) (*Mass
 	return a, nil
 }
 
-// BaseValue returns the base value of MassConcentration in KilogramPerCubicMeter.
+// BaseValue returns the base value of MassConcentration in KilogramPerCubicMeter unit (the base/default quantity).
 func (a *MassConcentration) BaseValue() float64 {
 	return a.value
 }
 
 
-// GramPerCubicMillimeter returns the value in GramPerCubicMillimeter.
+// GramsPerCubicMillimeter returns the MassConcentration value in GramsPerCubicMillimeter.
+//
+// 
 func (a *MassConcentration) GramsPerCubicMillimeter() float64 {
 	if a.grams_per_cubic_millimeterLazy != nil {
 		return *a.grams_per_cubic_millimeterLazy
@@ -499,7 +511,9 @@ func (a *MassConcentration) GramsPerCubicMillimeter() float64 {
 	return grams_per_cubic_millimeter
 }
 
-// GramPerCubicCentimeter returns the value in GramPerCubicCentimeter.
+// GramsPerCubicCentimeter returns the MassConcentration value in GramsPerCubicCentimeter.
+//
+// 
 func (a *MassConcentration) GramsPerCubicCentimeter() float64 {
 	if a.grams_per_cubic_centimeterLazy != nil {
 		return *a.grams_per_cubic_centimeterLazy
@@ -509,7 +523,9 @@ func (a *MassConcentration) GramsPerCubicCentimeter() float64 {
 	return grams_per_cubic_centimeter
 }
 
-// GramPerCubicMeter returns the value in GramPerCubicMeter.
+// GramsPerCubicMeter returns the MassConcentration value in GramsPerCubicMeter.
+//
+// 
 func (a *MassConcentration) GramsPerCubicMeter() float64 {
 	if a.grams_per_cubic_meterLazy != nil {
 		return *a.grams_per_cubic_meterLazy
@@ -519,7 +535,9 @@ func (a *MassConcentration) GramsPerCubicMeter() float64 {
 	return grams_per_cubic_meter
 }
 
-// GramPerMicroliter returns the value in GramPerMicroliter.
+// GramsPerMicroliter returns the MassConcentration value in GramsPerMicroliter.
+//
+// 
 func (a *MassConcentration) GramsPerMicroliter() float64 {
 	if a.grams_per_microliterLazy != nil {
 		return *a.grams_per_microliterLazy
@@ -529,7 +547,9 @@ func (a *MassConcentration) GramsPerMicroliter() float64 {
 	return grams_per_microliter
 }
 
-// GramPerMilliliter returns the value in GramPerMilliliter.
+// GramsPerMilliliter returns the MassConcentration value in GramsPerMilliliter.
+//
+// 
 func (a *MassConcentration) GramsPerMilliliter() float64 {
 	if a.grams_per_milliliterLazy != nil {
 		return *a.grams_per_milliliterLazy
@@ -539,7 +559,9 @@ func (a *MassConcentration) GramsPerMilliliter() float64 {
 	return grams_per_milliliter
 }
 
-// GramPerDeciliter returns the value in GramPerDeciliter.
+// GramsPerDeciliter returns the MassConcentration value in GramsPerDeciliter.
+//
+// 
 func (a *MassConcentration) GramsPerDeciliter() float64 {
 	if a.grams_per_deciliterLazy != nil {
 		return *a.grams_per_deciliterLazy
@@ -549,7 +571,9 @@ func (a *MassConcentration) GramsPerDeciliter() float64 {
 	return grams_per_deciliter
 }
 
-// GramPerLiter returns the value in GramPerLiter.
+// GramsPerLiter returns the MassConcentration value in GramsPerLiter.
+//
+// 
 func (a *MassConcentration) GramsPerLiter() float64 {
 	if a.grams_per_literLazy != nil {
 		return *a.grams_per_literLazy
@@ -559,7 +583,9 @@ func (a *MassConcentration) GramsPerLiter() float64 {
 	return grams_per_liter
 }
 
-// TonnePerCubicMillimeter returns the value in TonnePerCubicMillimeter.
+// TonnesPerCubicMillimeter returns the MassConcentration value in TonnesPerCubicMillimeter.
+//
+// 
 func (a *MassConcentration) TonnesPerCubicMillimeter() float64 {
 	if a.tonnes_per_cubic_millimeterLazy != nil {
 		return *a.tonnes_per_cubic_millimeterLazy
@@ -569,7 +595,9 @@ func (a *MassConcentration) TonnesPerCubicMillimeter() float64 {
 	return tonnes_per_cubic_millimeter
 }
 
-// TonnePerCubicCentimeter returns the value in TonnePerCubicCentimeter.
+// TonnesPerCubicCentimeter returns the MassConcentration value in TonnesPerCubicCentimeter.
+//
+// 
 func (a *MassConcentration) TonnesPerCubicCentimeter() float64 {
 	if a.tonnes_per_cubic_centimeterLazy != nil {
 		return *a.tonnes_per_cubic_centimeterLazy
@@ -579,7 +607,9 @@ func (a *MassConcentration) TonnesPerCubicCentimeter() float64 {
 	return tonnes_per_cubic_centimeter
 }
 
-// TonnePerCubicMeter returns the value in TonnePerCubicMeter.
+// TonnesPerCubicMeter returns the MassConcentration value in TonnesPerCubicMeter.
+//
+// 
 func (a *MassConcentration) TonnesPerCubicMeter() float64 {
 	if a.tonnes_per_cubic_meterLazy != nil {
 		return *a.tonnes_per_cubic_meterLazy
@@ -589,7 +619,9 @@ func (a *MassConcentration) TonnesPerCubicMeter() float64 {
 	return tonnes_per_cubic_meter
 }
 
-// PoundPerCubicInch returns the value in PoundPerCubicInch.
+// PoundsPerCubicInch returns the MassConcentration value in PoundsPerCubicInch.
+//
+// 
 func (a *MassConcentration) PoundsPerCubicInch() float64 {
 	if a.pounds_per_cubic_inchLazy != nil {
 		return *a.pounds_per_cubic_inchLazy
@@ -599,7 +631,9 @@ func (a *MassConcentration) PoundsPerCubicInch() float64 {
 	return pounds_per_cubic_inch
 }
 
-// PoundPerCubicFoot returns the value in PoundPerCubicFoot.
+// PoundsPerCubicFoot returns the MassConcentration value in PoundsPerCubicFoot.
+//
+// 
 func (a *MassConcentration) PoundsPerCubicFoot() float64 {
 	if a.pounds_per_cubic_footLazy != nil {
 		return *a.pounds_per_cubic_footLazy
@@ -609,7 +643,9 @@ func (a *MassConcentration) PoundsPerCubicFoot() float64 {
 	return pounds_per_cubic_foot
 }
 
-// SlugPerCubicFoot returns the value in SlugPerCubicFoot.
+// SlugsPerCubicFoot returns the MassConcentration value in SlugsPerCubicFoot.
+//
+// 
 func (a *MassConcentration) SlugsPerCubicFoot() float64 {
 	if a.slugs_per_cubic_footLazy != nil {
 		return *a.slugs_per_cubic_footLazy
@@ -619,7 +655,9 @@ func (a *MassConcentration) SlugsPerCubicFoot() float64 {
 	return slugs_per_cubic_foot
 }
 
-// PoundPerUSGallon returns the value in PoundPerUSGallon.
+// PoundsPerUSGallon returns the MassConcentration value in PoundsPerUSGallon.
+//
+// 
 func (a *MassConcentration) PoundsPerUSGallon() float64 {
 	if a.pounds_per_us_gallonLazy != nil {
 		return *a.pounds_per_us_gallonLazy
@@ -629,7 +667,9 @@ func (a *MassConcentration) PoundsPerUSGallon() float64 {
 	return pounds_per_us_gallon
 }
 
-// OuncePerUSGallon returns the value in OuncePerUSGallon.
+// OuncesPerUSGallon returns the MassConcentration value in OuncesPerUSGallon.
+//
+// 
 func (a *MassConcentration) OuncesPerUSGallon() float64 {
 	if a.ounces_per_us_gallonLazy != nil {
 		return *a.ounces_per_us_gallonLazy
@@ -639,7 +679,9 @@ func (a *MassConcentration) OuncesPerUSGallon() float64 {
 	return ounces_per_us_gallon
 }
 
-// OuncePerImperialGallon returns the value in OuncePerImperialGallon.
+// OuncesPerImperialGallon returns the MassConcentration value in OuncesPerImperialGallon.
+//
+// 
 func (a *MassConcentration) OuncesPerImperialGallon() float64 {
 	if a.ounces_per_imperial_gallonLazy != nil {
 		return *a.ounces_per_imperial_gallonLazy
@@ -649,7 +691,9 @@ func (a *MassConcentration) OuncesPerImperialGallon() float64 {
 	return ounces_per_imperial_gallon
 }
 
-// PoundPerImperialGallon returns the value in PoundPerImperialGallon.
+// PoundsPerImperialGallon returns the MassConcentration value in PoundsPerImperialGallon.
+//
+// 
 func (a *MassConcentration) PoundsPerImperialGallon() float64 {
 	if a.pounds_per_imperial_gallonLazy != nil {
 		return *a.pounds_per_imperial_gallonLazy
@@ -659,7 +703,9 @@ func (a *MassConcentration) PoundsPerImperialGallon() float64 {
 	return pounds_per_imperial_gallon
 }
 
-// KilogramPerCubicMillimeter returns the value in KilogramPerCubicMillimeter.
+// KilogramsPerCubicMillimeter returns the MassConcentration value in KilogramsPerCubicMillimeter.
+//
+// 
 func (a *MassConcentration) KilogramsPerCubicMillimeter() float64 {
 	if a.kilograms_per_cubic_millimeterLazy != nil {
 		return *a.kilograms_per_cubic_millimeterLazy
@@ -669,7 +715,9 @@ func (a *MassConcentration) KilogramsPerCubicMillimeter() float64 {
 	return kilograms_per_cubic_millimeter
 }
 
-// KilogramPerCubicCentimeter returns the value in KilogramPerCubicCentimeter.
+// KilogramsPerCubicCentimeter returns the MassConcentration value in KilogramsPerCubicCentimeter.
+//
+// 
 func (a *MassConcentration) KilogramsPerCubicCentimeter() float64 {
 	if a.kilograms_per_cubic_centimeterLazy != nil {
 		return *a.kilograms_per_cubic_centimeterLazy
@@ -679,7 +727,9 @@ func (a *MassConcentration) KilogramsPerCubicCentimeter() float64 {
 	return kilograms_per_cubic_centimeter
 }
 
-// KilogramPerCubicMeter returns the value in KilogramPerCubicMeter.
+// KilogramsPerCubicMeter returns the MassConcentration value in KilogramsPerCubicMeter.
+//
+// 
 func (a *MassConcentration) KilogramsPerCubicMeter() float64 {
 	if a.kilograms_per_cubic_meterLazy != nil {
 		return *a.kilograms_per_cubic_meterLazy
@@ -689,7 +739,9 @@ func (a *MassConcentration) KilogramsPerCubicMeter() float64 {
 	return kilograms_per_cubic_meter
 }
 
-// MilligramPerCubicMeter returns the value in MilligramPerCubicMeter.
+// MilligramsPerCubicMeter returns the MassConcentration value in MilligramsPerCubicMeter.
+//
+// 
 func (a *MassConcentration) MilligramsPerCubicMeter() float64 {
 	if a.milligrams_per_cubic_meterLazy != nil {
 		return *a.milligrams_per_cubic_meterLazy
@@ -699,7 +751,9 @@ func (a *MassConcentration) MilligramsPerCubicMeter() float64 {
 	return milligrams_per_cubic_meter
 }
 
-// MicrogramPerCubicMeter returns the value in MicrogramPerCubicMeter.
+// MicrogramsPerCubicMeter returns the MassConcentration value in MicrogramsPerCubicMeter.
+//
+// 
 func (a *MassConcentration) MicrogramsPerCubicMeter() float64 {
 	if a.micrograms_per_cubic_meterLazy != nil {
 		return *a.micrograms_per_cubic_meterLazy
@@ -709,7 +763,9 @@ func (a *MassConcentration) MicrogramsPerCubicMeter() float64 {
 	return micrograms_per_cubic_meter
 }
 
-// PicogramPerMicroliter returns the value in PicogramPerMicroliter.
+// PicogramsPerMicroliter returns the MassConcentration value in PicogramsPerMicroliter.
+//
+// 
 func (a *MassConcentration) PicogramsPerMicroliter() float64 {
 	if a.picograms_per_microliterLazy != nil {
 		return *a.picograms_per_microliterLazy
@@ -719,7 +775,9 @@ func (a *MassConcentration) PicogramsPerMicroliter() float64 {
 	return picograms_per_microliter
 }
 
-// NanogramPerMicroliter returns the value in NanogramPerMicroliter.
+// NanogramsPerMicroliter returns the MassConcentration value in NanogramsPerMicroliter.
+//
+// 
 func (a *MassConcentration) NanogramsPerMicroliter() float64 {
 	if a.nanograms_per_microliterLazy != nil {
 		return *a.nanograms_per_microliterLazy
@@ -729,7 +787,9 @@ func (a *MassConcentration) NanogramsPerMicroliter() float64 {
 	return nanograms_per_microliter
 }
 
-// MicrogramPerMicroliter returns the value in MicrogramPerMicroliter.
+// MicrogramsPerMicroliter returns the MassConcentration value in MicrogramsPerMicroliter.
+//
+// 
 func (a *MassConcentration) MicrogramsPerMicroliter() float64 {
 	if a.micrograms_per_microliterLazy != nil {
 		return *a.micrograms_per_microliterLazy
@@ -739,7 +799,9 @@ func (a *MassConcentration) MicrogramsPerMicroliter() float64 {
 	return micrograms_per_microliter
 }
 
-// MilligramPerMicroliter returns the value in MilligramPerMicroliter.
+// MilligramsPerMicroliter returns the MassConcentration value in MilligramsPerMicroliter.
+//
+// 
 func (a *MassConcentration) MilligramsPerMicroliter() float64 {
 	if a.milligrams_per_microliterLazy != nil {
 		return *a.milligrams_per_microliterLazy
@@ -749,7 +811,9 @@ func (a *MassConcentration) MilligramsPerMicroliter() float64 {
 	return milligrams_per_microliter
 }
 
-// CentigramPerMicroliter returns the value in CentigramPerMicroliter.
+// CentigramsPerMicroliter returns the MassConcentration value in CentigramsPerMicroliter.
+//
+// 
 func (a *MassConcentration) CentigramsPerMicroliter() float64 {
 	if a.centigrams_per_microliterLazy != nil {
 		return *a.centigrams_per_microliterLazy
@@ -759,7 +823,9 @@ func (a *MassConcentration) CentigramsPerMicroliter() float64 {
 	return centigrams_per_microliter
 }
 
-// DecigramPerMicroliter returns the value in DecigramPerMicroliter.
+// DecigramsPerMicroliter returns the MassConcentration value in DecigramsPerMicroliter.
+//
+// 
 func (a *MassConcentration) DecigramsPerMicroliter() float64 {
 	if a.decigrams_per_microliterLazy != nil {
 		return *a.decigrams_per_microliterLazy
@@ -769,7 +835,9 @@ func (a *MassConcentration) DecigramsPerMicroliter() float64 {
 	return decigrams_per_microliter
 }
 
-// PicogramPerMilliliter returns the value in PicogramPerMilliliter.
+// PicogramsPerMilliliter returns the MassConcentration value in PicogramsPerMilliliter.
+//
+// 
 func (a *MassConcentration) PicogramsPerMilliliter() float64 {
 	if a.picograms_per_milliliterLazy != nil {
 		return *a.picograms_per_milliliterLazy
@@ -779,7 +847,9 @@ func (a *MassConcentration) PicogramsPerMilliliter() float64 {
 	return picograms_per_milliliter
 }
 
-// NanogramPerMilliliter returns the value in NanogramPerMilliliter.
+// NanogramsPerMilliliter returns the MassConcentration value in NanogramsPerMilliliter.
+//
+// 
 func (a *MassConcentration) NanogramsPerMilliliter() float64 {
 	if a.nanograms_per_milliliterLazy != nil {
 		return *a.nanograms_per_milliliterLazy
@@ -789,7 +859,9 @@ func (a *MassConcentration) NanogramsPerMilliliter() float64 {
 	return nanograms_per_milliliter
 }
 
-// MicrogramPerMilliliter returns the value in MicrogramPerMilliliter.
+// MicrogramsPerMilliliter returns the MassConcentration value in MicrogramsPerMilliliter.
+//
+// 
 func (a *MassConcentration) MicrogramsPerMilliliter() float64 {
 	if a.micrograms_per_milliliterLazy != nil {
 		return *a.micrograms_per_milliliterLazy
@@ -799,7 +871,9 @@ func (a *MassConcentration) MicrogramsPerMilliliter() float64 {
 	return micrograms_per_milliliter
 }
 
-// MilligramPerMilliliter returns the value in MilligramPerMilliliter.
+// MilligramsPerMilliliter returns the MassConcentration value in MilligramsPerMilliliter.
+//
+// 
 func (a *MassConcentration) MilligramsPerMilliliter() float64 {
 	if a.milligrams_per_milliliterLazy != nil {
 		return *a.milligrams_per_milliliterLazy
@@ -809,7 +883,9 @@ func (a *MassConcentration) MilligramsPerMilliliter() float64 {
 	return milligrams_per_milliliter
 }
 
-// CentigramPerMilliliter returns the value in CentigramPerMilliliter.
+// CentigramsPerMilliliter returns the MassConcentration value in CentigramsPerMilliliter.
+//
+// 
 func (a *MassConcentration) CentigramsPerMilliliter() float64 {
 	if a.centigrams_per_milliliterLazy != nil {
 		return *a.centigrams_per_milliliterLazy
@@ -819,7 +895,9 @@ func (a *MassConcentration) CentigramsPerMilliliter() float64 {
 	return centigrams_per_milliliter
 }
 
-// DecigramPerMilliliter returns the value in DecigramPerMilliliter.
+// DecigramsPerMilliliter returns the MassConcentration value in DecigramsPerMilliliter.
+//
+// 
 func (a *MassConcentration) DecigramsPerMilliliter() float64 {
 	if a.decigrams_per_milliliterLazy != nil {
 		return *a.decigrams_per_milliliterLazy
@@ -829,7 +907,9 @@ func (a *MassConcentration) DecigramsPerMilliliter() float64 {
 	return decigrams_per_milliliter
 }
 
-// PicogramPerDeciliter returns the value in PicogramPerDeciliter.
+// PicogramsPerDeciliter returns the MassConcentration value in PicogramsPerDeciliter.
+//
+// 
 func (a *MassConcentration) PicogramsPerDeciliter() float64 {
 	if a.picograms_per_deciliterLazy != nil {
 		return *a.picograms_per_deciliterLazy
@@ -839,7 +919,9 @@ func (a *MassConcentration) PicogramsPerDeciliter() float64 {
 	return picograms_per_deciliter
 }
 
-// NanogramPerDeciliter returns the value in NanogramPerDeciliter.
+// NanogramsPerDeciliter returns the MassConcentration value in NanogramsPerDeciliter.
+//
+// 
 func (a *MassConcentration) NanogramsPerDeciliter() float64 {
 	if a.nanograms_per_deciliterLazy != nil {
 		return *a.nanograms_per_deciliterLazy
@@ -849,7 +931,9 @@ func (a *MassConcentration) NanogramsPerDeciliter() float64 {
 	return nanograms_per_deciliter
 }
 
-// MicrogramPerDeciliter returns the value in MicrogramPerDeciliter.
+// MicrogramsPerDeciliter returns the MassConcentration value in MicrogramsPerDeciliter.
+//
+// 
 func (a *MassConcentration) MicrogramsPerDeciliter() float64 {
 	if a.micrograms_per_deciliterLazy != nil {
 		return *a.micrograms_per_deciliterLazy
@@ -859,7 +943,9 @@ func (a *MassConcentration) MicrogramsPerDeciliter() float64 {
 	return micrograms_per_deciliter
 }
 
-// MilligramPerDeciliter returns the value in MilligramPerDeciliter.
+// MilligramsPerDeciliter returns the MassConcentration value in MilligramsPerDeciliter.
+//
+// 
 func (a *MassConcentration) MilligramsPerDeciliter() float64 {
 	if a.milligrams_per_deciliterLazy != nil {
 		return *a.milligrams_per_deciliterLazy
@@ -869,7 +955,9 @@ func (a *MassConcentration) MilligramsPerDeciliter() float64 {
 	return milligrams_per_deciliter
 }
 
-// CentigramPerDeciliter returns the value in CentigramPerDeciliter.
+// CentigramsPerDeciliter returns the MassConcentration value in CentigramsPerDeciliter.
+//
+// 
 func (a *MassConcentration) CentigramsPerDeciliter() float64 {
 	if a.centigrams_per_deciliterLazy != nil {
 		return *a.centigrams_per_deciliterLazy
@@ -879,7 +967,9 @@ func (a *MassConcentration) CentigramsPerDeciliter() float64 {
 	return centigrams_per_deciliter
 }
 
-// DecigramPerDeciliter returns the value in DecigramPerDeciliter.
+// DecigramsPerDeciliter returns the MassConcentration value in DecigramsPerDeciliter.
+//
+// 
 func (a *MassConcentration) DecigramsPerDeciliter() float64 {
 	if a.decigrams_per_deciliterLazy != nil {
 		return *a.decigrams_per_deciliterLazy
@@ -889,7 +979,9 @@ func (a *MassConcentration) DecigramsPerDeciliter() float64 {
 	return decigrams_per_deciliter
 }
 
-// PicogramPerLiter returns the value in PicogramPerLiter.
+// PicogramsPerLiter returns the MassConcentration value in PicogramsPerLiter.
+//
+// 
 func (a *MassConcentration) PicogramsPerLiter() float64 {
 	if a.picograms_per_literLazy != nil {
 		return *a.picograms_per_literLazy
@@ -899,7 +991,9 @@ func (a *MassConcentration) PicogramsPerLiter() float64 {
 	return picograms_per_liter
 }
 
-// NanogramPerLiter returns the value in NanogramPerLiter.
+// NanogramsPerLiter returns the MassConcentration value in NanogramsPerLiter.
+//
+// 
 func (a *MassConcentration) NanogramsPerLiter() float64 {
 	if a.nanograms_per_literLazy != nil {
 		return *a.nanograms_per_literLazy
@@ -909,7 +1003,9 @@ func (a *MassConcentration) NanogramsPerLiter() float64 {
 	return nanograms_per_liter
 }
 
-// MicrogramPerLiter returns the value in MicrogramPerLiter.
+// MicrogramsPerLiter returns the MassConcentration value in MicrogramsPerLiter.
+//
+// 
 func (a *MassConcentration) MicrogramsPerLiter() float64 {
 	if a.micrograms_per_literLazy != nil {
 		return *a.micrograms_per_literLazy
@@ -919,7 +1015,9 @@ func (a *MassConcentration) MicrogramsPerLiter() float64 {
 	return micrograms_per_liter
 }
 
-// MilligramPerLiter returns the value in MilligramPerLiter.
+// MilligramsPerLiter returns the MassConcentration value in MilligramsPerLiter.
+//
+// 
 func (a *MassConcentration) MilligramsPerLiter() float64 {
 	if a.milligrams_per_literLazy != nil {
 		return *a.milligrams_per_literLazy
@@ -929,7 +1027,9 @@ func (a *MassConcentration) MilligramsPerLiter() float64 {
 	return milligrams_per_liter
 }
 
-// CentigramPerLiter returns the value in CentigramPerLiter.
+// CentigramsPerLiter returns the MassConcentration value in CentigramsPerLiter.
+//
+// 
 func (a *MassConcentration) CentigramsPerLiter() float64 {
 	if a.centigrams_per_literLazy != nil {
 		return *a.centigrams_per_literLazy
@@ -939,7 +1039,9 @@ func (a *MassConcentration) CentigramsPerLiter() float64 {
 	return centigrams_per_liter
 }
 
-// DecigramPerLiter returns the value in DecigramPerLiter.
+// DecigramsPerLiter returns the MassConcentration value in DecigramsPerLiter.
+//
+// 
 func (a *MassConcentration) DecigramsPerLiter() float64 {
 	if a.decigrams_per_literLazy != nil {
 		return *a.decigrams_per_literLazy
@@ -949,7 +1051,9 @@ func (a *MassConcentration) DecigramsPerLiter() float64 {
 	return decigrams_per_liter
 }
 
-// KilogramPerLiter returns the value in KilogramPerLiter.
+// KilogramsPerLiter returns the MassConcentration value in KilogramsPerLiter.
+//
+// 
 func (a *MassConcentration) KilogramsPerLiter() float64 {
 	if a.kilograms_per_literLazy != nil {
 		return *a.kilograms_per_literLazy
@@ -959,7 +1063,9 @@ func (a *MassConcentration) KilogramsPerLiter() float64 {
 	return kilograms_per_liter
 }
 
-// KilopoundPerCubicInch returns the value in KilopoundPerCubicInch.
+// KilopoundsPerCubicInch returns the MassConcentration value in KilopoundsPerCubicInch.
+//
+// 
 func (a *MassConcentration) KilopoundsPerCubicInch() float64 {
 	if a.kilopounds_per_cubic_inchLazy != nil {
 		return *a.kilopounds_per_cubic_inchLazy
@@ -969,7 +1075,9 @@ func (a *MassConcentration) KilopoundsPerCubicInch() float64 {
 	return kilopounds_per_cubic_inch
 }
 
-// KilopoundPerCubicFoot returns the value in KilopoundPerCubicFoot.
+// KilopoundsPerCubicFoot returns the MassConcentration value in KilopoundsPerCubicFoot.
+//
+// 
 func (a *MassConcentration) KilopoundsPerCubicFoot() float64 {
 	if a.kilopounds_per_cubic_footLazy != nil {
 		return *a.kilopounds_per_cubic_footLazy
@@ -980,7 +1088,9 @@ func (a *MassConcentration) KilopoundsPerCubicFoot() float64 {
 }
 
 
-// ToDto creates an MassConcentrationDto representation.
+// ToDto creates a MassConcentrationDto representation from the MassConcentration instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerCubicMeter by default.
 func (a *MassConcentration) ToDto(holdInUnit *MassConcentrationUnits) MassConcentrationDto {
 	if holdInUnit == nil {
 		defaultUnit := MassConcentrationKilogramPerCubicMeter // Default value
@@ -993,12 +1103,19 @@ func (a *MassConcentration) ToDto(holdInUnit *MassConcentrationUnits) MassConcen
 	}
 }
 
-// ToDtoJSON creates an MassConcentrationDto representation.
+// ToDtoJSON creates a JSON representation of the MassConcentration instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by KilogramPerCubicMeter by default.
 func (a *MassConcentration) ToDtoJSON(holdInUnit *MassConcentrationUnits) ([]byte, error) {
+	// Convert to MassConcentrationDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts MassConcentration to a specific unit value.
+// Convert converts a MassConcentration to a specific unit value.
+// The function uses the provided unit type (MassConcentrationUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *MassConcentration) Convert(toUnit MassConcentrationUnits) float64 {
 	switch toUnit { 
     case MassConcentrationGramPerCubicMillimeter:
@@ -1100,7 +1217,7 @@ func (a *MassConcentration) Convert(toUnit MassConcentrationUnits) float64 {
     case MassConcentrationKilopoundPerCubicFoot:
 		return a.KilopoundsPerCubicFoot()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -1315,13 +1432,22 @@ func (a *MassConcentration) convertToBase(value float64, fromUnit MassConcentrat
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the MassConcentration in the default unit (KilogramPerCubicMeter),
+// formatted to two decimal places.
 func (a MassConcentration) String() string {
 	return a.ToString(MassConcentrationKilogramPerCubicMeter, 2)
 }
 
-// ToString formats the MassConcentration to string.
-// fractionalDigits -1 for not mention
+// ToString formats the MassConcentration value as a string with the specified unit and fractional digits.
+// It converts the MassConcentration to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the MassConcentration value will be converted (e.g., KilogramPerCubicMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the MassConcentration with the unit abbreviation.
 func (a *MassConcentration) ToString(unit MassConcentrationUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1437,12 +1563,26 @@ func (a *MassConcentration) getUnitAbbreviation(unit MassConcentrationUnits) str
 	}
 }
 
-// Check if the given MassConcentration are equals to the current MassConcentration
+// Equals checks if the given MassConcentration is equal to the current MassConcentration.
+//
+// Parameters:
+//    other: The MassConcentration to compare against.
+//
+// Returns:
+//    bool: Returns true if both MassConcentration are equal, false otherwise.
 func (a *MassConcentration) Equals(other *MassConcentration) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given MassConcentration are equals to the current MassConcentration
+// CompareTo compares the current MassConcentration with another MassConcentration.
+// It returns -1 if the current MassConcentration is less than the other MassConcentration, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MassConcentration to compare against.
+//
+// Returns:
+//    int: -1 if the current MassConcentration is less, 1 if greater, and 0 if equal.
 func (a *MassConcentration) CompareTo(other *MassConcentration) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1455,22 +1595,50 @@ func (a *MassConcentration) CompareTo(other *MassConcentration) int {
 	return 0
 }
 
-// Add the given MassConcentration to the current MassConcentration.
+// Add adds the given MassConcentration to the current MassConcentration and returns the result.
+// The result is a new MassConcentration instance with the sum of the values.
+//
+// Parameters:
+//    other: The MassConcentration to add to the current MassConcentration.
+//
+// Returns:
+//    *MassConcentration: A new MassConcentration instance representing the sum of both MassConcentration.
 func (a *MassConcentration) Add(other *MassConcentration) *MassConcentration {
 	return &MassConcentration{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given MassConcentration to the current MassConcentration.
+// Subtract subtracts the given MassConcentration from the current MassConcentration and returns the result.
+// The result is a new MassConcentration instance with the difference of the values.
+//
+// Parameters:
+//    other: The MassConcentration to subtract from the current MassConcentration.
+//
+// Returns:
+//    *MassConcentration: A new MassConcentration instance representing the difference of both MassConcentration.
 func (a *MassConcentration) Subtract(other *MassConcentration) *MassConcentration {
 	return &MassConcentration{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given MassConcentration to the current MassConcentration.
+// Multiply multiplies the current MassConcentration by the given MassConcentration and returns the result.
+// The result is a new MassConcentration instance with the product of the values.
+//
+// Parameters:
+//    other: The MassConcentration to multiply with the current MassConcentration.
+//
+// Returns:
+//    *MassConcentration: A new MassConcentration instance representing the product of both MassConcentration.
 func (a *MassConcentration) Multiply(other *MassConcentration) *MassConcentration {
 	return &MassConcentration{value: a.value * other.BaseValue()}
 }
 
-// Divide the given MassConcentration to the current MassConcentration.
+// Divide divides the current MassConcentration by the given MassConcentration and returns the result.
+// The result is a new MassConcentration instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MassConcentration to divide the current MassConcentration by.
+//
+// Returns:
+//    *MassConcentration: A new MassConcentration instance representing the quotient of both MassConcentration.
 func (a *MassConcentration) Divide(other *MassConcentration) *MassConcentration {
 	return &MassConcentration{value: a.value / other.BaseValue()}
 }

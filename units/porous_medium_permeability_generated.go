@@ -12,7 +12,7 @@ import (
 
 
 
-// PorousMediumPermeabilityUnits enumeration
+// PorousMediumPermeabilityUnits defines various units of PorousMediumPermeability.
 type PorousMediumPermeabilityUnits string
 
 const (
@@ -29,19 +29,24 @@ const (
         PorousMediumPermeabilityMillidarcy PorousMediumPermeabilityUnits = "Millidarcy"
 )
 
-// PorousMediumPermeabilityDto represents an PorousMediumPermeability
+// PorousMediumPermeabilityDto represents a PorousMediumPermeability measurement with a numerical value and its corresponding unit.
 type PorousMediumPermeabilityDto struct {
+    // Value is the numerical representation of the PorousMediumPermeability.
 	Value float64
+    // Unit specifies the unit of measurement for the PorousMediumPermeability, as defined in the PorousMediumPermeabilityUnits enumeration.
 	Unit  PorousMediumPermeabilityUnits
 }
 
-// PorousMediumPermeabilityDtoFactory struct to group related functions
+// PorousMediumPermeabilityDtoFactory groups methods for creating and serializing PorousMediumPermeabilityDto objects.
 type PorousMediumPermeabilityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a PorousMediumPermeabilityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf PorousMediumPermeabilityDtoFactory) FromJSON(data []byte) (*PorousMediumPermeabilityDto, error) {
 	a := PorousMediumPermeabilityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into PorousMediumPermeabilityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -49,6 +54,9 @@ func (udf PorousMediumPermeabilityDtoFactory) FromJSON(data []byte) (*PorousMedi
 	return &a, nil
 }
 
+// ToJSON serializes a PorousMediumPermeabilityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a PorousMediumPermeabilityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -60,10 +68,11 @@ func (a PorousMediumPermeabilityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// PorousMediumPermeability struct
+// PorousMediumPermeability represents a measurement in a of PorousMediumPermeability.
+//
+// None
 type PorousMediumPermeability struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     darcysLazy *float64 
@@ -73,52 +82,53 @@ type PorousMediumPermeability struct {
     millidarcysLazy *float64 
 }
 
-// PorousMediumPermeabilityFactory struct to group related functions
+// PorousMediumPermeabilityFactory groups methods for creating PorousMediumPermeability instances.
 type PorousMediumPermeabilityFactory struct{}
 
+// CreatePorousMediumPermeability creates a new PorousMediumPermeability instance from the given value and unit.
 func (uf PorousMediumPermeabilityFactory) CreatePorousMediumPermeability(value float64, unit PorousMediumPermeabilityUnits) (*PorousMediumPermeability, error) {
 	return newPorousMediumPermeability(value, unit)
 }
 
+// FromDto converts a PorousMediumPermeabilityDto to a PorousMediumPermeability instance.
 func (uf PorousMediumPermeabilityFactory) FromDto(dto PorousMediumPermeabilityDto) (*PorousMediumPermeability, error) {
 	return newPorousMediumPermeability(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a PorousMediumPermeability instance.
 func (uf PorousMediumPermeabilityFactory) FromDtoJSON(data []byte) (*PorousMediumPermeability, error) {
 	unitDto, err := PorousMediumPermeabilityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse PorousMediumPermeabilityDto from JSON: %w", err)
 	}
 	return PorousMediumPermeabilityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromDarcy creates a new PorousMediumPermeability instance from Darcy.
+// FromDarcys creates a new PorousMediumPermeability instance from a value in Darcys.
 func (uf PorousMediumPermeabilityFactory) FromDarcys(value float64) (*PorousMediumPermeability, error) {
 	return newPorousMediumPermeability(value, PorousMediumPermeabilityDarcy)
 }
 
-// FromSquareMeter creates a new PorousMediumPermeability instance from SquareMeter.
+// FromSquareMeters creates a new PorousMediumPermeability instance from a value in SquareMeters.
 func (uf PorousMediumPermeabilityFactory) FromSquareMeters(value float64) (*PorousMediumPermeability, error) {
 	return newPorousMediumPermeability(value, PorousMediumPermeabilitySquareMeter)
 }
 
-// FromSquareCentimeter creates a new PorousMediumPermeability instance from SquareCentimeter.
+// FromSquareCentimeters creates a new PorousMediumPermeability instance from a value in SquareCentimeters.
 func (uf PorousMediumPermeabilityFactory) FromSquareCentimeters(value float64) (*PorousMediumPermeability, error) {
 	return newPorousMediumPermeability(value, PorousMediumPermeabilitySquareCentimeter)
 }
 
-// FromMicrodarcy creates a new PorousMediumPermeability instance from Microdarcy.
+// FromMicrodarcys creates a new PorousMediumPermeability instance from a value in Microdarcys.
 func (uf PorousMediumPermeabilityFactory) FromMicrodarcys(value float64) (*PorousMediumPermeability, error) {
 	return newPorousMediumPermeability(value, PorousMediumPermeabilityMicrodarcy)
 }
 
-// FromMillidarcy creates a new PorousMediumPermeability instance from Millidarcy.
+// FromMillidarcys creates a new PorousMediumPermeability instance from a value in Millidarcys.
 func (uf PorousMediumPermeabilityFactory) FromMillidarcys(value float64) (*PorousMediumPermeability, error) {
 	return newPorousMediumPermeability(value, PorousMediumPermeabilityMillidarcy)
 }
-
-
 
 
 // newPorousMediumPermeability creates a new PorousMediumPermeability.
@@ -131,13 +141,15 @@ func newPorousMediumPermeability(value float64, fromUnit PorousMediumPermeabilit
 	return a, nil
 }
 
-// BaseValue returns the base value of PorousMediumPermeability in SquareMeter.
+// BaseValue returns the base value of PorousMediumPermeability in SquareMeter unit (the base/default quantity).
 func (a *PorousMediumPermeability) BaseValue() float64 {
 	return a.value
 }
 
 
-// Darcy returns the value in Darcy.
+// Darcys returns the PorousMediumPermeability value in Darcys.
+//
+// 
 func (a *PorousMediumPermeability) Darcys() float64 {
 	if a.darcysLazy != nil {
 		return *a.darcysLazy
@@ -147,7 +159,9 @@ func (a *PorousMediumPermeability) Darcys() float64 {
 	return darcys
 }
 
-// SquareMeter returns the value in SquareMeter.
+// SquareMeters returns the PorousMediumPermeability value in SquareMeters.
+//
+// 
 func (a *PorousMediumPermeability) SquareMeters() float64 {
 	if a.square_metersLazy != nil {
 		return *a.square_metersLazy
@@ -157,7 +171,9 @@ func (a *PorousMediumPermeability) SquareMeters() float64 {
 	return square_meters
 }
 
-// SquareCentimeter returns the value in SquareCentimeter.
+// SquareCentimeters returns the PorousMediumPermeability value in SquareCentimeters.
+//
+// 
 func (a *PorousMediumPermeability) SquareCentimeters() float64 {
 	if a.square_centimetersLazy != nil {
 		return *a.square_centimetersLazy
@@ -167,7 +183,9 @@ func (a *PorousMediumPermeability) SquareCentimeters() float64 {
 	return square_centimeters
 }
 
-// Microdarcy returns the value in Microdarcy.
+// Microdarcys returns the PorousMediumPermeability value in Microdarcys.
+//
+// 
 func (a *PorousMediumPermeability) Microdarcys() float64 {
 	if a.microdarcysLazy != nil {
 		return *a.microdarcysLazy
@@ -177,7 +195,9 @@ func (a *PorousMediumPermeability) Microdarcys() float64 {
 	return microdarcys
 }
 
-// Millidarcy returns the value in Millidarcy.
+// Millidarcys returns the PorousMediumPermeability value in Millidarcys.
+//
+// 
 func (a *PorousMediumPermeability) Millidarcys() float64 {
 	if a.millidarcysLazy != nil {
 		return *a.millidarcysLazy
@@ -188,7 +208,9 @@ func (a *PorousMediumPermeability) Millidarcys() float64 {
 }
 
 
-// ToDto creates an PorousMediumPermeabilityDto representation.
+// ToDto creates a PorousMediumPermeabilityDto representation from the PorousMediumPermeability instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by SquareMeter by default.
 func (a *PorousMediumPermeability) ToDto(holdInUnit *PorousMediumPermeabilityUnits) PorousMediumPermeabilityDto {
 	if holdInUnit == nil {
 		defaultUnit := PorousMediumPermeabilitySquareMeter // Default value
@@ -201,12 +223,19 @@ func (a *PorousMediumPermeability) ToDto(holdInUnit *PorousMediumPermeabilityUni
 	}
 }
 
-// ToDtoJSON creates an PorousMediumPermeabilityDto representation.
+// ToDtoJSON creates a JSON representation of the PorousMediumPermeability instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by SquareMeter by default.
 func (a *PorousMediumPermeability) ToDtoJSON(holdInUnit *PorousMediumPermeabilityUnits) ([]byte, error) {
+	// Convert to PorousMediumPermeabilityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts PorousMediumPermeability to a specific unit value.
+// Convert converts a PorousMediumPermeability to a specific unit value.
+// The function uses the provided unit type (PorousMediumPermeabilityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *PorousMediumPermeability) Convert(toUnit PorousMediumPermeabilityUnits) float64 {
 	switch toUnit { 
     case PorousMediumPermeabilityDarcy:
@@ -220,7 +249,7 @@ func (a *PorousMediumPermeability) Convert(toUnit PorousMediumPermeabilityUnits)
     case PorousMediumPermeabilityMillidarcy:
 		return a.Millidarcys()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -259,13 +288,22 @@ func (a *PorousMediumPermeability) convertToBase(value float64, fromUnit PorousM
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the PorousMediumPermeability in the default unit (SquareMeter),
+// formatted to two decimal places.
 func (a PorousMediumPermeability) String() string {
 	return a.ToString(PorousMediumPermeabilitySquareMeter, 2)
 }
 
-// ToString formats the PorousMediumPermeability to string.
-// fractionalDigits -1 for not mention
+// ToString formats the PorousMediumPermeability value as a string with the specified unit and fractional digits.
+// It converts the PorousMediumPermeability to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the PorousMediumPermeability value will be converted (e.g., SquareMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the PorousMediumPermeability with the unit abbreviation.
 func (a *PorousMediumPermeability) ToString(unit PorousMediumPermeabilityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -293,12 +331,26 @@ func (a *PorousMediumPermeability) getUnitAbbreviation(unit PorousMediumPermeabi
 	}
 }
 
-// Check if the given PorousMediumPermeability are equals to the current PorousMediumPermeability
+// Equals checks if the given PorousMediumPermeability is equal to the current PorousMediumPermeability.
+//
+// Parameters:
+//    other: The PorousMediumPermeability to compare against.
+//
+// Returns:
+//    bool: Returns true if both PorousMediumPermeability are equal, false otherwise.
 func (a *PorousMediumPermeability) Equals(other *PorousMediumPermeability) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given PorousMediumPermeability are equals to the current PorousMediumPermeability
+// CompareTo compares the current PorousMediumPermeability with another PorousMediumPermeability.
+// It returns -1 if the current PorousMediumPermeability is less than the other PorousMediumPermeability, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The PorousMediumPermeability to compare against.
+//
+// Returns:
+//    int: -1 if the current PorousMediumPermeability is less, 1 if greater, and 0 if equal.
 func (a *PorousMediumPermeability) CompareTo(other *PorousMediumPermeability) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -311,22 +363,50 @@ func (a *PorousMediumPermeability) CompareTo(other *PorousMediumPermeability) in
 	return 0
 }
 
-// Add the given PorousMediumPermeability to the current PorousMediumPermeability.
+// Add adds the given PorousMediumPermeability to the current PorousMediumPermeability and returns the result.
+// The result is a new PorousMediumPermeability instance with the sum of the values.
+//
+// Parameters:
+//    other: The PorousMediumPermeability to add to the current PorousMediumPermeability.
+//
+// Returns:
+//    *PorousMediumPermeability: A new PorousMediumPermeability instance representing the sum of both PorousMediumPermeability.
 func (a *PorousMediumPermeability) Add(other *PorousMediumPermeability) *PorousMediumPermeability {
 	return &PorousMediumPermeability{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given PorousMediumPermeability to the current PorousMediumPermeability.
+// Subtract subtracts the given PorousMediumPermeability from the current PorousMediumPermeability and returns the result.
+// The result is a new PorousMediumPermeability instance with the difference of the values.
+//
+// Parameters:
+//    other: The PorousMediumPermeability to subtract from the current PorousMediumPermeability.
+//
+// Returns:
+//    *PorousMediumPermeability: A new PorousMediumPermeability instance representing the difference of both PorousMediumPermeability.
 func (a *PorousMediumPermeability) Subtract(other *PorousMediumPermeability) *PorousMediumPermeability {
 	return &PorousMediumPermeability{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given PorousMediumPermeability to the current PorousMediumPermeability.
+// Multiply multiplies the current PorousMediumPermeability by the given PorousMediumPermeability and returns the result.
+// The result is a new PorousMediumPermeability instance with the product of the values.
+//
+// Parameters:
+//    other: The PorousMediumPermeability to multiply with the current PorousMediumPermeability.
+//
+// Returns:
+//    *PorousMediumPermeability: A new PorousMediumPermeability instance representing the product of both PorousMediumPermeability.
 func (a *PorousMediumPermeability) Multiply(other *PorousMediumPermeability) *PorousMediumPermeability {
 	return &PorousMediumPermeability{value: a.value * other.BaseValue()}
 }
 
-// Divide the given PorousMediumPermeability to the current PorousMediumPermeability.
+// Divide divides the current PorousMediumPermeability by the given PorousMediumPermeability and returns the result.
+// The result is a new PorousMediumPermeability instance with the quotient of the values.
+//
+// Parameters:
+//    other: The PorousMediumPermeability to divide the current PorousMediumPermeability by.
+//
+// Returns:
+//    *PorousMediumPermeability: A new PorousMediumPermeability instance representing the quotient of both PorousMediumPermeability.
 func (a *PorousMediumPermeability) Divide(other *PorousMediumPermeability) *PorousMediumPermeability {
 	return &PorousMediumPermeability{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// LuminosityUnits enumeration
+// LuminosityUnits defines various units of Luminosity.
 type LuminosityUnits string
 
 const (
@@ -47,19 +47,24 @@ const (
         LuminosityPetawatt LuminosityUnits = "Petawatt"
 )
 
-// LuminosityDto represents an Luminosity
+// LuminosityDto represents a Luminosity measurement with a numerical value and its corresponding unit.
 type LuminosityDto struct {
+    // Value is the numerical representation of the Luminosity.
 	Value float64
+    // Unit specifies the unit of measurement for the Luminosity, as defined in the LuminosityUnits enumeration.
 	Unit  LuminosityUnits
 }
 
-// LuminosityDtoFactory struct to group related functions
+// LuminosityDtoFactory groups methods for creating and serializing LuminosityDto objects.
 type LuminosityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a LuminosityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf LuminosityDtoFactory) FromJSON(data []byte) (*LuminosityDto, error) {
 	a := LuminosityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into LuminosityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -67,6 +72,9 @@ func (udf LuminosityDtoFactory) FromJSON(data []byte) (*LuminosityDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a LuminosityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a LuminosityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -78,10 +86,11 @@ func (a LuminosityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Luminosity struct
+// Luminosity represents a measurement in a of Luminosity.
+//
+// Luminosity is an absolute measure of radiated electromagnetic power (light), the radiant power emitted by a light-emitting object.
 type Luminosity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     wattsLazy *float64 
@@ -100,97 +109,98 @@ type Luminosity struct {
     petawattsLazy *float64 
 }
 
-// LuminosityFactory struct to group related functions
+// LuminosityFactory groups methods for creating Luminosity instances.
 type LuminosityFactory struct{}
 
+// CreateLuminosity creates a new Luminosity instance from the given value and unit.
 func (uf LuminosityFactory) CreateLuminosity(value float64, unit LuminosityUnits) (*Luminosity, error) {
 	return newLuminosity(value, unit)
 }
 
+// FromDto converts a LuminosityDto to a Luminosity instance.
 func (uf LuminosityFactory) FromDto(dto LuminosityDto) (*Luminosity, error) {
 	return newLuminosity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Luminosity instance.
 func (uf LuminosityFactory) FromDtoJSON(data []byte) (*Luminosity, error) {
 	unitDto, err := LuminosityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse LuminosityDto from JSON: %w", err)
 	}
 	return LuminosityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromWatt creates a new Luminosity instance from Watt.
+// FromWatts creates a new Luminosity instance from a value in Watts.
 func (uf LuminosityFactory) FromWatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityWatt)
 }
 
-// FromSolarLuminosity creates a new Luminosity instance from SolarLuminosity.
+// FromSolarLuminosities creates a new Luminosity instance from a value in SolarLuminosities.
 func (uf LuminosityFactory) FromSolarLuminosities(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminositySolarLuminosity)
 }
 
-// FromFemtowatt creates a new Luminosity instance from Femtowatt.
+// FromFemtowatts creates a new Luminosity instance from a value in Femtowatts.
 func (uf LuminosityFactory) FromFemtowatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityFemtowatt)
 }
 
-// FromPicowatt creates a new Luminosity instance from Picowatt.
+// FromPicowatts creates a new Luminosity instance from a value in Picowatts.
 func (uf LuminosityFactory) FromPicowatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityPicowatt)
 }
 
-// FromNanowatt creates a new Luminosity instance from Nanowatt.
+// FromNanowatts creates a new Luminosity instance from a value in Nanowatts.
 func (uf LuminosityFactory) FromNanowatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityNanowatt)
 }
 
-// FromMicrowatt creates a new Luminosity instance from Microwatt.
+// FromMicrowatts creates a new Luminosity instance from a value in Microwatts.
 func (uf LuminosityFactory) FromMicrowatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityMicrowatt)
 }
 
-// FromMilliwatt creates a new Luminosity instance from Milliwatt.
+// FromMilliwatts creates a new Luminosity instance from a value in Milliwatts.
 func (uf LuminosityFactory) FromMilliwatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityMilliwatt)
 }
 
-// FromDeciwatt creates a new Luminosity instance from Deciwatt.
+// FromDeciwatts creates a new Luminosity instance from a value in Deciwatts.
 func (uf LuminosityFactory) FromDeciwatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityDeciwatt)
 }
 
-// FromDecawatt creates a new Luminosity instance from Decawatt.
+// FromDecawatts creates a new Luminosity instance from a value in Decawatts.
 func (uf LuminosityFactory) FromDecawatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityDecawatt)
 }
 
-// FromKilowatt creates a new Luminosity instance from Kilowatt.
+// FromKilowatts creates a new Luminosity instance from a value in Kilowatts.
 func (uf LuminosityFactory) FromKilowatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityKilowatt)
 }
 
-// FromMegawatt creates a new Luminosity instance from Megawatt.
+// FromMegawatts creates a new Luminosity instance from a value in Megawatts.
 func (uf LuminosityFactory) FromMegawatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityMegawatt)
 }
 
-// FromGigawatt creates a new Luminosity instance from Gigawatt.
+// FromGigawatts creates a new Luminosity instance from a value in Gigawatts.
 func (uf LuminosityFactory) FromGigawatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityGigawatt)
 }
 
-// FromTerawatt creates a new Luminosity instance from Terawatt.
+// FromTerawatts creates a new Luminosity instance from a value in Terawatts.
 func (uf LuminosityFactory) FromTerawatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityTerawatt)
 }
 
-// FromPetawatt creates a new Luminosity instance from Petawatt.
+// FromPetawatts creates a new Luminosity instance from a value in Petawatts.
 func (uf LuminosityFactory) FromPetawatts(value float64) (*Luminosity, error) {
 	return newLuminosity(value, LuminosityPetawatt)
 }
-
-
 
 
 // newLuminosity creates a new Luminosity.
@@ -203,13 +213,15 @@ func newLuminosity(value float64, fromUnit LuminosityUnits) (*Luminosity, error)
 	return a, nil
 }
 
-// BaseValue returns the base value of Luminosity in Watt.
+// BaseValue returns the base value of Luminosity in Watt unit (the base/default quantity).
 func (a *Luminosity) BaseValue() float64 {
 	return a.value
 }
 
 
-// Watt returns the value in Watt.
+// Watts returns the Luminosity value in Watts.
+//
+// 
 func (a *Luminosity) Watts() float64 {
 	if a.wattsLazy != nil {
 		return *a.wattsLazy
@@ -219,7 +231,9 @@ func (a *Luminosity) Watts() float64 {
 	return watts
 }
 
-// SolarLuminosity returns the value in SolarLuminosity.
+// SolarLuminosities returns the Luminosity value in SolarLuminosities.
+//
+// 
 func (a *Luminosity) SolarLuminosities() float64 {
 	if a.solar_luminositiesLazy != nil {
 		return *a.solar_luminositiesLazy
@@ -229,7 +243,9 @@ func (a *Luminosity) SolarLuminosities() float64 {
 	return solar_luminosities
 }
 
-// Femtowatt returns the value in Femtowatt.
+// Femtowatts returns the Luminosity value in Femtowatts.
+//
+// 
 func (a *Luminosity) Femtowatts() float64 {
 	if a.femtowattsLazy != nil {
 		return *a.femtowattsLazy
@@ -239,7 +255,9 @@ func (a *Luminosity) Femtowatts() float64 {
 	return femtowatts
 }
 
-// Picowatt returns the value in Picowatt.
+// Picowatts returns the Luminosity value in Picowatts.
+//
+// 
 func (a *Luminosity) Picowatts() float64 {
 	if a.picowattsLazy != nil {
 		return *a.picowattsLazy
@@ -249,7 +267,9 @@ func (a *Luminosity) Picowatts() float64 {
 	return picowatts
 }
 
-// Nanowatt returns the value in Nanowatt.
+// Nanowatts returns the Luminosity value in Nanowatts.
+//
+// 
 func (a *Luminosity) Nanowatts() float64 {
 	if a.nanowattsLazy != nil {
 		return *a.nanowattsLazy
@@ -259,7 +279,9 @@ func (a *Luminosity) Nanowatts() float64 {
 	return nanowatts
 }
 
-// Microwatt returns the value in Microwatt.
+// Microwatts returns the Luminosity value in Microwatts.
+//
+// 
 func (a *Luminosity) Microwatts() float64 {
 	if a.microwattsLazy != nil {
 		return *a.microwattsLazy
@@ -269,7 +291,9 @@ func (a *Luminosity) Microwatts() float64 {
 	return microwatts
 }
 
-// Milliwatt returns the value in Milliwatt.
+// Milliwatts returns the Luminosity value in Milliwatts.
+//
+// 
 func (a *Luminosity) Milliwatts() float64 {
 	if a.milliwattsLazy != nil {
 		return *a.milliwattsLazy
@@ -279,7 +303,9 @@ func (a *Luminosity) Milliwatts() float64 {
 	return milliwatts
 }
 
-// Deciwatt returns the value in Deciwatt.
+// Deciwatts returns the Luminosity value in Deciwatts.
+//
+// 
 func (a *Luminosity) Deciwatts() float64 {
 	if a.deciwattsLazy != nil {
 		return *a.deciwattsLazy
@@ -289,7 +315,9 @@ func (a *Luminosity) Deciwatts() float64 {
 	return deciwatts
 }
 
-// Decawatt returns the value in Decawatt.
+// Decawatts returns the Luminosity value in Decawatts.
+//
+// 
 func (a *Luminosity) Decawatts() float64 {
 	if a.decawattsLazy != nil {
 		return *a.decawattsLazy
@@ -299,7 +327,9 @@ func (a *Luminosity) Decawatts() float64 {
 	return decawatts
 }
 
-// Kilowatt returns the value in Kilowatt.
+// Kilowatts returns the Luminosity value in Kilowatts.
+//
+// 
 func (a *Luminosity) Kilowatts() float64 {
 	if a.kilowattsLazy != nil {
 		return *a.kilowattsLazy
@@ -309,7 +339,9 @@ func (a *Luminosity) Kilowatts() float64 {
 	return kilowatts
 }
 
-// Megawatt returns the value in Megawatt.
+// Megawatts returns the Luminosity value in Megawatts.
+//
+// 
 func (a *Luminosity) Megawatts() float64 {
 	if a.megawattsLazy != nil {
 		return *a.megawattsLazy
@@ -319,7 +351,9 @@ func (a *Luminosity) Megawatts() float64 {
 	return megawatts
 }
 
-// Gigawatt returns the value in Gigawatt.
+// Gigawatts returns the Luminosity value in Gigawatts.
+//
+// 
 func (a *Luminosity) Gigawatts() float64 {
 	if a.gigawattsLazy != nil {
 		return *a.gigawattsLazy
@@ -329,7 +363,9 @@ func (a *Luminosity) Gigawatts() float64 {
 	return gigawatts
 }
 
-// Terawatt returns the value in Terawatt.
+// Terawatts returns the Luminosity value in Terawatts.
+//
+// 
 func (a *Luminosity) Terawatts() float64 {
 	if a.terawattsLazy != nil {
 		return *a.terawattsLazy
@@ -339,7 +375,9 @@ func (a *Luminosity) Terawatts() float64 {
 	return terawatts
 }
 
-// Petawatt returns the value in Petawatt.
+// Petawatts returns the Luminosity value in Petawatts.
+//
+// 
 func (a *Luminosity) Petawatts() float64 {
 	if a.petawattsLazy != nil {
 		return *a.petawattsLazy
@@ -350,7 +388,9 @@ func (a *Luminosity) Petawatts() float64 {
 }
 
 
-// ToDto creates an LuminosityDto representation.
+// ToDto creates a LuminosityDto representation from the Luminosity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Watt by default.
 func (a *Luminosity) ToDto(holdInUnit *LuminosityUnits) LuminosityDto {
 	if holdInUnit == nil {
 		defaultUnit := LuminosityWatt // Default value
@@ -363,12 +403,19 @@ func (a *Luminosity) ToDto(holdInUnit *LuminosityUnits) LuminosityDto {
 	}
 }
 
-// ToDtoJSON creates an LuminosityDto representation.
+// ToDtoJSON creates a JSON representation of the Luminosity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Watt by default.
 func (a *Luminosity) ToDtoJSON(holdInUnit *LuminosityUnits) ([]byte, error) {
+	// Convert to LuminosityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Luminosity to a specific unit value.
+// Convert converts a Luminosity to a specific unit value.
+// The function uses the provided unit type (LuminosityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Luminosity) Convert(toUnit LuminosityUnits) float64 {
 	switch toUnit { 
     case LuminosityWatt:
@@ -400,7 +447,7 @@ func (a *Luminosity) Convert(toUnit LuminosityUnits) float64 {
     case LuminosityPetawatt:
 		return a.Petawatts()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -475,13 +522,22 @@ func (a *Luminosity) convertToBase(value float64, fromUnit LuminosityUnits) floa
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Luminosity in the default unit (Watt),
+// formatted to two decimal places.
 func (a Luminosity) String() string {
 	return a.ToString(LuminosityWatt, 2)
 }
 
-// ToString formats the Luminosity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Luminosity value as a string with the specified unit and fractional digits.
+// It converts the Luminosity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Luminosity value will be converted (e.g., Watt))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Luminosity with the unit abbreviation.
 func (a *Luminosity) ToString(unit LuminosityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -527,12 +583,26 @@ func (a *Luminosity) getUnitAbbreviation(unit LuminosityUnits) string {
 	}
 }
 
-// Check if the given Luminosity are equals to the current Luminosity
+// Equals checks if the given Luminosity is equal to the current Luminosity.
+//
+// Parameters:
+//    other: The Luminosity to compare against.
+//
+// Returns:
+//    bool: Returns true if both Luminosity are equal, false otherwise.
 func (a *Luminosity) Equals(other *Luminosity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Luminosity are equals to the current Luminosity
+// CompareTo compares the current Luminosity with another Luminosity.
+// It returns -1 if the current Luminosity is less than the other Luminosity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Luminosity to compare against.
+//
+// Returns:
+//    int: -1 if the current Luminosity is less, 1 if greater, and 0 if equal.
 func (a *Luminosity) CompareTo(other *Luminosity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -545,22 +615,50 @@ func (a *Luminosity) CompareTo(other *Luminosity) int {
 	return 0
 }
 
-// Add the given Luminosity to the current Luminosity.
+// Add adds the given Luminosity to the current Luminosity and returns the result.
+// The result is a new Luminosity instance with the sum of the values.
+//
+// Parameters:
+//    other: The Luminosity to add to the current Luminosity.
+//
+// Returns:
+//    *Luminosity: A new Luminosity instance representing the sum of both Luminosity.
 func (a *Luminosity) Add(other *Luminosity) *Luminosity {
 	return &Luminosity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Luminosity to the current Luminosity.
+// Subtract subtracts the given Luminosity from the current Luminosity and returns the result.
+// The result is a new Luminosity instance with the difference of the values.
+//
+// Parameters:
+//    other: The Luminosity to subtract from the current Luminosity.
+//
+// Returns:
+//    *Luminosity: A new Luminosity instance representing the difference of both Luminosity.
 func (a *Luminosity) Subtract(other *Luminosity) *Luminosity {
 	return &Luminosity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Luminosity to the current Luminosity.
+// Multiply multiplies the current Luminosity by the given Luminosity and returns the result.
+// The result is a new Luminosity instance with the product of the values.
+//
+// Parameters:
+//    other: The Luminosity to multiply with the current Luminosity.
+//
+// Returns:
+//    *Luminosity: A new Luminosity instance representing the product of both Luminosity.
 func (a *Luminosity) Multiply(other *Luminosity) *Luminosity {
 	return &Luminosity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Luminosity to the current Luminosity.
+// Divide divides the current Luminosity by the given Luminosity and returns the result.
+// The result is a new Luminosity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Luminosity to divide the current Luminosity by.
+//
+// Returns:
+//    *Luminosity: A new Luminosity instance representing the quotient of both Luminosity.
 func (a *Luminosity) Divide(other *Luminosity) *Luminosity {
 	return &Luminosity{value: a.value / other.BaseValue()}
 }

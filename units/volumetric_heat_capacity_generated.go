@@ -12,7 +12,7 @@ import (
 
 
 
-// VolumetricHeatCapacityUnits enumeration
+// VolumetricHeatCapacityUnits defines various units of VolumetricHeatCapacity.
 type VolumetricHeatCapacityUnits string
 
 const (
@@ -37,19 +37,24 @@ const (
         VolumetricHeatCapacityKilocaloriePerCubicCentimeterDegreeCelsius VolumetricHeatCapacityUnits = "KilocaloriePerCubicCentimeterDegreeCelsius"
 )
 
-// VolumetricHeatCapacityDto represents an VolumetricHeatCapacity
+// VolumetricHeatCapacityDto represents a VolumetricHeatCapacity measurement with a numerical value and its corresponding unit.
 type VolumetricHeatCapacityDto struct {
+    // Value is the numerical representation of the VolumetricHeatCapacity.
 	Value float64
+    // Unit specifies the unit of measurement for the VolumetricHeatCapacity, as defined in the VolumetricHeatCapacityUnits enumeration.
 	Unit  VolumetricHeatCapacityUnits
 }
 
-// VolumetricHeatCapacityDtoFactory struct to group related functions
+// VolumetricHeatCapacityDtoFactory groups methods for creating and serializing VolumetricHeatCapacityDto objects.
 type VolumetricHeatCapacityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a VolumetricHeatCapacityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf VolumetricHeatCapacityDtoFactory) FromJSON(data []byte) (*VolumetricHeatCapacityDto, error) {
 	a := VolumetricHeatCapacityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into VolumetricHeatCapacityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -57,6 +62,9 @@ func (udf VolumetricHeatCapacityDtoFactory) FromJSON(data []byte) (*VolumetricHe
 	return &a, nil
 }
 
+// ToJSON serializes a VolumetricHeatCapacityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a VolumetricHeatCapacityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -68,10 +76,11 @@ func (a VolumetricHeatCapacityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// VolumetricHeatCapacity struct
+// VolumetricHeatCapacity represents a measurement in a of VolumetricHeatCapacity.
+//
+// The volumetric heat capacity is the amount of energy that must be added, in the form of heat, to one unit of volume of the material in order to cause an increase of one unit in its temperature.
 type VolumetricHeatCapacity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     joules_per_cubic_meter_kelvinLazy *float64 
@@ -85,72 +94,73 @@ type VolumetricHeatCapacity struct {
     kilocalories_per_cubic_centimeter_degree_celsiusLazy *float64 
 }
 
-// VolumetricHeatCapacityFactory struct to group related functions
+// VolumetricHeatCapacityFactory groups methods for creating VolumetricHeatCapacity instances.
 type VolumetricHeatCapacityFactory struct{}
 
+// CreateVolumetricHeatCapacity creates a new VolumetricHeatCapacity instance from the given value and unit.
 func (uf VolumetricHeatCapacityFactory) CreateVolumetricHeatCapacity(value float64, unit VolumetricHeatCapacityUnits) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, unit)
 }
 
+// FromDto converts a VolumetricHeatCapacityDto to a VolumetricHeatCapacity instance.
 func (uf VolumetricHeatCapacityFactory) FromDto(dto VolumetricHeatCapacityDto) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a VolumetricHeatCapacity instance.
 func (uf VolumetricHeatCapacityFactory) FromDtoJSON(data []byte) (*VolumetricHeatCapacity, error) {
 	unitDto, err := VolumetricHeatCapacityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse VolumetricHeatCapacityDto from JSON: %w", err)
 	}
 	return VolumetricHeatCapacityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromJoulePerCubicMeterKelvin creates a new VolumetricHeatCapacity instance from JoulePerCubicMeterKelvin.
+// FromJoulesPerCubicMeterKelvin creates a new VolumetricHeatCapacity instance from a value in JoulesPerCubicMeterKelvin.
 func (uf VolumetricHeatCapacityFactory) FromJoulesPerCubicMeterKelvin(value float64) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, VolumetricHeatCapacityJoulePerCubicMeterKelvin)
 }
 
-// FromJoulePerCubicMeterDegreeCelsius creates a new VolumetricHeatCapacity instance from JoulePerCubicMeterDegreeCelsius.
+// FromJoulesPerCubicMeterDegreeCelsius creates a new VolumetricHeatCapacity instance from a value in JoulesPerCubicMeterDegreeCelsius.
 func (uf VolumetricHeatCapacityFactory) FromJoulesPerCubicMeterDegreeCelsius(value float64) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, VolumetricHeatCapacityJoulePerCubicMeterDegreeCelsius)
 }
 
-// FromCaloriePerCubicCentimeterDegreeCelsius creates a new VolumetricHeatCapacity instance from CaloriePerCubicCentimeterDegreeCelsius.
+// FromCaloriesPerCubicCentimeterDegreeCelsius creates a new VolumetricHeatCapacity instance from a value in CaloriesPerCubicCentimeterDegreeCelsius.
 func (uf VolumetricHeatCapacityFactory) FromCaloriesPerCubicCentimeterDegreeCelsius(value float64) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, VolumetricHeatCapacityCaloriePerCubicCentimeterDegreeCelsius)
 }
 
-// FromBtuPerCubicFootDegreeFahrenheit creates a new VolumetricHeatCapacity instance from BtuPerCubicFootDegreeFahrenheit.
+// FromBtusPerCubicFootDegreeFahrenheit creates a new VolumetricHeatCapacity instance from a value in BtusPerCubicFootDegreeFahrenheit.
 func (uf VolumetricHeatCapacityFactory) FromBtusPerCubicFootDegreeFahrenheit(value float64) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, VolumetricHeatCapacityBtuPerCubicFootDegreeFahrenheit)
 }
 
-// FromKilojoulePerCubicMeterKelvin creates a new VolumetricHeatCapacity instance from KilojoulePerCubicMeterKelvin.
+// FromKilojoulesPerCubicMeterKelvin creates a new VolumetricHeatCapacity instance from a value in KilojoulesPerCubicMeterKelvin.
 func (uf VolumetricHeatCapacityFactory) FromKilojoulesPerCubicMeterKelvin(value float64) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, VolumetricHeatCapacityKilojoulePerCubicMeterKelvin)
 }
 
-// FromMegajoulePerCubicMeterKelvin creates a new VolumetricHeatCapacity instance from MegajoulePerCubicMeterKelvin.
+// FromMegajoulesPerCubicMeterKelvin creates a new VolumetricHeatCapacity instance from a value in MegajoulesPerCubicMeterKelvin.
 func (uf VolumetricHeatCapacityFactory) FromMegajoulesPerCubicMeterKelvin(value float64) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, VolumetricHeatCapacityMegajoulePerCubicMeterKelvin)
 }
 
-// FromKilojoulePerCubicMeterDegreeCelsius creates a new VolumetricHeatCapacity instance from KilojoulePerCubicMeterDegreeCelsius.
+// FromKilojoulesPerCubicMeterDegreeCelsius creates a new VolumetricHeatCapacity instance from a value in KilojoulesPerCubicMeterDegreeCelsius.
 func (uf VolumetricHeatCapacityFactory) FromKilojoulesPerCubicMeterDegreeCelsius(value float64) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, VolumetricHeatCapacityKilojoulePerCubicMeterDegreeCelsius)
 }
 
-// FromMegajoulePerCubicMeterDegreeCelsius creates a new VolumetricHeatCapacity instance from MegajoulePerCubicMeterDegreeCelsius.
+// FromMegajoulesPerCubicMeterDegreeCelsius creates a new VolumetricHeatCapacity instance from a value in MegajoulesPerCubicMeterDegreeCelsius.
 func (uf VolumetricHeatCapacityFactory) FromMegajoulesPerCubicMeterDegreeCelsius(value float64) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, VolumetricHeatCapacityMegajoulePerCubicMeterDegreeCelsius)
 }
 
-// FromKilocaloriePerCubicCentimeterDegreeCelsius creates a new VolumetricHeatCapacity instance from KilocaloriePerCubicCentimeterDegreeCelsius.
+// FromKilocaloriesPerCubicCentimeterDegreeCelsius creates a new VolumetricHeatCapacity instance from a value in KilocaloriesPerCubicCentimeterDegreeCelsius.
 func (uf VolumetricHeatCapacityFactory) FromKilocaloriesPerCubicCentimeterDegreeCelsius(value float64) (*VolumetricHeatCapacity, error) {
 	return newVolumetricHeatCapacity(value, VolumetricHeatCapacityKilocaloriePerCubicCentimeterDegreeCelsius)
 }
-
-
 
 
 // newVolumetricHeatCapacity creates a new VolumetricHeatCapacity.
@@ -163,13 +173,15 @@ func newVolumetricHeatCapacity(value float64, fromUnit VolumetricHeatCapacityUni
 	return a, nil
 }
 
-// BaseValue returns the base value of VolumetricHeatCapacity in JoulePerCubicMeterKelvin.
+// BaseValue returns the base value of VolumetricHeatCapacity in JoulePerCubicMeterKelvin unit (the base/default quantity).
 func (a *VolumetricHeatCapacity) BaseValue() float64 {
 	return a.value
 }
 
 
-// JoulePerCubicMeterKelvin returns the value in JoulePerCubicMeterKelvin.
+// JoulesPerCubicMeterKelvin returns the VolumetricHeatCapacity value in JoulesPerCubicMeterKelvin.
+//
+// 
 func (a *VolumetricHeatCapacity) JoulesPerCubicMeterKelvin() float64 {
 	if a.joules_per_cubic_meter_kelvinLazy != nil {
 		return *a.joules_per_cubic_meter_kelvinLazy
@@ -179,7 +191,9 @@ func (a *VolumetricHeatCapacity) JoulesPerCubicMeterKelvin() float64 {
 	return joules_per_cubic_meter_kelvin
 }
 
-// JoulePerCubicMeterDegreeCelsius returns the value in JoulePerCubicMeterDegreeCelsius.
+// JoulesPerCubicMeterDegreeCelsius returns the VolumetricHeatCapacity value in JoulesPerCubicMeterDegreeCelsius.
+//
+// 
 func (a *VolumetricHeatCapacity) JoulesPerCubicMeterDegreeCelsius() float64 {
 	if a.joules_per_cubic_meter_degree_celsiusLazy != nil {
 		return *a.joules_per_cubic_meter_degree_celsiusLazy
@@ -189,7 +203,9 @@ func (a *VolumetricHeatCapacity) JoulesPerCubicMeterDegreeCelsius() float64 {
 	return joules_per_cubic_meter_degree_celsius
 }
 
-// CaloriePerCubicCentimeterDegreeCelsius returns the value in CaloriePerCubicCentimeterDegreeCelsius.
+// CaloriesPerCubicCentimeterDegreeCelsius returns the VolumetricHeatCapacity value in CaloriesPerCubicCentimeterDegreeCelsius.
+//
+// 
 func (a *VolumetricHeatCapacity) CaloriesPerCubicCentimeterDegreeCelsius() float64 {
 	if a.calories_per_cubic_centimeter_degree_celsiusLazy != nil {
 		return *a.calories_per_cubic_centimeter_degree_celsiusLazy
@@ -199,7 +215,9 @@ func (a *VolumetricHeatCapacity) CaloriesPerCubicCentimeterDegreeCelsius() float
 	return calories_per_cubic_centimeter_degree_celsius
 }
 
-// BtuPerCubicFootDegreeFahrenheit returns the value in BtuPerCubicFootDegreeFahrenheit.
+// BtusPerCubicFootDegreeFahrenheit returns the VolumetricHeatCapacity value in BtusPerCubicFootDegreeFahrenheit.
+//
+// 
 func (a *VolumetricHeatCapacity) BtusPerCubicFootDegreeFahrenheit() float64 {
 	if a.btus_per_cubic_foot_degree_fahrenheitLazy != nil {
 		return *a.btus_per_cubic_foot_degree_fahrenheitLazy
@@ -209,7 +227,9 @@ func (a *VolumetricHeatCapacity) BtusPerCubicFootDegreeFahrenheit() float64 {
 	return btus_per_cubic_foot_degree_fahrenheit
 }
 
-// KilojoulePerCubicMeterKelvin returns the value in KilojoulePerCubicMeterKelvin.
+// KilojoulesPerCubicMeterKelvin returns the VolumetricHeatCapacity value in KilojoulesPerCubicMeterKelvin.
+//
+// 
 func (a *VolumetricHeatCapacity) KilojoulesPerCubicMeterKelvin() float64 {
 	if a.kilojoules_per_cubic_meter_kelvinLazy != nil {
 		return *a.kilojoules_per_cubic_meter_kelvinLazy
@@ -219,7 +239,9 @@ func (a *VolumetricHeatCapacity) KilojoulesPerCubicMeterKelvin() float64 {
 	return kilojoules_per_cubic_meter_kelvin
 }
 
-// MegajoulePerCubicMeterKelvin returns the value in MegajoulePerCubicMeterKelvin.
+// MegajoulesPerCubicMeterKelvin returns the VolumetricHeatCapacity value in MegajoulesPerCubicMeterKelvin.
+//
+// 
 func (a *VolumetricHeatCapacity) MegajoulesPerCubicMeterKelvin() float64 {
 	if a.megajoules_per_cubic_meter_kelvinLazy != nil {
 		return *a.megajoules_per_cubic_meter_kelvinLazy
@@ -229,7 +251,9 @@ func (a *VolumetricHeatCapacity) MegajoulesPerCubicMeterKelvin() float64 {
 	return megajoules_per_cubic_meter_kelvin
 }
 
-// KilojoulePerCubicMeterDegreeCelsius returns the value in KilojoulePerCubicMeterDegreeCelsius.
+// KilojoulesPerCubicMeterDegreeCelsius returns the VolumetricHeatCapacity value in KilojoulesPerCubicMeterDegreeCelsius.
+//
+// 
 func (a *VolumetricHeatCapacity) KilojoulesPerCubicMeterDegreeCelsius() float64 {
 	if a.kilojoules_per_cubic_meter_degree_celsiusLazy != nil {
 		return *a.kilojoules_per_cubic_meter_degree_celsiusLazy
@@ -239,7 +263,9 @@ func (a *VolumetricHeatCapacity) KilojoulesPerCubicMeterDegreeCelsius() float64 
 	return kilojoules_per_cubic_meter_degree_celsius
 }
 
-// MegajoulePerCubicMeterDegreeCelsius returns the value in MegajoulePerCubicMeterDegreeCelsius.
+// MegajoulesPerCubicMeterDegreeCelsius returns the VolumetricHeatCapacity value in MegajoulesPerCubicMeterDegreeCelsius.
+//
+// 
 func (a *VolumetricHeatCapacity) MegajoulesPerCubicMeterDegreeCelsius() float64 {
 	if a.megajoules_per_cubic_meter_degree_celsiusLazy != nil {
 		return *a.megajoules_per_cubic_meter_degree_celsiusLazy
@@ -249,7 +275,9 @@ func (a *VolumetricHeatCapacity) MegajoulesPerCubicMeterDegreeCelsius() float64 
 	return megajoules_per_cubic_meter_degree_celsius
 }
 
-// KilocaloriePerCubicCentimeterDegreeCelsius returns the value in KilocaloriePerCubicCentimeterDegreeCelsius.
+// KilocaloriesPerCubicCentimeterDegreeCelsius returns the VolumetricHeatCapacity value in KilocaloriesPerCubicCentimeterDegreeCelsius.
+//
+// 
 func (a *VolumetricHeatCapacity) KilocaloriesPerCubicCentimeterDegreeCelsius() float64 {
 	if a.kilocalories_per_cubic_centimeter_degree_celsiusLazy != nil {
 		return *a.kilocalories_per_cubic_centimeter_degree_celsiusLazy
@@ -260,7 +288,9 @@ func (a *VolumetricHeatCapacity) KilocaloriesPerCubicCentimeterDegreeCelsius() f
 }
 
 
-// ToDto creates an VolumetricHeatCapacityDto representation.
+// ToDto creates a VolumetricHeatCapacityDto representation from the VolumetricHeatCapacity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerCubicMeterKelvin by default.
 func (a *VolumetricHeatCapacity) ToDto(holdInUnit *VolumetricHeatCapacityUnits) VolumetricHeatCapacityDto {
 	if holdInUnit == nil {
 		defaultUnit := VolumetricHeatCapacityJoulePerCubicMeterKelvin // Default value
@@ -273,12 +303,19 @@ func (a *VolumetricHeatCapacity) ToDto(holdInUnit *VolumetricHeatCapacityUnits) 
 	}
 }
 
-// ToDtoJSON creates an VolumetricHeatCapacityDto representation.
+// ToDtoJSON creates a JSON representation of the VolumetricHeatCapacity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by JoulePerCubicMeterKelvin by default.
 func (a *VolumetricHeatCapacity) ToDtoJSON(holdInUnit *VolumetricHeatCapacityUnits) ([]byte, error) {
+	// Convert to VolumetricHeatCapacityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts VolumetricHeatCapacity to a specific unit value.
+// Convert converts a VolumetricHeatCapacity to a specific unit value.
+// The function uses the provided unit type (VolumetricHeatCapacityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *VolumetricHeatCapacity) Convert(toUnit VolumetricHeatCapacityUnits) float64 {
 	switch toUnit { 
     case VolumetricHeatCapacityJoulePerCubicMeterKelvin:
@@ -300,7 +337,7 @@ func (a *VolumetricHeatCapacity) Convert(toUnit VolumetricHeatCapacityUnits) flo
     case VolumetricHeatCapacityKilocaloriePerCubicCentimeterDegreeCelsius:
 		return a.KilocaloriesPerCubicCentimeterDegreeCelsius()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -355,13 +392,22 @@ func (a *VolumetricHeatCapacity) convertToBase(value float64, fromUnit Volumetri
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the VolumetricHeatCapacity in the default unit (JoulePerCubicMeterKelvin),
+// formatted to two decimal places.
 func (a VolumetricHeatCapacity) String() string {
 	return a.ToString(VolumetricHeatCapacityJoulePerCubicMeterKelvin, 2)
 }
 
-// ToString formats the VolumetricHeatCapacity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the VolumetricHeatCapacity value as a string with the specified unit and fractional digits.
+// It converts the VolumetricHeatCapacity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the VolumetricHeatCapacity value will be converted (e.g., JoulePerCubicMeterKelvin))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the VolumetricHeatCapacity with the unit abbreviation.
 func (a *VolumetricHeatCapacity) ToString(unit VolumetricHeatCapacityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -397,12 +443,26 @@ func (a *VolumetricHeatCapacity) getUnitAbbreviation(unit VolumetricHeatCapacity
 	}
 }
 
-// Check if the given VolumetricHeatCapacity are equals to the current VolumetricHeatCapacity
+// Equals checks if the given VolumetricHeatCapacity is equal to the current VolumetricHeatCapacity.
+//
+// Parameters:
+//    other: The VolumetricHeatCapacity to compare against.
+//
+// Returns:
+//    bool: Returns true if both VolumetricHeatCapacity are equal, false otherwise.
 func (a *VolumetricHeatCapacity) Equals(other *VolumetricHeatCapacity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given VolumetricHeatCapacity are equals to the current VolumetricHeatCapacity
+// CompareTo compares the current VolumetricHeatCapacity with another VolumetricHeatCapacity.
+// It returns -1 if the current VolumetricHeatCapacity is less than the other VolumetricHeatCapacity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The VolumetricHeatCapacity to compare against.
+//
+// Returns:
+//    int: -1 if the current VolumetricHeatCapacity is less, 1 if greater, and 0 if equal.
 func (a *VolumetricHeatCapacity) CompareTo(other *VolumetricHeatCapacity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -415,22 +475,50 @@ func (a *VolumetricHeatCapacity) CompareTo(other *VolumetricHeatCapacity) int {
 	return 0
 }
 
-// Add the given VolumetricHeatCapacity to the current VolumetricHeatCapacity.
+// Add adds the given VolumetricHeatCapacity to the current VolumetricHeatCapacity and returns the result.
+// The result is a new VolumetricHeatCapacity instance with the sum of the values.
+//
+// Parameters:
+//    other: The VolumetricHeatCapacity to add to the current VolumetricHeatCapacity.
+//
+// Returns:
+//    *VolumetricHeatCapacity: A new VolumetricHeatCapacity instance representing the sum of both VolumetricHeatCapacity.
 func (a *VolumetricHeatCapacity) Add(other *VolumetricHeatCapacity) *VolumetricHeatCapacity {
 	return &VolumetricHeatCapacity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given VolumetricHeatCapacity to the current VolumetricHeatCapacity.
+// Subtract subtracts the given VolumetricHeatCapacity from the current VolumetricHeatCapacity and returns the result.
+// The result is a new VolumetricHeatCapacity instance with the difference of the values.
+//
+// Parameters:
+//    other: The VolumetricHeatCapacity to subtract from the current VolumetricHeatCapacity.
+//
+// Returns:
+//    *VolumetricHeatCapacity: A new VolumetricHeatCapacity instance representing the difference of both VolumetricHeatCapacity.
 func (a *VolumetricHeatCapacity) Subtract(other *VolumetricHeatCapacity) *VolumetricHeatCapacity {
 	return &VolumetricHeatCapacity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given VolumetricHeatCapacity to the current VolumetricHeatCapacity.
+// Multiply multiplies the current VolumetricHeatCapacity by the given VolumetricHeatCapacity and returns the result.
+// The result is a new VolumetricHeatCapacity instance with the product of the values.
+//
+// Parameters:
+//    other: The VolumetricHeatCapacity to multiply with the current VolumetricHeatCapacity.
+//
+// Returns:
+//    *VolumetricHeatCapacity: A new VolumetricHeatCapacity instance representing the product of both VolumetricHeatCapacity.
 func (a *VolumetricHeatCapacity) Multiply(other *VolumetricHeatCapacity) *VolumetricHeatCapacity {
 	return &VolumetricHeatCapacity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given VolumetricHeatCapacity to the current VolumetricHeatCapacity.
+// Divide divides the current VolumetricHeatCapacity by the given VolumetricHeatCapacity and returns the result.
+// The result is a new VolumetricHeatCapacity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The VolumetricHeatCapacity to divide the current VolumetricHeatCapacity by.
+//
+// Returns:
+//    *VolumetricHeatCapacity: A new VolumetricHeatCapacity instance representing the quotient of both VolumetricHeatCapacity.
 func (a *VolumetricHeatCapacity) Divide(other *VolumetricHeatCapacity) *VolumetricHeatCapacity {
 	return &VolumetricHeatCapacity{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// AbsorbedDoseOfIonizingRadiationUnits enumeration
+// AbsorbedDoseOfIonizingRadiationUnits defines various units of AbsorbedDoseOfIonizingRadiation.
 type AbsorbedDoseOfIonizingRadiationUnits string
 
 const (
@@ -51,19 +51,24 @@ const (
         AbsorbedDoseOfIonizingRadiationMegarad AbsorbedDoseOfIonizingRadiationUnits = "Megarad"
 )
 
-// AbsorbedDoseOfIonizingRadiationDto represents an AbsorbedDoseOfIonizingRadiation
+// AbsorbedDoseOfIonizingRadiationDto represents a AbsorbedDoseOfIonizingRadiation measurement with a numerical value and its corresponding unit.
 type AbsorbedDoseOfIonizingRadiationDto struct {
+    // Value is the numerical representation of the AbsorbedDoseOfIonizingRadiation.
 	Value float64
+    // Unit specifies the unit of measurement for the AbsorbedDoseOfIonizingRadiation, as defined in the AbsorbedDoseOfIonizingRadiationUnits enumeration.
 	Unit  AbsorbedDoseOfIonizingRadiationUnits
 }
 
-// AbsorbedDoseOfIonizingRadiationDtoFactory struct to group related functions
+// AbsorbedDoseOfIonizingRadiationDtoFactory groups methods for creating and serializing AbsorbedDoseOfIonizingRadiationDto objects.
 type AbsorbedDoseOfIonizingRadiationDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a AbsorbedDoseOfIonizingRadiationDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf AbsorbedDoseOfIonizingRadiationDtoFactory) FromJSON(data []byte) (*AbsorbedDoseOfIonizingRadiationDto, error) {
 	a := AbsorbedDoseOfIonizingRadiationDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into AbsorbedDoseOfIonizingRadiationDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -71,6 +76,9 @@ func (udf AbsorbedDoseOfIonizingRadiationDtoFactory) FromJSON(data []byte) (*Abs
 	return &a, nil
 }
 
+// ToJSON serializes a AbsorbedDoseOfIonizingRadiationDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a AbsorbedDoseOfIonizingRadiationDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -82,10 +90,11 @@ func (a AbsorbedDoseOfIonizingRadiationDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// AbsorbedDoseOfIonizingRadiation struct
+// AbsorbedDoseOfIonizingRadiation represents a measurement in a of AbsorbedDoseOfIonizingRadiation.
+//
+// Absorbed dose is a dose quantity which is the measure of the energy deposited in matter by ionizing radiation per unit mass.
 type AbsorbedDoseOfIonizingRadiation struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     graysLazy *float64 
@@ -106,107 +115,108 @@ type AbsorbedDoseOfIonizingRadiation struct {
     megaradsLazy *float64 
 }
 
-// AbsorbedDoseOfIonizingRadiationFactory struct to group related functions
+// AbsorbedDoseOfIonizingRadiationFactory groups methods for creating AbsorbedDoseOfIonizingRadiation instances.
 type AbsorbedDoseOfIonizingRadiationFactory struct{}
 
+// CreateAbsorbedDoseOfIonizingRadiation creates a new AbsorbedDoseOfIonizingRadiation instance from the given value and unit.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) CreateAbsorbedDoseOfIonizingRadiation(value float64, unit AbsorbedDoseOfIonizingRadiationUnits) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, unit)
 }
 
+// FromDto converts a AbsorbedDoseOfIonizingRadiationDto to a AbsorbedDoseOfIonizingRadiation instance.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromDto(dto AbsorbedDoseOfIonizingRadiationDto) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a AbsorbedDoseOfIonizingRadiation instance.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromDtoJSON(data []byte) (*AbsorbedDoseOfIonizingRadiation, error) {
 	unitDto, err := AbsorbedDoseOfIonizingRadiationDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse AbsorbedDoseOfIonizingRadiationDto from JSON: %w", err)
 	}
 	return AbsorbedDoseOfIonizingRadiationFactory{}.FromDto(*unitDto)
 }
 
 
-// FromGray creates a new AbsorbedDoseOfIonizingRadiation instance from Gray.
+// FromGrays creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Grays.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromGrays(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationGray)
 }
 
-// FromRad creates a new AbsorbedDoseOfIonizingRadiation instance from Rad.
+// FromRads creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Rads.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromRads(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationRad)
 }
 
-// FromFemtogray creates a new AbsorbedDoseOfIonizingRadiation instance from Femtogray.
+// FromFemtograys creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Femtograys.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromFemtograys(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationFemtogray)
 }
 
-// FromPicogray creates a new AbsorbedDoseOfIonizingRadiation instance from Picogray.
+// FromPicograys creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Picograys.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromPicograys(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationPicogray)
 }
 
-// FromNanogray creates a new AbsorbedDoseOfIonizingRadiation instance from Nanogray.
+// FromNanograys creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Nanograys.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromNanograys(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationNanogray)
 }
 
-// FromMicrogray creates a new AbsorbedDoseOfIonizingRadiation instance from Microgray.
+// FromMicrograys creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Micrograys.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromMicrograys(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationMicrogray)
 }
 
-// FromMilligray creates a new AbsorbedDoseOfIonizingRadiation instance from Milligray.
+// FromMilligrays creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Milligrays.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromMilligrays(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationMilligray)
 }
 
-// FromCentigray creates a new AbsorbedDoseOfIonizingRadiation instance from Centigray.
+// FromCentigrays creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Centigrays.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromCentigrays(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationCentigray)
 }
 
-// FromKilogray creates a new AbsorbedDoseOfIonizingRadiation instance from Kilogray.
+// FromKilograys creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Kilograys.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromKilograys(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationKilogray)
 }
 
-// FromMegagray creates a new AbsorbedDoseOfIonizingRadiation instance from Megagray.
+// FromMegagrays creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Megagrays.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromMegagrays(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationMegagray)
 }
 
-// FromGigagray creates a new AbsorbedDoseOfIonizingRadiation instance from Gigagray.
+// FromGigagrays creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Gigagrays.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromGigagrays(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationGigagray)
 }
 
-// FromTeragray creates a new AbsorbedDoseOfIonizingRadiation instance from Teragray.
+// FromTeragrays creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Teragrays.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromTeragrays(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationTeragray)
 }
 
-// FromPetagray creates a new AbsorbedDoseOfIonizingRadiation instance from Petagray.
+// FromPetagrays creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Petagrays.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromPetagrays(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationPetagray)
 }
 
-// FromMillirad creates a new AbsorbedDoseOfIonizingRadiation instance from Millirad.
+// FromMillirads creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Millirads.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromMillirads(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationMillirad)
 }
 
-// FromKilorad creates a new AbsorbedDoseOfIonizingRadiation instance from Kilorad.
+// FromKilorads creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Kilorads.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromKilorads(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationKilorad)
 }
 
-// FromMegarad creates a new AbsorbedDoseOfIonizingRadiation instance from Megarad.
+// FromMegarads creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Megarads.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromMegarads(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationMegarad)
 }
-
-
 
 
 // newAbsorbedDoseOfIonizingRadiation creates a new AbsorbedDoseOfIonizingRadiation.
@@ -219,13 +229,15 @@ func newAbsorbedDoseOfIonizingRadiation(value float64, fromUnit AbsorbedDoseOfIo
 	return a, nil
 }
 
-// BaseValue returns the base value of AbsorbedDoseOfIonizingRadiation in Gray.
+// BaseValue returns the base value of AbsorbedDoseOfIonizingRadiation in Gray unit (the base/default quantity).
 func (a *AbsorbedDoseOfIonizingRadiation) BaseValue() float64 {
 	return a.value
 }
 
 
-// Gray returns the value in Gray.
+// Grays returns the AbsorbedDoseOfIonizingRadiation value in Grays.
+//
+// The gray is the unit of ionizing radiation dose in the SI, defined as the absorption of one joule of radiation energy per kilogram of matter.
 func (a *AbsorbedDoseOfIonizingRadiation) Grays() float64 {
 	if a.graysLazy != nil {
 		return *a.graysLazy
@@ -235,7 +247,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Grays() float64 {
 	return grays
 }
 
-// Rad returns the value in Rad.
+// Rads returns the AbsorbedDoseOfIonizingRadiation value in Rads.
+//
+// The rad is a unit of absorbed radiation dose, defined as 1 rad = 0.01 Gy = 0.01 J/kg.
 func (a *AbsorbedDoseOfIonizingRadiation) Rads() float64 {
 	if a.radsLazy != nil {
 		return *a.radsLazy
@@ -245,7 +259,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Rads() float64 {
 	return rads
 }
 
-// Femtogray returns the value in Femtogray.
+// Femtograys returns the AbsorbedDoseOfIonizingRadiation value in Femtograys.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Femtograys() float64 {
 	if a.femtograysLazy != nil {
 		return *a.femtograysLazy
@@ -255,7 +271,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Femtograys() float64 {
 	return femtograys
 }
 
-// Picogray returns the value in Picogray.
+// Picograys returns the AbsorbedDoseOfIonizingRadiation value in Picograys.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Picograys() float64 {
 	if a.picograysLazy != nil {
 		return *a.picograysLazy
@@ -265,7 +283,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Picograys() float64 {
 	return picograys
 }
 
-// Nanogray returns the value in Nanogray.
+// Nanograys returns the AbsorbedDoseOfIonizingRadiation value in Nanograys.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Nanograys() float64 {
 	if a.nanograysLazy != nil {
 		return *a.nanograysLazy
@@ -275,7 +295,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Nanograys() float64 {
 	return nanograys
 }
 
-// Microgray returns the value in Microgray.
+// Micrograys returns the AbsorbedDoseOfIonizingRadiation value in Micrograys.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Micrograys() float64 {
 	if a.micrograysLazy != nil {
 		return *a.micrograysLazy
@@ -285,7 +307,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Micrograys() float64 {
 	return micrograys
 }
 
-// Milligray returns the value in Milligray.
+// Milligrays returns the AbsorbedDoseOfIonizingRadiation value in Milligrays.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Milligrays() float64 {
 	if a.milligraysLazy != nil {
 		return *a.milligraysLazy
@@ -295,7 +319,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Milligrays() float64 {
 	return milligrays
 }
 
-// Centigray returns the value in Centigray.
+// Centigrays returns the AbsorbedDoseOfIonizingRadiation value in Centigrays.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Centigrays() float64 {
 	if a.centigraysLazy != nil {
 		return *a.centigraysLazy
@@ -305,7 +331,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Centigrays() float64 {
 	return centigrays
 }
 
-// Kilogray returns the value in Kilogray.
+// Kilograys returns the AbsorbedDoseOfIonizingRadiation value in Kilograys.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Kilograys() float64 {
 	if a.kilograysLazy != nil {
 		return *a.kilograysLazy
@@ -315,7 +343,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Kilograys() float64 {
 	return kilograys
 }
 
-// Megagray returns the value in Megagray.
+// Megagrays returns the AbsorbedDoseOfIonizingRadiation value in Megagrays.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Megagrays() float64 {
 	if a.megagraysLazy != nil {
 		return *a.megagraysLazy
@@ -325,7 +355,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Megagrays() float64 {
 	return megagrays
 }
 
-// Gigagray returns the value in Gigagray.
+// Gigagrays returns the AbsorbedDoseOfIonizingRadiation value in Gigagrays.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Gigagrays() float64 {
 	if a.gigagraysLazy != nil {
 		return *a.gigagraysLazy
@@ -335,7 +367,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Gigagrays() float64 {
 	return gigagrays
 }
 
-// Teragray returns the value in Teragray.
+// Teragrays returns the AbsorbedDoseOfIonizingRadiation value in Teragrays.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Teragrays() float64 {
 	if a.teragraysLazy != nil {
 		return *a.teragraysLazy
@@ -345,7 +379,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Teragrays() float64 {
 	return teragrays
 }
 
-// Petagray returns the value in Petagray.
+// Petagrays returns the AbsorbedDoseOfIonizingRadiation value in Petagrays.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Petagrays() float64 {
 	if a.petagraysLazy != nil {
 		return *a.petagraysLazy
@@ -355,7 +391,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Petagrays() float64 {
 	return petagrays
 }
 
-// Millirad returns the value in Millirad.
+// Millirads returns the AbsorbedDoseOfIonizingRadiation value in Millirads.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Millirads() float64 {
 	if a.milliradsLazy != nil {
 		return *a.milliradsLazy
@@ -365,7 +403,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Millirads() float64 {
 	return millirads
 }
 
-// Kilorad returns the value in Kilorad.
+// Kilorads returns the AbsorbedDoseOfIonizingRadiation value in Kilorads.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Kilorads() float64 {
 	if a.kiloradsLazy != nil {
 		return *a.kiloradsLazy
@@ -375,7 +415,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Kilorads() float64 {
 	return kilorads
 }
 
-// Megarad returns the value in Megarad.
+// Megarads returns the AbsorbedDoseOfIonizingRadiation value in Megarads.
+//
+// 
 func (a *AbsorbedDoseOfIonizingRadiation) Megarads() float64 {
 	if a.megaradsLazy != nil {
 		return *a.megaradsLazy
@@ -386,7 +428,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) Megarads() float64 {
 }
 
 
-// ToDto creates an AbsorbedDoseOfIonizingRadiationDto representation.
+// ToDto creates a AbsorbedDoseOfIonizingRadiationDto representation from the AbsorbedDoseOfIonizingRadiation instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Gray by default.
 func (a *AbsorbedDoseOfIonizingRadiation) ToDto(holdInUnit *AbsorbedDoseOfIonizingRadiationUnits) AbsorbedDoseOfIonizingRadiationDto {
 	if holdInUnit == nil {
 		defaultUnit := AbsorbedDoseOfIonizingRadiationGray // Default value
@@ -399,12 +443,19 @@ func (a *AbsorbedDoseOfIonizingRadiation) ToDto(holdInUnit *AbsorbedDoseOfIonizi
 	}
 }
 
-// ToDtoJSON creates an AbsorbedDoseOfIonizingRadiationDto representation.
+// ToDtoJSON creates a JSON representation of the AbsorbedDoseOfIonizingRadiation instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Gray by default.
 func (a *AbsorbedDoseOfIonizingRadiation) ToDtoJSON(holdInUnit *AbsorbedDoseOfIonizingRadiationUnits) ([]byte, error) {
+	// Convert to AbsorbedDoseOfIonizingRadiationDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts AbsorbedDoseOfIonizingRadiation to a specific unit value.
+// Convert converts a AbsorbedDoseOfIonizingRadiation to a specific unit value.
+// The function uses the provided unit type (AbsorbedDoseOfIonizingRadiationUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *AbsorbedDoseOfIonizingRadiation) Convert(toUnit AbsorbedDoseOfIonizingRadiationUnits) float64 {
 	switch toUnit { 
     case AbsorbedDoseOfIonizingRadiationGray:
@@ -440,7 +491,7 @@ func (a *AbsorbedDoseOfIonizingRadiation) Convert(toUnit AbsorbedDoseOfIonizingR
     case AbsorbedDoseOfIonizingRadiationMegarad:
 		return a.Megarads()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -523,13 +574,22 @@ func (a *AbsorbedDoseOfIonizingRadiation) convertToBase(value float64, fromUnit 
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the AbsorbedDoseOfIonizingRadiation in the default unit (Gray),
+// formatted to two decimal places.
 func (a AbsorbedDoseOfIonizingRadiation) String() string {
 	return a.ToString(AbsorbedDoseOfIonizingRadiationGray, 2)
 }
 
-// ToString formats the AbsorbedDoseOfIonizingRadiation to string.
-// fractionalDigits -1 for not mention
+// ToString formats the AbsorbedDoseOfIonizingRadiation value as a string with the specified unit and fractional digits.
+// It converts the AbsorbedDoseOfIonizingRadiation to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the AbsorbedDoseOfIonizingRadiation value will be converted (e.g., Gray))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the AbsorbedDoseOfIonizingRadiation with the unit abbreviation.
 func (a *AbsorbedDoseOfIonizingRadiation) ToString(unit AbsorbedDoseOfIonizingRadiationUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -579,12 +639,26 @@ func (a *AbsorbedDoseOfIonizingRadiation) getUnitAbbreviation(unit AbsorbedDoseO
 	}
 }
 
-// Check if the given AbsorbedDoseOfIonizingRadiation are equals to the current AbsorbedDoseOfIonizingRadiation
+// Equals checks if the given AbsorbedDoseOfIonizingRadiation is equal to the current AbsorbedDoseOfIonizingRadiation.
+//
+// Parameters:
+//    other: The AbsorbedDoseOfIonizingRadiation to compare against.
+//
+// Returns:
+//    bool: Returns true if both AbsorbedDoseOfIonizingRadiation are equal, false otherwise.
 func (a *AbsorbedDoseOfIonizingRadiation) Equals(other *AbsorbedDoseOfIonizingRadiation) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given AbsorbedDoseOfIonizingRadiation are equals to the current AbsorbedDoseOfIonizingRadiation
+// CompareTo compares the current AbsorbedDoseOfIonizingRadiation with another AbsorbedDoseOfIonizingRadiation.
+// It returns -1 if the current AbsorbedDoseOfIonizingRadiation is less than the other AbsorbedDoseOfIonizingRadiation, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The AbsorbedDoseOfIonizingRadiation to compare against.
+//
+// Returns:
+//    int: -1 if the current AbsorbedDoseOfIonizingRadiation is less, 1 if greater, and 0 if equal.
 func (a *AbsorbedDoseOfIonizingRadiation) CompareTo(other *AbsorbedDoseOfIonizingRadiation) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -597,22 +671,50 @@ func (a *AbsorbedDoseOfIonizingRadiation) CompareTo(other *AbsorbedDoseOfIonizin
 	return 0
 }
 
-// Add the given AbsorbedDoseOfIonizingRadiation to the current AbsorbedDoseOfIonizingRadiation.
+// Add adds the given AbsorbedDoseOfIonizingRadiation to the current AbsorbedDoseOfIonizingRadiation and returns the result.
+// The result is a new AbsorbedDoseOfIonizingRadiation instance with the sum of the values.
+//
+// Parameters:
+//    other: The AbsorbedDoseOfIonizingRadiation to add to the current AbsorbedDoseOfIonizingRadiation.
+//
+// Returns:
+//    *AbsorbedDoseOfIonizingRadiation: A new AbsorbedDoseOfIonizingRadiation instance representing the sum of both AbsorbedDoseOfIonizingRadiation.
 func (a *AbsorbedDoseOfIonizingRadiation) Add(other *AbsorbedDoseOfIonizingRadiation) *AbsorbedDoseOfIonizingRadiation {
 	return &AbsorbedDoseOfIonizingRadiation{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given AbsorbedDoseOfIonizingRadiation to the current AbsorbedDoseOfIonizingRadiation.
+// Subtract subtracts the given AbsorbedDoseOfIonizingRadiation from the current AbsorbedDoseOfIonizingRadiation and returns the result.
+// The result is a new AbsorbedDoseOfIonizingRadiation instance with the difference of the values.
+//
+// Parameters:
+//    other: The AbsorbedDoseOfIonizingRadiation to subtract from the current AbsorbedDoseOfIonizingRadiation.
+//
+// Returns:
+//    *AbsorbedDoseOfIonizingRadiation: A new AbsorbedDoseOfIonizingRadiation instance representing the difference of both AbsorbedDoseOfIonizingRadiation.
 func (a *AbsorbedDoseOfIonizingRadiation) Subtract(other *AbsorbedDoseOfIonizingRadiation) *AbsorbedDoseOfIonizingRadiation {
 	return &AbsorbedDoseOfIonizingRadiation{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given AbsorbedDoseOfIonizingRadiation to the current AbsorbedDoseOfIonizingRadiation.
+// Multiply multiplies the current AbsorbedDoseOfIonizingRadiation by the given AbsorbedDoseOfIonizingRadiation and returns the result.
+// The result is a new AbsorbedDoseOfIonizingRadiation instance with the product of the values.
+//
+// Parameters:
+//    other: The AbsorbedDoseOfIonizingRadiation to multiply with the current AbsorbedDoseOfIonizingRadiation.
+//
+// Returns:
+//    *AbsorbedDoseOfIonizingRadiation: A new AbsorbedDoseOfIonizingRadiation instance representing the product of both AbsorbedDoseOfIonizingRadiation.
 func (a *AbsorbedDoseOfIonizingRadiation) Multiply(other *AbsorbedDoseOfIonizingRadiation) *AbsorbedDoseOfIonizingRadiation {
 	return &AbsorbedDoseOfIonizingRadiation{value: a.value * other.BaseValue()}
 }
 
-// Divide the given AbsorbedDoseOfIonizingRadiation to the current AbsorbedDoseOfIonizingRadiation.
+// Divide divides the current AbsorbedDoseOfIonizingRadiation by the given AbsorbedDoseOfIonizingRadiation and returns the result.
+// The result is a new AbsorbedDoseOfIonizingRadiation instance with the quotient of the values.
+//
+// Parameters:
+//    other: The AbsorbedDoseOfIonizingRadiation to divide the current AbsorbedDoseOfIonizingRadiation by.
+//
+// Returns:
+//    *AbsorbedDoseOfIonizingRadiation: A new AbsorbedDoseOfIonizingRadiation instance representing the quotient of both AbsorbedDoseOfIonizingRadiation.
 func (a *AbsorbedDoseOfIonizingRadiation) Divide(other *AbsorbedDoseOfIonizingRadiation) *AbsorbedDoseOfIonizingRadiation {
 	return &AbsorbedDoseOfIonizingRadiation{value: a.value / other.BaseValue()}
 }

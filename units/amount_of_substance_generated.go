@@ -12,7 +12,7 @@ import (
 
 
 
-// AmountOfSubstanceUnits enumeration
+// AmountOfSubstanceUnits defines various units of AmountOfSubstance.
 type AmountOfSubstanceUnits string
 
 const (
@@ -53,19 +53,24 @@ const (
         AmountOfSubstanceKilopoundMole AmountOfSubstanceUnits = "KilopoundMole"
 )
 
-// AmountOfSubstanceDto represents an AmountOfSubstance
+// AmountOfSubstanceDto represents a AmountOfSubstance measurement with a numerical value and its corresponding unit.
 type AmountOfSubstanceDto struct {
+    // Value is the numerical representation of the AmountOfSubstance.
 	Value float64
+    // Unit specifies the unit of measurement for the AmountOfSubstance, as defined in the AmountOfSubstanceUnits enumeration.
 	Unit  AmountOfSubstanceUnits
 }
 
-// AmountOfSubstanceDtoFactory struct to group related functions
+// AmountOfSubstanceDtoFactory groups methods for creating and serializing AmountOfSubstanceDto objects.
 type AmountOfSubstanceDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a AmountOfSubstanceDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf AmountOfSubstanceDtoFactory) FromJSON(data []byte) (*AmountOfSubstanceDto, error) {
 	a := AmountOfSubstanceDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into AmountOfSubstanceDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -73,6 +78,9 @@ func (udf AmountOfSubstanceDtoFactory) FromJSON(data []byte) (*AmountOfSubstance
 	return &a, nil
 }
 
+// ToJSON serializes a AmountOfSubstanceDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a AmountOfSubstanceDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -84,10 +92,11 @@ func (a AmountOfSubstanceDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// AmountOfSubstance struct
+// AmountOfSubstance represents a measurement in a of AmountOfSubstance.
+//
+// Mole is the amount of substance containing Avagadro's Number (6.02 x 10 ^ 23) of real particles such as molecules,atoms, ions or radicals.
 type AmountOfSubstance struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     molesLazy *float64 
@@ -109,112 +118,113 @@ type AmountOfSubstance struct {
     kilopound_molesLazy *float64 
 }
 
-// AmountOfSubstanceFactory struct to group related functions
+// AmountOfSubstanceFactory groups methods for creating AmountOfSubstance instances.
 type AmountOfSubstanceFactory struct{}
 
+// CreateAmountOfSubstance creates a new AmountOfSubstance instance from the given value and unit.
 func (uf AmountOfSubstanceFactory) CreateAmountOfSubstance(value float64, unit AmountOfSubstanceUnits) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, unit)
 }
 
+// FromDto converts a AmountOfSubstanceDto to a AmountOfSubstance instance.
 func (uf AmountOfSubstanceFactory) FromDto(dto AmountOfSubstanceDto) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a AmountOfSubstance instance.
 func (uf AmountOfSubstanceFactory) FromDtoJSON(data []byte) (*AmountOfSubstance, error) {
 	unitDto, err := AmountOfSubstanceDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse AmountOfSubstanceDto from JSON: %w", err)
 	}
 	return AmountOfSubstanceFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMole creates a new AmountOfSubstance instance from Mole.
+// FromMoles creates a new AmountOfSubstance instance from a value in Moles.
 func (uf AmountOfSubstanceFactory) FromMoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceMole)
 }
 
-// FromPoundMole creates a new AmountOfSubstance instance from PoundMole.
+// FromPoundMoles creates a new AmountOfSubstance instance from a value in PoundMoles.
 func (uf AmountOfSubstanceFactory) FromPoundMoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstancePoundMole)
 }
 
-// FromFemtomole creates a new AmountOfSubstance instance from Femtomole.
+// FromFemtomoles creates a new AmountOfSubstance instance from a value in Femtomoles.
 func (uf AmountOfSubstanceFactory) FromFemtomoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceFemtomole)
 }
 
-// FromPicomole creates a new AmountOfSubstance instance from Picomole.
+// FromPicomoles creates a new AmountOfSubstance instance from a value in Picomoles.
 func (uf AmountOfSubstanceFactory) FromPicomoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstancePicomole)
 }
 
-// FromNanomole creates a new AmountOfSubstance instance from Nanomole.
+// FromNanomoles creates a new AmountOfSubstance instance from a value in Nanomoles.
 func (uf AmountOfSubstanceFactory) FromNanomoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceNanomole)
 }
 
-// FromMicromole creates a new AmountOfSubstance instance from Micromole.
+// FromMicromoles creates a new AmountOfSubstance instance from a value in Micromoles.
 func (uf AmountOfSubstanceFactory) FromMicromoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceMicromole)
 }
 
-// FromMillimole creates a new AmountOfSubstance instance from Millimole.
+// FromMillimoles creates a new AmountOfSubstance instance from a value in Millimoles.
 func (uf AmountOfSubstanceFactory) FromMillimoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceMillimole)
 }
 
-// FromCentimole creates a new AmountOfSubstance instance from Centimole.
+// FromCentimoles creates a new AmountOfSubstance instance from a value in Centimoles.
 func (uf AmountOfSubstanceFactory) FromCentimoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceCentimole)
 }
 
-// FromDecimole creates a new AmountOfSubstance instance from Decimole.
+// FromDecimoles creates a new AmountOfSubstance instance from a value in Decimoles.
 func (uf AmountOfSubstanceFactory) FromDecimoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceDecimole)
 }
 
-// FromKilomole creates a new AmountOfSubstance instance from Kilomole.
+// FromKilomoles creates a new AmountOfSubstance instance from a value in Kilomoles.
 func (uf AmountOfSubstanceFactory) FromKilomoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceKilomole)
 }
 
-// FromMegamole creates a new AmountOfSubstance instance from Megamole.
+// FromMegamoles creates a new AmountOfSubstance instance from a value in Megamoles.
 func (uf AmountOfSubstanceFactory) FromMegamoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceMegamole)
 }
 
-// FromNanopoundMole creates a new AmountOfSubstance instance from NanopoundMole.
+// FromNanopoundMoles creates a new AmountOfSubstance instance from a value in NanopoundMoles.
 func (uf AmountOfSubstanceFactory) FromNanopoundMoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceNanopoundMole)
 }
 
-// FromMicropoundMole creates a new AmountOfSubstance instance from MicropoundMole.
+// FromMicropoundMoles creates a new AmountOfSubstance instance from a value in MicropoundMoles.
 func (uf AmountOfSubstanceFactory) FromMicropoundMoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceMicropoundMole)
 }
 
-// FromMillipoundMole creates a new AmountOfSubstance instance from MillipoundMole.
+// FromMillipoundMoles creates a new AmountOfSubstance instance from a value in MillipoundMoles.
 func (uf AmountOfSubstanceFactory) FromMillipoundMoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceMillipoundMole)
 }
 
-// FromCentipoundMole creates a new AmountOfSubstance instance from CentipoundMole.
+// FromCentipoundMoles creates a new AmountOfSubstance instance from a value in CentipoundMoles.
 func (uf AmountOfSubstanceFactory) FromCentipoundMoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceCentipoundMole)
 }
 
-// FromDecipoundMole creates a new AmountOfSubstance instance from DecipoundMole.
+// FromDecipoundMoles creates a new AmountOfSubstance instance from a value in DecipoundMoles.
 func (uf AmountOfSubstanceFactory) FromDecipoundMoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceDecipoundMole)
 }
 
-// FromKilopoundMole creates a new AmountOfSubstance instance from KilopoundMole.
+// FromKilopoundMoles creates a new AmountOfSubstance instance from a value in KilopoundMoles.
 func (uf AmountOfSubstanceFactory) FromKilopoundMoles(value float64) (*AmountOfSubstance, error) {
 	return newAmountOfSubstance(value, AmountOfSubstanceKilopoundMole)
 }
-
-
 
 
 // newAmountOfSubstance creates a new AmountOfSubstance.
@@ -227,13 +237,15 @@ func newAmountOfSubstance(value float64, fromUnit AmountOfSubstanceUnits) (*Amou
 	return a, nil
 }
 
-// BaseValue returns the base value of AmountOfSubstance in Mole.
+// BaseValue returns the base value of AmountOfSubstance in Mole unit (the base/default quantity).
 func (a *AmountOfSubstance) BaseValue() float64 {
 	return a.value
 }
 
 
-// Mole returns the value in Mole.
+// Moles returns the AmountOfSubstance value in Moles.
+//
+// 
 func (a *AmountOfSubstance) Moles() float64 {
 	if a.molesLazy != nil {
 		return *a.molesLazy
@@ -243,7 +255,9 @@ func (a *AmountOfSubstance) Moles() float64 {
 	return moles
 }
 
-// PoundMole returns the value in PoundMole.
+// PoundMoles returns the AmountOfSubstance value in PoundMoles.
+//
+// 
 func (a *AmountOfSubstance) PoundMoles() float64 {
 	if a.pound_molesLazy != nil {
 		return *a.pound_molesLazy
@@ -253,7 +267,9 @@ func (a *AmountOfSubstance) PoundMoles() float64 {
 	return pound_moles
 }
 
-// Femtomole returns the value in Femtomole.
+// Femtomoles returns the AmountOfSubstance value in Femtomoles.
+//
+// 
 func (a *AmountOfSubstance) Femtomoles() float64 {
 	if a.femtomolesLazy != nil {
 		return *a.femtomolesLazy
@@ -263,7 +279,9 @@ func (a *AmountOfSubstance) Femtomoles() float64 {
 	return femtomoles
 }
 
-// Picomole returns the value in Picomole.
+// Picomoles returns the AmountOfSubstance value in Picomoles.
+//
+// 
 func (a *AmountOfSubstance) Picomoles() float64 {
 	if a.picomolesLazy != nil {
 		return *a.picomolesLazy
@@ -273,7 +291,9 @@ func (a *AmountOfSubstance) Picomoles() float64 {
 	return picomoles
 }
 
-// Nanomole returns the value in Nanomole.
+// Nanomoles returns the AmountOfSubstance value in Nanomoles.
+//
+// 
 func (a *AmountOfSubstance) Nanomoles() float64 {
 	if a.nanomolesLazy != nil {
 		return *a.nanomolesLazy
@@ -283,7 +303,9 @@ func (a *AmountOfSubstance) Nanomoles() float64 {
 	return nanomoles
 }
 
-// Micromole returns the value in Micromole.
+// Micromoles returns the AmountOfSubstance value in Micromoles.
+//
+// 
 func (a *AmountOfSubstance) Micromoles() float64 {
 	if a.micromolesLazy != nil {
 		return *a.micromolesLazy
@@ -293,7 +315,9 @@ func (a *AmountOfSubstance) Micromoles() float64 {
 	return micromoles
 }
 
-// Millimole returns the value in Millimole.
+// Millimoles returns the AmountOfSubstance value in Millimoles.
+//
+// 
 func (a *AmountOfSubstance) Millimoles() float64 {
 	if a.millimolesLazy != nil {
 		return *a.millimolesLazy
@@ -303,7 +327,9 @@ func (a *AmountOfSubstance) Millimoles() float64 {
 	return millimoles
 }
 
-// Centimole returns the value in Centimole.
+// Centimoles returns the AmountOfSubstance value in Centimoles.
+//
+// 
 func (a *AmountOfSubstance) Centimoles() float64 {
 	if a.centimolesLazy != nil {
 		return *a.centimolesLazy
@@ -313,7 +339,9 @@ func (a *AmountOfSubstance) Centimoles() float64 {
 	return centimoles
 }
 
-// Decimole returns the value in Decimole.
+// Decimoles returns the AmountOfSubstance value in Decimoles.
+//
+// 
 func (a *AmountOfSubstance) Decimoles() float64 {
 	if a.decimolesLazy != nil {
 		return *a.decimolesLazy
@@ -323,7 +351,9 @@ func (a *AmountOfSubstance) Decimoles() float64 {
 	return decimoles
 }
 
-// Kilomole returns the value in Kilomole.
+// Kilomoles returns the AmountOfSubstance value in Kilomoles.
+//
+// 
 func (a *AmountOfSubstance) Kilomoles() float64 {
 	if a.kilomolesLazy != nil {
 		return *a.kilomolesLazy
@@ -333,7 +363,9 @@ func (a *AmountOfSubstance) Kilomoles() float64 {
 	return kilomoles
 }
 
-// Megamole returns the value in Megamole.
+// Megamoles returns the AmountOfSubstance value in Megamoles.
+//
+// 
 func (a *AmountOfSubstance) Megamoles() float64 {
 	if a.megamolesLazy != nil {
 		return *a.megamolesLazy
@@ -343,7 +375,9 @@ func (a *AmountOfSubstance) Megamoles() float64 {
 	return megamoles
 }
 
-// NanopoundMole returns the value in NanopoundMole.
+// NanopoundMoles returns the AmountOfSubstance value in NanopoundMoles.
+//
+// 
 func (a *AmountOfSubstance) NanopoundMoles() float64 {
 	if a.nanopound_molesLazy != nil {
 		return *a.nanopound_molesLazy
@@ -353,7 +387,9 @@ func (a *AmountOfSubstance) NanopoundMoles() float64 {
 	return nanopound_moles
 }
 
-// MicropoundMole returns the value in MicropoundMole.
+// MicropoundMoles returns the AmountOfSubstance value in MicropoundMoles.
+//
+// 
 func (a *AmountOfSubstance) MicropoundMoles() float64 {
 	if a.micropound_molesLazy != nil {
 		return *a.micropound_molesLazy
@@ -363,7 +399,9 @@ func (a *AmountOfSubstance) MicropoundMoles() float64 {
 	return micropound_moles
 }
 
-// MillipoundMole returns the value in MillipoundMole.
+// MillipoundMoles returns the AmountOfSubstance value in MillipoundMoles.
+//
+// 
 func (a *AmountOfSubstance) MillipoundMoles() float64 {
 	if a.millipound_molesLazy != nil {
 		return *a.millipound_molesLazy
@@ -373,7 +411,9 @@ func (a *AmountOfSubstance) MillipoundMoles() float64 {
 	return millipound_moles
 }
 
-// CentipoundMole returns the value in CentipoundMole.
+// CentipoundMoles returns the AmountOfSubstance value in CentipoundMoles.
+//
+// 
 func (a *AmountOfSubstance) CentipoundMoles() float64 {
 	if a.centipound_molesLazy != nil {
 		return *a.centipound_molesLazy
@@ -383,7 +423,9 @@ func (a *AmountOfSubstance) CentipoundMoles() float64 {
 	return centipound_moles
 }
 
-// DecipoundMole returns the value in DecipoundMole.
+// DecipoundMoles returns the AmountOfSubstance value in DecipoundMoles.
+//
+// 
 func (a *AmountOfSubstance) DecipoundMoles() float64 {
 	if a.decipound_molesLazy != nil {
 		return *a.decipound_molesLazy
@@ -393,7 +435,9 @@ func (a *AmountOfSubstance) DecipoundMoles() float64 {
 	return decipound_moles
 }
 
-// KilopoundMole returns the value in KilopoundMole.
+// KilopoundMoles returns the AmountOfSubstance value in KilopoundMoles.
+//
+// 
 func (a *AmountOfSubstance) KilopoundMoles() float64 {
 	if a.kilopound_molesLazy != nil {
 		return *a.kilopound_molesLazy
@@ -404,7 +448,9 @@ func (a *AmountOfSubstance) KilopoundMoles() float64 {
 }
 
 
-// ToDto creates an AmountOfSubstanceDto representation.
+// ToDto creates a AmountOfSubstanceDto representation from the AmountOfSubstance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Mole by default.
 func (a *AmountOfSubstance) ToDto(holdInUnit *AmountOfSubstanceUnits) AmountOfSubstanceDto {
 	if holdInUnit == nil {
 		defaultUnit := AmountOfSubstanceMole // Default value
@@ -417,12 +463,19 @@ func (a *AmountOfSubstance) ToDto(holdInUnit *AmountOfSubstanceUnits) AmountOfSu
 	}
 }
 
-// ToDtoJSON creates an AmountOfSubstanceDto representation.
+// ToDtoJSON creates a JSON representation of the AmountOfSubstance instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Mole by default.
 func (a *AmountOfSubstance) ToDtoJSON(holdInUnit *AmountOfSubstanceUnits) ([]byte, error) {
+	// Convert to AmountOfSubstanceDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts AmountOfSubstance to a specific unit value.
+// Convert converts a AmountOfSubstance to a specific unit value.
+// The function uses the provided unit type (AmountOfSubstanceUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *AmountOfSubstance) Convert(toUnit AmountOfSubstanceUnits) float64 {
 	switch toUnit { 
     case AmountOfSubstanceMole:
@@ -460,7 +513,7 @@ func (a *AmountOfSubstance) Convert(toUnit AmountOfSubstanceUnits) float64 {
     case AmountOfSubstanceKilopoundMole:
 		return a.KilopoundMoles()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -547,13 +600,22 @@ func (a *AmountOfSubstance) convertToBase(value float64, fromUnit AmountOfSubsta
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the AmountOfSubstance in the default unit (Mole),
+// formatted to two decimal places.
 func (a AmountOfSubstance) String() string {
 	return a.ToString(AmountOfSubstanceMole, 2)
 }
 
-// ToString formats the AmountOfSubstance to string.
-// fractionalDigits -1 for not mention
+// ToString formats the AmountOfSubstance value as a string with the specified unit and fractional digits.
+// It converts the AmountOfSubstance to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the AmountOfSubstance value will be converted (e.g., Mole))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the AmountOfSubstance with the unit abbreviation.
 func (a *AmountOfSubstance) ToString(unit AmountOfSubstanceUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -605,12 +667,26 @@ func (a *AmountOfSubstance) getUnitAbbreviation(unit AmountOfSubstanceUnits) str
 	}
 }
 
-// Check if the given AmountOfSubstance are equals to the current AmountOfSubstance
+// Equals checks if the given AmountOfSubstance is equal to the current AmountOfSubstance.
+//
+// Parameters:
+//    other: The AmountOfSubstance to compare against.
+//
+// Returns:
+//    bool: Returns true if both AmountOfSubstance are equal, false otherwise.
 func (a *AmountOfSubstance) Equals(other *AmountOfSubstance) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given AmountOfSubstance are equals to the current AmountOfSubstance
+// CompareTo compares the current AmountOfSubstance with another AmountOfSubstance.
+// It returns -1 if the current AmountOfSubstance is less than the other AmountOfSubstance, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The AmountOfSubstance to compare against.
+//
+// Returns:
+//    int: -1 if the current AmountOfSubstance is less, 1 if greater, and 0 if equal.
 func (a *AmountOfSubstance) CompareTo(other *AmountOfSubstance) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -623,22 +699,50 @@ func (a *AmountOfSubstance) CompareTo(other *AmountOfSubstance) int {
 	return 0
 }
 
-// Add the given AmountOfSubstance to the current AmountOfSubstance.
+// Add adds the given AmountOfSubstance to the current AmountOfSubstance and returns the result.
+// The result is a new AmountOfSubstance instance with the sum of the values.
+//
+// Parameters:
+//    other: The AmountOfSubstance to add to the current AmountOfSubstance.
+//
+// Returns:
+//    *AmountOfSubstance: A new AmountOfSubstance instance representing the sum of both AmountOfSubstance.
 func (a *AmountOfSubstance) Add(other *AmountOfSubstance) *AmountOfSubstance {
 	return &AmountOfSubstance{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given AmountOfSubstance to the current AmountOfSubstance.
+// Subtract subtracts the given AmountOfSubstance from the current AmountOfSubstance and returns the result.
+// The result is a new AmountOfSubstance instance with the difference of the values.
+//
+// Parameters:
+//    other: The AmountOfSubstance to subtract from the current AmountOfSubstance.
+//
+// Returns:
+//    *AmountOfSubstance: A new AmountOfSubstance instance representing the difference of both AmountOfSubstance.
 func (a *AmountOfSubstance) Subtract(other *AmountOfSubstance) *AmountOfSubstance {
 	return &AmountOfSubstance{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given AmountOfSubstance to the current AmountOfSubstance.
+// Multiply multiplies the current AmountOfSubstance by the given AmountOfSubstance and returns the result.
+// The result is a new AmountOfSubstance instance with the product of the values.
+//
+// Parameters:
+//    other: The AmountOfSubstance to multiply with the current AmountOfSubstance.
+//
+// Returns:
+//    *AmountOfSubstance: A new AmountOfSubstance instance representing the product of both AmountOfSubstance.
 func (a *AmountOfSubstance) Multiply(other *AmountOfSubstance) *AmountOfSubstance {
 	return &AmountOfSubstance{value: a.value * other.BaseValue()}
 }
 
-// Divide the given AmountOfSubstance to the current AmountOfSubstance.
+// Divide divides the current AmountOfSubstance by the given AmountOfSubstance and returns the result.
+// The result is a new AmountOfSubstance instance with the quotient of the values.
+//
+// Parameters:
+//    other: The AmountOfSubstance to divide the current AmountOfSubstance by.
+//
+// Returns:
+//    *AmountOfSubstance: A new AmountOfSubstance instance representing the quotient of both AmountOfSubstance.
 func (a *AmountOfSubstance) Divide(other *AmountOfSubstance) *AmountOfSubstance {
 	return &AmountOfSubstance{value: a.value / other.BaseValue()}
 }

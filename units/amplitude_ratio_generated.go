@@ -12,7 +12,7 @@ import (
 
 
 
-// AmplitudeRatioUnits enumeration
+// AmplitudeRatioUnits defines various units of AmplitudeRatio.
 type AmplitudeRatioUnits string
 
 const (
@@ -27,19 +27,24 @@ const (
         AmplitudeRatioDecibelUnloaded AmplitudeRatioUnits = "DecibelUnloaded"
 )
 
-// AmplitudeRatioDto represents an AmplitudeRatio
+// AmplitudeRatioDto represents a AmplitudeRatio measurement with a numerical value and its corresponding unit.
 type AmplitudeRatioDto struct {
+    // Value is the numerical representation of the AmplitudeRatio.
 	Value float64
+    // Unit specifies the unit of measurement for the AmplitudeRatio, as defined in the AmplitudeRatioUnits enumeration.
 	Unit  AmplitudeRatioUnits
 }
 
-// AmplitudeRatioDtoFactory struct to group related functions
+// AmplitudeRatioDtoFactory groups methods for creating and serializing AmplitudeRatioDto objects.
 type AmplitudeRatioDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a AmplitudeRatioDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf AmplitudeRatioDtoFactory) FromJSON(data []byte) (*AmplitudeRatioDto, error) {
 	a := AmplitudeRatioDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into AmplitudeRatioDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -47,6 +52,9 @@ func (udf AmplitudeRatioDtoFactory) FromJSON(data []byte) (*AmplitudeRatioDto, e
 	return &a, nil
 }
 
+// ToJSON serializes a AmplitudeRatioDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a AmplitudeRatioDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -58,10 +66,11 @@ func (a AmplitudeRatioDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// AmplitudeRatio struct
+// AmplitudeRatio represents a measurement in a of AmplitudeRatio.
+//
+// The strength of a signal expressed in decibels (dB) relative to one volt RMS.
 type AmplitudeRatio struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     decibel_voltsLazy *float64 
@@ -70,47 +79,48 @@ type AmplitudeRatio struct {
     decibels_unloadedLazy *float64 
 }
 
-// AmplitudeRatioFactory struct to group related functions
+// AmplitudeRatioFactory groups methods for creating AmplitudeRatio instances.
 type AmplitudeRatioFactory struct{}
 
+// CreateAmplitudeRatio creates a new AmplitudeRatio instance from the given value and unit.
 func (uf AmplitudeRatioFactory) CreateAmplitudeRatio(value float64, unit AmplitudeRatioUnits) (*AmplitudeRatio, error) {
 	return newAmplitudeRatio(value, unit)
 }
 
+// FromDto converts a AmplitudeRatioDto to a AmplitudeRatio instance.
 func (uf AmplitudeRatioFactory) FromDto(dto AmplitudeRatioDto) (*AmplitudeRatio, error) {
 	return newAmplitudeRatio(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a AmplitudeRatio instance.
 func (uf AmplitudeRatioFactory) FromDtoJSON(data []byte) (*AmplitudeRatio, error) {
 	unitDto, err := AmplitudeRatioDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse AmplitudeRatioDto from JSON: %w", err)
 	}
 	return AmplitudeRatioFactory{}.FromDto(*unitDto)
 }
 
 
-// FromDecibelVolt creates a new AmplitudeRatio instance from DecibelVolt.
+// FromDecibelVolts creates a new AmplitudeRatio instance from a value in DecibelVolts.
 func (uf AmplitudeRatioFactory) FromDecibelVolts(value float64) (*AmplitudeRatio, error) {
 	return newAmplitudeRatio(value, AmplitudeRatioDecibelVolt)
 }
 
-// FromDecibelMicrovolt creates a new AmplitudeRatio instance from DecibelMicrovolt.
+// FromDecibelMicrovolts creates a new AmplitudeRatio instance from a value in DecibelMicrovolts.
 func (uf AmplitudeRatioFactory) FromDecibelMicrovolts(value float64) (*AmplitudeRatio, error) {
 	return newAmplitudeRatio(value, AmplitudeRatioDecibelMicrovolt)
 }
 
-// FromDecibelMillivolt creates a new AmplitudeRatio instance from DecibelMillivolt.
+// FromDecibelMillivolts creates a new AmplitudeRatio instance from a value in DecibelMillivolts.
 func (uf AmplitudeRatioFactory) FromDecibelMillivolts(value float64) (*AmplitudeRatio, error) {
 	return newAmplitudeRatio(value, AmplitudeRatioDecibelMillivolt)
 }
 
-// FromDecibelUnloaded creates a new AmplitudeRatio instance from DecibelUnloaded.
+// FromDecibelsUnloaded creates a new AmplitudeRatio instance from a value in DecibelsUnloaded.
 func (uf AmplitudeRatioFactory) FromDecibelsUnloaded(value float64) (*AmplitudeRatio, error) {
 	return newAmplitudeRatio(value, AmplitudeRatioDecibelUnloaded)
 }
-
-
 
 
 // newAmplitudeRatio creates a new AmplitudeRatio.
@@ -123,13 +133,15 @@ func newAmplitudeRatio(value float64, fromUnit AmplitudeRatioUnits) (*AmplitudeR
 	return a, nil
 }
 
-// BaseValue returns the base value of AmplitudeRatio in DecibelVolt.
+// BaseValue returns the base value of AmplitudeRatio in DecibelVolt unit (the base/default quantity).
 func (a *AmplitudeRatio) BaseValue() float64 {
 	return a.value
 }
 
 
-// DecibelVolt returns the value in DecibelVolt.
+// DecibelVolts returns the AmplitudeRatio value in DecibelVolts.
+//
+// 
 func (a *AmplitudeRatio) DecibelVolts() float64 {
 	if a.decibel_voltsLazy != nil {
 		return *a.decibel_voltsLazy
@@ -139,7 +151,9 @@ func (a *AmplitudeRatio) DecibelVolts() float64 {
 	return decibel_volts
 }
 
-// DecibelMicrovolt returns the value in DecibelMicrovolt.
+// DecibelMicrovolts returns the AmplitudeRatio value in DecibelMicrovolts.
+//
+// 
 func (a *AmplitudeRatio) DecibelMicrovolts() float64 {
 	if a.decibel_microvoltsLazy != nil {
 		return *a.decibel_microvoltsLazy
@@ -149,7 +163,9 @@ func (a *AmplitudeRatio) DecibelMicrovolts() float64 {
 	return decibel_microvolts
 }
 
-// DecibelMillivolt returns the value in DecibelMillivolt.
+// DecibelMillivolts returns the AmplitudeRatio value in DecibelMillivolts.
+//
+// 
 func (a *AmplitudeRatio) DecibelMillivolts() float64 {
 	if a.decibel_millivoltsLazy != nil {
 		return *a.decibel_millivoltsLazy
@@ -159,7 +175,9 @@ func (a *AmplitudeRatio) DecibelMillivolts() float64 {
 	return decibel_millivolts
 }
 
-// DecibelUnloaded returns the value in DecibelUnloaded.
+// DecibelsUnloaded returns the AmplitudeRatio value in DecibelsUnloaded.
+//
+// 
 func (a *AmplitudeRatio) DecibelsUnloaded() float64 {
 	if a.decibels_unloadedLazy != nil {
 		return *a.decibels_unloadedLazy
@@ -170,7 +188,9 @@ func (a *AmplitudeRatio) DecibelsUnloaded() float64 {
 }
 
 
-// ToDto creates an AmplitudeRatioDto representation.
+// ToDto creates a AmplitudeRatioDto representation from the AmplitudeRatio instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DecibelVolt by default.
 func (a *AmplitudeRatio) ToDto(holdInUnit *AmplitudeRatioUnits) AmplitudeRatioDto {
 	if holdInUnit == nil {
 		defaultUnit := AmplitudeRatioDecibelVolt // Default value
@@ -183,12 +203,19 @@ func (a *AmplitudeRatio) ToDto(holdInUnit *AmplitudeRatioUnits) AmplitudeRatioDt
 	}
 }
 
-// ToDtoJSON creates an AmplitudeRatioDto representation.
+// ToDtoJSON creates a JSON representation of the AmplitudeRatio instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by DecibelVolt by default.
 func (a *AmplitudeRatio) ToDtoJSON(holdInUnit *AmplitudeRatioUnits) ([]byte, error) {
+	// Convert to AmplitudeRatioDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts AmplitudeRatio to a specific unit value.
+// Convert converts a AmplitudeRatio to a specific unit value.
+// The function uses the provided unit type (AmplitudeRatioUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *AmplitudeRatio) Convert(toUnit AmplitudeRatioUnits) float64 {
 	switch toUnit { 
     case AmplitudeRatioDecibelVolt:
@@ -200,7 +227,7 @@ func (a *AmplitudeRatio) Convert(toUnit AmplitudeRatioUnits) float64 {
     case AmplitudeRatioDecibelUnloaded:
 		return a.DecibelsUnloaded()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -235,13 +262,22 @@ func (a *AmplitudeRatio) convertToBase(value float64, fromUnit AmplitudeRatioUni
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the AmplitudeRatio in the default unit (DecibelVolt),
+// formatted to two decimal places.
 func (a AmplitudeRatio) String() string {
 	return a.ToString(AmplitudeRatioDecibelVolt, 2)
 }
 
-// ToString formats the AmplitudeRatio to string.
-// fractionalDigits -1 for not mention
+// ToString formats the AmplitudeRatio value as a string with the specified unit and fractional digits.
+// It converts the AmplitudeRatio to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the AmplitudeRatio value will be converted (e.g., DecibelVolt))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the AmplitudeRatio with the unit abbreviation.
 func (a *AmplitudeRatio) ToString(unit AmplitudeRatioUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -267,12 +303,26 @@ func (a *AmplitudeRatio) getUnitAbbreviation(unit AmplitudeRatioUnits) string {
 	}
 }
 
-// Check if the given AmplitudeRatio are equals to the current AmplitudeRatio
+// Equals checks if the given AmplitudeRatio is equal to the current AmplitudeRatio.
+//
+// Parameters:
+//    other: The AmplitudeRatio to compare against.
+//
+// Returns:
+//    bool: Returns true if both AmplitudeRatio are equal, false otherwise.
 func (a *AmplitudeRatio) Equals(other *AmplitudeRatio) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given AmplitudeRatio are equals to the current AmplitudeRatio
+// CompareTo compares the current AmplitudeRatio with another AmplitudeRatio.
+// It returns -1 if the current AmplitudeRatio is less than the other AmplitudeRatio, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The AmplitudeRatio to compare against.
+//
+// Returns:
+//    int: -1 if the current AmplitudeRatio is less, 1 if greater, and 0 if equal.
 func (a *AmplitudeRatio) CompareTo(other *AmplitudeRatio) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -285,22 +335,50 @@ func (a *AmplitudeRatio) CompareTo(other *AmplitudeRatio) int {
 	return 0
 }
 
-// Add the given AmplitudeRatio to the current AmplitudeRatio.
+// Add adds the given AmplitudeRatio to the current AmplitudeRatio and returns the result.
+// The result is a new AmplitudeRatio instance with the sum of the values.
+//
+// Parameters:
+//    other: The AmplitudeRatio to add to the current AmplitudeRatio.
+//
+// Returns:
+//    *AmplitudeRatio: A new AmplitudeRatio instance representing the sum of both AmplitudeRatio.
 func (a *AmplitudeRatio) Add(other *AmplitudeRatio) *AmplitudeRatio {
 	return &AmplitudeRatio{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given AmplitudeRatio to the current AmplitudeRatio.
+// Subtract subtracts the given AmplitudeRatio from the current AmplitudeRatio and returns the result.
+// The result is a new AmplitudeRatio instance with the difference of the values.
+//
+// Parameters:
+//    other: The AmplitudeRatio to subtract from the current AmplitudeRatio.
+//
+// Returns:
+//    *AmplitudeRatio: A new AmplitudeRatio instance representing the difference of both AmplitudeRatio.
 func (a *AmplitudeRatio) Subtract(other *AmplitudeRatio) *AmplitudeRatio {
 	return &AmplitudeRatio{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given AmplitudeRatio to the current AmplitudeRatio.
+// Multiply multiplies the current AmplitudeRatio by the given AmplitudeRatio and returns the result.
+// The result is a new AmplitudeRatio instance with the product of the values.
+//
+// Parameters:
+//    other: The AmplitudeRatio to multiply with the current AmplitudeRatio.
+//
+// Returns:
+//    *AmplitudeRatio: A new AmplitudeRatio instance representing the product of both AmplitudeRatio.
 func (a *AmplitudeRatio) Multiply(other *AmplitudeRatio) *AmplitudeRatio {
 	return &AmplitudeRatio{value: a.value * other.BaseValue()}
 }
 
-// Divide the given AmplitudeRatio to the current AmplitudeRatio.
+// Divide divides the current AmplitudeRatio by the given AmplitudeRatio and returns the result.
+// The result is a new AmplitudeRatio instance with the quotient of the values.
+//
+// Parameters:
+//    other: The AmplitudeRatio to divide the current AmplitudeRatio by.
+//
+// Returns:
+//    *AmplitudeRatio: A new AmplitudeRatio instance representing the quotient of both AmplitudeRatio.
 func (a *AmplitudeRatio) Divide(other *AmplitudeRatio) *AmplitudeRatio {
 	return &AmplitudeRatio{value: a.value / other.BaseValue()}
 }

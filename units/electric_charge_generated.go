@@ -12,7 +12,7 @@ import (
 
 
 
-// ElectricChargeUnits enumeration
+// ElectricChargeUnits defines various units of ElectricCharge.
 type ElectricChargeUnits string
 
 const (
@@ -41,19 +41,24 @@ const (
         ElectricChargeMegaampereHour ElectricChargeUnits = "MegaampereHour"
 )
 
-// ElectricChargeDto represents an ElectricCharge
+// ElectricChargeDto represents a ElectricCharge measurement with a numerical value and its corresponding unit.
 type ElectricChargeDto struct {
+    // Value is the numerical representation of the ElectricCharge.
 	Value float64
+    // Unit specifies the unit of measurement for the ElectricCharge, as defined in the ElectricChargeUnits enumeration.
 	Unit  ElectricChargeUnits
 }
 
-// ElectricChargeDtoFactory struct to group related functions
+// ElectricChargeDtoFactory groups methods for creating and serializing ElectricChargeDto objects.
 type ElectricChargeDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricChargeDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ElectricChargeDtoFactory) FromJSON(data []byte) (*ElectricChargeDto, error) {
 	a := ElectricChargeDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ElectricChargeDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -61,6 +66,9 @@ func (udf ElectricChargeDtoFactory) FromJSON(data []byte) (*ElectricChargeDto, e
 	return &a, nil
 }
 
+// ToJSON serializes a ElectricChargeDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ElectricChargeDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -72,10 +80,11 @@ func (a ElectricChargeDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ElectricCharge struct
+// ElectricCharge represents a measurement in a of ElectricCharge.
+//
+// Electric charge is the physical property of matter that causes it to experience a force when placed in an electromagnetic field.
 type ElectricCharge struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     coulombsLazy *float64 
@@ -91,82 +100,83 @@ type ElectricCharge struct {
     megaampere_hoursLazy *float64 
 }
 
-// ElectricChargeFactory struct to group related functions
+// ElectricChargeFactory groups methods for creating ElectricCharge instances.
 type ElectricChargeFactory struct{}
 
+// CreateElectricCharge creates a new ElectricCharge instance from the given value and unit.
 func (uf ElectricChargeFactory) CreateElectricCharge(value float64, unit ElectricChargeUnits) (*ElectricCharge, error) {
 	return newElectricCharge(value, unit)
 }
 
+// FromDto converts a ElectricChargeDto to a ElectricCharge instance.
 func (uf ElectricChargeFactory) FromDto(dto ElectricChargeDto) (*ElectricCharge, error) {
 	return newElectricCharge(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricCharge instance.
 func (uf ElectricChargeFactory) FromDtoJSON(data []byte) (*ElectricCharge, error) {
 	unitDto, err := ElectricChargeDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ElectricChargeDto from JSON: %w", err)
 	}
 	return ElectricChargeFactory{}.FromDto(*unitDto)
 }
 
 
-// FromCoulomb creates a new ElectricCharge instance from Coulomb.
+// FromCoulombs creates a new ElectricCharge instance from a value in Coulombs.
 func (uf ElectricChargeFactory) FromCoulombs(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeCoulomb)
 }
 
-// FromAmpereHour creates a new ElectricCharge instance from AmpereHour.
+// FromAmpereHours creates a new ElectricCharge instance from a value in AmpereHours.
 func (uf ElectricChargeFactory) FromAmpereHours(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeAmpereHour)
 }
 
-// FromPicocoulomb creates a new ElectricCharge instance from Picocoulomb.
+// FromPicocoulombs creates a new ElectricCharge instance from a value in Picocoulombs.
 func (uf ElectricChargeFactory) FromPicocoulombs(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargePicocoulomb)
 }
 
-// FromNanocoulomb creates a new ElectricCharge instance from Nanocoulomb.
+// FromNanocoulombs creates a new ElectricCharge instance from a value in Nanocoulombs.
 func (uf ElectricChargeFactory) FromNanocoulombs(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeNanocoulomb)
 }
 
-// FromMicrocoulomb creates a new ElectricCharge instance from Microcoulomb.
+// FromMicrocoulombs creates a new ElectricCharge instance from a value in Microcoulombs.
 func (uf ElectricChargeFactory) FromMicrocoulombs(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeMicrocoulomb)
 }
 
-// FromMillicoulomb creates a new ElectricCharge instance from Millicoulomb.
+// FromMillicoulombs creates a new ElectricCharge instance from a value in Millicoulombs.
 func (uf ElectricChargeFactory) FromMillicoulombs(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeMillicoulomb)
 }
 
-// FromKilocoulomb creates a new ElectricCharge instance from Kilocoulomb.
+// FromKilocoulombs creates a new ElectricCharge instance from a value in Kilocoulombs.
 func (uf ElectricChargeFactory) FromKilocoulombs(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeKilocoulomb)
 }
 
-// FromMegacoulomb creates a new ElectricCharge instance from Megacoulomb.
+// FromMegacoulombs creates a new ElectricCharge instance from a value in Megacoulombs.
 func (uf ElectricChargeFactory) FromMegacoulombs(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeMegacoulomb)
 }
 
-// FromMilliampereHour creates a new ElectricCharge instance from MilliampereHour.
+// FromMilliampereHours creates a new ElectricCharge instance from a value in MilliampereHours.
 func (uf ElectricChargeFactory) FromMilliampereHours(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeMilliampereHour)
 }
 
-// FromKiloampereHour creates a new ElectricCharge instance from KiloampereHour.
+// FromKiloampereHours creates a new ElectricCharge instance from a value in KiloampereHours.
 func (uf ElectricChargeFactory) FromKiloampereHours(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeKiloampereHour)
 }
 
-// FromMegaampereHour creates a new ElectricCharge instance from MegaampereHour.
+// FromMegaampereHours creates a new ElectricCharge instance from a value in MegaampereHours.
 func (uf ElectricChargeFactory) FromMegaampereHours(value float64) (*ElectricCharge, error) {
 	return newElectricCharge(value, ElectricChargeMegaampereHour)
 }
-
-
 
 
 // newElectricCharge creates a new ElectricCharge.
@@ -179,13 +189,15 @@ func newElectricCharge(value float64, fromUnit ElectricChargeUnits) (*ElectricCh
 	return a, nil
 }
 
-// BaseValue returns the base value of ElectricCharge in Coulomb.
+// BaseValue returns the base value of ElectricCharge in Coulomb unit (the base/default quantity).
 func (a *ElectricCharge) BaseValue() float64 {
 	return a.value
 }
 
 
-// Coulomb returns the value in Coulomb.
+// Coulombs returns the ElectricCharge value in Coulombs.
+//
+// 
 func (a *ElectricCharge) Coulombs() float64 {
 	if a.coulombsLazy != nil {
 		return *a.coulombsLazy
@@ -195,7 +207,9 @@ func (a *ElectricCharge) Coulombs() float64 {
 	return coulombs
 }
 
-// AmpereHour returns the value in AmpereHour.
+// AmpereHours returns the ElectricCharge value in AmpereHours.
+//
+// 
 func (a *ElectricCharge) AmpereHours() float64 {
 	if a.ampere_hoursLazy != nil {
 		return *a.ampere_hoursLazy
@@ -205,7 +219,9 @@ func (a *ElectricCharge) AmpereHours() float64 {
 	return ampere_hours
 }
 
-// Picocoulomb returns the value in Picocoulomb.
+// Picocoulombs returns the ElectricCharge value in Picocoulombs.
+//
+// 
 func (a *ElectricCharge) Picocoulombs() float64 {
 	if a.picocoulombsLazy != nil {
 		return *a.picocoulombsLazy
@@ -215,7 +231,9 @@ func (a *ElectricCharge) Picocoulombs() float64 {
 	return picocoulombs
 }
 
-// Nanocoulomb returns the value in Nanocoulomb.
+// Nanocoulombs returns the ElectricCharge value in Nanocoulombs.
+//
+// 
 func (a *ElectricCharge) Nanocoulombs() float64 {
 	if a.nanocoulombsLazy != nil {
 		return *a.nanocoulombsLazy
@@ -225,7 +243,9 @@ func (a *ElectricCharge) Nanocoulombs() float64 {
 	return nanocoulombs
 }
 
-// Microcoulomb returns the value in Microcoulomb.
+// Microcoulombs returns the ElectricCharge value in Microcoulombs.
+//
+// 
 func (a *ElectricCharge) Microcoulombs() float64 {
 	if a.microcoulombsLazy != nil {
 		return *a.microcoulombsLazy
@@ -235,7 +255,9 @@ func (a *ElectricCharge) Microcoulombs() float64 {
 	return microcoulombs
 }
 
-// Millicoulomb returns the value in Millicoulomb.
+// Millicoulombs returns the ElectricCharge value in Millicoulombs.
+//
+// 
 func (a *ElectricCharge) Millicoulombs() float64 {
 	if a.millicoulombsLazy != nil {
 		return *a.millicoulombsLazy
@@ -245,7 +267,9 @@ func (a *ElectricCharge) Millicoulombs() float64 {
 	return millicoulombs
 }
 
-// Kilocoulomb returns the value in Kilocoulomb.
+// Kilocoulombs returns the ElectricCharge value in Kilocoulombs.
+//
+// 
 func (a *ElectricCharge) Kilocoulombs() float64 {
 	if a.kilocoulombsLazy != nil {
 		return *a.kilocoulombsLazy
@@ -255,7 +279,9 @@ func (a *ElectricCharge) Kilocoulombs() float64 {
 	return kilocoulombs
 }
 
-// Megacoulomb returns the value in Megacoulomb.
+// Megacoulombs returns the ElectricCharge value in Megacoulombs.
+//
+// 
 func (a *ElectricCharge) Megacoulombs() float64 {
 	if a.megacoulombsLazy != nil {
 		return *a.megacoulombsLazy
@@ -265,7 +291,9 @@ func (a *ElectricCharge) Megacoulombs() float64 {
 	return megacoulombs
 }
 
-// MilliampereHour returns the value in MilliampereHour.
+// MilliampereHours returns the ElectricCharge value in MilliampereHours.
+//
+// 
 func (a *ElectricCharge) MilliampereHours() float64 {
 	if a.milliampere_hoursLazy != nil {
 		return *a.milliampere_hoursLazy
@@ -275,7 +303,9 @@ func (a *ElectricCharge) MilliampereHours() float64 {
 	return milliampere_hours
 }
 
-// KiloampereHour returns the value in KiloampereHour.
+// KiloampereHours returns the ElectricCharge value in KiloampereHours.
+//
+// 
 func (a *ElectricCharge) KiloampereHours() float64 {
 	if a.kiloampere_hoursLazy != nil {
 		return *a.kiloampere_hoursLazy
@@ -285,7 +315,9 @@ func (a *ElectricCharge) KiloampereHours() float64 {
 	return kiloampere_hours
 }
 
-// MegaampereHour returns the value in MegaampereHour.
+// MegaampereHours returns the ElectricCharge value in MegaampereHours.
+//
+// 
 func (a *ElectricCharge) MegaampereHours() float64 {
 	if a.megaampere_hoursLazy != nil {
 		return *a.megaampere_hoursLazy
@@ -296,7 +328,9 @@ func (a *ElectricCharge) MegaampereHours() float64 {
 }
 
 
-// ToDto creates an ElectricChargeDto representation.
+// ToDto creates a ElectricChargeDto representation from the ElectricCharge instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Coulomb by default.
 func (a *ElectricCharge) ToDto(holdInUnit *ElectricChargeUnits) ElectricChargeDto {
 	if holdInUnit == nil {
 		defaultUnit := ElectricChargeCoulomb // Default value
@@ -309,12 +343,19 @@ func (a *ElectricCharge) ToDto(holdInUnit *ElectricChargeUnits) ElectricChargeDt
 	}
 }
 
-// ToDtoJSON creates an ElectricChargeDto representation.
+// ToDtoJSON creates a JSON representation of the ElectricCharge instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Coulomb by default.
 func (a *ElectricCharge) ToDtoJSON(holdInUnit *ElectricChargeUnits) ([]byte, error) {
+	// Convert to ElectricChargeDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ElectricCharge to a specific unit value.
+// Convert converts a ElectricCharge to a specific unit value.
+// The function uses the provided unit type (ElectricChargeUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ElectricCharge) Convert(toUnit ElectricChargeUnits) float64 {
 	switch toUnit { 
     case ElectricChargeCoulomb:
@@ -340,7 +381,7 @@ func (a *ElectricCharge) Convert(toUnit ElectricChargeUnits) float64 {
     case ElectricChargeMegaampereHour:
 		return a.MegaampereHours()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -403,13 +444,22 @@ func (a *ElectricCharge) convertToBase(value float64, fromUnit ElectricChargeUni
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ElectricCharge in the default unit (Coulomb),
+// formatted to two decimal places.
 func (a ElectricCharge) String() string {
 	return a.ToString(ElectricChargeCoulomb, 2)
 }
 
-// ToString formats the ElectricCharge to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ElectricCharge value as a string with the specified unit and fractional digits.
+// It converts the ElectricCharge to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ElectricCharge value will be converted (e.g., Coulomb))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ElectricCharge with the unit abbreviation.
 func (a *ElectricCharge) ToString(unit ElectricChargeUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -449,12 +499,26 @@ func (a *ElectricCharge) getUnitAbbreviation(unit ElectricChargeUnits) string {
 	}
 }
 
-// Check if the given ElectricCharge are equals to the current ElectricCharge
+// Equals checks if the given ElectricCharge is equal to the current ElectricCharge.
+//
+// Parameters:
+//    other: The ElectricCharge to compare against.
+//
+// Returns:
+//    bool: Returns true if both ElectricCharge are equal, false otherwise.
 func (a *ElectricCharge) Equals(other *ElectricCharge) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ElectricCharge are equals to the current ElectricCharge
+// CompareTo compares the current ElectricCharge with another ElectricCharge.
+// It returns -1 if the current ElectricCharge is less than the other ElectricCharge, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ElectricCharge to compare against.
+//
+// Returns:
+//    int: -1 if the current ElectricCharge is less, 1 if greater, and 0 if equal.
 func (a *ElectricCharge) CompareTo(other *ElectricCharge) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -467,22 +531,50 @@ func (a *ElectricCharge) CompareTo(other *ElectricCharge) int {
 	return 0
 }
 
-// Add the given ElectricCharge to the current ElectricCharge.
+// Add adds the given ElectricCharge to the current ElectricCharge and returns the result.
+// The result is a new ElectricCharge instance with the sum of the values.
+//
+// Parameters:
+//    other: The ElectricCharge to add to the current ElectricCharge.
+//
+// Returns:
+//    *ElectricCharge: A new ElectricCharge instance representing the sum of both ElectricCharge.
 func (a *ElectricCharge) Add(other *ElectricCharge) *ElectricCharge {
 	return &ElectricCharge{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ElectricCharge to the current ElectricCharge.
+// Subtract subtracts the given ElectricCharge from the current ElectricCharge and returns the result.
+// The result is a new ElectricCharge instance with the difference of the values.
+//
+// Parameters:
+//    other: The ElectricCharge to subtract from the current ElectricCharge.
+//
+// Returns:
+//    *ElectricCharge: A new ElectricCharge instance representing the difference of both ElectricCharge.
 func (a *ElectricCharge) Subtract(other *ElectricCharge) *ElectricCharge {
 	return &ElectricCharge{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ElectricCharge to the current ElectricCharge.
+// Multiply multiplies the current ElectricCharge by the given ElectricCharge and returns the result.
+// The result is a new ElectricCharge instance with the product of the values.
+//
+// Parameters:
+//    other: The ElectricCharge to multiply with the current ElectricCharge.
+//
+// Returns:
+//    *ElectricCharge: A new ElectricCharge instance representing the product of both ElectricCharge.
 func (a *ElectricCharge) Multiply(other *ElectricCharge) *ElectricCharge {
 	return &ElectricCharge{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ElectricCharge to the current ElectricCharge.
+// Divide divides the current ElectricCharge by the given ElectricCharge and returns the result.
+// The result is a new ElectricCharge instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ElectricCharge to divide the current ElectricCharge by.
+//
+// Returns:
+//    *ElectricCharge: A new ElectricCharge instance representing the quotient of both ElectricCharge.
 func (a *ElectricCharge) Divide(other *ElectricCharge) *ElectricCharge {
 	return &ElectricCharge{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// ForceChangeRateUnits enumeration
+// ForceChangeRateUnits defines various units of ForceChangeRate.
 type ForceChangeRateUnits string
 
 const (
@@ -49,19 +49,24 @@ const (
         ForceChangeRateKilopoundForcePerSecond ForceChangeRateUnits = "KilopoundForcePerSecond"
 )
 
-// ForceChangeRateDto represents an ForceChangeRate
+// ForceChangeRateDto represents a ForceChangeRate measurement with a numerical value and its corresponding unit.
 type ForceChangeRateDto struct {
+    // Value is the numerical representation of the ForceChangeRate.
 	Value float64
+    // Unit specifies the unit of measurement for the ForceChangeRate, as defined in the ForceChangeRateUnits enumeration.
 	Unit  ForceChangeRateUnits
 }
 
-// ForceChangeRateDtoFactory struct to group related functions
+// ForceChangeRateDtoFactory groups methods for creating and serializing ForceChangeRateDto objects.
 type ForceChangeRateDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ForceChangeRateDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ForceChangeRateDtoFactory) FromJSON(data []byte) (*ForceChangeRateDto, error) {
 	a := ForceChangeRateDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ForceChangeRateDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -69,6 +74,9 @@ func (udf ForceChangeRateDtoFactory) FromJSON(data []byte) (*ForceChangeRateDto,
 	return &a, nil
 }
 
+// ToJSON serializes a ForceChangeRateDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ForceChangeRateDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -80,10 +88,11 @@ func (a ForceChangeRateDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ForceChangeRate struct
+// ForceChangeRate represents a measurement in a of ForceChangeRate.
+//
+// Force change rate is the ratio of the force change to the time during which the change occurred (value of force changes per unit time).
 type ForceChangeRate struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     newtons_per_minuteLazy *float64 
@@ -103,102 +112,103 @@ type ForceChangeRate struct {
     kilopounds_force_per_secondLazy *float64 
 }
 
-// ForceChangeRateFactory struct to group related functions
+// ForceChangeRateFactory groups methods for creating ForceChangeRate instances.
 type ForceChangeRateFactory struct{}
 
+// CreateForceChangeRate creates a new ForceChangeRate instance from the given value and unit.
 func (uf ForceChangeRateFactory) CreateForceChangeRate(value float64, unit ForceChangeRateUnits) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, unit)
 }
 
+// FromDto converts a ForceChangeRateDto to a ForceChangeRate instance.
 func (uf ForceChangeRateFactory) FromDto(dto ForceChangeRateDto) (*ForceChangeRate, error) {
 	return newForceChangeRate(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ForceChangeRate instance.
 func (uf ForceChangeRateFactory) FromDtoJSON(data []byte) (*ForceChangeRate, error) {
 	unitDto, err := ForceChangeRateDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ForceChangeRateDto from JSON: %w", err)
 	}
 	return ForceChangeRateFactory{}.FromDto(*unitDto)
 }
 
 
-// FromNewtonPerMinute creates a new ForceChangeRate instance from NewtonPerMinute.
+// FromNewtonsPerMinute creates a new ForceChangeRate instance from a value in NewtonsPerMinute.
 func (uf ForceChangeRateFactory) FromNewtonsPerMinute(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateNewtonPerMinute)
 }
 
-// FromNewtonPerSecond creates a new ForceChangeRate instance from NewtonPerSecond.
+// FromNewtonsPerSecond creates a new ForceChangeRate instance from a value in NewtonsPerSecond.
 func (uf ForceChangeRateFactory) FromNewtonsPerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateNewtonPerSecond)
 }
 
-// FromPoundForcePerMinute creates a new ForceChangeRate instance from PoundForcePerMinute.
+// FromPoundsForcePerMinute creates a new ForceChangeRate instance from a value in PoundsForcePerMinute.
 func (uf ForceChangeRateFactory) FromPoundsForcePerMinute(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRatePoundForcePerMinute)
 }
 
-// FromPoundForcePerSecond creates a new ForceChangeRate instance from PoundForcePerSecond.
+// FromPoundsForcePerSecond creates a new ForceChangeRate instance from a value in PoundsForcePerSecond.
 func (uf ForceChangeRateFactory) FromPoundsForcePerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRatePoundForcePerSecond)
 }
 
-// FromDecanewtonPerMinute creates a new ForceChangeRate instance from DecanewtonPerMinute.
+// FromDecanewtonsPerMinute creates a new ForceChangeRate instance from a value in DecanewtonsPerMinute.
 func (uf ForceChangeRateFactory) FromDecanewtonsPerMinute(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateDecanewtonPerMinute)
 }
 
-// FromKilonewtonPerMinute creates a new ForceChangeRate instance from KilonewtonPerMinute.
+// FromKilonewtonsPerMinute creates a new ForceChangeRate instance from a value in KilonewtonsPerMinute.
 func (uf ForceChangeRateFactory) FromKilonewtonsPerMinute(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateKilonewtonPerMinute)
 }
 
-// FromNanonewtonPerSecond creates a new ForceChangeRate instance from NanonewtonPerSecond.
+// FromNanonewtonsPerSecond creates a new ForceChangeRate instance from a value in NanonewtonsPerSecond.
 func (uf ForceChangeRateFactory) FromNanonewtonsPerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateNanonewtonPerSecond)
 }
 
-// FromMicronewtonPerSecond creates a new ForceChangeRate instance from MicronewtonPerSecond.
+// FromMicronewtonsPerSecond creates a new ForceChangeRate instance from a value in MicronewtonsPerSecond.
 func (uf ForceChangeRateFactory) FromMicronewtonsPerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateMicronewtonPerSecond)
 }
 
-// FromMillinewtonPerSecond creates a new ForceChangeRate instance from MillinewtonPerSecond.
+// FromMillinewtonsPerSecond creates a new ForceChangeRate instance from a value in MillinewtonsPerSecond.
 func (uf ForceChangeRateFactory) FromMillinewtonsPerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateMillinewtonPerSecond)
 }
 
-// FromCentinewtonPerSecond creates a new ForceChangeRate instance from CentinewtonPerSecond.
+// FromCentinewtonsPerSecond creates a new ForceChangeRate instance from a value in CentinewtonsPerSecond.
 func (uf ForceChangeRateFactory) FromCentinewtonsPerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateCentinewtonPerSecond)
 }
 
-// FromDecinewtonPerSecond creates a new ForceChangeRate instance from DecinewtonPerSecond.
+// FromDecinewtonsPerSecond creates a new ForceChangeRate instance from a value in DecinewtonsPerSecond.
 func (uf ForceChangeRateFactory) FromDecinewtonsPerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateDecinewtonPerSecond)
 }
 
-// FromDecanewtonPerSecond creates a new ForceChangeRate instance from DecanewtonPerSecond.
+// FromDecanewtonsPerSecond creates a new ForceChangeRate instance from a value in DecanewtonsPerSecond.
 func (uf ForceChangeRateFactory) FromDecanewtonsPerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateDecanewtonPerSecond)
 }
 
-// FromKilonewtonPerSecond creates a new ForceChangeRate instance from KilonewtonPerSecond.
+// FromKilonewtonsPerSecond creates a new ForceChangeRate instance from a value in KilonewtonsPerSecond.
 func (uf ForceChangeRateFactory) FromKilonewtonsPerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateKilonewtonPerSecond)
 }
 
-// FromKilopoundForcePerMinute creates a new ForceChangeRate instance from KilopoundForcePerMinute.
+// FromKilopoundsForcePerMinute creates a new ForceChangeRate instance from a value in KilopoundsForcePerMinute.
 func (uf ForceChangeRateFactory) FromKilopoundsForcePerMinute(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateKilopoundForcePerMinute)
 }
 
-// FromKilopoundForcePerSecond creates a new ForceChangeRate instance from KilopoundForcePerSecond.
+// FromKilopoundsForcePerSecond creates a new ForceChangeRate instance from a value in KilopoundsForcePerSecond.
 func (uf ForceChangeRateFactory) FromKilopoundsForcePerSecond(value float64) (*ForceChangeRate, error) {
 	return newForceChangeRate(value, ForceChangeRateKilopoundForcePerSecond)
 }
-
-
 
 
 // newForceChangeRate creates a new ForceChangeRate.
@@ -211,13 +221,15 @@ func newForceChangeRate(value float64, fromUnit ForceChangeRateUnits) (*ForceCha
 	return a, nil
 }
 
-// BaseValue returns the base value of ForceChangeRate in NewtonPerSecond.
+// BaseValue returns the base value of ForceChangeRate in NewtonPerSecond unit (the base/default quantity).
 func (a *ForceChangeRate) BaseValue() float64 {
 	return a.value
 }
 
 
-// NewtonPerMinute returns the value in NewtonPerMinute.
+// NewtonsPerMinute returns the ForceChangeRate value in NewtonsPerMinute.
+//
+// 
 func (a *ForceChangeRate) NewtonsPerMinute() float64 {
 	if a.newtons_per_minuteLazy != nil {
 		return *a.newtons_per_minuteLazy
@@ -227,7 +239,9 @@ func (a *ForceChangeRate) NewtonsPerMinute() float64 {
 	return newtons_per_minute
 }
 
-// NewtonPerSecond returns the value in NewtonPerSecond.
+// NewtonsPerSecond returns the ForceChangeRate value in NewtonsPerSecond.
+//
+// 
 func (a *ForceChangeRate) NewtonsPerSecond() float64 {
 	if a.newtons_per_secondLazy != nil {
 		return *a.newtons_per_secondLazy
@@ -237,7 +251,9 @@ func (a *ForceChangeRate) NewtonsPerSecond() float64 {
 	return newtons_per_second
 }
 
-// PoundForcePerMinute returns the value in PoundForcePerMinute.
+// PoundsForcePerMinute returns the ForceChangeRate value in PoundsForcePerMinute.
+//
+// 
 func (a *ForceChangeRate) PoundsForcePerMinute() float64 {
 	if a.pounds_force_per_minuteLazy != nil {
 		return *a.pounds_force_per_minuteLazy
@@ -247,7 +263,9 @@ func (a *ForceChangeRate) PoundsForcePerMinute() float64 {
 	return pounds_force_per_minute
 }
 
-// PoundForcePerSecond returns the value in PoundForcePerSecond.
+// PoundsForcePerSecond returns the ForceChangeRate value in PoundsForcePerSecond.
+//
+// 
 func (a *ForceChangeRate) PoundsForcePerSecond() float64 {
 	if a.pounds_force_per_secondLazy != nil {
 		return *a.pounds_force_per_secondLazy
@@ -257,7 +275,9 @@ func (a *ForceChangeRate) PoundsForcePerSecond() float64 {
 	return pounds_force_per_second
 }
 
-// DecanewtonPerMinute returns the value in DecanewtonPerMinute.
+// DecanewtonsPerMinute returns the ForceChangeRate value in DecanewtonsPerMinute.
+//
+// 
 func (a *ForceChangeRate) DecanewtonsPerMinute() float64 {
 	if a.decanewtons_per_minuteLazy != nil {
 		return *a.decanewtons_per_minuteLazy
@@ -267,7 +287,9 @@ func (a *ForceChangeRate) DecanewtonsPerMinute() float64 {
 	return decanewtons_per_minute
 }
 
-// KilonewtonPerMinute returns the value in KilonewtonPerMinute.
+// KilonewtonsPerMinute returns the ForceChangeRate value in KilonewtonsPerMinute.
+//
+// 
 func (a *ForceChangeRate) KilonewtonsPerMinute() float64 {
 	if a.kilonewtons_per_minuteLazy != nil {
 		return *a.kilonewtons_per_minuteLazy
@@ -277,7 +299,9 @@ func (a *ForceChangeRate) KilonewtonsPerMinute() float64 {
 	return kilonewtons_per_minute
 }
 
-// NanonewtonPerSecond returns the value in NanonewtonPerSecond.
+// NanonewtonsPerSecond returns the ForceChangeRate value in NanonewtonsPerSecond.
+//
+// 
 func (a *ForceChangeRate) NanonewtonsPerSecond() float64 {
 	if a.nanonewtons_per_secondLazy != nil {
 		return *a.nanonewtons_per_secondLazy
@@ -287,7 +311,9 @@ func (a *ForceChangeRate) NanonewtonsPerSecond() float64 {
 	return nanonewtons_per_second
 }
 
-// MicronewtonPerSecond returns the value in MicronewtonPerSecond.
+// MicronewtonsPerSecond returns the ForceChangeRate value in MicronewtonsPerSecond.
+//
+// 
 func (a *ForceChangeRate) MicronewtonsPerSecond() float64 {
 	if a.micronewtons_per_secondLazy != nil {
 		return *a.micronewtons_per_secondLazy
@@ -297,7 +323,9 @@ func (a *ForceChangeRate) MicronewtonsPerSecond() float64 {
 	return micronewtons_per_second
 }
 
-// MillinewtonPerSecond returns the value in MillinewtonPerSecond.
+// MillinewtonsPerSecond returns the ForceChangeRate value in MillinewtonsPerSecond.
+//
+// 
 func (a *ForceChangeRate) MillinewtonsPerSecond() float64 {
 	if a.millinewtons_per_secondLazy != nil {
 		return *a.millinewtons_per_secondLazy
@@ -307,7 +335,9 @@ func (a *ForceChangeRate) MillinewtonsPerSecond() float64 {
 	return millinewtons_per_second
 }
 
-// CentinewtonPerSecond returns the value in CentinewtonPerSecond.
+// CentinewtonsPerSecond returns the ForceChangeRate value in CentinewtonsPerSecond.
+//
+// 
 func (a *ForceChangeRate) CentinewtonsPerSecond() float64 {
 	if a.centinewtons_per_secondLazy != nil {
 		return *a.centinewtons_per_secondLazy
@@ -317,7 +347,9 @@ func (a *ForceChangeRate) CentinewtonsPerSecond() float64 {
 	return centinewtons_per_second
 }
 
-// DecinewtonPerSecond returns the value in DecinewtonPerSecond.
+// DecinewtonsPerSecond returns the ForceChangeRate value in DecinewtonsPerSecond.
+//
+// 
 func (a *ForceChangeRate) DecinewtonsPerSecond() float64 {
 	if a.decinewtons_per_secondLazy != nil {
 		return *a.decinewtons_per_secondLazy
@@ -327,7 +359,9 @@ func (a *ForceChangeRate) DecinewtonsPerSecond() float64 {
 	return decinewtons_per_second
 }
 
-// DecanewtonPerSecond returns the value in DecanewtonPerSecond.
+// DecanewtonsPerSecond returns the ForceChangeRate value in DecanewtonsPerSecond.
+//
+// 
 func (a *ForceChangeRate) DecanewtonsPerSecond() float64 {
 	if a.decanewtons_per_secondLazy != nil {
 		return *a.decanewtons_per_secondLazy
@@ -337,7 +371,9 @@ func (a *ForceChangeRate) DecanewtonsPerSecond() float64 {
 	return decanewtons_per_second
 }
 
-// KilonewtonPerSecond returns the value in KilonewtonPerSecond.
+// KilonewtonsPerSecond returns the ForceChangeRate value in KilonewtonsPerSecond.
+//
+// 
 func (a *ForceChangeRate) KilonewtonsPerSecond() float64 {
 	if a.kilonewtons_per_secondLazy != nil {
 		return *a.kilonewtons_per_secondLazy
@@ -347,7 +383,9 @@ func (a *ForceChangeRate) KilonewtonsPerSecond() float64 {
 	return kilonewtons_per_second
 }
 
-// KilopoundForcePerMinute returns the value in KilopoundForcePerMinute.
+// KilopoundsForcePerMinute returns the ForceChangeRate value in KilopoundsForcePerMinute.
+//
+// 
 func (a *ForceChangeRate) KilopoundsForcePerMinute() float64 {
 	if a.kilopounds_force_per_minuteLazy != nil {
 		return *a.kilopounds_force_per_minuteLazy
@@ -357,7 +395,9 @@ func (a *ForceChangeRate) KilopoundsForcePerMinute() float64 {
 	return kilopounds_force_per_minute
 }
 
-// KilopoundForcePerSecond returns the value in KilopoundForcePerSecond.
+// KilopoundsForcePerSecond returns the ForceChangeRate value in KilopoundsForcePerSecond.
+//
+// 
 func (a *ForceChangeRate) KilopoundsForcePerSecond() float64 {
 	if a.kilopounds_force_per_secondLazy != nil {
 		return *a.kilopounds_force_per_secondLazy
@@ -368,7 +408,9 @@ func (a *ForceChangeRate) KilopoundsForcePerSecond() float64 {
 }
 
 
-// ToDto creates an ForceChangeRateDto representation.
+// ToDto creates a ForceChangeRateDto representation from the ForceChangeRate instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonPerSecond by default.
 func (a *ForceChangeRate) ToDto(holdInUnit *ForceChangeRateUnits) ForceChangeRateDto {
 	if holdInUnit == nil {
 		defaultUnit := ForceChangeRateNewtonPerSecond // Default value
@@ -381,12 +423,19 @@ func (a *ForceChangeRate) ToDto(holdInUnit *ForceChangeRateUnits) ForceChangeRat
 	}
 }
 
-// ToDtoJSON creates an ForceChangeRateDto representation.
+// ToDtoJSON creates a JSON representation of the ForceChangeRate instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonPerSecond by default.
 func (a *ForceChangeRate) ToDtoJSON(holdInUnit *ForceChangeRateUnits) ([]byte, error) {
+	// Convert to ForceChangeRateDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ForceChangeRate to a specific unit value.
+// Convert converts a ForceChangeRate to a specific unit value.
+// The function uses the provided unit type (ForceChangeRateUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ForceChangeRate) Convert(toUnit ForceChangeRateUnits) float64 {
 	switch toUnit { 
     case ForceChangeRateNewtonPerMinute:
@@ -420,7 +469,7 @@ func (a *ForceChangeRate) Convert(toUnit ForceChangeRateUnits) float64 {
     case ForceChangeRateKilopoundForcePerSecond:
 		return a.KilopoundsForcePerSecond()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -499,13 +548,22 @@ func (a *ForceChangeRate) convertToBase(value float64, fromUnit ForceChangeRateU
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ForceChangeRate in the default unit (NewtonPerSecond),
+// formatted to two decimal places.
 func (a ForceChangeRate) String() string {
 	return a.ToString(ForceChangeRateNewtonPerSecond, 2)
 }
 
-// ToString formats the ForceChangeRate to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ForceChangeRate value as a string with the specified unit and fractional digits.
+// It converts the ForceChangeRate to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ForceChangeRate value will be converted (e.g., NewtonPerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ForceChangeRate with the unit abbreviation.
 func (a *ForceChangeRate) ToString(unit ForceChangeRateUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -553,12 +611,26 @@ func (a *ForceChangeRate) getUnitAbbreviation(unit ForceChangeRateUnits) string 
 	}
 }
 
-// Check if the given ForceChangeRate are equals to the current ForceChangeRate
+// Equals checks if the given ForceChangeRate is equal to the current ForceChangeRate.
+//
+// Parameters:
+//    other: The ForceChangeRate to compare against.
+//
+// Returns:
+//    bool: Returns true if both ForceChangeRate are equal, false otherwise.
 func (a *ForceChangeRate) Equals(other *ForceChangeRate) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ForceChangeRate are equals to the current ForceChangeRate
+// CompareTo compares the current ForceChangeRate with another ForceChangeRate.
+// It returns -1 if the current ForceChangeRate is less than the other ForceChangeRate, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ForceChangeRate to compare against.
+//
+// Returns:
+//    int: -1 if the current ForceChangeRate is less, 1 if greater, and 0 if equal.
 func (a *ForceChangeRate) CompareTo(other *ForceChangeRate) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -571,22 +643,50 @@ func (a *ForceChangeRate) CompareTo(other *ForceChangeRate) int {
 	return 0
 }
 
-// Add the given ForceChangeRate to the current ForceChangeRate.
+// Add adds the given ForceChangeRate to the current ForceChangeRate and returns the result.
+// The result is a new ForceChangeRate instance with the sum of the values.
+//
+// Parameters:
+//    other: The ForceChangeRate to add to the current ForceChangeRate.
+//
+// Returns:
+//    *ForceChangeRate: A new ForceChangeRate instance representing the sum of both ForceChangeRate.
 func (a *ForceChangeRate) Add(other *ForceChangeRate) *ForceChangeRate {
 	return &ForceChangeRate{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ForceChangeRate to the current ForceChangeRate.
+// Subtract subtracts the given ForceChangeRate from the current ForceChangeRate and returns the result.
+// The result is a new ForceChangeRate instance with the difference of the values.
+//
+// Parameters:
+//    other: The ForceChangeRate to subtract from the current ForceChangeRate.
+//
+// Returns:
+//    *ForceChangeRate: A new ForceChangeRate instance representing the difference of both ForceChangeRate.
 func (a *ForceChangeRate) Subtract(other *ForceChangeRate) *ForceChangeRate {
 	return &ForceChangeRate{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ForceChangeRate to the current ForceChangeRate.
+// Multiply multiplies the current ForceChangeRate by the given ForceChangeRate and returns the result.
+// The result is a new ForceChangeRate instance with the product of the values.
+//
+// Parameters:
+//    other: The ForceChangeRate to multiply with the current ForceChangeRate.
+//
+// Returns:
+//    *ForceChangeRate: A new ForceChangeRate instance representing the product of both ForceChangeRate.
 func (a *ForceChangeRate) Multiply(other *ForceChangeRate) *ForceChangeRate {
 	return &ForceChangeRate{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ForceChangeRate to the current ForceChangeRate.
+// Divide divides the current ForceChangeRate by the given ForceChangeRate and returns the result.
+// The result is a new ForceChangeRate instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ForceChangeRate to divide the current ForceChangeRate by.
+//
+// Returns:
+//    *ForceChangeRate: A new ForceChangeRate instance representing the quotient of both ForceChangeRate.
 func (a *ForceChangeRate) Divide(other *ForceChangeRate) *ForceChangeRate {
 	return &ForceChangeRate{value: a.value / other.BaseValue()}
 }

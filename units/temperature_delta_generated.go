@@ -12,7 +12,7 @@ import (
 
 
 
-// TemperatureDeltaUnits enumeration
+// TemperatureDeltaUnits defines various units of TemperatureDelta.
 type TemperatureDeltaUnits string
 
 const (
@@ -37,19 +37,24 @@ const (
         TemperatureDeltaMillidegreeCelsius TemperatureDeltaUnits = "MillidegreeCelsius"
 )
 
-// TemperatureDeltaDto represents an TemperatureDelta
+// TemperatureDeltaDto represents a TemperatureDelta measurement with a numerical value and its corresponding unit.
 type TemperatureDeltaDto struct {
+    // Value is the numerical representation of the TemperatureDelta.
 	Value float64
+    // Unit specifies the unit of measurement for the TemperatureDelta, as defined in the TemperatureDeltaUnits enumeration.
 	Unit  TemperatureDeltaUnits
 }
 
-// TemperatureDeltaDtoFactory struct to group related functions
+// TemperatureDeltaDtoFactory groups methods for creating and serializing TemperatureDeltaDto objects.
 type TemperatureDeltaDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a TemperatureDeltaDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf TemperatureDeltaDtoFactory) FromJSON(data []byte) (*TemperatureDeltaDto, error) {
 	a := TemperatureDeltaDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into TemperatureDeltaDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -57,6 +62,9 @@ func (udf TemperatureDeltaDtoFactory) FromJSON(data []byte) (*TemperatureDeltaDt
 	return &a, nil
 }
 
+// ToJSON serializes a TemperatureDeltaDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a TemperatureDeltaDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -68,10 +76,11 @@ func (a TemperatureDeltaDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// TemperatureDelta struct
+// TemperatureDelta represents a measurement in a of TemperatureDelta.
+//
+// Difference between two temperatures. The conversions are different than for Temperature.
 type TemperatureDelta struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     kelvinsLazy *float64 
@@ -85,72 +94,73 @@ type TemperatureDelta struct {
     millidegrees_celsiusLazy *float64 
 }
 
-// TemperatureDeltaFactory struct to group related functions
+// TemperatureDeltaFactory groups methods for creating TemperatureDelta instances.
 type TemperatureDeltaFactory struct{}
 
+// CreateTemperatureDelta creates a new TemperatureDelta instance from the given value and unit.
 func (uf TemperatureDeltaFactory) CreateTemperatureDelta(value float64, unit TemperatureDeltaUnits) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, unit)
 }
 
+// FromDto converts a TemperatureDeltaDto to a TemperatureDelta instance.
 func (uf TemperatureDeltaFactory) FromDto(dto TemperatureDeltaDto) (*TemperatureDelta, error) {
 	return newTemperatureDelta(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a TemperatureDelta instance.
 func (uf TemperatureDeltaFactory) FromDtoJSON(data []byte) (*TemperatureDelta, error) {
 	unitDto, err := TemperatureDeltaDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse TemperatureDeltaDto from JSON: %w", err)
 	}
 	return TemperatureDeltaFactory{}.FromDto(*unitDto)
 }
 
 
-// FromKelvin creates a new TemperatureDelta instance from Kelvin.
+// FromKelvins creates a new TemperatureDelta instance from a value in Kelvins.
 func (uf TemperatureDeltaFactory) FromKelvins(value float64) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, TemperatureDeltaKelvin)
 }
 
-// FromDegreeCelsius creates a new TemperatureDelta instance from DegreeCelsius.
+// FromDegreesCelsius creates a new TemperatureDelta instance from a value in DegreesCelsius.
 func (uf TemperatureDeltaFactory) FromDegreesCelsius(value float64) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, TemperatureDeltaDegreeCelsius)
 }
 
-// FromDegreeDelisle creates a new TemperatureDelta instance from DegreeDelisle.
+// FromDegreesDelisle creates a new TemperatureDelta instance from a value in DegreesDelisle.
 func (uf TemperatureDeltaFactory) FromDegreesDelisle(value float64) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, TemperatureDeltaDegreeDelisle)
 }
 
-// FromDegreeFahrenheit creates a new TemperatureDelta instance from DegreeFahrenheit.
+// FromDegreesFahrenheit creates a new TemperatureDelta instance from a value in DegreesFahrenheit.
 func (uf TemperatureDeltaFactory) FromDegreesFahrenheit(value float64) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, TemperatureDeltaDegreeFahrenheit)
 }
 
-// FromDegreeNewton creates a new TemperatureDelta instance from DegreeNewton.
+// FromDegreesNewton creates a new TemperatureDelta instance from a value in DegreesNewton.
 func (uf TemperatureDeltaFactory) FromDegreesNewton(value float64) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, TemperatureDeltaDegreeNewton)
 }
 
-// FromDegreeRankine creates a new TemperatureDelta instance from DegreeRankine.
+// FromDegreesRankine creates a new TemperatureDelta instance from a value in DegreesRankine.
 func (uf TemperatureDeltaFactory) FromDegreesRankine(value float64) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, TemperatureDeltaDegreeRankine)
 }
 
-// FromDegreeReaumur creates a new TemperatureDelta instance from DegreeReaumur.
+// FromDegreesReaumur creates a new TemperatureDelta instance from a value in DegreesReaumur.
 func (uf TemperatureDeltaFactory) FromDegreesReaumur(value float64) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, TemperatureDeltaDegreeReaumur)
 }
 
-// FromDegreeRoemer creates a new TemperatureDelta instance from DegreeRoemer.
+// FromDegreesRoemer creates a new TemperatureDelta instance from a value in DegreesRoemer.
 func (uf TemperatureDeltaFactory) FromDegreesRoemer(value float64) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, TemperatureDeltaDegreeRoemer)
 }
 
-// FromMillidegreeCelsius creates a new TemperatureDelta instance from MillidegreeCelsius.
+// FromMillidegreesCelsius creates a new TemperatureDelta instance from a value in MillidegreesCelsius.
 func (uf TemperatureDeltaFactory) FromMillidegreesCelsius(value float64) (*TemperatureDelta, error) {
 	return newTemperatureDelta(value, TemperatureDeltaMillidegreeCelsius)
 }
-
-
 
 
 // newTemperatureDelta creates a new TemperatureDelta.
@@ -163,13 +173,15 @@ func newTemperatureDelta(value float64, fromUnit TemperatureDeltaUnits) (*Temper
 	return a, nil
 }
 
-// BaseValue returns the base value of TemperatureDelta in Kelvin.
+// BaseValue returns the base value of TemperatureDelta in Kelvin unit (the base/default quantity).
 func (a *TemperatureDelta) BaseValue() float64 {
 	return a.value
 }
 
 
-// Kelvin returns the value in Kelvin.
+// Kelvins returns the TemperatureDelta value in Kelvins.
+//
+// 
 func (a *TemperatureDelta) Kelvins() float64 {
 	if a.kelvinsLazy != nil {
 		return *a.kelvinsLazy
@@ -179,7 +191,9 @@ func (a *TemperatureDelta) Kelvins() float64 {
 	return kelvins
 }
 
-// DegreeCelsius returns the value in DegreeCelsius.
+// DegreesCelsius returns the TemperatureDelta value in DegreesCelsius.
+//
+// 
 func (a *TemperatureDelta) DegreesCelsius() float64 {
 	if a.degrees_celsiusLazy != nil {
 		return *a.degrees_celsiusLazy
@@ -189,7 +203,9 @@ func (a *TemperatureDelta) DegreesCelsius() float64 {
 	return degrees_celsius
 }
 
-// DegreeDelisle returns the value in DegreeDelisle.
+// DegreesDelisle returns the TemperatureDelta value in DegreesDelisle.
+//
+// 
 func (a *TemperatureDelta) DegreesDelisle() float64 {
 	if a.degrees_delisleLazy != nil {
 		return *a.degrees_delisleLazy
@@ -199,7 +215,9 @@ func (a *TemperatureDelta) DegreesDelisle() float64 {
 	return degrees_delisle
 }
 
-// DegreeFahrenheit returns the value in DegreeFahrenheit.
+// DegreesFahrenheit returns the TemperatureDelta value in DegreesFahrenheit.
+//
+// 
 func (a *TemperatureDelta) DegreesFahrenheit() float64 {
 	if a.degrees_fahrenheitLazy != nil {
 		return *a.degrees_fahrenheitLazy
@@ -209,7 +227,9 @@ func (a *TemperatureDelta) DegreesFahrenheit() float64 {
 	return degrees_fahrenheit
 }
 
-// DegreeNewton returns the value in DegreeNewton.
+// DegreesNewton returns the TemperatureDelta value in DegreesNewton.
+//
+// 
 func (a *TemperatureDelta) DegreesNewton() float64 {
 	if a.degrees_newtonLazy != nil {
 		return *a.degrees_newtonLazy
@@ -219,7 +239,9 @@ func (a *TemperatureDelta) DegreesNewton() float64 {
 	return degrees_newton
 }
 
-// DegreeRankine returns the value in DegreeRankine.
+// DegreesRankine returns the TemperatureDelta value in DegreesRankine.
+//
+// 
 func (a *TemperatureDelta) DegreesRankine() float64 {
 	if a.degrees_rankineLazy != nil {
 		return *a.degrees_rankineLazy
@@ -229,7 +251,9 @@ func (a *TemperatureDelta) DegreesRankine() float64 {
 	return degrees_rankine
 }
 
-// DegreeReaumur returns the value in DegreeReaumur.
+// DegreesReaumur returns the TemperatureDelta value in DegreesReaumur.
+//
+// 
 func (a *TemperatureDelta) DegreesReaumur() float64 {
 	if a.degrees_reaumurLazy != nil {
 		return *a.degrees_reaumurLazy
@@ -239,7 +263,9 @@ func (a *TemperatureDelta) DegreesReaumur() float64 {
 	return degrees_reaumur
 }
 
-// DegreeRoemer returns the value in DegreeRoemer.
+// DegreesRoemer returns the TemperatureDelta value in DegreesRoemer.
+//
+// 
 func (a *TemperatureDelta) DegreesRoemer() float64 {
 	if a.degrees_roemerLazy != nil {
 		return *a.degrees_roemerLazy
@@ -249,7 +275,9 @@ func (a *TemperatureDelta) DegreesRoemer() float64 {
 	return degrees_roemer
 }
 
-// MillidegreeCelsius returns the value in MillidegreeCelsius.
+// MillidegreesCelsius returns the TemperatureDelta value in MillidegreesCelsius.
+//
+// 
 func (a *TemperatureDelta) MillidegreesCelsius() float64 {
 	if a.millidegrees_celsiusLazy != nil {
 		return *a.millidegrees_celsiusLazy
@@ -260,7 +288,9 @@ func (a *TemperatureDelta) MillidegreesCelsius() float64 {
 }
 
 
-// ToDto creates an TemperatureDeltaDto representation.
+// ToDto creates a TemperatureDeltaDto representation from the TemperatureDelta instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Kelvin by default.
 func (a *TemperatureDelta) ToDto(holdInUnit *TemperatureDeltaUnits) TemperatureDeltaDto {
 	if holdInUnit == nil {
 		defaultUnit := TemperatureDeltaKelvin // Default value
@@ -273,12 +303,19 @@ func (a *TemperatureDelta) ToDto(holdInUnit *TemperatureDeltaUnits) TemperatureD
 	}
 }
 
-// ToDtoJSON creates an TemperatureDeltaDto representation.
+// ToDtoJSON creates a JSON representation of the TemperatureDelta instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Kelvin by default.
 func (a *TemperatureDelta) ToDtoJSON(holdInUnit *TemperatureDeltaUnits) ([]byte, error) {
+	// Convert to TemperatureDeltaDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts TemperatureDelta to a specific unit value.
+// Convert converts a TemperatureDelta to a specific unit value.
+// The function uses the provided unit type (TemperatureDeltaUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *TemperatureDelta) Convert(toUnit TemperatureDeltaUnits) float64 {
 	switch toUnit { 
     case TemperatureDeltaKelvin:
@@ -300,7 +337,7 @@ func (a *TemperatureDelta) Convert(toUnit TemperatureDeltaUnits) float64 {
     case TemperatureDeltaMillidegreeCelsius:
 		return a.MillidegreesCelsius()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -355,13 +392,22 @@ func (a *TemperatureDelta) convertToBase(value float64, fromUnit TemperatureDelt
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the TemperatureDelta in the default unit (Kelvin),
+// formatted to two decimal places.
 func (a TemperatureDelta) String() string {
 	return a.ToString(TemperatureDeltaKelvin, 2)
 }
 
-// ToString formats the TemperatureDelta to string.
-// fractionalDigits -1 for not mention
+// ToString formats the TemperatureDelta value as a string with the specified unit and fractional digits.
+// It converts the TemperatureDelta to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the TemperatureDelta value will be converted (e.g., Kelvin))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the TemperatureDelta with the unit abbreviation.
 func (a *TemperatureDelta) ToString(unit TemperatureDeltaUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -397,12 +443,26 @@ func (a *TemperatureDelta) getUnitAbbreviation(unit TemperatureDeltaUnits) strin
 	}
 }
 
-// Check if the given TemperatureDelta are equals to the current TemperatureDelta
+// Equals checks if the given TemperatureDelta is equal to the current TemperatureDelta.
+//
+// Parameters:
+//    other: The TemperatureDelta to compare against.
+//
+// Returns:
+//    bool: Returns true if both TemperatureDelta are equal, false otherwise.
 func (a *TemperatureDelta) Equals(other *TemperatureDelta) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given TemperatureDelta are equals to the current TemperatureDelta
+// CompareTo compares the current TemperatureDelta with another TemperatureDelta.
+// It returns -1 if the current TemperatureDelta is less than the other TemperatureDelta, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The TemperatureDelta to compare against.
+//
+// Returns:
+//    int: -1 if the current TemperatureDelta is less, 1 if greater, and 0 if equal.
 func (a *TemperatureDelta) CompareTo(other *TemperatureDelta) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -415,22 +475,50 @@ func (a *TemperatureDelta) CompareTo(other *TemperatureDelta) int {
 	return 0
 }
 
-// Add the given TemperatureDelta to the current TemperatureDelta.
+// Add adds the given TemperatureDelta to the current TemperatureDelta and returns the result.
+// The result is a new TemperatureDelta instance with the sum of the values.
+//
+// Parameters:
+//    other: The TemperatureDelta to add to the current TemperatureDelta.
+//
+// Returns:
+//    *TemperatureDelta: A new TemperatureDelta instance representing the sum of both TemperatureDelta.
 func (a *TemperatureDelta) Add(other *TemperatureDelta) *TemperatureDelta {
 	return &TemperatureDelta{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given TemperatureDelta to the current TemperatureDelta.
+// Subtract subtracts the given TemperatureDelta from the current TemperatureDelta and returns the result.
+// The result is a new TemperatureDelta instance with the difference of the values.
+//
+// Parameters:
+//    other: The TemperatureDelta to subtract from the current TemperatureDelta.
+//
+// Returns:
+//    *TemperatureDelta: A new TemperatureDelta instance representing the difference of both TemperatureDelta.
 func (a *TemperatureDelta) Subtract(other *TemperatureDelta) *TemperatureDelta {
 	return &TemperatureDelta{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given TemperatureDelta to the current TemperatureDelta.
+// Multiply multiplies the current TemperatureDelta by the given TemperatureDelta and returns the result.
+// The result is a new TemperatureDelta instance with the product of the values.
+//
+// Parameters:
+//    other: The TemperatureDelta to multiply with the current TemperatureDelta.
+//
+// Returns:
+//    *TemperatureDelta: A new TemperatureDelta instance representing the product of both TemperatureDelta.
 func (a *TemperatureDelta) Multiply(other *TemperatureDelta) *TemperatureDelta {
 	return &TemperatureDelta{value: a.value * other.BaseValue()}
 }
 
-// Divide the given TemperatureDelta to the current TemperatureDelta.
+// Divide divides the current TemperatureDelta by the given TemperatureDelta and returns the result.
+// The result is a new TemperatureDelta instance with the quotient of the values.
+//
+// Parameters:
+//    other: The TemperatureDelta to divide the current TemperatureDelta by.
+//
+// Returns:
+//    *TemperatureDelta: A new TemperatureDelta instance representing the quotient of both TemperatureDelta.
 func (a *TemperatureDelta) Divide(other *TemperatureDelta) *TemperatureDelta {
 	return &TemperatureDelta{value: a.value / other.BaseValue()}
 }

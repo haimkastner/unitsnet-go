@@ -12,7 +12,7 @@ import (
 
 
 
-// HeatTransferCoefficientUnits enumeration
+// HeatTransferCoefficientUnits defines various units of HeatTransferCoefficient.
 type HeatTransferCoefficientUnits string
 
 const (
@@ -29,19 +29,24 @@ const (
         HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius HeatTransferCoefficientUnits = "KilocaloriePerHourSquareMeterDegreeCelsius"
 )
 
-// HeatTransferCoefficientDto represents an HeatTransferCoefficient
+// HeatTransferCoefficientDto represents a HeatTransferCoefficient measurement with a numerical value and its corresponding unit.
 type HeatTransferCoefficientDto struct {
+    // Value is the numerical representation of the HeatTransferCoefficient.
 	Value float64
+    // Unit specifies the unit of measurement for the HeatTransferCoefficient, as defined in the HeatTransferCoefficientUnits enumeration.
 	Unit  HeatTransferCoefficientUnits
 }
 
-// HeatTransferCoefficientDtoFactory struct to group related functions
+// HeatTransferCoefficientDtoFactory groups methods for creating and serializing HeatTransferCoefficientDto objects.
 type HeatTransferCoefficientDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a HeatTransferCoefficientDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf HeatTransferCoefficientDtoFactory) FromJSON(data []byte) (*HeatTransferCoefficientDto, error) {
 	a := HeatTransferCoefficientDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into HeatTransferCoefficientDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -49,6 +54,9 @@ func (udf HeatTransferCoefficientDtoFactory) FromJSON(data []byte) (*HeatTransfe
 	return &a, nil
 }
 
+// ToJSON serializes a HeatTransferCoefficientDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a HeatTransferCoefficientDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -60,10 +68,11 @@ func (a HeatTransferCoefficientDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// HeatTransferCoefficient struct
+// HeatTransferCoefficient represents a measurement in a of HeatTransferCoefficient.
+//
+// The heat transfer coefficient or film coefficient, or film effectiveness, in thermodynamics and in mechanics is the proportionality constant between the heat flux and the thermodynamic driving force for the flow of heat (i.e., the temperature difference, ΔT)
 type HeatTransferCoefficient struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     watts_per_square_meter_kelvinLazy *float64 
@@ -73,52 +82,53 @@ type HeatTransferCoefficient struct {
     kilocalories_per_hour_square_meter_degree_celsiusLazy *float64 
 }
 
-// HeatTransferCoefficientFactory struct to group related functions
+// HeatTransferCoefficientFactory groups methods for creating HeatTransferCoefficient instances.
 type HeatTransferCoefficientFactory struct{}
 
+// CreateHeatTransferCoefficient creates a new HeatTransferCoefficient instance from the given value and unit.
 func (uf HeatTransferCoefficientFactory) CreateHeatTransferCoefficient(value float64, unit HeatTransferCoefficientUnits) (*HeatTransferCoefficient, error) {
 	return newHeatTransferCoefficient(value, unit)
 }
 
+// FromDto converts a HeatTransferCoefficientDto to a HeatTransferCoefficient instance.
 func (uf HeatTransferCoefficientFactory) FromDto(dto HeatTransferCoefficientDto) (*HeatTransferCoefficient, error) {
 	return newHeatTransferCoefficient(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a HeatTransferCoefficient instance.
 func (uf HeatTransferCoefficientFactory) FromDtoJSON(data []byte) (*HeatTransferCoefficient, error) {
 	unitDto, err := HeatTransferCoefficientDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse HeatTransferCoefficientDto from JSON: %w", err)
 	}
 	return HeatTransferCoefficientFactory{}.FromDto(*unitDto)
 }
 
 
-// FromWattPerSquareMeterKelvin creates a new HeatTransferCoefficient instance from WattPerSquareMeterKelvin.
+// FromWattsPerSquareMeterKelvin creates a new HeatTransferCoefficient instance from a value in WattsPerSquareMeterKelvin.
 func (uf HeatTransferCoefficientFactory) FromWattsPerSquareMeterKelvin(value float64) (*HeatTransferCoefficient, error) {
 	return newHeatTransferCoefficient(value, HeatTransferCoefficientWattPerSquareMeterKelvin)
 }
 
-// FromWattPerSquareMeterCelsius creates a new HeatTransferCoefficient instance from WattPerSquareMeterCelsius.
+// FromWattsPerSquareMeterCelsius creates a new HeatTransferCoefficient instance from a value in WattsPerSquareMeterCelsius.
 func (uf HeatTransferCoefficientFactory) FromWattsPerSquareMeterCelsius(value float64) (*HeatTransferCoefficient, error) {
 	return newHeatTransferCoefficient(value, HeatTransferCoefficientWattPerSquareMeterCelsius)
 }
 
-// FromBtuPerHourSquareFootDegreeFahrenheit creates a new HeatTransferCoefficient instance from BtuPerHourSquareFootDegreeFahrenheit.
+// FromBtusPerHourSquareFootDegreeFahrenheit creates a new HeatTransferCoefficient instance from a value in BtusPerHourSquareFootDegreeFahrenheit.
 func (uf HeatTransferCoefficientFactory) FromBtusPerHourSquareFootDegreeFahrenheit(value float64) (*HeatTransferCoefficient, error) {
 	return newHeatTransferCoefficient(value, HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit)
 }
 
-// FromCaloriePerHourSquareMeterDegreeCelsius creates a new HeatTransferCoefficient instance from CaloriePerHourSquareMeterDegreeCelsius.
+// FromCaloriesPerHourSquareMeterDegreeCelsius creates a new HeatTransferCoefficient instance from a value in CaloriesPerHourSquareMeterDegreeCelsius.
 func (uf HeatTransferCoefficientFactory) FromCaloriesPerHourSquareMeterDegreeCelsius(value float64) (*HeatTransferCoefficient, error) {
 	return newHeatTransferCoefficient(value, HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius)
 }
 
-// FromKilocaloriePerHourSquareMeterDegreeCelsius creates a new HeatTransferCoefficient instance from KilocaloriePerHourSquareMeterDegreeCelsius.
+// FromKilocaloriesPerHourSquareMeterDegreeCelsius creates a new HeatTransferCoefficient instance from a value in KilocaloriesPerHourSquareMeterDegreeCelsius.
 func (uf HeatTransferCoefficientFactory) FromKilocaloriesPerHourSquareMeterDegreeCelsius(value float64) (*HeatTransferCoefficient, error) {
 	return newHeatTransferCoefficient(value, HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius)
 }
-
-
 
 
 // newHeatTransferCoefficient creates a new HeatTransferCoefficient.
@@ -131,13 +141,15 @@ func newHeatTransferCoefficient(value float64, fromUnit HeatTransferCoefficientU
 	return a, nil
 }
 
-// BaseValue returns the base value of HeatTransferCoefficient in WattPerSquareMeterKelvin.
+// BaseValue returns the base value of HeatTransferCoefficient in WattPerSquareMeterKelvin unit (the base/default quantity).
 func (a *HeatTransferCoefficient) BaseValue() float64 {
 	return a.value
 }
 
 
-// WattPerSquareMeterKelvin returns the value in WattPerSquareMeterKelvin.
+// WattsPerSquareMeterKelvin returns the HeatTransferCoefficient value in WattsPerSquareMeterKelvin.
+//
+// 
 func (a *HeatTransferCoefficient) WattsPerSquareMeterKelvin() float64 {
 	if a.watts_per_square_meter_kelvinLazy != nil {
 		return *a.watts_per_square_meter_kelvinLazy
@@ -147,7 +159,9 @@ func (a *HeatTransferCoefficient) WattsPerSquareMeterKelvin() float64 {
 	return watts_per_square_meter_kelvin
 }
 
-// WattPerSquareMeterCelsius returns the value in WattPerSquareMeterCelsius.
+// WattsPerSquareMeterCelsius returns the HeatTransferCoefficient value in WattsPerSquareMeterCelsius.
+//
+// 
 func (a *HeatTransferCoefficient) WattsPerSquareMeterCelsius() float64 {
 	if a.watts_per_square_meter_celsiusLazy != nil {
 		return *a.watts_per_square_meter_celsiusLazy
@@ -157,7 +171,9 @@ func (a *HeatTransferCoefficient) WattsPerSquareMeterCelsius() float64 {
 	return watts_per_square_meter_celsius
 }
 
-// BtuPerHourSquareFootDegreeFahrenheit returns the value in BtuPerHourSquareFootDegreeFahrenheit.
+// BtusPerHourSquareFootDegreeFahrenheit returns the HeatTransferCoefficient value in BtusPerHourSquareFootDegreeFahrenheit.
+//
+// 
 func (a *HeatTransferCoefficient) BtusPerHourSquareFootDegreeFahrenheit() float64 {
 	if a.btus_per_hour_square_foot_degree_fahrenheitLazy != nil {
 		return *a.btus_per_hour_square_foot_degree_fahrenheitLazy
@@ -167,7 +183,9 @@ func (a *HeatTransferCoefficient) BtusPerHourSquareFootDegreeFahrenheit() float6
 	return btus_per_hour_square_foot_degree_fahrenheit
 }
 
-// CaloriePerHourSquareMeterDegreeCelsius returns the value in CaloriePerHourSquareMeterDegreeCelsius.
+// CaloriesPerHourSquareMeterDegreeCelsius returns the HeatTransferCoefficient value in CaloriesPerHourSquareMeterDegreeCelsius.
+//
+// 
 func (a *HeatTransferCoefficient) CaloriesPerHourSquareMeterDegreeCelsius() float64 {
 	if a.calories_per_hour_square_meter_degree_celsiusLazy != nil {
 		return *a.calories_per_hour_square_meter_degree_celsiusLazy
@@ -177,7 +195,9 @@ func (a *HeatTransferCoefficient) CaloriesPerHourSquareMeterDegreeCelsius() floa
 	return calories_per_hour_square_meter_degree_celsius
 }
 
-// KilocaloriePerHourSquareMeterDegreeCelsius returns the value in KilocaloriePerHourSquareMeterDegreeCelsius.
+// KilocaloriesPerHourSquareMeterDegreeCelsius returns the HeatTransferCoefficient value in KilocaloriesPerHourSquareMeterDegreeCelsius.
+//
+// 
 func (a *HeatTransferCoefficient) KilocaloriesPerHourSquareMeterDegreeCelsius() float64 {
 	if a.kilocalories_per_hour_square_meter_degree_celsiusLazy != nil {
 		return *a.kilocalories_per_hour_square_meter_degree_celsiusLazy
@@ -188,7 +208,9 @@ func (a *HeatTransferCoefficient) KilocaloriesPerHourSquareMeterDegreeCelsius() 
 }
 
 
-// ToDto creates an HeatTransferCoefficientDto representation.
+// ToDto creates a HeatTransferCoefficientDto representation from the HeatTransferCoefficient instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerSquareMeterKelvin by default.
 func (a *HeatTransferCoefficient) ToDto(holdInUnit *HeatTransferCoefficientUnits) HeatTransferCoefficientDto {
 	if holdInUnit == nil {
 		defaultUnit := HeatTransferCoefficientWattPerSquareMeterKelvin // Default value
@@ -201,12 +223,19 @@ func (a *HeatTransferCoefficient) ToDto(holdInUnit *HeatTransferCoefficientUnits
 	}
 }
 
-// ToDtoJSON creates an HeatTransferCoefficientDto representation.
+// ToDtoJSON creates a JSON representation of the HeatTransferCoefficient instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerSquareMeterKelvin by default.
 func (a *HeatTransferCoefficient) ToDtoJSON(holdInUnit *HeatTransferCoefficientUnits) ([]byte, error) {
+	// Convert to HeatTransferCoefficientDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts HeatTransferCoefficient to a specific unit value.
+// Convert converts a HeatTransferCoefficient to a specific unit value.
+// The function uses the provided unit type (HeatTransferCoefficientUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *HeatTransferCoefficient) Convert(toUnit HeatTransferCoefficientUnits) float64 {
 	switch toUnit { 
     case HeatTransferCoefficientWattPerSquareMeterKelvin:
@@ -220,7 +249,7 @@ func (a *HeatTransferCoefficient) Convert(toUnit HeatTransferCoefficientUnits) f
     case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:
 		return a.KilocaloriesPerHourSquareMeterDegreeCelsius()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -259,13 +288,22 @@ func (a *HeatTransferCoefficient) convertToBase(value float64, fromUnit HeatTran
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the HeatTransferCoefficient in the default unit (WattPerSquareMeterKelvin),
+// formatted to two decimal places.
 func (a HeatTransferCoefficient) String() string {
 	return a.ToString(HeatTransferCoefficientWattPerSquareMeterKelvin, 2)
 }
 
-// ToString formats the HeatTransferCoefficient to string.
-// fractionalDigits -1 for not mention
+// ToString formats the HeatTransferCoefficient value as a string with the specified unit and fractional digits.
+// It converts the HeatTransferCoefficient to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the HeatTransferCoefficient value will be converted (e.g., WattPerSquareMeterKelvin))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the HeatTransferCoefficient with the unit abbreviation.
 func (a *HeatTransferCoefficient) ToString(unit HeatTransferCoefficientUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -293,12 +331,26 @@ func (a *HeatTransferCoefficient) getUnitAbbreviation(unit HeatTransferCoefficie
 	}
 }
 
-// Check if the given HeatTransferCoefficient are equals to the current HeatTransferCoefficient
+// Equals checks if the given HeatTransferCoefficient is equal to the current HeatTransferCoefficient.
+//
+// Parameters:
+//    other: The HeatTransferCoefficient to compare against.
+//
+// Returns:
+//    bool: Returns true if both HeatTransferCoefficient are equal, false otherwise.
 func (a *HeatTransferCoefficient) Equals(other *HeatTransferCoefficient) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given HeatTransferCoefficient are equals to the current HeatTransferCoefficient
+// CompareTo compares the current HeatTransferCoefficient with another HeatTransferCoefficient.
+// It returns -1 if the current HeatTransferCoefficient is less than the other HeatTransferCoefficient, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The HeatTransferCoefficient to compare against.
+//
+// Returns:
+//    int: -1 if the current HeatTransferCoefficient is less, 1 if greater, and 0 if equal.
 func (a *HeatTransferCoefficient) CompareTo(other *HeatTransferCoefficient) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -311,22 +363,50 @@ func (a *HeatTransferCoefficient) CompareTo(other *HeatTransferCoefficient) int 
 	return 0
 }
 
-// Add the given HeatTransferCoefficient to the current HeatTransferCoefficient.
+// Add adds the given HeatTransferCoefficient to the current HeatTransferCoefficient and returns the result.
+// The result is a new HeatTransferCoefficient instance with the sum of the values.
+//
+// Parameters:
+//    other: The HeatTransferCoefficient to add to the current HeatTransferCoefficient.
+//
+// Returns:
+//    *HeatTransferCoefficient: A new HeatTransferCoefficient instance representing the sum of both HeatTransferCoefficient.
 func (a *HeatTransferCoefficient) Add(other *HeatTransferCoefficient) *HeatTransferCoefficient {
 	return &HeatTransferCoefficient{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given HeatTransferCoefficient to the current HeatTransferCoefficient.
+// Subtract subtracts the given HeatTransferCoefficient from the current HeatTransferCoefficient and returns the result.
+// The result is a new HeatTransferCoefficient instance with the difference of the values.
+//
+// Parameters:
+//    other: The HeatTransferCoefficient to subtract from the current HeatTransferCoefficient.
+//
+// Returns:
+//    *HeatTransferCoefficient: A new HeatTransferCoefficient instance representing the difference of both HeatTransferCoefficient.
 func (a *HeatTransferCoefficient) Subtract(other *HeatTransferCoefficient) *HeatTransferCoefficient {
 	return &HeatTransferCoefficient{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given HeatTransferCoefficient to the current HeatTransferCoefficient.
+// Multiply multiplies the current HeatTransferCoefficient by the given HeatTransferCoefficient and returns the result.
+// The result is a new HeatTransferCoefficient instance with the product of the values.
+//
+// Parameters:
+//    other: The HeatTransferCoefficient to multiply with the current HeatTransferCoefficient.
+//
+// Returns:
+//    *HeatTransferCoefficient: A new HeatTransferCoefficient instance representing the product of both HeatTransferCoefficient.
 func (a *HeatTransferCoefficient) Multiply(other *HeatTransferCoefficient) *HeatTransferCoefficient {
 	return &HeatTransferCoefficient{value: a.value * other.BaseValue()}
 }
 
-// Divide the given HeatTransferCoefficient to the current HeatTransferCoefficient.
+// Divide divides the current HeatTransferCoefficient by the given HeatTransferCoefficient and returns the result.
+// The result is a new HeatTransferCoefficient instance with the quotient of the values.
+//
+// Parameters:
+//    other: The HeatTransferCoefficient to divide the current HeatTransferCoefficient by.
+//
+// Returns:
+//    *HeatTransferCoefficient: A new HeatTransferCoefficient instance representing the quotient of both HeatTransferCoefficient.
 func (a *HeatTransferCoefficient) Divide(other *HeatTransferCoefficient) *HeatTransferCoefficient {
 	return &HeatTransferCoefficient{value: a.value / other.BaseValue()}
 }

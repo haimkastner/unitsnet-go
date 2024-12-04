@@ -12,7 +12,7 @@ import (
 
 
 
-// ForcePerLengthUnits enumeration
+// ForcePerLengthUnits defines various units of ForcePerLength.
 type ForcePerLengthUnits string
 
 const (
@@ -95,19 +95,24 @@ const (
         ForcePerLengthMeganewtonPerMillimeter ForcePerLengthUnits = "MeganewtonPerMillimeter"
 )
 
-// ForcePerLengthDto represents an ForcePerLength
+// ForcePerLengthDto represents a ForcePerLength measurement with a numerical value and its corresponding unit.
 type ForcePerLengthDto struct {
+    // Value is the numerical representation of the ForcePerLength.
 	Value float64
+    // Unit specifies the unit of measurement for the ForcePerLength, as defined in the ForcePerLengthUnits enumeration.
 	Unit  ForcePerLengthUnits
 }
 
-// ForcePerLengthDtoFactory struct to group related functions
+// ForcePerLengthDtoFactory groups methods for creating and serializing ForcePerLengthDto objects.
 type ForcePerLengthDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ForcePerLengthDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ForcePerLengthDtoFactory) FromJSON(data []byte) (*ForcePerLengthDto, error) {
 	a := ForcePerLengthDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ForcePerLengthDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -115,6 +120,9 @@ func (udf ForcePerLengthDtoFactory) FromJSON(data []byte) (*ForcePerLengthDto, e
 	return &a, nil
 }
 
+// ToJSON serializes a ForcePerLengthDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ForcePerLengthDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -126,10 +134,11 @@ func (a ForcePerLengthDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ForcePerLength struct
+// ForcePerLength represents a measurement in a of ForcePerLength.
+//
+// The magnitude of force per unit length.
 type ForcePerLength struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     newtons_per_meterLazy *float64 
@@ -172,217 +181,218 @@ type ForcePerLength struct {
     meganewtons_per_millimeterLazy *float64 
 }
 
-// ForcePerLengthFactory struct to group related functions
+// ForcePerLengthFactory groups methods for creating ForcePerLength instances.
 type ForcePerLengthFactory struct{}
 
+// CreateForcePerLength creates a new ForcePerLength instance from the given value and unit.
 func (uf ForcePerLengthFactory) CreateForcePerLength(value float64, unit ForcePerLengthUnits) (*ForcePerLength, error) {
 	return newForcePerLength(value, unit)
 }
 
+// FromDto converts a ForcePerLengthDto to a ForcePerLength instance.
 func (uf ForcePerLengthFactory) FromDto(dto ForcePerLengthDto) (*ForcePerLength, error) {
 	return newForcePerLength(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ForcePerLength instance.
 func (uf ForcePerLengthFactory) FromDtoJSON(data []byte) (*ForcePerLength, error) {
 	unitDto, err := ForcePerLengthDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ForcePerLengthDto from JSON: %w", err)
 	}
 	return ForcePerLengthFactory{}.FromDto(*unitDto)
 }
 
 
-// FromNewtonPerMeter creates a new ForcePerLength instance from NewtonPerMeter.
+// FromNewtonsPerMeter creates a new ForcePerLength instance from a value in NewtonsPerMeter.
 func (uf ForcePerLengthFactory) FromNewtonsPerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthNewtonPerMeter)
 }
 
-// FromNewtonPerCentimeter creates a new ForcePerLength instance from NewtonPerCentimeter.
+// FromNewtonsPerCentimeter creates a new ForcePerLength instance from a value in NewtonsPerCentimeter.
 func (uf ForcePerLengthFactory) FromNewtonsPerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthNewtonPerCentimeter)
 }
 
-// FromNewtonPerMillimeter creates a new ForcePerLength instance from NewtonPerMillimeter.
+// FromNewtonsPerMillimeter creates a new ForcePerLength instance from a value in NewtonsPerMillimeter.
 func (uf ForcePerLengthFactory) FromNewtonsPerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthNewtonPerMillimeter)
 }
 
-// FromKilogramForcePerMeter creates a new ForcePerLength instance from KilogramForcePerMeter.
+// FromKilogramsForcePerMeter creates a new ForcePerLength instance from a value in KilogramsForcePerMeter.
 func (uf ForcePerLengthFactory) FromKilogramsForcePerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthKilogramForcePerMeter)
 }
 
-// FromKilogramForcePerCentimeter creates a new ForcePerLength instance from KilogramForcePerCentimeter.
+// FromKilogramsForcePerCentimeter creates a new ForcePerLength instance from a value in KilogramsForcePerCentimeter.
 func (uf ForcePerLengthFactory) FromKilogramsForcePerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthKilogramForcePerCentimeter)
 }
 
-// FromKilogramForcePerMillimeter creates a new ForcePerLength instance from KilogramForcePerMillimeter.
+// FromKilogramsForcePerMillimeter creates a new ForcePerLength instance from a value in KilogramsForcePerMillimeter.
 func (uf ForcePerLengthFactory) FromKilogramsForcePerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthKilogramForcePerMillimeter)
 }
 
-// FromTonneForcePerMeter creates a new ForcePerLength instance from TonneForcePerMeter.
+// FromTonnesForcePerMeter creates a new ForcePerLength instance from a value in TonnesForcePerMeter.
 func (uf ForcePerLengthFactory) FromTonnesForcePerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthTonneForcePerMeter)
 }
 
-// FromTonneForcePerCentimeter creates a new ForcePerLength instance from TonneForcePerCentimeter.
+// FromTonnesForcePerCentimeter creates a new ForcePerLength instance from a value in TonnesForcePerCentimeter.
 func (uf ForcePerLengthFactory) FromTonnesForcePerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthTonneForcePerCentimeter)
 }
 
-// FromTonneForcePerMillimeter creates a new ForcePerLength instance from TonneForcePerMillimeter.
+// FromTonnesForcePerMillimeter creates a new ForcePerLength instance from a value in TonnesForcePerMillimeter.
 func (uf ForcePerLengthFactory) FromTonnesForcePerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthTonneForcePerMillimeter)
 }
 
-// FromPoundForcePerFoot creates a new ForcePerLength instance from PoundForcePerFoot.
+// FromPoundsForcePerFoot creates a new ForcePerLength instance from a value in PoundsForcePerFoot.
 func (uf ForcePerLengthFactory) FromPoundsForcePerFoot(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthPoundForcePerFoot)
 }
 
-// FromPoundForcePerInch creates a new ForcePerLength instance from PoundForcePerInch.
+// FromPoundsForcePerInch creates a new ForcePerLength instance from a value in PoundsForcePerInch.
 func (uf ForcePerLengthFactory) FromPoundsForcePerInch(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthPoundForcePerInch)
 }
 
-// FromPoundForcePerYard creates a new ForcePerLength instance from PoundForcePerYard.
+// FromPoundsForcePerYard creates a new ForcePerLength instance from a value in PoundsForcePerYard.
 func (uf ForcePerLengthFactory) FromPoundsForcePerYard(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthPoundForcePerYard)
 }
 
-// FromKilopoundForcePerFoot creates a new ForcePerLength instance from KilopoundForcePerFoot.
+// FromKilopoundsForcePerFoot creates a new ForcePerLength instance from a value in KilopoundsForcePerFoot.
 func (uf ForcePerLengthFactory) FromKilopoundsForcePerFoot(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthKilopoundForcePerFoot)
 }
 
-// FromKilopoundForcePerInch creates a new ForcePerLength instance from KilopoundForcePerInch.
+// FromKilopoundsForcePerInch creates a new ForcePerLength instance from a value in KilopoundsForcePerInch.
 func (uf ForcePerLengthFactory) FromKilopoundsForcePerInch(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthKilopoundForcePerInch)
 }
 
-// FromNanonewtonPerMeter creates a new ForcePerLength instance from NanonewtonPerMeter.
+// FromNanonewtonsPerMeter creates a new ForcePerLength instance from a value in NanonewtonsPerMeter.
 func (uf ForcePerLengthFactory) FromNanonewtonsPerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthNanonewtonPerMeter)
 }
 
-// FromMicronewtonPerMeter creates a new ForcePerLength instance from MicronewtonPerMeter.
+// FromMicronewtonsPerMeter creates a new ForcePerLength instance from a value in MicronewtonsPerMeter.
 func (uf ForcePerLengthFactory) FromMicronewtonsPerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthMicronewtonPerMeter)
 }
 
-// FromMillinewtonPerMeter creates a new ForcePerLength instance from MillinewtonPerMeter.
+// FromMillinewtonsPerMeter creates a new ForcePerLength instance from a value in MillinewtonsPerMeter.
 func (uf ForcePerLengthFactory) FromMillinewtonsPerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthMillinewtonPerMeter)
 }
 
-// FromCentinewtonPerMeter creates a new ForcePerLength instance from CentinewtonPerMeter.
+// FromCentinewtonsPerMeter creates a new ForcePerLength instance from a value in CentinewtonsPerMeter.
 func (uf ForcePerLengthFactory) FromCentinewtonsPerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthCentinewtonPerMeter)
 }
 
-// FromDecinewtonPerMeter creates a new ForcePerLength instance from DecinewtonPerMeter.
+// FromDecinewtonsPerMeter creates a new ForcePerLength instance from a value in DecinewtonsPerMeter.
 func (uf ForcePerLengthFactory) FromDecinewtonsPerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthDecinewtonPerMeter)
 }
 
-// FromDecanewtonPerMeter creates a new ForcePerLength instance from DecanewtonPerMeter.
+// FromDecanewtonsPerMeter creates a new ForcePerLength instance from a value in DecanewtonsPerMeter.
 func (uf ForcePerLengthFactory) FromDecanewtonsPerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthDecanewtonPerMeter)
 }
 
-// FromKilonewtonPerMeter creates a new ForcePerLength instance from KilonewtonPerMeter.
+// FromKilonewtonsPerMeter creates a new ForcePerLength instance from a value in KilonewtonsPerMeter.
 func (uf ForcePerLengthFactory) FromKilonewtonsPerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthKilonewtonPerMeter)
 }
 
-// FromMeganewtonPerMeter creates a new ForcePerLength instance from MeganewtonPerMeter.
+// FromMeganewtonsPerMeter creates a new ForcePerLength instance from a value in MeganewtonsPerMeter.
 func (uf ForcePerLengthFactory) FromMeganewtonsPerMeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthMeganewtonPerMeter)
 }
 
-// FromNanonewtonPerCentimeter creates a new ForcePerLength instance from NanonewtonPerCentimeter.
+// FromNanonewtonsPerCentimeter creates a new ForcePerLength instance from a value in NanonewtonsPerCentimeter.
 func (uf ForcePerLengthFactory) FromNanonewtonsPerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthNanonewtonPerCentimeter)
 }
 
-// FromMicronewtonPerCentimeter creates a new ForcePerLength instance from MicronewtonPerCentimeter.
+// FromMicronewtonsPerCentimeter creates a new ForcePerLength instance from a value in MicronewtonsPerCentimeter.
 func (uf ForcePerLengthFactory) FromMicronewtonsPerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthMicronewtonPerCentimeter)
 }
 
-// FromMillinewtonPerCentimeter creates a new ForcePerLength instance from MillinewtonPerCentimeter.
+// FromMillinewtonsPerCentimeter creates a new ForcePerLength instance from a value in MillinewtonsPerCentimeter.
 func (uf ForcePerLengthFactory) FromMillinewtonsPerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthMillinewtonPerCentimeter)
 }
 
-// FromCentinewtonPerCentimeter creates a new ForcePerLength instance from CentinewtonPerCentimeter.
+// FromCentinewtonsPerCentimeter creates a new ForcePerLength instance from a value in CentinewtonsPerCentimeter.
 func (uf ForcePerLengthFactory) FromCentinewtonsPerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthCentinewtonPerCentimeter)
 }
 
-// FromDecinewtonPerCentimeter creates a new ForcePerLength instance from DecinewtonPerCentimeter.
+// FromDecinewtonsPerCentimeter creates a new ForcePerLength instance from a value in DecinewtonsPerCentimeter.
 func (uf ForcePerLengthFactory) FromDecinewtonsPerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthDecinewtonPerCentimeter)
 }
 
-// FromDecanewtonPerCentimeter creates a new ForcePerLength instance from DecanewtonPerCentimeter.
+// FromDecanewtonsPerCentimeter creates a new ForcePerLength instance from a value in DecanewtonsPerCentimeter.
 func (uf ForcePerLengthFactory) FromDecanewtonsPerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthDecanewtonPerCentimeter)
 }
 
-// FromKilonewtonPerCentimeter creates a new ForcePerLength instance from KilonewtonPerCentimeter.
+// FromKilonewtonsPerCentimeter creates a new ForcePerLength instance from a value in KilonewtonsPerCentimeter.
 func (uf ForcePerLengthFactory) FromKilonewtonsPerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthKilonewtonPerCentimeter)
 }
 
-// FromMeganewtonPerCentimeter creates a new ForcePerLength instance from MeganewtonPerCentimeter.
+// FromMeganewtonsPerCentimeter creates a new ForcePerLength instance from a value in MeganewtonsPerCentimeter.
 func (uf ForcePerLengthFactory) FromMeganewtonsPerCentimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthMeganewtonPerCentimeter)
 }
 
-// FromNanonewtonPerMillimeter creates a new ForcePerLength instance from NanonewtonPerMillimeter.
+// FromNanonewtonsPerMillimeter creates a new ForcePerLength instance from a value in NanonewtonsPerMillimeter.
 func (uf ForcePerLengthFactory) FromNanonewtonsPerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthNanonewtonPerMillimeter)
 }
 
-// FromMicronewtonPerMillimeter creates a new ForcePerLength instance from MicronewtonPerMillimeter.
+// FromMicronewtonsPerMillimeter creates a new ForcePerLength instance from a value in MicronewtonsPerMillimeter.
 func (uf ForcePerLengthFactory) FromMicronewtonsPerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthMicronewtonPerMillimeter)
 }
 
-// FromMillinewtonPerMillimeter creates a new ForcePerLength instance from MillinewtonPerMillimeter.
+// FromMillinewtonsPerMillimeter creates a new ForcePerLength instance from a value in MillinewtonsPerMillimeter.
 func (uf ForcePerLengthFactory) FromMillinewtonsPerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthMillinewtonPerMillimeter)
 }
 
-// FromCentinewtonPerMillimeter creates a new ForcePerLength instance from CentinewtonPerMillimeter.
+// FromCentinewtonsPerMillimeter creates a new ForcePerLength instance from a value in CentinewtonsPerMillimeter.
 func (uf ForcePerLengthFactory) FromCentinewtonsPerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthCentinewtonPerMillimeter)
 }
 
-// FromDecinewtonPerMillimeter creates a new ForcePerLength instance from DecinewtonPerMillimeter.
+// FromDecinewtonsPerMillimeter creates a new ForcePerLength instance from a value in DecinewtonsPerMillimeter.
 func (uf ForcePerLengthFactory) FromDecinewtonsPerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthDecinewtonPerMillimeter)
 }
 
-// FromDecanewtonPerMillimeter creates a new ForcePerLength instance from DecanewtonPerMillimeter.
+// FromDecanewtonsPerMillimeter creates a new ForcePerLength instance from a value in DecanewtonsPerMillimeter.
 func (uf ForcePerLengthFactory) FromDecanewtonsPerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthDecanewtonPerMillimeter)
 }
 
-// FromKilonewtonPerMillimeter creates a new ForcePerLength instance from KilonewtonPerMillimeter.
+// FromKilonewtonsPerMillimeter creates a new ForcePerLength instance from a value in KilonewtonsPerMillimeter.
 func (uf ForcePerLengthFactory) FromKilonewtonsPerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthKilonewtonPerMillimeter)
 }
 
-// FromMeganewtonPerMillimeter creates a new ForcePerLength instance from MeganewtonPerMillimeter.
+// FromMeganewtonsPerMillimeter creates a new ForcePerLength instance from a value in MeganewtonsPerMillimeter.
 func (uf ForcePerLengthFactory) FromMeganewtonsPerMillimeter(value float64) (*ForcePerLength, error) {
 	return newForcePerLength(value, ForcePerLengthMeganewtonPerMillimeter)
 }
-
-
 
 
 // newForcePerLength creates a new ForcePerLength.
@@ -395,13 +405,15 @@ func newForcePerLength(value float64, fromUnit ForcePerLengthUnits) (*ForcePerLe
 	return a, nil
 }
 
-// BaseValue returns the base value of ForcePerLength in NewtonPerMeter.
+// BaseValue returns the base value of ForcePerLength in NewtonPerMeter unit (the base/default quantity).
 func (a *ForcePerLength) BaseValue() float64 {
 	return a.value
 }
 
 
-// NewtonPerMeter returns the value in NewtonPerMeter.
+// NewtonsPerMeter returns the ForcePerLength value in NewtonsPerMeter.
+//
+// 
 func (a *ForcePerLength) NewtonsPerMeter() float64 {
 	if a.newtons_per_meterLazy != nil {
 		return *a.newtons_per_meterLazy
@@ -411,7 +423,9 @@ func (a *ForcePerLength) NewtonsPerMeter() float64 {
 	return newtons_per_meter
 }
 
-// NewtonPerCentimeter returns the value in NewtonPerCentimeter.
+// NewtonsPerCentimeter returns the ForcePerLength value in NewtonsPerCentimeter.
+//
+// 
 func (a *ForcePerLength) NewtonsPerCentimeter() float64 {
 	if a.newtons_per_centimeterLazy != nil {
 		return *a.newtons_per_centimeterLazy
@@ -421,7 +435,9 @@ func (a *ForcePerLength) NewtonsPerCentimeter() float64 {
 	return newtons_per_centimeter
 }
 
-// NewtonPerMillimeter returns the value in NewtonPerMillimeter.
+// NewtonsPerMillimeter returns the ForcePerLength value in NewtonsPerMillimeter.
+//
+// 
 func (a *ForcePerLength) NewtonsPerMillimeter() float64 {
 	if a.newtons_per_millimeterLazy != nil {
 		return *a.newtons_per_millimeterLazy
@@ -431,7 +447,9 @@ func (a *ForcePerLength) NewtonsPerMillimeter() float64 {
 	return newtons_per_millimeter
 }
 
-// KilogramForcePerMeter returns the value in KilogramForcePerMeter.
+// KilogramsForcePerMeter returns the ForcePerLength value in KilogramsForcePerMeter.
+//
+// 
 func (a *ForcePerLength) KilogramsForcePerMeter() float64 {
 	if a.kilograms_force_per_meterLazy != nil {
 		return *a.kilograms_force_per_meterLazy
@@ -441,7 +459,9 @@ func (a *ForcePerLength) KilogramsForcePerMeter() float64 {
 	return kilograms_force_per_meter
 }
 
-// KilogramForcePerCentimeter returns the value in KilogramForcePerCentimeter.
+// KilogramsForcePerCentimeter returns the ForcePerLength value in KilogramsForcePerCentimeter.
+//
+// 
 func (a *ForcePerLength) KilogramsForcePerCentimeter() float64 {
 	if a.kilograms_force_per_centimeterLazy != nil {
 		return *a.kilograms_force_per_centimeterLazy
@@ -451,7 +471,9 @@ func (a *ForcePerLength) KilogramsForcePerCentimeter() float64 {
 	return kilograms_force_per_centimeter
 }
 
-// KilogramForcePerMillimeter returns the value in KilogramForcePerMillimeter.
+// KilogramsForcePerMillimeter returns the ForcePerLength value in KilogramsForcePerMillimeter.
+//
+// 
 func (a *ForcePerLength) KilogramsForcePerMillimeter() float64 {
 	if a.kilograms_force_per_millimeterLazy != nil {
 		return *a.kilograms_force_per_millimeterLazy
@@ -461,7 +483,9 @@ func (a *ForcePerLength) KilogramsForcePerMillimeter() float64 {
 	return kilograms_force_per_millimeter
 }
 
-// TonneForcePerMeter returns the value in TonneForcePerMeter.
+// TonnesForcePerMeter returns the ForcePerLength value in TonnesForcePerMeter.
+//
+// 
 func (a *ForcePerLength) TonnesForcePerMeter() float64 {
 	if a.tonnes_force_per_meterLazy != nil {
 		return *a.tonnes_force_per_meterLazy
@@ -471,7 +495,9 @@ func (a *ForcePerLength) TonnesForcePerMeter() float64 {
 	return tonnes_force_per_meter
 }
 
-// TonneForcePerCentimeter returns the value in TonneForcePerCentimeter.
+// TonnesForcePerCentimeter returns the ForcePerLength value in TonnesForcePerCentimeter.
+//
+// 
 func (a *ForcePerLength) TonnesForcePerCentimeter() float64 {
 	if a.tonnes_force_per_centimeterLazy != nil {
 		return *a.tonnes_force_per_centimeterLazy
@@ -481,7 +507,9 @@ func (a *ForcePerLength) TonnesForcePerCentimeter() float64 {
 	return tonnes_force_per_centimeter
 }
 
-// TonneForcePerMillimeter returns the value in TonneForcePerMillimeter.
+// TonnesForcePerMillimeter returns the ForcePerLength value in TonnesForcePerMillimeter.
+//
+// 
 func (a *ForcePerLength) TonnesForcePerMillimeter() float64 {
 	if a.tonnes_force_per_millimeterLazy != nil {
 		return *a.tonnes_force_per_millimeterLazy
@@ -491,7 +519,9 @@ func (a *ForcePerLength) TonnesForcePerMillimeter() float64 {
 	return tonnes_force_per_millimeter
 }
 
-// PoundForcePerFoot returns the value in PoundForcePerFoot.
+// PoundsForcePerFoot returns the ForcePerLength value in PoundsForcePerFoot.
+//
+// 
 func (a *ForcePerLength) PoundsForcePerFoot() float64 {
 	if a.pounds_force_per_footLazy != nil {
 		return *a.pounds_force_per_footLazy
@@ -501,7 +531,9 @@ func (a *ForcePerLength) PoundsForcePerFoot() float64 {
 	return pounds_force_per_foot
 }
 
-// PoundForcePerInch returns the value in PoundForcePerInch.
+// PoundsForcePerInch returns the ForcePerLength value in PoundsForcePerInch.
+//
+// 
 func (a *ForcePerLength) PoundsForcePerInch() float64 {
 	if a.pounds_force_per_inchLazy != nil {
 		return *a.pounds_force_per_inchLazy
@@ -511,7 +543,9 @@ func (a *ForcePerLength) PoundsForcePerInch() float64 {
 	return pounds_force_per_inch
 }
 
-// PoundForcePerYard returns the value in PoundForcePerYard.
+// PoundsForcePerYard returns the ForcePerLength value in PoundsForcePerYard.
+//
+// 
 func (a *ForcePerLength) PoundsForcePerYard() float64 {
 	if a.pounds_force_per_yardLazy != nil {
 		return *a.pounds_force_per_yardLazy
@@ -521,7 +555,9 @@ func (a *ForcePerLength) PoundsForcePerYard() float64 {
 	return pounds_force_per_yard
 }
 
-// KilopoundForcePerFoot returns the value in KilopoundForcePerFoot.
+// KilopoundsForcePerFoot returns the ForcePerLength value in KilopoundsForcePerFoot.
+//
+// 
 func (a *ForcePerLength) KilopoundsForcePerFoot() float64 {
 	if a.kilopounds_force_per_footLazy != nil {
 		return *a.kilopounds_force_per_footLazy
@@ -531,7 +567,9 @@ func (a *ForcePerLength) KilopoundsForcePerFoot() float64 {
 	return kilopounds_force_per_foot
 }
 
-// KilopoundForcePerInch returns the value in KilopoundForcePerInch.
+// KilopoundsForcePerInch returns the ForcePerLength value in KilopoundsForcePerInch.
+//
+// 
 func (a *ForcePerLength) KilopoundsForcePerInch() float64 {
 	if a.kilopounds_force_per_inchLazy != nil {
 		return *a.kilopounds_force_per_inchLazy
@@ -541,7 +579,9 @@ func (a *ForcePerLength) KilopoundsForcePerInch() float64 {
 	return kilopounds_force_per_inch
 }
 
-// NanonewtonPerMeter returns the value in NanonewtonPerMeter.
+// NanonewtonsPerMeter returns the ForcePerLength value in NanonewtonsPerMeter.
+//
+// 
 func (a *ForcePerLength) NanonewtonsPerMeter() float64 {
 	if a.nanonewtons_per_meterLazy != nil {
 		return *a.nanonewtons_per_meterLazy
@@ -551,7 +591,9 @@ func (a *ForcePerLength) NanonewtonsPerMeter() float64 {
 	return nanonewtons_per_meter
 }
 
-// MicronewtonPerMeter returns the value in MicronewtonPerMeter.
+// MicronewtonsPerMeter returns the ForcePerLength value in MicronewtonsPerMeter.
+//
+// 
 func (a *ForcePerLength) MicronewtonsPerMeter() float64 {
 	if a.micronewtons_per_meterLazy != nil {
 		return *a.micronewtons_per_meterLazy
@@ -561,7 +603,9 @@ func (a *ForcePerLength) MicronewtonsPerMeter() float64 {
 	return micronewtons_per_meter
 }
 
-// MillinewtonPerMeter returns the value in MillinewtonPerMeter.
+// MillinewtonsPerMeter returns the ForcePerLength value in MillinewtonsPerMeter.
+//
+// 
 func (a *ForcePerLength) MillinewtonsPerMeter() float64 {
 	if a.millinewtons_per_meterLazy != nil {
 		return *a.millinewtons_per_meterLazy
@@ -571,7 +615,9 @@ func (a *ForcePerLength) MillinewtonsPerMeter() float64 {
 	return millinewtons_per_meter
 }
 
-// CentinewtonPerMeter returns the value in CentinewtonPerMeter.
+// CentinewtonsPerMeter returns the ForcePerLength value in CentinewtonsPerMeter.
+//
+// 
 func (a *ForcePerLength) CentinewtonsPerMeter() float64 {
 	if a.centinewtons_per_meterLazy != nil {
 		return *a.centinewtons_per_meterLazy
@@ -581,7 +627,9 @@ func (a *ForcePerLength) CentinewtonsPerMeter() float64 {
 	return centinewtons_per_meter
 }
 
-// DecinewtonPerMeter returns the value in DecinewtonPerMeter.
+// DecinewtonsPerMeter returns the ForcePerLength value in DecinewtonsPerMeter.
+//
+// 
 func (a *ForcePerLength) DecinewtonsPerMeter() float64 {
 	if a.decinewtons_per_meterLazy != nil {
 		return *a.decinewtons_per_meterLazy
@@ -591,7 +639,9 @@ func (a *ForcePerLength) DecinewtonsPerMeter() float64 {
 	return decinewtons_per_meter
 }
 
-// DecanewtonPerMeter returns the value in DecanewtonPerMeter.
+// DecanewtonsPerMeter returns the ForcePerLength value in DecanewtonsPerMeter.
+//
+// 
 func (a *ForcePerLength) DecanewtonsPerMeter() float64 {
 	if a.decanewtons_per_meterLazy != nil {
 		return *a.decanewtons_per_meterLazy
@@ -601,7 +651,9 @@ func (a *ForcePerLength) DecanewtonsPerMeter() float64 {
 	return decanewtons_per_meter
 }
 
-// KilonewtonPerMeter returns the value in KilonewtonPerMeter.
+// KilonewtonsPerMeter returns the ForcePerLength value in KilonewtonsPerMeter.
+//
+// 
 func (a *ForcePerLength) KilonewtonsPerMeter() float64 {
 	if a.kilonewtons_per_meterLazy != nil {
 		return *a.kilonewtons_per_meterLazy
@@ -611,7 +663,9 @@ func (a *ForcePerLength) KilonewtonsPerMeter() float64 {
 	return kilonewtons_per_meter
 }
 
-// MeganewtonPerMeter returns the value in MeganewtonPerMeter.
+// MeganewtonsPerMeter returns the ForcePerLength value in MeganewtonsPerMeter.
+//
+// 
 func (a *ForcePerLength) MeganewtonsPerMeter() float64 {
 	if a.meganewtons_per_meterLazy != nil {
 		return *a.meganewtons_per_meterLazy
@@ -621,7 +675,9 @@ func (a *ForcePerLength) MeganewtonsPerMeter() float64 {
 	return meganewtons_per_meter
 }
 
-// NanonewtonPerCentimeter returns the value in NanonewtonPerCentimeter.
+// NanonewtonsPerCentimeter returns the ForcePerLength value in NanonewtonsPerCentimeter.
+//
+// 
 func (a *ForcePerLength) NanonewtonsPerCentimeter() float64 {
 	if a.nanonewtons_per_centimeterLazy != nil {
 		return *a.nanonewtons_per_centimeterLazy
@@ -631,7 +687,9 @@ func (a *ForcePerLength) NanonewtonsPerCentimeter() float64 {
 	return nanonewtons_per_centimeter
 }
 
-// MicronewtonPerCentimeter returns the value in MicronewtonPerCentimeter.
+// MicronewtonsPerCentimeter returns the ForcePerLength value in MicronewtonsPerCentimeter.
+//
+// 
 func (a *ForcePerLength) MicronewtonsPerCentimeter() float64 {
 	if a.micronewtons_per_centimeterLazy != nil {
 		return *a.micronewtons_per_centimeterLazy
@@ -641,7 +699,9 @@ func (a *ForcePerLength) MicronewtonsPerCentimeter() float64 {
 	return micronewtons_per_centimeter
 }
 
-// MillinewtonPerCentimeter returns the value in MillinewtonPerCentimeter.
+// MillinewtonsPerCentimeter returns the ForcePerLength value in MillinewtonsPerCentimeter.
+//
+// 
 func (a *ForcePerLength) MillinewtonsPerCentimeter() float64 {
 	if a.millinewtons_per_centimeterLazy != nil {
 		return *a.millinewtons_per_centimeterLazy
@@ -651,7 +711,9 @@ func (a *ForcePerLength) MillinewtonsPerCentimeter() float64 {
 	return millinewtons_per_centimeter
 }
 
-// CentinewtonPerCentimeter returns the value in CentinewtonPerCentimeter.
+// CentinewtonsPerCentimeter returns the ForcePerLength value in CentinewtonsPerCentimeter.
+//
+// 
 func (a *ForcePerLength) CentinewtonsPerCentimeter() float64 {
 	if a.centinewtons_per_centimeterLazy != nil {
 		return *a.centinewtons_per_centimeterLazy
@@ -661,7 +723,9 @@ func (a *ForcePerLength) CentinewtonsPerCentimeter() float64 {
 	return centinewtons_per_centimeter
 }
 
-// DecinewtonPerCentimeter returns the value in DecinewtonPerCentimeter.
+// DecinewtonsPerCentimeter returns the ForcePerLength value in DecinewtonsPerCentimeter.
+//
+// 
 func (a *ForcePerLength) DecinewtonsPerCentimeter() float64 {
 	if a.decinewtons_per_centimeterLazy != nil {
 		return *a.decinewtons_per_centimeterLazy
@@ -671,7 +735,9 @@ func (a *ForcePerLength) DecinewtonsPerCentimeter() float64 {
 	return decinewtons_per_centimeter
 }
 
-// DecanewtonPerCentimeter returns the value in DecanewtonPerCentimeter.
+// DecanewtonsPerCentimeter returns the ForcePerLength value in DecanewtonsPerCentimeter.
+//
+// 
 func (a *ForcePerLength) DecanewtonsPerCentimeter() float64 {
 	if a.decanewtons_per_centimeterLazy != nil {
 		return *a.decanewtons_per_centimeterLazy
@@ -681,7 +747,9 @@ func (a *ForcePerLength) DecanewtonsPerCentimeter() float64 {
 	return decanewtons_per_centimeter
 }
 
-// KilonewtonPerCentimeter returns the value in KilonewtonPerCentimeter.
+// KilonewtonsPerCentimeter returns the ForcePerLength value in KilonewtonsPerCentimeter.
+//
+// 
 func (a *ForcePerLength) KilonewtonsPerCentimeter() float64 {
 	if a.kilonewtons_per_centimeterLazy != nil {
 		return *a.kilonewtons_per_centimeterLazy
@@ -691,7 +759,9 @@ func (a *ForcePerLength) KilonewtonsPerCentimeter() float64 {
 	return kilonewtons_per_centimeter
 }
 
-// MeganewtonPerCentimeter returns the value in MeganewtonPerCentimeter.
+// MeganewtonsPerCentimeter returns the ForcePerLength value in MeganewtonsPerCentimeter.
+//
+// 
 func (a *ForcePerLength) MeganewtonsPerCentimeter() float64 {
 	if a.meganewtons_per_centimeterLazy != nil {
 		return *a.meganewtons_per_centimeterLazy
@@ -701,7 +771,9 @@ func (a *ForcePerLength) MeganewtonsPerCentimeter() float64 {
 	return meganewtons_per_centimeter
 }
 
-// NanonewtonPerMillimeter returns the value in NanonewtonPerMillimeter.
+// NanonewtonsPerMillimeter returns the ForcePerLength value in NanonewtonsPerMillimeter.
+//
+// 
 func (a *ForcePerLength) NanonewtonsPerMillimeter() float64 {
 	if a.nanonewtons_per_millimeterLazy != nil {
 		return *a.nanonewtons_per_millimeterLazy
@@ -711,7 +783,9 @@ func (a *ForcePerLength) NanonewtonsPerMillimeter() float64 {
 	return nanonewtons_per_millimeter
 }
 
-// MicronewtonPerMillimeter returns the value in MicronewtonPerMillimeter.
+// MicronewtonsPerMillimeter returns the ForcePerLength value in MicronewtonsPerMillimeter.
+//
+// 
 func (a *ForcePerLength) MicronewtonsPerMillimeter() float64 {
 	if a.micronewtons_per_millimeterLazy != nil {
 		return *a.micronewtons_per_millimeterLazy
@@ -721,7 +795,9 @@ func (a *ForcePerLength) MicronewtonsPerMillimeter() float64 {
 	return micronewtons_per_millimeter
 }
 
-// MillinewtonPerMillimeter returns the value in MillinewtonPerMillimeter.
+// MillinewtonsPerMillimeter returns the ForcePerLength value in MillinewtonsPerMillimeter.
+//
+// 
 func (a *ForcePerLength) MillinewtonsPerMillimeter() float64 {
 	if a.millinewtons_per_millimeterLazy != nil {
 		return *a.millinewtons_per_millimeterLazy
@@ -731,7 +807,9 @@ func (a *ForcePerLength) MillinewtonsPerMillimeter() float64 {
 	return millinewtons_per_millimeter
 }
 
-// CentinewtonPerMillimeter returns the value in CentinewtonPerMillimeter.
+// CentinewtonsPerMillimeter returns the ForcePerLength value in CentinewtonsPerMillimeter.
+//
+// 
 func (a *ForcePerLength) CentinewtonsPerMillimeter() float64 {
 	if a.centinewtons_per_millimeterLazy != nil {
 		return *a.centinewtons_per_millimeterLazy
@@ -741,7 +819,9 @@ func (a *ForcePerLength) CentinewtonsPerMillimeter() float64 {
 	return centinewtons_per_millimeter
 }
 
-// DecinewtonPerMillimeter returns the value in DecinewtonPerMillimeter.
+// DecinewtonsPerMillimeter returns the ForcePerLength value in DecinewtonsPerMillimeter.
+//
+// 
 func (a *ForcePerLength) DecinewtonsPerMillimeter() float64 {
 	if a.decinewtons_per_millimeterLazy != nil {
 		return *a.decinewtons_per_millimeterLazy
@@ -751,7 +831,9 @@ func (a *ForcePerLength) DecinewtonsPerMillimeter() float64 {
 	return decinewtons_per_millimeter
 }
 
-// DecanewtonPerMillimeter returns the value in DecanewtonPerMillimeter.
+// DecanewtonsPerMillimeter returns the ForcePerLength value in DecanewtonsPerMillimeter.
+//
+// 
 func (a *ForcePerLength) DecanewtonsPerMillimeter() float64 {
 	if a.decanewtons_per_millimeterLazy != nil {
 		return *a.decanewtons_per_millimeterLazy
@@ -761,7 +843,9 @@ func (a *ForcePerLength) DecanewtonsPerMillimeter() float64 {
 	return decanewtons_per_millimeter
 }
 
-// KilonewtonPerMillimeter returns the value in KilonewtonPerMillimeter.
+// KilonewtonsPerMillimeter returns the ForcePerLength value in KilonewtonsPerMillimeter.
+//
+// 
 func (a *ForcePerLength) KilonewtonsPerMillimeter() float64 {
 	if a.kilonewtons_per_millimeterLazy != nil {
 		return *a.kilonewtons_per_millimeterLazy
@@ -771,7 +855,9 @@ func (a *ForcePerLength) KilonewtonsPerMillimeter() float64 {
 	return kilonewtons_per_millimeter
 }
 
-// MeganewtonPerMillimeter returns the value in MeganewtonPerMillimeter.
+// MeganewtonsPerMillimeter returns the ForcePerLength value in MeganewtonsPerMillimeter.
+//
+// 
 func (a *ForcePerLength) MeganewtonsPerMillimeter() float64 {
 	if a.meganewtons_per_millimeterLazy != nil {
 		return *a.meganewtons_per_millimeterLazy
@@ -782,7 +868,9 @@ func (a *ForcePerLength) MeganewtonsPerMillimeter() float64 {
 }
 
 
-// ToDto creates an ForcePerLengthDto representation.
+// ToDto creates a ForcePerLengthDto representation from the ForcePerLength instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonPerMeter by default.
 func (a *ForcePerLength) ToDto(holdInUnit *ForcePerLengthUnits) ForcePerLengthDto {
 	if holdInUnit == nil {
 		defaultUnit := ForcePerLengthNewtonPerMeter // Default value
@@ -795,12 +883,19 @@ func (a *ForcePerLength) ToDto(holdInUnit *ForcePerLengthUnits) ForcePerLengthDt
 	}
 }
 
-// ToDtoJSON creates an ForcePerLengthDto representation.
+// ToDtoJSON creates a JSON representation of the ForcePerLength instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by NewtonPerMeter by default.
 func (a *ForcePerLength) ToDtoJSON(holdInUnit *ForcePerLengthUnits) ([]byte, error) {
+	// Convert to ForcePerLengthDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ForcePerLength to a specific unit value.
+// Convert converts a ForcePerLength to a specific unit value.
+// The function uses the provided unit type (ForcePerLengthUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ForcePerLength) Convert(toUnit ForcePerLengthUnits) float64 {
 	switch toUnit { 
     case ForcePerLengthNewtonPerMeter:
@@ -880,7 +975,7 @@ func (a *ForcePerLength) Convert(toUnit ForcePerLengthUnits) float64 {
     case ForcePerLengthMeganewtonPerMillimeter:
 		return a.MeganewtonsPerMillimeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -1051,13 +1146,22 @@ func (a *ForcePerLength) convertToBase(value float64, fromUnit ForcePerLengthUni
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ForcePerLength in the default unit (NewtonPerMeter),
+// formatted to two decimal places.
 func (a ForcePerLength) String() string {
 	return a.ToString(ForcePerLengthNewtonPerMeter, 2)
 }
 
-// ToString formats the ForcePerLength to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ForcePerLength value as a string with the specified unit and fractional digits.
+// It converts the ForcePerLength to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ForcePerLength value will be converted (e.g., NewtonPerMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ForcePerLength with the unit abbreviation.
 func (a *ForcePerLength) ToString(unit ForcePerLengthUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1151,12 +1255,26 @@ func (a *ForcePerLength) getUnitAbbreviation(unit ForcePerLengthUnits) string {
 	}
 }
 
-// Check if the given ForcePerLength are equals to the current ForcePerLength
+// Equals checks if the given ForcePerLength is equal to the current ForcePerLength.
+//
+// Parameters:
+//    other: The ForcePerLength to compare against.
+//
+// Returns:
+//    bool: Returns true if both ForcePerLength are equal, false otherwise.
 func (a *ForcePerLength) Equals(other *ForcePerLength) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ForcePerLength are equals to the current ForcePerLength
+// CompareTo compares the current ForcePerLength with another ForcePerLength.
+// It returns -1 if the current ForcePerLength is less than the other ForcePerLength, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ForcePerLength to compare against.
+//
+// Returns:
+//    int: -1 if the current ForcePerLength is less, 1 if greater, and 0 if equal.
 func (a *ForcePerLength) CompareTo(other *ForcePerLength) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1169,22 +1287,50 @@ func (a *ForcePerLength) CompareTo(other *ForcePerLength) int {
 	return 0
 }
 
-// Add the given ForcePerLength to the current ForcePerLength.
+// Add adds the given ForcePerLength to the current ForcePerLength and returns the result.
+// The result is a new ForcePerLength instance with the sum of the values.
+//
+// Parameters:
+//    other: The ForcePerLength to add to the current ForcePerLength.
+//
+// Returns:
+//    *ForcePerLength: A new ForcePerLength instance representing the sum of both ForcePerLength.
 func (a *ForcePerLength) Add(other *ForcePerLength) *ForcePerLength {
 	return &ForcePerLength{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ForcePerLength to the current ForcePerLength.
+// Subtract subtracts the given ForcePerLength from the current ForcePerLength and returns the result.
+// The result is a new ForcePerLength instance with the difference of the values.
+//
+// Parameters:
+//    other: The ForcePerLength to subtract from the current ForcePerLength.
+//
+// Returns:
+//    *ForcePerLength: A new ForcePerLength instance representing the difference of both ForcePerLength.
 func (a *ForcePerLength) Subtract(other *ForcePerLength) *ForcePerLength {
 	return &ForcePerLength{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ForcePerLength to the current ForcePerLength.
+// Multiply multiplies the current ForcePerLength by the given ForcePerLength and returns the result.
+// The result is a new ForcePerLength instance with the product of the values.
+//
+// Parameters:
+//    other: The ForcePerLength to multiply with the current ForcePerLength.
+//
+// Returns:
+//    *ForcePerLength: A new ForcePerLength instance representing the product of both ForcePerLength.
 func (a *ForcePerLength) Multiply(other *ForcePerLength) *ForcePerLength {
 	return &ForcePerLength{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ForcePerLength to the current ForcePerLength.
+// Divide divides the current ForcePerLength by the given ForcePerLength and returns the result.
+// The result is a new ForcePerLength instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ForcePerLength to divide the current ForcePerLength by.
+//
+// Returns:
+//    *ForcePerLength: A new ForcePerLength instance representing the quotient of both ForcePerLength.
 func (a *ForcePerLength) Divide(other *ForcePerLength) *ForcePerLength {
 	return &ForcePerLength{value: a.value / other.BaseValue()}
 }

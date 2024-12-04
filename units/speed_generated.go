@@ -12,7 +12,7 @@ import (
 
 
 
-// SpeedUnits enumeration
+// SpeedUnits defines various units of Speed.
 type SpeedUnits string
 
 const (
@@ -85,19 +85,24 @@ const (
         SpeedKilometerPerHour SpeedUnits = "KilometerPerHour"
 )
 
-// SpeedDto represents an Speed
+// SpeedDto represents a Speed measurement with a numerical value and its corresponding unit.
 type SpeedDto struct {
+    // Value is the numerical representation of the Speed.
 	Value float64
+    // Unit specifies the unit of measurement for the Speed, as defined in the SpeedUnits enumeration.
 	Unit  SpeedUnits
 }
 
-// SpeedDtoFactory struct to group related functions
+// SpeedDtoFactory groups methods for creating and serializing SpeedDto objects.
 type SpeedDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a SpeedDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf SpeedDtoFactory) FromJSON(data []byte) (*SpeedDto, error) {
 	a := SpeedDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into SpeedDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -105,6 +110,9 @@ func (udf SpeedDtoFactory) FromJSON(data []byte) (*SpeedDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a SpeedDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a SpeedDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -116,10 +124,11 @@ func (a SpeedDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Speed struct
+// Speed represents a measurement in a of Speed.
+//
+// In everyday use and in kinematics, the speed of an object is the magnitude of its velocity (the rate of change of its position); it is thus a scalar quantity.[1] The average speed of an object in an interval of time is the distance travelled by the object divided by the duration of the interval;[2] the instantaneous speed is the limit of the average speed as the duration of the time interval approaches zero.
 type Speed struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     meters_per_secondLazy *float64 
@@ -157,192 +166,193 @@ type Speed struct {
     kilometers_per_hourLazy *float64 
 }
 
-// SpeedFactory struct to group related functions
+// SpeedFactory groups methods for creating Speed instances.
 type SpeedFactory struct{}
 
+// CreateSpeed creates a new Speed instance from the given value and unit.
 func (uf SpeedFactory) CreateSpeed(value float64, unit SpeedUnits) (*Speed, error) {
 	return newSpeed(value, unit)
 }
 
+// FromDto converts a SpeedDto to a Speed instance.
 func (uf SpeedFactory) FromDto(dto SpeedDto) (*Speed, error) {
 	return newSpeed(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Speed instance.
 func (uf SpeedFactory) FromDtoJSON(data []byte) (*Speed, error) {
 	unitDto, err := SpeedDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse SpeedDto from JSON: %w", err)
 	}
 	return SpeedFactory{}.FromDto(*unitDto)
 }
 
 
-// FromMeterPerSecond creates a new Speed instance from MeterPerSecond.
+// FromMetersPerSecond creates a new Speed instance from a value in MetersPerSecond.
 func (uf SpeedFactory) FromMetersPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMeterPerSecond)
 }
 
-// FromMeterPerMinute creates a new Speed instance from MeterPerMinute.
+// FromMetersPerMinutes creates a new Speed instance from a value in MetersPerMinutes.
 func (uf SpeedFactory) FromMetersPerMinutes(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMeterPerMinute)
 }
 
-// FromMeterPerHour creates a new Speed instance from MeterPerHour.
+// FromMetersPerHour creates a new Speed instance from a value in MetersPerHour.
 func (uf SpeedFactory) FromMetersPerHour(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMeterPerHour)
 }
 
-// FromFootPerSecond creates a new Speed instance from FootPerSecond.
+// FromFeetPerSecond creates a new Speed instance from a value in FeetPerSecond.
 func (uf SpeedFactory) FromFeetPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedFootPerSecond)
 }
 
-// FromFootPerMinute creates a new Speed instance from FootPerMinute.
+// FromFeetPerMinute creates a new Speed instance from a value in FeetPerMinute.
 func (uf SpeedFactory) FromFeetPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedFootPerMinute)
 }
 
-// FromFootPerHour creates a new Speed instance from FootPerHour.
+// FromFeetPerHour creates a new Speed instance from a value in FeetPerHour.
 func (uf SpeedFactory) FromFeetPerHour(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedFootPerHour)
 }
 
-// FromUsSurveyFootPerSecond creates a new Speed instance from UsSurveyFootPerSecond.
+// FromUsSurveyFeetPerSecond creates a new Speed instance from a value in UsSurveyFeetPerSecond.
 func (uf SpeedFactory) FromUsSurveyFeetPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedUsSurveyFootPerSecond)
 }
 
-// FromUsSurveyFootPerMinute creates a new Speed instance from UsSurveyFootPerMinute.
+// FromUsSurveyFeetPerMinute creates a new Speed instance from a value in UsSurveyFeetPerMinute.
 func (uf SpeedFactory) FromUsSurveyFeetPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedUsSurveyFootPerMinute)
 }
 
-// FromUsSurveyFootPerHour creates a new Speed instance from UsSurveyFootPerHour.
+// FromUsSurveyFeetPerHour creates a new Speed instance from a value in UsSurveyFeetPerHour.
 func (uf SpeedFactory) FromUsSurveyFeetPerHour(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedUsSurveyFootPerHour)
 }
 
-// FromInchPerSecond creates a new Speed instance from InchPerSecond.
+// FromInchesPerSecond creates a new Speed instance from a value in InchesPerSecond.
 func (uf SpeedFactory) FromInchesPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedInchPerSecond)
 }
 
-// FromInchPerMinute creates a new Speed instance from InchPerMinute.
+// FromInchesPerMinute creates a new Speed instance from a value in InchesPerMinute.
 func (uf SpeedFactory) FromInchesPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedInchPerMinute)
 }
 
-// FromInchPerHour creates a new Speed instance from InchPerHour.
+// FromInchesPerHour creates a new Speed instance from a value in InchesPerHour.
 func (uf SpeedFactory) FromInchesPerHour(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedInchPerHour)
 }
 
-// FromYardPerSecond creates a new Speed instance from YardPerSecond.
+// FromYardsPerSecond creates a new Speed instance from a value in YardsPerSecond.
 func (uf SpeedFactory) FromYardsPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedYardPerSecond)
 }
 
-// FromYardPerMinute creates a new Speed instance from YardPerMinute.
+// FromYardsPerMinute creates a new Speed instance from a value in YardsPerMinute.
 func (uf SpeedFactory) FromYardsPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedYardPerMinute)
 }
 
-// FromYardPerHour creates a new Speed instance from YardPerHour.
+// FromYardsPerHour creates a new Speed instance from a value in YardsPerHour.
 func (uf SpeedFactory) FromYardsPerHour(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedYardPerHour)
 }
 
-// FromKnot creates a new Speed instance from Knot.
+// FromKnots creates a new Speed instance from a value in Knots.
 func (uf SpeedFactory) FromKnots(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedKnot)
 }
 
-// FromMilePerHour creates a new Speed instance from MilePerHour.
+// FromMilesPerHour creates a new Speed instance from a value in MilesPerHour.
 func (uf SpeedFactory) FromMilesPerHour(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMilePerHour)
 }
 
-// FromMach creates a new Speed instance from Mach.
+// FromMach creates a new Speed instance from a value in Mach.
 func (uf SpeedFactory) FromMach(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMach)
 }
 
-// FromNanometerPerSecond creates a new Speed instance from NanometerPerSecond.
+// FromNanometersPerSecond creates a new Speed instance from a value in NanometersPerSecond.
 func (uf SpeedFactory) FromNanometersPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedNanometerPerSecond)
 }
 
-// FromMicrometerPerSecond creates a new Speed instance from MicrometerPerSecond.
+// FromMicrometersPerSecond creates a new Speed instance from a value in MicrometersPerSecond.
 func (uf SpeedFactory) FromMicrometersPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMicrometerPerSecond)
 }
 
-// FromMillimeterPerSecond creates a new Speed instance from MillimeterPerSecond.
+// FromMillimetersPerSecond creates a new Speed instance from a value in MillimetersPerSecond.
 func (uf SpeedFactory) FromMillimetersPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMillimeterPerSecond)
 }
 
-// FromCentimeterPerSecond creates a new Speed instance from CentimeterPerSecond.
+// FromCentimetersPerSecond creates a new Speed instance from a value in CentimetersPerSecond.
 func (uf SpeedFactory) FromCentimetersPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedCentimeterPerSecond)
 }
 
-// FromDecimeterPerSecond creates a new Speed instance from DecimeterPerSecond.
+// FromDecimetersPerSecond creates a new Speed instance from a value in DecimetersPerSecond.
 func (uf SpeedFactory) FromDecimetersPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedDecimeterPerSecond)
 }
 
-// FromKilometerPerSecond creates a new Speed instance from KilometerPerSecond.
+// FromKilometersPerSecond creates a new Speed instance from a value in KilometersPerSecond.
 func (uf SpeedFactory) FromKilometersPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedKilometerPerSecond)
 }
 
-// FromNanometerPerMinute creates a new Speed instance from NanometerPerMinute.
+// FromNanometersPerMinutes creates a new Speed instance from a value in NanometersPerMinutes.
 func (uf SpeedFactory) FromNanometersPerMinutes(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedNanometerPerMinute)
 }
 
-// FromMicrometerPerMinute creates a new Speed instance from MicrometerPerMinute.
+// FromMicrometersPerMinutes creates a new Speed instance from a value in MicrometersPerMinutes.
 func (uf SpeedFactory) FromMicrometersPerMinutes(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMicrometerPerMinute)
 }
 
-// FromMillimeterPerMinute creates a new Speed instance from MillimeterPerMinute.
+// FromMillimetersPerMinutes creates a new Speed instance from a value in MillimetersPerMinutes.
 func (uf SpeedFactory) FromMillimetersPerMinutes(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMillimeterPerMinute)
 }
 
-// FromCentimeterPerMinute creates a new Speed instance from CentimeterPerMinute.
+// FromCentimetersPerMinutes creates a new Speed instance from a value in CentimetersPerMinutes.
 func (uf SpeedFactory) FromCentimetersPerMinutes(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedCentimeterPerMinute)
 }
 
-// FromDecimeterPerMinute creates a new Speed instance from DecimeterPerMinute.
+// FromDecimetersPerMinutes creates a new Speed instance from a value in DecimetersPerMinutes.
 func (uf SpeedFactory) FromDecimetersPerMinutes(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedDecimeterPerMinute)
 }
 
-// FromKilometerPerMinute creates a new Speed instance from KilometerPerMinute.
+// FromKilometersPerMinutes creates a new Speed instance from a value in KilometersPerMinutes.
 func (uf SpeedFactory) FromKilometersPerMinutes(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedKilometerPerMinute)
 }
 
-// FromMillimeterPerHour creates a new Speed instance from MillimeterPerHour.
+// FromMillimetersPerHour creates a new Speed instance from a value in MillimetersPerHour.
 func (uf SpeedFactory) FromMillimetersPerHour(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMillimeterPerHour)
 }
 
-// FromCentimeterPerHour creates a new Speed instance from CentimeterPerHour.
+// FromCentimetersPerHour creates a new Speed instance from a value in CentimetersPerHour.
 func (uf SpeedFactory) FromCentimetersPerHour(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedCentimeterPerHour)
 }
 
-// FromKilometerPerHour creates a new Speed instance from KilometerPerHour.
+// FromKilometersPerHour creates a new Speed instance from a value in KilometersPerHour.
 func (uf SpeedFactory) FromKilometersPerHour(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedKilometerPerHour)
 }
-
-
 
 
 // newSpeed creates a new Speed.
@@ -355,13 +365,15 @@ func newSpeed(value float64, fromUnit SpeedUnits) (*Speed, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Speed in MeterPerSecond.
+// BaseValue returns the base value of Speed in MeterPerSecond unit (the base/default quantity).
 func (a *Speed) BaseValue() float64 {
 	return a.value
 }
 
 
-// MeterPerSecond returns the value in MeterPerSecond.
+// MetersPerSecond returns the Speed value in MetersPerSecond.
+//
+// 
 func (a *Speed) MetersPerSecond() float64 {
 	if a.meters_per_secondLazy != nil {
 		return *a.meters_per_secondLazy
@@ -371,7 +383,9 @@ func (a *Speed) MetersPerSecond() float64 {
 	return meters_per_second
 }
 
-// MeterPerMinute returns the value in MeterPerMinute.
+// MetersPerMinutes returns the Speed value in MetersPerMinutes.
+//
+// 
 func (a *Speed) MetersPerMinutes() float64 {
 	if a.meters_per_minutesLazy != nil {
 		return *a.meters_per_minutesLazy
@@ -381,7 +395,9 @@ func (a *Speed) MetersPerMinutes() float64 {
 	return meters_per_minutes
 }
 
-// MeterPerHour returns the value in MeterPerHour.
+// MetersPerHour returns the Speed value in MetersPerHour.
+//
+// 
 func (a *Speed) MetersPerHour() float64 {
 	if a.meters_per_hourLazy != nil {
 		return *a.meters_per_hourLazy
@@ -391,7 +407,9 @@ func (a *Speed) MetersPerHour() float64 {
 	return meters_per_hour
 }
 
-// FootPerSecond returns the value in FootPerSecond.
+// FeetPerSecond returns the Speed value in FeetPerSecond.
+//
+// 
 func (a *Speed) FeetPerSecond() float64 {
 	if a.feet_per_secondLazy != nil {
 		return *a.feet_per_secondLazy
@@ -401,7 +419,9 @@ func (a *Speed) FeetPerSecond() float64 {
 	return feet_per_second
 }
 
-// FootPerMinute returns the value in FootPerMinute.
+// FeetPerMinute returns the Speed value in FeetPerMinute.
+//
+// 
 func (a *Speed) FeetPerMinute() float64 {
 	if a.feet_per_minuteLazy != nil {
 		return *a.feet_per_minuteLazy
@@ -411,7 +431,9 @@ func (a *Speed) FeetPerMinute() float64 {
 	return feet_per_minute
 }
 
-// FootPerHour returns the value in FootPerHour.
+// FeetPerHour returns the Speed value in FeetPerHour.
+//
+// 
 func (a *Speed) FeetPerHour() float64 {
 	if a.feet_per_hourLazy != nil {
 		return *a.feet_per_hourLazy
@@ -421,7 +443,9 @@ func (a *Speed) FeetPerHour() float64 {
 	return feet_per_hour
 }
 
-// UsSurveyFootPerSecond returns the value in UsSurveyFootPerSecond.
+// UsSurveyFeetPerSecond returns the Speed value in UsSurveyFeetPerSecond.
+//
+// 
 func (a *Speed) UsSurveyFeetPerSecond() float64 {
 	if a.us_survey_feet_per_secondLazy != nil {
 		return *a.us_survey_feet_per_secondLazy
@@ -431,7 +455,9 @@ func (a *Speed) UsSurveyFeetPerSecond() float64 {
 	return us_survey_feet_per_second
 }
 
-// UsSurveyFootPerMinute returns the value in UsSurveyFootPerMinute.
+// UsSurveyFeetPerMinute returns the Speed value in UsSurveyFeetPerMinute.
+//
+// 
 func (a *Speed) UsSurveyFeetPerMinute() float64 {
 	if a.us_survey_feet_per_minuteLazy != nil {
 		return *a.us_survey_feet_per_minuteLazy
@@ -441,7 +467,9 @@ func (a *Speed) UsSurveyFeetPerMinute() float64 {
 	return us_survey_feet_per_minute
 }
 
-// UsSurveyFootPerHour returns the value in UsSurveyFootPerHour.
+// UsSurveyFeetPerHour returns the Speed value in UsSurveyFeetPerHour.
+//
+// 
 func (a *Speed) UsSurveyFeetPerHour() float64 {
 	if a.us_survey_feet_per_hourLazy != nil {
 		return *a.us_survey_feet_per_hourLazy
@@ -451,7 +479,9 @@ func (a *Speed) UsSurveyFeetPerHour() float64 {
 	return us_survey_feet_per_hour
 }
 
-// InchPerSecond returns the value in InchPerSecond.
+// InchesPerSecond returns the Speed value in InchesPerSecond.
+//
+// 
 func (a *Speed) InchesPerSecond() float64 {
 	if a.inches_per_secondLazy != nil {
 		return *a.inches_per_secondLazy
@@ -461,7 +491,9 @@ func (a *Speed) InchesPerSecond() float64 {
 	return inches_per_second
 }
 
-// InchPerMinute returns the value in InchPerMinute.
+// InchesPerMinute returns the Speed value in InchesPerMinute.
+//
+// 
 func (a *Speed) InchesPerMinute() float64 {
 	if a.inches_per_minuteLazy != nil {
 		return *a.inches_per_minuteLazy
@@ -471,7 +503,9 @@ func (a *Speed) InchesPerMinute() float64 {
 	return inches_per_minute
 }
 
-// InchPerHour returns the value in InchPerHour.
+// InchesPerHour returns the Speed value in InchesPerHour.
+//
+// 
 func (a *Speed) InchesPerHour() float64 {
 	if a.inches_per_hourLazy != nil {
 		return *a.inches_per_hourLazy
@@ -481,7 +515,9 @@ func (a *Speed) InchesPerHour() float64 {
 	return inches_per_hour
 }
 
-// YardPerSecond returns the value in YardPerSecond.
+// YardsPerSecond returns the Speed value in YardsPerSecond.
+//
+// 
 func (a *Speed) YardsPerSecond() float64 {
 	if a.yards_per_secondLazy != nil {
 		return *a.yards_per_secondLazy
@@ -491,7 +527,9 @@ func (a *Speed) YardsPerSecond() float64 {
 	return yards_per_second
 }
 
-// YardPerMinute returns the value in YardPerMinute.
+// YardsPerMinute returns the Speed value in YardsPerMinute.
+//
+// 
 func (a *Speed) YardsPerMinute() float64 {
 	if a.yards_per_minuteLazy != nil {
 		return *a.yards_per_minuteLazy
@@ -501,7 +539,9 @@ func (a *Speed) YardsPerMinute() float64 {
 	return yards_per_minute
 }
 
-// YardPerHour returns the value in YardPerHour.
+// YardsPerHour returns the Speed value in YardsPerHour.
+//
+// 
 func (a *Speed) YardsPerHour() float64 {
 	if a.yards_per_hourLazy != nil {
 		return *a.yards_per_hourLazy
@@ -511,7 +551,9 @@ func (a *Speed) YardsPerHour() float64 {
 	return yards_per_hour
 }
 
-// Knot returns the value in Knot.
+// Knots returns the Speed value in Knots.
+//
+// The knot, by definition, is a unit of speed equals to 1 nautical mile per hour, which is exactly 1852.000 metres per hour. The length of the internationally agreed nautical mile is 1852 m. The US adopted the international definition in 1954, the UK adopted the international nautical mile definition in 1970.
 func (a *Speed) Knots() float64 {
 	if a.knotsLazy != nil {
 		return *a.knotsLazy
@@ -521,7 +563,9 @@ func (a *Speed) Knots() float64 {
 	return knots
 }
 
-// MilePerHour returns the value in MilePerHour.
+// MilesPerHour returns the Speed value in MilesPerHour.
+//
+// 
 func (a *Speed) MilesPerHour() float64 {
 	if a.miles_per_hourLazy != nil {
 		return *a.miles_per_hourLazy
@@ -531,7 +575,9 @@ func (a *Speed) MilesPerHour() float64 {
 	return miles_per_hour
 }
 
-// Mach returns the value in Mach.
+// Mach returns the Speed value in Mach.
+//
+// 
 func (a *Speed) Mach() float64 {
 	if a.machLazy != nil {
 		return *a.machLazy
@@ -541,7 +587,9 @@ func (a *Speed) Mach() float64 {
 	return mach
 }
 
-// NanometerPerSecond returns the value in NanometerPerSecond.
+// NanometersPerSecond returns the Speed value in NanometersPerSecond.
+//
+// 
 func (a *Speed) NanometersPerSecond() float64 {
 	if a.nanometers_per_secondLazy != nil {
 		return *a.nanometers_per_secondLazy
@@ -551,7 +599,9 @@ func (a *Speed) NanometersPerSecond() float64 {
 	return nanometers_per_second
 }
 
-// MicrometerPerSecond returns the value in MicrometerPerSecond.
+// MicrometersPerSecond returns the Speed value in MicrometersPerSecond.
+//
+// 
 func (a *Speed) MicrometersPerSecond() float64 {
 	if a.micrometers_per_secondLazy != nil {
 		return *a.micrometers_per_secondLazy
@@ -561,7 +611,9 @@ func (a *Speed) MicrometersPerSecond() float64 {
 	return micrometers_per_second
 }
 
-// MillimeterPerSecond returns the value in MillimeterPerSecond.
+// MillimetersPerSecond returns the Speed value in MillimetersPerSecond.
+//
+// 
 func (a *Speed) MillimetersPerSecond() float64 {
 	if a.millimeters_per_secondLazy != nil {
 		return *a.millimeters_per_secondLazy
@@ -571,7 +623,9 @@ func (a *Speed) MillimetersPerSecond() float64 {
 	return millimeters_per_second
 }
 
-// CentimeterPerSecond returns the value in CentimeterPerSecond.
+// CentimetersPerSecond returns the Speed value in CentimetersPerSecond.
+//
+// 
 func (a *Speed) CentimetersPerSecond() float64 {
 	if a.centimeters_per_secondLazy != nil {
 		return *a.centimeters_per_secondLazy
@@ -581,7 +635,9 @@ func (a *Speed) CentimetersPerSecond() float64 {
 	return centimeters_per_second
 }
 
-// DecimeterPerSecond returns the value in DecimeterPerSecond.
+// DecimetersPerSecond returns the Speed value in DecimetersPerSecond.
+//
+// 
 func (a *Speed) DecimetersPerSecond() float64 {
 	if a.decimeters_per_secondLazy != nil {
 		return *a.decimeters_per_secondLazy
@@ -591,7 +647,9 @@ func (a *Speed) DecimetersPerSecond() float64 {
 	return decimeters_per_second
 }
 
-// KilometerPerSecond returns the value in KilometerPerSecond.
+// KilometersPerSecond returns the Speed value in KilometersPerSecond.
+//
+// 
 func (a *Speed) KilometersPerSecond() float64 {
 	if a.kilometers_per_secondLazy != nil {
 		return *a.kilometers_per_secondLazy
@@ -601,7 +659,9 @@ func (a *Speed) KilometersPerSecond() float64 {
 	return kilometers_per_second
 }
 
-// NanometerPerMinute returns the value in NanometerPerMinute.
+// NanometersPerMinutes returns the Speed value in NanometersPerMinutes.
+//
+// 
 func (a *Speed) NanometersPerMinutes() float64 {
 	if a.nanometers_per_minutesLazy != nil {
 		return *a.nanometers_per_minutesLazy
@@ -611,7 +671,9 @@ func (a *Speed) NanometersPerMinutes() float64 {
 	return nanometers_per_minutes
 }
 
-// MicrometerPerMinute returns the value in MicrometerPerMinute.
+// MicrometersPerMinutes returns the Speed value in MicrometersPerMinutes.
+//
+// 
 func (a *Speed) MicrometersPerMinutes() float64 {
 	if a.micrometers_per_minutesLazy != nil {
 		return *a.micrometers_per_minutesLazy
@@ -621,7 +683,9 @@ func (a *Speed) MicrometersPerMinutes() float64 {
 	return micrometers_per_minutes
 }
 
-// MillimeterPerMinute returns the value in MillimeterPerMinute.
+// MillimetersPerMinutes returns the Speed value in MillimetersPerMinutes.
+//
+// 
 func (a *Speed) MillimetersPerMinutes() float64 {
 	if a.millimeters_per_minutesLazy != nil {
 		return *a.millimeters_per_minutesLazy
@@ -631,7 +695,9 @@ func (a *Speed) MillimetersPerMinutes() float64 {
 	return millimeters_per_minutes
 }
 
-// CentimeterPerMinute returns the value in CentimeterPerMinute.
+// CentimetersPerMinutes returns the Speed value in CentimetersPerMinutes.
+//
+// 
 func (a *Speed) CentimetersPerMinutes() float64 {
 	if a.centimeters_per_minutesLazy != nil {
 		return *a.centimeters_per_minutesLazy
@@ -641,7 +707,9 @@ func (a *Speed) CentimetersPerMinutes() float64 {
 	return centimeters_per_minutes
 }
 
-// DecimeterPerMinute returns the value in DecimeterPerMinute.
+// DecimetersPerMinutes returns the Speed value in DecimetersPerMinutes.
+//
+// 
 func (a *Speed) DecimetersPerMinutes() float64 {
 	if a.decimeters_per_minutesLazy != nil {
 		return *a.decimeters_per_minutesLazy
@@ -651,7 +719,9 @@ func (a *Speed) DecimetersPerMinutes() float64 {
 	return decimeters_per_minutes
 }
 
-// KilometerPerMinute returns the value in KilometerPerMinute.
+// KilometersPerMinutes returns the Speed value in KilometersPerMinutes.
+//
+// 
 func (a *Speed) KilometersPerMinutes() float64 {
 	if a.kilometers_per_minutesLazy != nil {
 		return *a.kilometers_per_minutesLazy
@@ -661,7 +731,9 @@ func (a *Speed) KilometersPerMinutes() float64 {
 	return kilometers_per_minutes
 }
 
-// MillimeterPerHour returns the value in MillimeterPerHour.
+// MillimetersPerHour returns the Speed value in MillimetersPerHour.
+//
+// 
 func (a *Speed) MillimetersPerHour() float64 {
 	if a.millimeters_per_hourLazy != nil {
 		return *a.millimeters_per_hourLazy
@@ -671,7 +743,9 @@ func (a *Speed) MillimetersPerHour() float64 {
 	return millimeters_per_hour
 }
 
-// CentimeterPerHour returns the value in CentimeterPerHour.
+// CentimetersPerHour returns the Speed value in CentimetersPerHour.
+//
+// 
 func (a *Speed) CentimetersPerHour() float64 {
 	if a.centimeters_per_hourLazy != nil {
 		return *a.centimeters_per_hourLazy
@@ -681,7 +755,9 @@ func (a *Speed) CentimetersPerHour() float64 {
 	return centimeters_per_hour
 }
 
-// KilometerPerHour returns the value in KilometerPerHour.
+// KilometersPerHour returns the Speed value in KilometersPerHour.
+//
+// 
 func (a *Speed) KilometersPerHour() float64 {
 	if a.kilometers_per_hourLazy != nil {
 		return *a.kilometers_per_hourLazy
@@ -692,7 +768,9 @@ func (a *Speed) KilometersPerHour() float64 {
 }
 
 
-// ToDto creates an SpeedDto representation.
+// ToDto creates a SpeedDto representation from the Speed instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterPerSecond by default.
 func (a *Speed) ToDto(holdInUnit *SpeedUnits) SpeedDto {
 	if holdInUnit == nil {
 		defaultUnit := SpeedMeterPerSecond // Default value
@@ -705,12 +783,19 @@ func (a *Speed) ToDto(holdInUnit *SpeedUnits) SpeedDto {
 	}
 }
 
-// ToDtoJSON creates an SpeedDto representation.
+// ToDtoJSON creates a JSON representation of the Speed instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by MeterPerSecond by default.
 func (a *Speed) ToDtoJSON(holdInUnit *SpeedUnits) ([]byte, error) {
+	// Convert to SpeedDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Speed to a specific unit value.
+// Convert converts a Speed to a specific unit value.
+// The function uses the provided unit type (SpeedUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Speed) Convert(toUnit SpeedUnits) float64 {
 	switch toUnit { 
     case SpeedMeterPerSecond:
@@ -780,7 +865,7 @@ func (a *Speed) Convert(toUnit SpeedUnits) float64 {
     case SpeedKilometerPerHour:
 		return a.KilometersPerHour()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -931,13 +1016,22 @@ func (a *Speed) convertToBase(value float64, fromUnit SpeedUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Speed in the default unit (MeterPerSecond),
+// formatted to two decimal places.
 func (a Speed) String() string {
 	return a.ToString(SpeedMeterPerSecond, 2)
 }
 
-// ToString formats the Speed to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Speed value as a string with the specified unit and fractional digits.
+// It converts the Speed to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Speed value will be converted (e.g., MeterPerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Speed with the unit abbreviation.
 func (a *Speed) ToString(unit SpeedUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1021,12 +1115,26 @@ func (a *Speed) getUnitAbbreviation(unit SpeedUnits) string {
 	}
 }
 
-// Check if the given Speed are equals to the current Speed
+// Equals checks if the given Speed is equal to the current Speed.
+//
+// Parameters:
+//    other: The Speed to compare against.
+//
+// Returns:
+//    bool: Returns true if both Speed are equal, false otherwise.
 func (a *Speed) Equals(other *Speed) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Speed are equals to the current Speed
+// CompareTo compares the current Speed with another Speed.
+// It returns -1 if the current Speed is less than the other Speed, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Speed to compare against.
+//
+// Returns:
+//    int: -1 if the current Speed is less, 1 if greater, and 0 if equal.
 func (a *Speed) CompareTo(other *Speed) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1039,22 +1147,50 @@ func (a *Speed) CompareTo(other *Speed) int {
 	return 0
 }
 
-// Add the given Speed to the current Speed.
+// Add adds the given Speed to the current Speed and returns the result.
+// The result is a new Speed instance with the sum of the values.
+//
+// Parameters:
+//    other: The Speed to add to the current Speed.
+//
+// Returns:
+//    *Speed: A new Speed instance representing the sum of both Speed.
 func (a *Speed) Add(other *Speed) *Speed {
 	return &Speed{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Speed to the current Speed.
+// Subtract subtracts the given Speed from the current Speed and returns the result.
+// The result is a new Speed instance with the difference of the values.
+//
+// Parameters:
+//    other: The Speed to subtract from the current Speed.
+//
+// Returns:
+//    *Speed: A new Speed instance representing the difference of both Speed.
 func (a *Speed) Subtract(other *Speed) *Speed {
 	return &Speed{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Speed to the current Speed.
+// Multiply multiplies the current Speed by the given Speed and returns the result.
+// The result is a new Speed instance with the product of the values.
+//
+// Parameters:
+//    other: The Speed to multiply with the current Speed.
+//
+// Returns:
+//    *Speed: A new Speed instance representing the product of both Speed.
 func (a *Speed) Multiply(other *Speed) *Speed {
 	return &Speed{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Speed to the current Speed.
+// Divide divides the current Speed by the given Speed and returns the result.
+// The result is a new Speed instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Speed to divide the current Speed by.
+//
+// Returns:
+//    *Speed: A new Speed instance representing the quotient of both Speed.
 func (a *Speed) Divide(other *Speed) *Speed {
 	return &Speed{value: a.value / other.BaseValue()}
 }

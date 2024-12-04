@@ -12,7 +12,7 @@ import (
 
 
 
-// ScalarUnits enumeration
+// ScalarUnits defines various units of Scalar.
 type ScalarUnits string
 
 const (
@@ -21,19 +21,24 @@ const (
         ScalarAmount ScalarUnits = "Amount"
 )
 
-// ScalarDto represents an Scalar
+// ScalarDto represents a Scalar measurement with a numerical value and its corresponding unit.
 type ScalarDto struct {
+    // Value is the numerical representation of the Scalar.
 	Value float64
+    // Unit specifies the unit of measurement for the Scalar, as defined in the ScalarUnits enumeration.
 	Unit  ScalarUnits
 }
 
-// ScalarDtoFactory struct to group related functions
+// ScalarDtoFactory groups methods for creating and serializing ScalarDto objects.
 type ScalarDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ScalarDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ScalarDtoFactory) FromJSON(data []byte) (*ScalarDto, error) {
 	a := ScalarDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ScalarDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -41,6 +46,9 @@ func (udf ScalarDtoFactory) FromJSON(data []byte) (*ScalarDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a ScalarDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ScalarDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -52,41 +60,43 @@ func (a ScalarDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Scalar struct
+// Scalar represents a measurement in a of Scalar.
+//
+// A way of representing a number of items.
 type Scalar struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     amountLazy *float64 
 }
 
-// ScalarFactory struct to group related functions
+// ScalarFactory groups methods for creating Scalar instances.
 type ScalarFactory struct{}
 
+// CreateScalar creates a new Scalar instance from the given value and unit.
 func (uf ScalarFactory) CreateScalar(value float64, unit ScalarUnits) (*Scalar, error) {
 	return newScalar(value, unit)
 }
 
+// FromDto converts a ScalarDto to a Scalar instance.
 func (uf ScalarFactory) FromDto(dto ScalarDto) (*Scalar, error) {
 	return newScalar(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Scalar instance.
 func (uf ScalarFactory) FromDtoJSON(data []byte) (*Scalar, error) {
 	unitDto, err := ScalarDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ScalarDto from JSON: %w", err)
 	}
 	return ScalarFactory{}.FromDto(*unitDto)
 }
 
 
-// FromAmount creates a new Scalar instance from Amount.
+// FromAmount creates a new Scalar instance from a value in Amount.
 func (uf ScalarFactory) FromAmount(value float64) (*Scalar, error) {
 	return newScalar(value, ScalarAmount)
 }
-
-
 
 
 // newScalar creates a new Scalar.
@@ -99,13 +109,15 @@ func newScalar(value float64, fromUnit ScalarUnits) (*Scalar, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Scalar in Amount.
+// BaseValue returns the base value of Scalar in Amount unit (the base/default quantity).
 func (a *Scalar) BaseValue() float64 {
 	return a.value
 }
 
 
-// Amount returns the value in Amount.
+// Amount returns the Scalar value in Amount.
+//
+// 
 func (a *Scalar) Amount() float64 {
 	if a.amountLazy != nil {
 		return *a.amountLazy
@@ -116,7 +128,9 @@ func (a *Scalar) Amount() float64 {
 }
 
 
-// ToDto creates an ScalarDto representation.
+// ToDto creates a ScalarDto representation from the Scalar instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Amount by default.
 func (a *Scalar) ToDto(holdInUnit *ScalarUnits) ScalarDto {
 	if holdInUnit == nil {
 		defaultUnit := ScalarAmount // Default value
@@ -129,18 +143,25 @@ func (a *Scalar) ToDto(holdInUnit *ScalarUnits) ScalarDto {
 	}
 }
 
-// ToDtoJSON creates an ScalarDto representation.
+// ToDtoJSON creates a JSON representation of the Scalar instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Amount by default.
 func (a *Scalar) ToDtoJSON(holdInUnit *ScalarUnits) ([]byte, error) {
+	// Convert to ScalarDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Scalar to a specific unit value.
+// Convert converts a Scalar to a specific unit value.
+// The function uses the provided unit type (ScalarUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Scalar) Convert(toUnit ScalarUnits) float64 {
 	switch toUnit { 
     case ScalarAmount:
 		return a.Amount()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -163,13 +184,22 @@ func (a *Scalar) convertToBase(value float64, fromUnit ScalarUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Scalar in the default unit (Amount),
+// formatted to two decimal places.
 func (a Scalar) String() string {
 	return a.ToString(ScalarAmount, 2)
 }
 
-// ToString formats the Scalar to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Scalar value as a string with the specified unit and fractional digits.
+// It converts the Scalar to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Scalar value will be converted (e.g., Amount))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Scalar with the unit abbreviation.
 func (a *Scalar) ToString(unit ScalarUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -189,12 +219,26 @@ func (a *Scalar) getUnitAbbreviation(unit ScalarUnits) string {
 	}
 }
 
-// Check if the given Scalar are equals to the current Scalar
+// Equals checks if the given Scalar is equal to the current Scalar.
+//
+// Parameters:
+//    other: The Scalar to compare against.
+//
+// Returns:
+//    bool: Returns true if both Scalar are equal, false otherwise.
 func (a *Scalar) Equals(other *Scalar) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Scalar are equals to the current Scalar
+// CompareTo compares the current Scalar with another Scalar.
+// It returns -1 if the current Scalar is less than the other Scalar, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Scalar to compare against.
+//
+// Returns:
+//    int: -1 if the current Scalar is less, 1 if greater, and 0 if equal.
 func (a *Scalar) CompareTo(other *Scalar) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -207,22 +251,50 @@ func (a *Scalar) CompareTo(other *Scalar) int {
 	return 0
 }
 
-// Add the given Scalar to the current Scalar.
+// Add adds the given Scalar to the current Scalar and returns the result.
+// The result is a new Scalar instance with the sum of the values.
+//
+// Parameters:
+//    other: The Scalar to add to the current Scalar.
+//
+// Returns:
+//    *Scalar: A new Scalar instance representing the sum of both Scalar.
 func (a *Scalar) Add(other *Scalar) *Scalar {
 	return &Scalar{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Scalar to the current Scalar.
+// Subtract subtracts the given Scalar from the current Scalar and returns the result.
+// The result is a new Scalar instance with the difference of the values.
+//
+// Parameters:
+//    other: The Scalar to subtract from the current Scalar.
+//
+// Returns:
+//    *Scalar: A new Scalar instance representing the difference of both Scalar.
 func (a *Scalar) Subtract(other *Scalar) *Scalar {
 	return &Scalar{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Scalar to the current Scalar.
+// Multiply multiplies the current Scalar by the given Scalar and returns the result.
+// The result is a new Scalar instance with the product of the values.
+//
+// Parameters:
+//    other: The Scalar to multiply with the current Scalar.
+//
+// Returns:
+//    *Scalar: A new Scalar instance representing the product of both Scalar.
 func (a *Scalar) Multiply(other *Scalar) *Scalar {
 	return &Scalar{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Scalar to the current Scalar.
+// Divide divides the current Scalar by the given Scalar and returns the result.
+// The result is a new Scalar instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Scalar to divide the current Scalar by.
+//
+// Returns:
+//    *Scalar: A new Scalar instance representing the quotient of both Scalar.
 func (a *Scalar) Divide(other *Scalar) *Scalar {
 	return &Scalar{value: a.value / other.BaseValue()}
 }

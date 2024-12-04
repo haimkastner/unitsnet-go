@@ -12,7 +12,7 @@ import (
 
 
 
-// VolumeUnits enumeration
+// VolumeUnits defines various units of Volume.
 type VolumeUnits string
 
 const (
@@ -127,19 +127,24 @@ const (
         VolumeMegausGallon VolumeUnits = "MegausGallon"
 )
 
-// VolumeDto represents an Volume
+// VolumeDto represents a Volume measurement with a numerical value and its corresponding unit.
 type VolumeDto struct {
+    // Value is the numerical representation of the Volume.
 	Value float64
+    // Unit specifies the unit of measurement for the Volume, as defined in the VolumeUnits enumeration.
 	Unit  VolumeUnits
 }
 
-// VolumeDtoFactory struct to group related functions
+// VolumeDtoFactory groups methods for creating and serializing VolumeDto objects.
 type VolumeDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a VolumeDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf VolumeDtoFactory) FromJSON(data []byte) (*VolumeDto, error) {
 	a := VolumeDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into VolumeDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -147,6 +152,9 @@ func (udf VolumeDtoFactory) FromJSON(data []byte) (*VolumeDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a VolumeDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a VolumeDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -158,10 +166,11 @@ func (a VolumeDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// Volume struct
+// Volume represents a measurement in a of Volume.
+//
+// Volume is the quantity of three-dimensional space enclosed by some closed boundary, for example, the space that a substance (solid, liquid, gas, or plasma) or shape occupies or contains.[1] Volume is often quantified numerically using the SI derived unit, the cubic metre. The volume of a container is generally understood to be the capacity of the container, i. e. the amount of fluid (gas or liquid) that the container could hold, rather than the amount of space the container itself displaces.
 type Volume struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     litersLazy *float64 
@@ -220,297 +229,298 @@ type Volume struct {
     megaus_gallonsLazy *float64 
 }
 
-// VolumeFactory struct to group related functions
+// VolumeFactory groups methods for creating Volume instances.
 type VolumeFactory struct{}
 
+// CreateVolume creates a new Volume instance from the given value and unit.
 func (uf VolumeFactory) CreateVolume(value float64, unit VolumeUnits) (*Volume, error) {
 	return newVolume(value, unit)
 }
 
+// FromDto converts a VolumeDto to a Volume instance.
 func (uf VolumeFactory) FromDto(dto VolumeDto) (*Volume, error) {
 	return newVolume(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a Volume instance.
 func (uf VolumeFactory) FromDtoJSON(data []byte) (*Volume, error) {
 	unitDto, err := VolumeDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse VolumeDto from JSON: %w", err)
 	}
 	return VolumeFactory{}.FromDto(*unitDto)
 }
 
 
-// FromLiter creates a new Volume instance from Liter.
+// FromLiters creates a new Volume instance from a value in Liters.
 func (uf VolumeFactory) FromLiters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeLiter)
 }
 
-// FromCubicMeter creates a new Volume instance from CubicMeter.
+// FromCubicMeters creates a new Volume instance from a value in CubicMeters.
 func (uf VolumeFactory) FromCubicMeters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicMeter)
 }
 
-// FromCubicKilometer creates a new Volume instance from CubicKilometer.
+// FromCubicKilometers creates a new Volume instance from a value in CubicKilometers.
 func (uf VolumeFactory) FromCubicKilometers(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicKilometer)
 }
 
-// FromCubicHectometer creates a new Volume instance from CubicHectometer.
+// FromCubicHectometers creates a new Volume instance from a value in CubicHectometers.
 func (uf VolumeFactory) FromCubicHectometers(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicHectometer)
 }
 
-// FromCubicDecimeter creates a new Volume instance from CubicDecimeter.
+// FromCubicDecimeters creates a new Volume instance from a value in CubicDecimeters.
 func (uf VolumeFactory) FromCubicDecimeters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicDecimeter)
 }
 
-// FromCubicCentimeter creates a new Volume instance from CubicCentimeter.
+// FromCubicCentimeters creates a new Volume instance from a value in CubicCentimeters.
 func (uf VolumeFactory) FromCubicCentimeters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicCentimeter)
 }
 
-// FromCubicMillimeter creates a new Volume instance from CubicMillimeter.
+// FromCubicMillimeters creates a new Volume instance from a value in CubicMillimeters.
 func (uf VolumeFactory) FromCubicMillimeters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicMillimeter)
 }
 
-// FromCubicMicrometer creates a new Volume instance from CubicMicrometer.
+// FromCubicMicrometers creates a new Volume instance from a value in CubicMicrometers.
 func (uf VolumeFactory) FromCubicMicrometers(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicMicrometer)
 }
 
-// FromCubicMile creates a new Volume instance from CubicMile.
+// FromCubicMiles creates a new Volume instance from a value in CubicMiles.
 func (uf VolumeFactory) FromCubicMiles(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicMile)
 }
 
-// FromCubicYard creates a new Volume instance from CubicYard.
+// FromCubicYards creates a new Volume instance from a value in CubicYards.
 func (uf VolumeFactory) FromCubicYards(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicYard)
 }
 
-// FromCubicFoot creates a new Volume instance from CubicFoot.
+// FromCubicFeet creates a new Volume instance from a value in CubicFeet.
 func (uf VolumeFactory) FromCubicFeet(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicFoot)
 }
 
-// FromCubicInch creates a new Volume instance from CubicInch.
+// FromCubicInches creates a new Volume instance from a value in CubicInches.
 func (uf VolumeFactory) FromCubicInches(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCubicInch)
 }
 
-// FromImperialGallon creates a new Volume instance from ImperialGallon.
+// FromImperialGallons creates a new Volume instance from a value in ImperialGallons.
 func (uf VolumeFactory) FromImperialGallons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeImperialGallon)
 }
 
-// FromImperialOunce creates a new Volume instance from ImperialOunce.
+// FromImperialOunces creates a new Volume instance from a value in ImperialOunces.
 func (uf VolumeFactory) FromImperialOunces(value float64) (*Volume, error) {
 	return newVolume(value, VolumeImperialOunce)
 }
 
-// FromUsGallon creates a new Volume instance from UsGallon.
+// FromUsGallons creates a new Volume instance from a value in UsGallons.
 func (uf VolumeFactory) FromUsGallons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUsGallon)
 }
 
-// FromUsOunce creates a new Volume instance from UsOunce.
+// FromUsOunces creates a new Volume instance from a value in UsOunces.
 func (uf VolumeFactory) FromUsOunces(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUsOunce)
 }
 
-// FromUsTablespoon creates a new Volume instance from UsTablespoon.
+// FromUsTablespoons creates a new Volume instance from a value in UsTablespoons.
 func (uf VolumeFactory) FromUsTablespoons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUsTablespoon)
 }
 
-// FromAuTablespoon creates a new Volume instance from AuTablespoon.
+// FromAuTablespoons creates a new Volume instance from a value in AuTablespoons.
 func (uf VolumeFactory) FromAuTablespoons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeAuTablespoon)
 }
 
-// FromUkTablespoon creates a new Volume instance from UkTablespoon.
+// FromUkTablespoons creates a new Volume instance from a value in UkTablespoons.
 func (uf VolumeFactory) FromUkTablespoons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUkTablespoon)
 }
 
-// FromMetricTeaspoon creates a new Volume instance from MetricTeaspoon.
+// FromMetricTeaspoons creates a new Volume instance from a value in MetricTeaspoons.
 func (uf VolumeFactory) FromMetricTeaspoons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeMetricTeaspoon)
 }
 
-// FromUsTeaspoon creates a new Volume instance from UsTeaspoon.
+// FromUsTeaspoons creates a new Volume instance from a value in UsTeaspoons.
 func (uf VolumeFactory) FromUsTeaspoons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUsTeaspoon)
 }
 
-// FromMetricCup creates a new Volume instance from MetricCup.
+// FromMetricCups creates a new Volume instance from a value in MetricCups.
 func (uf VolumeFactory) FromMetricCups(value float64) (*Volume, error) {
 	return newVolume(value, VolumeMetricCup)
 }
 
-// FromUsCustomaryCup creates a new Volume instance from UsCustomaryCup.
+// FromUsCustomaryCups creates a new Volume instance from a value in UsCustomaryCups.
 func (uf VolumeFactory) FromUsCustomaryCups(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUsCustomaryCup)
 }
 
-// FromUsLegalCup creates a new Volume instance from UsLegalCup.
+// FromUsLegalCups creates a new Volume instance from a value in UsLegalCups.
 func (uf VolumeFactory) FromUsLegalCups(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUsLegalCup)
 }
 
-// FromOilBarrel creates a new Volume instance from OilBarrel.
+// FromOilBarrels creates a new Volume instance from a value in OilBarrels.
 func (uf VolumeFactory) FromOilBarrels(value float64) (*Volume, error) {
 	return newVolume(value, VolumeOilBarrel)
 }
 
-// FromUsBeerBarrel creates a new Volume instance from UsBeerBarrel.
+// FromUsBeerBarrels creates a new Volume instance from a value in UsBeerBarrels.
 func (uf VolumeFactory) FromUsBeerBarrels(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUsBeerBarrel)
 }
 
-// FromImperialBeerBarrel creates a new Volume instance from ImperialBeerBarrel.
+// FromImperialBeerBarrels creates a new Volume instance from a value in ImperialBeerBarrels.
 func (uf VolumeFactory) FromImperialBeerBarrels(value float64) (*Volume, error) {
 	return newVolume(value, VolumeImperialBeerBarrel)
 }
 
-// FromUsQuart creates a new Volume instance from UsQuart.
+// FromUsQuarts creates a new Volume instance from a value in UsQuarts.
 func (uf VolumeFactory) FromUsQuarts(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUsQuart)
 }
 
-// FromImperialQuart creates a new Volume instance from ImperialQuart.
+// FromImperialQuarts creates a new Volume instance from a value in ImperialQuarts.
 func (uf VolumeFactory) FromImperialQuarts(value float64) (*Volume, error) {
 	return newVolume(value, VolumeImperialQuart)
 }
 
-// FromUsPint creates a new Volume instance from UsPint.
+// FromUsPints creates a new Volume instance from a value in UsPints.
 func (uf VolumeFactory) FromUsPints(value float64) (*Volume, error) {
 	return newVolume(value, VolumeUsPint)
 }
 
-// FromAcreFoot creates a new Volume instance from AcreFoot.
+// FromAcreFeet creates a new Volume instance from a value in AcreFeet.
 func (uf VolumeFactory) FromAcreFeet(value float64) (*Volume, error) {
 	return newVolume(value, VolumeAcreFoot)
 }
 
-// FromImperialPint creates a new Volume instance from ImperialPint.
+// FromImperialPints creates a new Volume instance from a value in ImperialPints.
 func (uf VolumeFactory) FromImperialPints(value float64) (*Volume, error) {
 	return newVolume(value, VolumeImperialPint)
 }
 
-// FromBoardFoot creates a new Volume instance from BoardFoot.
+// FromBoardFeet creates a new Volume instance from a value in BoardFeet.
 func (uf VolumeFactory) FromBoardFeet(value float64) (*Volume, error) {
 	return newVolume(value, VolumeBoardFoot)
 }
 
-// FromNanoliter creates a new Volume instance from Nanoliter.
+// FromNanoliters creates a new Volume instance from a value in Nanoliters.
 func (uf VolumeFactory) FromNanoliters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeNanoliter)
 }
 
-// FromMicroliter creates a new Volume instance from Microliter.
+// FromMicroliters creates a new Volume instance from a value in Microliters.
 func (uf VolumeFactory) FromMicroliters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeMicroliter)
 }
 
-// FromMilliliter creates a new Volume instance from Milliliter.
+// FromMilliliters creates a new Volume instance from a value in Milliliters.
 func (uf VolumeFactory) FromMilliliters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeMilliliter)
 }
 
-// FromCentiliter creates a new Volume instance from Centiliter.
+// FromCentiliters creates a new Volume instance from a value in Centiliters.
 func (uf VolumeFactory) FromCentiliters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeCentiliter)
 }
 
-// FromDeciliter creates a new Volume instance from Deciliter.
+// FromDeciliters creates a new Volume instance from a value in Deciliters.
 func (uf VolumeFactory) FromDeciliters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeDeciliter)
 }
 
-// FromDecaliter creates a new Volume instance from Decaliter.
+// FromDecaliters creates a new Volume instance from a value in Decaliters.
 func (uf VolumeFactory) FromDecaliters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeDecaliter)
 }
 
-// FromHectoliter creates a new Volume instance from Hectoliter.
+// FromHectoliters creates a new Volume instance from a value in Hectoliters.
 func (uf VolumeFactory) FromHectoliters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeHectoliter)
 }
 
-// FromKiloliter creates a new Volume instance from Kiloliter.
+// FromKiloliters creates a new Volume instance from a value in Kiloliters.
 func (uf VolumeFactory) FromKiloliters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeKiloliter)
 }
 
-// FromMegaliter creates a new Volume instance from Megaliter.
+// FromMegaliters creates a new Volume instance from a value in Megaliters.
 func (uf VolumeFactory) FromMegaliters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeMegaliter)
 }
 
-// FromHectocubicMeter creates a new Volume instance from HectocubicMeter.
+// FromHectocubicMeters creates a new Volume instance from a value in HectocubicMeters.
 func (uf VolumeFactory) FromHectocubicMeters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeHectocubicMeter)
 }
 
-// FromKilocubicMeter creates a new Volume instance from KilocubicMeter.
+// FromKilocubicMeters creates a new Volume instance from a value in KilocubicMeters.
 func (uf VolumeFactory) FromKilocubicMeters(value float64) (*Volume, error) {
 	return newVolume(value, VolumeKilocubicMeter)
 }
 
-// FromHectocubicFoot creates a new Volume instance from HectocubicFoot.
+// FromHectocubicFeet creates a new Volume instance from a value in HectocubicFeet.
 func (uf VolumeFactory) FromHectocubicFeet(value float64) (*Volume, error) {
 	return newVolume(value, VolumeHectocubicFoot)
 }
 
-// FromKilocubicFoot creates a new Volume instance from KilocubicFoot.
+// FromKilocubicFeet creates a new Volume instance from a value in KilocubicFeet.
 func (uf VolumeFactory) FromKilocubicFeet(value float64) (*Volume, error) {
 	return newVolume(value, VolumeKilocubicFoot)
 }
 
-// FromMegacubicFoot creates a new Volume instance from MegacubicFoot.
+// FromMegacubicFeet creates a new Volume instance from a value in MegacubicFeet.
 func (uf VolumeFactory) FromMegacubicFeet(value float64) (*Volume, error) {
 	return newVolume(value, VolumeMegacubicFoot)
 }
 
-// FromKiloimperialGallon creates a new Volume instance from KiloimperialGallon.
+// FromKiloimperialGallons creates a new Volume instance from a value in KiloimperialGallons.
 func (uf VolumeFactory) FromKiloimperialGallons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeKiloimperialGallon)
 }
 
-// FromMegaimperialGallon creates a new Volume instance from MegaimperialGallon.
+// FromMegaimperialGallons creates a new Volume instance from a value in MegaimperialGallons.
 func (uf VolumeFactory) FromMegaimperialGallons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeMegaimperialGallon)
 }
 
-// FromDecausGallon creates a new Volume instance from DecausGallon.
+// FromDecausGallons creates a new Volume instance from a value in DecausGallons.
 func (uf VolumeFactory) FromDecausGallons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeDecausGallon)
 }
 
-// FromDeciusGallon creates a new Volume instance from DeciusGallon.
+// FromDeciusGallons creates a new Volume instance from a value in DeciusGallons.
 func (uf VolumeFactory) FromDeciusGallons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeDeciusGallon)
 }
 
-// FromHectousGallon creates a new Volume instance from HectousGallon.
+// FromHectousGallons creates a new Volume instance from a value in HectousGallons.
 func (uf VolumeFactory) FromHectousGallons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeHectousGallon)
 }
 
-// FromKilousGallon creates a new Volume instance from KilousGallon.
+// FromKilousGallons creates a new Volume instance from a value in KilousGallons.
 func (uf VolumeFactory) FromKilousGallons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeKilousGallon)
 }
 
-// FromMegausGallon creates a new Volume instance from MegausGallon.
+// FromMegausGallons creates a new Volume instance from a value in MegausGallons.
 func (uf VolumeFactory) FromMegausGallons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeMegausGallon)
 }
-
-
 
 
 // newVolume creates a new Volume.
@@ -523,13 +533,15 @@ func newVolume(value float64, fromUnit VolumeUnits) (*Volume, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Volume in CubicMeter.
+// BaseValue returns the base value of Volume in CubicMeter unit (the base/default quantity).
 func (a *Volume) BaseValue() float64 {
 	return a.value
 }
 
 
-// Liter returns the value in Liter.
+// Liters returns the Volume value in Liters.
+//
+// 
 func (a *Volume) Liters() float64 {
 	if a.litersLazy != nil {
 		return *a.litersLazy
@@ -539,7 +551,9 @@ func (a *Volume) Liters() float64 {
 	return liters
 }
 
-// CubicMeter returns the value in CubicMeter.
+// CubicMeters returns the Volume value in CubicMeters.
+//
+// 
 func (a *Volume) CubicMeters() float64 {
 	if a.cubic_metersLazy != nil {
 		return *a.cubic_metersLazy
@@ -549,7 +563,9 @@ func (a *Volume) CubicMeters() float64 {
 	return cubic_meters
 }
 
-// CubicKilometer returns the value in CubicKilometer.
+// CubicKilometers returns the Volume value in CubicKilometers.
+//
+// 
 func (a *Volume) CubicKilometers() float64 {
 	if a.cubic_kilometersLazy != nil {
 		return *a.cubic_kilometersLazy
@@ -559,7 +575,9 @@ func (a *Volume) CubicKilometers() float64 {
 	return cubic_kilometers
 }
 
-// CubicHectometer returns the value in CubicHectometer.
+// CubicHectometers returns the Volume value in CubicHectometers.
+//
+// 
 func (a *Volume) CubicHectometers() float64 {
 	if a.cubic_hectometersLazy != nil {
 		return *a.cubic_hectometersLazy
@@ -569,7 +587,9 @@ func (a *Volume) CubicHectometers() float64 {
 	return cubic_hectometers
 }
 
-// CubicDecimeter returns the value in CubicDecimeter.
+// CubicDecimeters returns the Volume value in CubicDecimeters.
+//
+// 
 func (a *Volume) CubicDecimeters() float64 {
 	if a.cubic_decimetersLazy != nil {
 		return *a.cubic_decimetersLazy
@@ -579,7 +599,9 @@ func (a *Volume) CubicDecimeters() float64 {
 	return cubic_decimeters
 }
 
-// CubicCentimeter returns the value in CubicCentimeter.
+// CubicCentimeters returns the Volume value in CubicCentimeters.
+//
+// 
 func (a *Volume) CubicCentimeters() float64 {
 	if a.cubic_centimetersLazy != nil {
 		return *a.cubic_centimetersLazy
@@ -589,7 +611,9 @@ func (a *Volume) CubicCentimeters() float64 {
 	return cubic_centimeters
 }
 
-// CubicMillimeter returns the value in CubicMillimeter.
+// CubicMillimeters returns the Volume value in CubicMillimeters.
+//
+// 
 func (a *Volume) CubicMillimeters() float64 {
 	if a.cubic_millimetersLazy != nil {
 		return *a.cubic_millimetersLazy
@@ -599,7 +623,9 @@ func (a *Volume) CubicMillimeters() float64 {
 	return cubic_millimeters
 }
 
-// CubicMicrometer returns the value in CubicMicrometer.
+// CubicMicrometers returns the Volume value in CubicMicrometers.
+//
+// 
 func (a *Volume) CubicMicrometers() float64 {
 	if a.cubic_micrometersLazy != nil {
 		return *a.cubic_micrometersLazy
@@ -609,7 +635,9 @@ func (a *Volume) CubicMicrometers() float64 {
 	return cubic_micrometers
 }
 
-// CubicMile returns the value in CubicMile.
+// CubicMiles returns the Volume value in CubicMiles.
+//
+// 
 func (a *Volume) CubicMiles() float64 {
 	if a.cubic_milesLazy != nil {
 		return *a.cubic_milesLazy
@@ -619,7 +647,9 @@ func (a *Volume) CubicMiles() float64 {
 	return cubic_miles
 }
 
-// CubicYard returns the value in CubicYard.
+// CubicYards returns the Volume value in CubicYards.
+//
+// 
 func (a *Volume) CubicYards() float64 {
 	if a.cubic_yardsLazy != nil {
 		return *a.cubic_yardsLazy
@@ -629,7 +659,9 @@ func (a *Volume) CubicYards() float64 {
 	return cubic_yards
 }
 
-// CubicFoot returns the value in CubicFoot.
+// CubicFeet returns the Volume value in CubicFeet.
+//
+// 
 func (a *Volume) CubicFeet() float64 {
 	if a.cubic_feetLazy != nil {
 		return *a.cubic_feetLazy
@@ -639,7 +671,9 @@ func (a *Volume) CubicFeet() float64 {
 	return cubic_feet
 }
 
-// CubicInch returns the value in CubicInch.
+// CubicInches returns the Volume value in CubicInches.
+//
+// 
 func (a *Volume) CubicInches() float64 {
 	if a.cubic_inchesLazy != nil {
 		return *a.cubic_inchesLazy
@@ -649,7 +683,9 @@ func (a *Volume) CubicInches() float64 {
 	return cubic_inches
 }
 
-// ImperialGallon returns the value in ImperialGallon.
+// ImperialGallons returns the Volume value in ImperialGallons.
+//
+// The British imperial gallon (frequently called simply "gallon") is defined as exactly 4.54609 litres.
 func (a *Volume) ImperialGallons() float64 {
 	if a.imperial_gallonsLazy != nil {
 		return *a.imperial_gallonsLazy
@@ -659,7 +695,9 @@ func (a *Volume) ImperialGallons() float64 {
 	return imperial_gallons
 }
 
-// ImperialOunce returns the value in ImperialOunce.
+// ImperialOunces returns the Volume value in ImperialOunces.
+//
+// 
 func (a *Volume) ImperialOunces() float64 {
 	if a.imperial_ouncesLazy != nil {
 		return *a.imperial_ouncesLazy
@@ -669,7 +707,9 @@ func (a *Volume) ImperialOunces() float64 {
 	return imperial_ounces
 }
 
-// UsGallon returns the value in UsGallon.
+// UsGallons returns the Volume value in UsGallons.
+//
+// The US liquid gallon (frequently called simply "gallon") is legally defined as 231 cubic inches, which is exactly 3.785411784 litres.
 func (a *Volume) UsGallons() float64 {
 	if a.us_gallonsLazy != nil {
 		return *a.us_gallonsLazy
@@ -679,7 +719,9 @@ func (a *Volume) UsGallons() float64 {
 	return us_gallons
 }
 
-// UsOunce returns the value in UsOunce.
+// UsOunces returns the Volume value in UsOunces.
+//
+// 
 func (a *Volume) UsOunces() float64 {
 	if a.us_ouncesLazy != nil {
 		return *a.us_ouncesLazy
@@ -689,7 +731,9 @@ func (a *Volume) UsOunces() float64 {
 	return us_ounces
 }
 
-// UsTablespoon returns the value in UsTablespoon.
+// UsTablespoons returns the Volume value in UsTablespoons.
+//
+// 
 func (a *Volume) UsTablespoons() float64 {
 	if a.us_tablespoonsLazy != nil {
 		return *a.us_tablespoonsLazy
@@ -699,7 +743,9 @@ func (a *Volume) UsTablespoons() float64 {
 	return us_tablespoons
 }
 
-// AuTablespoon returns the value in AuTablespoon.
+// AuTablespoons returns the Volume value in AuTablespoons.
+//
+// 
 func (a *Volume) AuTablespoons() float64 {
 	if a.au_tablespoonsLazy != nil {
 		return *a.au_tablespoonsLazy
@@ -709,7 +755,9 @@ func (a *Volume) AuTablespoons() float64 {
 	return au_tablespoons
 }
 
-// UkTablespoon returns the value in UkTablespoon.
+// UkTablespoons returns the Volume value in UkTablespoons.
+//
+// 
 func (a *Volume) UkTablespoons() float64 {
 	if a.uk_tablespoonsLazy != nil {
 		return *a.uk_tablespoonsLazy
@@ -719,7 +767,9 @@ func (a *Volume) UkTablespoons() float64 {
 	return uk_tablespoons
 }
 
-// MetricTeaspoon returns the value in MetricTeaspoon.
+// MetricTeaspoons returns the Volume value in MetricTeaspoons.
+//
+// 
 func (a *Volume) MetricTeaspoons() float64 {
 	if a.metric_teaspoonsLazy != nil {
 		return *a.metric_teaspoonsLazy
@@ -729,7 +779,9 @@ func (a *Volume) MetricTeaspoons() float64 {
 	return metric_teaspoons
 }
 
-// UsTeaspoon returns the value in UsTeaspoon.
+// UsTeaspoons returns the Volume value in UsTeaspoons.
+//
+// 
 func (a *Volume) UsTeaspoons() float64 {
 	if a.us_teaspoonsLazy != nil {
 		return *a.us_teaspoonsLazy
@@ -739,7 +791,9 @@ func (a *Volume) UsTeaspoons() float64 {
 	return us_teaspoons
 }
 
-// MetricCup returns the value in MetricCup.
+// MetricCups returns the Volume value in MetricCups.
+//
+// 
 func (a *Volume) MetricCups() float64 {
 	if a.metric_cupsLazy != nil {
 		return *a.metric_cupsLazy
@@ -749,7 +803,9 @@ func (a *Volume) MetricCups() float64 {
 	return metric_cups
 }
 
-// UsCustomaryCup returns the value in UsCustomaryCup.
+// UsCustomaryCups returns the Volume value in UsCustomaryCups.
+//
+// 
 func (a *Volume) UsCustomaryCups() float64 {
 	if a.us_customary_cupsLazy != nil {
 		return *a.us_customary_cupsLazy
@@ -759,7 +815,9 @@ func (a *Volume) UsCustomaryCups() float64 {
 	return us_customary_cups
 }
 
-// UsLegalCup returns the value in UsLegalCup.
+// UsLegalCups returns the Volume value in UsLegalCups.
+//
+// 
 func (a *Volume) UsLegalCups() float64 {
 	if a.us_legal_cupsLazy != nil {
 		return *a.us_legal_cupsLazy
@@ -769,7 +827,9 @@ func (a *Volume) UsLegalCups() float64 {
 	return us_legal_cups
 }
 
-// OilBarrel returns the value in OilBarrel.
+// OilBarrels returns the Volume value in OilBarrels.
+//
+// 
 func (a *Volume) OilBarrels() float64 {
 	if a.oil_barrelsLazy != nil {
 		return *a.oil_barrelsLazy
@@ -779,7 +839,9 @@ func (a *Volume) OilBarrels() float64 {
 	return oil_barrels
 }
 
-// UsBeerBarrel returns the value in UsBeerBarrel.
+// UsBeerBarrels returns the Volume value in UsBeerBarrels.
+//
+// 
 func (a *Volume) UsBeerBarrels() float64 {
 	if a.us_beer_barrelsLazy != nil {
 		return *a.us_beer_barrelsLazy
@@ -789,7 +851,9 @@ func (a *Volume) UsBeerBarrels() float64 {
 	return us_beer_barrels
 }
 
-// ImperialBeerBarrel returns the value in ImperialBeerBarrel.
+// ImperialBeerBarrels returns the Volume value in ImperialBeerBarrels.
+//
+// 
 func (a *Volume) ImperialBeerBarrels() float64 {
 	if a.imperial_beer_barrelsLazy != nil {
 		return *a.imperial_beer_barrelsLazy
@@ -799,7 +863,9 @@ func (a *Volume) ImperialBeerBarrels() float64 {
 	return imperial_beer_barrels
 }
 
-// UsQuart returns the value in UsQuart.
+// UsQuarts returns the Volume value in UsQuarts.
+//
+// 
 func (a *Volume) UsQuarts() float64 {
 	if a.us_quartsLazy != nil {
 		return *a.us_quartsLazy
@@ -809,7 +875,9 @@ func (a *Volume) UsQuarts() float64 {
 	return us_quarts
 }
 
-// ImperialQuart returns the value in ImperialQuart.
+// ImperialQuarts returns the Volume value in ImperialQuarts.
+//
+// 
 func (a *Volume) ImperialQuarts() float64 {
 	if a.imperial_quartsLazy != nil {
 		return *a.imperial_quartsLazy
@@ -819,7 +887,9 @@ func (a *Volume) ImperialQuarts() float64 {
 	return imperial_quarts
 }
 
-// UsPint returns the value in UsPint.
+// UsPints returns the Volume value in UsPints.
+//
+// 
 func (a *Volume) UsPints() float64 {
 	if a.us_pintsLazy != nil {
 		return *a.us_pintsLazy
@@ -829,7 +899,9 @@ func (a *Volume) UsPints() float64 {
 	return us_pints
 }
 
-// AcreFoot returns the value in AcreFoot.
+// AcreFeet returns the Volume value in AcreFeet.
+//
+// 
 func (a *Volume) AcreFeet() float64 {
 	if a.acre_feetLazy != nil {
 		return *a.acre_feetLazy
@@ -839,7 +911,9 @@ func (a *Volume) AcreFeet() float64 {
 	return acre_feet
 }
 
-// ImperialPint returns the value in ImperialPint.
+// ImperialPints returns the Volume value in ImperialPints.
+//
+// 
 func (a *Volume) ImperialPints() float64 {
 	if a.imperial_pintsLazy != nil {
 		return *a.imperial_pintsLazy
@@ -849,7 +923,9 @@ func (a *Volume) ImperialPints() float64 {
 	return imperial_pints
 }
 
-// BoardFoot returns the value in BoardFoot.
+// BoardFeet returns the Volume value in BoardFeet.
+//
+// 
 func (a *Volume) BoardFeet() float64 {
 	if a.board_feetLazy != nil {
 		return *a.board_feetLazy
@@ -859,7 +935,9 @@ func (a *Volume) BoardFeet() float64 {
 	return board_feet
 }
 
-// Nanoliter returns the value in Nanoliter.
+// Nanoliters returns the Volume value in Nanoliters.
+//
+// 
 func (a *Volume) Nanoliters() float64 {
 	if a.nanolitersLazy != nil {
 		return *a.nanolitersLazy
@@ -869,7 +947,9 @@ func (a *Volume) Nanoliters() float64 {
 	return nanoliters
 }
 
-// Microliter returns the value in Microliter.
+// Microliters returns the Volume value in Microliters.
+//
+// 
 func (a *Volume) Microliters() float64 {
 	if a.microlitersLazy != nil {
 		return *a.microlitersLazy
@@ -879,7 +959,9 @@ func (a *Volume) Microliters() float64 {
 	return microliters
 }
 
-// Milliliter returns the value in Milliliter.
+// Milliliters returns the Volume value in Milliliters.
+//
+// 
 func (a *Volume) Milliliters() float64 {
 	if a.millilitersLazy != nil {
 		return *a.millilitersLazy
@@ -889,7 +971,9 @@ func (a *Volume) Milliliters() float64 {
 	return milliliters
 }
 
-// Centiliter returns the value in Centiliter.
+// Centiliters returns the Volume value in Centiliters.
+//
+// 
 func (a *Volume) Centiliters() float64 {
 	if a.centilitersLazy != nil {
 		return *a.centilitersLazy
@@ -899,7 +983,9 @@ func (a *Volume) Centiliters() float64 {
 	return centiliters
 }
 
-// Deciliter returns the value in Deciliter.
+// Deciliters returns the Volume value in Deciliters.
+//
+// 
 func (a *Volume) Deciliters() float64 {
 	if a.decilitersLazy != nil {
 		return *a.decilitersLazy
@@ -909,7 +995,9 @@ func (a *Volume) Deciliters() float64 {
 	return deciliters
 }
 
-// Decaliter returns the value in Decaliter.
+// Decaliters returns the Volume value in Decaliters.
+//
+// 
 func (a *Volume) Decaliters() float64 {
 	if a.decalitersLazy != nil {
 		return *a.decalitersLazy
@@ -919,7 +1007,9 @@ func (a *Volume) Decaliters() float64 {
 	return decaliters
 }
 
-// Hectoliter returns the value in Hectoliter.
+// Hectoliters returns the Volume value in Hectoliters.
+//
+// 
 func (a *Volume) Hectoliters() float64 {
 	if a.hectolitersLazy != nil {
 		return *a.hectolitersLazy
@@ -929,7 +1019,9 @@ func (a *Volume) Hectoliters() float64 {
 	return hectoliters
 }
 
-// Kiloliter returns the value in Kiloliter.
+// Kiloliters returns the Volume value in Kiloliters.
+//
+// 
 func (a *Volume) Kiloliters() float64 {
 	if a.kilolitersLazy != nil {
 		return *a.kilolitersLazy
@@ -939,7 +1031,9 @@ func (a *Volume) Kiloliters() float64 {
 	return kiloliters
 }
 
-// Megaliter returns the value in Megaliter.
+// Megaliters returns the Volume value in Megaliters.
+//
+// 
 func (a *Volume) Megaliters() float64 {
 	if a.megalitersLazy != nil {
 		return *a.megalitersLazy
@@ -949,7 +1043,9 @@ func (a *Volume) Megaliters() float64 {
 	return megaliters
 }
 
-// HectocubicMeter returns the value in HectocubicMeter.
+// HectocubicMeters returns the Volume value in HectocubicMeters.
+//
+// 
 func (a *Volume) HectocubicMeters() float64 {
 	if a.hectocubic_metersLazy != nil {
 		return *a.hectocubic_metersLazy
@@ -959,7 +1055,9 @@ func (a *Volume) HectocubicMeters() float64 {
 	return hectocubic_meters
 }
 
-// KilocubicMeter returns the value in KilocubicMeter.
+// KilocubicMeters returns the Volume value in KilocubicMeters.
+//
+// 
 func (a *Volume) KilocubicMeters() float64 {
 	if a.kilocubic_metersLazy != nil {
 		return *a.kilocubic_metersLazy
@@ -969,7 +1067,9 @@ func (a *Volume) KilocubicMeters() float64 {
 	return kilocubic_meters
 }
 
-// HectocubicFoot returns the value in HectocubicFoot.
+// HectocubicFeet returns the Volume value in HectocubicFeet.
+//
+// 
 func (a *Volume) HectocubicFeet() float64 {
 	if a.hectocubic_feetLazy != nil {
 		return *a.hectocubic_feetLazy
@@ -979,7 +1079,9 @@ func (a *Volume) HectocubicFeet() float64 {
 	return hectocubic_feet
 }
 
-// KilocubicFoot returns the value in KilocubicFoot.
+// KilocubicFeet returns the Volume value in KilocubicFeet.
+//
+// 
 func (a *Volume) KilocubicFeet() float64 {
 	if a.kilocubic_feetLazy != nil {
 		return *a.kilocubic_feetLazy
@@ -989,7 +1091,9 @@ func (a *Volume) KilocubicFeet() float64 {
 	return kilocubic_feet
 }
 
-// MegacubicFoot returns the value in MegacubicFoot.
+// MegacubicFeet returns the Volume value in MegacubicFeet.
+//
+// 
 func (a *Volume) MegacubicFeet() float64 {
 	if a.megacubic_feetLazy != nil {
 		return *a.megacubic_feetLazy
@@ -999,7 +1103,9 @@ func (a *Volume) MegacubicFeet() float64 {
 	return megacubic_feet
 }
 
-// KiloimperialGallon returns the value in KiloimperialGallon.
+// KiloimperialGallons returns the Volume value in KiloimperialGallons.
+//
+// 
 func (a *Volume) KiloimperialGallons() float64 {
 	if a.kiloimperial_gallonsLazy != nil {
 		return *a.kiloimperial_gallonsLazy
@@ -1009,7 +1115,9 @@ func (a *Volume) KiloimperialGallons() float64 {
 	return kiloimperial_gallons
 }
 
-// MegaimperialGallon returns the value in MegaimperialGallon.
+// MegaimperialGallons returns the Volume value in MegaimperialGallons.
+//
+// 
 func (a *Volume) MegaimperialGallons() float64 {
 	if a.megaimperial_gallonsLazy != nil {
 		return *a.megaimperial_gallonsLazy
@@ -1019,7 +1127,9 @@ func (a *Volume) MegaimperialGallons() float64 {
 	return megaimperial_gallons
 }
 
-// DecausGallon returns the value in DecausGallon.
+// DecausGallons returns the Volume value in DecausGallons.
+//
+// 
 func (a *Volume) DecausGallons() float64 {
 	if a.decaus_gallonsLazy != nil {
 		return *a.decaus_gallonsLazy
@@ -1029,7 +1139,9 @@ func (a *Volume) DecausGallons() float64 {
 	return decaus_gallons
 }
 
-// DeciusGallon returns the value in DeciusGallon.
+// DeciusGallons returns the Volume value in DeciusGallons.
+//
+// 
 func (a *Volume) DeciusGallons() float64 {
 	if a.decius_gallonsLazy != nil {
 		return *a.decius_gallonsLazy
@@ -1039,7 +1151,9 @@ func (a *Volume) DeciusGallons() float64 {
 	return decius_gallons
 }
 
-// HectousGallon returns the value in HectousGallon.
+// HectousGallons returns the Volume value in HectousGallons.
+//
+// 
 func (a *Volume) HectousGallons() float64 {
 	if a.hectous_gallonsLazy != nil {
 		return *a.hectous_gallonsLazy
@@ -1049,7 +1163,9 @@ func (a *Volume) HectousGallons() float64 {
 	return hectous_gallons
 }
 
-// KilousGallon returns the value in KilousGallon.
+// KilousGallons returns the Volume value in KilousGallons.
+//
+// 
 func (a *Volume) KilousGallons() float64 {
 	if a.kilous_gallonsLazy != nil {
 		return *a.kilous_gallonsLazy
@@ -1059,7 +1175,9 @@ func (a *Volume) KilousGallons() float64 {
 	return kilous_gallons
 }
 
-// MegausGallon returns the value in MegausGallon.
+// MegausGallons returns the Volume value in MegausGallons.
+//
+// 
 func (a *Volume) MegausGallons() float64 {
 	if a.megaus_gallonsLazy != nil {
 		return *a.megaus_gallonsLazy
@@ -1070,7 +1188,9 @@ func (a *Volume) MegausGallons() float64 {
 }
 
 
-// ToDto creates an VolumeDto representation.
+// ToDto creates a VolumeDto representation from the Volume instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CubicMeter by default.
 func (a *Volume) ToDto(holdInUnit *VolumeUnits) VolumeDto {
 	if holdInUnit == nil {
 		defaultUnit := VolumeCubicMeter // Default value
@@ -1083,12 +1203,19 @@ func (a *Volume) ToDto(holdInUnit *VolumeUnits) VolumeDto {
 	}
 }
 
-// ToDtoJSON creates an VolumeDto representation.
+// ToDtoJSON creates a JSON representation of the Volume instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by CubicMeter by default.
 func (a *Volume) ToDtoJSON(holdInUnit *VolumeUnits) ([]byte, error) {
+	// Convert to VolumeDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts Volume to a specific unit value.
+// Convert converts a Volume to a specific unit value.
+// The function uses the provided unit type (VolumeUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *Volume) Convert(toUnit VolumeUnits) float64 {
 	switch toUnit { 
     case VolumeLiter:
@@ -1200,7 +1327,7 @@ func (a *Volume) Convert(toUnit VolumeUnits) float64 {
     case VolumeMegausGallon:
 		return a.MegausGallons()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -1435,13 +1562,22 @@ func (a *Volume) convertToBase(value float64, fromUnit VolumeUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the Volume in the default unit (CubicMeter),
+// formatted to two decimal places.
 func (a Volume) String() string {
 	return a.ToString(VolumeCubicMeter, 2)
 }
 
-// ToString formats the Volume to string.
-// fractionalDigits -1 for not mention
+// ToString formats the Volume value as a string with the specified unit and fractional digits.
+// It converts the Volume to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the Volume value will be converted (e.g., CubicMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the Volume with the unit abbreviation.
 func (a *Volume) ToString(unit VolumeUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -1567,12 +1703,26 @@ func (a *Volume) getUnitAbbreviation(unit VolumeUnits) string {
 	}
 }
 
-// Check if the given Volume are equals to the current Volume
+// Equals checks if the given Volume is equal to the current Volume.
+//
+// Parameters:
+//    other: The Volume to compare against.
+//
+// Returns:
+//    bool: Returns true if both Volume are equal, false otherwise.
 func (a *Volume) Equals(other *Volume) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given Volume are equals to the current Volume
+// CompareTo compares the current Volume with another Volume.
+// It returns -1 if the current Volume is less than the other Volume, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Volume to compare against.
+//
+// Returns:
+//    int: -1 if the current Volume is less, 1 if greater, and 0 if equal.
 func (a *Volume) CompareTo(other *Volume) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -1585,22 +1735,50 @@ func (a *Volume) CompareTo(other *Volume) int {
 	return 0
 }
 
-// Add the given Volume to the current Volume.
+// Add adds the given Volume to the current Volume and returns the result.
+// The result is a new Volume instance with the sum of the values.
+//
+// Parameters:
+//    other: The Volume to add to the current Volume.
+//
+// Returns:
+//    *Volume: A new Volume instance representing the sum of both Volume.
 func (a *Volume) Add(other *Volume) *Volume {
 	return &Volume{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given Volume to the current Volume.
+// Subtract subtracts the given Volume from the current Volume and returns the result.
+// The result is a new Volume instance with the difference of the values.
+//
+// Parameters:
+//    other: The Volume to subtract from the current Volume.
+//
+// Returns:
+//    *Volume: A new Volume instance representing the difference of both Volume.
 func (a *Volume) Subtract(other *Volume) *Volume {
 	return &Volume{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given Volume to the current Volume.
+// Multiply multiplies the current Volume by the given Volume and returns the result.
+// The result is a new Volume instance with the product of the values.
+//
+// Parameters:
+//    other: The Volume to multiply with the current Volume.
+//
+// Returns:
+//    *Volume: A new Volume instance representing the product of both Volume.
 func (a *Volume) Multiply(other *Volume) *Volume {
 	return &Volume{value: a.value * other.BaseValue()}
 }
 
-// Divide the given Volume to the current Volume.
+// Divide divides the current Volume by the given Volume and returns the result.
+// The result is a new Volume instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Volume to divide the current Volume by.
+//
+// Returns:
+//    *Volume: A new Volume instance representing the quotient of both Volume.
 func (a *Volume) Divide(other *Volume) *Volume {
 	return &Volume{value: a.value / other.BaseValue()}
 }

@@ -12,7 +12,7 @@ import (
 
 
 
-// ElectricCurrentUnits enumeration
+// ElectricCurrentUnits defines various units of ElectricCurrent.
 type ElectricCurrentUnits string
 
 const (
@@ -37,19 +37,24 @@ const (
         ElectricCurrentMegaampere ElectricCurrentUnits = "Megaampere"
 )
 
-// ElectricCurrentDto represents an ElectricCurrent
+// ElectricCurrentDto represents a ElectricCurrent measurement with a numerical value and its corresponding unit.
 type ElectricCurrentDto struct {
+    // Value is the numerical representation of the ElectricCurrent.
 	Value float64
+    // Unit specifies the unit of measurement for the ElectricCurrent, as defined in the ElectricCurrentUnits enumeration.
 	Unit  ElectricCurrentUnits
 }
 
-// ElectricCurrentDtoFactory struct to group related functions
+// ElectricCurrentDtoFactory groups methods for creating and serializing ElectricCurrentDto objects.
 type ElectricCurrentDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricCurrentDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ElectricCurrentDtoFactory) FromJSON(data []byte) (*ElectricCurrentDto, error) {
 	a := ElectricCurrentDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ElectricCurrentDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -57,6 +62,9 @@ func (udf ElectricCurrentDtoFactory) FromJSON(data []byte) (*ElectricCurrentDto,
 	return &a, nil
 }
 
+// ToJSON serializes a ElectricCurrentDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ElectricCurrentDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -68,10 +76,11 @@ func (a ElectricCurrentDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ElectricCurrent struct
+// ElectricCurrent represents a measurement in a of ElectricCurrent.
+//
+// An electric current is a flow of electric charge. In electric circuits this charge is often carried by moving electrons in a wire. It can also be carried by ions in an electrolyte, or by both ions and electrons such as in a plasma.
 type ElectricCurrent struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     amperesLazy *float64 
@@ -85,72 +94,73 @@ type ElectricCurrent struct {
     megaamperesLazy *float64 
 }
 
-// ElectricCurrentFactory struct to group related functions
+// ElectricCurrentFactory groups methods for creating ElectricCurrent instances.
 type ElectricCurrentFactory struct{}
 
+// CreateElectricCurrent creates a new ElectricCurrent instance from the given value and unit.
 func (uf ElectricCurrentFactory) CreateElectricCurrent(value float64, unit ElectricCurrentUnits) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, unit)
 }
 
+// FromDto converts a ElectricCurrentDto to a ElectricCurrent instance.
 func (uf ElectricCurrentFactory) FromDto(dto ElectricCurrentDto) (*ElectricCurrent, error) {
 	return newElectricCurrent(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricCurrent instance.
 func (uf ElectricCurrentFactory) FromDtoJSON(data []byte) (*ElectricCurrent, error) {
 	unitDto, err := ElectricCurrentDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ElectricCurrentDto from JSON: %w", err)
 	}
 	return ElectricCurrentFactory{}.FromDto(*unitDto)
 }
 
 
-// FromAmpere creates a new ElectricCurrent instance from Ampere.
+// FromAmperes creates a new ElectricCurrent instance from a value in Amperes.
 func (uf ElectricCurrentFactory) FromAmperes(value float64) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, ElectricCurrentAmpere)
 }
 
-// FromFemtoampere creates a new ElectricCurrent instance from Femtoampere.
+// FromFemtoamperes creates a new ElectricCurrent instance from a value in Femtoamperes.
 func (uf ElectricCurrentFactory) FromFemtoamperes(value float64) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, ElectricCurrentFemtoampere)
 }
 
-// FromPicoampere creates a new ElectricCurrent instance from Picoampere.
+// FromPicoamperes creates a new ElectricCurrent instance from a value in Picoamperes.
 func (uf ElectricCurrentFactory) FromPicoamperes(value float64) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, ElectricCurrentPicoampere)
 }
 
-// FromNanoampere creates a new ElectricCurrent instance from Nanoampere.
+// FromNanoamperes creates a new ElectricCurrent instance from a value in Nanoamperes.
 func (uf ElectricCurrentFactory) FromNanoamperes(value float64) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, ElectricCurrentNanoampere)
 }
 
-// FromMicroampere creates a new ElectricCurrent instance from Microampere.
+// FromMicroamperes creates a new ElectricCurrent instance from a value in Microamperes.
 func (uf ElectricCurrentFactory) FromMicroamperes(value float64) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, ElectricCurrentMicroampere)
 }
 
-// FromMilliampere creates a new ElectricCurrent instance from Milliampere.
+// FromMilliamperes creates a new ElectricCurrent instance from a value in Milliamperes.
 func (uf ElectricCurrentFactory) FromMilliamperes(value float64) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, ElectricCurrentMilliampere)
 }
 
-// FromCentiampere creates a new ElectricCurrent instance from Centiampere.
+// FromCentiamperes creates a new ElectricCurrent instance from a value in Centiamperes.
 func (uf ElectricCurrentFactory) FromCentiamperes(value float64) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, ElectricCurrentCentiampere)
 }
 
-// FromKiloampere creates a new ElectricCurrent instance from Kiloampere.
+// FromKiloamperes creates a new ElectricCurrent instance from a value in Kiloamperes.
 func (uf ElectricCurrentFactory) FromKiloamperes(value float64) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, ElectricCurrentKiloampere)
 }
 
-// FromMegaampere creates a new ElectricCurrent instance from Megaampere.
+// FromMegaamperes creates a new ElectricCurrent instance from a value in Megaamperes.
 func (uf ElectricCurrentFactory) FromMegaamperes(value float64) (*ElectricCurrent, error) {
 	return newElectricCurrent(value, ElectricCurrentMegaampere)
 }
-
-
 
 
 // newElectricCurrent creates a new ElectricCurrent.
@@ -163,13 +173,15 @@ func newElectricCurrent(value float64, fromUnit ElectricCurrentUnits) (*Electric
 	return a, nil
 }
 
-// BaseValue returns the base value of ElectricCurrent in Ampere.
+// BaseValue returns the base value of ElectricCurrent in Ampere unit (the base/default quantity).
 func (a *ElectricCurrent) BaseValue() float64 {
 	return a.value
 }
 
 
-// Ampere returns the value in Ampere.
+// Amperes returns the ElectricCurrent value in Amperes.
+//
+// 
 func (a *ElectricCurrent) Amperes() float64 {
 	if a.amperesLazy != nil {
 		return *a.amperesLazy
@@ -179,7 +191,9 @@ func (a *ElectricCurrent) Amperes() float64 {
 	return amperes
 }
 
-// Femtoampere returns the value in Femtoampere.
+// Femtoamperes returns the ElectricCurrent value in Femtoamperes.
+//
+// 
 func (a *ElectricCurrent) Femtoamperes() float64 {
 	if a.femtoamperesLazy != nil {
 		return *a.femtoamperesLazy
@@ -189,7 +203,9 @@ func (a *ElectricCurrent) Femtoamperes() float64 {
 	return femtoamperes
 }
 
-// Picoampere returns the value in Picoampere.
+// Picoamperes returns the ElectricCurrent value in Picoamperes.
+//
+// 
 func (a *ElectricCurrent) Picoamperes() float64 {
 	if a.picoamperesLazy != nil {
 		return *a.picoamperesLazy
@@ -199,7 +215,9 @@ func (a *ElectricCurrent) Picoamperes() float64 {
 	return picoamperes
 }
 
-// Nanoampere returns the value in Nanoampere.
+// Nanoamperes returns the ElectricCurrent value in Nanoamperes.
+//
+// 
 func (a *ElectricCurrent) Nanoamperes() float64 {
 	if a.nanoamperesLazy != nil {
 		return *a.nanoamperesLazy
@@ -209,7 +227,9 @@ func (a *ElectricCurrent) Nanoamperes() float64 {
 	return nanoamperes
 }
 
-// Microampere returns the value in Microampere.
+// Microamperes returns the ElectricCurrent value in Microamperes.
+//
+// 
 func (a *ElectricCurrent) Microamperes() float64 {
 	if a.microamperesLazy != nil {
 		return *a.microamperesLazy
@@ -219,7 +239,9 @@ func (a *ElectricCurrent) Microamperes() float64 {
 	return microamperes
 }
 
-// Milliampere returns the value in Milliampere.
+// Milliamperes returns the ElectricCurrent value in Milliamperes.
+//
+// 
 func (a *ElectricCurrent) Milliamperes() float64 {
 	if a.milliamperesLazy != nil {
 		return *a.milliamperesLazy
@@ -229,7 +251,9 @@ func (a *ElectricCurrent) Milliamperes() float64 {
 	return milliamperes
 }
 
-// Centiampere returns the value in Centiampere.
+// Centiamperes returns the ElectricCurrent value in Centiamperes.
+//
+// 
 func (a *ElectricCurrent) Centiamperes() float64 {
 	if a.centiamperesLazy != nil {
 		return *a.centiamperesLazy
@@ -239,7 +263,9 @@ func (a *ElectricCurrent) Centiamperes() float64 {
 	return centiamperes
 }
 
-// Kiloampere returns the value in Kiloampere.
+// Kiloamperes returns the ElectricCurrent value in Kiloamperes.
+//
+// 
 func (a *ElectricCurrent) Kiloamperes() float64 {
 	if a.kiloamperesLazy != nil {
 		return *a.kiloamperesLazy
@@ -249,7 +275,9 @@ func (a *ElectricCurrent) Kiloamperes() float64 {
 	return kiloamperes
 }
 
-// Megaampere returns the value in Megaampere.
+// Megaamperes returns the ElectricCurrent value in Megaamperes.
+//
+// 
 func (a *ElectricCurrent) Megaamperes() float64 {
 	if a.megaamperesLazy != nil {
 		return *a.megaamperesLazy
@@ -260,7 +288,9 @@ func (a *ElectricCurrent) Megaamperes() float64 {
 }
 
 
-// ToDto creates an ElectricCurrentDto representation.
+// ToDto creates a ElectricCurrentDto representation from the ElectricCurrent instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Ampere by default.
 func (a *ElectricCurrent) ToDto(holdInUnit *ElectricCurrentUnits) ElectricCurrentDto {
 	if holdInUnit == nil {
 		defaultUnit := ElectricCurrentAmpere // Default value
@@ -273,12 +303,19 @@ func (a *ElectricCurrent) ToDto(holdInUnit *ElectricCurrentUnits) ElectricCurren
 	}
 }
 
-// ToDtoJSON creates an ElectricCurrentDto representation.
+// ToDtoJSON creates a JSON representation of the ElectricCurrent instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by Ampere by default.
 func (a *ElectricCurrent) ToDtoJSON(holdInUnit *ElectricCurrentUnits) ([]byte, error) {
+	// Convert to ElectricCurrentDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ElectricCurrent to a specific unit value.
+// Convert converts a ElectricCurrent to a specific unit value.
+// The function uses the provided unit type (ElectricCurrentUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ElectricCurrent) Convert(toUnit ElectricCurrentUnits) float64 {
 	switch toUnit { 
     case ElectricCurrentAmpere:
@@ -300,7 +337,7 @@ func (a *ElectricCurrent) Convert(toUnit ElectricCurrentUnits) float64 {
     case ElectricCurrentMegaampere:
 		return a.Megaamperes()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -355,13 +392,22 @@ func (a *ElectricCurrent) convertToBase(value float64, fromUnit ElectricCurrentU
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ElectricCurrent in the default unit (Ampere),
+// formatted to two decimal places.
 func (a ElectricCurrent) String() string {
 	return a.ToString(ElectricCurrentAmpere, 2)
 }
 
-// ToString formats the ElectricCurrent to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ElectricCurrent value as a string with the specified unit and fractional digits.
+// It converts the ElectricCurrent to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ElectricCurrent value will be converted (e.g., Ampere))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ElectricCurrent with the unit abbreviation.
 func (a *ElectricCurrent) ToString(unit ElectricCurrentUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -397,12 +443,26 @@ func (a *ElectricCurrent) getUnitAbbreviation(unit ElectricCurrentUnits) string 
 	}
 }
 
-// Check if the given ElectricCurrent are equals to the current ElectricCurrent
+// Equals checks if the given ElectricCurrent is equal to the current ElectricCurrent.
+//
+// Parameters:
+//    other: The ElectricCurrent to compare against.
+//
+// Returns:
+//    bool: Returns true if both ElectricCurrent are equal, false otherwise.
 func (a *ElectricCurrent) Equals(other *ElectricCurrent) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ElectricCurrent are equals to the current ElectricCurrent
+// CompareTo compares the current ElectricCurrent with another ElectricCurrent.
+// It returns -1 if the current ElectricCurrent is less than the other ElectricCurrent, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ElectricCurrent to compare against.
+//
+// Returns:
+//    int: -1 if the current ElectricCurrent is less, 1 if greater, and 0 if equal.
 func (a *ElectricCurrent) CompareTo(other *ElectricCurrent) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -415,22 +475,50 @@ func (a *ElectricCurrent) CompareTo(other *ElectricCurrent) int {
 	return 0
 }
 
-// Add the given ElectricCurrent to the current ElectricCurrent.
+// Add adds the given ElectricCurrent to the current ElectricCurrent and returns the result.
+// The result is a new ElectricCurrent instance with the sum of the values.
+//
+// Parameters:
+//    other: The ElectricCurrent to add to the current ElectricCurrent.
+//
+// Returns:
+//    *ElectricCurrent: A new ElectricCurrent instance representing the sum of both ElectricCurrent.
 func (a *ElectricCurrent) Add(other *ElectricCurrent) *ElectricCurrent {
 	return &ElectricCurrent{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ElectricCurrent to the current ElectricCurrent.
+// Subtract subtracts the given ElectricCurrent from the current ElectricCurrent and returns the result.
+// The result is a new ElectricCurrent instance with the difference of the values.
+//
+// Parameters:
+//    other: The ElectricCurrent to subtract from the current ElectricCurrent.
+//
+// Returns:
+//    *ElectricCurrent: A new ElectricCurrent instance representing the difference of both ElectricCurrent.
 func (a *ElectricCurrent) Subtract(other *ElectricCurrent) *ElectricCurrent {
 	return &ElectricCurrent{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ElectricCurrent to the current ElectricCurrent.
+// Multiply multiplies the current ElectricCurrent by the given ElectricCurrent and returns the result.
+// The result is a new ElectricCurrent instance with the product of the values.
+//
+// Parameters:
+//    other: The ElectricCurrent to multiply with the current ElectricCurrent.
+//
+// Returns:
+//    *ElectricCurrent: A new ElectricCurrent instance representing the product of both ElectricCurrent.
 func (a *ElectricCurrent) Multiply(other *ElectricCurrent) *ElectricCurrent {
 	return &ElectricCurrent{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ElectricCurrent to the current ElectricCurrent.
+// Divide divides the current ElectricCurrent by the given ElectricCurrent and returns the result.
+// The result is a new ElectricCurrent instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ElectricCurrent to divide the current ElectricCurrent by.
+//
+// Returns:
+//    *ElectricCurrent: A new ElectricCurrent instance representing the quotient of both ElectricCurrent.
 func (a *ElectricCurrent) Divide(other *ElectricCurrent) *ElectricCurrent {
 	return &ElectricCurrent{value: a.value / other.BaseValue()}
 }

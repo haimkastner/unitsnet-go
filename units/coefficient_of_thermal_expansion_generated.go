@@ -12,7 +12,7 @@ import (
 
 
 
-// CoefficientOfThermalExpansionUnits enumeration
+// CoefficientOfThermalExpansionUnits defines various units of CoefficientOfThermalExpansion.
 type CoefficientOfThermalExpansionUnits string
 
 const (
@@ -31,19 +31,24 @@ const (
         CoefficientOfThermalExpansionPpmPerDegreeFahrenheit CoefficientOfThermalExpansionUnits = "PpmPerDegreeFahrenheit"
 )
 
-// CoefficientOfThermalExpansionDto represents an CoefficientOfThermalExpansion
+// CoefficientOfThermalExpansionDto represents a CoefficientOfThermalExpansion measurement with a numerical value and its corresponding unit.
 type CoefficientOfThermalExpansionDto struct {
+    // Value is the numerical representation of the CoefficientOfThermalExpansion.
 	Value float64
+    // Unit specifies the unit of measurement for the CoefficientOfThermalExpansion, as defined in the CoefficientOfThermalExpansionUnits enumeration.
 	Unit  CoefficientOfThermalExpansionUnits
 }
 
-// CoefficientOfThermalExpansionDtoFactory struct to group related functions
+// CoefficientOfThermalExpansionDtoFactory groups methods for creating and serializing CoefficientOfThermalExpansionDto objects.
 type CoefficientOfThermalExpansionDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a CoefficientOfThermalExpansionDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf CoefficientOfThermalExpansionDtoFactory) FromJSON(data []byte) (*CoefficientOfThermalExpansionDto, error) {
 	a := CoefficientOfThermalExpansionDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into CoefficientOfThermalExpansionDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -51,6 +56,9 @@ func (udf CoefficientOfThermalExpansionDtoFactory) FromJSON(data []byte) (*Coeff
 	return &a, nil
 }
 
+// ToJSON serializes a CoefficientOfThermalExpansionDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a CoefficientOfThermalExpansionDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -62,10 +70,11 @@ func (a CoefficientOfThermalExpansionDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// CoefficientOfThermalExpansion struct
+// CoefficientOfThermalExpansion represents a measurement in a of CoefficientOfThermalExpansion.
+//
+// A unit that represents a fractional change in size in response to a change in temperature.
 type CoefficientOfThermalExpansion struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     per_kelvinLazy *float64 
@@ -76,57 +85,58 @@ type CoefficientOfThermalExpansion struct {
     ppm_per_degree_fahrenheitLazy *float64 
 }
 
-// CoefficientOfThermalExpansionFactory struct to group related functions
+// CoefficientOfThermalExpansionFactory groups methods for creating CoefficientOfThermalExpansion instances.
 type CoefficientOfThermalExpansionFactory struct{}
 
+// CreateCoefficientOfThermalExpansion creates a new CoefficientOfThermalExpansion instance from the given value and unit.
 func (uf CoefficientOfThermalExpansionFactory) CreateCoefficientOfThermalExpansion(value float64, unit CoefficientOfThermalExpansionUnits) (*CoefficientOfThermalExpansion, error) {
 	return newCoefficientOfThermalExpansion(value, unit)
 }
 
+// FromDto converts a CoefficientOfThermalExpansionDto to a CoefficientOfThermalExpansion instance.
 func (uf CoefficientOfThermalExpansionFactory) FromDto(dto CoefficientOfThermalExpansionDto) (*CoefficientOfThermalExpansion, error) {
 	return newCoefficientOfThermalExpansion(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a CoefficientOfThermalExpansion instance.
 func (uf CoefficientOfThermalExpansionFactory) FromDtoJSON(data []byte) (*CoefficientOfThermalExpansion, error) {
 	unitDto, err := CoefficientOfThermalExpansionDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse CoefficientOfThermalExpansionDto from JSON: %w", err)
 	}
 	return CoefficientOfThermalExpansionFactory{}.FromDto(*unitDto)
 }
 
 
-// FromPerKelvin creates a new CoefficientOfThermalExpansion instance from PerKelvin.
+// FromPerKelvin creates a new CoefficientOfThermalExpansion instance from a value in PerKelvin.
 func (uf CoefficientOfThermalExpansionFactory) FromPerKelvin(value float64) (*CoefficientOfThermalExpansion, error) {
 	return newCoefficientOfThermalExpansion(value, CoefficientOfThermalExpansionPerKelvin)
 }
 
-// FromPerDegreeCelsius creates a new CoefficientOfThermalExpansion instance from PerDegreeCelsius.
+// FromPerDegreeCelsius creates a new CoefficientOfThermalExpansion instance from a value in PerDegreeCelsius.
 func (uf CoefficientOfThermalExpansionFactory) FromPerDegreeCelsius(value float64) (*CoefficientOfThermalExpansion, error) {
 	return newCoefficientOfThermalExpansion(value, CoefficientOfThermalExpansionPerDegreeCelsius)
 }
 
-// FromPerDegreeFahrenheit creates a new CoefficientOfThermalExpansion instance from PerDegreeFahrenheit.
+// FromPerDegreeFahrenheit creates a new CoefficientOfThermalExpansion instance from a value in PerDegreeFahrenheit.
 func (uf CoefficientOfThermalExpansionFactory) FromPerDegreeFahrenheit(value float64) (*CoefficientOfThermalExpansion, error) {
 	return newCoefficientOfThermalExpansion(value, CoefficientOfThermalExpansionPerDegreeFahrenheit)
 }
 
-// FromPpmPerKelvin creates a new CoefficientOfThermalExpansion instance from PpmPerKelvin.
+// FromPpmPerKelvin creates a new CoefficientOfThermalExpansion instance from a value in PpmPerKelvin.
 func (uf CoefficientOfThermalExpansionFactory) FromPpmPerKelvin(value float64) (*CoefficientOfThermalExpansion, error) {
 	return newCoefficientOfThermalExpansion(value, CoefficientOfThermalExpansionPpmPerKelvin)
 }
 
-// FromPpmPerDegreeCelsius creates a new CoefficientOfThermalExpansion instance from PpmPerDegreeCelsius.
+// FromPpmPerDegreeCelsius creates a new CoefficientOfThermalExpansion instance from a value in PpmPerDegreeCelsius.
 func (uf CoefficientOfThermalExpansionFactory) FromPpmPerDegreeCelsius(value float64) (*CoefficientOfThermalExpansion, error) {
 	return newCoefficientOfThermalExpansion(value, CoefficientOfThermalExpansionPpmPerDegreeCelsius)
 }
 
-// FromPpmPerDegreeFahrenheit creates a new CoefficientOfThermalExpansion instance from PpmPerDegreeFahrenheit.
+// FromPpmPerDegreeFahrenheit creates a new CoefficientOfThermalExpansion instance from a value in PpmPerDegreeFahrenheit.
 func (uf CoefficientOfThermalExpansionFactory) FromPpmPerDegreeFahrenheit(value float64) (*CoefficientOfThermalExpansion, error) {
 	return newCoefficientOfThermalExpansion(value, CoefficientOfThermalExpansionPpmPerDegreeFahrenheit)
 }
-
-
 
 
 // newCoefficientOfThermalExpansion creates a new CoefficientOfThermalExpansion.
@@ -139,13 +149,15 @@ func newCoefficientOfThermalExpansion(value float64, fromUnit CoefficientOfTherm
 	return a, nil
 }
 
-// BaseValue returns the base value of CoefficientOfThermalExpansion in PerKelvin.
+// BaseValue returns the base value of CoefficientOfThermalExpansion in PerKelvin unit (the base/default quantity).
 func (a *CoefficientOfThermalExpansion) BaseValue() float64 {
 	return a.value
 }
 
 
-// PerKelvin returns the value in PerKelvin.
+// PerKelvin returns the CoefficientOfThermalExpansion value in PerKelvin.
+//
+// 
 func (a *CoefficientOfThermalExpansion) PerKelvin() float64 {
 	if a.per_kelvinLazy != nil {
 		return *a.per_kelvinLazy
@@ -155,7 +167,9 @@ func (a *CoefficientOfThermalExpansion) PerKelvin() float64 {
 	return per_kelvin
 }
 
-// PerDegreeCelsius returns the value in PerDegreeCelsius.
+// PerDegreeCelsius returns the CoefficientOfThermalExpansion value in PerDegreeCelsius.
+//
+// 
 func (a *CoefficientOfThermalExpansion) PerDegreeCelsius() float64 {
 	if a.per_degree_celsiusLazy != nil {
 		return *a.per_degree_celsiusLazy
@@ -165,7 +179,9 @@ func (a *CoefficientOfThermalExpansion) PerDegreeCelsius() float64 {
 	return per_degree_celsius
 }
 
-// PerDegreeFahrenheit returns the value in PerDegreeFahrenheit.
+// PerDegreeFahrenheit returns the CoefficientOfThermalExpansion value in PerDegreeFahrenheit.
+//
+// 
 func (a *CoefficientOfThermalExpansion) PerDegreeFahrenheit() float64 {
 	if a.per_degree_fahrenheitLazy != nil {
 		return *a.per_degree_fahrenheitLazy
@@ -175,7 +191,9 @@ func (a *CoefficientOfThermalExpansion) PerDegreeFahrenheit() float64 {
 	return per_degree_fahrenheit
 }
 
-// PpmPerKelvin returns the value in PpmPerKelvin.
+// PpmPerKelvin returns the CoefficientOfThermalExpansion value in PpmPerKelvin.
+//
+// 
 func (a *CoefficientOfThermalExpansion) PpmPerKelvin() float64 {
 	if a.ppm_per_kelvinLazy != nil {
 		return *a.ppm_per_kelvinLazy
@@ -185,7 +203,9 @@ func (a *CoefficientOfThermalExpansion) PpmPerKelvin() float64 {
 	return ppm_per_kelvin
 }
 
-// PpmPerDegreeCelsius returns the value in PpmPerDegreeCelsius.
+// PpmPerDegreeCelsius returns the CoefficientOfThermalExpansion value in PpmPerDegreeCelsius.
+//
+// 
 func (a *CoefficientOfThermalExpansion) PpmPerDegreeCelsius() float64 {
 	if a.ppm_per_degree_celsiusLazy != nil {
 		return *a.ppm_per_degree_celsiusLazy
@@ -195,7 +215,9 @@ func (a *CoefficientOfThermalExpansion) PpmPerDegreeCelsius() float64 {
 	return ppm_per_degree_celsius
 }
 
-// PpmPerDegreeFahrenheit returns the value in PpmPerDegreeFahrenheit.
+// PpmPerDegreeFahrenheit returns the CoefficientOfThermalExpansion value in PpmPerDegreeFahrenheit.
+//
+// 
 func (a *CoefficientOfThermalExpansion) PpmPerDegreeFahrenheit() float64 {
 	if a.ppm_per_degree_fahrenheitLazy != nil {
 		return *a.ppm_per_degree_fahrenheitLazy
@@ -206,7 +228,9 @@ func (a *CoefficientOfThermalExpansion) PpmPerDegreeFahrenheit() float64 {
 }
 
 
-// ToDto creates an CoefficientOfThermalExpansionDto representation.
+// ToDto creates a CoefficientOfThermalExpansionDto representation from the CoefficientOfThermalExpansion instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by PerKelvin by default.
 func (a *CoefficientOfThermalExpansion) ToDto(holdInUnit *CoefficientOfThermalExpansionUnits) CoefficientOfThermalExpansionDto {
 	if holdInUnit == nil {
 		defaultUnit := CoefficientOfThermalExpansionPerKelvin // Default value
@@ -219,12 +243,19 @@ func (a *CoefficientOfThermalExpansion) ToDto(holdInUnit *CoefficientOfThermalEx
 	}
 }
 
-// ToDtoJSON creates an CoefficientOfThermalExpansionDto representation.
+// ToDtoJSON creates a JSON representation of the CoefficientOfThermalExpansion instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by PerKelvin by default.
 func (a *CoefficientOfThermalExpansion) ToDtoJSON(holdInUnit *CoefficientOfThermalExpansionUnits) ([]byte, error) {
+	// Convert to CoefficientOfThermalExpansionDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts CoefficientOfThermalExpansion to a specific unit value.
+// Convert converts a CoefficientOfThermalExpansion to a specific unit value.
+// The function uses the provided unit type (CoefficientOfThermalExpansionUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *CoefficientOfThermalExpansion) Convert(toUnit CoefficientOfThermalExpansionUnits) float64 {
 	switch toUnit { 
     case CoefficientOfThermalExpansionPerKelvin:
@@ -240,7 +271,7 @@ func (a *CoefficientOfThermalExpansion) Convert(toUnit CoefficientOfThermalExpan
     case CoefficientOfThermalExpansionPpmPerDegreeFahrenheit:
 		return a.PpmPerDegreeFahrenheit()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -283,13 +314,22 @@ func (a *CoefficientOfThermalExpansion) convertToBase(value float64, fromUnit Co
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the CoefficientOfThermalExpansion in the default unit (PerKelvin),
+// formatted to two decimal places.
 func (a CoefficientOfThermalExpansion) String() string {
 	return a.ToString(CoefficientOfThermalExpansionPerKelvin, 2)
 }
 
-// ToString formats the CoefficientOfThermalExpansion to string.
-// fractionalDigits -1 for not mention
+// ToString formats the CoefficientOfThermalExpansion value as a string with the specified unit and fractional digits.
+// It converts the CoefficientOfThermalExpansion to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the CoefficientOfThermalExpansion value will be converted (e.g., PerKelvin))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the CoefficientOfThermalExpansion with the unit abbreviation.
 func (a *CoefficientOfThermalExpansion) ToString(unit CoefficientOfThermalExpansionUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -319,12 +359,26 @@ func (a *CoefficientOfThermalExpansion) getUnitAbbreviation(unit CoefficientOfTh
 	}
 }
 
-// Check if the given CoefficientOfThermalExpansion are equals to the current CoefficientOfThermalExpansion
+// Equals checks if the given CoefficientOfThermalExpansion is equal to the current CoefficientOfThermalExpansion.
+//
+// Parameters:
+//    other: The CoefficientOfThermalExpansion to compare against.
+//
+// Returns:
+//    bool: Returns true if both CoefficientOfThermalExpansion are equal, false otherwise.
 func (a *CoefficientOfThermalExpansion) Equals(other *CoefficientOfThermalExpansion) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given CoefficientOfThermalExpansion are equals to the current CoefficientOfThermalExpansion
+// CompareTo compares the current CoefficientOfThermalExpansion with another CoefficientOfThermalExpansion.
+// It returns -1 if the current CoefficientOfThermalExpansion is less than the other CoefficientOfThermalExpansion, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The CoefficientOfThermalExpansion to compare against.
+//
+// Returns:
+//    int: -1 if the current CoefficientOfThermalExpansion is less, 1 if greater, and 0 if equal.
 func (a *CoefficientOfThermalExpansion) CompareTo(other *CoefficientOfThermalExpansion) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -337,22 +391,50 @@ func (a *CoefficientOfThermalExpansion) CompareTo(other *CoefficientOfThermalExp
 	return 0
 }
 
-// Add the given CoefficientOfThermalExpansion to the current CoefficientOfThermalExpansion.
+// Add adds the given CoefficientOfThermalExpansion to the current CoefficientOfThermalExpansion and returns the result.
+// The result is a new CoefficientOfThermalExpansion instance with the sum of the values.
+//
+// Parameters:
+//    other: The CoefficientOfThermalExpansion to add to the current CoefficientOfThermalExpansion.
+//
+// Returns:
+//    *CoefficientOfThermalExpansion: A new CoefficientOfThermalExpansion instance representing the sum of both CoefficientOfThermalExpansion.
 func (a *CoefficientOfThermalExpansion) Add(other *CoefficientOfThermalExpansion) *CoefficientOfThermalExpansion {
 	return &CoefficientOfThermalExpansion{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given CoefficientOfThermalExpansion to the current CoefficientOfThermalExpansion.
+// Subtract subtracts the given CoefficientOfThermalExpansion from the current CoefficientOfThermalExpansion and returns the result.
+// The result is a new CoefficientOfThermalExpansion instance with the difference of the values.
+//
+// Parameters:
+//    other: The CoefficientOfThermalExpansion to subtract from the current CoefficientOfThermalExpansion.
+//
+// Returns:
+//    *CoefficientOfThermalExpansion: A new CoefficientOfThermalExpansion instance representing the difference of both CoefficientOfThermalExpansion.
 func (a *CoefficientOfThermalExpansion) Subtract(other *CoefficientOfThermalExpansion) *CoefficientOfThermalExpansion {
 	return &CoefficientOfThermalExpansion{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given CoefficientOfThermalExpansion to the current CoefficientOfThermalExpansion.
+// Multiply multiplies the current CoefficientOfThermalExpansion by the given CoefficientOfThermalExpansion and returns the result.
+// The result is a new CoefficientOfThermalExpansion instance with the product of the values.
+//
+// Parameters:
+//    other: The CoefficientOfThermalExpansion to multiply with the current CoefficientOfThermalExpansion.
+//
+// Returns:
+//    *CoefficientOfThermalExpansion: A new CoefficientOfThermalExpansion instance representing the product of both CoefficientOfThermalExpansion.
 func (a *CoefficientOfThermalExpansion) Multiply(other *CoefficientOfThermalExpansion) *CoefficientOfThermalExpansion {
 	return &CoefficientOfThermalExpansion{value: a.value * other.BaseValue()}
 }
 
-// Divide the given CoefficientOfThermalExpansion to the current CoefficientOfThermalExpansion.
+// Divide divides the current CoefficientOfThermalExpansion by the given CoefficientOfThermalExpansion and returns the result.
+// The result is a new CoefficientOfThermalExpansion instance with the quotient of the values.
+//
+// Parameters:
+//    other: The CoefficientOfThermalExpansion to divide the current CoefficientOfThermalExpansion by.
+//
+// Returns:
+//    *CoefficientOfThermalExpansion: A new CoefficientOfThermalExpansion instance representing the quotient of both CoefficientOfThermalExpansion.
 func (a *CoefficientOfThermalExpansion) Divide(other *CoefficientOfThermalExpansion) *CoefficientOfThermalExpansion {
 	return &CoefficientOfThermalExpansion{value: a.value / other.BaseValue()}
 }

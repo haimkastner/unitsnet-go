@@ -12,7 +12,7 @@ import (
 
 
 
-// ElectricConductivityUnits enumeration
+// ElectricConductivityUnits defines various units of ElectricConductivity.
 type ElectricConductivityUnits string
 
 const (
@@ -31,19 +31,24 @@ const (
         ElectricConductivityMillisiemensPerCentimeter ElectricConductivityUnits = "MillisiemensPerCentimeter"
 )
 
-// ElectricConductivityDto represents an ElectricConductivity
+// ElectricConductivityDto represents a ElectricConductivity measurement with a numerical value and its corresponding unit.
 type ElectricConductivityDto struct {
+    // Value is the numerical representation of the ElectricConductivity.
 	Value float64
+    // Unit specifies the unit of measurement for the ElectricConductivity, as defined in the ElectricConductivityUnits enumeration.
 	Unit  ElectricConductivityUnits
 }
 
-// ElectricConductivityDtoFactory struct to group related functions
+// ElectricConductivityDtoFactory groups methods for creating and serializing ElectricConductivityDto objects.
 type ElectricConductivityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricConductivityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf ElectricConductivityDtoFactory) FromJSON(data []byte) (*ElectricConductivityDto, error) {
 	a := ElectricConductivityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into ElectricConductivityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -51,6 +56,9 @@ func (udf ElectricConductivityDtoFactory) FromJSON(data []byte) (*ElectricConduc
 	return &a, nil
 }
 
+// ToJSON serializes a ElectricConductivityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a ElectricConductivityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -62,10 +70,11 @@ func (a ElectricConductivityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// ElectricConductivity struct
+// ElectricConductivity represents a measurement in a of ElectricConductivity.
+//
+// Electrical conductivity or specific conductance is the reciprocal of electrical resistivity, and measures a material's ability to conduct an electric current.
 type ElectricConductivity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     siemens_per_meterLazy *float64 
@@ -76,57 +85,58 @@ type ElectricConductivity struct {
     millisiemens_per_centimeterLazy *float64 
 }
 
-// ElectricConductivityFactory struct to group related functions
+// ElectricConductivityFactory groups methods for creating ElectricConductivity instances.
 type ElectricConductivityFactory struct{}
 
+// CreateElectricConductivity creates a new ElectricConductivity instance from the given value and unit.
 func (uf ElectricConductivityFactory) CreateElectricConductivity(value float64, unit ElectricConductivityUnits) (*ElectricConductivity, error) {
 	return newElectricConductivity(value, unit)
 }
 
+// FromDto converts a ElectricConductivityDto to a ElectricConductivity instance.
 func (uf ElectricConductivityFactory) FromDto(dto ElectricConductivityDto) (*ElectricConductivity, error) {
 	return newElectricConductivity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a ElectricConductivity instance.
 func (uf ElectricConductivityFactory) FromDtoJSON(data []byte) (*ElectricConductivity, error) {
 	unitDto, err := ElectricConductivityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse ElectricConductivityDto from JSON: %w", err)
 	}
 	return ElectricConductivityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromSiemensPerMeter creates a new ElectricConductivity instance from SiemensPerMeter.
+// FromSiemensPerMeter creates a new ElectricConductivity instance from a value in SiemensPerMeter.
 func (uf ElectricConductivityFactory) FromSiemensPerMeter(value float64) (*ElectricConductivity, error) {
 	return newElectricConductivity(value, ElectricConductivitySiemensPerMeter)
 }
 
-// FromSiemensPerInch creates a new ElectricConductivity instance from SiemensPerInch.
+// FromSiemensPerInch creates a new ElectricConductivity instance from a value in SiemensPerInch.
 func (uf ElectricConductivityFactory) FromSiemensPerInch(value float64) (*ElectricConductivity, error) {
 	return newElectricConductivity(value, ElectricConductivitySiemensPerInch)
 }
 
-// FromSiemensPerFoot creates a new ElectricConductivity instance from SiemensPerFoot.
+// FromSiemensPerFoot creates a new ElectricConductivity instance from a value in SiemensPerFoot.
 func (uf ElectricConductivityFactory) FromSiemensPerFoot(value float64) (*ElectricConductivity, error) {
 	return newElectricConductivity(value, ElectricConductivitySiemensPerFoot)
 }
 
-// FromSiemensPerCentimeter creates a new ElectricConductivity instance from SiemensPerCentimeter.
+// FromSiemensPerCentimeter creates a new ElectricConductivity instance from a value in SiemensPerCentimeter.
 func (uf ElectricConductivityFactory) FromSiemensPerCentimeter(value float64) (*ElectricConductivity, error) {
 	return newElectricConductivity(value, ElectricConductivitySiemensPerCentimeter)
 }
 
-// FromMicrosiemensPerCentimeter creates a new ElectricConductivity instance from MicrosiemensPerCentimeter.
+// FromMicrosiemensPerCentimeter creates a new ElectricConductivity instance from a value in MicrosiemensPerCentimeter.
 func (uf ElectricConductivityFactory) FromMicrosiemensPerCentimeter(value float64) (*ElectricConductivity, error) {
 	return newElectricConductivity(value, ElectricConductivityMicrosiemensPerCentimeter)
 }
 
-// FromMillisiemensPerCentimeter creates a new ElectricConductivity instance from MillisiemensPerCentimeter.
+// FromMillisiemensPerCentimeter creates a new ElectricConductivity instance from a value in MillisiemensPerCentimeter.
 func (uf ElectricConductivityFactory) FromMillisiemensPerCentimeter(value float64) (*ElectricConductivity, error) {
 	return newElectricConductivity(value, ElectricConductivityMillisiemensPerCentimeter)
 }
-
-
 
 
 // newElectricConductivity creates a new ElectricConductivity.
@@ -139,13 +149,15 @@ func newElectricConductivity(value float64, fromUnit ElectricConductivityUnits) 
 	return a, nil
 }
 
-// BaseValue returns the base value of ElectricConductivity in SiemensPerMeter.
+// BaseValue returns the base value of ElectricConductivity in SiemensPerMeter unit (the base/default quantity).
 func (a *ElectricConductivity) BaseValue() float64 {
 	return a.value
 }
 
 
-// SiemensPerMeter returns the value in SiemensPerMeter.
+// SiemensPerMeter returns the ElectricConductivity value in SiemensPerMeter.
+//
+// 
 func (a *ElectricConductivity) SiemensPerMeter() float64 {
 	if a.siemens_per_meterLazy != nil {
 		return *a.siemens_per_meterLazy
@@ -155,7 +167,9 @@ func (a *ElectricConductivity) SiemensPerMeter() float64 {
 	return siemens_per_meter
 }
 
-// SiemensPerInch returns the value in SiemensPerInch.
+// SiemensPerInch returns the ElectricConductivity value in SiemensPerInch.
+//
+// 
 func (a *ElectricConductivity) SiemensPerInch() float64 {
 	if a.siemens_per_inchLazy != nil {
 		return *a.siemens_per_inchLazy
@@ -165,7 +179,9 @@ func (a *ElectricConductivity) SiemensPerInch() float64 {
 	return siemens_per_inch
 }
 
-// SiemensPerFoot returns the value in SiemensPerFoot.
+// SiemensPerFoot returns the ElectricConductivity value in SiemensPerFoot.
+//
+// 
 func (a *ElectricConductivity) SiemensPerFoot() float64 {
 	if a.siemens_per_footLazy != nil {
 		return *a.siemens_per_footLazy
@@ -175,7 +191,9 @@ func (a *ElectricConductivity) SiemensPerFoot() float64 {
 	return siemens_per_foot
 }
 
-// SiemensPerCentimeter returns the value in SiemensPerCentimeter.
+// SiemensPerCentimeter returns the ElectricConductivity value in SiemensPerCentimeter.
+//
+// 
 func (a *ElectricConductivity) SiemensPerCentimeter() float64 {
 	if a.siemens_per_centimeterLazy != nil {
 		return *a.siemens_per_centimeterLazy
@@ -185,7 +203,9 @@ func (a *ElectricConductivity) SiemensPerCentimeter() float64 {
 	return siemens_per_centimeter
 }
 
-// MicrosiemensPerCentimeter returns the value in MicrosiemensPerCentimeter.
+// MicrosiemensPerCentimeter returns the ElectricConductivity value in MicrosiemensPerCentimeter.
+//
+// 
 func (a *ElectricConductivity) MicrosiemensPerCentimeter() float64 {
 	if a.microsiemens_per_centimeterLazy != nil {
 		return *a.microsiemens_per_centimeterLazy
@@ -195,7 +215,9 @@ func (a *ElectricConductivity) MicrosiemensPerCentimeter() float64 {
 	return microsiemens_per_centimeter
 }
 
-// MillisiemensPerCentimeter returns the value in MillisiemensPerCentimeter.
+// MillisiemensPerCentimeter returns the ElectricConductivity value in MillisiemensPerCentimeter.
+//
+// 
 func (a *ElectricConductivity) MillisiemensPerCentimeter() float64 {
 	if a.millisiemens_per_centimeterLazy != nil {
 		return *a.millisiemens_per_centimeterLazy
@@ -206,7 +228,9 @@ func (a *ElectricConductivity) MillisiemensPerCentimeter() float64 {
 }
 
 
-// ToDto creates an ElectricConductivityDto representation.
+// ToDto creates a ElectricConductivityDto representation from the ElectricConductivity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by SiemensPerMeter by default.
 func (a *ElectricConductivity) ToDto(holdInUnit *ElectricConductivityUnits) ElectricConductivityDto {
 	if holdInUnit == nil {
 		defaultUnit := ElectricConductivitySiemensPerMeter // Default value
@@ -219,12 +243,19 @@ func (a *ElectricConductivity) ToDto(holdInUnit *ElectricConductivityUnits) Elec
 	}
 }
 
-// ToDtoJSON creates an ElectricConductivityDto representation.
+// ToDtoJSON creates a JSON representation of the ElectricConductivity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by SiemensPerMeter by default.
 func (a *ElectricConductivity) ToDtoJSON(holdInUnit *ElectricConductivityUnits) ([]byte, error) {
+	// Convert to ElectricConductivityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts ElectricConductivity to a specific unit value.
+// Convert converts a ElectricConductivity to a specific unit value.
+// The function uses the provided unit type (ElectricConductivityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *ElectricConductivity) Convert(toUnit ElectricConductivityUnits) float64 {
 	switch toUnit { 
     case ElectricConductivitySiemensPerMeter:
@@ -240,7 +271,7 @@ func (a *ElectricConductivity) Convert(toUnit ElectricConductivityUnits) float64
     case ElectricConductivityMillisiemensPerCentimeter:
 		return a.MillisiemensPerCentimeter()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -283,13 +314,22 @@ func (a *ElectricConductivity) convertToBase(value float64, fromUnit ElectricCon
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the ElectricConductivity in the default unit (SiemensPerMeter),
+// formatted to two decimal places.
 func (a ElectricConductivity) String() string {
 	return a.ToString(ElectricConductivitySiemensPerMeter, 2)
 }
 
-// ToString formats the ElectricConductivity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the ElectricConductivity value as a string with the specified unit and fractional digits.
+// It converts the ElectricConductivity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the ElectricConductivity value will be converted (e.g., SiemensPerMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the ElectricConductivity with the unit abbreviation.
 func (a *ElectricConductivity) ToString(unit ElectricConductivityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -319,12 +359,26 @@ func (a *ElectricConductivity) getUnitAbbreviation(unit ElectricConductivityUnit
 	}
 }
 
-// Check if the given ElectricConductivity are equals to the current ElectricConductivity
+// Equals checks if the given ElectricConductivity is equal to the current ElectricConductivity.
+//
+// Parameters:
+//    other: The ElectricConductivity to compare against.
+//
+// Returns:
+//    bool: Returns true if both ElectricConductivity are equal, false otherwise.
 func (a *ElectricConductivity) Equals(other *ElectricConductivity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given ElectricConductivity are equals to the current ElectricConductivity
+// CompareTo compares the current ElectricConductivity with another ElectricConductivity.
+// It returns -1 if the current ElectricConductivity is less than the other ElectricConductivity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The ElectricConductivity to compare against.
+//
+// Returns:
+//    int: -1 if the current ElectricConductivity is less, 1 if greater, and 0 if equal.
 func (a *ElectricConductivity) CompareTo(other *ElectricConductivity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -337,22 +391,50 @@ func (a *ElectricConductivity) CompareTo(other *ElectricConductivity) int {
 	return 0
 }
 
-// Add the given ElectricConductivity to the current ElectricConductivity.
+// Add adds the given ElectricConductivity to the current ElectricConductivity and returns the result.
+// The result is a new ElectricConductivity instance with the sum of the values.
+//
+// Parameters:
+//    other: The ElectricConductivity to add to the current ElectricConductivity.
+//
+// Returns:
+//    *ElectricConductivity: A new ElectricConductivity instance representing the sum of both ElectricConductivity.
 func (a *ElectricConductivity) Add(other *ElectricConductivity) *ElectricConductivity {
 	return &ElectricConductivity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given ElectricConductivity to the current ElectricConductivity.
+// Subtract subtracts the given ElectricConductivity from the current ElectricConductivity and returns the result.
+// The result is a new ElectricConductivity instance with the difference of the values.
+//
+// Parameters:
+//    other: The ElectricConductivity to subtract from the current ElectricConductivity.
+//
+// Returns:
+//    *ElectricConductivity: A new ElectricConductivity instance representing the difference of both ElectricConductivity.
 func (a *ElectricConductivity) Subtract(other *ElectricConductivity) *ElectricConductivity {
 	return &ElectricConductivity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given ElectricConductivity to the current ElectricConductivity.
+// Multiply multiplies the current ElectricConductivity by the given ElectricConductivity and returns the result.
+// The result is a new ElectricConductivity instance with the product of the values.
+//
+// Parameters:
+//    other: The ElectricConductivity to multiply with the current ElectricConductivity.
+//
+// Returns:
+//    *ElectricConductivity: A new ElectricConductivity instance representing the product of both ElectricConductivity.
 func (a *ElectricConductivity) Multiply(other *ElectricConductivity) *ElectricConductivity {
 	return &ElectricConductivity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given ElectricConductivity to the current ElectricConductivity.
+// Divide divides the current ElectricConductivity by the given ElectricConductivity and returns the result.
+// The result is a new ElectricConductivity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The ElectricConductivity to divide the current ElectricConductivity by.
+//
+// Returns:
+//    *ElectricConductivity: A new ElectricConductivity instance representing the quotient of both ElectricConductivity.
 func (a *ElectricConductivity) Divide(other *ElectricConductivity) *ElectricConductivity {
 	return &ElectricConductivity{value: a.value / other.BaseValue()}
 }

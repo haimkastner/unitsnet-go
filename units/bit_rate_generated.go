@@ -12,7 +12,7 @@ import (
 
 
 
-// BitRateUnits enumeration
+// BitRateUnits defines various units of BitRate.
 type BitRateUnits string
 
 const (
@@ -71,19 +71,24 @@ const (
         BitRateExbibytePerSecond BitRateUnits = "ExbibytePerSecond"
 )
 
-// BitRateDto represents an BitRate
+// BitRateDto represents a BitRate measurement with a numerical value and its corresponding unit.
 type BitRateDto struct {
+    // Value is the numerical representation of the BitRate.
 	Value float64
+    // Unit specifies the unit of measurement for the BitRate, as defined in the BitRateUnits enumeration.
 	Unit  BitRateUnits
 }
 
-// BitRateDtoFactory struct to group related functions
+// BitRateDtoFactory groups methods for creating and serializing BitRateDto objects.
 type BitRateDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a BitRateDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf BitRateDtoFactory) FromJSON(data []byte) (*BitRateDto, error) {
 	a := BitRateDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into BitRateDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -91,6 +96,9 @@ func (udf BitRateDtoFactory) FromJSON(data []byte) (*BitRateDto, error) {
 	return &a, nil
 }
 
+// ToJSON serializes a BitRateDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a BitRateDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -102,10 +110,11 @@ func (a BitRateDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// BitRate struct
+// BitRate represents a measurement in a of BitRate.
+//
+// In telecommunications and computing, bit rate is the number of bits that are conveyed or processed per unit of time.
 type BitRate struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     bits_per_secondLazy *float64 
@@ -136,157 +145,158 @@ type BitRate struct {
     exbibytes_per_secondLazy *float64 
 }
 
-// BitRateFactory struct to group related functions
+// BitRateFactory groups methods for creating BitRate instances.
 type BitRateFactory struct{}
 
+// CreateBitRate creates a new BitRate instance from the given value and unit.
 func (uf BitRateFactory) CreateBitRate(value float64, unit BitRateUnits) (*BitRate, error) {
 	return newBitRate(value, unit)
 }
 
+// FromDto converts a BitRateDto to a BitRate instance.
 func (uf BitRateFactory) FromDto(dto BitRateDto) (*BitRate, error) {
 	return newBitRate(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a BitRate instance.
 func (uf BitRateFactory) FromDtoJSON(data []byte) (*BitRate, error) {
 	unitDto, err := BitRateDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse BitRateDto from JSON: %w", err)
 	}
 	return BitRateFactory{}.FromDto(*unitDto)
 }
 
 
-// FromBitPerSecond creates a new BitRate instance from BitPerSecond.
+// FromBitsPerSecond creates a new BitRate instance from a value in BitsPerSecond.
 func (uf BitRateFactory) FromBitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateBitPerSecond)
 }
 
-// FromBytePerSecond creates a new BitRate instance from BytePerSecond.
+// FromBytesPerSecond creates a new BitRate instance from a value in BytesPerSecond.
 func (uf BitRateFactory) FromBytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateBytePerSecond)
 }
 
-// FromKilobitPerSecond creates a new BitRate instance from KilobitPerSecond.
+// FromKilobitsPerSecond creates a new BitRate instance from a value in KilobitsPerSecond.
 func (uf BitRateFactory) FromKilobitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateKilobitPerSecond)
 }
 
-// FromMegabitPerSecond creates a new BitRate instance from MegabitPerSecond.
+// FromMegabitsPerSecond creates a new BitRate instance from a value in MegabitsPerSecond.
 func (uf BitRateFactory) FromMegabitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateMegabitPerSecond)
 }
 
-// FromGigabitPerSecond creates a new BitRate instance from GigabitPerSecond.
+// FromGigabitsPerSecond creates a new BitRate instance from a value in GigabitsPerSecond.
 func (uf BitRateFactory) FromGigabitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateGigabitPerSecond)
 }
 
-// FromTerabitPerSecond creates a new BitRate instance from TerabitPerSecond.
+// FromTerabitsPerSecond creates a new BitRate instance from a value in TerabitsPerSecond.
 func (uf BitRateFactory) FromTerabitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateTerabitPerSecond)
 }
 
-// FromPetabitPerSecond creates a new BitRate instance from PetabitPerSecond.
+// FromPetabitsPerSecond creates a new BitRate instance from a value in PetabitsPerSecond.
 func (uf BitRateFactory) FromPetabitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRatePetabitPerSecond)
 }
 
-// FromExabitPerSecond creates a new BitRate instance from ExabitPerSecond.
+// FromExabitsPerSecond creates a new BitRate instance from a value in ExabitsPerSecond.
 func (uf BitRateFactory) FromExabitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateExabitPerSecond)
 }
 
-// FromKibibitPerSecond creates a new BitRate instance from KibibitPerSecond.
+// FromKibibitsPerSecond creates a new BitRate instance from a value in KibibitsPerSecond.
 func (uf BitRateFactory) FromKibibitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateKibibitPerSecond)
 }
 
-// FromMebibitPerSecond creates a new BitRate instance from MebibitPerSecond.
+// FromMebibitsPerSecond creates a new BitRate instance from a value in MebibitsPerSecond.
 func (uf BitRateFactory) FromMebibitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateMebibitPerSecond)
 }
 
-// FromGibibitPerSecond creates a new BitRate instance from GibibitPerSecond.
+// FromGibibitsPerSecond creates a new BitRate instance from a value in GibibitsPerSecond.
 func (uf BitRateFactory) FromGibibitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateGibibitPerSecond)
 }
 
-// FromTebibitPerSecond creates a new BitRate instance from TebibitPerSecond.
+// FromTebibitsPerSecond creates a new BitRate instance from a value in TebibitsPerSecond.
 func (uf BitRateFactory) FromTebibitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateTebibitPerSecond)
 }
 
-// FromPebibitPerSecond creates a new BitRate instance from PebibitPerSecond.
+// FromPebibitsPerSecond creates a new BitRate instance from a value in PebibitsPerSecond.
 func (uf BitRateFactory) FromPebibitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRatePebibitPerSecond)
 }
 
-// FromExbibitPerSecond creates a new BitRate instance from ExbibitPerSecond.
+// FromExbibitsPerSecond creates a new BitRate instance from a value in ExbibitsPerSecond.
 func (uf BitRateFactory) FromExbibitsPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateExbibitPerSecond)
 }
 
-// FromKilobytePerSecond creates a new BitRate instance from KilobytePerSecond.
+// FromKilobytesPerSecond creates a new BitRate instance from a value in KilobytesPerSecond.
 func (uf BitRateFactory) FromKilobytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateKilobytePerSecond)
 }
 
-// FromMegabytePerSecond creates a new BitRate instance from MegabytePerSecond.
+// FromMegabytesPerSecond creates a new BitRate instance from a value in MegabytesPerSecond.
 func (uf BitRateFactory) FromMegabytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateMegabytePerSecond)
 }
 
-// FromGigabytePerSecond creates a new BitRate instance from GigabytePerSecond.
+// FromGigabytesPerSecond creates a new BitRate instance from a value in GigabytesPerSecond.
 func (uf BitRateFactory) FromGigabytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateGigabytePerSecond)
 }
 
-// FromTerabytePerSecond creates a new BitRate instance from TerabytePerSecond.
+// FromTerabytesPerSecond creates a new BitRate instance from a value in TerabytesPerSecond.
 func (uf BitRateFactory) FromTerabytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateTerabytePerSecond)
 }
 
-// FromPetabytePerSecond creates a new BitRate instance from PetabytePerSecond.
+// FromPetabytesPerSecond creates a new BitRate instance from a value in PetabytesPerSecond.
 func (uf BitRateFactory) FromPetabytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRatePetabytePerSecond)
 }
 
-// FromExabytePerSecond creates a new BitRate instance from ExabytePerSecond.
+// FromExabytesPerSecond creates a new BitRate instance from a value in ExabytesPerSecond.
 func (uf BitRateFactory) FromExabytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateExabytePerSecond)
 }
 
-// FromKibibytePerSecond creates a new BitRate instance from KibibytePerSecond.
+// FromKibibytesPerSecond creates a new BitRate instance from a value in KibibytesPerSecond.
 func (uf BitRateFactory) FromKibibytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateKibibytePerSecond)
 }
 
-// FromMebibytePerSecond creates a new BitRate instance from MebibytePerSecond.
+// FromMebibytesPerSecond creates a new BitRate instance from a value in MebibytesPerSecond.
 func (uf BitRateFactory) FromMebibytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateMebibytePerSecond)
 }
 
-// FromGibibytePerSecond creates a new BitRate instance from GibibytePerSecond.
+// FromGibibytesPerSecond creates a new BitRate instance from a value in GibibytesPerSecond.
 func (uf BitRateFactory) FromGibibytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateGibibytePerSecond)
 }
 
-// FromTebibytePerSecond creates a new BitRate instance from TebibytePerSecond.
+// FromTebibytesPerSecond creates a new BitRate instance from a value in TebibytesPerSecond.
 func (uf BitRateFactory) FromTebibytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateTebibytePerSecond)
 }
 
-// FromPebibytePerSecond creates a new BitRate instance from PebibytePerSecond.
+// FromPebibytesPerSecond creates a new BitRate instance from a value in PebibytesPerSecond.
 func (uf BitRateFactory) FromPebibytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRatePebibytePerSecond)
 }
 
-// FromExbibytePerSecond creates a new BitRate instance from ExbibytePerSecond.
+// FromExbibytesPerSecond creates a new BitRate instance from a value in ExbibytesPerSecond.
 func (uf BitRateFactory) FromExbibytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateExbibytePerSecond)
 }
-
-
 
 
 // newBitRate creates a new BitRate.
@@ -299,13 +309,15 @@ func newBitRate(value float64, fromUnit BitRateUnits) (*BitRate, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of BitRate in BitPerSecond.
+// BaseValue returns the base value of BitRate in BitPerSecond unit (the base/default quantity).
 func (a *BitRate) BaseValue() float64 {
 	return a.value
 }
 
 
-// BitPerSecond returns the value in BitPerSecond.
+// BitsPerSecond returns the BitRate value in BitsPerSecond.
+//
+// 
 func (a *BitRate) BitsPerSecond() float64 {
 	if a.bits_per_secondLazy != nil {
 		return *a.bits_per_secondLazy
@@ -315,7 +327,9 @@ func (a *BitRate) BitsPerSecond() float64 {
 	return bits_per_second
 }
 
-// BytePerSecond returns the value in BytePerSecond.
+// BytesPerSecond returns the BitRate value in BytesPerSecond.
+//
+// 
 func (a *BitRate) BytesPerSecond() float64 {
 	if a.bytes_per_secondLazy != nil {
 		return *a.bytes_per_secondLazy
@@ -325,7 +339,9 @@ func (a *BitRate) BytesPerSecond() float64 {
 	return bytes_per_second
 }
 
-// KilobitPerSecond returns the value in KilobitPerSecond.
+// KilobitsPerSecond returns the BitRate value in KilobitsPerSecond.
+//
+// 
 func (a *BitRate) KilobitsPerSecond() float64 {
 	if a.kilobits_per_secondLazy != nil {
 		return *a.kilobits_per_secondLazy
@@ -335,7 +351,9 @@ func (a *BitRate) KilobitsPerSecond() float64 {
 	return kilobits_per_second
 }
 
-// MegabitPerSecond returns the value in MegabitPerSecond.
+// MegabitsPerSecond returns the BitRate value in MegabitsPerSecond.
+//
+// 
 func (a *BitRate) MegabitsPerSecond() float64 {
 	if a.megabits_per_secondLazy != nil {
 		return *a.megabits_per_secondLazy
@@ -345,7 +363,9 @@ func (a *BitRate) MegabitsPerSecond() float64 {
 	return megabits_per_second
 }
 
-// GigabitPerSecond returns the value in GigabitPerSecond.
+// GigabitsPerSecond returns the BitRate value in GigabitsPerSecond.
+//
+// 
 func (a *BitRate) GigabitsPerSecond() float64 {
 	if a.gigabits_per_secondLazy != nil {
 		return *a.gigabits_per_secondLazy
@@ -355,7 +375,9 @@ func (a *BitRate) GigabitsPerSecond() float64 {
 	return gigabits_per_second
 }
 
-// TerabitPerSecond returns the value in TerabitPerSecond.
+// TerabitsPerSecond returns the BitRate value in TerabitsPerSecond.
+//
+// 
 func (a *BitRate) TerabitsPerSecond() float64 {
 	if a.terabits_per_secondLazy != nil {
 		return *a.terabits_per_secondLazy
@@ -365,7 +387,9 @@ func (a *BitRate) TerabitsPerSecond() float64 {
 	return terabits_per_second
 }
 
-// PetabitPerSecond returns the value in PetabitPerSecond.
+// PetabitsPerSecond returns the BitRate value in PetabitsPerSecond.
+//
+// 
 func (a *BitRate) PetabitsPerSecond() float64 {
 	if a.petabits_per_secondLazy != nil {
 		return *a.petabits_per_secondLazy
@@ -375,7 +399,9 @@ func (a *BitRate) PetabitsPerSecond() float64 {
 	return petabits_per_second
 }
 
-// ExabitPerSecond returns the value in ExabitPerSecond.
+// ExabitsPerSecond returns the BitRate value in ExabitsPerSecond.
+//
+// 
 func (a *BitRate) ExabitsPerSecond() float64 {
 	if a.exabits_per_secondLazy != nil {
 		return *a.exabits_per_secondLazy
@@ -385,7 +411,9 @@ func (a *BitRate) ExabitsPerSecond() float64 {
 	return exabits_per_second
 }
 
-// KibibitPerSecond returns the value in KibibitPerSecond.
+// KibibitsPerSecond returns the BitRate value in KibibitsPerSecond.
+//
+// 
 func (a *BitRate) KibibitsPerSecond() float64 {
 	if a.kibibits_per_secondLazy != nil {
 		return *a.kibibits_per_secondLazy
@@ -395,7 +423,9 @@ func (a *BitRate) KibibitsPerSecond() float64 {
 	return kibibits_per_second
 }
 
-// MebibitPerSecond returns the value in MebibitPerSecond.
+// MebibitsPerSecond returns the BitRate value in MebibitsPerSecond.
+//
+// 
 func (a *BitRate) MebibitsPerSecond() float64 {
 	if a.mebibits_per_secondLazy != nil {
 		return *a.mebibits_per_secondLazy
@@ -405,7 +435,9 @@ func (a *BitRate) MebibitsPerSecond() float64 {
 	return mebibits_per_second
 }
 
-// GibibitPerSecond returns the value in GibibitPerSecond.
+// GibibitsPerSecond returns the BitRate value in GibibitsPerSecond.
+//
+// 
 func (a *BitRate) GibibitsPerSecond() float64 {
 	if a.gibibits_per_secondLazy != nil {
 		return *a.gibibits_per_secondLazy
@@ -415,7 +447,9 @@ func (a *BitRate) GibibitsPerSecond() float64 {
 	return gibibits_per_second
 }
 
-// TebibitPerSecond returns the value in TebibitPerSecond.
+// TebibitsPerSecond returns the BitRate value in TebibitsPerSecond.
+//
+// 
 func (a *BitRate) TebibitsPerSecond() float64 {
 	if a.tebibits_per_secondLazy != nil {
 		return *a.tebibits_per_secondLazy
@@ -425,7 +459,9 @@ func (a *BitRate) TebibitsPerSecond() float64 {
 	return tebibits_per_second
 }
 
-// PebibitPerSecond returns the value in PebibitPerSecond.
+// PebibitsPerSecond returns the BitRate value in PebibitsPerSecond.
+//
+// 
 func (a *BitRate) PebibitsPerSecond() float64 {
 	if a.pebibits_per_secondLazy != nil {
 		return *a.pebibits_per_secondLazy
@@ -435,7 +471,9 @@ func (a *BitRate) PebibitsPerSecond() float64 {
 	return pebibits_per_second
 }
 
-// ExbibitPerSecond returns the value in ExbibitPerSecond.
+// ExbibitsPerSecond returns the BitRate value in ExbibitsPerSecond.
+//
+// 
 func (a *BitRate) ExbibitsPerSecond() float64 {
 	if a.exbibits_per_secondLazy != nil {
 		return *a.exbibits_per_secondLazy
@@ -445,7 +483,9 @@ func (a *BitRate) ExbibitsPerSecond() float64 {
 	return exbibits_per_second
 }
 
-// KilobytePerSecond returns the value in KilobytePerSecond.
+// KilobytesPerSecond returns the BitRate value in KilobytesPerSecond.
+//
+// 
 func (a *BitRate) KilobytesPerSecond() float64 {
 	if a.kilobytes_per_secondLazy != nil {
 		return *a.kilobytes_per_secondLazy
@@ -455,7 +495,9 @@ func (a *BitRate) KilobytesPerSecond() float64 {
 	return kilobytes_per_second
 }
 
-// MegabytePerSecond returns the value in MegabytePerSecond.
+// MegabytesPerSecond returns the BitRate value in MegabytesPerSecond.
+//
+// 
 func (a *BitRate) MegabytesPerSecond() float64 {
 	if a.megabytes_per_secondLazy != nil {
 		return *a.megabytes_per_secondLazy
@@ -465,7 +507,9 @@ func (a *BitRate) MegabytesPerSecond() float64 {
 	return megabytes_per_second
 }
 
-// GigabytePerSecond returns the value in GigabytePerSecond.
+// GigabytesPerSecond returns the BitRate value in GigabytesPerSecond.
+//
+// 
 func (a *BitRate) GigabytesPerSecond() float64 {
 	if a.gigabytes_per_secondLazy != nil {
 		return *a.gigabytes_per_secondLazy
@@ -475,7 +519,9 @@ func (a *BitRate) GigabytesPerSecond() float64 {
 	return gigabytes_per_second
 }
 
-// TerabytePerSecond returns the value in TerabytePerSecond.
+// TerabytesPerSecond returns the BitRate value in TerabytesPerSecond.
+//
+// 
 func (a *BitRate) TerabytesPerSecond() float64 {
 	if a.terabytes_per_secondLazy != nil {
 		return *a.terabytes_per_secondLazy
@@ -485,7 +531,9 @@ func (a *BitRate) TerabytesPerSecond() float64 {
 	return terabytes_per_second
 }
 
-// PetabytePerSecond returns the value in PetabytePerSecond.
+// PetabytesPerSecond returns the BitRate value in PetabytesPerSecond.
+//
+// 
 func (a *BitRate) PetabytesPerSecond() float64 {
 	if a.petabytes_per_secondLazy != nil {
 		return *a.petabytes_per_secondLazy
@@ -495,7 +543,9 @@ func (a *BitRate) PetabytesPerSecond() float64 {
 	return petabytes_per_second
 }
 
-// ExabytePerSecond returns the value in ExabytePerSecond.
+// ExabytesPerSecond returns the BitRate value in ExabytesPerSecond.
+//
+// 
 func (a *BitRate) ExabytesPerSecond() float64 {
 	if a.exabytes_per_secondLazy != nil {
 		return *a.exabytes_per_secondLazy
@@ -505,7 +555,9 @@ func (a *BitRate) ExabytesPerSecond() float64 {
 	return exabytes_per_second
 }
 
-// KibibytePerSecond returns the value in KibibytePerSecond.
+// KibibytesPerSecond returns the BitRate value in KibibytesPerSecond.
+//
+// 
 func (a *BitRate) KibibytesPerSecond() float64 {
 	if a.kibibytes_per_secondLazy != nil {
 		return *a.kibibytes_per_secondLazy
@@ -515,7 +567,9 @@ func (a *BitRate) KibibytesPerSecond() float64 {
 	return kibibytes_per_second
 }
 
-// MebibytePerSecond returns the value in MebibytePerSecond.
+// MebibytesPerSecond returns the BitRate value in MebibytesPerSecond.
+//
+// 
 func (a *BitRate) MebibytesPerSecond() float64 {
 	if a.mebibytes_per_secondLazy != nil {
 		return *a.mebibytes_per_secondLazy
@@ -525,7 +579,9 @@ func (a *BitRate) MebibytesPerSecond() float64 {
 	return mebibytes_per_second
 }
 
-// GibibytePerSecond returns the value in GibibytePerSecond.
+// GibibytesPerSecond returns the BitRate value in GibibytesPerSecond.
+//
+// 
 func (a *BitRate) GibibytesPerSecond() float64 {
 	if a.gibibytes_per_secondLazy != nil {
 		return *a.gibibytes_per_secondLazy
@@ -535,7 +591,9 @@ func (a *BitRate) GibibytesPerSecond() float64 {
 	return gibibytes_per_second
 }
 
-// TebibytePerSecond returns the value in TebibytePerSecond.
+// TebibytesPerSecond returns the BitRate value in TebibytesPerSecond.
+//
+// 
 func (a *BitRate) TebibytesPerSecond() float64 {
 	if a.tebibytes_per_secondLazy != nil {
 		return *a.tebibytes_per_secondLazy
@@ -545,7 +603,9 @@ func (a *BitRate) TebibytesPerSecond() float64 {
 	return tebibytes_per_second
 }
 
-// PebibytePerSecond returns the value in PebibytePerSecond.
+// PebibytesPerSecond returns the BitRate value in PebibytesPerSecond.
+//
+// 
 func (a *BitRate) PebibytesPerSecond() float64 {
 	if a.pebibytes_per_secondLazy != nil {
 		return *a.pebibytes_per_secondLazy
@@ -555,7 +615,9 @@ func (a *BitRate) PebibytesPerSecond() float64 {
 	return pebibytes_per_second
 }
 
-// ExbibytePerSecond returns the value in ExbibytePerSecond.
+// ExbibytesPerSecond returns the BitRate value in ExbibytesPerSecond.
+//
+// 
 func (a *BitRate) ExbibytesPerSecond() float64 {
 	if a.exbibytes_per_secondLazy != nil {
 		return *a.exbibytes_per_secondLazy
@@ -566,7 +628,9 @@ func (a *BitRate) ExbibytesPerSecond() float64 {
 }
 
 
-// ToDto creates an BitRateDto representation.
+// ToDto creates a BitRateDto representation from the BitRate instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by BitPerSecond by default.
 func (a *BitRate) ToDto(holdInUnit *BitRateUnits) BitRateDto {
 	if holdInUnit == nil {
 		defaultUnit := BitRateBitPerSecond // Default value
@@ -579,12 +643,19 @@ func (a *BitRate) ToDto(holdInUnit *BitRateUnits) BitRateDto {
 	}
 }
 
-// ToDtoJSON creates an BitRateDto representation.
+// ToDtoJSON creates a JSON representation of the BitRate instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by BitPerSecond by default.
 func (a *BitRate) ToDtoJSON(holdInUnit *BitRateUnits) ([]byte, error) {
+	// Convert to BitRateDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts BitRate to a specific unit value.
+// Convert converts a BitRate to a specific unit value.
+// The function uses the provided unit type (BitRateUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *BitRate) Convert(toUnit BitRateUnits) float64 {
 	switch toUnit { 
     case BitRateBitPerSecond:
@@ -640,7 +711,7 @@ func (a *BitRate) Convert(toUnit BitRateUnits) float64 {
     case BitRateExbibytePerSecond:
 		return a.ExbibytesPerSecond()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -763,13 +834,22 @@ func (a *BitRate) convertToBase(value float64, fromUnit BitRateUnits) float64 {
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the BitRate in the default unit (BitPerSecond),
+// formatted to two decimal places.
 func (a BitRate) String() string {
 	return a.ToString(BitRateBitPerSecond, 2)
 }
 
-// ToString formats the BitRate to string.
-// fractionalDigits -1 for not mention
+// ToString formats the BitRate value as a string with the specified unit and fractional digits.
+// It converts the BitRate to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the BitRate value will be converted (e.g., BitPerSecond))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the BitRate with the unit abbreviation.
 func (a *BitRate) ToString(unit BitRateUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -839,12 +919,26 @@ func (a *BitRate) getUnitAbbreviation(unit BitRateUnits) string {
 	}
 }
 
-// Check if the given BitRate are equals to the current BitRate
+// Equals checks if the given BitRate is equal to the current BitRate.
+//
+// Parameters:
+//    other: The BitRate to compare against.
+//
+// Returns:
+//    bool: Returns true if both BitRate are equal, false otherwise.
 func (a *BitRate) Equals(other *BitRate) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given BitRate are equals to the current BitRate
+// CompareTo compares the current BitRate with another BitRate.
+// It returns -1 if the current BitRate is less than the other BitRate, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The BitRate to compare against.
+//
+// Returns:
+//    int: -1 if the current BitRate is less, 1 if greater, and 0 if equal.
 func (a *BitRate) CompareTo(other *BitRate) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -857,22 +951,50 @@ func (a *BitRate) CompareTo(other *BitRate) int {
 	return 0
 }
 
-// Add the given BitRate to the current BitRate.
+// Add adds the given BitRate to the current BitRate and returns the result.
+// The result is a new BitRate instance with the sum of the values.
+//
+// Parameters:
+//    other: The BitRate to add to the current BitRate.
+//
+// Returns:
+//    *BitRate: A new BitRate instance representing the sum of both BitRate.
 func (a *BitRate) Add(other *BitRate) *BitRate {
 	return &BitRate{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given BitRate to the current BitRate.
+// Subtract subtracts the given BitRate from the current BitRate and returns the result.
+// The result is a new BitRate instance with the difference of the values.
+//
+// Parameters:
+//    other: The BitRate to subtract from the current BitRate.
+//
+// Returns:
+//    *BitRate: A new BitRate instance representing the difference of both BitRate.
 func (a *BitRate) Subtract(other *BitRate) *BitRate {
 	return &BitRate{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given BitRate to the current BitRate.
+// Multiply multiplies the current BitRate by the given BitRate and returns the result.
+// The result is a new BitRate instance with the product of the values.
+//
+// Parameters:
+//    other: The BitRate to multiply with the current BitRate.
+//
+// Returns:
+//    *BitRate: A new BitRate instance representing the product of both BitRate.
 func (a *BitRate) Multiply(other *BitRate) *BitRate {
 	return &BitRate{value: a.value * other.BaseValue()}
 }
 
-// Divide the given BitRate to the current BitRate.
+// Divide divides the current BitRate by the given BitRate and returns the result.
+// The result is a new BitRate instance with the quotient of the values.
+//
+// Parameters:
+//    other: The BitRate to divide the current BitRate by.
+//
+// Returns:
+//    *BitRate: A new BitRate instance representing the quotient of both BitRate.
 func (a *BitRate) Divide(other *BitRate) *BitRate {
 	return &BitRate{value: a.value / other.BaseValue()}
 }

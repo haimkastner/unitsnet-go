@@ -12,7 +12,7 @@ import (
 
 
 
-// LinearPowerDensityUnits enumeration
+// LinearPowerDensityUnits defines various units of LinearPowerDensity.
 type LinearPowerDensityUnits string
 
 const (
@@ -69,19 +69,24 @@ const (
         LinearPowerDensityGigawattPerFoot LinearPowerDensityUnits = "GigawattPerFoot"
 )
 
-// LinearPowerDensityDto represents an LinearPowerDensity
+// LinearPowerDensityDto represents a LinearPowerDensity measurement with a numerical value and its corresponding unit.
 type LinearPowerDensityDto struct {
+    // Value is the numerical representation of the LinearPowerDensity.
 	Value float64
+    // Unit specifies the unit of measurement for the LinearPowerDensity, as defined in the LinearPowerDensityUnits enumeration.
 	Unit  LinearPowerDensityUnits
 }
 
-// LinearPowerDensityDtoFactory struct to group related functions
+// LinearPowerDensityDtoFactory groups methods for creating and serializing LinearPowerDensityDto objects.
 type LinearPowerDensityDtoFactory struct{}
 
+// FromJSON parses a JSON-encoded byte slice into a LinearPowerDensityDto object.
+//
+// Returns an error if the JSON cannot be parsed.
 func (udf LinearPowerDensityDtoFactory) FromJSON(data []byte) (*LinearPowerDensityDto, error) {
 	a := LinearPowerDensityDto{}
 
-	// Parse JSON into the temporary structure
+    // Parse JSON into LinearPowerDensityDto
 	if err := json.Unmarshal(data, &a); err != nil {
 		return nil, err
 	}
@@ -89,6 +94,9 @@ func (udf LinearPowerDensityDtoFactory) FromJSON(data []byte) (*LinearPowerDensi
 	return &a, nil
 }
 
+// ToJSON serializes a LinearPowerDensityDto into a JSON-encoded byte slice.
+//
+// Returns an error if the serialization fails.
 func (a LinearPowerDensityDto) ToJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Value float64 `json:"value"`
@@ -100,10 +108,11 @@ func (a LinearPowerDensityDto) ToJSON() ([]byte, error) {
 }
 
 
-
-
-// LinearPowerDensity struct
+// LinearPowerDensity represents a measurement in a of LinearPowerDensity.
+//
+// The Linear Power Density of a substance is its power per unit length.  The term linear density is most often used when describing the characteristics of one-dimensional objects, although linear density can also be used to describe the density of a three-dimensional quantity along one particular dimension.
 type LinearPowerDensity struct {
+	// value is the base measurement stored internally.
 	value       float64
     
     watts_per_meterLazy *float64 
@@ -133,152 +142,153 @@ type LinearPowerDensity struct {
     gigawatts_per_footLazy *float64 
 }
 
-// LinearPowerDensityFactory struct to group related functions
+// LinearPowerDensityFactory groups methods for creating LinearPowerDensity instances.
 type LinearPowerDensityFactory struct{}
 
+// CreateLinearPowerDensity creates a new LinearPowerDensity instance from the given value and unit.
 func (uf LinearPowerDensityFactory) CreateLinearPowerDensity(value float64, unit LinearPowerDensityUnits) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, unit)
 }
 
+// FromDto converts a LinearPowerDensityDto to a LinearPowerDensity instance.
 func (uf LinearPowerDensityFactory) FromDto(dto LinearPowerDensityDto) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(dto.Value, dto.Unit)
 }
 
+// FromJSON parses a JSON-encoded byte slice into a LinearPowerDensity instance.
 func (uf LinearPowerDensityFactory) FromDtoJSON(data []byte) (*LinearPowerDensity, error) {
 	unitDto, err := LinearPowerDensityDtoFactory{}.FromJSON(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse LinearPowerDensityDto from JSON: %w", err)
 	}
 	return LinearPowerDensityFactory{}.FromDto(*unitDto)
 }
 
 
-// FromWattPerMeter creates a new LinearPowerDensity instance from WattPerMeter.
+// FromWattsPerMeter creates a new LinearPowerDensity instance from a value in WattsPerMeter.
 func (uf LinearPowerDensityFactory) FromWattsPerMeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityWattPerMeter)
 }
 
-// FromWattPerCentimeter creates a new LinearPowerDensity instance from WattPerCentimeter.
+// FromWattsPerCentimeter creates a new LinearPowerDensity instance from a value in WattsPerCentimeter.
 func (uf LinearPowerDensityFactory) FromWattsPerCentimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityWattPerCentimeter)
 }
 
-// FromWattPerMillimeter creates a new LinearPowerDensity instance from WattPerMillimeter.
+// FromWattsPerMillimeter creates a new LinearPowerDensity instance from a value in WattsPerMillimeter.
 func (uf LinearPowerDensityFactory) FromWattsPerMillimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityWattPerMillimeter)
 }
 
-// FromWattPerInch creates a new LinearPowerDensity instance from WattPerInch.
+// FromWattsPerInch creates a new LinearPowerDensity instance from a value in WattsPerInch.
 func (uf LinearPowerDensityFactory) FromWattsPerInch(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityWattPerInch)
 }
 
-// FromWattPerFoot creates a new LinearPowerDensity instance from WattPerFoot.
+// FromWattsPerFoot creates a new LinearPowerDensity instance from a value in WattsPerFoot.
 func (uf LinearPowerDensityFactory) FromWattsPerFoot(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityWattPerFoot)
 }
 
-// FromMilliwattPerMeter creates a new LinearPowerDensity instance from MilliwattPerMeter.
+// FromMilliwattsPerMeter creates a new LinearPowerDensity instance from a value in MilliwattsPerMeter.
 func (uf LinearPowerDensityFactory) FromMilliwattsPerMeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMilliwattPerMeter)
 }
 
-// FromKilowattPerMeter creates a new LinearPowerDensity instance from KilowattPerMeter.
+// FromKilowattsPerMeter creates a new LinearPowerDensity instance from a value in KilowattsPerMeter.
 func (uf LinearPowerDensityFactory) FromKilowattsPerMeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityKilowattPerMeter)
 }
 
-// FromMegawattPerMeter creates a new LinearPowerDensity instance from MegawattPerMeter.
+// FromMegawattsPerMeter creates a new LinearPowerDensity instance from a value in MegawattsPerMeter.
 func (uf LinearPowerDensityFactory) FromMegawattsPerMeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMegawattPerMeter)
 }
 
-// FromGigawattPerMeter creates a new LinearPowerDensity instance from GigawattPerMeter.
+// FromGigawattsPerMeter creates a new LinearPowerDensity instance from a value in GigawattsPerMeter.
 func (uf LinearPowerDensityFactory) FromGigawattsPerMeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityGigawattPerMeter)
 }
 
-// FromMilliwattPerCentimeter creates a new LinearPowerDensity instance from MilliwattPerCentimeter.
+// FromMilliwattsPerCentimeter creates a new LinearPowerDensity instance from a value in MilliwattsPerCentimeter.
 func (uf LinearPowerDensityFactory) FromMilliwattsPerCentimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMilliwattPerCentimeter)
 }
 
-// FromKilowattPerCentimeter creates a new LinearPowerDensity instance from KilowattPerCentimeter.
+// FromKilowattsPerCentimeter creates a new LinearPowerDensity instance from a value in KilowattsPerCentimeter.
 func (uf LinearPowerDensityFactory) FromKilowattsPerCentimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityKilowattPerCentimeter)
 }
 
-// FromMegawattPerCentimeter creates a new LinearPowerDensity instance from MegawattPerCentimeter.
+// FromMegawattsPerCentimeter creates a new LinearPowerDensity instance from a value in MegawattsPerCentimeter.
 func (uf LinearPowerDensityFactory) FromMegawattsPerCentimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMegawattPerCentimeter)
 }
 
-// FromGigawattPerCentimeter creates a new LinearPowerDensity instance from GigawattPerCentimeter.
+// FromGigawattsPerCentimeter creates a new LinearPowerDensity instance from a value in GigawattsPerCentimeter.
 func (uf LinearPowerDensityFactory) FromGigawattsPerCentimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityGigawattPerCentimeter)
 }
 
-// FromMilliwattPerMillimeter creates a new LinearPowerDensity instance from MilliwattPerMillimeter.
+// FromMilliwattsPerMillimeter creates a new LinearPowerDensity instance from a value in MilliwattsPerMillimeter.
 func (uf LinearPowerDensityFactory) FromMilliwattsPerMillimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMilliwattPerMillimeter)
 }
 
-// FromKilowattPerMillimeter creates a new LinearPowerDensity instance from KilowattPerMillimeter.
+// FromKilowattsPerMillimeter creates a new LinearPowerDensity instance from a value in KilowattsPerMillimeter.
 func (uf LinearPowerDensityFactory) FromKilowattsPerMillimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityKilowattPerMillimeter)
 }
 
-// FromMegawattPerMillimeter creates a new LinearPowerDensity instance from MegawattPerMillimeter.
+// FromMegawattsPerMillimeter creates a new LinearPowerDensity instance from a value in MegawattsPerMillimeter.
 func (uf LinearPowerDensityFactory) FromMegawattsPerMillimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMegawattPerMillimeter)
 }
 
-// FromGigawattPerMillimeter creates a new LinearPowerDensity instance from GigawattPerMillimeter.
+// FromGigawattsPerMillimeter creates a new LinearPowerDensity instance from a value in GigawattsPerMillimeter.
 func (uf LinearPowerDensityFactory) FromGigawattsPerMillimeter(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityGigawattPerMillimeter)
 }
 
-// FromMilliwattPerInch creates a new LinearPowerDensity instance from MilliwattPerInch.
+// FromMilliwattsPerInch creates a new LinearPowerDensity instance from a value in MilliwattsPerInch.
 func (uf LinearPowerDensityFactory) FromMilliwattsPerInch(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMilliwattPerInch)
 }
 
-// FromKilowattPerInch creates a new LinearPowerDensity instance from KilowattPerInch.
+// FromKilowattsPerInch creates a new LinearPowerDensity instance from a value in KilowattsPerInch.
 func (uf LinearPowerDensityFactory) FromKilowattsPerInch(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityKilowattPerInch)
 }
 
-// FromMegawattPerInch creates a new LinearPowerDensity instance from MegawattPerInch.
+// FromMegawattsPerInch creates a new LinearPowerDensity instance from a value in MegawattsPerInch.
 func (uf LinearPowerDensityFactory) FromMegawattsPerInch(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMegawattPerInch)
 }
 
-// FromGigawattPerInch creates a new LinearPowerDensity instance from GigawattPerInch.
+// FromGigawattsPerInch creates a new LinearPowerDensity instance from a value in GigawattsPerInch.
 func (uf LinearPowerDensityFactory) FromGigawattsPerInch(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityGigawattPerInch)
 }
 
-// FromMilliwattPerFoot creates a new LinearPowerDensity instance from MilliwattPerFoot.
+// FromMilliwattsPerFoot creates a new LinearPowerDensity instance from a value in MilliwattsPerFoot.
 func (uf LinearPowerDensityFactory) FromMilliwattsPerFoot(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMilliwattPerFoot)
 }
 
-// FromKilowattPerFoot creates a new LinearPowerDensity instance from KilowattPerFoot.
+// FromKilowattsPerFoot creates a new LinearPowerDensity instance from a value in KilowattsPerFoot.
 func (uf LinearPowerDensityFactory) FromKilowattsPerFoot(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityKilowattPerFoot)
 }
 
-// FromMegawattPerFoot creates a new LinearPowerDensity instance from MegawattPerFoot.
+// FromMegawattsPerFoot creates a new LinearPowerDensity instance from a value in MegawattsPerFoot.
 func (uf LinearPowerDensityFactory) FromMegawattsPerFoot(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityMegawattPerFoot)
 }
 
-// FromGigawattPerFoot creates a new LinearPowerDensity instance from GigawattPerFoot.
+// FromGigawattsPerFoot creates a new LinearPowerDensity instance from a value in GigawattsPerFoot.
 func (uf LinearPowerDensityFactory) FromGigawattsPerFoot(value float64) (*LinearPowerDensity, error) {
 	return newLinearPowerDensity(value, LinearPowerDensityGigawattPerFoot)
 }
-
-
 
 
 // newLinearPowerDensity creates a new LinearPowerDensity.
@@ -291,13 +301,15 @@ func newLinearPowerDensity(value float64, fromUnit LinearPowerDensityUnits) (*Li
 	return a, nil
 }
 
-// BaseValue returns the base value of LinearPowerDensity in WattPerMeter.
+// BaseValue returns the base value of LinearPowerDensity in WattPerMeter unit (the base/default quantity).
 func (a *LinearPowerDensity) BaseValue() float64 {
 	return a.value
 }
 
 
-// WattPerMeter returns the value in WattPerMeter.
+// WattsPerMeter returns the LinearPowerDensity value in WattsPerMeter.
+//
+// 
 func (a *LinearPowerDensity) WattsPerMeter() float64 {
 	if a.watts_per_meterLazy != nil {
 		return *a.watts_per_meterLazy
@@ -307,7 +319,9 @@ func (a *LinearPowerDensity) WattsPerMeter() float64 {
 	return watts_per_meter
 }
 
-// WattPerCentimeter returns the value in WattPerCentimeter.
+// WattsPerCentimeter returns the LinearPowerDensity value in WattsPerCentimeter.
+//
+// 
 func (a *LinearPowerDensity) WattsPerCentimeter() float64 {
 	if a.watts_per_centimeterLazy != nil {
 		return *a.watts_per_centimeterLazy
@@ -317,7 +331,9 @@ func (a *LinearPowerDensity) WattsPerCentimeter() float64 {
 	return watts_per_centimeter
 }
 
-// WattPerMillimeter returns the value in WattPerMillimeter.
+// WattsPerMillimeter returns the LinearPowerDensity value in WattsPerMillimeter.
+//
+// 
 func (a *LinearPowerDensity) WattsPerMillimeter() float64 {
 	if a.watts_per_millimeterLazy != nil {
 		return *a.watts_per_millimeterLazy
@@ -327,7 +343,9 @@ func (a *LinearPowerDensity) WattsPerMillimeter() float64 {
 	return watts_per_millimeter
 }
 
-// WattPerInch returns the value in WattPerInch.
+// WattsPerInch returns the LinearPowerDensity value in WattsPerInch.
+//
+// 
 func (a *LinearPowerDensity) WattsPerInch() float64 {
 	if a.watts_per_inchLazy != nil {
 		return *a.watts_per_inchLazy
@@ -337,7 +355,9 @@ func (a *LinearPowerDensity) WattsPerInch() float64 {
 	return watts_per_inch
 }
 
-// WattPerFoot returns the value in WattPerFoot.
+// WattsPerFoot returns the LinearPowerDensity value in WattsPerFoot.
+//
+// 
 func (a *LinearPowerDensity) WattsPerFoot() float64 {
 	if a.watts_per_footLazy != nil {
 		return *a.watts_per_footLazy
@@ -347,7 +367,9 @@ func (a *LinearPowerDensity) WattsPerFoot() float64 {
 	return watts_per_foot
 }
 
-// MilliwattPerMeter returns the value in MilliwattPerMeter.
+// MilliwattsPerMeter returns the LinearPowerDensity value in MilliwattsPerMeter.
+//
+// 
 func (a *LinearPowerDensity) MilliwattsPerMeter() float64 {
 	if a.milliwatts_per_meterLazy != nil {
 		return *a.milliwatts_per_meterLazy
@@ -357,7 +379,9 @@ func (a *LinearPowerDensity) MilliwattsPerMeter() float64 {
 	return milliwatts_per_meter
 }
 
-// KilowattPerMeter returns the value in KilowattPerMeter.
+// KilowattsPerMeter returns the LinearPowerDensity value in KilowattsPerMeter.
+//
+// 
 func (a *LinearPowerDensity) KilowattsPerMeter() float64 {
 	if a.kilowatts_per_meterLazy != nil {
 		return *a.kilowatts_per_meterLazy
@@ -367,7 +391,9 @@ func (a *LinearPowerDensity) KilowattsPerMeter() float64 {
 	return kilowatts_per_meter
 }
 
-// MegawattPerMeter returns the value in MegawattPerMeter.
+// MegawattsPerMeter returns the LinearPowerDensity value in MegawattsPerMeter.
+//
+// 
 func (a *LinearPowerDensity) MegawattsPerMeter() float64 {
 	if a.megawatts_per_meterLazy != nil {
 		return *a.megawatts_per_meterLazy
@@ -377,7 +403,9 @@ func (a *LinearPowerDensity) MegawattsPerMeter() float64 {
 	return megawatts_per_meter
 }
 
-// GigawattPerMeter returns the value in GigawattPerMeter.
+// GigawattsPerMeter returns the LinearPowerDensity value in GigawattsPerMeter.
+//
+// 
 func (a *LinearPowerDensity) GigawattsPerMeter() float64 {
 	if a.gigawatts_per_meterLazy != nil {
 		return *a.gigawatts_per_meterLazy
@@ -387,7 +415,9 @@ func (a *LinearPowerDensity) GigawattsPerMeter() float64 {
 	return gigawatts_per_meter
 }
 
-// MilliwattPerCentimeter returns the value in MilliwattPerCentimeter.
+// MilliwattsPerCentimeter returns the LinearPowerDensity value in MilliwattsPerCentimeter.
+//
+// 
 func (a *LinearPowerDensity) MilliwattsPerCentimeter() float64 {
 	if a.milliwatts_per_centimeterLazy != nil {
 		return *a.milliwatts_per_centimeterLazy
@@ -397,7 +427,9 @@ func (a *LinearPowerDensity) MilliwattsPerCentimeter() float64 {
 	return milliwatts_per_centimeter
 }
 
-// KilowattPerCentimeter returns the value in KilowattPerCentimeter.
+// KilowattsPerCentimeter returns the LinearPowerDensity value in KilowattsPerCentimeter.
+//
+// 
 func (a *LinearPowerDensity) KilowattsPerCentimeter() float64 {
 	if a.kilowatts_per_centimeterLazy != nil {
 		return *a.kilowatts_per_centimeterLazy
@@ -407,7 +439,9 @@ func (a *LinearPowerDensity) KilowattsPerCentimeter() float64 {
 	return kilowatts_per_centimeter
 }
 
-// MegawattPerCentimeter returns the value in MegawattPerCentimeter.
+// MegawattsPerCentimeter returns the LinearPowerDensity value in MegawattsPerCentimeter.
+//
+// 
 func (a *LinearPowerDensity) MegawattsPerCentimeter() float64 {
 	if a.megawatts_per_centimeterLazy != nil {
 		return *a.megawatts_per_centimeterLazy
@@ -417,7 +451,9 @@ func (a *LinearPowerDensity) MegawattsPerCentimeter() float64 {
 	return megawatts_per_centimeter
 }
 
-// GigawattPerCentimeter returns the value in GigawattPerCentimeter.
+// GigawattsPerCentimeter returns the LinearPowerDensity value in GigawattsPerCentimeter.
+//
+// 
 func (a *LinearPowerDensity) GigawattsPerCentimeter() float64 {
 	if a.gigawatts_per_centimeterLazy != nil {
 		return *a.gigawatts_per_centimeterLazy
@@ -427,7 +463,9 @@ func (a *LinearPowerDensity) GigawattsPerCentimeter() float64 {
 	return gigawatts_per_centimeter
 }
 
-// MilliwattPerMillimeter returns the value in MilliwattPerMillimeter.
+// MilliwattsPerMillimeter returns the LinearPowerDensity value in MilliwattsPerMillimeter.
+//
+// 
 func (a *LinearPowerDensity) MilliwattsPerMillimeter() float64 {
 	if a.milliwatts_per_millimeterLazy != nil {
 		return *a.milliwatts_per_millimeterLazy
@@ -437,7 +475,9 @@ func (a *LinearPowerDensity) MilliwattsPerMillimeter() float64 {
 	return milliwatts_per_millimeter
 }
 
-// KilowattPerMillimeter returns the value in KilowattPerMillimeter.
+// KilowattsPerMillimeter returns the LinearPowerDensity value in KilowattsPerMillimeter.
+//
+// 
 func (a *LinearPowerDensity) KilowattsPerMillimeter() float64 {
 	if a.kilowatts_per_millimeterLazy != nil {
 		return *a.kilowatts_per_millimeterLazy
@@ -447,7 +487,9 @@ func (a *LinearPowerDensity) KilowattsPerMillimeter() float64 {
 	return kilowatts_per_millimeter
 }
 
-// MegawattPerMillimeter returns the value in MegawattPerMillimeter.
+// MegawattsPerMillimeter returns the LinearPowerDensity value in MegawattsPerMillimeter.
+//
+// 
 func (a *LinearPowerDensity) MegawattsPerMillimeter() float64 {
 	if a.megawatts_per_millimeterLazy != nil {
 		return *a.megawatts_per_millimeterLazy
@@ -457,7 +499,9 @@ func (a *LinearPowerDensity) MegawattsPerMillimeter() float64 {
 	return megawatts_per_millimeter
 }
 
-// GigawattPerMillimeter returns the value in GigawattPerMillimeter.
+// GigawattsPerMillimeter returns the LinearPowerDensity value in GigawattsPerMillimeter.
+//
+// 
 func (a *LinearPowerDensity) GigawattsPerMillimeter() float64 {
 	if a.gigawatts_per_millimeterLazy != nil {
 		return *a.gigawatts_per_millimeterLazy
@@ -467,7 +511,9 @@ func (a *LinearPowerDensity) GigawattsPerMillimeter() float64 {
 	return gigawatts_per_millimeter
 }
 
-// MilliwattPerInch returns the value in MilliwattPerInch.
+// MilliwattsPerInch returns the LinearPowerDensity value in MilliwattsPerInch.
+//
+// 
 func (a *LinearPowerDensity) MilliwattsPerInch() float64 {
 	if a.milliwatts_per_inchLazy != nil {
 		return *a.milliwatts_per_inchLazy
@@ -477,7 +523,9 @@ func (a *LinearPowerDensity) MilliwattsPerInch() float64 {
 	return milliwatts_per_inch
 }
 
-// KilowattPerInch returns the value in KilowattPerInch.
+// KilowattsPerInch returns the LinearPowerDensity value in KilowattsPerInch.
+//
+// 
 func (a *LinearPowerDensity) KilowattsPerInch() float64 {
 	if a.kilowatts_per_inchLazy != nil {
 		return *a.kilowatts_per_inchLazy
@@ -487,7 +535,9 @@ func (a *LinearPowerDensity) KilowattsPerInch() float64 {
 	return kilowatts_per_inch
 }
 
-// MegawattPerInch returns the value in MegawattPerInch.
+// MegawattsPerInch returns the LinearPowerDensity value in MegawattsPerInch.
+//
+// 
 func (a *LinearPowerDensity) MegawattsPerInch() float64 {
 	if a.megawatts_per_inchLazy != nil {
 		return *a.megawatts_per_inchLazy
@@ -497,7 +547,9 @@ func (a *LinearPowerDensity) MegawattsPerInch() float64 {
 	return megawatts_per_inch
 }
 
-// GigawattPerInch returns the value in GigawattPerInch.
+// GigawattsPerInch returns the LinearPowerDensity value in GigawattsPerInch.
+//
+// 
 func (a *LinearPowerDensity) GigawattsPerInch() float64 {
 	if a.gigawatts_per_inchLazy != nil {
 		return *a.gigawatts_per_inchLazy
@@ -507,7 +559,9 @@ func (a *LinearPowerDensity) GigawattsPerInch() float64 {
 	return gigawatts_per_inch
 }
 
-// MilliwattPerFoot returns the value in MilliwattPerFoot.
+// MilliwattsPerFoot returns the LinearPowerDensity value in MilliwattsPerFoot.
+//
+// 
 func (a *LinearPowerDensity) MilliwattsPerFoot() float64 {
 	if a.milliwatts_per_footLazy != nil {
 		return *a.milliwatts_per_footLazy
@@ -517,7 +571,9 @@ func (a *LinearPowerDensity) MilliwattsPerFoot() float64 {
 	return milliwatts_per_foot
 }
 
-// KilowattPerFoot returns the value in KilowattPerFoot.
+// KilowattsPerFoot returns the LinearPowerDensity value in KilowattsPerFoot.
+//
+// 
 func (a *LinearPowerDensity) KilowattsPerFoot() float64 {
 	if a.kilowatts_per_footLazy != nil {
 		return *a.kilowatts_per_footLazy
@@ -527,7 +583,9 @@ func (a *LinearPowerDensity) KilowattsPerFoot() float64 {
 	return kilowatts_per_foot
 }
 
-// MegawattPerFoot returns the value in MegawattPerFoot.
+// MegawattsPerFoot returns the LinearPowerDensity value in MegawattsPerFoot.
+//
+// 
 func (a *LinearPowerDensity) MegawattsPerFoot() float64 {
 	if a.megawatts_per_footLazy != nil {
 		return *a.megawatts_per_footLazy
@@ -537,7 +595,9 @@ func (a *LinearPowerDensity) MegawattsPerFoot() float64 {
 	return megawatts_per_foot
 }
 
-// GigawattPerFoot returns the value in GigawattPerFoot.
+// GigawattsPerFoot returns the LinearPowerDensity value in GigawattsPerFoot.
+//
+// 
 func (a *LinearPowerDensity) GigawattsPerFoot() float64 {
 	if a.gigawatts_per_footLazy != nil {
 		return *a.gigawatts_per_footLazy
@@ -548,7 +608,9 @@ func (a *LinearPowerDensity) GigawattsPerFoot() float64 {
 }
 
 
-// ToDto creates an LinearPowerDensityDto representation.
+// ToDto creates a LinearPowerDensityDto representation from the LinearPowerDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerMeter by default.
 func (a *LinearPowerDensity) ToDto(holdInUnit *LinearPowerDensityUnits) LinearPowerDensityDto {
 	if holdInUnit == nil {
 		defaultUnit := LinearPowerDensityWattPerMeter // Default value
@@ -561,12 +623,19 @@ func (a *LinearPowerDensity) ToDto(holdInUnit *LinearPowerDensityUnits) LinearPo
 	}
 }
 
-// ToDtoJSON creates an LinearPowerDensityDto representation.
+// ToDtoJSON creates a JSON representation of the LinearPowerDensity instance.
+//
+// If the provided holdInUnit is nil, the value will be repesented by WattPerMeter by default.
 func (a *LinearPowerDensity) ToDtoJSON(holdInUnit *LinearPowerDensityUnits) ([]byte, error) {
+	// Convert to LinearPowerDensityDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
 }
 
-// Convert converts LinearPowerDensity to a specific unit value.
+// Convert converts a LinearPowerDensity to a specific unit value.
+// The function uses the provided unit type (LinearPowerDensityUnits) to return the corresponding value in the target unit.
+// 
+// Returns:
+//    float64: The converted value in the target unit.
 func (a *LinearPowerDensity) Convert(toUnit LinearPowerDensityUnits) float64 {
 	switch toUnit { 
     case LinearPowerDensityWattPerMeter:
@@ -620,7 +689,7 @@ func (a *LinearPowerDensity) Convert(toUnit LinearPowerDensityUnits) float64 {
     case LinearPowerDensityGigawattPerFoot:
 		return a.GigawattsPerFoot()
 	default:
-		return 0
+		return math.NaN()
 	}
 }
 
@@ -739,13 +808,22 @@ func (a *LinearPowerDensity) convertToBase(value float64, fromUnit LinearPowerDe
 	}
 }
 
-// Implement the String() method for AngleDto
+// String returns a string representation of the LinearPowerDensity in the default unit (WattPerMeter),
+// formatted to two decimal places.
 func (a LinearPowerDensity) String() string {
 	return a.ToString(LinearPowerDensityWattPerMeter, 2)
 }
 
-// ToString formats the LinearPowerDensity to string.
-// fractionalDigits -1 for not mention
+// ToString formats the LinearPowerDensity value as a string with the specified unit and fractional digits.
+// It converts the LinearPowerDensity to the specified unit and returns the formatted value with the appropriate unit abbreviation.
+// 
+// Parameters:
+//    unit: The unit to which the LinearPowerDensity value will be converted (e.g., WattPerMeter))
+//    fractionalDigits: The number of digits to show after the decimal point. 
+//                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
+// 
+// Returns:
+//    string: The formatted string representing the LinearPowerDensity with the unit abbreviation.
 func (a *LinearPowerDensity) ToString(unit LinearPowerDensityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
@@ -813,12 +891,26 @@ func (a *LinearPowerDensity) getUnitAbbreviation(unit LinearPowerDensityUnits) s
 	}
 }
 
-// Check if the given LinearPowerDensity are equals to the current LinearPowerDensity
+// Equals checks if the given LinearPowerDensity is equal to the current LinearPowerDensity.
+//
+// Parameters:
+//    other: The LinearPowerDensity to compare against.
+//
+// Returns:
+//    bool: Returns true if both LinearPowerDensity are equal, false otherwise.
 func (a *LinearPowerDensity) Equals(other *LinearPowerDensity) bool {
 	return a.value == other.BaseValue()
 }
 
-// Check if the given LinearPowerDensity are equals to the current LinearPowerDensity
+// CompareTo compares the current LinearPowerDensity with another LinearPowerDensity.
+// It returns -1 if the current LinearPowerDensity is less than the other LinearPowerDensity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The LinearPowerDensity to compare against.
+//
+// Returns:
+//    int: -1 if the current LinearPowerDensity is less, 1 if greater, and 0 if equal.
 func (a *LinearPowerDensity) CompareTo(other *LinearPowerDensity) int {
 	otherValue := other.BaseValue()
 	if a.value < otherValue {
@@ -831,22 +923,50 @@ func (a *LinearPowerDensity) CompareTo(other *LinearPowerDensity) int {
 	return 0
 }
 
-// Add the given LinearPowerDensity to the current LinearPowerDensity.
+// Add adds the given LinearPowerDensity to the current LinearPowerDensity and returns the result.
+// The result is a new LinearPowerDensity instance with the sum of the values.
+//
+// Parameters:
+//    other: The LinearPowerDensity to add to the current LinearPowerDensity.
+//
+// Returns:
+//    *LinearPowerDensity: A new LinearPowerDensity instance representing the sum of both LinearPowerDensity.
 func (a *LinearPowerDensity) Add(other *LinearPowerDensity) *LinearPowerDensity {
 	return &LinearPowerDensity{value: a.value + other.BaseValue()}
 }
 
-// Subtract the given LinearPowerDensity to the current LinearPowerDensity.
+// Subtract subtracts the given LinearPowerDensity from the current LinearPowerDensity and returns the result.
+// The result is a new LinearPowerDensity instance with the difference of the values.
+//
+// Parameters:
+//    other: The LinearPowerDensity to subtract from the current LinearPowerDensity.
+//
+// Returns:
+//    *LinearPowerDensity: A new LinearPowerDensity instance representing the difference of both LinearPowerDensity.
 func (a *LinearPowerDensity) Subtract(other *LinearPowerDensity) *LinearPowerDensity {
 	return &LinearPowerDensity{value: a.value - other.BaseValue()}
 }
 
-// Multiply the given LinearPowerDensity to the current LinearPowerDensity.
+// Multiply multiplies the current LinearPowerDensity by the given LinearPowerDensity and returns the result.
+// The result is a new LinearPowerDensity instance with the product of the values.
+//
+// Parameters:
+//    other: The LinearPowerDensity to multiply with the current LinearPowerDensity.
+//
+// Returns:
+//    *LinearPowerDensity: A new LinearPowerDensity instance representing the product of both LinearPowerDensity.
 func (a *LinearPowerDensity) Multiply(other *LinearPowerDensity) *LinearPowerDensity {
 	return &LinearPowerDensity{value: a.value * other.BaseValue()}
 }
 
-// Divide the given LinearPowerDensity to the current LinearPowerDensity.
+// Divide divides the current LinearPowerDensity by the given LinearPowerDensity and returns the result.
+// The result is a new LinearPowerDensity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The LinearPowerDensity to divide the current LinearPowerDensity by.
+//
+// Returns:
+//    *LinearPowerDensity: A new LinearPowerDensity instance representing the quotient of both LinearPowerDensity.
 func (a *LinearPowerDensity) Divide(other *LinearPowerDensity) *LinearPowerDensity {
 	return &LinearPowerDensity{value: a.value / other.BaseValue()}
 }
