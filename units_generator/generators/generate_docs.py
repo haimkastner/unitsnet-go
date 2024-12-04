@@ -28,4 +28,4 @@ def units_docs_generator(definitions: List):
     with open(f"Units.md", "w", encoding="utf-8") as f:
         f.write(code)
 
-    print(f'[readme_generator] Generating "Units.md" finished successfully')
+    print(f'[units_docs_generator] Generating "Units.md" finished successfully')

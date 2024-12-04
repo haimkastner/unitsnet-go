@@ -127,11 +127,11 @@ log.Println(lengthFromKmDto) // 100.01 m
 
 // Get a DTO instance from a Length instance
 lengthDto := length.ToDto(nil)
-// # Get the json representation of the DTO
+// Get the json representation of the DTO
 lengthJson, _ := lengthDto.ToJSON() // {"value":100.01,"unit":"Meter"}
-// # Obtain DTO instance from a json representation
+// Obtain DTO instance from a json representation
 lengthDtoFromJson, _ := units.LengthDtoFactory{}.FromJSON(lengthJson)
-// # Obtain Length unit from a DTO instance
+// Obtain Length unit from a DTO instance
 lengthFromJson, _ := lf.FromDto(*lengthDtoFromJson)
 log.Println(lengthFromJson) // 100.01 m
 ```
