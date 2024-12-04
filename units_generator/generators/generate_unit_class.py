@@ -7,17 +7,17 @@ from templates import unit_class_template
 
 def __format_formula(original_formula: str):
     # Remove C# number types
-    python_formula = original_formula.replace("d", "").replace("m", "")
-    # Convert to python code
-    python_formula = python_formula.replace("{x}", "value").lower()
+    golang_formula = original_formula.replace("d", "").replace("m", "")
+    # Convert to golang code
+    golang_formula = golang_formula.replace("{x}", "value").lower()
 
-    # Convert to python code
-    python_formula = python_formula.replace(".pi", ".Pi")
-    python_formula = python_formula.replace(".asin", ".Asin")
-    python_formula = python_formula.replace(".sin", ".Sin")
-    python_formula = python_formula.replace(".pow", ".Pow")
-    python_formula = python_formula.replace(".sqrt", ".Sqrt")
-    return f"({python_formula})"
+    # Convert to golang code
+    golang_formula = golang_formula.replace(".pi", ".Pi")
+    golang_formula = golang_formula.replace(".asin", ".Asin")
+    golang_formula = golang_formula.replace(".sin", ".Sin")
+    golang_formula = golang_formula.replace(".pow", ".Pow")
+    golang_formula = golang_formula.replace(".sqrt", ".Sqrt")
+    return f"({golang_formula})"
 
 
 def __generate_prefixes(unit, prefixes) -> List[Dict]:
