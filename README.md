@@ -8,7 +8,7 @@
 <!-- [![GitHub stars](https://img.shields.io/github/stars/haimkastner/unitsnet-go.svg?style=social&label=Stars)](https://github.com/haimkastner/unitsnet-go/stargazers)  -->
 [![License](https://img.shields.io/github/license/haimkastner/unitsnet-go.svg?style=social)](https://github.com/haimkastner/unitsnet-go/blob/master/LICENSE)
 
-The unitsnet-go package provides an efficient way to store unit variables and perform easy conversions to different units when it required. 
+The unitsnet-go package provides an efficient way to store unit variables and perform easy conversions to different units when it's required. 
 
 It offers support for more than 100 unit types across various unit categories, including pretty-printing, comparison, and arithmetic methods. 
 
