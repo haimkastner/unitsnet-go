@@ -16,11 +16,13 @@ The API is designed to be user-friendly and straightforward to use.
 
 The library is built on top of the [Units.NET](https://github.com/angularsen/UnitsNet) project and leverages their [definitions sources](https://github.com/angularsen/UnitsNet/tree/master/Common/UnitDefinitions) to generate the Golang units.
 
+
 ###### The unitsnet-go package does not require any external dependencies or packages to function.
+
 
 [Units.NET on other platforms](#unitsnet-on-other-platforms)
 
-## Install package
+## Fetch package
 
 ```bash 
 go get github.com/haimkastner/unitsnet-go
