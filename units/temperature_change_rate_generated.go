@@ -24,6 +24,18 @@ const (
         // 
         TemperatureChangeRateDegreeKelvinPerMinute TemperatureChangeRateUnits = "DegreeKelvinPerMinute"
         // 
+        TemperatureChangeRateDegreeFahrenheitPerMinute TemperatureChangeRateUnits = "DegreeFahrenheitPerMinute"
+        // 
+        TemperatureChangeRateDegreeFahrenheitPerSecond TemperatureChangeRateUnits = "DegreeFahrenheitPerSecond"
+        // 
+        TemperatureChangeRateDegreeKelvinPerSecond TemperatureChangeRateUnits = "DegreeKelvinPerSecond"
+        // 
+        TemperatureChangeRateDegreeCelsiusPerHour TemperatureChangeRateUnits = "DegreeCelsiusPerHour"
+        // 
+        TemperatureChangeRateDegreeKelvinPerHour TemperatureChangeRateUnits = "DegreeKelvinPerHour"
+        // 
+        TemperatureChangeRateDegreeFahrenheitPerHour TemperatureChangeRateUnits = "DegreeFahrenheitPerHour"
+        // 
         TemperatureChangeRateNanodegreeCelsiusPerSecond TemperatureChangeRateUnits = "NanodegreeCelsiusPerSecond"
         // 
         TemperatureChangeRateMicrodegreeCelsiusPerSecond TemperatureChangeRateUnits = "MicrodegreeCelsiusPerSecond"
@@ -90,6 +102,12 @@ type TemperatureChangeRate struct {
     degrees_celsius_per_secondLazy *float64 
     degrees_celsius_per_minuteLazy *float64 
     degrees_kelvin_per_minuteLazy *float64 
+    degrees_fahrenheit_per_minuteLazy *float64 
+    degrees_fahrenheit_per_secondLazy *float64 
+    degrees_kelvin_per_secondLazy *float64 
+    degrees_celsius_per_hourLazy *float64 
+    degrees_kelvin_per_hourLazy *float64 
+    degrees_fahrenheit_per_hourLazy *float64 
     nanodegrees_celsius_per_secondLazy *float64 
     microdegrees_celsius_per_secondLazy *float64 
     millidegrees_celsius_per_secondLazy *float64 
@@ -136,6 +154,36 @@ func (uf TemperatureChangeRateFactory) FromDegreesCelsiusPerMinute(value float64
 // FromDegreesKelvinPerMinute creates a new TemperatureChangeRate instance from a value in DegreesKelvinPerMinute.
 func (uf TemperatureChangeRateFactory) FromDegreesKelvinPerMinute(value float64) (*TemperatureChangeRate, error) {
 	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeKelvinPerMinute)
+}
+
+// FromDegreesFahrenheitPerMinute creates a new TemperatureChangeRate instance from a value in DegreesFahrenheitPerMinute.
+func (uf TemperatureChangeRateFactory) FromDegreesFahrenheitPerMinute(value float64) (*TemperatureChangeRate, error) {
+	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeFahrenheitPerMinute)
+}
+
+// FromDegreesFahrenheitPerSecond creates a new TemperatureChangeRate instance from a value in DegreesFahrenheitPerSecond.
+func (uf TemperatureChangeRateFactory) FromDegreesFahrenheitPerSecond(value float64) (*TemperatureChangeRate, error) {
+	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeFahrenheitPerSecond)
+}
+
+// FromDegreesKelvinPerSecond creates a new TemperatureChangeRate instance from a value in DegreesKelvinPerSecond.
+func (uf TemperatureChangeRateFactory) FromDegreesKelvinPerSecond(value float64) (*TemperatureChangeRate, error) {
+	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeKelvinPerSecond)
+}
+
+// FromDegreesCelsiusPerHour creates a new TemperatureChangeRate instance from a value in DegreesCelsiusPerHour.
+func (uf TemperatureChangeRateFactory) FromDegreesCelsiusPerHour(value float64) (*TemperatureChangeRate, error) {
+	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeCelsiusPerHour)
+}
+
+// FromDegreesKelvinPerHour creates a new TemperatureChangeRate instance from a value in DegreesKelvinPerHour.
+func (uf TemperatureChangeRateFactory) FromDegreesKelvinPerHour(value float64) (*TemperatureChangeRate, error) {
+	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeKelvinPerHour)
+}
+
+// FromDegreesFahrenheitPerHour creates a new TemperatureChangeRate instance from a value in DegreesFahrenheitPerHour.
+func (uf TemperatureChangeRateFactory) FromDegreesFahrenheitPerHour(value float64) (*TemperatureChangeRate, error) {
+	return newTemperatureChangeRate(value, TemperatureChangeRateDegreeFahrenheitPerHour)
 }
 
 // FromNanodegreesCelsiusPerSecond creates a new TemperatureChangeRate instance from a value in NanodegreesCelsiusPerSecond.
@@ -229,6 +277,78 @@ func (a *TemperatureChangeRate) DegreesKelvinPerMinute() float64 {
 	degrees_kelvin_per_minute := a.convertFromBase(TemperatureChangeRateDegreeKelvinPerMinute)
 	a.degrees_kelvin_per_minuteLazy = &degrees_kelvin_per_minute
 	return degrees_kelvin_per_minute
+}
+
+// DegreesFahrenheitPerMinute returns the TemperatureChangeRate value in DegreesFahrenheitPerMinute.
+//
+// 
+func (a *TemperatureChangeRate) DegreesFahrenheitPerMinute() float64 {
+	if a.degrees_fahrenheit_per_minuteLazy != nil {
+		return *a.degrees_fahrenheit_per_minuteLazy
+	}
+	degrees_fahrenheit_per_minute := a.convertFromBase(TemperatureChangeRateDegreeFahrenheitPerMinute)
+	a.degrees_fahrenheit_per_minuteLazy = &degrees_fahrenheit_per_minute
+	return degrees_fahrenheit_per_minute
+}
+
+// DegreesFahrenheitPerSecond returns the TemperatureChangeRate value in DegreesFahrenheitPerSecond.
+//
+// 
+func (a *TemperatureChangeRate) DegreesFahrenheitPerSecond() float64 {
+	if a.degrees_fahrenheit_per_secondLazy != nil {
+		return *a.degrees_fahrenheit_per_secondLazy
+	}
+	degrees_fahrenheit_per_second := a.convertFromBase(TemperatureChangeRateDegreeFahrenheitPerSecond)
+	a.degrees_fahrenheit_per_secondLazy = &degrees_fahrenheit_per_second
+	return degrees_fahrenheit_per_second
+}
+
+// DegreesKelvinPerSecond returns the TemperatureChangeRate value in DegreesKelvinPerSecond.
+//
+// 
+func (a *TemperatureChangeRate) DegreesKelvinPerSecond() float64 {
+	if a.degrees_kelvin_per_secondLazy != nil {
+		return *a.degrees_kelvin_per_secondLazy
+	}
+	degrees_kelvin_per_second := a.convertFromBase(TemperatureChangeRateDegreeKelvinPerSecond)
+	a.degrees_kelvin_per_secondLazy = &degrees_kelvin_per_second
+	return degrees_kelvin_per_second
+}
+
+// DegreesCelsiusPerHour returns the TemperatureChangeRate value in DegreesCelsiusPerHour.
+//
+// 
+func (a *TemperatureChangeRate) DegreesCelsiusPerHour() float64 {
+	if a.degrees_celsius_per_hourLazy != nil {
+		return *a.degrees_celsius_per_hourLazy
+	}
+	degrees_celsius_per_hour := a.convertFromBase(TemperatureChangeRateDegreeCelsiusPerHour)
+	a.degrees_celsius_per_hourLazy = &degrees_celsius_per_hour
+	return degrees_celsius_per_hour
+}
+
+// DegreesKelvinPerHour returns the TemperatureChangeRate value in DegreesKelvinPerHour.
+//
+// 
+func (a *TemperatureChangeRate) DegreesKelvinPerHour() float64 {
+	if a.degrees_kelvin_per_hourLazy != nil {
+		return *a.degrees_kelvin_per_hourLazy
+	}
+	degrees_kelvin_per_hour := a.convertFromBase(TemperatureChangeRateDegreeKelvinPerHour)
+	a.degrees_kelvin_per_hourLazy = &degrees_kelvin_per_hour
+	return degrees_kelvin_per_hour
+}
+
+// DegreesFahrenheitPerHour returns the TemperatureChangeRate value in DegreesFahrenheitPerHour.
+//
+// 
+func (a *TemperatureChangeRate) DegreesFahrenheitPerHour() float64 {
+	if a.degrees_fahrenheit_per_hourLazy != nil {
+		return *a.degrees_fahrenheit_per_hourLazy
+	}
+	degrees_fahrenheit_per_hour := a.convertFromBase(TemperatureChangeRateDegreeFahrenheitPerHour)
+	a.degrees_fahrenheit_per_hourLazy = &degrees_fahrenheit_per_hour
+	return degrees_fahrenheit_per_hour
 }
 
 // NanodegreesCelsiusPerSecond returns the TemperatureChangeRate value in NanodegreesCelsiusPerSecond.
@@ -364,6 +484,18 @@ func (a *TemperatureChangeRate) Convert(toUnit TemperatureChangeRateUnits) float
 		return a.DegreesCelsiusPerMinute()
     case TemperatureChangeRateDegreeKelvinPerMinute:
 		return a.DegreesKelvinPerMinute()
+    case TemperatureChangeRateDegreeFahrenheitPerMinute:
+		return a.DegreesFahrenheitPerMinute()
+    case TemperatureChangeRateDegreeFahrenheitPerSecond:
+		return a.DegreesFahrenheitPerSecond()
+    case TemperatureChangeRateDegreeKelvinPerSecond:
+		return a.DegreesKelvinPerSecond()
+    case TemperatureChangeRateDegreeCelsiusPerHour:
+		return a.DegreesCelsiusPerHour()
+    case TemperatureChangeRateDegreeKelvinPerHour:
+		return a.DegreesKelvinPerHour()
+    case TemperatureChangeRateDegreeFahrenheitPerHour:
+		return a.DegreesFahrenheitPerHour()
     case TemperatureChangeRateNanodegreeCelsiusPerSecond:
 		return a.NanodegreesCelsiusPerSecond()
     case TemperatureChangeRateMicrodegreeCelsiusPerSecond:
@@ -393,7 +525,19 @@ func (a *TemperatureChangeRate) convertFromBase(toUnit TemperatureChangeRateUnit
 	case TemperatureChangeRateDegreeCelsiusPerMinute:
 		return (value * 60) 
 	case TemperatureChangeRateDegreeKelvinPerMinute:
-		return ((value + 273.15) * 60) 
+		return (value * 60) 
+	case TemperatureChangeRateDegreeFahrenheitPerMinute:
+		return (value * 9 / 5 * 60) 
+	case TemperatureChangeRateDegreeFahrenheitPerSecond:
+		return (value * 9 / 5) 
+	case TemperatureChangeRateDegreeKelvinPerSecond:
+		return (value) 
+	case TemperatureChangeRateDegreeCelsiusPerHour:
+		return (value * 3600) 
+	case TemperatureChangeRateDegreeKelvinPerHour:
+		return (value * 3600) 
+	case TemperatureChangeRateDegreeFahrenheitPerHour:
+		return (value * 9 / 5 * 3600) 
 	case TemperatureChangeRateNanodegreeCelsiusPerSecond:
 		return ((value) / 1e-09) 
 	case TemperatureChangeRateMicrodegreeCelsiusPerSecond:
@@ -422,7 +566,19 @@ func (a *TemperatureChangeRate) convertToBase(value float64, fromUnit Temperatur
 	case TemperatureChangeRateDegreeCelsiusPerMinute:
 		return (value / 60) 
 	case TemperatureChangeRateDegreeKelvinPerMinute:
-		return ((value / 60) - 273.15) 
+		return (value / 60) 
+	case TemperatureChangeRateDegreeFahrenheitPerMinute:
+		return (value * 5 / 9 / 60) 
+	case TemperatureChangeRateDegreeFahrenheitPerSecond:
+		return (value * 5 / 9) 
+	case TemperatureChangeRateDegreeKelvinPerSecond:
+		return (value) 
+	case TemperatureChangeRateDegreeCelsiusPerHour:
+		return (value / 3600) 
+	case TemperatureChangeRateDegreeKelvinPerHour:
+		return (value / 3600) 
+	case TemperatureChangeRateDegreeFahrenheitPerHour:
+		return (value * 5 / 9 / 3600) 
 	case TemperatureChangeRateNanodegreeCelsiusPerSecond:
 		return ((value) * 1e-09) 
 	case TemperatureChangeRateMicrodegreeCelsiusPerSecond:
@@ -478,6 +634,18 @@ func (a *TemperatureChangeRate) getUnitAbbreviation(unit TemperatureChangeRateUn
 		return "°C/min" 
 	case TemperatureChangeRateDegreeKelvinPerMinute:
 		return "K/min" 
+	case TemperatureChangeRateDegreeFahrenheitPerMinute:
+		return "°F/min" 
+	case TemperatureChangeRateDegreeFahrenheitPerSecond:
+		return "°F/s" 
+	case TemperatureChangeRateDegreeKelvinPerSecond:
+		return "K/s" 
+	case TemperatureChangeRateDegreeCelsiusPerHour:
+		return "°C/h" 
+	case TemperatureChangeRateDegreeKelvinPerHour:
+		return "K/h" 
+	case TemperatureChangeRateDegreeFahrenheitPerHour:
+		return "°F/h" 
 	case TemperatureChangeRateNanodegreeCelsiusPerSecond:
 		return "n°C/s" 
 	case TemperatureChangeRateMicrodegreeCelsiusPerSecond:
