@@ -64,3 +64,8 @@ jobs:
           body: ${{  steps.version_info.outputs.BODY }}
           draft: false
           prerelease: false
+
+      - name: Notify pkg.go.dev
+        if: github.ref == 'refs/heads/main'
+        run: |
+          curl -sSf https://proxy.golang.org/github.com/haimkastner/unitsnet-go/@v/${{ steps.update_version.outputs.VERSION }}.info || echo "Failed to notify pkg.go.dev"
