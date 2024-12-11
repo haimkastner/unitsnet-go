@@ -1,0 +1,5 @@
+# Ignore generating units Python files
+*.py linguist-detectable=false
+
+# Ensure Go is detected as the primary language
+*.go linguist-detectable=true

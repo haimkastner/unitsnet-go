@@ -1,12 +1,10 @@
 # unitsnet-go
 
 [![unitsnet-go](https://github.com/haimkastner/unitsnet-go/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/haimkastner/unitsnet-go/actions/workflows/build.yml)
-
- [![Latest Release](https://img.shields.io/github/v/release/haimkastner/unitsnet-go)](https://github.com/haimkastner/unitsnet-go/releases) 
-
-
-<!-- [![GitHub stars](https://img.shields.io/github/stars/haimkastner/unitsnet-go.svg?style=social&label=Stars)](https://github.com/haimkastner/unitsnet-go/stargazers)  -->
+ [![Latest Release](https://img.shields.io/github/v/release/haimkastner/unitsnet-go)](https://github.com/haimkastner/unitsnet-go/releases)
+[![GitHub stars](https://img.shields.io/github/stars/haimkastner/unitsnet-go.svg?style=social&label=Stars)](https://github.com/haimkastner/unitsnet-go/stargazers) 
 [![License](https://img.shields.io/github/license/haimkastner/unitsnet-go.svg?style=social)](https://github.com/haimkastner/unitsnet-go/blob/master/LICENSE)
+[![Go Reference](https://pkg.go.dev/badge/github.com/haimkastner/unitsnet-go.svg)](https://pkg.go.dev/github.com/haimkastner/unitsnet-go)
 
 The unitsnet-go package provides an efficient way to store unit variables and perform easy conversions to different units when it's required. 
 
