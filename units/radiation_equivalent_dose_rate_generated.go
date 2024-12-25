@@ -20,6 +20,8 @@ const (
         // 
         RadiationEquivalentDoseRateSievertPerHour RadiationEquivalentDoseRateUnits = "SievertPerHour"
         // 
+        RadiationEquivalentDoseRateSievertPerSecond RadiationEquivalentDoseRateUnits = "SievertPerSecond"
+        // 
         RadiationEquivalentDoseRateRoentgenEquivalentManPerHour RadiationEquivalentDoseRateUnits = "RoentgenEquivalentManPerHour"
         // 
         RadiationEquivalentDoseRateNanosievertPerHour RadiationEquivalentDoseRateUnits = "NanosievertPerHour"
@@ -27,6 +29,12 @@ const (
         RadiationEquivalentDoseRateMicrosievertPerHour RadiationEquivalentDoseRateUnits = "MicrosievertPerHour"
         // 
         RadiationEquivalentDoseRateMillisievertPerHour RadiationEquivalentDoseRateUnits = "MillisievertPerHour"
+        // 
+        RadiationEquivalentDoseRateNanosievertPerSecond RadiationEquivalentDoseRateUnits = "NanosievertPerSecond"
+        // 
+        RadiationEquivalentDoseRateMicrosievertPerSecond RadiationEquivalentDoseRateUnits = "MicrosievertPerSecond"
+        // 
+        RadiationEquivalentDoseRateMillisievertPerSecond RadiationEquivalentDoseRateUnits = "MillisievertPerSecond"
         // 
         RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour RadiationEquivalentDoseRateUnits = "MilliroentgenEquivalentManPerHour"
 )
@@ -78,10 +86,14 @@ type RadiationEquivalentDoseRate struct {
 	value       float64
     
     sieverts_per_hourLazy *float64 
+    sieverts_per_secondLazy *float64 
     roentgens_equivalent_man_per_hourLazy *float64 
     nanosieverts_per_hourLazy *float64 
     microsieverts_per_hourLazy *float64 
     millisieverts_per_hourLazy *float64 
+    nanosieverts_per_secondLazy *float64 
+    microsieverts_per_secondLazy *float64 
+    millisieverts_per_secondLazy *float64 
     milliroentgens_equivalent_man_per_hourLazy *float64 
 }
 
@@ -113,6 +125,11 @@ func (uf RadiationEquivalentDoseRateFactory) FromSievertsPerHour(value float64) 
 	return newRadiationEquivalentDoseRate(value, RadiationEquivalentDoseRateSievertPerHour)
 }
 
+// FromSievertsPerSecond creates a new RadiationEquivalentDoseRate instance from a value in SievertsPerSecond.
+func (uf RadiationEquivalentDoseRateFactory) FromSievertsPerSecond(value float64) (*RadiationEquivalentDoseRate, error) {
+	return newRadiationEquivalentDoseRate(value, RadiationEquivalentDoseRateSievertPerSecond)
+}
+
 // FromRoentgensEquivalentManPerHour creates a new RadiationEquivalentDoseRate instance from a value in RoentgensEquivalentManPerHour.
 func (uf RadiationEquivalentDoseRateFactory) FromRoentgensEquivalentManPerHour(value float64) (*RadiationEquivalentDoseRate, error) {
 	return newRadiationEquivalentDoseRate(value, RadiationEquivalentDoseRateRoentgenEquivalentManPerHour)
@@ -133,6 +150,21 @@ func (uf RadiationEquivalentDoseRateFactory) FromMillisievertsPerHour(value floa
 	return newRadiationEquivalentDoseRate(value, RadiationEquivalentDoseRateMillisievertPerHour)
 }
 
+// FromNanosievertsPerSecond creates a new RadiationEquivalentDoseRate instance from a value in NanosievertsPerSecond.
+func (uf RadiationEquivalentDoseRateFactory) FromNanosievertsPerSecond(value float64) (*RadiationEquivalentDoseRate, error) {
+	return newRadiationEquivalentDoseRate(value, RadiationEquivalentDoseRateNanosievertPerSecond)
+}
+
+// FromMicrosievertsPerSecond creates a new RadiationEquivalentDoseRate instance from a value in MicrosievertsPerSecond.
+func (uf RadiationEquivalentDoseRateFactory) FromMicrosievertsPerSecond(value float64) (*RadiationEquivalentDoseRate, error) {
+	return newRadiationEquivalentDoseRate(value, RadiationEquivalentDoseRateMicrosievertPerSecond)
+}
+
+// FromMillisievertsPerSecond creates a new RadiationEquivalentDoseRate instance from a value in MillisievertsPerSecond.
+func (uf RadiationEquivalentDoseRateFactory) FromMillisievertsPerSecond(value float64) (*RadiationEquivalentDoseRate, error) {
+	return newRadiationEquivalentDoseRate(value, RadiationEquivalentDoseRateMillisievertPerSecond)
+}
+
 // FromMilliroentgensEquivalentManPerHour creates a new RadiationEquivalentDoseRate instance from a value in MilliroentgensEquivalentManPerHour.
 func (uf RadiationEquivalentDoseRateFactory) FromMilliroentgensEquivalentManPerHour(value float64) (*RadiationEquivalentDoseRate, error) {
 	return newRadiationEquivalentDoseRate(value, RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour)
@@ -149,7 +181,7 @@ func newRadiationEquivalentDoseRate(value float64, fromUnit RadiationEquivalentD
 	return a, nil
 }
 
-// BaseValue returns the base value of RadiationEquivalentDoseRate in SievertPerHour unit (the base/default quantity).
+// BaseValue returns the base value of RadiationEquivalentDoseRate in SievertPerSecond unit (the base/default quantity).
 func (a *RadiationEquivalentDoseRate) BaseValue() float64 {
 	return a.value
 }
@@ -165,6 +197,18 @@ func (a *RadiationEquivalentDoseRate) SievertsPerHour() float64 {
 	sieverts_per_hour := a.convertFromBase(RadiationEquivalentDoseRateSievertPerHour)
 	a.sieverts_per_hourLazy = &sieverts_per_hour
 	return sieverts_per_hour
+}
+
+// SievertsPerSecond returns the RadiationEquivalentDoseRate value in SievertsPerSecond.
+//
+// 
+func (a *RadiationEquivalentDoseRate) SievertsPerSecond() float64 {
+	if a.sieverts_per_secondLazy != nil {
+		return *a.sieverts_per_secondLazy
+	}
+	sieverts_per_second := a.convertFromBase(RadiationEquivalentDoseRateSievertPerSecond)
+	a.sieverts_per_secondLazy = &sieverts_per_second
+	return sieverts_per_second
 }
 
 // RoentgensEquivalentManPerHour returns the RadiationEquivalentDoseRate value in RoentgensEquivalentManPerHour.
@@ -215,6 +259,42 @@ func (a *RadiationEquivalentDoseRate) MillisievertsPerHour() float64 {
 	return millisieverts_per_hour
 }
 
+// NanosievertsPerSecond returns the RadiationEquivalentDoseRate value in NanosievertsPerSecond.
+//
+// 
+func (a *RadiationEquivalentDoseRate) NanosievertsPerSecond() float64 {
+	if a.nanosieverts_per_secondLazy != nil {
+		return *a.nanosieverts_per_secondLazy
+	}
+	nanosieverts_per_second := a.convertFromBase(RadiationEquivalentDoseRateNanosievertPerSecond)
+	a.nanosieverts_per_secondLazy = &nanosieverts_per_second
+	return nanosieverts_per_second
+}
+
+// MicrosievertsPerSecond returns the RadiationEquivalentDoseRate value in MicrosievertsPerSecond.
+//
+// 
+func (a *RadiationEquivalentDoseRate) MicrosievertsPerSecond() float64 {
+	if a.microsieverts_per_secondLazy != nil {
+		return *a.microsieverts_per_secondLazy
+	}
+	microsieverts_per_second := a.convertFromBase(RadiationEquivalentDoseRateMicrosievertPerSecond)
+	a.microsieverts_per_secondLazy = &microsieverts_per_second
+	return microsieverts_per_second
+}
+
+// MillisievertsPerSecond returns the RadiationEquivalentDoseRate value in MillisievertsPerSecond.
+//
+// 
+func (a *RadiationEquivalentDoseRate) MillisievertsPerSecond() float64 {
+	if a.millisieverts_per_secondLazy != nil {
+		return *a.millisieverts_per_secondLazy
+	}
+	millisieverts_per_second := a.convertFromBase(RadiationEquivalentDoseRateMillisievertPerSecond)
+	a.millisieverts_per_secondLazy = &millisieverts_per_second
+	return millisieverts_per_second
+}
+
 // MilliroentgensEquivalentManPerHour returns the RadiationEquivalentDoseRate value in MilliroentgensEquivalentManPerHour.
 //
 // 
@@ -230,10 +310,10 @@ func (a *RadiationEquivalentDoseRate) MilliroentgensEquivalentManPerHour() float
 
 // ToDto creates a RadiationEquivalentDoseRateDto representation from the RadiationEquivalentDoseRate instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by SievertPerHour by default.
+// If the provided holdInUnit is nil, the value will be repesented by SievertPerSecond by default.
 func (a *RadiationEquivalentDoseRate) ToDto(holdInUnit *RadiationEquivalentDoseRateUnits) RadiationEquivalentDoseRateDto {
 	if holdInUnit == nil {
-		defaultUnit := RadiationEquivalentDoseRateSievertPerHour // Default value
+		defaultUnit := RadiationEquivalentDoseRateSievertPerSecond // Default value
 		holdInUnit = &defaultUnit
 	}
 
@@ -245,7 +325,7 @@ func (a *RadiationEquivalentDoseRate) ToDto(holdInUnit *RadiationEquivalentDoseR
 
 // ToDtoJSON creates a JSON representation of the RadiationEquivalentDoseRate instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by SievertPerHour by default.
+// If the provided holdInUnit is nil, the value will be repesented by SievertPerSecond by default.
 func (a *RadiationEquivalentDoseRate) ToDtoJSON(holdInUnit *RadiationEquivalentDoseRateUnits) ([]byte, error) {
 	// Convert to RadiationEquivalentDoseRateDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
@@ -260,6 +340,8 @@ func (a *RadiationEquivalentDoseRate) Convert(toUnit RadiationEquivalentDoseRate
 	switch toUnit { 
     case RadiationEquivalentDoseRateSievertPerHour:
 		return a.SievertsPerHour()
+    case RadiationEquivalentDoseRateSievertPerSecond:
+		return a.SievertsPerSecond()
     case RadiationEquivalentDoseRateRoentgenEquivalentManPerHour:
 		return a.RoentgensEquivalentManPerHour()
     case RadiationEquivalentDoseRateNanosievertPerHour:
@@ -268,6 +350,12 @@ func (a *RadiationEquivalentDoseRate) Convert(toUnit RadiationEquivalentDoseRate
 		return a.MicrosievertsPerHour()
     case RadiationEquivalentDoseRateMillisievertPerHour:
 		return a.MillisievertsPerHour()
+    case RadiationEquivalentDoseRateNanosievertPerSecond:
+		return a.NanosievertsPerSecond()
+    case RadiationEquivalentDoseRateMicrosievertPerSecond:
+		return a.MicrosievertsPerSecond()
+    case RadiationEquivalentDoseRateMillisievertPerSecond:
+		return a.MillisievertsPerSecond()
     case RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour:
 		return a.MilliroentgensEquivalentManPerHour()
 	default:
@@ -279,17 +367,25 @@ func (a *RadiationEquivalentDoseRate) convertFromBase(toUnit RadiationEquivalent
     value := a.value
 	switch toUnit { 
 	case RadiationEquivalentDoseRateSievertPerHour:
+		return (value*3600) 
+	case RadiationEquivalentDoseRateSievertPerSecond:
 		return (value) 
 	case RadiationEquivalentDoseRateRoentgenEquivalentManPerHour:
-		return (value * 100) 
+		return (value * 100 * 3600) 
 	case RadiationEquivalentDoseRateNanosievertPerHour:
-		return ((value) / 1e-09) 
+		return ((value*3600) / 1e-09) 
 	case RadiationEquivalentDoseRateMicrosievertPerHour:
-		return ((value) / 1e-06) 
+		return ((value*3600) / 1e-06) 
 	case RadiationEquivalentDoseRateMillisievertPerHour:
+		return ((value*3600) / 0.001) 
+	case RadiationEquivalentDoseRateNanosievertPerSecond:
+		return ((value) / 1e-09) 
+	case RadiationEquivalentDoseRateMicrosievertPerSecond:
+		return ((value) / 1e-06) 
+	case RadiationEquivalentDoseRateMillisievertPerSecond:
 		return ((value) / 0.001) 
 	case RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour:
-		return ((value * 100) / 0.001) 
+		return ((value * 100 * 3600) / 0.001) 
 	default:
 		return math.NaN()
 	}
@@ -298,33 +394,41 @@ func (a *RadiationEquivalentDoseRate) convertFromBase(toUnit RadiationEquivalent
 func (a *RadiationEquivalentDoseRate) convertToBase(value float64, fromUnit RadiationEquivalentDoseRateUnits) float64 {
 	switch fromUnit { 
 	case RadiationEquivalentDoseRateSievertPerHour:
+		return (value/3600) 
+	case RadiationEquivalentDoseRateSievertPerSecond:
 		return (value) 
 	case RadiationEquivalentDoseRateRoentgenEquivalentManPerHour:
-		return (value / 100) 
+		return (value / 100 / 3600) 
 	case RadiationEquivalentDoseRateNanosievertPerHour:
-		return ((value) * 1e-09) 
+		return ((value/3600) * 1e-09) 
 	case RadiationEquivalentDoseRateMicrosievertPerHour:
-		return ((value) * 1e-06) 
+		return ((value/3600) * 1e-06) 
 	case RadiationEquivalentDoseRateMillisievertPerHour:
+		return ((value/3600) * 0.001) 
+	case RadiationEquivalentDoseRateNanosievertPerSecond:
+		return ((value) * 1e-09) 
+	case RadiationEquivalentDoseRateMicrosievertPerSecond:
+		return ((value) * 1e-06) 
+	case RadiationEquivalentDoseRateMillisievertPerSecond:
 		return ((value) * 0.001) 
 	case RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour:
-		return ((value / 100) * 0.001) 
+		return ((value / 100 / 3600) * 0.001) 
 	default:
 		return math.NaN()
 	}
 }
 
-// String returns a string representation of the RadiationEquivalentDoseRate in the default unit (SievertPerHour),
+// String returns a string representation of the RadiationEquivalentDoseRate in the default unit (SievertPerSecond),
 // formatted to two decimal places.
 func (a RadiationEquivalentDoseRate) String() string {
-	return a.ToString(RadiationEquivalentDoseRateSievertPerHour, 2)
+	return a.ToString(RadiationEquivalentDoseRateSievertPerSecond, 2)
 }
 
 // ToString formats the RadiationEquivalentDoseRate value as a string with the specified unit and fractional digits.
 // It converts the RadiationEquivalentDoseRate to the specified unit and returns the formatted value with the appropriate unit abbreviation.
 // 
 // Parameters:
-//    unit: The unit to which the RadiationEquivalentDoseRate value will be converted (e.g., SievertPerHour))
+//    unit: The unit to which the RadiationEquivalentDoseRate value will be converted (e.g., SievertPerSecond))
 //    fractionalDigits: The number of digits to show after the decimal point. 
 //                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
 // 
@@ -344,6 +448,8 @@ func (a *RadiationEquivalentDoseRate) getUnitAbbreviation(unit RadiationEquivale
 	switch unit { 
 	case RadiationEquivalentDoseRateSievertPerHour:
 		return "Sv/h" 
+	case RadiationEquivalentDoseRateSievertPerSecond:
+		return "Sv/s" 
 	case RadiationEquivalentDoseRateRoentgenEquivalentManPerHour:
 		return "rem/h" 
 	case RadiationEquivalentDoseRateNanosievertPerHour:
@@ -352,6 +458,12 @@ func (a *RadiationEquivalentDoseRate) getUnitAbbreviation(unit RadiationEquivale
 		return "μSv/h" 
 	case RadiationEquivalentDoseRateMillisievertPerHour:
 		return "mSv/h" 
+	case RadiationEquivalentDoseRateNanosievertPerSecond:
+		return "nSv/s" 
+	case RadiationEquivalentDoseRateMicrosievertPerSecond:
+		return "μSv/s" 
+	case RadiationEquivalentDoseRateMillisievertPerSecond:
+		return "mSv/s" 
 	case RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour:
 		return "mrem/h" 
 	default:
