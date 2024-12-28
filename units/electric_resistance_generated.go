@@ -20,6 +20,8 @@ const (
         // 
         ElectricResistanceOhm ElectricResistanceUnits = "Ohm"
         // 
+        ElectricResistanceNanoohm ElectricResistanceUnits = "Nanoohm"
+        // 
         ElectricResistanceMicroohm ElectricResistanceUnits = "Microohm"
         // 
         ElectricResistanceMilliohm ElectricResistanceUnits = "Milliohm"
@@ -74,12 +76,13 @@ func (a ElectricResistanceDto) ToJSON() ([]byte, error) {
 
 // ElectricResistance represents a measurement in a of ElectricResistance.
 //
-// The electrical resistance of an electrical conductor is the opposition to the passage of an electric current through that conductor.
+// The electrical resistance of an object is a measure of its opposition to the flow of electric current. Along with reactance, it is one of two elements of impedance. Its reciprocal quantity is electrical conductance.
 type ElectricResistance struct {
 	// value is the base measurement stored internally.
 	value       float64
     
     ohmsLazy *float64 
+    nanoohmsLazy *float64 
     microohmsLazy *float64 
     milliohmsLazy *float64 
     kiloohmsLazy *float64 
@@ -114,6 +117,11 @@ func (uf ElectricResistanceFactory) FromDtoJSON(data []byte) (*ElectricResistanc
 // FromOhms creates a new ElectricResistance instance from a value in Ohms.
 func (uf ElectricResistanceFactory) FromOhms(value float64) (*ElectricResistance, error) {
 	return newElectricResistance(value, ElectricResistanceOhm)
+}
+
+// FromNanoohms creates a new ElectricResistance instance from a value in Nanoohms.
+func (uf ElectricResistanceFactory) FromNanoohms(value float64) (*ElectricResistance, error) {
+	return newElectricResistance(value, ElectricResistanceNanoohm)
 }
 
 // FromMicroohms creates a new ElectricResistance instance from a value in Microohms.
@@ -173,6 +181,18 @@ func (a *ElectricResistance) Ohms() float64 {
 	ohms := a.convertFromBase(ElectricResistanceOhm)
 	a.ohmsLazy = &ohms
 	return ohms
+}
+
+// Nanoohms returns the ElectricResistance value in Nanoohms.
+//
+// 
+func (a *ElectricResistance) Nanoohms() float64 {
+	if a.nanoohmsLazy != nil {
+		return *a.nanoohmsLazy
+	}
+	nanoohms := a.convertFromBase(ElectricResistanceNanoohm)
+	a.nanoohmsLazy = &nanoohms
+	return nanoohms
 }
 
 // Microohms returns the ElectricResistance value in Microohms.
@@ -280,6 +300,8 @@ func (a *ElectricResistance) Convert(toUnit ElectricResistanceUnits) float64 {
 	switch toUnit { 
     case ElectricResistanceOhm:
 		return a.Ohms()
+    case ElectricResistanceNanoohm:
+		return a.Nanoohms()
     case ElectricResistanceMicroohm:
 		return a.Microohms()
     case ElectricResistanceMilliohm:
@@ -302,6 +324,8 @@ func (a *ElectricResistance) convertFromBase(toUnit ElectricResistanceUnits) flo
 	switch toUnit { 
 	case ElectricResistanceOhm:
 		return (value) 
+	case ElectricResistanceNanoohm:
+		return ((value) / 1e-09) 
 	case ElectricResistanceMicroohm:
 		return ((value) / 1e-06) 
 	case ElectricResistanceMilliohm:
@@ -323,6 +347,8 @@ func (a *ElectricResistance) convertToBase(value float64, fromUnit ElectricResis
 	switch fromUnit { 
 	case ElectricResistanceOhm:
 		return (value) 
+	case ElectricResistanceNanoohm:
+		return ((value) * 1e-09) 
 	case ElectricResistanceMicroohm:
 		return ((value) * 1e-06) 
 	case ElectricResistanceMilliohm:
@@ -370,6 +396,8 @@ func (a *ElectricResistance) getUnitAbbreviation(unit ElectricResistanceUnits) s
 	switch unit { 
 	case ElectricResistanceOhm:
 		return "Ω" 
+	case ElectricResistanceNanoohm:
+		return "nΩ" 
 	case ElectricResistanceMicroohm:
 		return "μΩ" 
 	case ElectricResistanceMilliohm:

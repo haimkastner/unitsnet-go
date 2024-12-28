@@ -20,6 +20,8 @@ const (
         // 
         ElectricConductanceSiemens ElectricConductanceUnits = "Siemens"
         // 
+        ElectricConductanceMho ElectricConductanceUnits = "Mho"
+        // 
         ElectricConductanceNanosiemens ElectricConductanceUnits = "Nanosiemens"
         // 
         ElectricConductanceMicrosiemens ElectricConductanceUnits = "Microsiemens"
@@ -27,6 +29,26 @@ const (
         ElectricConductanceMillisiemens ElectricConductanceUnits = "Millisiemens"
         // 
         ElectricConductanceKilosiemens ElectricConductanceUnits = "Kilosiemens"
+        // 
+        ElectricConductanceMegasiemens ElectricConductanceUnits = "Megasiemens"
+        // 
+        ElectricConductanceGigasiemens ElectricConductanceUnits = "Gigasiemens"
+        // 
+        ElectricConductanceTerasiemens ElectricConductanceUnits = "Terasiemens"
+        // 
+        ElectricConductanceNanomho ElectricConductanceUnits = "Nanomho"
+        // 
+        ElectricConductanceMicromho ElectricConductanceUnits = "Micromho"
+        // 
+        ElectricConductanceMillimho ElectricConductanceUnits = "Millimho"
+        // 
+        ElectricConductanceKilomho ElectricConductanceUnits = "Kilomho"
+        // 
+        ElectricConductanceMegamho ElectricConductanceUnits = "Megamho"
+        // 
+        ElectricConductanceGigamho ElectricConductanceUnits = "Gigamho"
+        // 
+        ElectricConductanceTeramho ElectricConductanceUnits = "Teramho"
 )
 
 // ElectricConductanceDto represents a ElectricConductance measurement with a numerical value and its corresponding unit.
@@ -70,16 +92,27 @@ func (a ElectricConductanceDto) ToJSON() ([]byte, error) {
 
 // ElectricConductance represents a measurement in a of ElectricConductance.
 //
-// The electrical conductance of an electrical conductor is a measure of the easeness to pass an electric current through that conductor.
+// The electrical conductance of an object is a measure of the ease with which an electric current passes. Along with susceptance, it is one of two elements of admittance. Its reciprocal quantity is electrical resistance.
 type ElectricConductance struct {
 	// value is the base measurement stored internally.
 	value       float64
     
     siemensLazy *float64 
+    mhosLazy *float64 
     nanosiemensLazy *float64 
     microsiemensLazy *float64 
     millisiemensLazy *float64 
     kilosiemensLazy *float64 
+    megasiemensLazy *float64 
+    gigasiemensLazy *float64 
+    terasiemensLazy *float64 
+    nanomhosLazy *float64 
+    micromhosLazy *float64 
+    millimhosLazy *float64 
+    kilomhosLazy *float64 
+    megamhosLazy *float64 
+    gigamhosLazy *float64 
+    teramhosLazy *float64 
 }
 
 // ElectricConductanceFactory groups methods for creating ElectricConductance instances.
@@ -110,6 +143,11 @@ func (uf ElectricConductanceFactory) FromSiemens(value float64) (*ElectricConduc
 	return newElectricConductance(value, ElectricConductanceSiemens)
 }
 
+// FromMhos creates a new ElectricConductance instance from a value in Mhos.
+func (uf ElectricConductanceFactory) FromMhos(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceMho)
+}
+
 // FromNanosiemens creates a new ElectricConductance instance from a value in Nanosiemens.
 func (uf ElectricConductanceFactory) FromNanosiemens(value float64) (*ElectricConductance, error) {
 	return newElectricConductance(value, ElectricConductanceNanosiemens)
@@ -128,6 +166,56 @@ func (uf ElectricConductanceFactory) FromMillisiemens(value float64) (*ElectricC
 // FromKilosiemens creates a new ElectricConductance instance from a value in Kilosiemens.
 func (uf ElectricConductanceFactory) FromKilosiemens(value float64) (*ElectricConductance, error) {
 	return newElectricConductance(value, ElectricConductanceKilosiemens)
+}
+
+// FromMegasiemens creates a new ElectricConductance instance from a value in Megasiemens.
+func (uf ElectricConductanceFactory) FromMegasiemens(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceMegasiemens)
+}
+
+// FromGigasiemens creates a new ElectricConductance instance from a value in Gigasiemens.
+func (uf ElectricConductanceFactory) FromGigasiemens(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceGigasiemens)
+}
+
+// FromTerasiemens creates a new ElectricConductance instance from a value in Terasiemens.
+func (uf ElectricConductanceFactory) FromTerasiemens(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceTerasiemens)
+}
+
+// FromNanomhos creates a new ElectricConductance instance from a value in Nanomhos.
+func (uf ElectricConductanceFactory) FromNanomhos(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceNanomho)
+}
+
+// FromMicromhos creates a new ElectricConductance instance from a value in Micromhos.
+func (uf ElectricConductanceFactory) FromMicromhos(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceMicromho)
+}
+
+// FromMillimhos creates a new ElectricConductance instance from a value in Millimhos.
+func (uf ElectricConductanceFactory) FromMillimhos(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceMillimho)
+}
+
+// FromKilomhos creates a new ElectricConductance instance from a value in Kilomhos.
+func (uf ElectricConductanceFactory) FromKilomhos(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceKilomho)
+}
+
+// FromMegamhos creates a new ElectricConductance instance from a value in Megamhos.
+func (uf ElectricConductanceFactory) FromMegamhos(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceMegamho)
+}
+
+// FromGigamhos creates a new ElectricConductance instance from a value in Gigamhos.
+func (uf ElectricConductanceFactory) FromGigamhos(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceGigamho)
+}
+
+// FromTeramhos creates a new ElectricConductance instance from a value in Teramhos.
+func (uf ElectricConductanceFactory) FromTeramhos(value float64) (*ElectricConductance, error) {
+	return newElectricConductance(value, ElectricConductanceTeramho)
 }
 
 
@@ -157,6 +245,18 @@ func (a *ElectricConductance) Siemens() float64 {
 	siemens := a.convertFromBase(ElectricConductanceSiemens)
 	a.siemensLazy = &siemens
 	return siemens
+}
+
+// Mhos returns the ElectricConductance value in Mhos.
+//
+// 
+func (a *ElectricConductance) Mhos() float64 {
+	if a.mhosLazy != nil {
+		return *a.mhosLazy
+	}
+	mhos := a.convertFromBase(ElectricConductanceMho)
+	a.mhosLazy = &mhos
+	return mhos
 }
 
 // Nanosiemens returns the ElectricConductance value in Nanosiemens.
@@ -207,6 +307,126 @@ func (a *ElectricConductance) Kilosiemens() float64 {
 	return kilosiemens
 }
 
+// Megasiemens returns the ElectricConductance value in Megasiemens.
+//
+// 
+func (a *ElectricConductance) Megasiemens() float64 {
+	if a.megasiemensLazy != nil {
+		return *a.megasiemensLazy
+	}
+	megasiemens := a.convertFromBase(ElectricConductanceMegasiemens)
+	a.megasiemensLazy = &megasiemens
+	return megasiemens
+}
+
+// Gigasiemens returns the ElectricConductance value in Gigasiemens.
+//
+// 
+func (a *ElectricConductance) Gigasiemens() float64 {
+	if a.gigasiemensLazy != nil {
+		return *a.gigasiemensLazy
+	}
+	gigasiemens := a.convertFromBase(ElectricConductanceGigasiemens)
+	a.gigasiemensLazy = &gigasiemens
+	return gigasiemens
+}
+
+// Terasiemens returns the ElectricConductance value in Terasiemens.
+//
+// 
+func (a *ElectricConductance) Terasiemens() float64 {
+	if a.terasiemensLazy != nil {
+		return *a.terasiemensLazy
+	}
+	terasiemens := a.convertFromBase(ElectricConductanceTerasiemens)
+	a.terasiemensLazy = &terasiemens
+	return terasiemens
+}
+
+// Nanomhos returns the ElectricConductance value in Nanomhos.
+//
+// 
+func (a *ElectricConductance) Nanomhos() float64 {
+	if a.nanomhosLazy != nil {
+		return *a.nanomhosLazy
+	}
+	nanomhos := a.convertFromBase(ElectricConductanceNanomho)
+	a.nanomhosLazy = &nanomhos
+	return nanomhos
+}
+
+// Micromhos returns the ElectricConductance value in Micromhos.
+//
+// 
+func (a *ElectricConductance) Micromhos() float64 {
+	if a.micromhosLazy != nil {
+		return *a.micromhosLazy
+	}
+	micromhos := a.convertFromBase(ElectricConductanceMicromho)
+	a.micromhosLazy = &micromhos
+	return micromhos
+}
+
+// Millimhos returns the ElectricConductance value in Millimhos.
+//
+// 
+func (a *ElectricConductance) Millimhos() float64 {
+	if a.millimhosLazy != nil {
+		return *a.millimhosLazy
+	}
+	millimhos := a.convertFromBase(ElectricConductanceMillimho)
+	a.millimhosLazy = &millimhos
+	return millimhos
+}
+
+// Kilomhos returns the ElectricConductance value in Kilomhos.
+//
+// 
+func (a *ElectricConductance) Kilomhos() float64 {
+	if a.kilomhosLazy != nil {
+		return *a.kilomhosLazy
+	}
+	kilomhos := a.convertFromBase(ElectricConductanceKilomho)
+	a.kilomhosLazy = &kilomhos
+	return kilomhos
+}
+
+// Megamhos returns the ElectricConductance value in Megamhos.
+//
+// 
+func (a *ElectricConductance) Megamhos() float64 {
+	if a.megamhosLazy != nil {
+		return *a.megamhosLazy
+	}
+	megamhos := a.convertFromBase(ElectricConductanceMegamho)
+	a.megamhosLazy = &megamhos
+	return megamhos
+}
+
+// Gigamhos returns the ElectricConductance value in Gigamhos.
+//
+// 
+func (a *ElectricConductance) Gigamhos() float64 {
+	if a.gigamhosLazy != nil {
+		return *a.gigamhosLazy
+	}
+	gigamhos := a.convertFromBase(ElectricConductanceGigamho)
+	a.gigamhosLazy = &gigamhos
+	return gigamhos
+}
+
+// Teramhos returns the ElectricConductance value in Teramhos.
+//
+// 
+func (a *ElectricConductance) Teramhos() float64 {
+	if a.teramhosLazy != nil {
+		return *a.teramhosLazy
+	}
+	teramhos := a.convertFromBase(ElectricConductanceTeramho)
+	a.teramhosLazy = &teramhos
+	return teramhos
+}
+
 
 // ToDto creates a ElectricConductanceDto representation from the ElectricConductance instance.
 //
@@ -240,6 +460,8 @@ func (a *ElectricConductance) Convert(toUnit ElectricConductanceUnits) float64 {
 	switch toUnit { 
     case ElectricConductanceSiemens:
 		return a.Siemens()
+    case ElectricConductanceMho:
+		return a.Mhos()
     case ElectricConductanceNanosiemens:
 		return a.Nanosiemens()
     case ElectricConductanceMicrosiemens:
@@ -248,6 +470,26 @@ func (a *ElectricConductance) Convert(toUnit ElectricConductanceUnits) float64 {
 		return a.Millisiemens()
     case ElectricConductanceKilosiemens:
 		return a.Kilosiemens()
+    case ElectricConductanceMegasiemens:
+		return a.Megasiemens()
+    case ElectricConductanceGigasiemens:
+		return a.Gigasiemens()
+    case ElectricConductanceTerasiemens:
+		return a.Terasiemens()
+    case ElectricConductanceNanomho:
+		return a.Nanomhos()
+    case ElectricConductanceMicromho:
+		return a.Micromhos()
+    case ElectricConductanceMillimho:
+		return a.Millimhos()
+    case ElectricConductanceKilomho:
+		return a.Kilomhos()
+    case ElectricConductanceMegamho:
+		return a.Megamhos()
+    case ElectricConductanceGigamho:
+		return a.Gigamhos()
+    case ElectricConductanceTeramho:
+		return a.Teramhos()
 	default:
 		return math.NaN()
 	}
@@ -258,6 +500,8 @@ func (a *ElectricConductance) convertFromBase(toUnit ElectricConductanceUnits) f
 	switch toUnit { 
 	case ElectricConductanceSiemens:
 		return (value) 
+	case ElectricConductanceMho:
+		return (value) 
 	case ElectricConductanceNanosiemens:
 		return ((value) / 1e-09) 
 	case ElectricConductanceMicrosiemens:
@@ -266,6 +510,26 @@ func (a *ElectricConductance) convertFromBase(toUnit ElectricConductanceUnits) f
 		return ((value) / 0.001) 
 	case ElectricConductanceKilosiemens:
 		return ((value) / 1000.0) 
+	case ElectricConductanceMegasiemens:
+		return ((value) / 1000000.0) 
+	case ElectricConductanceGigasiemens:
+		return ((value) / 1000000000.0) 
+	case ElectricConductanceTerasiemens:
+		return ((value) / 1000000000000.0) 
+	case ElectricConductanceNanomho:
+		return ((value) / 1e-09) 
+	case ElectricConductanceMicromho:
+		return ((value) / 1e-06) 
+	case ElectricConductanceMillimho:
+		return ((value) / 0.001) 
+	case ElectricConductanceKilomho:
+		return ((value) / 1000.0) 
+	case ElectricConductanceMegamho:
+		return ((value) / 1000000.0) 
+	case ElectricConductanceGigamho:
+		return ((value) / 1000000000.0) 
+	case ElectricConductanceTeramho:
+		return ((value) / 1000000000000.0) 
 	default:
 		return math.NaN()
 	}
@@ -275,6 +539,8 @@ func (a *ElectricConductance) convertToBase(value float64, fromUnit ElectricCond
 	switch fromUnit { 
 	case ElectricConductanceSiemens:
 		return (value) 
+	case ElectricConductanceMho:
+		return (value) 
 	case ElectricConductanceNanosiemens:
 		return ((value) * 1e-09) 
 	case ElectricConductanceMicrosiemens:
@@ -283,6 +549,26 @@ func (a *ElectricConductance) convertToBase(value float64, fromUnit ElectricCond
 		return ((value) * 0.001) 
 	case ElectricConductanceKilosiemens:
 		return ((value) * 1000.0) 
+	case ElectricConductanceMegasiemens:
+		return ((value) * 1000000.0) 
+	case ElectricConductanceGigasiemens:
+		return ((value) * 1000000000.0) 
+	case ElectricConductanceTerasiemens:
+		return ((value) * 1000000000000.0) 
+	case ElectricConductanceNanomho:
+		return ((value) * 1e-09) 
+	case ElectricConductanceMicromho:
+		return ((value) * 1e-06) 
+	case ElectricConductanceMillimho:
+		return ((value) * 0.001) 
+	case ElectricConductanceKilomho:
+		return ((value) * 1000.0) 
+	case ElectricConductanceMegamho:
+		return ((value) * 1000000.0) 
+	case ElectricConductanceGigamho:
+		return ((value) * 1000000000.0) 
+	case ElectricConductanceTeramho:
+		return ((value) * 1000000000000.0) 
 	default:
 		return math.NaN()
 	}
@@ -318,6 +604,8 @@ func (a *ElectricConductance) getUnitAbbreviation(unit ElectricConductanceUnits)
 	switch unit { 
 	case ElectricConductanceSiemens:
 		return "S" 
+	case ElectricConductanceMho:
+		return "℧" 
 	case ElectricConductanceNanosiemens:
 		return "nS" 
 	case ElectricConductanceMicrosiemens:
@@ -326,6 +614,26 @@ func (a *ElectricConductance) getUnitAbbreviation(unit ElectricConductanceUnits)
 		return "mS" 
 	case ElectricConductanceKilosiemens:
 		return "kS" 
+	case ElectricConductanceMegasiemens:
+		return "MS" 
+	case ElectricConductanceGigasiemens:
+		return "GS" 
+	case ElectricConductanceTerasiemens:
+		return "TS" 
+	case ElectricConductanceNanomho:
+		return "n℧" 
+	case ElectricConductanceMicromho:
+		return "μ℧" 
+	case ElectricConductanceMillimho:
+		return "m℧" 
+	case ElectricConductanceKilomho:
+		return "k℧" 
+	case ElectricConductanceMegamho:
+		return "M℧" 
+	case ElectricConductanceGigamho:
+		return "G℧" 
+	case ElectricConductanceTeramho:
+		return "T℧" 
 	default:
 		return ""
 	}
