@@ -42,9 +42,9 @@ const (
 // TemperatureDto represents a Temperature measurement with a numerical value and its corresponding unit.
 type TemperatureDto struct {
     // Value is the numerical representation of the Temperature.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Temperature, as defined in the TemperatureUnits enumeration.
-	Unit  TemperatureUnits
+	Unit  TemperatureUnits `json:"unit"`
 }
 
 // TemperatureDtoFactory groups methods for creating and serializing TemperatureDto objects.
@@ -68,13 +68,7 @@ func (udf TemperatureDtoFactory) FromJSON(data []byte) (*TemperatureDto, error) 
 //
 // Returns an error if the serialization fails.
 func (a TemperatureDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

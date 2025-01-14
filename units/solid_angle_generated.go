@@ -24,9 +24,9 @@ const (
 // SolidAngleDto represents a SolidAngle measurement with a numerical value and its corresponding unit.
 type SolidAngleDto struct {
     // Value is the numerical representation of the SolidAngle.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SolidAngle, as defined in the SolidAngleUnits enumeration.
-	Unit  SolidAngleUnits
+	Unit  SolidAngleUnits `json:"unit"`
 }
 
 // SolidAngleDtoFactory groups methods for creating and serializing SolidAngleDto objects.
@@ -50,13 +50,7 @@ func (udf SolidAngleDtoFactory) FromJSON(data []byte) (*SolidAngleDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a SolidAngleDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

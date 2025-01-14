@@ -40,9 +40,9 @@ const (
 // VolumetricHeatCapacityDto represents a VolumetricHeatCapacity measurement with a numerical value and its corresponding unit.
 type VolumetricHeatCapacityDto struct {
     // Value is the numerical representation of the VolumetricHeatCapacity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VolumetricHeatCapacity, as defined in the VolumetricHeatCapacityUnits enumeration.
-	Unit  VolumetricHeatCapacityUnits
+	Unit  VolumetricHeatCapacityUnits `json:"unit"`
 }
 
 // VolumetricHeatCapacityDtoFactory groups methods for creating and serializing VolumetricHeatCapacityDto objects.
@@ -66,13 +66,7 @@ func (udf VolumetricHeatCapacityDtoFactory) FromJSON(data []byte) (*VolumetricHe
 //
 // Returns an error if the serialization fails.
 func (a VolumetricHeatCapacityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -28,9 +28,9 @@ const (
 // MolarEntropyDto represents a MolarEntropy measurement with a numerical value and its corresponding unit.
 type MolarEntropyDto struct {
     // Value is the numerical representation of the MolarEntropy.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MolarEntropy, as defined in the MolarEntropyUnits enumeration.
-	Unit  MolarEntropyUnits
+	Unit  MolarEntropyUnits `json:"unit"`
 }
 
 // MolarEntropyDtoFactory groups methods for creating and serializing MolarEntropyDto objects.
@@ -54,13 +54,7 @@ func (udf MolarEntropyDtoFactory) FromJSON(data []byte) (*MolarEntropyDto, error
 //
 // Returns an error if the serialization fails.
 func (a MolarEntropyDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

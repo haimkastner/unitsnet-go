@@ -40,9 +40,9 @@ const (
 // IrradiationDto represents a Irradiation measurement with a numerical value and its corresponding unit.
 type IrradiationDto struct {
     // Value is the numerical representation of the Irradiation.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Irradiation, as defined in the IrradiationUnits enumeration.
-	Unit  IrradiationUnits
+	Unit  IrradiationUnits `json:"unit"`
 }
 
 // IrradiationDtoFactory groups methods for creating and serializing IrradiationDto objects.
@@ -66,13 +66,7 @@ func (udf IrradiationDtoFactory) FromJSON(data []byte) (*IrradiationDto, error) 
 //
 // Returns an error if the serialization fails.
 func (a IrradiationDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

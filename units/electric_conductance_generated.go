@@ -54,9 +54,9 @@ const (
 // ElectricConductanceDto represents a ElectricConductance measurement with a numerical value and its corresponding unit.
 type ElectricConductanceDto struct {
     // Value is the numerical representation of the ElectricConductance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricConductance, as defined in the ElectricConductanceUnits enumeration.
-	Unit  ElectricConductanceUnits
+	Unit  ElectricConductanceUnits `json:"unit"`
 }
 
 // ElectricConductanceDtoFactory groups methods for creating and serializing ElectricConductanceDto objects.
@@ -80,13 +80,7 @@ func (udf ElectricConductanceDtoFactory) FromJSON(data []byte) (*ElectricConduct
 //
 // Returns an error if the serialization fails.
 func (a ElectricConductanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

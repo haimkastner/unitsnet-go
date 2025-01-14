@@ -54,9 +54,9 @@ const (
 // ElectricSusceptanceDto represents a ElectricSusceptance measurement with a numerical value and its corresponding unit.
 type ElectricSusceptanceDto struct {
     // Value is the numerical representation of the ElectricSusceptance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricSusceptance, as defined in the ElectricSusceptanceUnits enumeration.
-	Unit  ElectricSusceptanceUnits
+	Unit  ElectricSusceptanceUnits `json:"unit"`
 }
 
 // ElectricSusceptanceDtoFactory groups methods for creating and serializing ElectricSusceptanceDto objects.
@@ -80,13 +80,7 @@ func (udf ElectricSusceptanceDtoFactory) FromJSON(data []byte) (*ElectricSuscept
 //
 // Returns an error if the serialization fails.
 func (a ElectricSusceptanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

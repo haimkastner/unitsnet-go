@@ -30,9 +30,9 @@ const (
 // SpecificFuelConsumptionDto represents a SpecificFuelConsumption measurement with a numerical value and its corresponding unit.
 type SpecificFuelConsumptionDto struct {
     // Value is the numerical representation of the SpecificFuelConsumption.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificFuelConsumption, as defined in the SpecificFuelConsumptionUnits enumeration.
-	Unit  SpecificFuelConsumptionUnits
+	Unit  SpecificFuelConsumptionUnits `json:"unit"`
 }
 
 // SpecificFuelConsumptionDtoFactory groups methods for creating and serializing SpecificFuelConsumptionDto objects.
@@ -56,13 +56,7 @@ func (udf SpecificFuelConsumptionDtoFactory) FromJSON(data []byte) (*SpecificFue
 //
 // Returns an error if the serialization fails.
 func (a SpecificFuelConsumptionDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

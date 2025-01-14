@@ -26,9 +26,9 @@ const (
 // RatioChangeRateDto represents a RatioChangeRate measurement with a numerical value and its corresponding unit.
 type RatioChangeRateDto struct {
     // Value is the numerical representation of the RatioChangeRate.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RatioChangeRate, as defined in the RatioChangeRateUnits enumeration.
-	Unit  RatioChangeRateUnits
+	Unit  RatioChangeRateUnits `json:"unit"`
 }
 
 // RatioChangeRateDtoFactory groups methods for creating and serializing RatioChangeRateDto objects.
@@ -52,13 +52,7 @@ func (udf RatioChangeRateDtoFactory) FromJSON(data []byte) (*RatioChangeRateDto,
 //
 // Returns an error if the serialization fails.
 func (a RatioChangeRateDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

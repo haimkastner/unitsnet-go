@@ -48,9 +48,9 @@ const (
 // ImpulseDto represents a Impulse measurement with a numerical value and its corresponding unit.
 type ImpulseDto struct {
     // Value is the numerical representation of the Impulse.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Impulse, as defined in the ImpulseUnits enumeration.
-	Unit  ImpulseUnits
+	Unit  ImpulseUnits `json:"unit"`
 }
 
 // ImpulseDtoFactory groups methods for creating and serializing ImpulseDto objects.
@@ -74,13 +74,7 @@ func (udf ImpulseDtoFactory) FromJSON(data []byte) (*ImpulseDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a ImpulseDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -44,9 +44,9 @@ const (
 // JerkDto represents a Jerk measurement with a numerical value and its corresponding unit.
 type JerkDto struct {
     // Value is the numerical representation of the Jerk.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Jerk, as defined in the JerkUnits enumeration.
-	Unit  JerkUnits
+	Unit  JerkUnits `json:"unit"`
 }
 
 // JerkDtoFactory groups methods for creating and serializing JerkDto objects.
@@ -70,13 +70,7 @@ func (udf JerkDtoFactory) FromJSON(data []byte) (*JerkDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a JerkDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

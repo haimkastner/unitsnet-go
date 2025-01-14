@@ -36,9 +36,9 @@ const (
 // ElectricCapacitanceDto represents a ElectricCapacitance measurement with a numerical value and its corresponding unit.
 type ElectricCapacitanceDto struct {
     // Value is the numerical representation of the ElectricCapacitance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricCapacitance, as defined in the ElectricCapacitanceUnits enumeration.
-	Unit  ElectricCapacitanceUnits
+	Unit  ElectricCapacitanceUnits `json:"unit"`
 }
 
 // ElectricCapacitanceDtoFactory groups methods for creating and serializing ElectricCapacitanceDto objects.
@@ -62,13 +62,7 @@ func (udf ElectricCapacitanceDtoFactory) FromJSON(data []byte) (*ElectricCapacit
 //
 // Returns an error if the serialization fails.
 func (a ElectricCapacitanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

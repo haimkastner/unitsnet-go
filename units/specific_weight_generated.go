@@ -56,9 +56,9 @@ const (
 // SpecificWeightDto represents a SpecificWeight measurement with a numerical value and its corresponding unit.
 type SpecificWeightDto struct {
     // Value is the numerical representation of the SpecificWeight.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificWeight, as defined in the SpecificWeightUnits enumeration.
-	Unit  SpecificWeightUnits
+	Unit  SpecificWeightUnits `json:"unit"`
 }
 
 // SpecificWeightDtoFactory groups methods for creating and serializing SpecificWeightDto objects.
@@ -82,13 +82,7 @@ func (udf SpecificWeightDtoFactory) FromJSON(data []byte) (*SpecificWeightDto, e
 //
 // Returns an error if the serialization fails.
 func (a SpecificWeightDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

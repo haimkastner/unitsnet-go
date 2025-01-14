@@ -38,9 +38,9 @@ const (
 // ElectricReactanceDto represents a ElectricReactance measurement with a numerical value and its corresponding unit.
 type ElectricReactanceDto struct {
     // Value is the numerical representation of the ElectricReactance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricReactance, as defined in the ElectricReactanceUnits enumeration.
-	Unit  ElectricReactanceUnits
+	Unit  ElectricReactanceUnits `json:"unit"`
 }
 
 // ElectricReactanceDtoFactory groups methods for creating and serializing ElectricReactanceDto objects.
@@ -64,13 +64,7 @@ func (udf ElectricReactanceDtoFactory) FromJSON(data []byte) (*ElectricReactance
 //
 // Returns an error if the serialization fails.
 func (a ElectricReactanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

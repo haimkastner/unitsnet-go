@@ -30,9 +30,9 @@ const (
 // FuelEfficiencyDto represents a FuelEfficiency measurement with a numerical value and its corresponding unit.
 type FuelEfficiencyDto struct {
     // Value is the numerical representation of the FuelEfficiency.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the FuelEfficiency, as defined in the FuelEfficiencyUnits enumeration.
-	Unit  FuelEfficiencyUnits
+	Unit  FuelEfficiencyUnits `json:"unit"`
 }
 
 // FuelEfficiencyDtoFactory groups methods for creating and serializing FuelEfficiencyDto objects.
@@ -56,13 +56,7 @@ func (udf FuelEfficiencyDtoFactory) FromJSON(data []byte) (*FuelEfficiencyDto, e
 //
 // Returns an error if the serialization fails.
 func (a FuelEfficiencyDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -24,9 +24,9 @@ const (
 // MagneticFluxDto represents a MagneticFlux measurement with a numerical value and its corresponding unit.
 type MagneticFluxDto struct {
     // Value is the numerical representation of the MagneticFlux.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MagneticFlux, as defined in the MagneticFluxUnits enumeration.
-	Unit  MagneticFluxUnits
+	Unit  MagneticFluxUnits `json:"unit"`
 }
 
 // MagneticFluxDtoFactory groups methods for creating and serializing MagneticFluxDto objects.
@@ -50,13 +50,7 @@ func (udf MagneticFluxDtoFactory) FromJSON(data []byte) (*MagneticFluxDto, error
 //
 // Returns an error if the serialization fails.
 func (a MagneticFluxDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

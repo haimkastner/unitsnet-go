@@ -24,9 +24,9 @@ const (
 // LuminousFluxDto represents a LuminousFlux measurement with a numerical value and its corresponding unit.
 type LuminousFluxDto struct {
     // Value is the numerical representation of the LuminousFlux.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the LuminousFlux, as defined in the LuminousFluxUnits enumeration.
-	Unit  LuminousFluxUnits
+	Unit  LuminousFluxUnits `json:"unit"`
 }
 
 // LuminousFluxDtoFactory groups methods for creating and serializing LuminousFluxDto objects.
@@ -50,13 +50,7 @@ func (udf LuminousFluxDtoFactory) FromJSON(data []byte) (*LuminousFluxDto, error
 //
 // Returns an error if the serialization fails.
 func (a LuminousFluxDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

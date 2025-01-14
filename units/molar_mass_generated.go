@@ -48,9 +48,9 @@ const (
 // MolarMassDto represents a MolarMass measurement with a numerical value and its corresponding unit.
 type MolarMassDto struct {
     // Value is the numerical representation of the MolarMass.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MolarMass, as defined in the MolarMassUnits enumeration.
-	Unit  MolarMassUnits
+	Unit  MolarMassUnits `json:"unit"`
 }
 
 // MolarMassDtoFactory groups methods for creating and serializing MolarMassDto objects.
@@ -74,13 +74,7 @@ func (udf MolarMassDtoFactory) FromJSON(data []byte) (*MolarMassDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a MolarMassDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

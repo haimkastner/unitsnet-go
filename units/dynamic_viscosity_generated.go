@@ -42,9 +42,9 @@ const (
 // DynamicViscosityDto represents a DynamicViscosity measurement with a numerical value and its corresponding unit.
 type DynamicViscosityDto struct {
     // Value is the numerical representation of the DynamicViscosity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the DynamicViscosity, as defined in the DynamicViscosityUnits enumeration.
-	Unit  DynamicViscosityUnits
+	Unit  DynamicViscosityUnits `json:"unit"`
 }
 
 // DynamicViscosityDtoFactory groups methods for creating and serializing DynamicViscosityDto objects.
@@ -68,13 +68,7 @@ func (udf DynamicViscosityDtoFactory) FromJSON(data []byte) (*DynamicViscosityDt
 //
 // Returns an error if the serialization fails.
 func (a DynamicViscosityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

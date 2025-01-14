@@ -120,9 +120,9 @@ const (
 // PressureDto represents a Pressure measurement with a numerical value and its corresponding unit.
 type PressureDto struct {
     // Value is the numerical representation of the Pressure.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Pressure, as defined in the PressureUnits enumeration.
-	Unit  PressureUnits
+	Unit  PressureUnits `json:"unit"`
 }
 
 // PressureDtoFactory groups methods for creating and serializing PressureDto objects.
@@ -146,13 +146,7 @@ func (udf PressureDtoFactory) FromJSON(data []byte) (*PressureDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a PressureDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

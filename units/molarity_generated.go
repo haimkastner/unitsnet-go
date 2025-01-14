@@ -44,9 +44,9 @@ const (
 // MolarityDto represents a Molarity measurement with a numerical value and its corresponding unit.
 type MolarityDto struct {
     // Value is the numerical representation of the Molarity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Molarity, as defined in the MolarityUnits enumeration.
-	Unit  MolarityUnits
+	Unit  MolarityUnits `json:"unit"`
 }
 
 // MolarityDtoFactory groups methods for creating and serializing MolarityDto objects.
@@ -70,13 +70,7 @@ func (udf MolarityDtoFactory) FromJSON(data []byte) (*MolarityDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a MolarityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

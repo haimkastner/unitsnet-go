@@ -36,9 +36,9 @@ const (
 // CompressibilityDto represents a Compressibility measurement with a numerical value and its corresponding unit.
 type CompressibilityDto struct {
     // Value is the numerical representation of the Compressibility.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Compressibility, as defined in the CompressibilityUnits enumeration.
-	Unit  CompressibilityUnits
+	Unit  CompressibilityUnits `json:"unit"`
 }
 
 // CompressibilityDtoFactory groups methods for creating and serializing CompressibilityDto objects.
@@ -62,13 +62,7 @@ func (udf CompressibilityDtoFactory) FromJSON(data []byte) (*CompressibilityDto,
 //
 // Returns an error if the serialization fails.
 func (a CompressibilityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

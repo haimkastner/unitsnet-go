@@ -44,9 +44,9 @@ const (
 // ReciprocalAreaDto represents a ReciprocalArea measurement with a numerical value and its corresponding unit.
 type ReciprocalAreaDto struct {
     // Value is the numerical representation of the ReciprocalArea.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ReciprocalArea, as defined in the ReciprocalAreaUnits enumeration.
-	Unit  ReciprocalAreaUnits
+	Unit  ReciprocalAreaUnits `json:"unit"`
 }
 
 // ReciprocalAreaDtoFactory groups methods for creating and serializing ReciprocalAreaDto objects.
@@ -70,13 +70,7 @@ func (udf ReciprocalAreaDtoFactory) FromJSON(data []byte) (*ReciprocalAreaDto, e
 //
 // Returns an error if the serialization fails.
 func (a ReciprocalAreaDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

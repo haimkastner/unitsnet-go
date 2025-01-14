@@ -58,9 +58,9 @@ const (
 // HeatFluxDto represents a HeatFlux measurement with a numerical value and its corresponding unit.
 type HeatFluxDto struct {
     // Value is the numerical representation of the HeatFlux.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the HeatFlux, as defined in the HeatFluxUnits enumeration.
-	Unit  HeatFluxUnits
+	Unit  HeatFluxUnits `json:"unit"`
 }
 
 // HeatFluxDtoFactory groups methods for creating and serializing HeatFluxDto objects.
@@ -84,13 +84,7 @@ func (udf HeatFluxDtoFactory) FromJSON(data []byte) (*HeatFluxDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a HeatFluxDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -46,9 +46,9 @@ const (
 // EnergyDensityDto represents a EnergyDensity measurement with a numerical value and its corresponding unit.
 type EnergyDensityDto struct {
     // Value is the numerical representation of the EnergyDensity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the EnergyDensity, as defined in the EnergyDensityUnits enumeration.
-	Unit  EnergyDensityUnits
+	Unit  EnergyDensityUnits `json:"unit"`
 }
 
 // EnergyDensityDtoFactory groups methods for creating and serializing EnergyDensityDto objects.
@@ -72,13 +72,7 @@ func (udf EnergyDensityDtoFactory) FromJSON(data []byte) (*EnergyDensityDto, err
 //
 // Returns an error if the serialization fails.
 func (a EnergyDensityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -24,9 +24,9 @@ const (
 // {{ unit }}Dto represents a {{ unit }} measurement with a numerical value and its corresponding unit.
 type {{ unit }}Dto struct {
     // Value is the numerical representation of the {{ unit }}.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the {{ unit }}, as defined in the {{ unit }}Units enumeration.
-	Unit  {{ unit }}Units
+	Unit  {{ unit }}Units `json:"unit"`
 }
 
 // {{ unit }}DtoFactory groups methods for creating and serializing {{ unit }}Dto objects.
@@ -50,13 +50,7 @@ func (udf {{ unit }}DtoFactory) FromJSON(data []byte) (*{{ unit }}Dto, error) {
 //
 // Returns an error if the serialization fails.
 func (a {{ unit }}Dto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 {% endif %}
 

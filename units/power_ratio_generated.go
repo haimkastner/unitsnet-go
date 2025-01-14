@@ -26,9 +26,9 @@ const (
 // PowerRatioDto represents a PowerRatio measurement with a numerical value and its corresponding unit.
 type PowerRatioDto struct {
     // Value is the numerical representation of the PowerRatio.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the PowerRatio, as defined in the PowerRatioUnits enumeration.
-	Unit  PowerRatioUnits
+	Unit  PowerRatioUnits `json:"unit"`
 }
 
 // PowerRatioDtoFactory groups methods for creating and serializing PowerRatioDto objects.
@@ -52,13 +52,7 @@ func (udf PowerRatioDtoFactory) FromJSON(data []byte) (*PowerRatioDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a PowerRatioDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

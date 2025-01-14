@@ -34,9 +34,9 @@ const (
 // ElectricApparentPowerDto represents a ElectricApparentPower measurement with a numerical value and its corresponding unit.
 type ElectricApparentPowerDto struct {
     // Value is the numerical representation of the ElectricApparentPower.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricApparentPower, as defined in the ElectricApparentPowerUnits enumeration.
-	Unit  ElectricApparentPowerUnits
+	Unit  ElectricApparentPowerUnits `json:"unit"`
 }
 
 // ElectricApparentPowerDtoFactory groups methods for creating and serializing ElectricApparentPowerDto objects.
@@ -60,13 +60,7 @@ func (udf ElectricApparentPowerDtoFactory) FromJSON(data []byte) (*ElectricAppar
 //
 // Returns an error if the serialization fails.
 func (a ElectricApparentPowerDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

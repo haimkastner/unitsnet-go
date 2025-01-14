@@ -72,9 +72,9 @@ const (
 // TorqueDto represents a Torque measurement with a numerical value and its corresponding unit.
 type TorqueDto struct {
     // Value is the numerical representation of the Torque.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Torque, as defined in the TorqueUnits enumeration.
-	Unit  TorqueUnits
+	Unit  TorqueUnits `json:"unit"`
 }
 
 // TorqueDtoFactory groups methods for creating and serializing TorqueDto objects.
@@ -98,13 +98,7 @@ func (udf TorqueDtoFactory) FromJSON(data []byte) (*TorqueDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a TorqueDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -46,9 +46,9 @@ const (
 // DurationDto represents a Duration measurement with a numerical value and its corresponding unit.
 type DurationDto struct {
     // Value is the numerical representation of the Duration.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Duration, as defined in the DurationUnits enumeration.
-	Unit  DurationUnits
+	Unit  DurationUnits `json:"unit"`
 }
 
 // DurationDtoFactory groups methods for creating and serializing DurationDto objects.
@@ -72,13 +72,7 @@ func (udf DurationDtoFactory) FromJSON(data []byte) (*DurationDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a DurationDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -34,9 +34,9 @@ const (
 // AreaMomentOfInertiaDto represents a AreaMomentOfInertia measurement with a numerical value and its corresponding unit.
 type AreaMomentOfInertiaDto struct {
     // Value is the numerical representation of the AreaMomentOfInertia.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AreaMomentOfInertia, as defined in the AreaMomentOfInertiaUnits enumeration.
-	Unit  AreaMomentOfInertiaUnits
+	Unit  AreaMomentOfInertiaUnits `json:"unit"`
 }
 
 // AreaMomentOfInertiaDtoFactory groups methods for creating and serializing AreaMomentOfInertiaDto objects.
@@ -60,13 +60,7 @@ func (udf AreaMomentOfInertiaDtoFactory) FromJSON(data []byte) (*AreaMomentOfIne
 //
 // Returns an error if the serialization fails.
 func (a AreaMomentOfInertiaDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -34,9 +34,9 @@ const (
 // ThermalResistanceDto represents a ThermalResistance measurement with a numerical value and its corresponding unit.
 type ThermalResistanceDto struct {
     // Value is the numerical representation of the ThermalResistance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ThermalResistance, as defined in the ThermalResistanceUnits enumeration.
-	Unit  ThermalResistanceUnits
+	Unit  ThermalResistanceUnits `json:"unit"`
 }
 
 // ThermalResistanceDtoFactory groups methods for creating and serializing ThermalResistanceDto objects.
@@ -60,13 +60,7 @@ func (udf ThermalResistanceDtoFactory) FromJSON(data []byte) (*ThermalResistance
 //
 // Returns an error if the serialization fails.
 func (a ThermalResistanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

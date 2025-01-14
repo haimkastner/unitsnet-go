@@ -40,9 +40,9 @@ const (
 // ElectricCurrentDto represents a ElectricCurrent measurement with a numerical value and its corresponding unit.
 type ElectricCurrentDto struct {
     // Value is the numerical representation of the ElectricCurrent.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricCurrent, as defined in the ElectricCurrentUnits enumeration.
-	Unit  ElectricCurrentUnits
+	Unit  ElectricCurrentUnits `json:"unit"`
 }
 
 // ElectricCurrentDtoFactory groups methods for creating and serializing ElectricCurrentDto objects.
@@ -66,13 +66,7 @@ func (udf ElectricCurrentDtoFactory) FromJSON(data []byte) (*ElectricCurrentDto,
 //
 // Returns an error if the serialization fails.
 func (a ElectricCurrentDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

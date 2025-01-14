@@ -62,9 +62,9 @@ const (
 // DoseAreaProductDto represents a DoseAreaProduct measurement with a numerical value and its corresponding unit.
 type DoseAreaProductDto struct {
     // Value is the numerical representation of the DoseAreaProduct.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the DoseAreaProduct, as defined in the DoseAreaProductUnits enumeration.
-	Unit  DoseAreaProductUnits
+	Unit  DoseAreaProductUnits `json:"unit"`
 }
 
 // DoseAreaProductDtoFactory groups methods for creating and serializing DoseAreaProductDto objects.
@@ -88,13 +88,7 @@ func (udf DoseAreaProductDtoFactory) FromJSON(data []byte) (*DoseAreaProductDto,
 //
 // Returns an error if the serialization fails.
 func (a DoseAreaProductDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

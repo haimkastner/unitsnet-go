@@ -24,9 +24,9 @@ const (
 // ElectricFieldDto represents a ElectricField measurement with a numerical value and its corresponding unit.
 type ElectricFieldDto struct {
     // Value is the numerical representation of the ElectricField.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricField, as defined in the ElectricFieldUnits enumeration.
-	Unit  ElectricFieldUnits
+	Unit  ElectricFieldUnits `json:"unit"`
 }
 
 // ElectricFieldDtoFactory groups methods for creating and serializing ElectricFieldDto objects.
@@ -50,13 +50,7 @@ func (udf ElectricFieldDtoFactory) FromJSON(data []byte) (*ElectricFieldDto, err
 //
 // Returns an error if the serialization fails.
 func (a ElectricFieldDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

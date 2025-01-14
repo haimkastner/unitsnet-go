@@ -24,9 +24,9 @@ const (
 // MagnetizationDto represents a Magnetization measurement with a numerical value and its corresponding unit.
 type MagnetizationDto struct {
     // Value is the numerical representation of the Magnetization.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Magnetization, as defined in the MagnetizationUnits enumeration.
-	Unit  MagnetizationUnits
+	Unit  MagnetizationUnits `json:"unit"`
 }
 
 // MagnetizationDtoFactory groups methods for creating and serializing MagnetizationDto objects.
@@ -50,13 +50,7 @@ func (udf MagnetizationDtoFactory) FromJSON(data []byte) (*MagnetizationDto, err
 //
 // Returns an error if the serialization fails.
 func (a MagnetizationDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

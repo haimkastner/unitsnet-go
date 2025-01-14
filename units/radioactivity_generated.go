@@ -80,9 +80,9 @@ const (
 // RadioactivityDto represents a Radioactivity measurement with a numerical value and its corresponding unit.
 type RadioactivityDto struct {
     // Value is the numerical representation of the Radioactivity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Radioactivity, as defined in the RadioactivityUnits enumeration.
-	Unit  RadioactivityUnits
+	Unit  RadioactivityUnits `json:"unit"`
 }
 
 // RadioactivityDtoFactory groups methods for creating and serializing RadioactivityDto objects.
@@ -106,13 +106,7 @@ func (udf RadioactivityDtoFactory) FromJSON(data []byte) (*RadioactivityDto, err
 //
 // Returns an error if the serialization fails.
 func (a RadioactivityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

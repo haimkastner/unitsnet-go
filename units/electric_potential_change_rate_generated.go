@@ -62,9 +62,9 @@ const (
 // ElectricPotentialChangeRateDto represents a ElectricPotentialChangeRate measurement with a numerical value and its corresponding unit.
 type ElectricPotentialChangeRateDto struct {
     // Value is the numerical representation of the ElectricPotentialChangeRate.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricPotentialChangeRate, as defined in the ElectricPotentialChangeRateUnits enumeration.
-	Unit  ElectricPotentialChangeRateUnits
+	Unit  ElectricPotentialChangeRateUnits `json:"unit"`
 }
 
 // ElectricPotentialChangeRateDtoFactory groups methods for creating and serializing ElectricPotentialChangeRateDto objects.
@@ -88,13 +88,7 @@ func (udf ElectricPotentialChangeRateDtoFactory) FromJSON(data []byte) (*Electri
 //
 // Returns an error if the serialization fails.
 func (a ElectricPotentialChangeRateDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

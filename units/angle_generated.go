@@ -54,9 +54,9 @@ const (
 // AngleDto represents a Angle measurement with a numerical value and its corresponding unit.
 type AngleDto struct {
     // Value is the numerical representation of the Angle.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Angle, as defined in the AngleUnits enumeration.
-	Unit  AngleUnits
+	Unit  AngleUnits `json:"unit"`
 }
 
 // AngleDtoFactory groups methods for creating and serializing AngleDto objects.
@@ -80,13 +80,7 @@ func (udf AngleDtoFactory) FromJSON(data []byte) (*AngleDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a AngleDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

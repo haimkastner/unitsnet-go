@@ -82,9 +82,9 @@ const (
 // SpecificEnergyDto represents a SpecificEnergy measurement with a numerical value and its corresponding unit.
 type SpecificEnergyDto struct {
     // Value is the numerical representation of the SpecificEnergy.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificEnergy, as defined in the SpecificEnergyUnits enumeration.
-	Unit  SpecificEnergyUnits
+	Unit  SpecificEnergyUnits `json:"unit"`
 }
 
 // SpecificEnergyDtoFactory groups methods for creating and serializing SpecificEnergyDto objects.
@@ -108,13 +108,7 @@ func (udf SpecificEnergyDtoFactory) FromJSON(data []byte) (*SpecificEnergyDto, e
 //
 // Returns an error if the serialization fails.
 func (a SpecificEnergyDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

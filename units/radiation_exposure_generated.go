@@ -38,9 +38,9 @@ const (
 // RadiationExposureDto represents a RadiationExposure measurement with a numerical value and its corresponding unit.
 type RadiationExposureDto struct {
     // Value is the numerical representation of the RadiationExposure.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RadiationExposure, as defined in the RadiationExposureUnits enumeration.
-	Unit  RadiationExposureUnits
+	Unit  RadiationExposureUnits `json:"unit"`
 }
 
 // RadiationExposureDtoFactory groups methods for creating and serializing RadiationExposureDto objects.
@@ -64,13 +64,7 @@ func (udf RadiationExposureDtoFactory) FromJSON(data []byte) (*RadiationExposure
 //
 // Returns an error if the serialization fails.
 func (a RadiationExposureDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

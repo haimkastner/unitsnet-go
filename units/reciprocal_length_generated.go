@@ -42,9 +42,9 @@ const (
 // ReciprocalLengthDto represents a ReciprocalLength measurement with a numerical value and its corresponding unit.
 type ReciprocalLengthDto struct {
     // Value is the numerical representation of the ReciprocalLength.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ReciprocalLength, as defined in the ReciprocalLengthUnits enumeration.
-	Unit  ReciprocalLengthUnits
+	Unit  ReciprocalLengthUnits `json:"unit"`
 }
 
 // ReciprocalLengthDtoFactory groups methods for creating and serializing ReciprocalLengthDto objects.
@@ -68,13 +68,7 @@ func (udf ReciprocalLengthDtoFactory) FromJSON(data []byte) (*ReciprocalLengthDt
 //
 // Returns an error if the serialization fails.
 func (a ReciprocalLengthDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

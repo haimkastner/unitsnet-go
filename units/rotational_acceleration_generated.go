@@ -30,9 +30,9 @@ const (
 // RotationalAccelerationDto represents a RotationalAcceleration measurement with a numerical value and its corresponding unit.
 type RotationalAccelerationDto struct {
     // Value is the numerical representation of the RotationalAcceleration.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RotationalAcceleration, as defined in the RotationalAccelerationUnits enumeration.
-	Unit  RotationalAccelerationUnits
+	Unit  RotationalAccelerationUnits `json:"unit"`
 }
 
 // RotationalAccelerationDtoFactory groups methods for creating and serializing RotationalAccelerationDto objects.
@@ -56,13 +56,7 @@ func (udf RotationalAccelerationDtoFactory) FromJSON(data []byte) (*RotationalAc
 //
 // Returns an error if the serialization fails.
 func (a RotationalAccelerationDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

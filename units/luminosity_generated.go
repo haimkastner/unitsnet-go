@@ -50,9 +50,9 @@ const (
 // LuminosityDto represents a Luminosity measurement with a numerical value and its corresponding unit.
 type LuminosityDto struct {
     // Value is the numerical representation of the Luminosity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Luminosity, as defined in the LuminosityUnits enumeration.
-	Unit  LuminosityUnits
+	Unit  LuminosityUnits `json:"unit"`
 }
 
 // LuminosityDtoFactory groups methods for creating and serializing LuminosityDto objects.
@@ -76,13 +76,7 @@ func (udf LuminosityDtoFactory) FromJSON(data []byte) (*LuminosityDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a LuminosityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -110,9 +110,9 @@ const (
 // PowerDensityDto represents a PowerDensity measurement with a numerical value and its corresponding unit.
 type PowerDensityDto struct {
     // Value is the numerical representation of the PowerDensity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the PowerDensity, as defined in the PowerDensityUnits enumeration.
-	Unit  PowerDensityUnits
+	Unit  PowerDensityUnits `json:"unit"`
 }
 
 // PowerDensityDtoFactory groups methods for creating and serializing PowerDensityDto objects.
@@ -136,13 +136,7 @@ func (udf PowerDensityDtoFactory) FromJSON(data []byte) (*PowerDensityDto, error
 //
 // Returns an error if the serialization fails.
 func (a PowerDensityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

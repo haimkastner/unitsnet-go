@@ -32,9 +32,9 @@ const (
 // ElectricInductanceDto represents a ElectricInductance measurement with a numerical value and its corresponding unit.
 type ElectricInductanceDto struct {
     // Value is the numerical representation of the ElectricInductance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricInductance, as defined in the ElectricInductanceUnits enumeration.
-	Unit  ElectricInductanceUnits
+	Unit  ElectricInductanceUnits `json:"unit"`
 }
 
 // ElectricInductanceDtoFactory groups methods for creating and serializing ElectricInductanceDto objects.
@@ -58,13 +58,7 @@ func (udf ElectricInductanceDtoFactory) FromJSON(data []byte) (*ElectricInductan
 //
 // Returns an error if the serialization fails.
 func (a ElectricInductanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

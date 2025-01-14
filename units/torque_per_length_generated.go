@@ -64,9 +64,9 @@ const (
 // TorquePerLengthDto represents a TorquePerLength measurement with a numerical value and its corresponding unit.
 type TorquePerLengthDto struct {
     // Value is the numerical representation of the TorquePerLength.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the TorquePerLength, as defined in the TorquePerLengthUnits enumeration.
-	Unit  TorquePerLengthUnits
+	Unit  TorquePerLengthUnits `json:"unit"`
 }
 
 // TorquePerLengthDtoFactory groups methods for creating and serializing TorquePerLengthDto objects.
@@ -90,13 +90,7 @@ func (udf TorquePerLengthDtoFactory) FromJSON(data []byte) (*TorquePerLengthDto,
 //
 // Returns an error if the serialization fails.
 func (a TorquePerLengthDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

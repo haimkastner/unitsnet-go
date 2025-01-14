@@ -34,9 +34,9 @@ const (
 // WarpingMomentOfInertiaDto represents a WarpingMomentOfInertia measurement with a numerical value and its corresponding unit.
 type WarpingMomentOfInertiaDto struct {
     // Value is the numerical representation of the WarpingMomentOfInertia.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the WarpingMomentOfInertia, as defined in the WarpingMomentOfInertiaUnits enumeration.
-	Unit  WarpingMomentOfInertiaUnits
+	Unit  WarpingMomentOfInertiaUnits `json:"unit"`
 }
 
 // WarpingMomentOfInertiaDtoFactory groups methods for creating and serializing WarpingMomentOfInertiaDto objects.
@@ -60,13 +60,7 @@ func (udf WarpingMomentOfInertiaDtoFactory) FromJSON(data []byte) (*WarpingMomen
 //
 // Returns an error if the serialization fails.
 func (a WarpingMomentOfInertiaDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

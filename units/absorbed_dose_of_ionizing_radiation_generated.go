@@ -54,9 +54,9 @@ const (
 // AbsorbedDoseOfIonizingRadiationDto represents a AbsorbedDoseOfIonizingRadiation measurement with a numerical value and its corresponding unit.
 type AbsorbedDoseOfIonizingRadiationDto struct {
     // Value is the numerical representation of the AbsorbedDoseOfIonizingRadiation.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AbsorbedDoseOfIonizingRadiation, as defined in the AbsorbedDoseOfIonizingRadiationUnits enumeration.
-	Unit  AbsorbedDoseOfIonizingRadiationUnits
+	Unit  AbsorbedDoseOfIonizingRadiationUnits `json:"unit"`
 }
 
 // AbsorbedDoseOfIonizingRadiationDtoFactory groups methods for creating and serializing AbsorbedDoseOfIonizingRadiationDto objects.
@@ -80,13 +80,7 @@ func (udf AbsorbedDoseOfIonizingRadiationDtoFactory) FromJSON(data []byte) (*Abs
 //
 // Returns an error if the serialization fails.
 func (a AbsorbedDoseOfIonizingRadiationDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

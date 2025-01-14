@@ -24,9 +24,9 @@ const (
 // TurbidityDto represents a Turbidity measurement with a numerical value and its corresponding unit.
 type TurbidityDto struct {
     // Value is the numerical representation of the Turbidity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Turbidity, as defined in the TurbidityUnits enumeration.
-	Unit  TurbidityUnits
+	Unit  TurbidityUnits `json:"unit"`
 }
 
 // TurbidityDtoFactory groups methods for creating and serializing TurbidityDto objects.
@@ -50,13 +50,7 @@ func (udf TurbidityDtoFactory) FromJSON(data []byte) (*TurbidityDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a TurbidityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

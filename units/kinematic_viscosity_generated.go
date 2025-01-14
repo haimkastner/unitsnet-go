@@ -40,9 +40,9 @@ const (
 // KinematicViscosityDto represents a KinematicViscosity measurement with a numerical value and its corresponding unit.
 type KinematicViscosityDto struct {
     // Value is the numerical representation of the KinematicViscosity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the KinematicViscosity, as defined in the KinematicViscosityUnits enumeration.
-	Unit  KinematicViscosityUnits
+	Unit  KinematicViscosityUnits `json:"unit"`
 }
 
 // KinematicViscosityDtoFactory groups methods for creating and serializing KinematicViscosityDto objects.
@@ -66,13 +66,7 @@ func (udf KinematicViscosityDtoFactory) FromJSON(data []byte) (*KinematicViscosi
 //
 // Returns an error if the serialization fails.
 func (a KinematicViscosityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -50,9 +50,9 @@ const (
 // AreaDto represents a Area measurement with a numerical value and its corresponding unit.
 type AreaDto struct {
     // Value is the numerical representation of the Area.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Area, as defined in the AreaUnits enumeration.
-	Unit  AreaUnits
+	Unit  AreaUnits `json:"unit"`
 }
 
 // AreaDtoFactory groups methods for creating and serializing AreaDto objects.
@@ -76,13 +76,7 @@ func (udf AreaDtoFactory) FromJSON(data []byte) (*AreaDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a AreaDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

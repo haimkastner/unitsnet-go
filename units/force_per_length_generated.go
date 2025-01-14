@@ -98,9 +98,9 @@ const (
 // ForcePerLengthDto represents a ForcePerLength measurement with a numerical value and its corresponding unit.
 type ForcePerLengthDto struct {
     // Value is the numerical representation of the ForcePerLength.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ForcePerLength, as defined in the ForcePerLengthUnits enumeration.
-	Unit  ForcePerLengthUnits
+	Unit  ForcePerLengthUnits `json:"unit"`
 }
 
 // ForcePerLengthDtoFactory groups methods for creating and serializing ForcePerLengthDto objects.
@@ -124,13 +124,7 @@ func (udf ForcePerLengthDtoFactory) FromJSON(data []byte) (*ForcePerLengthDto, e
 //
 // Returns an error if the serialization fails.
 func (a ForcePerLengthDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

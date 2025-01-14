@@ -28,9 +28,9 @@ const (
 // ElectricSurfaceChargeDensityDto represents a ElectricSurfaceChargeDensity measurement with a numerical value and its corresponding unit.
 type ElectricSurfaceChargeDensityDto struct {
     // Value is the numerical representation of the ElectricSurfaceChargeDensity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricSurfaceChargeDensity, as defined in the ElectricSurfaceChargeDensityUnits enumeration.
-	Unit  ElectricSurfaceChargeDensityUnits
+	Unit  ElectricSurfaceChargeDensityUnits `json:"unit"`
 }
 
 // ElectricSurfaceChargeDensityDtoFactory groups methods for creating and serializing ElectricSurfaceChargeDensityDto objects.
@@ -54,13 +54,7 @@ func (udf ElectricSurfaceChargeDensityDtoFactory) FromJSON(data []byte) (*Electr
 //
 // Returns an error if the serialization fails.
 func (a ElectricSurfaceChargeDensityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

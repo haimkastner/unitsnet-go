@@ -32,9 +32,9 @@ const (
 // PorousMediumPermeabilityDto represents a PorousMediumPermeability measurement with a numerical value and its corresponding unit.
 type PorousMediumPermeabilityDto struct {
     // Value is the numerical representation of the PorousMediumPermeability.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the PorousMediumPermeability, as defined in the PorousMediumPermeabilityUnits enumeration.
-	Unit  PorousMediumPermeabilityUnits
+	Unit  PorousMediumPermeabilityUnits `json:"unit"`
 }
 
 // PorousMediumPermeabilityDtoFactory groups methods for creating and serializing PorousMediumPermeabilityDto objects.
@@ -58,13 +58,7 @@ func (udf PorousMediumPermeabilityDtoFactory) FromJSON(data []byte) (*PorousMedi
 //
 // Returns an error if the serialization fails.
 func (a PorousMediumPermeabilityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -32,9 +32,9 @@ const (
 // RotationalStiffnessPerLengthDto represents a RotationalStiffnessPerLength measurement with a numerical value and its corresponding unit.
 type RotationalStiffnessPerLengthDto struct {
     // Value is the numerical representation of the RotationalStiffnessPerLength.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RotationalStiffnessPerLength, as defined in the RotationalStiffnessPerLengthUnits enumeration.
-	Unit  RotationalStiffnessPerLengthUnits
+	Unit  RotationalStiffnessPerLengthUnits `json:"unit"`
 }
 
 // RotationalStiffnessPerLengthDtoFactory groups methods for creating and serializing RotationalStiffnessPerLengthDto objects.
@@ -58,13 +58,7 @@ func (udf RotationalStiffnessPerLengthDtoFactory) FromJSON(data []byte) (*Rotati
 //
 // Returns an error if the serialization fails.
 func (a RotationalStiffnessPerLengthDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

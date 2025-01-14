@@ -106,9 +106,9 @@ const (
 // LengthDto represents a Length measurement with a numerical value and its corresponding unit.
 type LengthDto struct {
     // Value is the numerical representation of the Length.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Length, as defined in the LengthUnits enumeration.
-	Unit  LengthUnits
+	Unit  LengthUnits `json:"unit"`
 }
 
 // LengthDtoFactory groups methods for creating and serializing LengthDto objects.
@@ -132,13 +132,7 @@ func (udf LengthDtoFactory) FromJSON(data []byte) (*LengthDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a LengthDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

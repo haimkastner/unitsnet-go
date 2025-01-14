@@ -120,9 +120,9 @@ const (
 // MassConcentrationDto represents a MassConcentration measurement with a numerical value and its corresponding unit.
 type MassConcentrationDto struct {
     // Value is the numerical representation of the MassConcentration.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MassConcentration, as defined in the MassConcentrationUnits enumeration.
-	Unit  MassConcentrationUnits
+	Unit  MassConcentrationUnits `json:"unit"`
 }
 
 // MassConcentrationDtoFactory groups methods for creating and serializing MassConcentrationDto objects.
@@ -146,13 +146,7 @@ func (udf MassConcentrationDtoFactory) FromJSON(data []byte) (*MassConcentration
 //
 // Returns an error if the serialization fails.
 func (a MassConcentrationDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

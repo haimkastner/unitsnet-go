@@ -34,9 +34,9 @@ const (
 // ApparentPowerDto represents a ApparentPower measurement with a numerical value and its corresponding unit.
 type ApparentPowerDto struct {
     // Value is the numerical representation of the ApparentPower.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ApparentPower, as defined in the ApparentPowerUnits enumeration.
-	Unit  ApparentPowerUnits
+	Unit  ApparentPowerUnits `json:"unit"`
 }
 
 // ApparentPowerDtoFactory groups methods for creating and serializing ApparentPowerDto objects.
@@ -60,13 +60,7 @@ func (udf ApparentPowerDtoFactory) FromJSON(data []byte) (*ApparentPowerDto, err
 //
 // Returns an error if the serialization fails.
 func (a ApparentPowerDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

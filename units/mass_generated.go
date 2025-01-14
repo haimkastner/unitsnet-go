@@ -76,9 +76,9 @@ const (
 // MassDto represents a Mass measurement with a numerical value and its corresponding unit.
 type MassDto struct {
     // Value is the numerical representation of the Mass.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Mass, as defined in the MassUnits enumeration.
-	Unit  MassUnits
+	Unit  MassUnits `json:"unit"`
 }
 
 // MassDtoFactory groups methods for creating and serializing MassDto objects.
@@ -102,13 +102,7 @@ func (udf MassDtoFactory) FromJSON(data []byte) (*MassDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a MassDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

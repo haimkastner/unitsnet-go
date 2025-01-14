@@ -48,9 +48,9 @@ const (
 // RotationalSpeedDto represents a RotationalSpeed measurement with a numerical value and its corresponding unit.
 type RotationalSpeedDto struct {
     // Value is the numerical representation of the RotationalSpeed.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RotationalSpeed, as defined in the RotationalSpeedUnits enumeration.
-	Unit  RotationalSpeedUnits
+	Unit  RotationalSpeedUnits `json:"unit"`
 }
 
 // RotationalSpeedDtoFactory groups methods for creating and serializing RotationalSpeedDto objects.
@@ -74,13 +74,7 @@ func (udf RotationalSpeedDtoFactory) FromJSON(data []byte) (*RotationalSpeedDto,
 //
 // Returns an error if the serialization fails.
 func (a RotationalSpeedDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

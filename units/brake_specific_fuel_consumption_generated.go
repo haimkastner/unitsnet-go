@@ -28,9 +28,9 @@ const (
 // BrakeSpecificFuelConsumptionDto represents a BrakeSpecificFuelConsumption measurement with a numerical value and its corresponding unit.
 type BrakeSpecificFuelConsumptionDto struct {
     // Value is the numerical representation of the BrakeSpecificFuelConsumption.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the BrakeSpecificFuelConsumption, as defined in the BrakeSpecificFuelConsumptionUnits enumeration.
-	Unit  BrakeSpecificFuelConsumptionUnits
+	Unit  BrakeSpecificFuelConsumptionUnits `json:"unit"`
 }
 
 // BrakeSpecificFuelConsumptionDtoFactory groups methods for creating and serializing BrakeSpecificFuelConsumptionDto objects.
@@ -54,13 +54,7 @@ func (udf BrakeSpecificFuelConsumptionDtoFactory) FromJSON(data []byte) (*BrakeS
 //
 // Returns an error if the serialization fails.
 func (a BrakeSpecificFuelConsumptionDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

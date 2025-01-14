@@ -14,4 +14,4 @@ for definition in definitions:
 # # Generate README doc file
 units_docs_generator(definitions)
 
-print("Generating GoLang units package finished successfully")
+print("Generating GoLang units completed.")

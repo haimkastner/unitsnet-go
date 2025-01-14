@@ -26,9 +26,9 @@ const (
 // ThermalConductivityDto represents a ThermalConductivity measurement with a numerical value and its corresponding unit.
 type ThermalConductivityDto struct {
     // Value is the numerical representation of the ThermalConductivity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ThermalConductivity, as defined in the ThermalConductivityUnits enumeration.
-	Unit  ThermalConductivityUnits
+	Unit  ThermalConductivityUnits `json:"unit"`
 }
 
 // ThermalConductivityDtoFactory groups methods for creating and serializing ThermalConductivityDto objects.
@@ -52,13 +52,7 @@ func (udf ThermalConductivityDtoFactory) FromJSON(data []byte) (*ThermalConducti
 //
 // Returns an error if the serialization fails.
 func (a ThermalConductivityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

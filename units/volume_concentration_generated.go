@@ -62,9 +62,9 @@ const (
 // VolumeConcentrationDto represents a VolumeConcentration measurement with a numerical value and its corresponding unit.
 type VolumeConcentrationDto struct {
     // Value is the numerical representation of the VolumeConcentration.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VolumeConcentration, as defined in the VolumeConcentrationUnits enumeration.
-	Unit  VolumeConcentrationUnits
+	Unit  VolumeConcentrationUnits `json:"unit"`
 }
 
 // VolumeConcentrationDtoFactory groups methods for creating and serializing VolumeConcentrationDto objects.
@@ -88,13 +88,7 @@ func (udf VolumeConcentrationDtoFactory) FromJSON(data []byte) (*VolumeConcentra
 //
 // Returns an error if the serialization fails.
 func (a VolumeConcentrationDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -24,9 +24,9 @@ const (
 // ScalarDto represents a Scalar measurement with a numerical value and its corresponding unit.
 type ScalarDto struct {
     // Value is the numerical representation of the Scalar.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Scalar, as defined in the ScalarUnits enumeration.
-	Unit  ScalarUnits
+	Unit  ScalarUnits `json:"unit"`
 }
 
 // ScalarDtoFactory groups methods for creating and serializing ScalarDto objects.
@@ -50,13 +50,7 @@ func (udf ScalarDtoFactory) FromJSON(data []byte) (*ScalarDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a ScalarDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

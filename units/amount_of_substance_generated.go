@@ -56,9 +56,9 @@ const (
 // AmountOfSubstanceDto represents a AmountOfSubstance measurement with a numerical value and its corresponding unit.
 type AmountOfSubstanceDto struct {
     // Value is the numerical representation of the AmountOfSubstance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AmountOfSubstance, as defined in the AmountOfSubstanceUnits enumeration.
-	Unit  AmountOfSubstanceUnits
+	Unit  AmountOfSubstanceUnits `json:"unit"`
 }
 
 // AmountOfSubstanceDtoFactory groups methods for creating and serializing AmountOfSubstanceDto objects.
@@ -82,13 +82,7 @@ func (udf AmountOfSubstanceDtoFactory) FromJSON(data []byte) (*AmountOfSubstance
 //
 // Returns an error if the serialization fails.
 func (a AmountOfSubstanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

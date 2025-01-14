@@ -26,9 +26,9 @@ const (
 // LevelDto represents a Level measurement with a numerical value and its corresponding unit.
 type LevelDto struct {
     // Value is the numerical representation of the Level.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Level, as defined in the LevelUnits enumeration.
-	Unit  LevelUnits
+	Unit  LevelUnits `json:"unit"`
 }
 
 // LevelDtoFactory groups methods for creating and serializing LevelDto objects.
@@ -52,13 +52,7 @@ func (udf LevelDtoFactory) FromJSON(data []byte) (*LevelDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a LevelDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

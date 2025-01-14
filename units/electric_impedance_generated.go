@@ -38,9 +38,9 @@ const (
 // ElectricImpedanceDto represents a ElectricImpedance measurement with a numerical value and its corresponding unit.
 type ElectricImpedanceDto struct {
     // Value is the numerical representation of the ElectricImpedance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricImpedance, as defined in the ElectricImpedanceUnits enumeration.
-	Unit  ElectricImpedanceUnits
+	Unit  ElectricImpedanceUnits `json:"unit"`
 }
 
 // ElectricImpedanceDtoFactory groups methods for creating and serializing ElectricImpedanceDto objects.
@@ -64,13 +64,7 @@ func (udf ElectricImpedanceDtoFactory) FromJSON(data []byte) (*ElectricImpedance
 //
 // Returns an error if the serialization fails.
 func (a ElectricImpedanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -28,9 +28,9 @@ const (
 // ReactiveEnergyDto represents a ReactiveEnergy measurement with a numerical value and its corresponding unit.
 type ReactiveEnergyDto struct {
     // Value is the numerical representation of the ReactiveEnergy.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ReactiveEnergy, as defined in the ReactiveEnergyUnits enumeration.
-	Unit  ReactiveEnergyUnits
+	Unit  ReactiveEnergyUnits `json:"unit"`
 }
 
 // ReactiveEnergyDtoFactory groups methods for creating and serializing ReactiveEnergyDto objects.
@@ -54,13 +54,7 @@ func (udf ReactiveEnergyDtoFactory) FromJSON(data []byte) (*ReactiveEnergyDto, e
 //
 // Returns an error if the serialization fails.
 func (a ReactiveEnergyDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

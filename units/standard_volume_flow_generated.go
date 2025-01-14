@@ -40,9 +40,9 @@ const (
 // StandardVolumeFlowDto represents a StandardVolumeFlow measurement with a numerical value and its corresponding unit.
 type StandardVolumeFlowDto struct {
     // Value is the numerical representation of the StandardVolumeFlow.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the StandardVolumeFlow, as defined in the StandardVolumeFlowUnits enumeration.
-	Unit  StandardVolumeFlowUnits
+	Unit  StandardVolumeFlowUnits `json:"unit"`
 }
 
 // StandardVolumeFlowDtoFactory groups methods for creating and serializing StandardVolumeFlowDto objects.
@@ -66,13 +66,7 @@ func (udf StandardVolumeFlowDtoFactory) FromJSON(data []byte) (*StandardVolumeFl
 //
 // Returns an error if the serialization fails.
 func (a StandardVolumeFlowDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

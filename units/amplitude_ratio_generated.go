@@ -30,9 +30,9 @@ const (
 // AmplitudeRatioDto represents a AmplitudeRatio measurement with a numerical value and its corresponding unit.
 type AmplitudeRatioDto struct {
     // Value is the numerical representation of the AmplitudeRatio.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AmplitudeRatio, as defined in the AmplitudeRatioUnits enumeration.
-	Unit  AmplitudeRatioUnits
+	Unit  AmplitudeRatioUnits `json:"unit"`
 }
 
 // AmplitudeRatioDtoFactory groups methods for creating and serializing AmplitudeRatioDto objects.
@@ -56,13 +56,7 @@ func (udf AmplitudeRatioDtoFactory) FromJSON(data []byte) (*AmplitudeRatioDto, e
 //
 // Returns an error if the serialization fails.
 func (a AmplitudeRatioDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

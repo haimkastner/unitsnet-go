@@ -30,9 +30,9 @@ const (
 // ElectricReactivePowerDto represents a ElectricReactivePower measurement with a numerical value and its corresponding unit.
 type ElectricReactivePowerDto struct {
     // Value is the numerical representation of the ElectricReactivePower.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricReactivePower, as defined in the ElectricReactivePowerUnits enumeration.
-	Unit  ElectricReactivePowerUnits
+	Unit  ElectricReactivePowerUnits `json:"unit"`
 }
 
 // ElectricReactivePowerDtoFactory groups methods for creating and serializing ElectricReactivePowerDto objects.
@@ -56,13 +56,7 @@ func (udf ElectricReactivePowerDtoFactory) FromJSON(data []byte) (*ElectricReact
 //
 // Returns an error if the serialization fails.
 func (a ElectricReactivePowerDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

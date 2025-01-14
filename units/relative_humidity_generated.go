@@ -24,9 +24,9 @@ const (
 // RelativeHumidityDto represents a RelativeHumidity measurement with a numerical value and its corresponding unit.
 type RelativeHumidityDto struct {
     // Value is the numerical representation of the RelativeHumidity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RelativeHumidity, as defined in the RelativeHumidityUnits enumeration.
-	Unit  RelativeHumidityUnits
+	Unit  RelativeHumidityUnits `json:"unit"`
 }
 
 // RelativeHumidityDtoFactory groups methods for creating and serializing RelativeHumidityDto objects.
@@ -50,13 +50,7 @@ func (udf RelativeHumidityDtoFactory) FromJSON(data []byte) (*RelativeHumidityDt
 //
 // Returns an error if the serialization fails.
 func (a RelativeHumidityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

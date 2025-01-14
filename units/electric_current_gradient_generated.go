@@ -36,9 +36,9 @@ const (
 // ElectricCurrentGradientDto represents a ElectricCurrentGradient measurement with a numerical value and its corresponding unit.
 type ElectricCurrentGradientDto struct {
     // Value is the numerical representation of the ElectricCurrentGradient.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricCurrentGradient, as defined in the ElectricCurrentGradientUnits enumeration.
-	Unit  ElectricCurrentGradientUnits
+	Unit  ElectricCurrentGradientUnits `json:"unit"`
 }
 
 // ElectricCurrentGradientDtoFactory groups methods for creating and serializing ElectricCurrentGradientDto objects.
@@ -62,13 +62,7 @@ func (udf ElectricCurrentGradientDtoFactory) FromJSON(data []byte) (*ElectricCur
 //
 // Returns an error if the serialization fails.
 func (a ElectricCurrentGradientDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

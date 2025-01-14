@@ -88,9 +88,9 @@ const (
 // SpeedDto represents a Speed measurement with a numerical value and its corresponding unit.
 type SpeedDto struct {
     // Value is the numerical representation of the Speed.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Speed, as defined in the SpeedUnits enumeration.
-	Unit  SpeedUnits
+	Unit  SpeedUnits `json:"unit"`
 }
 
 // SpeedDtoFactory groups methods for creating and serializing SpeedDto objects.
@@ -114,13 +114,7 @@ func (udf SpeedDtoFactory) FromJSON(data []byte) (*SpeedDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a SpeedDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

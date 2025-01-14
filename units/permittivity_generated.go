@@ -24,9 +24,9 @@ const (
 // PermittivityDto represents a Permittivity measurement with a numerical value and its corresponding unit.
 type PermittivityDto struct {
     // Value is the numerical representation of the Permittivity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Permittivity, as defined in the PermittivityUnits enumeration.
-	Unit  PermittivityUnits
+	Unit  PermittivityUnits `json:"unit"`
 }
 
 // PermittivityDtoFactory groups methods for creating and serializing PermittivityDto objects.
@@ -50,13 +50,7 @@ func (udf PermittivityDtoFactory) FromJSON(data []byte) (*PermittivityDto, error
 //
 // Returns an error if the serialization fails.
 func (a PermittivityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

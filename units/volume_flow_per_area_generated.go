@@ -26,9 +26,9 @@ const (
 // VolumeFlowPerAreaDto represents a VolumeFlowPerArea measurement with a numerical value and its corresponding unit.
 type VolumeFlowPerAreaDto struct {
     // Value is the numerical representation of the VolumeFlowPerArea.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VolumeFlowPerArea, as defined in the VolumeFlowPerAreaUnits enumeration.
-	Unit  VolumeFlowPerAreaUnits
+	Unit  VolumeFlowPerAreaUnits `json:"unit"`
 }
 
 // VolumeFlowPerAreaDtoFactory groups methods for creating and serializing VolumeFlowPerAreaDto objects.
@@ -52,13 +52,7 @@ func (udf VolumeFlowPerAreaDtoFactory) FromJSON(data []byte) (*VolumeFlowPerArea
 //
 // Returns an error if the serialization fails.
 func (a VolumeFlowPerAreaDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -36,9 +36,9 @@ const (
 // CapacitanceDto represents a Capacitance measurement with a numerical value and its corresponding unit.
 type CapacitanceDto struct {
     // Value is the numerical representation of the Capacitance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Capacitance, as defined in the CapacitanceUnits enumeration.
-	Unit  CapacitanceUnits
+	Unit  CapacitanceUnits `json:"unit"`
 }
 
 // CapacitanceDtoFactory groups methods for creating and serializing CapacitanceDto objects.
@@ -62,13 +62,7 @@ func (udf CapacitanceDtoFactory) FromJSON(data []byte) (*CapacitanceDto, error) 
 //
 // Returns an error if the serialization fails.
 func (a CapacitanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

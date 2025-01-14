@@ -48,9 +48,9 @@ const (
 // FrequencyDto represents a Frequency measurement with a numerical value and its corresponding unit.
 type FrequencyDto struct {
     // Value is the numerical representation of the Frequency.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Frequency, as defined in the FrequencyUnits enumeration.
-	Unit  FrequencyUnits
+	Unit  FrequencyUnits `json:"unit"`
 }
 
 // FrequencyDtoFactory groups methods for creating and serializing FrequencyDto objects.
@@ -74,13 +74,7 @@ func (udf FrequencyDtoFactory) FromJSON(data []byte) (*FrequencyDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a FrequencyDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

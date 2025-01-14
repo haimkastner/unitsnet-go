@@ -32,9 +32,9 @@ const (
 // HeatTransferCoefficientDto represents a HeatTransferCoefficient measurement with a numerical value and its corresponding unit.
 type HeatTransferCoefficientDto struct {
     // Value is the numerical representation of the HeatTransferCoefficient.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the HeatTransferCoefficient, as defined in the HeatTransferCoefficientUnits enumeration.
-	Unit  HeatTransferCoefficientUnits
+	Unit  HeatTransferCoefficientUnits `json:"unit"`
 }
 
 // HeatTransferCoefficientDtoFactory groups methods for creating and serializing HeatTransferCoefficientDto objects.
@@ -58,13 +58,7 @@ func (udf HeatTransferCoefficientDtoFactory) FromJSON(data []byte) (*HeatTransfe
 //
 // Returns an error if the serialization fails.
 func (a HeatTransferCoefficientDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

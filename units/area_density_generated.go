@@ -28,9 +28,9 @@ const (
 // AreaDensityDto represents a AreaDensity measurement with a numerical value and its corresponding unit.
 type AreaDensityDto struct {
     // Value is the numerical representation of the AreaDensity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AreaDensity, as defined in the AreaDensityUnits enumeration.
-	Unit  AreaDensityUnits
+	Unit  AreaDensityUnits `json:"unit"`
 }
 
 // AreaDensityDtoFactory groups methods for creating and serializing AreaDensityDto objects.
@@ -54,13 +54,7 @@ func (udf AreaDensityDtoFactory) FromJSON(data []byte) (*AreaDensityDto, error) 
 //
 // Returns an error if the serialization fails.
 func (a AreaDensityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

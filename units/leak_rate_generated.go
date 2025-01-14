@@ -28,9 +28,9 @@ const (
 // LeakRateDto represents a LeakRate measurement with a numerical value and its corresponding unit.
 type LeakRateDto struct {
     // Value is the numerical representation of the LeakRate.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the LeakRate, as defined in the LeakRateUnits enumeration.
-	Unit  LeakRateUnits
+	Unit  LeakRateUnits `json:"unit"`
 }
 
 // LeakRateDtoFactory groups methods for creating and serializing LeakRateDto objects.
@@ -54,13 +54,7 @@ func (udf LeakRateDtoFactory) FromJSON(data []byte) (*LeakRateDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a LeakRateDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

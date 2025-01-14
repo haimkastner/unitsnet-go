@@ -34,9 +34,9 @@ const (
 // MagneticFieldDto represents a MagneticField measurement with a numerical value and its corresponding unit.
 type MagneticFieldDto struct {
     // Value is the numerical representation of the MagneticField.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MagneticField, as defined in the MagneticFieldUnits enumeration.
-	Unit  MagneticFieldUnits
+	Unit  MagneticFieldUnits `json:"unit"`
 }
 
 // MagneticFieldDtoFactory groups methods for creating and serializing MagneticFieldDto objects.
@@ -60,13 +60,7 @@ func (udf MagneticFieldDtoFactory) FromJSON(data []byte) (*MagneticFieldDto, err
 //
 // Returns an error if the serialization fails.
 func (a MagneticFieldDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

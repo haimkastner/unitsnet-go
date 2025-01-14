@@ -38,9 +38,9 @@ const (
 // ElectricResistanceDto represents a ElectricResistance measurement with a numerical value and its corresponding unit.
 type ElectricResistanceDto struct {
     // Value is the numerical representation of the ElectricResistance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricResistance, as defined in the ElectricResistanceUnits enumeration.
-	Unit  ElectricResistanceUnits
+	Unit  ElectricResistanceUnits `json:"unit"`
 }
 
 // ElectricResistanceDtoFactory groups methods for creating and serializing ElectricResistanceDto objects.
@@ -64,13 +64,7 @@ func (udf ElectricResistanceDtoFactory) FromJSON(data []byte) (*ElectricResistan
 //
 // Returns an error if the serialization fails.
 func (a ElectricResistanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

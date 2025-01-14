@@ -30,9 +30,9 @@ const (
 // IlluminanceDto represents a Illuminance measurement with a numerical value and its corresponding unit.
 type IlluminanceDto struct {
     // Value is the numerical representation of the Illuminance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Illuminance, as defined in the IlluminanceUnits enumeration.
-	Unit  IlluminanceUnits
+	Unit  IlluminanceUnits `json:"unit"`
 }
 
 // IlluminanceDtoFactory groups methods for creating and serializing IlluminanceDto objects.
@@ -56,13 +56,7 @@ func (udf IlluminanceDtoFactory) FromJSON(data []byte) (*IlluminanceDto, error) 
 //
 // Returns an error if the serialization fails.
 func (a IlluminanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

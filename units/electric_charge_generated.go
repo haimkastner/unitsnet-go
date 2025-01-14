@@ -44,9 +44,9 @@ const (
 // ElectricChargeDto represents a ElectricCharge measurement with a numerical value and its corresponding unit.
 type ElectricChargeDto struct {
     // Value is the numerical representation of the ElectricCharge.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricCharge, as defined in the ElectricChargeUnits enumeration.
-	Unit  ElectricChargeUnits
+	Unit  ElectricChargeUnits `json:"unit"`
 }
 
 // ElectricChargeDtoFactory groups methods for creating and serializing ElectricChargeDto objects.
@@ -70,13 +70,7 @@ func (udf ElectricChargeDtoFactory) FromJSON(data []byte) (*ElectricChargeDto, e
 //
 // Returns an error if the serialization fails.
 func (a ElectricChargeDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

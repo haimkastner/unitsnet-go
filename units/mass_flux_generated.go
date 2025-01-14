@@ -46,9 +46,9 @@ const (
 // MassFluxDto represents a MassFlux measurement with a numerical value and its corresponding unit.
 type MassFluxDto struct {
     // Value is the numerical representation of the MassFlux.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MassFlux, as defined in the MassFluxUnits enumeration.
-	Unit  MassFluxUnits
+	Unit  MassFluxUnits `json:"unit"`
 }
 
 // MassFluxDtoFactory groups methods for creating and serializing MassFluxDto objects.
@@ -72,13 +72,7 @@ func (udf MassFluxDtoFactory) FromJSON(data []byte) (*MassFluxDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a MassFluxDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

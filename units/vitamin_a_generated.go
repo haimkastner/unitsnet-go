@@ -24,9 +24,9 @@ const (
 // VitaminADto represents a VitaminA measurement with a numerical value and its corresponding unit.
 type VitaminADto struct {
     // Value is the numerical representation of the VitaminA.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VitaminA, as defined in the VitaminAUnits enumeration.
-	Unit  VitaminAUnits
+	Unit  VitaminAUnits `json:"unit"`
 }
 
 // VitaminADtoFactory groups methods for creating and serializing VitaminADto objects.
@@ -50,13 +50,7 @@ func (udf VitaminADtoFactory) FromJSON(data []byte) (*VitaminADto, error) {
 //
 // Returns an error if the serialization fails.
 func (a VitaminADto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -24,9 +24,9 @@ const (
 // PermeabilityDto represents a Permeability measurement with a numerical value and its corresponding unit.
 type PermeabilityDto struct {
     // Value is the numerical representation of the Permeability.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Permeability, as defined in the PermeabilityUnits enumeration.
-	Unit  PermeabilityUnits
+	Unit  PermeabilityUnits `json:"unit"`
 }
 
 // PermeabilityDtoFactory groups methods for creating and serializing PermeabilityDto objects.
@@ -50,13 +50,7 @@ func (udf PermeabilityDtoFactory) FromJSON(data []byte) (*PermeabilityDto, error
 //
 // Returns an error if the serialization fails.
 func (a PermeabilityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

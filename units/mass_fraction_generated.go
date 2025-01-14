@@ -70,9 +70,9 @@ const (
 // MassFractionDto represents a MassFraction measurement with a numerical value and its corresponding unit.
 type MassFractionDto struct {
     // Value is the numerical representation of the MassFraction.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MassFraction, as defined in the MassFractionUnits enumeration.
-	Unit  MassFractionUnits
+	Unit  MassFractionUnits `json:"unit"`
 }
 
 // MassFractionDtoFactory groups methods for creating and serializing MassFractionDto objects.
@@ -96,13 +96,7 @@ func (udf MassFractionDtoFactory) FromJSON(data []byte) (*MassFractionDto, error
 //
 // Returns an error if the serialization fails.
 func (a MassFractionDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

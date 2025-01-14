@@ -50,9 +50,9 @@ const (
 // AccelerationDto represents a Acceleration measurement with a numerical value and its corresponding unit.
 type AccelerationDto struct {
     // Value is the numerical representation of the Acceleration.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Acceleration, as defined in the AccelerationUnits enumeration.
-	Unit  AccelerationUnits
+	Unit  AccelerationUnits `json:"unit"`
 }
 
 // AccelerationDtoFactory groups methods for creating and serializing AccelerationDto objects.
@@ -76,13 +76,7 @@ func (udf AccelerationDtoFactory) FromJSON(data []byte) (*AccelerationDto, error
 //
 // Returns an error if the serialization fails.
 func (a AccelerationDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

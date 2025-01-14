@@ -28,9 +28,9 @@ const (
 // ApparentEnergyDto represents a ApparentEnergy measurement with a numerical value and its corresponding unit.
 type ApparentEnergyDto struct {
     // Value is the numerical representation of the ApparentEnergy.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ApparentEnergy, as defined in the ApparentEnergyUnits enumeration.
-	Unit  ApparentEnergyUnits
+	Unit  ApparentEnergyUnits `json:"unit"`
 }
 
 // ApparentEnergyDtoFactory groups methods for creating and serializing ApparentEnergyDto objects.
@@ -54,13 +54,7 @@ func (udf ApparentEnergyDtoFactory) FromJSON(data []byte) (*ApparentEnergyDto, e
 //
 // Returns an error if the serialization fails.
 func (a ApparentEnergyDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

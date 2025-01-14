@@ -102,9 +102,9 @@ const (
 // EnergyDto represents a Energy measurement with a numerical value and its corresponding unit.
 type EnergyDto struct {
     // Value is the numerical representation of the Energy.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Energy, as defined in the EnergyUnits enumeration.
-	Unit  EnergyUnits
+	Unit  EnergyUnits `json:"unit"`
 }
 
 // EnergyDtoFactory groups methods for creating and serializing EnergyDto objects.
@@ -128,13 +128,7 @@ func (udf EnergyDtoFactory) FromJSON(data []byte) (*EnergyDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a EnergyDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

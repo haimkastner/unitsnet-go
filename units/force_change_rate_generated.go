@@ -52,9 +52,9 @@ const (
 // ForceChangeRateDto represents a ForceChangeRate measurement with a numerical value and its corresponding unit.
 type ForceChangeRateDto struct {
     // Value is the numerical representation of the ForceChangeRate.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ForceChangeRate, as defined in the ForceChangeRateUnits enumeration.
-	Unit  ForceChangeRateUnits
+	Unit  ForceChangeRateUnits `json:"unit"`
 }
 
 // ForceChangeRateDtoFactory groups methods for creating and serializing ForceChangeRateDto objects.
@@ -78,13 +78,7 @@ func (udf ForceChangeRateDtoFactory) FromJSON(data []byte) (*ForceChangeRateDto,
 //
 // Returns an error if the serialization fails.
 func (a ForceChangeRateDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

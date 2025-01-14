@@ -74,9 +74,9 @@ const (
 // InformationDto represents a Information measurement with a numerical value and its corresponding unit.
 type InformationDto struct {
     // Value is the numerical representation of the Information.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Information, as defined in the InformationUnits enumeration.
-	Unit  InformationUnits
+	Unit  InformationUnits `json:"unit"`
 }
 
 // InformationDtoFactory groups methods for creating and serializing InformationDto objects.
@@ -100,13 +100,7 @@ func (udf InformationDtoFactory) FromJSON(data []byte) (*InformationDto, error) 
 //
 // Returns an error if the serialization fails.
 func (a InformationDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

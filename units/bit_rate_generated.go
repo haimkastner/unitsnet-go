@@ -74,9 +74,9 @@ const (
 // BitRateDto represents a BitRate measurement with a numerical value and its corresponding unit.
 type BitRateDto struct {
     // Value is the numerical representation of the BitRate.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the BitRate, as defined in the BitRateUnits enumeration.
-	Unit  BitRateUnits
+	Unit  BitRateUnits `json:"unit"`
 }
 
 // BitRateDtoFactory groups methods for creating and serializing BitRateDto objects.
@@ -100,13 +100,7 @@ func (udf BitRateDtoFactory) FromJSON(data []byte) (*BitRateDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a BitRateDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -34,9 +34,9 @@ const (
 // ElectricPotentialDto represents a ElectricPotential measurement with a numerical value and its corresponding unit.
 type ElectricPotentialDto struct {
     // Value is the numerical representation of the ElectricPotential.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricPotential, as defined in the ElectricPotentialUnits enumeration.
-	Unit  ElectricPotentialUnits
+	Unit  ElectricPotentialUnits `json:"unit"`
 }
 
 // ElectricPotentialDtoFactory groups methods for creating and serializing ElectricPotentialDto objects.
@@ -60,13 +60,7 @@ func (udf ElectricPotentialDtoFactory) FromJSON(data []byte) (*ElectricPotential
 //
 // Returns an error if the serialization fails.
 func (a ElectricPotentialDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -40,9 +40,9 @@ const (
 // VolumePerLengthDto represents a VolumePerLength measurement with a numerical value and its corresponding unit.
 type VolumePerLengthDto struct {
     // Value is the numerical representation of the VolumePerLength.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VolumePerLength, as defined in the VolumePerLengthUnits enumeration.
-	Unit  VolumePerLengthUnits
+	Unit  VolumePerLengthUnits `json:"unit"`
 }
 
 // VolumePerLengthDtoFactory groups methods for creating and serializing VolumePerLengthDto objects.
@@ -66,13 +66,7 @@ func (udf VolumePerLengthDtoFactory) FromJSON(data []byte) (*VolumePerLengthDto,
 //
 // Returns an error if the serialization fails.
 func (a VolumePerLengthDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

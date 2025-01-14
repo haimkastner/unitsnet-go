@@ -58,9 +58,9 @@ const (
 // LinearDensityDto represents a LinearDensity measurement with a numerical value and its corresponding unit.
 type LinearDensityDto struct {
     // Value is the numerical representation of the LinearDensity.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the LinearDensity, as defined in the LinearDensityUnits enumeration.
-	Unit  LinearDensityUnits
+	Unit  LinearDensityUnits `json:"unit"`
 }
 
 // LinearDensityDtoFactory groups methods for creating and serializing LinearDensityDto objects.
@@ -84,13 +84,7 @@ func (udf LinearDensityDtoFactory) FromJSON(data []byte) (*LinearDensityDto, err
 //
 // Returns an error if the serialization fails.
 func (a LinearDensityDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

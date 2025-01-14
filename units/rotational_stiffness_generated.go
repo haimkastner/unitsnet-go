@@ -88,9 +88,9 @@ const (
 // RotationalStiffnessDto represents a RotationalStiffness measurement with a numerical value and its corresponding unit.
 type RotationalStiffnessDto struct {
     // Value is the numerical representation of the RotationalStiffness.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RotationalStiffness, as defined in the RotationalStiffnessUnits enumeration.
-	Unit  RotationalStiffnessUnits
+	Unit  RotationalStiffnessUnits `json:"unit"`
 }
 
 // RotationalStiffnessDtoFactory groups methods for creating and serializing RotationalStiffnessDto objects.
@@ -114,13 +114,7 @@ func (udf RotationalStiffnessDtoFactory) FromJSON(data []byte) (*RotationalStiff
 //
 // Returns an error if the serialization fails.
 func (a RotationalStiffnessDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

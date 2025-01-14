@@ -54,9 +54,9 @@ const (
 // ElectricAdmittanceDto represents a ElectricAdmittance measurement with a numerical value and its corresponding unit.
 type ElectricAdmittanceDto struct {
     // Value is the numerical representation of the ElectricAdmittance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricAdmittance, as defined in the ElectricAdmittanceUnits enumeration.
-	Unit  ElectricAdmittanceUnits
+	Unit  ElectricAdmittanceUnits `json:"unit"`
 }
 
 // ElectricAdmittanceDtoFactory groups methods for creating and serializing ElectricAdmittanceDto objects.
@@ -80,13 +80,7 @@ func (udf ElectricAdmittanceDtoFactory) FromJSON(data []byte) (*ElectricAdmittan
 //
 // Returns an error if the serialization fails.
 func (a ElectricAdmittanceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

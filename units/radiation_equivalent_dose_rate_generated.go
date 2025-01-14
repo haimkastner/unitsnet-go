@@ -42,9 +42,9 @@ const (
 // RadiationEquivalentDoseRateDto represents a RadiationEquivalentDoseRate measurement with a numerical value and its corresponding unit.
 type RadiationEquivalentDoseRateDto struct {
     // Value is the numerical representation of the RadiationEquivalentDoseRate.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RadiationEquivalentDoseRate, as defined in the RadiationEquivalentDoseRateUnits enumeration.
-	Unit  RadiationEquivalentDoseRateUnits
+	Unit  RadiationEquivalentDoseRateUnits `json:"unit"`
 }
 
 // RadiationEquivalentDoseRateDtoFactory groups methods for creating and serializing RadiationEquivalentDoseRateDto objects.
@@ -68,13 +68,7 @@ func (udf RadiationEquivalentDoseRateDtoFactory) FromJSON(data []byte) (*Radiati
 //
 // Returns an error if the serialization fails.
 func (a RadiationEquivalentDoseRateDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

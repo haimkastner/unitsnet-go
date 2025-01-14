@@ -34,9 +34,9 @@ const (
 // RatioDto represents a Ratio measurement with a numerical value and its corresponding unit.
 type RatioDto struct {
     // Value is the numerical representation of the Ratio.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Ratio, as defined in the RatioUnits enumeration.
-	Unit  RatioUnits
+	Unit  RatioUnits `json:"unit"`
 }
 
 // RatioDtoFactory groups methods for creating and serializing RatioDto objects.
@@ -60,13 +60,7 @@ func (udf RatioDtoFactory) FromJSON(data []byte) (*RatioDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a RatioDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

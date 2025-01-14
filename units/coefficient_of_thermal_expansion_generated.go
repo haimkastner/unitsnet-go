@@ -34,9 +34,9 @@ const (
 // CoefficientOfThermalExpansionDto represents a CoefficientOfThermalExpansion measurement with a numerical value and its corresponding unit.
 type CoefficientOfThermalExpansionDto struct {
     // Value is the numerical representation of the CoefficientOfThermalExpansion.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the CoefficientOfThermalExpansion, as defined in the CoefficientOfThermalExpansionUnits enumeration.
-	Unit  CoefficientOfThermalExpansionUnits
+	Unit  CoefficientOfThermalExpansionUnits `json:"unit"`
 }
 
 // CoefficientOfThermalExpansionDtoFactory groups methods for creating and serializing CoefficientOfThermalExpansionDto objects.
@@ -60,13 +60,7 @@ func (udf CoefficientOfThermalExpansionDtoFactory) FromJSON(data []byte) (*Coeff
 //
 // Returns an error if the serialization fails.
 func (a CoefficientOfThermalExpansionDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

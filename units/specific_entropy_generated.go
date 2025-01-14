@@ -40,9 +40,9 @@ const (
 // SpecificEntropyDto represents a SpecificEntropy measurement with a numerical value and its corresponding unit.
 type SpecificEntropyDto struct {
     // Value is the numerical representation of the SpecificEntropy.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificEntropy, as defined in the SpecificEntropyUnits enumeration.
-	Unit  SpecificEntropyUnits
+	Unit  SpecificEntropyUnits `json:"unit"`
 }
 
 // SpecificEntropyDtoFactory groups methods for creating and serializing SpecificEntropyDto objects.
@@ -66,13 +66,7 @@ func (udf SpecificEntropyDtoFactory) FromJSON(data []byte) (*SpecificEntropyDto,
 //
 // Returns an error if the serialization fails.
 func (a SpecificEntropyDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

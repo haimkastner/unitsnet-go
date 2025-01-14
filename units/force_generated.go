@@ -52,9 +52,9 @@ const (
 // ForceDto represents a Force measurement with a numerical value and its corresponding unit.
 type ForceDto struct {
     // Value is the numerical representation of the Force.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Force, as defined in the ForceUnits enumeration.
-	Unit  ForceUnits
+	Unit  ForceUnits `json:"unit"`
 }
 
 // ForceDtoFactory groups methods for creating and serializing ForceDto objects.
@@ -78,13 +78,7 @@ func (udf ForceDtoFactory) FromJSON(data []byte) (*ForceDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a ForceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

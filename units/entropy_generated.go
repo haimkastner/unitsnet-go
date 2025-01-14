@@ -36,9 +36,9 @@ const (
 // EntropyDto represents a Entropy measurement with a numerical value and its corresponding unit.
 type EntropyDto struct {
     // Value is the numerical representation of the Entropy.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Entropy, as defined in the EntropyUnits enumeration.
-	Unit  EntropyUnits
+	Unit  EntropyUnits `json:"unit"`
 }
 
 // EntropyDtoFactory groups methods for creating and serializing EntropyDto objects.
@@ -62,13 +62,7 @@ func (udf EntropyDtoFactory) FromJSON(data []byte) (*EntropyDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a EntropyDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 

@@ -50,9 +50,9 @@ const (
 // IrradianceDto represents a Irradiance measurement with a numerical value and its corresponding unit.
 type IrradianceDto struct {
     // Value is the numerical representation of the Irradiance.
-	Value float64
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Irradiance, as defined in the IrradianceUnits enumeration.
-	Unit  IrradianceUnits
+	Unit  IrradianceUnits `json:"unit"`
 }
 
 // IrradianceDtoFactory groups methods for creating and serializing IrradianceDto objects.
@@ -76,13 +76,7 @@ func (udf IrradianceDtoFactory) FromJSON(data []byte) (*IrradianceDto, error) {
 //
 // Returns an error if the serialization fails.
 func (a IrradianceDto) ToJSON() ([]byte, error) {
-	return json.Marshal(struct {
-		Value float64 `json:"value"`
-		Unit  string  `json:"unit"`
-	}{
-		Value: a.Value,
-		Unit:  string(a.Unit),
-	})
+	return json.Marshal(a)
 }
 
 
