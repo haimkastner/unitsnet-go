@@ -415,23 +415,23 @@ func (a *SpecificEntropy) ToString(unit SpecificEntropyUnits, fractionalDigits i
 func (a *SpecificEntropy) getUnitAbbreviation(unit SpecificEntropyUnits) string {
 	switch unit { 
 	case SpecificEntropyJoulePerKilogramKelvin:
-		return "J/kg.K" 
+		return "J/kg·K" 
 	case SpecificEntropyJoulePerKilogramDegreeCelsius:
-		return "J/kg.C" 
+		return "J/kg·°C" 
 	case SpecificEntropyCaloriePerGramKelvin:
-		return "cal/g.K" 
+		return "cal/g·K" 
 	case SpecificEntropyBtuPerPoundFahrenheit:
 		return "BTU/lb·°F" 
 	case SpecificEntropyKilojoulePerKilogramKelvin:
-		return "kJ/kg.K" 
+		return "kJ/kg·K" 
 	case SpecificEntropyMegajoulePerKilogramKelvin:
-		return "MJ/kg.K" 
+		return "MJ/kg·K" 
 	case SpecificEntropyKilojoulePerKilogramDegreeCelsius:
-		return "kJ/kg.C" 
+		return "kJ/kg·°C" 
 	case SpecificEntropyMegajoulePerKilogramDegreeCelsius:
-		return "MJ/kg.C" 
+		return "MJ/kg·°C" 
 	case SpecificEntropyKilocaloriePerGramKelvin:
-		return "kcal/g.K" 
+		return "kcal/g·K" 
 	default:
 		return ""
 	}

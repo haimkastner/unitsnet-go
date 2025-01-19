@@ -259,11 +259,11 @@ func (a *MolarEntropy) ToString(unit MolarEntropyUnits, fractionalDigits int) st
 func (a *MolarEntropy) getUnitAbbreviation(unit MolarEntropyUnits) string {
 	switch unit { 
 	case MolarEntropyJoulePerMoleKelvin:
-		return "J/(mol*K)" 
+		return "J/(mol·K)" 
 	case MolarEntropyKilojoulePerMoleKelvin:
-		return "kJ/(mol*K)" 
+		return "kJ/(mol·K)" 
 	case MolarEntropyMegajoulePerMoleKelvin:
-		return "MJ/(mol*K)" 
+		return "MJ/(mol·K)" 
 	default:
 		return ""
 	}

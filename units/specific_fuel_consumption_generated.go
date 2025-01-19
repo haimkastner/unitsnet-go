@@ -287,11 +287,11 @@ func (a *SpecificFuelConsumption) getUnitAbbreviation(unit SpecificFuelConsumpti
 	case SpecificFuelConsumptionPoundMassPerPoundForceHour:
 		return "lb/(lbf·h)" 
 	case SpecificFuelConsumptionKilogramPerKilogramForceHour:
-		return "kg/(kgf�h)" 
+		return "kg/(kgf·h)" 
 	case SpecificFuelConsumptionGramPerKiloNewtonSecond:
-		return "g/(kN�s)" 
+		return "g/(kN·s)" 
 	case SpecificFuelConsumptionKilogramPerKiloNewtonSecond:
-		return "kg/(kN�s)" 
+		return "kg/(kN·s)" 
 	default:
 		return ""
 	}
