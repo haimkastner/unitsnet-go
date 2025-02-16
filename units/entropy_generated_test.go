@@ -876,7 +876,7 @@ func TestGetEntropyAbbreviation(t *testing.T) {
         {
             name: "JoulePerDegreeCelsius abbreviation",
             unit: units.EntropyJoulePerDegreeCelsius,
-            want: "J/C",
+            want: "J/°C",
         },
         {
             name: "KilojoulePerKelvin abbreviation",
@@ -896,7 +896,7 @@ func TestGetEntropyAbbreviation(t *testing.T) {
         {
             name: "KilojoulePerDegreeCelsius abbreviation",
             unit: units.EntropyKilojoulePerDegreeCelsius,
-            want: "kJ/C",
+            want: "kJ/°C",
         },
         {
             name: "invalid unit",

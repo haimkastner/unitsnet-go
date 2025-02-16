@@ -542,17 +542,17 @@ func TestGetMolarEntropyAbbreviation(t *testing.T) {
         {
             name: "JoulePerMoleKelvin abbreviation",
             unit: units.MolarEntropyJoulePerMoleKelvin,
-            want: "J/(mol*K)",
+            want: "J/(mol·K)",
         },
         {
             name: "KilojoulePerMoleKelvin abbreviation",
             unit: units.MolarEntropyKilojoulePerMoleKelvin,
-            want: "kJ/(mol*K)",
+            want: "kJ/(mol·K)",
         },
         {
             name: "MegajoulePerMoleKelvin abbreviation",
             unit: units.MolarEntropyMegajoulePerMoleKelvin,
-            want: "MJ/(mol*K)",
+            want: "MJ/(mol·K)",
         },
         {
             name: "invalid unit",

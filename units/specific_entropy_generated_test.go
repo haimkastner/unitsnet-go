@@ -1028,17 +1028,17 @@ func TestGetSpecificEntropyAbbreviation(t *testing.T) {
         {
             name: "JoulePerKilogramKelvin abbreviation",
             unit: units.SpecificEntropyJoulePerKilogramKelvin,
-            want: "J/kg.K",
+            want: "J/kg·K",
         },
         {
             name: "JoulePerKilogramDegreeCelsius abbreviation",
             unit: units.SpecificEntropyJoulePerKilogramDegreeCelsius,
-            want: "J/kg.C",
+            want: "J/kg·°C",
         },
         {
             name: "CaloriePerGramKelvin abbreviation",
             unit: units.SpecificEntropyCaloriePerGramKelvin,
-            want: "cal/g.K",
+            want: "cal/g·K",
         },
         {
             name: "BtuPerPoundFahrenheit abbreviation",
@@ -1048,27 +1048,27 @@ func TestGetSpecificEntropyAbbreviation(t *testing.T) {
         {
             name: "KilojoulePerKilogramKelvin abbreviation",
             unit: units.SpecificEntropyKilojoulePerKilogramKelvin,
-            want: "kJ/kg.K",
+            want: "kJ/kg·K",
         },
         {
             name: "MegajoulePerKilogramKelvin abbreviation",
             unit: units.SpecificEntropyMegajoulePerKilogramKelvin,
-            want: "MJ/kg.K",
+            want: "MJ/kg·K",
         },
         {
             name: "KilojoulePerKilogramDegreeCelsius abbreviation",
             unit: units.SpecificEntropyKilojoulePerKilogramDegreeCelsius,
-            want: "kJ/kg.C",
+            want: "kJ/kg·°C",
         },
         {
             name: "MegajoulePerKilogramDegreeCelsius abbreviation",
             unit: units.SpecificEntropyMegajoulePerKilogramDegreeCelsius,
-            want: "MJ/kg.C",
+            want: "MJ/kg·°C",
         },
         {
             name: "KilocaloriePerGramKelvin abbreviation",
             unit: units.SpecificEntropyKilocaloriePerGramKelvin,
-            want: "kcal/g.K",
+            want: "kcal/g·K",
         },
         {
             name: "invalid unit",

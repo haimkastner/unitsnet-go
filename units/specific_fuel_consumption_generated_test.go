@@ -628,17 +628,17 @@ func TestGetSpecificFuelConsumptionAbbreviation(t *testing.T) {
         {
             name: "KilogramPerKilogramForceHour abbreviation",
             unit: units.SpecificFuelConsumptionKilogramPerKilogramForceHour,
-            want: "kg/(kgf�h)",
+            want: "kg/(kgf·h)",
         },
         {
             name: "GramPerKiloNewtonSecond abbreviation",
             unit: units.SpecificFuelConsumptionGramPerKiloNewtonSecond,
-            want: "g/(kN�s)",
+            want: "g/(kN·s)",
         },
         {
             name: "KilogramPerKiloNewtonSecond abbreviation",
             unit: units.SpecificFuelConsumptionKilogramPerKiloNewtonSecond,
-            want: "kg/(kN�s)",
+            want: "kg/(kN·s)",
         },
         {
             name: "invalid unit",

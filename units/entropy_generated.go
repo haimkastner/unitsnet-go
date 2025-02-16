@@ -451,7 +451,7 @@ func GetEntropyAbbreviation(unit EntropyUnits) string {
 	case EntropyCaloriePerKelvin:
 		return "cal/K" 
 	case EntropyJoulePerDegreeCelsius:
-		return "J/C" 
+		return "J/°C" 
 	case EntropyKilojoulePerKelvin:
 		return "kJ/K" 
 	case EntropyMegajoulePerKelvin:
@@ -459,7 +459,7 @@ func GetEntropyAbbreviation(unit EntropyUnits) string {
 	case EntropyKilocaloriePerKelvin:
 		return "kcal/K" 
 	case EntropyKilojoulePerDegreeCelsius:
-		return "kJ/C" 
+		return "kJ/°C" 
 	default:
 		return ""
 	}
