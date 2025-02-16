@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DegreesCelsiusPerSecond.
 		// No expected conversion value provided for DegreesCelsiusPerSecond, verifying result is not NaN.
 		result := a.DegreesCelsiusPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesCelsiusPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesCelsiusPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DegreesCelsiusPerMinute.
 		// No expected conversion value provided for DegreesCelsiusPerMinute, verifying result is not NaN.
 		result := a.DegreesCelsiusPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesCelsiusPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesCelsiusPerMinute returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DegreesKelvinPerMinute.
 		// No expected conversion value provided for DegreesKelvinPerMinute, verifying result is not NaN.
 		result := a.DegreesKelvinPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesKelvinPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesKelvinPerMinute returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DegreesFahrenheitPerMinute.
 		// No expected conversion value provided for DegreesFahrenheitPerMinute, verifying result is not NaN.
 		result := a.DegreesFahrenheitPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesFahrenheitPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesFahrenheitPerMinute returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DegreesFahrenheitPerSecond.
 		// No expected conversion value provided for DegreesFahrenheitPerSecond, verifying result is not NaN.
 		result := a.DegreesFahrenheitPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesFahrenheitPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesFahrenheitPerSecond returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DegreesKelvinPerSecond.
 		// No expected conversion value provided for DegreesKelvinPerSecond, verifying result is not NaN.
 		result := a.DegreesKelvinPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesKelvinPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesKelvinPerSecond returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DegreesCelsiusPerHour.
 		// No expected conversion value provided for DegreesCelsiusPerHour, verifying result is not NaN.
 		result := a.DegreesCelsiusPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesCelsiusPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesCelsiusPerHour returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DegreesKelvinPerHour.
 		// No expected conversion value provided for DegreesKelvinPerHour, verifying result is not NaN.
 		result := a.DegreesKelvinPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesKelvinPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesKelvinPerHour returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DegreesFahrenheitPerHour.
 		// No expected conversion value provided for DegreesFahrenheitPerHour, verifying result is not NaN.
 		result := a.DegreesFahrenheitPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesFahrenheitPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesFahrenheitPerHour returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to NanodegreesCelsiusPerSecond.
 		// No expected conversion value provided for NanodegreesCelsiusPerSecond, verifying result is not NaN.
 		result := a.NanodegreesCelsiusPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.NanodegreesCelsiusPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanodegreesCelsiusPerSecond returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to MicrodegreesCelsiusPerSecond.
 		// No expected conversion value provided for MicrodegreesCelsiusPerSecond, verifying result is not NaN.
 		result := a.MicrodegreesCelsiusPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrodegreesCelsiusPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrodegreesCelsiusPerSecond returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to MillidegreesCelsiusPerSecond.
 		// No expected conversion value provided for MillidegreesCelsiusPerSecond, verifying result is not NaN.
 		result := a.MillidegreesCelsiusPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MillidegreesCelsiusPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillidegreesCelsiusPerSecond returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to CentidegreesCelsiusPerSecond.
 		// No expected conversion value provided for CentidegreesCelsiusPerSecond, verifying result is not NaN.
 		result := a.CentidegreesCelsiusPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CentidegreesCelsiusPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentidegreesCelsiusPerSecond returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DecidegreesCelsiusPerSecond.
 		// No expected conversion value provided for DecidegreesCelsiusPerSecond, verifying result is not NaN.
 		result := a.DecidegreesCelsiusPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DecidegreesCelsiusPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecidegreesCelsiusPerSecond returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to DecadegreesCelsiusPerSecond.
 		// No expected conversion value provided for DecadegreesCelsiusPerSecond, verifying result is not NaN.
 		result := a.DecadegreesCelsiusPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DecadegreesCelsiusPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecadegreesCelsiusPerSecond returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to HectodegreesCelsiusPerSecond.
 		// No expected conversion value provided for HectodegreesCelsiusPerSecond, verifying result is not NaN.
 		result := a.HectodegreesCelsiusPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.HectodegreesCelsiusPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectodegreesCelsiusPerSecond returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestTemperatureChangeRateConversions(t *testing.T) {
 		// Test conversion to KilodegreesCelsiusPerSecond.
 		// No expected conversion value provided for KilodegreesCelsiusPerSecond, verifying result is not NaN.
 		result := a.KilodegreesCelsiusPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilodegreesCelsiusPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilodegreesCelsiusPerSecond returned NaN")
 		}
 	}
@@ -1646,4 +1664,175 @@ func TestTemperatureChangeRate_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetTemperatureChangeRateAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.TemperatureChangeRateUnits
+        want string
+    }{
+        {
+            name: "DegreeCelsiusPerSecond abbreviation",
+            unit: units.TemperatureChangeRateDegreeCelsiusPerSecond,
+            want: "°C/s",
+        },
+        {
+            name: "DegreeCelsiusPerMinute abbreviation",
+            unit: units.TemperatureChangeRateDegreeCelsiusPerMinute,
+            want: "°C/min",
+        },
+        {
+            name: "DegreeKelvinPerMinute abbreviation",
+            unit: units.TemperatureChangeRateDegreeKelvinPerMinute,
+            want: "K/min",
+        },
+        {
+            name: "DegreeFahrenheitPerMinute abbreviation",
+            unit: units.TemperatureChangeRateDegreeFahrenheitPerMinute,
+            want: "°F/min",
+        },
+        {
+            name: "DegreeFahrenheitPerSecond abbreviation",
+            unit: units.TemperatureChangeRateDegreeFahrenheitPerSecond,
+            want: "°F/s",
+        },
+        {
+            name: "DegreeKelvinPerSecond abbreviation",
+            unit: units.TemperatureChangeRateDegreeKelvinPerSecond,
+            want: "K/s",
+        },
+        {
+            name: "DegreeCelsiusPerHour abbreviation",
+            unit: units.TemperatureChangeRateDegreeCelsiusPerHour,
+            want: "°C/h",
+        },
+        {
+            name: "DegreeKelvinPerHour abbreviation",
+            unit: units.TemperatureChangeRateDegreeKelvinPerHour,
+            want: "K/h",
+        },
+        {
+            name: "DegreeFahrenheitPerHour abbreviation",
+            unit: units.TemperatureChangeRateDegreeFahrenheitPerHour,
+            want: "°F/h",
+        },
+        {
+            name: "NanodegreeCelsiusPerSecond abbreviation",
+            unit: units.TemperatureChangeRateNanodegreeCelsiusPerSecond,
+            want: "n°C/s",
+        },
+        {
+            name: "MicrodegreeCelsiusPerSecond abbreviation",
+            unit: units.TemperatureChangeRateMicrodegreeCelsiusPerSecond,
+            want: "μ°C/s",
+        },
+        {
+            name: "MillidegreeCelsiusPerSecond abbreviation",
+            unit: units.TemperatureChangeRateMillidegreeCelsiusPerSecond,
+            want: "m°C/s",
+        },
+        {
+            name: "CentidegreeCelsiusPerSecond abbreviation",
+            unit: units.TemperatureChangeRateCentidegreeCelsiusPerSecond,
+            want: "c°C/s",
+        },
+        {
+            name: "DecidegreeCelsiusPerSecond abbreviation",
+            unit: units.TemperatureChangeRateDecidegreeCelsiusPerSecond,
+            want: "d°C/s",
+        },
+        {
+            name: "DecadegreeCelsiusPerSecond abbreviation",
+            unit: units.TemperatureChangeRateDecadegreeCelsiusPerSecond,
+            want: "da°C/s",
+        },
+        {
+            name: "HectodegreeCelsiusPerSecond abbreviation",
+            unit: units.TemperatureChangeRateHectodegreeCelsiusPerSecond,
+            want: "h°C/s",
+        },
+        {
+            name: "KilodegreeCelsiusPerSecond abbreviation",
+            unit: units.TemperatureChangeRateKilodegreeCelsiusPerSecond,
+            want: "k°C/s",
+        },
+        {
+            name: "invalid unit",
+            unit: units.TemperatureChangeRateUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetTemperatureChangeRateAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetTemperatureChangeRateAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestTemperatureChangeRate_String(t *testing.T) {
+    factory := units.TemperatureChangeRateFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateTemperatureChangeRate(tt.value, units.TemperatureChangeRateDegreeCelsiusPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("TemperatureChangeRate.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

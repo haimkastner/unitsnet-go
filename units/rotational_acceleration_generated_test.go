@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestRotationalAccelerationConversions(t *testing.T) {
 		// Test conversion to RadiansPerSecondSquared.
 		// No expected conversion value provided for RadiansPerSecondSquared, verifying result is not NaN.
 		result := a.RadiansPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.RadiansPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to RadiansPerSecondSquared returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestRotationalAccelerationConversions(t *testing.T) {
 		// Test conversion to DegreesPerSecondSquared.
 		// No expected conversion value provided for DegreesPerSecondSquared, verifying result is not NaN.
 		result := a.DegreesPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesPerSecondSquared returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestRotationalAccelerationConversions(t *testing.T) {
 		// Test conversion to RevolutionsPerMinutePerSecond.
 		// No expected conversion value provided for RevolutionsPerMinutePerSecond, verifying result is not NaN.
 		result := a.RevolutionsPerMinutePerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.RevolutionsPerMinutePerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to RevolutionsPerMinutePerSecond returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestRotationalAccelerationConversions(t *testing.T) {
 		// Test conversion to RevolutionsPerSecondSquared.
 		// No expected conversion value provided for RevolutionsPerSecondSquared, verifying result is not NaN.
 		result := a.RevolutionsPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.RevolutionsPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to RevolutionsPerSecondSquared returned NaN")
 		}
 	}
@@ -606,4 +611,110 @@ func TestRotationalAcceleration_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetRotationalAccelerationAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.RotationalAccelerationUnits
+        want string
+    }{
+        {
+            name: "RadianPerSecondSquared abbreviation",
+            unit: units.RotationalAccelerationRadianPerSecondSquared,
+            want: "rad/s²",
+        },
+        {
+            name: "DegreePerSecondSquared abbreviation",
+            unit: units.RotationalAccelerationDegreePerSecondSquared,
+            want: "°/s²",
+        },
+        {
+            name: "RevolutionPerMinutePerSecond abbreviation",
+            unit: units.RotationalAccelerationRevolutionPerMinutePerSecond,
+            want: "rpm/s",
+        },
+        {
+            name: "RevolutionPerSecondSquared abbreviation",
+            unit: units.RotationalAccelerationRevolutionPerSecondSquared,
+            want: "r/s²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.RotationalAccelerationUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetRotationalAccelerationAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetRotationalAccelerationAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestRotationalAcceleration_String(t *testing.T) {
+    factory := units.RotationalAccelerationFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateRotationalAcceleration(tt.value, units.RotationalAccelerationRadianPerSecondSquared)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("RotationalAcceleration.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

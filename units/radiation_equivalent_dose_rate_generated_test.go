@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to SievertsPerHour.
 		// No expected conversion value provided for SievertsPerHour, verifying result is not NaN.
 		result := a.SievertsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.SievertsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SievertsPerHour returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to SievertsPerSecond.
 		// No expected conversion value provided for SievertsPerSecond, verifying result is not NaN.
 		result := a.SievertsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.SievertsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SievertsPerSecond returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to RoentgensEquivalentManPerHour.
 		// No expected conversion value provided for RoentgensEquivalentManPerHour, verifying result is not NaN.
 		result := a.RoentgensEquivalentManPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.RoentgensEquivalentManPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to RoentgensEquivalentManPerHour returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to NanosievertsPerHour.
 		// No expected conversion value provided for NanosievertsPerHour, verifying result is not NaN.
 		result := a.NanosievertsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.NanosievertsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanosievertsPerHour returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to MicrosievertsPerHour.
 		// No expected conversion value provided for MicrosievertsPerHour, verifying result is not NaN.
 		result := a.MicrosievertsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrosievertsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrosievertsPerHour returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to MillisievertsPerHour.
 		// No expected conversion value provided for MillisievertsPerHour, verifying result is not NaN.
 		result := a.MillisievertsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MillisievertsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillisievertsPerHour returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to NanosievertsPerSecond.
 		// No expected conversion value provided for NanosievertsPerSecond, verifying result is not NaN.
 		result := a.NanosievertsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.NanosievertsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanosievertsPerSecond returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to MicrosievertsPerSecond.
 		// No expected conversion value provided for MicrosievertsPerSecond, verifying result is not NaN.
 		result := a.MicrosievertsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrosievertsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrosievertsPerSecond returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to MillisievertsPerSecond.
 		// No expected conversion value provided for MillisievertsPerSecond, verifying result is not NaN.
 		result := a.MillisievertsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MillisievertsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillisievertsPerSecond returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestRadiationEquivalentDoseRateConversions(t *testing.T) {
 		// Test conversion to MilliroentgensEquivalentManPerHour.
 		// No expected conversion value provided for MilliroentgensEquivalentManPerHour, verifying result is not NaN.
 		result := a.MilliroentgensEquivalentManPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliroentgensEquivalentManPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliroentgensEquivalentManPerHour returned NaN")
 		}
 	}
@@ -1086,4 +1097,140 @@ func TestRadiationEquivalentDoseRate_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetRadiationEquivalentDoseRateAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.RadiationEquivalentDoseRateUnits
+        want string
+    }{
+        {
+            name: "SievertPerHour abbreviation",
+            unit: units.RadiationEquivalentDoseRateSievertPerHour,
+            want: "Sv/h",
+        },
+        {
+            name: "SievertPerSecond abbreviation",
+            unit: units.RadiationEquivalentDoseRateSievertPerSecond,
+            want: "Sv/s",
+        },
+        {
+            name: "RoentgenEquivalentManPerHour abbreviation",
+            unit: units.RadiationEquivalentDoseRateRoentgenEquivalentManPerHour,
+            want: "rem/h",
+        },
+        {
+            name: "NanosievertPerHour abbreviation",
+            unit: units.RadiationEquivalentDoseRateNanosievertPerHour,
+            want: "nSv/h",
+        },
+        {
+            name: "MicrosievertPerHour abbreviation",
+            unit: units.RadiationEquivalentDoseRateMicrosievertPerHour,
+            want: "μSv/h",
+        },
+        {
+            name: "MillisievertPerHour abbreviation",
+            unit: units.RadiationEquivalentDoseRateMillisievertPerHour,
+            want: "mSv/h",
+        },
+        {
+            name: "NanosievertPerSecond abbreviation",
+            unit: units.RadiationEquivalentDoseRateNanosievertPerSecond,
+            want: "nSv/s",
+        },
+        {
+            name: "MicrosievertPerSecond abbreviation",
+            unit: units.RadiationEquivalentDoseRateMicrosievertPerSecond,
+            want: "μSv/s",
+        },
+        {
+            name: "MillisievertPerSecond abbreviation",
+            unit: units.RadiationEquivalentDoseRateMillisievertPerSecond,
+            want: "mSv/s",
+        },
+        {
+            name: "MilliroentgenEquivalentManPerHour abbreviation",
+            unit: units.RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour,
+            want: "mrem/h",
+        },
+        {
+            name: "invalid unit",
+            unit: units.RadiationEquivalentDoseRateUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetRadiationEquivalentDoseRateAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetRadiationEquivalentDoseRateAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestRadiationEquivalentDoseRate_String(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateRadiationEquivalentDoseRate(tt.value, units.RadiationEquivalentDoseRateSievertPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("RadiationEquivalentDoseRate.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

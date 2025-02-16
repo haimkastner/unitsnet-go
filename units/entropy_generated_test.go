@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestEntropyConversions(t *testing.T) {
 		// Test conversion to JoulesPerKelvin.
 		// No expected conversion value provided for JoulesPerKelvin, verifying result is not NaN.
 		result := a.JoulesPerKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerKelvin returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestEntropyConversions(t *testing.T) {
 		// Test conversion to CaloriesPerKelvin.
 		// No expected conversion value provided for CaloriesPerKelvin, verifying result is not NaN.
 		result := a.CaloriesPerKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.CaloriesPerKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CaloriesPerKelvin returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestEntropyConversions(t *testing.T) {
 		// Test conversion to JoulesPerDegreeCelsius.
 		// No expected conversion value provided for JoulesPerDegreeCelsius, verifying result is not NaN.
 		result := a.JoulesPerDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerDegreeCelsius returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestEntropyConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerKelvin.
 		// No expected conversion value provided for KilojoulesPerKelvin, verifying result is not NaN.
 		result := a.KilojoulesPerKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerKelvin returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestEntropyConversions(t *testing.T) {
 		// Test conversion to MegajoulesPerKelvin.
 		// No expected conversion value provided for MegajoulesPerKelvin, verifying result is not NaN.
 		result := a.MegajoulesPerKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.MegajoulesPerKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegajoulesPerKelvin returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestEntropyConversions(t *testing.T) {
 		// Test conversion to KilocaloriesPerKelvin.
 		// No expected conversion value provided for KilocaloriesPerKelvin, verifying result is not NaN.
 		result := a.KilocaloriesPerKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocaloriesPerKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocaloriesPerKelvin returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestEntropyConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerDegreeCelsius.
 		// No expected conversion value provided for KilojoulesPerDegreeCelsius, verifying result is not NaN.
 		result := a.KilojoulesPerDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerDegreeCelsius returned NaN")
 		}
 	}
@@ -846,4 +854,125 @@ func TestEntropy_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetEntropyAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.EntropyUnits
+        want string
+    }{
+        {
+            name: "JoulePerKelvin abbreviation",
+            unit: units.EntropyJoulePerKelvin,
+            want: "J/K",
+        },
+        {
+            name: "CaloriePerKelvin abbreviation",
+            unit: units.EntropyCaloriePerKelvin,
+            want: "cal/K",
+        },
+        {
+            name: "JoulePerDegreeCelsius abbreviation",
+            unit: units.EntropyJoulePerDegreeCelsius,
+            want: "J/C",
+        },
+        {
+            name: "KilojoulePerKelvin abbreviation",
+            unit: units.EntropyKilojoulePerKelvin,
+            want: "kJ/K",
+        },
+        {
+            name: "MegajoulePerKelvin abbreviation",
+            unit: units.EntropyMegajoulePerKelvin,
+            want: "MJ/K",
+        },
+        {
+            name: "KilocaloriePerKelvin abbreviation",
+            unit: units.EntropyKilocaloriePerKelvin,
+            want: "kcal/K",
+        },
+        {
+            name: "KilojoulePerDegreeCelsius abbreviation",
+            unit: units.EntropyKilojoulePerDegreeCelsius,
+            want: "kJ/C",
+        },
+        {
+            name: "invalid unit",
+            unit: units.EntropyUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetEntropyAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetEntropyAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestEntropy_String(t *testing.T) {
+    factory := units.EntropyFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateEntropy(tt.value, units.EntropyJoulePerKelvin)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Entropy.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

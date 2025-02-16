@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to NewtonSecondsPerMeterSquared.
 		// No expected conversion value provided for NewtonSecondsPerMeterSquared, verifying result is not NaN.
 		result := a.NewtonSecondsPerMeterSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonSecondsPerMeterSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonSecondsPerMeterSquared returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to PascalSeconds.
 		// No expected conversion value provided for PascalSeconds, verifying result is not NaN.
 		result := a.PascalSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.PascalSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PascalSeconds returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to Poise.
 		// No expected conversion value provided for Poise, verifying result is not NaN.
 		result := a.Poise()
-		if math.IsNaN(result) {
+		cacheResult := a.Poise()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Poise returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to Reyns.
 		// No expected conversion value provided for Reyns, verifying result is not NaN.
 		result := a.Reyns()
-		if math.IsNaN(result) {
+		cacheResult := a.Reyns()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Reyns returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to PoundsForceSecondPerSquareInch.
 		// No expected conversion value provided for PoundsForceSecondPerSquareInch, verifying result is not NaN.
 		result := a.PoundsForceSecondPerSquareInch()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForceSecondPerSquareInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForceSecondPerSquareInch returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to PoundsForceSecondPerSquareFoot.
 		// No expected conversion value provided for PoundsForceSecondPerSquareFoot, verifying result is not NaN.
 		result := a.PoundsForceSecondPerSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForceSecondPerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForceSecondPerSquareFoot returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to PoundsPerFootSecond.
 		// No expected conversion value provided for PoundsPerFootSecond, verifying result is not NaN.
 		result := a.PoundsPerFootSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerFootSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerFootSecond returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to MillipascalSeconds.
 		// No expected conversion value provided for MillipascalSeconds, verifying result is not NaN.
 		result := a.MillipascalSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MillipascalSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillipascalSeconds returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to MicropascalSeconds.
 		// No expected conversion value provided for MicropascalSeconds, verifying result is not NaN.
 		result := a.MicropascalSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MicropascalSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicropascalSeconds returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestDynamicViscosityConversions(t *testing.T) {
 		// Test conversion to Centipoise.
 		// No expected conversion value provided for Centipoise, verifying result is not NaN.
 		result := a.Centipoise()
-		if math.IsNaN(result) {
+		cacheResult := a.Centipoise()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centipoise returned NaN")
 		}
 	}
@@ -1086,4 +1097,140 @@ func TestDynamicViscosity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetDynamicViscosityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.DynamicViscosityUnits
+        want string
+    }{
+        {
+            name: "NewtonSecondPerMeterSquared abbreviation",
+            unit: units.DynamicViscosityNewtonSecondPerMeterSquared,
+            want: "Ns/m²",
+        },
+        {
+            name: "PascalSecond abbreviation",
+            unit: units.DynamicViscosityPascalSecond,
+            want: "Pa·s",
+        },
+        {
+            name: "Poise abbreviation",
+            unit: units.DynamicViscosityPoise,
+            want: "P",
+        },
+        {
+            name: "Reyn abbreviation",
+            unit: units.DynamicViscosityReyn,
+            want: "reyn",
+        },
+        {
+            name: "PoundForceSecondPerSquareInch abbreviation",
+            unit: units.DynamicViscosityPoundForceSecondPerSquareInch,
+            want: "lbf·s/in²",
+        },
+        {
+            name: "PoundForceSecondPerSquareFoot abbreviation",
+            unit: units.DynamicViscosityPoundForceSecondPerSquareFoot,
+            want: "lbf·s/ft²",
+        },
+        {
+            name: "PoundPerFootSecond abbreviation",
+            unit: units.DynamicViscosityPoundPerFootSecond,
+            want: "lb/ft·s",
+        },
+        {
+            name: "MillipascalSecond abbreviation",
+            unit: units.DynamicViscosityMillipascalSecond,
+            want: "mPa·s",
+        },
+        {
+            name: "MicropascalSecond abbreviation",
+            unit: units.DynamicViscosityMicropascalSecond,
+            want: "μPa·s",
+        },
+        {
+            name: "Centipoise abbreviation",
+            unit: units.DynamicViscosityCentipoise,
+            want: "cP",
+        },
+        {
+            name: "invalid unit",
+            unit: units.DynamicViscosityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetDynamicViscosityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetDynamicViscosityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestDynamicViscosity_String(t *testing.T) {
+    factory := units.DynamicViscosityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateDynamicViscosity(tt.value, units.DynamicViscosityNewtonSecondPerMeterSquared)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("DynamicViscosity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

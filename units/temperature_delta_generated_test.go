@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestTemperatureDeltaConversions(t *testing.T) {
 		// Test conversion to Kelvins.
 		// No expected conversion value provided for Kelvins, verifying result is not NaN.
 		result := a.Kelvins()
-		if math.IsNaN(result) {
+		cacheResult := a.Kelvins()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kelvins returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestTemperatureDeltaConversions(t *testing.T) {
 		// Test conversion to DegreesCelsius.
 		// No expected conversion value provided for DegreesCelsius, verifying result is not NaN.
 		result := a.DegreesCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesCelsius returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestTemperatureDeltaConversions(t *testing.T) {
 		// Test conversion to DegreesDelisle.
 		// No expected conversion value provided for DegreesDelisle, verifying result is not NaN.
 		result := a.DegreesDelisle()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesDelisle()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesDelisle returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestTemperatureDeltaConversions(t *testing.T) {
 		// Test conversion to DegreesFahrenheit.
 		// No expected conversion value provided for DegreesFahrenheit, verifying result is not NaN.
 		result := a.DegreesFahrenheit()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesFahrenheit()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesFahrenheit returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestTemperatureDeltaConversions(t *testing.T) {
 		// Test conversion to DegreesNewton.
 		// No expected conversion value provided for DegreesNewton, verifying result is not NaN.
 		result := a.DegreesNewton()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesNewton()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesNewton returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestTemperatureDeltaConversions(t *testing.T) {
 		// Test conversion to DegreesRankine.
 		// No expected conversion value provided for DegreesRankine, verifying result is not NaN.
 		result := a.DegreesRankine()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesRankine()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesRankine returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestTemperatureDeltaConversions(t *testing.T) {
 		// Test conversion to DegreesReaumur.
 		// No expected conversion value provided for DegreesReaumur, verifying result is not NaN.
 		result := a.DegreesReaumur()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesReaumur()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesReaumur returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestTemperatureDeltaConversions(t *testing.T) {
 		// Test conversion to DegreesRoemer.
 		// No expected conversion value provided for DegreesRoemer, verifying result is not NaN.
 		result := a.DegreesRoemer()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesRoemer()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesRoemer returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestTemperatureDeltaConversions(t *testing.T) {
 		// Test conversion to MillidegreesCelsius.
 		// No expected conversion value provided for MillidegreesCelsius, verifying result is not NaN.
 		result := a.MillidegreesCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.MillidegreesCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillidegreesCelsius returned NaN")
 		}
 	}
@@ -1006,4 +1016,135 @@ func TestTemperatureDelta_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetTemperatureDeltaAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.TemperatureDeltaUnits
+        want string
+    }{
+        {
+            name: "Kelvin abbreviation",
+            unit: units.TemperatureDeltaKelvin,
+            want: "∆K",
+        },
+        {
+            name: "DegreeCelsius abbreviation",
+            unit: units.TemperatureDeltaDegreeCelsius,
+            want: "∆°C",
+        },
+        {
+            name: "DegreeDelisle abbreviation",
+            unit: units.TemperatureDeltaDegreeDelisle,
+            want: "∆°De",
+        },
+        {
+            name: "DegreeFahrenheit abbreviation",
+            unit: units.TemperatureDeltaDegreeFahrenheit,
+            want: "∆°F",
+        },
+        {
+            name: "DegreeNewton abbreviation",
+            unit: units.TemperatureDeltaDegreeNewton,
+            want: "∆°N",
+        },
+        {
+            name: "DegreeRankine abbreviation",
+            unit: units.TemperatureDeltaDegreeRankine,
+            want: "∆°R",
+        },
+        {
+            name: "DegreeReaumur abbreviation",
+            unit: units.TemperatureDeltaDegreeReaumur,
+            want: "∆°Ré",
+        },
+        {
+            name: "DegreeRoemer abbreviation",
+            unit: units.TemperatureDeltaDegreeRoemer,
+            want: "∆°Rø",
+        },
+        {
+            name: "MillidegreeCelsius abbreviation",
+            unit: units.TemperatureDeltaMillidegreeCelsius,
+            want: "m∆°C",
+        },
+        {
+            name: "invalid unit",
+            unit: units.TemperatureDeltaUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetTemperatureDeltaAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetTemperatureDeltaAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestTemperatureDelta_String(t *testing.T) {
+    factory := units.TemperatureDeltaFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateTemperatureDelta(tt.value, units.TemperatureDeltaKelvin)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("TemperatureDelta.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

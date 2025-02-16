@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestPorousMediumPermeabilityConversions(t *testing.T) {
 		// Test conversion to Darcys.
 		// No expected conversion value provided for Darcys, verifying result is not NaN.
 		result := a.Darcys()
-		if math.IsNaN(result) {
+		cacheResult := a.Darcys()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Darcys returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestPorousMediumPermeabilityConversions(t *testing.T) {
 		// Test conversion to SquareMeters.
 		// No expected conversion value provided for SquareMeters, verifying result is not NaN.
 		result := a.SquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareMeters returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestPorousMediumPermeabilityConversions(t *testing.T) {
 		// Test conversion to SquareCentimeters.
 		// No expected conversion value provided for SquareCentimeters, verifying result is not NaN.
 		result := a.SquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareCentimeters returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestPorousMediumPermeabilityConversions(t *testing.T) {
 		// Test conversion to Microdarcys.
 		// No expected conversion value provided for Microdarcys, verifying result is not NaN.
 		result := a.Microdarcys()
-		if math.IsNaN(result) {
+		cacheResult := a.Microdarcys()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microdarcys returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestPorousMediumPermeabilityConversions(t *testing.T) {
 		// Test conversion to Millidarcys.
 		// No expected conversion value provided for Millidarcys, verifying result is not NaN.
 		result := a.Millidarcys()
-		if math.IsNaN(result) {
+		cacheResult := a.Millidarcys()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millidarcys returned NaN")
 		}
 	}
@@ -686,4 +692,115 @@ func TestPorousMediumPermeability_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetPorousMediumPermeabilityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.PorousMediumPermeabilityUnits
+        want string
+    }{
+        {
+            name: "Darcy abbreviation",
+            unit: units.PorousMediumPermeabilityDarcy,
+            want: "D",
+        },
+        {
+            name: "SquareMeter abbreviation",
+            unit: units.PorousMediumPermeabilitySquareMeter,
+            want: "m²",
+        },
+        {
+            name: "SquareCentimeter abbreviation",
+            unit: units.PorousMediumPermeabilitySquareCentimeter,
+            want: "cm²",
+        },
+        {
+            name: "Microdarcy abbreviation",
+            unit: units.PorousMediumPermeabilityMicrodarcy,
+            want: "μD",
+        },
+        {
+            name: "Millidarcy abbreviation",
+            unit: units.PorousMediumPermeabilityMillidarcy,
+            want: "mD",
+        },
+        {
+            name: "invalid unit",
+            unit: units.PorousMediumPermeabilityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetPorousMediumPermeabilityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetPorousMediumPermeabilityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestPorousMediumPermeability_String(t *testing.T) {
+    factory := units.PorousMediumPermeabilityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreatePorousMediumPermeability(tt.value, units.PorousMediumPermeabilitySquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("PorousMediumPermeability.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

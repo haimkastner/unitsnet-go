@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Siemens.
 		// No expected conversion value provided for Siemens, verifying result is not NaN.
 		result := a.Siemens()
-		if math.IsNaN(result) {
+		cacheResult := a.Siemens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Siemens returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Mhos.
 		// No expected conversion value provided for Mhos, verifying result is not NaN.
 		result := a.Mhos()
-		if math.IsNaN(result) {
+		cacheResult := a.Mhos()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Mhos returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Nanosiemens.
 		// No expected conversion value provided for Nanosiemens, verifying result is not NaN.
 		result := a.Nanosiemens()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanosiemens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanosiemens returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Microsiemens.
 		// No expected conversion value provided for Microsiemens, verifying result is not NaN.
 		result := a.Microsiemens()
-		if math.IsNaN(result) {
+		cacheResult := a.Microsiemens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microsiemens returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Millisiemens.
 		// No expected conversion value provided for Millisiemens, verifying result is not NaN.
 		result := a.Millisiemens()
-		if math.IsNaN(result) {
+		cacheResult := a.Millisiemens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millisiemens returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Kilosiemens.
 		// No expected conversion value provided for Kilosiemens, verifying result is not NaN.
 		result := a.Kilosiemens()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilosiemens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilosiemens returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Megasiemens.
 		// No expected conversion value provided for Megasiemens, verifying result is not NaN.
 		result := a.Megasiemens()
-		if math.IsNaN(result) {
+		cacheResult := a.Megasiemens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megasiemens returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Gigasiemens.
 		// No expected conversion value provided for Gigasiemens, verifying result is not NaN.
 		result := a.Gigasiemens()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigasiemens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigasiemens returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Terasiemens.
 		// No expected conversion value provided for Terasiemens, verifying result is not NaN.
 		result := a.Terasiemens()
-		if math.IsNaN(result) {
+		cacheResult := a.Terasiemens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Terasiemens returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Nanomhos.
 		// No expected conversion value provided for Nanomhos, verifying result is not NaN.
 		result := a.Nanomhos()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanomhos()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanomhos returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Micromhos.
 		// No expected conversion value provided for Micromhos, verifying result is not NaN.
 		result := a.Micromhos()
-		if math.IsNaN(result) {
+		cacheResult := a.Micromhos()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Micromhos returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Millimhos.
 		// No expected conversion value provided for Millimhos, verifying result is not NaN.
 		result := a.Millimhos()
-		if math.IsNaN(result) {
+		cacheResult := a.Millimhos()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millimhos returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Kilomhos.
 		// No expected conversion value provided for Kilomhos, verifying result is not NaN.
 		result := a.Kilomhos()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilomhos()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilomhos returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Megamhos.
 		// No expected conversion value provided for Megamhos, verifying result is not NaN.
 		result := a.Megamhos()
-		if math.IsNaN(result) {
+		cacheResult := a.Megamhos()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megamhos returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Gigamhos.
 		// No expected conversion value provided for Gigamhos, verifying result is not NaN.
 		result := a.Gigamhos()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigamhos()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigamhos returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestElectricAdmittanceConversions(t *testing.T) {
 		// Test conversion to Teramhos.
 		// No expected conversion value provided for Teramhos, verifying result is not NaN.
 		result := a.Teramhos()
-		if math.IsNaN(result) {
+		cacheResult := a.Teramhos()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Teramhos returned NaN")
 		}
 	}
@@ -1566,4 +1583,170 @@ func TestElectricAdmittance_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricAdmittanceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricAdmittanceUnits
+        want string
+    }{
+        {
+            name: "Siemens abbreviation",
+            unit: units.ElectricAdmittanceSiemens,
+            want: "S",
+        },
+        {
+            name: "Mho abbreviation",
+            unit: units.ElectricAdmittanceMho,
+            want: "℧",
+        },
+        {
+            name: "Nanosiemens abbreviation",
+            unit: units.ElectricAdmittanceNanosiemens,
+            want: "nS",
+        },
+        {
+            name: "Microsiemens abbreviation",
+            unit: units.ElectricAdmittanceMicrosiemens,
+            want: "μS",
+        },
+        {
+            name: "Millisiemens abbreviation",
+            unit: units.ElectricAdmittanceMillisiemens,
+            want: "mS",
+        },
+        {
+            name: "Kilosiemens abbreviation",
+            unit: units.ElectricAdmittanceKilosiemens,
+            want: "kS",
+        },
+        {
+            name: "Megasiemens abbreviation",
+            unit: units.ElectricAdmittanceMegasiemens,
+            want: "MS",
+        },
+        {
+            name: "Gigasiemens abbreviation",
+            unit: units.ElectricAdmittanceGigasiemens,
+            want: "GS",
+        },
+        {
+            name: "Terasiemens abbreviation",
+            unit: units.ElectricAdmittanceTerasiemens,
+            want: "TS",
+        },
+        {
+            name: "Nanomho abbreviation",
+            unit: units.ElectricAdmittanceNanomho,
+            want: "n℧",
+        },
+        {
+            name: "Micromho abbreviation",
+            unit: units.ElectricAdmittanceMicromho,
+            want: "μ℧",
+        },
+        {
+            name: "Millimho abbreviation",
+            unit: units.ElectricAdmittanceMillimho,
+            want: "m℧",
+        },
+        {
+            name: "Kilomho abbreviation",
+            unit: units.ElectricAdmittanceKilomho,
+            want: "k℧",
+        },
+        {
+            name: "Megamho abbreviation",
+            unit: units.ElectricAdmittanceMegamho,
+            want: "M℧",
+        },
+        {
+            name: "Gigamho abbreviation",
+            unit: units.ElectricAdmittanceGigamho,
+            want: "G℧",
+        },
+        {
+            name: "Teramho abbreviation",
+            unit: units.ElectricAdmittanceTeramho,
+            want: "T℧",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricAdmittanceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricAdmittanceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricAdmittanceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricAdmittance_String(t *testing.T) {
+    factory := units.ElectricAdmittanceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricAdmittance(tt.value, units.ElectricAdmittanceSiemens)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricAdmittance.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

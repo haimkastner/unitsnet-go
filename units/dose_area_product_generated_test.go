@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to GraySquareMeters.
 		// No expected conversion value provided for GraySquareMeters, verifying result is not NaN.
 		result := a.GraySquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GraySquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GraySquareMeters returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to GraySquareDecimeters.
 		// No expected conversion value provided for GraySquareDecimeters, verifying result is not NaN.
 		result := a.GraySquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GraySquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GraySquareDecimeters returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to GraySquareCentimeters.
 		// No expected conversion value provided for GraySquareCentimeters, verifying result is not NaN.
 		result := a.GraySquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GraySquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GraySquareCentimeters returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to GraySquareMillimeters.
 		// No expected conversion value provided for GraySquareMillimeters, verifying result is not NaN.
 		result := a.GraySquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GraySquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GraySquareMillimeters returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to MicrograySquareMeters.
 		// No expected conversion value provided for MicrograySquareMeters, verifying result is not NaN.
 		result := a.MicrograySquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrograySquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrograySquareMeters returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to MilligraySquareMeters.
 		// No expected conversion value provided for MilligraySquareMeters, verifying result is not NaN.
 		result := a.MilligraySquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligraySquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligraySquareMeters returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to CentigraySquareMeters.
 		// No expected conversion value provided for CentigraySquareMeters, verifying result is not NaN.
 		result := a.CentigraySquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigraySquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigraySquareMeters returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to DecigraySquareMeters.
 		// No expected conversion value provided for DecigraySquareMeters, verifying result is not NaN.
 		result := a.DecigraySquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigraySquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigraySquareMeters returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to MicrograySquareDecimeters.
 		// No expected conversion value provided for MicrograySquareDecimeters, verifying result is not NaN.
 		result := a.MicrograySquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrograySquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrograySquareDecimeters returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to MilligraySquareDecimeters.
 		// No expected conversion value provided for MilligraySquareDecimeters, verifying result is not NaN.
 		result := a.MilligraySquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligraySquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligraySquareDecimeters returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to CentigraySquareDecimeters.
 		// No expected conversion value provided for CentigraySquareDecimeters, verifying result is not NaN.
 		result := a.CentigraySquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigraySquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigraySquareDecimeters returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to DecigraySquareDecimeters.
 		// No expected conversion value provided for DecigraySquareDecimeters, verifying result is not NaN.
 		result := a.DecigraySquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigraySquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigraySquareDecimeters returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to MicrograySquareCentimeters.
 		// No expected conversion value provided for MicrograySquareCentimeters, verifying result is not NaN.
 		result := a.MicrograySquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrograySquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrograySquareCentimeters returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to MilligraySquareCentimeters.
 		// No expected conversion value provided for MilligraySquareCentimeters, verifying result is not NaN.
 		result := a.MilligraySquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligraySquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligraySquareCentimeters returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to CentigraySquareCentimeters.
 		// No expected conversion value provided for CentigraySquareCentimeters, verifying result is not NaN.
 		result := a.CentigraySquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigraySquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigraySquareCentimeters returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to DecigraySquareCentimeters.
 		// No expected conversion value provided for DecigraySquareCentimeters, verifying result is not NaN.
 		result := a.DecigraySquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigraySquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigraySquareCentimeters returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to MicrograySquareMillimeters.
 		// No expected conversion value provided for MicrograySquareMillimeters, verifying result is not NaN.
 		result := a.MicrograySquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrograySquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrograySquareMillimeters returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to MilligraySquareMillimeters.
 		// No expected conversion value provided for MilligraySquareMillimeters, verifying result is not NaN.
 		result := a.MilligraySquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligraySquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligraySquareMillimeters returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to CentigraySquareMillimeters.
 		// No expected conversion value provided for CentigraySquareMillimeters, verifying result is not NaN.
 		result := a.CentigraySquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigraySquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigraySquareMillimeters returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		// Test conversion to DecigraySquareMillimeters.
 		// No expected conversion value provided for DecigraySquareMillimeters, verifying result is not NaN.
 		result := a.DecigraySquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigraySquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigraySquareMillimeters returned NaN")
 		}
 	}
@@ -1886,4 +1907,190 @@ func TestDoseAreaProduct_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetDoseAreaProductAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.DoseAreaProductUnits
+        want string
+    }{
+        {
+            name: "GraySquareMeter abbreviation",
+            unit: units.DoseAreaProductGraySquareMeter,
+            want: "Gy·m²",
+        },
+        {
+            name: "GraySquareDecimeter abbreviation",
+            unit: units.DoseAreaProductGraySquareDecimeter,
+            want: "Gy·dm²",
+        },
+        {
+            name: "GraySquareCentimeter abbreviation",
+            unit: units.DoseAreaProductGraySquareCentimeter,
+            want: "Gy·cm²",
+        },
+        {
+            name: "GraySquareMillimeter abbreviation",
+            unit: units.DoseAreaProductGraySquareMillimeter,
+            want: "Gy·mm²",
+        },
+        {
+            name: "MicrograySquareMeter abbreviation",
+            unit: units.DoseAreaProductMicrograySquareMeter,
+            want: "μGy·m²",
+        },
+        {
+            name: "MilligraySquareMeter abbreviation",
+            unit: units.DoseAreaProductMilligraySquareMeter,
+            want: "mGy·m²",
+        },
+        {
+            name: "CentigraySquareMeter abbreviation",
+            unit: units.DoseAreaProductCentigraySquareMeter,
+            want: "cGy·m²",
+        },
+        {
+            name: "DecigraySquareMeter abbreviation",
+            unit: units.DoseAreaProductDecigraySquareMeter,
+            want: "dGy·m²",
+        },
+        {
+            name: "MicrograySquareDecimeter abbreviation",
+            unit: units.DoseAreaProductMicrograySquareDecimeter,
+            want: "μGy·dm²",
+        },
+        {
+            name: "MilligraySquareDecimeter abbreviation",
+            unit: units.DoseAreaProductMilligraySquareDecimeter,
+            want: "mGy·dm²",
+        },
+        {
+            name: "CentigraySquareDecimeter abbreviation",
+            unit: units.DoseAreaProductCentigraySquareDecimeter,
+            want: "cGy·dm²",
+        },
+        {
+            name: "DecigraySquareDecimeter abbreviation",
+            unit: units.DoseAreaProductDecigraySquareDecimeter,
+            want: "dGy·dm²",
+        },
+        {
+            name: "MicrograySquareCentimeter abbreviation",
+            unit: units.DoseAreaProductMicrograySquareCentimeter,
+            want: "μGy·cm²",
+        },
+        {
+            name: "MilligraySquareCentimeter abbreviation",
+            unit: units.DoseAreaProductMilligraySquareCentimeter,
+            want: "mGy·cm²",
+        },
+        {
+            name: "CentigraySquareCentimeter abbreviation",
+            unit: units.DoseAreaProductCentigraySquareCentimeter,
+            want: "cGy·cm²",
+        },
+        {
+            name: "DecigraySquareCentimeter abbreviation",
+            unit: units.DoseAreaProductDecigraySquareCentimeter,
+            want: "dGy·cm²",
+        },
+        {
+            name: "MicrograySquareMillimeter abbreviation",
+            unit: units.DoseAreaProductMicrograySquareMillimeter,
+            want: "μGy·mm²",
+        },
+        {
+            name: "MilligraySquareMillimeter abbreviation",
+            unit: units.DoseAreaProductMilligraySquareMillimeter,
+            want: "mGy·mm²",
+        },
+        {
+            name: "CentigraySquareMillimeter abbreviation",
+            unit: units.DoseAreaProductCentigraySquareMillimeter,
+            want: "cGy·mm²",
+        },
+        {
+            name: "DecigraySquareMillimeter abbreviation",
+            unit: units.DoseAreaProductDecigraySquareMillimeter,
+            want: "dGy·mm²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.DoseAreaProductUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetDoseAreaProductAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetDoseAreaProductAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestDoseAreaProduct_String(t *testing.T) {
+    factory := units.DoseAreaProductFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateDoseAreaProduct(tt.value, units.DoseAreaProductGraySquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("DoseAreaProduct.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

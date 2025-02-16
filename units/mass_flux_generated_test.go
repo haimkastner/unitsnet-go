@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to GramsPerSecondPerSquareMeter.
 		// No expected conversion value provided for GramsPerSecondPerSquareMeter, verifying result is not NaN.
 		result := a.GramsPerSecondPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerSecondPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerSecondPerSquareMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to GramsPerSecondPerSquareCentimeter.
 		// No expected conversion value provided for GramsPerSecondPerSquareCentimeter, verifying result is not NaN.
 		result := a.GramsPerSecondPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerSecondPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerSecondPerSquareCentimeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to GramsPerSecondPerSquareMillimeter.
 		// No expected conversion value provided for GramsPerSecondPerSquareMillimeter, verifying result is not NaN.
 		result := a.GramsPerSecondPerSquareMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerSecondPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerSecondPerSquareMillimeter returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to GramsPerHourPerSquareMeter.
 		// No expected conversion value provided for GramsPerHourPerSquareMeter, verifying result is not NaN.
 		result := a.GramsPerHourPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerHourPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerHourPerSquareMeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to GramsPerHourPerSquareCentimeter.
 		// No expected conversion value provided for GramsPerHourPerSquareCentimeter, verifying result is not NaN.
 		result := a.GramsPerHourPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerHourPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerHourPerSquareCentimeter returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to GramsPerHourPerSquareMillimeter.
 		// No expected conversion value provided for GramsPerHourPerSquareMillimeter, verifying result is not NaN.
 		result := a.GramsPerHourPerSquareMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerHourPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerHourPerSquareMillimeter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to KilogramsPerSecondPerSquareMeter.
 		// No expected conversion value provided for KilogramsPerSecondPerSquareMeter, verifying result is not NaN.
 		result := a.KilogramsPerSecondPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerSecondPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerSecondPerSquareMeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to KilogramsPerSecondPerSquareCentimeter.
 		// No expected conversion value provided for KilogramsPerSecondPerSquareCentimeter, verifying result is not NaN.
 		result := a.KilogramsPerSecondPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerSecondPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerSecondPerSquareCentimeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to KilogramsPerSecondPerSquareMillimeter.
 		// No expected conversion value provided for KilogramsPerSecondPerSquareMillimeter, verifying result is not NaN.
 		result := a.KilogramsPerSecondPerSquareMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerSecondPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerSecondPerSquareMillimeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to KilogramsPerHourPerSquareMeter.
 		// No expected conversion value provided for KilogramsPerHourPerSquareMeter, verifying result is not NaN.
 		result := a.KilogramsPerHourPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerHourPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerHourPerSquareMeter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to KilogramsPerHourPerSquareCentimeter.
 		// No expected conversion value provided for KilogramsPerHourPerSquareCentimeter, verifying result is not NaN.
 		result := a.KilogramsPerHourPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerHourPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerHourPerSquareCentimeter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestMassFluxConversions(t *testing.T) {
 		// Test conversion to KilogramsPerHourPerSquareMillimeter.
 		// No expected conversion value provided for KilogramsPerHourPerSquareMillimeter, verifying result is not NaN.
 		result := a.KilogramsPerHourPerSquareMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerHourPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerHourPerSquareMillimeter returned NaN")
 		}
 	}
@@ -1246,4 +1259,150 @@ func TestMassFlux_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMassFluxAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MassFluxUnits
+        want string
+    }{
+        {
+            name: "GramPerSecondPerSquareMeter abbreviation",
+            unit: units.MassFluxGramPerSecondPerSquareMeter,
+            want: "g·s⁻¹·m⁻²",
+        },
+        {
+            name: "GramPerSecondPerSquareCentimeter abbreviation",
+            unit: units.MassFluxGramPerSecondPerSquareCentimeter,
+            want: "g·s⁻¹·cm⁻²",
+        },
+        {
+            name: "GramPerSecondPerSquareMillimeter abbreviation",
+            unit: units.MassFluxGramPerSecondPerSquareMillimeter,
+            want: "g·s⁻¹·mm⁻²",
+        },
+        {
+            name: "GramPerHourPerSquareMeter abbreviation",
+            unit: units.MassFluxGramPerHourPerSquareMeter,
+            want: "g·h⁻¹·m⁻²",
+        },
+        {
+            name: "GramPerHourPerSquareCentimeter abbreviation",
+            unit: units.MassFluxGramPerHourPerSquareCentimeter,
+            want: "g·h⁻¹·cm⁻²",
+        },
+        {
+            name: "GramPerHourPerSquareMillimeter abbreviation",
+            unit: units.MassFluxGramPerHourPerSquareMillimeter,
+            want: "g·h⁻¹·mm⁻²",
+        },
+        {
+            name: "KilogramPerSecondPerSquareMeter abbreviation",
+            unit: units.MassFluxKilogramPerSecondPerSquareMeter,
+            want: "kg·s⁻¹·m⁻²",
+        },
+        {
+            name: "KilogramPerSecondPerSquareCentimeter abbreviation",
+            unit: units.MassFluxKilogramPerSecondPerSquareCentimeter,
+            want: "kg·s⁻¹·cm⁻²",
+        },
+        {
+            name: "KilogramPerSecondPerSquareMillimeter abbreviation",
+            unit: units.MassFluxKilogramPerSecondPerSquareMillimeter,
+            want: "kg·s⁻¹·mm⁻²",
+        },
+        {
+            name: "KilogramPerHourPerSquareMeter abbreviation",
+            unit: units.MassFluxKilogramPerHourPerSquareMeter,
+            want: "kg·h⁻¹·m⁻²",
+        },
+        {
+            name: "KilogramPerHourPerSquareCentimeter abbreviation",
+            unit: units.MassFluxKilogramPerHourPerSquareCentimeter,
+            want: "kg·h⁻¹·cm⁻²",
+        },
+        {
+            name: "KilogramPerHourPerSquareMillimeter abbreviation",
+            unit: units.MassFluxKilogramPerHourPerSquareMillimeter,
+            want: "kg·h⁻¹·mm⁻²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MassFluxUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMassFluxAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMassFluxAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMassFlux_String(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMassFlux(tt.value, units.MassFluxKilogramPerSecondPerSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("MassFlux.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

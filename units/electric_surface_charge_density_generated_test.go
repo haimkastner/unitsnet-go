@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricSurfaceChargeDensityConversions(t *testing.T) {
 		// Test conversion to CoulombsPerSquareMeter.
 		// No expected conversion value provided for CoulombsPerSquareMeter, verifying result is not NaN.
 		result := a.CoulombsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.CoulombsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CoulombsPerSquareMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricSurfaceChargeDensityConversions(t *testing.T) {
 		// Test conversion to CoulombsPerSquareCentimeter.
 		// No expected conversion value provided for CoulombsPerSquareCentimeter, verifying result is not NaN.
 		result := a.CoulombsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.CoulombsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CoulombsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricSurfaceChargeDensityConversions(t *testing.T) {
 		// Test conversion to CoulombsPerSquareInch.
 		// No expected conversion value provided for CoulombsPerSquareInch, verifying result is not NaN.
 		result := a.CoulombsPerSquareInch()
-		if math.IsNaN(result) {
+		cacheResult := a.CoulombsPerSquareInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CoulombsPerSquareInch returned NaN")
 		}
 	}
@@ -526,4 +530,105 @@ func TestElectricSurfaceChargeDensity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricSurfaceChargeDensityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricSurfaceChargeDensityUnits
+        want string
+    }{
+        {
+            name: "CoulombPerSquareMeter abbreviation",
+            unit: units.ElectricSurfaceChargeDensityCoulombPerSquareMeter,
+            want: "C/m²",
+        },
+        {
+            name: "CoulombPerSquareCentimeter abbreviation",
+            unit: units.ElectricSurfaceChargeDensityCoulombPerSquareCentimeter,
+            want: "C/cm²",
+        },
+        {
+            name: "CoulombPerSquareInch abbreviation",
+            unit: units.ElectricSurfaceChargeDensityCoulombPerSquareInch,
+            want: "C/in²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricSurfaceChargeDensityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricSurfaceChargeDensityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricSurfaceChargeDensityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricSurfaceChargeDensity_String(t *testing.T) {
+    factory := units.ElectricSurfaceChargeDensityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricSurfaceChargeDensity(tt.value, units.ElectricSurfaceChargeDensityCoulombPerSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricSurfaceChargeDensity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Joules.
 		// No expected conversion value provided for Joules, verifying result is not NaN.
 		result := a.Joules()
-		if math.IsNaN(result) {
+		cacheResult := a.Joules()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Joules returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Calories.
 		// No expected conversion value provided for Calories, verifying result is not NaN.
 		result := a.Calories()
-		if math.IsNaN(result) {
+		cacheResult := a.Calories()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Calories returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to BritishThermalUnits.
 		// No expected conversion value provided for BritishThermalUnits, verifying result is not NaN.
 		result := a.BritishThermalUnits()
-		if math.IsNaN(result) {
+		cacheResult := a.BritishThermalUnits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BritishThermalUnits returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to ElectronVolts.
 		// No expected conversion value provided for ElectronVolts, verifying result is not NaN.
 		result := a.ElectronVolts()
-		if math.IsNaN(result) {
+		cacheResult := a.ElectronVolts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ElectronVolts returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to FootPounds.
 		// No expected conversion value provided for FootPounds, verifying result is not NaN.
 		result := a.FootPounds()
-		if math.IsNaN(result) {
+		cacheResult := a.FootPounds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FootPounds returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Ergs.
 		// No expected conversion value provided for Ergs, verifying result is not NaN.
 		result := a.Ergs()
-		if math.IsNaN(result) {
+		cacheResult := a.Ergs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Ergs returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to WattHours.
 		// No expected conversion value provided for WattHours, verifying result is not NaN.
 		result := a.WattHours()
-		if math.IsNaN(result) {
+		cacheResult := a.WattHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattHours returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to WattDays.
 		// No expected conversion value provided for WattDays, verifying result is not NaN.
 		result := a.WattDays()
-		if math.IsNaN(result) {
+		cacheResult := a.WattDays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattDays returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to ThermsEc.
 		// No expected conversion value provided for ThermsEc, verifying result is not NaN.
 		result := a.ThermsEc()
-		if math.IsNaN(result) {
+		cacheResult := a.ThermsEc()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ThermsEc returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to ThermsUs.
 		// No expected conversion value provided for ThermsUs, verifying result is not NaN.
 		result := a.ThermsUs()
-		if math.IsNaN(result) {
+		cacheResult := a.ThermsUs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ThermsUs returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to ThermsImperial.
 		// No expected conversion value provided for ThermsImperial, verifying result is not NaN.
 		result := a.ThermsImperial()
-		if math.IsNaN(result) {
+		cacheResult := a.ThermsImperial()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ThermsImperial returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to HorsepowerHours.
 		// No expected conversion value provided for HorsepowerHours, verifying result is not NaN.
 		result := a.HorsepowerHours()
-		if math.IsNaN(result) {
+		cacheResult := a.HorsepowerHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HorsepowerHours returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Nanojoules.
 		// No expected conversion value provided for Nanojoules, verifying result is not NaN.
 		result := a.Nanojoules()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanojoules()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanojoules returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Microjoules.
 		// No expected conversion value provided for Microjoules, verifying result is not NaN.
 		result := a.Microjoules()
-		if math.IsNaN(result) {
+		cacheResult := a.Microjoules()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microjoules returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Millijoules.
 		// No expected conversion value provided for Millijoules, verifying result is not NaN.
 		result := a.Millijoules()
-		if math.IsNaN(result) {
+		cacheResult := a.Millijoules()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millijoules returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Kilojoules.
 		// No expected conversion value provided for Kilojoules, verifying result is not NaN.
 		result := a.Kilojoules()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilojoules()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilojoules returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Megajoules.
 		// No expected conversion value provided for Megajoules, verifying result is not NaN.
 		result := a.Megajoules()
-		if math.IsNaN(result) {
+		cacheResult := a.Megajoules()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megajoules returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Gigajoules.
 		// No expected conversion value provided for Gigajoules, verifying result is not NaN.
 		result := a.Gigajoules()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigajoules()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigajoules returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Terajoules.
 		// No expected conversion value provided for Terajoules, verifying result is not NaN.
 		result := a.Terajoules()
-		if math.IsNaN(result) {
+		cacheResult := a.Terajoules()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Terajoules returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Petajoules.
 		// No expected conversion value provided for Petajoules, verifying result is not NaN.
 		result := a.Petajoules()
-		if math.IsNaN(result) {
+		cacheResult := a.Petajoules()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Petajoules returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Kilocalories.
 		// No expected conversion value provided for Kilocalories, verifying result is not NaN.
 		result := a.Kilocalories()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilocalories()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilocalories returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to Megacalories.
 		// No expected conversion value provided for Megacalories, verifying result is not NaN.
 		result := a.Megacalories()
-		if math.IsNaN(result) {
+		cacheResult := a.Megacalories()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megacalories returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to KilobritishThermalUnits.
 		// No expected conversion value provided for KilobritishThermalUnits, verifying result is not NaN.
 		result := a.KilobritishThermalUnits()
-		if math.IsNaN(result) {
+		cacheResult := a.KilobritishThermalUnits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilobritishThermalUnits returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to MegabritishThermalUnits.
 		// No expected conversion value provided for MegabritishThermalUnits, verifying result is not NaN.
 		result := a.MegabritishThermalUnits()
-		if math.IsNaN(result) {
+		cacheResult := a.MegabritishThermalUnits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegabritishThermalUnits returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to GigabritishThermalUnits.
 		// No expected conversion value provided for GigabritishThermalUnits, verifying result is not NaN.
 		result := a.GigabritishThermalUnits()
-		if math.IsNaN(result) {
+		cacheResult := a.GigabritishThermalUnits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigabritishThermalUnits returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to KiloelectronVolts.
 		// No expected conversion value provided for KiloelectronVolts, verifying result is not NaN.
 		result := a.KiloelectronVolts()
-		if math.IsNaN(result) {
+		cacheResult := a.KiloelectronVolts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KiloelectronVolts returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to MegaelectronVolts.
 		// No expected conversion value provided for MegaelectronVolts, verifying result is not NaN.
 		result := a.MegaelectronVolts()
-		if math.IsNaN(result) {
+		cacheResult := a.MegaelectronVolts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegaelectronVolts returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to GigaelectronVolts.
 		// No expected conversion value provided for GigaelectronVolts, verifying result is not NaN.
 		result := a.GigaelectronVolts()
-		if math.IsNaN(result) {
+		cacheResult := a.GigaelectronVolts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigaelectronVolts returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to TeraelectronVolts.
 		// No expected conversion value provided for TeraelectronVolts, verifying result is not NaN.
 		result := a.TeraelectronVolts()
-		if math.IsNaN(result) {
+		cacheResult := a.TeraelectronVolts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TeraelectronVolts returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to KilowattHours.
 		// No expected conversion value provided for KilowattHours, verifying result is not NaN.
 		result := a.KilowattHours()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattHours returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to MegawattHours.
 		// No expected conversion value provided for MegawattHours, verifying result is not NaN.
 		result := a.MegawattHours()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattHours returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to GigawattHours.
 		// No expected conversion value provided for GigawattHours, verifying result is not NaN.
 		result := a.GigawattHours()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattHours returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to TerawattHours.
 		// No expected conversion value provided for TerawattHours, verifying result is not NaN.
 		result := a.TerawattHours()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattHours returned NaN")
 		}
 	}
@@ -344,7 +378,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to KilowattDays.
 		// No expected conversion value provided for KilowattDays, verifying result is not NaN.
 		result := a.KilowattDays()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattDays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattDays returned NaN")
 		}
 	}
@@ -352,7 +387,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to MegawattDays.
 		// No expected conversion value provided for MegawattDays, verifying result is not NaN.
 		result := a.MegawattDays()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattDays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattDays returned NaN")
 		}
 	}
@@ -360,7 +396,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to GigawattDays.
 		// No expected conversion value provided for GigawattDays, verifying result is not NaN.
 		result := a.GigawattDays()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattDays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattDays returned NaN")
 		}
 	}
@@ -368,7 +405,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to TerawattDays.
 		// No expected conversion value provided for TerawattDays, verifying result is not NaN.
 		result := a.TerawattDays()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattDays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattDays returned NaN")
 		}
 	}
@@ -376,7 +414,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to DecathermsEc.
 		// No expected conversion value provided for DecathermsEc, verifying result is not NaN.
 		result := a.DecathermsEc()
-		if math.IsNaN(result) {
+		cacheResult := a.DecathermsEc()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecathermsEc returned NaN")
 		}
 	}
@@ -384,7 +423,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to DecathermsUs.
 		// No expected conversion value provided for DecathermsUs, verifying result is not NaN.
 		result := a.DecathermsUs()
-		if math.IsNaN(result) {
+		cacheResult := a.DecathermsUs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecathermsUs returned NaN")
 		}
 	}
@@ -392,7 +432,8 @@ func TestEnergyConversions(t *testing.T) {
 		// Test conversion to DecathermsImperial.
 		// No expected conversion value provided for DecathermsImperial, verifying result is not NaN.
 		result := a.DecathermsImperial()
-		if math.IsNaN(result) {
+		cacheResult := a.DecathermsImperial()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecathermsImperial returned NaN")
 		}
 	}
@@ -3486,4 +3527,290 @@ func TestEnergy_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetEnergyAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.EnergyUnits
+        want string
+    }{
+        {
+            name: "Joule abbreviation",
+            unit: units.EnergyJoule,
+            want: "J",
+        },
+        {
+            name: "Calorie abbreviation",
+            unit: units.EnergyCalorie,
+            want: "cal",
+        },
+        {
+            name: "BritishThermalUnit abbreviation",
+            unit: units.EnergyBritishThermalUnit,
+            want: "BTU",
+        },
+        {
+            name: "ElectronVolt abbreviation",
+            unit: units.EnergyElectronVolt,
+            want: "eV",
+        },
+        {
+            name: "FootPound abbreviation",
+            unit: units.EnergyFootPound,
+            want: "ft·lb",
+        },
+        {
+            name: "Erg abbreviation",
+            unit: units.EnergyErg,
+            want: "erg",
+        },
+        {
+            name: "WattHour abbreviation",
+            unit: units.EnergyWattHour,
+            want: "Wh",
+        },
+        {
+            name: "WattDay abbreviation",
+            unit: units.EnergyWattDay,
+            want: "Wd",
+        },
+        {
+            name: "ThermEc abbreviation",
+            unit: units.EnergyThermEc,
+            want: "th (E.C.)",
+        },
+        {
+            name: "ThermUs abbreviation",
+            unit: units.EnergyThermUs,
+            want: "th (U.S.)",
+        },
+        {
+            name: "ThermImperial abbreviation",
+            unit: units.EnergyThermImperial,
+            want: "th (imp.)",
+        },
+        {
+            name: "HorsepowerHour abbreviation",
+            unit: units.EnergyHorsepowerHour,
+            want: "hp·h",
+        },
+        {
+            name: "Nanojoule abbreviation",
+            unit: units.EnergyNanojoule,
+            want: "nJ",
+        },
+        {
+            name: "Microjoule abbreviation",
+            unit: units.EnergyMicrojoule,
+            want: "μJ",
+        },
+        {
+            name: "Millijoule abbreviation",
+            unit: units.EnergyMillijoule,
+            want: "mJ",
+        },
+        {
+            name: "Kilojoule abbreviation",
+            unit: units.EnergyKilojoule,
+            want: "kJ",
+        },
+        {
+            name: "Megajoule abbreviation",
+            unit: units.EnergyMegajoule,
+            want: "MJ",
+        },
+        {
+            name: "Gigajoule abbreviation",
+            unit: units.EnergyGigajoule,
+            want: "GJ",
+        },
+        {
+            name: "Terajoule abbreviation",
+            unit: units.EnergyTerajoule,
+            want: "TJ",
+        },
+        {
+            name: "Petajoule abbreviation",
+            unit: units.EnergyPetajoule,
+            want: "PJ",
+        },
+        {
+            name: "Kilocalorie abbreviation",
+            unit: units.EnergyKilocalorie,
+            want: "kcal",
+        },
+        {
+            name: "Megacalorie abbreviation",
+            unit: units.EnergyMegacalorie,
+            want: "Mcal",
+        },
+        {
+            name: "KilobritishThermalUnit abbreviation",
+            unit: units.EnergyKilobritishThermalUnit,
+            want: "kBTU",
+        },
+        {
+            name: "MegabritishThermalUnit abbreviation",
+            unit: units.EnergyMegabritishThermalUnit,
+            want: "MBTU",
+        },
+        {
+            name: "GigabritishThermalUnit abbreviation",
+            unit: units.EnergyGigabritishThermalUnit,
+            want: "GBTU",
+        },
+        {
+            name: "KiloelectronVolt abbreviation",
+            unit: units.EnergyKiloelectronVolt,
+            want: "keV",
+        },
+        {
+            name: "MegaelectronVolt abbreviation",
+            unit: units.EnergyMegaelectronVolt,
+            want: "MeV",
+        },
+        {
+            name: "GigaelectronVolt abbreviation",
+            unit: units.EnergyGigaelectronVolt,
+            want: "GeV",
+        },
+        {
+            name: "TeraelectronVolt abbreviation",
+            unit: units.EnergyTeraelectronVolt,
+            want: "TeV",
+        },
+        {
+            name: "KilowattHour abbreviation",
+            unit: units.EnergyKilowattHour,
+            want: "kWh",
+        },
+        {
+            name: "MegawattHour abbreviation",
+            unit: units.EnergyMegawattHour,
+            want: "MWh",
+        },
+        {
+            name: "GigawattHour abbreviation",
+            unit: units.EnergyGigawattHour,
+            want: "GWh",
+        },
+        {
+            name: "TerawattHour abbreviation",
+            unit: units.EnergyTerawattHour,
+            want: "TWh",
+        },
+        {
+            name: "KilowattDay abbreviation",
+            unit: units.EnergyKilowattDay,
+            want: "kWd",
+        },
+        {
+            name: "MegawattDay abbreviation",
+            unit: units.EnergyMegawattDay,
+            want: "MWd",
+        },
+        {
+            name: "GigawattDay abbreviation",
+            unit: units.EnergyGigawattDay,
+            want: "GWd",
+        },
+        {
+            name: "TerawattDay abbreviation",
+            unit: units.EnergyTerawattDay,
+            want: "TWd",
+        },
+        {
+            name: "DecathermEc abbreviation",
+            unit: units.EnergyDecathermEc,
+            want: "dath (E.C.)",
+        },
+        {
+            name: "DecathermUs abbreviation",
+            unit: units.EnergyDecathermUs,
+            want: "dath (U.S.)",
+        },
+        {
+            name: "DecathermImperial abbreviation",
+            unit: units.EnergyDecathermImperial,
+            want: "dath (imp.)",
+        },
+        {
+            name: "invalid unit",
+            unit: units.EnergyUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetEnergyAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetEnergyAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestEnergy_String(t *testing.T) {
+    factory := units.EnergyFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateEnergy(tt.value, units.EnergyJoule)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Energy.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

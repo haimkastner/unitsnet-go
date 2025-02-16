@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to WattsPerSquareMeter.
 		// No expected conversion value provided for WattsPerSquareMeter, verifying result is not NaN.
 		result := a.WattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerSquareMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to WattsPerSquareInch.
 		// No expected conversion value provided for WattsPerSquareInch, verifying result is not NaN.
 		result := a.WattsPerSquareInch()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerSquareInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerSquareInch returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to WattsPerSquareFoot.
 		// No expected conversion value provided for WattsPerSquareFoot, verifying result is not NaN.
 		result := a.WattsPerSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerSquareFoot returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to BtusPerSecondSquareInch.
 		// No expected conversion value provided for BtusPerSecondSquareInch, verifying result is not NaN.
 		result := a.BtusPerSecondSquareInch()
-		if math.IsNaN(result) {
+		cacheResult := a.BtusPerSecondSquareInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BtusPerSecondSquareInch returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to BtusPerSecondSquareFoot.
 		// No expected conversion value provided for BtusPerSecondSquareFoot, verifying result is not NaN.
 		result := a.BtusPerSecondSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.BtusPerSecondSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BtusPerSecondSquareFoot returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to BtusPerMinuteSquareFoot.
 		// No expected conversion value provided for BtusPerMinuteSquareFoot, verifying result is not NaN.
 		result := a.BtusPerMinuteSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.BtusPerMinuteSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BtusPerMinuteSquareFoot returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to BtusPerHourSquareFoot.
 		// No expected conversion value provided for BtusPerHourSquareFoot, verifying result is not NaN.
 		result := a.BtusPerHourSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.BtusPerHourSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BtusPerHourSquareFoot returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to CaloriesPerSecondSquareCentimeter.
 		// No expected conversion value provided for CaloriesPerSecondSquareCentimeter, verifying result is not NaN.
 		result := a.CaloriesPerSecondSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.CaloriesPerSecondSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CaloriesPerSecondSquareCentimeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to KilocaloriesPerHourSquareMeter.
 		// No expected conversion value provided for KilocaloriesPerHourSquareMeter, verifying result is not NaN.
 		result := a.KilocaloriesPerHourSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocaloriesPerHourSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocaloriesPerHourSquareMeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to PoundsForcePerFootSecond.
 		// No expected conversion value provided for PoundsForcePerFootSecond, verifying result is not NaN.
 		result := a.PoundsForcePerFootSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForcePerFootSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForcePerFootSecond returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to PoundsPerSecondCubed.
 		// No expected conversion value provided for PoundsPerSecondCubed, verifying result is not NaN.
 		result := a.PoundsPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerSecondCubed returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to NanowattsPerSquareMeter.
 		// No expected conversion value provided for NanowattsPerSquareMeter, verifying result is not NaN.
 		result := a.NanowattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanowattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanowattsPerSquareMeter returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to MicrowattsPerSquareMeter.
 		// No expected conversion value provided for MicrowattsPerSquareMeter, verifying result is not NaN.
 		result := a.MicrowattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrowattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrowattsPerSquareMeter returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerSquareMeter.
 		// No expected conversion value provided for MilliwattsPerSquareMeter, verifying result is not NaN.
 		result := a.MilliwattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerSquareMeter returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to CentiwattsPerSquareMeter.
 		// No expected conversion value provided for CentiwattsPerSquareMeter, verifying result is not NaN.
 		result := a.CentiwattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.CentiwattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentiwattsPerSquareMeter returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to DeciwattsPerSquareMeter.
 		// No expected conversion value provided for DeciwattsPerSquareMeter, verifying result is not NaN.
 		result := a.DeciwattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.DeciwattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DeciwattsPerSquareMeter returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to KilowattsPerSquareMeter.
 		// No expected conversion value provided for KilowattsPerSquareMeter, verifying result is not NaN.
 		result := a.KilowattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerSquareMeter returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestHeatFluxConversions(t *testing.T) {
 		// Test conversion to KilocaloriesPerSecondSquareCentimeter.
 		// No expected conversion value provided for KilocaloriesPerSecondSquareCentimeter, verifying result is not NaN.
 		result := a.KilocaloriesPerSecondSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocaloriesPerSecondSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocaloriesPerSecondSquareCentimeter returned NaN")
 		}
 	}
@@ -1726,4 +1745,180 @@ func TestHeatFlux_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetHeatFluxAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.HeatFluxUnits
+        want string
+    }{
+        {
+            name: "WattPerSquareMeter abbreviation",
+            unit: units.HeatFluxWattPerSquareMeter,
+            want: "W/m²",
+        },
+        {
+            name: "WattPerSquareInch abbreviation",
+            unit: units.HeatFluxWattPerSquareInch,
+            want: "W/in²",
+        },
+        {
+            name: "WattPerSquareFoot abbreviation",
+            unit: units.HeatFluxWattPerSquareFoot,
+            want: "W/ft²",
+        },
+        {
+            name: "BtuPerSecondSquareInch abbreviation",
+            unit: units.HeatFluxBtuPerSecondSquareInch,
+            want: "BTU/s·in²",
+        },
+        {
+            name: "BtuPerSecondSquareFoot abbreviation",
+            unit: units.HeatFluxBtuPerSecondSquareFoot,
+            want: "BTU/s·ft²",
+        },
+        {
+            name: "BtuPerMinuteSquareFoot abbreviation",
+            unit: units.HeatFluxBtuPerMinuteSquareFoot,
+            want: "BTU/min·ft²",
+        },
+        {
+            name: "BtuPerHourSquareFoot abbreviation",
+            unit: units.HeatFluxBtuPerHourSquareFoot,
+            want: "BTU/h·ft²",
+        },
+        {
+            name: "CaloriePerSecondSquareCentimeter abbreviation",
+            unit: units.HeatFluxCaloriePerSecondSquareCentimeter,
+            want: "cal/s·cm²",
+        },
+        {
+            name: "KilocaloriePerHourSquareMeter abbreviation",
+            unit: units.HeatFluxKilocaloriePerHourSquareMeter,
+            want: "kcal/h·m²",
+        },
+        {
+            name: "PoundForcePerFootSecond abbreviation",
+            unit: units.HeatFluxPoundForcePerFootSecond,
+            want: "lbf/(ft·s)",
+        },
+        {
+            name: "PoundPerSecondCubed abbreviation",
+            unit: units.HeatFluxPoundPerSecondCubed,
+            want: "lb/s³",
+        },
+        {
+            name: "NanowattPerSquareMeter abbreviation",
+            unit: units.HeatFluxNanowattPerSquareMeter,
+            want: "nW/m²",
+        },
+        {
+            name: "MicrowattPerSquareMeter abbreviation",
+            unit: units.HeatFluxMicrowattPerSquareMeter,
+            want: "μW/m²",
+        },
+        {
+            name: "MilliwattPerSquareMeter abbreviation",
+            unit: units.HeatFluxMilliwattPerSquareMeter,
+            want: "mW/m²",
+        },
+        {
+            name: "CentiwattPerSquareMeter abbreviation",
+            unit: units.HeatFluxCentiwattPerSquareMeter,
+            want: "cW/m²",
+        },
+        {
+            name: "DeciwattPerSquareMeter abbreviation",
+            unit: units.HeatFluxDeciwattPerSquareMeter,
+            want: "dW/m²",
+        },
+        {
+            name: "KilowattPerSquareMeter abbreviation",
+            unit: units.HeatFluxKilowattPerSquareMeter,
+            want: "kW/m²",
+        },
+        {
+            name: "KilocaloriePerSecondSquareCentimeter abbreviation",
+            unit: units.HeatFluxKilocaloriePerSecondSquareCentimeter,
+            want: "kcal/s·cm²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.HeatFluxUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetHeatFluxAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetHeatFluxAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestHeatFlux_String(t *testing.T) {
+    factory := units.HeatFluxFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateHeatFlux(tt.value, units.HeatFluxWattPerSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("HeatFlux.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

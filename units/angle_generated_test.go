@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Radians.
 		// No expected conversion value provided for Radians, verifying result is not NaN.
 		result := a.Radians()
-		if math.IsNaN(result) {
+		cacheResult := a.Radians()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Radians returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Degrees.
 		// No expected conversion value provided for Degrees, verifying result is not NaN.
 		result := a.Degrees()
-		if math.IsNaN(result) {
+		cacheResult := a.Degrees()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Degrees returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Arcminutes.
 		// No expected conversion value provided for Arcminutes, verifying result is not NaN.
 		result := a.Arcminutes()
-		if math.IsNaN(result) {
+		cacheResult := a.Arcminutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Arcminutes returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Arcseconds.
 		// No expected conversion value provided for Arcseconds, verifying result is not NaN.
 		result := a.Arcseconds()
-		if math.IsNaN(result) {
+		cacheResult := a.Arcseconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Arcseconds returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Gradians.
 		// No expected conversion value provided for Gradians, verifying result is not NaN.
 		result := a.Gradians()
-		if math.IsNaN(result) {
+		cacheResult := a.Gradians()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gradians returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to NatoMils.
 		// No expected conversion value provided for NatoMils, verifying result is not NaN.
 		result := a.NatoMils()
-		if math.IsNaN(result) {
+		cacheResult := a.NatoMils()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NatoMils returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Revolutions.
 		// No expected conversion value provided for Revolutions, verifying result is not NaN.
 		result := a.Revolutions()
-		if math.IsNaN(result) {
+		cacheResult := a.Revolutions()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Revolutions returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Tilt.
 		// No expected conversion value provided for Tilt, verifying result is not NaN.
 		result := a.Tilt()
-		if math.IsNaN(result) {
+		cacheResult := a.Tilt()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Tilt returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Nanoradians.
 		// No expected conversion value provided for Nanoradians, verifying result is not NaN.
 		result := a.Nanoradians()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanoradians()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanoradians returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Microradians.
 		// No expected conversion value provided for Microradians, verifying result is not NaN.
 		result := a.Microradians()
-		if math.IsNaN(result) {
+		cacheResult := a.Microradians()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microradians returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Milliradians.
 		// No expected conversion value provided for Milliradians, verifying result is not NaN.
 		result := a.Milliradians()
-		if math.IsNaN(result) {
+		cacheResult := a.Milliradians()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milliradians returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Centiradians.
 		// No expected conversion value provided for Centiradians, verifying result is not NaN.
 		result := a.Centiradians()
-		if math.IsNaN(result) {
+		cacheResult := a.Centiradians()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centiradians returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Deciradians.
 		// No expected conversion value provided for Deciradians, verifying result is not NaN.
 		result := a.Deciradians()
-		if math.IsNaN(result) {
+		cacheResult := a.Deciradians()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Deciradians returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Nanodegrees.
 		// No expected conversion value provided for Nanodegrees, verifying result is not NaN.
 		result := a.Nanodegrees()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanodegrees()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanodegrees returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Microdegrees.
 		// No expected conversion value provided for Microdegrees, verifying result is not NaN.
 		result := a.Microdegrees()
-		if math.IsNaN(result) {
+		cacheResult := a.Microdegrees()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microdegrees returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestAngleConversions(t *testing.T) {
 		// Test conversion to Millidegrees.
 		// No expected conversion value provided for Millidegrees, verifying result is not NaN.
 		result := a.Millidegrees()
-		if math.IsNaN(result) {
+		cacheResult := a.Millidegrees()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millidegrees returned NaN")
 		}
 	}
@@ -1566,4 +1583,170 @@ func TestAngle_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetAngleAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.AngleUnits
+        want string
+    }{
+        {
+            name: "Radian abbreviation",
+            unit: units.AngleRadian,
+            want: "rad",
+        },
+        {
+            name: "Degree abbreviation",
+            unit: units.AngleDegree,
+            want: "°",
+        },
+        {
+            name: "Arcminute abbreviation",
+            unit: units.AngleArcminute,
+            want: "'",
+        },
+        {
+            name: "Arcsecond abbreviation",
+            unit: units.AngleArcsecond,
+            want: "″",
+        },
+        {
+            name: "Gradian abbreviation",
+            unit: units.AngleGradian,
+            want: "g",
+        },
+        {
+            name: "NatoMil abbreviation",
+            unit: units.AngleNatoMil,
+            want: "mil",
+        },
+        {
+            name: "Revolution abbreviation",
+            unit: units.AngleRevolution,
+            want: "r",
+        },
+        {
+            name: "Tilt abbreviation",
+            unit: units.AngleTilt,
+            want: "sin(θ)",
+        },
+        {
+            name: "Nanoradian abbreviation",
+            unit: units.AngleNanoradian,
+            want: "nrad",
+        },
+        {
+            name: "Microradian abbreviation",
+            unit: units.AngleMicroradian,
+            want: "μrad",
+        },
+        {
+            name: "Milliradian abbreviation",
+            unit: units.AngleMilliradian,
+            want: "mrad",
+        },
+        {
+            name: "Centiradian abbreviation",
+            unit: units.AngleCentiradian,
+            want: "crad",
+        },
+        {
+            name: "Deciradian abbreviation",
+            unit: units.AngleDeciradian,
+            want: "drad",
+        },
+        {
+            name: "Nanodegree abbreviation",
+            unit: units.AngleNanodegree,
+            want: "n°",
+        },
+        {
+            name: "Microdegree abbreviation",
+            unit: units.AngleMicrodegree,
+            want: "μ°",
+        },
+        {
+            name: "Millidegree abbreviation",
+            unit: units.AngleMillidegree,
+            want: "m°",
+        },
+        {
+            name: "invalid unit",
+            unit: units.AngleUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetAngleAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetAngleAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestAngle_String(t *testing.T) {
+    factory := units.AngleFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateAngle(tt.value, units.AngleDegree)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Angle.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

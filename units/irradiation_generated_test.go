@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestIrradiationConversions(t *testing.T) {
 		// Test conversion to JoulesPerSquareMeter.
 		// No expected conversion value provided for JoulesPerSquareMeter, verifying result is not NaN.
 		result := a.JoulesPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerSquareMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestIrradiationConversions(t *testing.T) {
 		// Test conversion to JoulesPerSquareCentimeter.
 		// No expected conversion value provided for JoulesPerSquareCentimeter, verifying result is not NaN.
 		result := a.JoulesPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerSquareCentimeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestIrradiationConversions(t *testing.T) {
 		// Test conversion to JoulesPerSquareMillimeter.
 		// No expected conversion value provided for JoulesPerSquareMillimeter, verifying result is not NaN.
 		result := a.JoulesPerSquareMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerSquareMillimeter returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestIrradiationConversions(t *testing.T) {
 		// Test conversion to WattHoursPerSquareMeter.
 		// No expected conversion value provided for WattHoursPerSquareMeter, verifying result is not NaN.
 		result := a.WattHoursPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattHoursPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattHoursPerSquareMeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestIrradiationConversions(t *testing.T) {
 		// Test conversion to BtusPerSquareFoot.
 		// No expected conversion value provided for BtusPerSquareFoot, verifying result is not NaN.
 		result := a.BtusPerSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.BtusPerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BtusPerSquareFoot returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestIrradiationConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerSquareMeter.
 		// No expected conversion value provided for KilojoulesPerSquareMeter, verifying result is not NaN.
 		result := a.KilojoulesPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerSquareMeter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestIrradiationConversions(t *testing.T) {
 		// Test conversion to MillijoulesPerSquareCentimeter.
 		// No expected conversion value provided for MillijoulesPerSquareCentimeter, verifying result is not NaN.
 		result := a.MillijoulesPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MillijoulesPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillijoulesPerSquareCentimeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestIrradiationConversions(t *testing.T) {
 		// Test conversion to KilowattHoursPerSquareMeter.
 		// No expected conversion value provided for KilowattHoursPerSquareMeter, verifying result is not NaN.
 		result := a.KilowattHoursPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattHoursPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattHoursPerSquareMeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestIrradiationConversions(t *testing.T) {
 		// Test conversion to KilobtusPerSquareFoot.
 		// No expected conversion value provided for KilobtusPerSquareFoot, verifying result is not NaN.
 		result := a.KilobtusPerSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.KilobtusPerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilobtusPerSquareFoot returned NaN")
 		}
 	}
@@ -1006,4 +1016,135 @@ func TestIrradiation_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetIrradiationAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.IrradiationUnits
+        want string
+    }{
+        {
+            name: "JoulePerSquareMeter abbreviation",
+            unit: units.IrradiationJoulePerSquareMeter,
+            want: "J/m²",
+        },
+        {
+            name: "JoulePerSquareCentimeter abbreviation",
+            unit: units.IrradiationJoulePerSquareCentimeter,
+            want: "J/cm²",
+        },
+        {
+            name: "JoulePerSquareMillimeter abbreviation",
+            unit: units.IrradiationJoulePerSquareMillimeter,
+            want: "J/mm²",
+        },
+        {
+            name: "WattHourPerSquareMeter abbreviation",
+            unit: units.IrradiationWattHourPerSquareMeter,
+            want: "Wh/m²",
+        },
+        {
+            name: "BtuPerSquareFoot abbreviation",
+            unit: units.IrradiationBtuPerSquareFoot,
+            want: "Btu/ft²",
+        },
+        {
+            name: "KilojoulePerSquareMeter abbreviation",
+            unit: units.IrradiationKilojoulePerSquareMeter,
+            want: "kJ/m²",
+        },
+        {
+            name: "MillijoulePerSquareCentimeter abbreviation",
+            unit: units.IrradiationMillijoulePerSquareCentimeter,
+            want: "mJ/cm²",
+        },
+        {
+            name: "KilowattHourPerSquareMeter abbreviation",
+            unit: units.IrradiationKilowattHourPerSquareMeter,
+            want: "kWh/m²",
+        },
+        {
+            name: "KilobtuPerSquareFoot abbreviation",
+            unit: units.IrradiationKilobtuPerSquareFoot,
+            want: "kBtu/ft²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.IrradiationUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetIrradiationAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetIrradiationAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestIrradiation_String(t *testing.T) {
+    factory := units.IrradiationFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateIrradiation(tt.value, units.IrradiationJoulePerSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Irradiation.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

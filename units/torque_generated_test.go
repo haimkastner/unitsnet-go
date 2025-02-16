@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to NewtonMillimeters.
 		// No expected conversion value provided for NewtonMillimeters, verifying result is not NaN.
 		result := a.NewtonMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonMillimeters returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to NewtonCentimeters.
 		// No expected conversion value provided for NewtonCentimeters, verifying result is not NaN.
 		result := a.NewtonCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonCentimeters returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to NewtonMeters.
 		// No expected conversion value provided for NewtonMeters, verifying result is not NaN.
 		result := a.NewtonMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonMeters returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to PoundalFeet.
 		// No expected conversion value provided for PoundalFeet, verifying result is not NaN.
 		result := a.PoundalFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundalFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundalFeet returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to PoundForceInches.
 		// No expected conversion value provided for PoundForceInches, verifying result is not NaN.
 		result := a.PoundForceInches()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundForceInches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundForceInches returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to PoundForceFeet.
 		// No expected conversion value provided for PoundForceFeet, verifying result is not NaN.
 		result := a.PoundForceFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundForceFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundForceFeet returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to GramForceMillimeters.
 		// No expected conversion value provided for GramForceMillimeters, verifying result is not NaN.
 		result := a.GramForceMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GramForceMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramForceMillimeters returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to GramForceCentimeters.
 		// No expected conversion value provided for GramForceCentimeters, verifying result is not NaN.
 		result := a.GramForceCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GramForceCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramForceCentimeters returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to GramForceMeters.
 		// No expected conversion value provided for GramForceMeters, verifying result is not NaN.
 		result := a.GramForceMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GramForceMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramForceMeters returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to KilogramForceMillimeters.
 		// No expected conversion value provided for KilogramForceMillimeters, verifying result is not NaN.
 		result := a.KilogramForceMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramForceMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramForceMillimeters returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to KilogramForceCentimeters.
 		// No expected conversion value provided for KilogramForceCentimeters, verifying result is not NaN.
 		result := a.KilogramForceCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramForceCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramForceCentimeters returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to KilogramForceMeters.
 		// No expected conversion value provided for KilogramForceMeters, verifying result is not NaN.
 		result := a.KilogramForceMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramForceMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramForceMeters returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to TonneForceMillimeters.
 		// No expected conversion value provided for TonneForceMillimeters, verifying result is not NaN.
 		result := a.TonneForceMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.TonneForceMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonneForceMillimeters returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to TonneForceCentimeters.
 		// No expected conversion value provided for TonneForceCentimeters, verifying result is not NaN.
 		result := a.TonneForceCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.TonneForceCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonneForceCentimeters returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to TonneForceMeters.
 		// No expected conversion value provided for TonneForceMeters, verifying result is not NaN.
 		result := a.TonneForceMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.TonneForceMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonneForceMeters returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to KilonewtonMillimeters.
 		// No expected conversion value provided for KilonewtonMillimeters, verifying result is not NaN.
 		result := a.KilonewtonMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonMillimeters returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to MeganewtonMillimeters.
 		// No expected conversion value provided for MeganewtonMillimeters, verifying result is not NaN.
 		result := a.MeganewtonMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonMillimeters returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to KilonewtonCentimeters.
 		// No expected conversion value provided for KilonewtonCentimeters, verifying result is not NaN.
 		result := a.KilonewtonCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonCentimeters returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to MeganewtonCentimeters.
 		// No expected conversion value provided for MeganewtonCentimeters, verifying result is not NaN.
 		result := a.MeganewtonCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonCentimeters returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to KilonewtonMeters.
 		// No expected conversion value provided for KilonewtonMeters, verifying result is not NaN.
 		result := a.KilonewtonMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonMeters returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to MeganewtonMeters.
 		// No expected conversion value provided for MeganewtonMeters, verifying result is not NaN.
 		result := a.MeganewtonMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonMeters returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to KilopoundForceInches.
 		// No expected conversion value provided for KilopoundForceInches, verifying result is not NaN.
 		result := a.KilopoundForceInches()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundForceInches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundForceInches returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to MegapoundForceInches.
 		// No expected conversion value provided for MegapoundForceInches, verifying result is not NaN.
 		result := a.MegapoundForceInches()
-		if math.IsNaN(result) {
+		cacheResult := a.MegapoundForceInches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegapoundForceInches returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to KilopoundForceFeet.
 		// No expected conversion value provided for KilopoundForceFeet, verifying result is not NaN.
 		result := a.KilopoundForceFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundForceFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundForceFeet returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestTorqueConversions(t *testing.T) {
 		// Test conversion to MegapoundForceFeet.
 		// No expected conversion value provided for MegapoundForceFeet, verifying result is not NaN.
 		result := a.MegapoundForceFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.MegapoundForceFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegapoundForceFeet returned NaN")
 		}
 	}
@@ -2286,4 +2312,215 @@ func TestTorque_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetTorqueAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.TorqueUnits
+        want string
+    }{
+        {
+            name: "NewtonMillimeter abbreviation",
+            unit: units.TorqueNewtonMillimeter,
+            want: "N·mm",
+        },
+        {
+            name: "NewtonCentimeter abbreviation",
+            unit: units.TorqueNewtonCentimeter,
+            want: "N·cm",
+        },
+        {
+            name: "NewtonMeter abbreviation",
+            unit: units.TorqueNewtonMeter,
+            want: "N·m",
+        },
+        {
+            name: "PoundalFoot abbreviation",
+            unit: units.TorquePoundalFoot,
+            want: "pdl·ft",
+        },
+        {
+            name: "PoundForceInch abbreviation",
+            unit: units.TorquePoundForceInch,
+            want: "lbf·in",
+        },
+        {
+            name: "PoundForceFoot abbreviation",
+            unit: units.TorquePoundForceFoot,
+            want: "lbf·ft",
+        },
+        {
+            name: "GramForceMillimeter abbreviation",
+            unit: units.TorqueGramForceMillimeter,
+            want: "gf·mm",
+        },
+        {
+            name: "GramForceCentimeter abbreviation",
+            unit: units.TorqueGramForceCentimeter,
+            want: "gf·cm",
+        },
+        {
+            name: "GramForceMeter abbreviation",
+            unit: units.TorqueGramForceMeter,
+            want: "gf·m",
+        },
+        {
+            name: "KilogramForceMillimeter abbreviation",
+            unit: units.TorqueKilogramForceMillimeter,
+            want: "kgf·mm",
+        },
+        {
+            name: "KilogramForceCentimeter abbreviation",
+            unit: units.TorqueKilogramForceCentimeter,
+            want: "kgf·cm",
+        },
+        {
+            name: "KilogramForceMeter abbreviation",
+            unit: units.TorqueKilogramForceMeter,
+            want: "kgf·m",
+        },
+        {
+            name: "TonneForceMillimeter abbreviation",
+            unit: units.TorqueTonneForceMillimeter,
+            want: "tf·mm",
+        },
+        {
+            name: "TonneForceCentimeter abbreviation",
+            unit: units.TorqueTonneForceCentimeter,
+            want: "tf·cm",
+        },
+        {
+            name: "TonneForceMeter abbreviation",
+            unit: units.TorqueTonneForceMeter,
+            want: "tf·m",
+        },
+        {
+            name: "KilonewtonMillimeter abbreviation",
+            unit: units.TorqueKilonewtonMillimeter,
+            want: "kN·mm",
+        },
+        {
+            name: "MeganewtonMillimeter abbreviation",
+            unit: units.TorqueMeganewtonMillimeter,
+            want: "MN·mm",
+        },
+        {
+            name: "KilonewtonCentimeter abbreviation",
+            unit: units.TorqueKilonewtonCentimeter,
+            want: "kN·cm",
+        },
+        {
+            name: "MeganewtonCentimeter abbreviation",
+            unit: units.TorqueMeganewtonCentimeter,
+            want: "MN·cm",
+        },
+        {
+            name: "KilonewtonMeter abbreviation",
+            unit: units.TorqueKilonewtonMeter,
+            want: "kN·m",
+        },
+        {
+            name: "MeganewtonMeter abbreviation",
+            unit: units.TorqueMeganewtonMeter,
+            want: "MN·m",
+        },
+        {
+            name: "KilopoundForceInch abbreviation",
+            unit: units.TorqueKilopoundForceInch,
+            want: "klbf·in",
+        },
+        {
+            name: "MegapoundForceInch abbreviation",
+            unit: units.TorqueMegapoundForceInch,
+            want: "Mlbf·in",
+        },
+        {
+            name: "KilopoundForceFoot abbreviation",
+            unit: units.TorqueKilopoundForceFoot,
+            want: "klbf·ft",
+        },
+        {
+            name: "MegapoundForceFoot abbreviation",
+            unit: units.TorqueMegapoundForceFoot,
+            want: "Mlbf·ft",
+        },
+        {
+            name: "invalid unit",
+            unit: units.TorqueUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetTorqueAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetTorqueAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestTorque_String(t *testing.T) {
+    factory := units.TorqueFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateTorque(tt.value, units.TorqueNewtonMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Torque.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

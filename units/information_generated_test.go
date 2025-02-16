@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Bytes.
 		// No expected conversion value provided for Bytes, verifying result is not NaN.
 		result := a.Bytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Bytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Bytes returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Bits.
 		// No expected conversion value provided for Bits, verifying result is not NaN.
 		result := a.Bits()
-		if math.IsNaN(result) {
+		cacheResult := a.Bits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Bits returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Kilobytes.
 		// No expected conversion value provided for Kilobytes, verifying result is not NaN.
 		result := a.Kilobytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilobytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilobytes returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Megabytes.
 		// No expected conversion value provided for Megabytes, verifying result is not NaN.
 		result := a.Megabytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Megabytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megabytes returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Gigabytes.
 		// No expected conversion value provided for Gigabytes, verifying result is not NaN.
 		result := a.Gigabytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigabytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigabytes returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Terabytes.
 		// No expected conversion value provided for Terabytes, verifying result is not NaN.
 		result := a.Terabytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Terabytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Terabytes returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Petabytes.
 		// No expected conversion value provided for Petabytes, verifying result is not NaN.
 		result := a.Petabytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Petabytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Petabytes returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Exabytes.
 		// No expected conversion value provided for Exabytes, verifying result is not NaN.
 		result := a.Exabytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Exabytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Exabytes returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Kibibytes.
 		// No expected conversion value provided for Kibibytes, verifying result is not NaN.
 		result := a.Kibibytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Kibibytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kibibytes returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Mebibytes.
 		// No expected conversion value provided for Mebibytes, verifying result is not NaN.
 		result := a.Mebibytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Mebibytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Mebibytes returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Gibibytes.
 		// No expected conversion value provided for Gibibytes, verifying result is not NaN.
 		result := a.Gibibytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Gibibytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gibibytes returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Tebibytes.
 		// No expected conversion value provided for Tebibytes, verifying result is not NaN.
 		result := a.Tebibytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Tebibytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Tebibytes returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Pebibytes.
 		// No expected conversion value provided for Pebibytes, verifying result is not NaN.
 		result := a.Pebibytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Pebibytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Pebibytes returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Exbibytes.
 		// No expected conversion value provided for Exbibytes, verifying result is not NaN.
 		result := a.Exbibytes()
-		if math.IsNaN(result) {
+		cacheResult := a.Exbibytes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Exbibytes returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Kilobits.
 		// No expected conversion value provided for Kilobits, verifying result is not NaN.
 		result := a.Kilobits()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilobits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilobits returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Megabits.
 		// No expected conversion value provided for Megabits, verifying result is not NaN.
 		result := a.Megabits()
-		if math.IsNaN(result) {
+		cacheResult := a.Megabits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megabits returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Gigabits.
 		// No expected conversion value provided for Gigabits, verifying result is not NaN.
 		result := a.Gigabits()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigabits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigabits returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Terabits.
 		// No expected conversion value provided for Terabits, verifying result is not NaN.
 		result := a.Terabits()
-		if math.IsNaN(result) {
+		cacheResult := a.Terabits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Terabits returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Petabits.
 		// No expected conversion value provided for Petabits, verifying result is not NaN.
 		result := a.Petabits()
-		if math.IsNaN(result) {
+		cacheResult := a.Petabits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Petabits returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Exabits.
 		// No expected conversion value provided for Exabits, verifying result is not NaN.
 		result := a.Exabits()
-		if math.IsNaN(result) {
+		cacheResult := a.Exabits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Exabits returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Kibibits.
 		// No expected conversion value provided for Kibibits, verifying result is not NaN.
 		result := a.Kibibits()
-		if math.IsNaN(result) {
+		cacheResult := a.Kibibits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kibibits returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Mebibits.
 		// No expected conversion value provided for Mebibits, verifying result is not NaN.
 		result := a.Mebibits()
-		if math.IsNaN(result) {
+		cacheResult := a.Mebibits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Mebibits returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Gibibits.
 		// No expected conversion value provided for Gibibits, verifying result is not NaN.
 		result := a.Gibibits()
-		if math.IsNaN(result) {
+		cacheResult := a.Gibibits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gibibits returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Tebibits.
 		// No expected conversion value provided for Tebibits, verifying result is not NaN.
 		result := a.Tebibits()
-		if math.IsNaN(result) {
+		cacheResult := a.Tebibits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Tebibits returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Pebibits.
 		// No expected conversion value provided for Pebibits, verifying result is not NaN.
 		result := a.Pebibits()
-		if math.IsNaN(result) {
+		cacheResult := a.Pebibits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Pebibits returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestInformationConversions(t *testing.T) {
 		// Test conversion to Exbibits.
 		// No expected conversion value provided for Exbibits, verifying result is not NaN.
 		result := a.Exbibits()
-		if math.IsNaN(result) {
+		cacheResult := a.Exbibits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Exbibits returned NaN")
 		}
 	}
@@ -2366,4 +2393,220 @@ func TestInformation_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetInformationAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.InformationUnits
+        want string
+    }{
+        {
+            name: "Byte abbreviation",
+            unit: units.InformationByte,
+            want: "B",
+        },
+        {
+            name: "Bit abbreviation",
+            unit: units.InformationBit,
+            want: "b",
+        },
+        {
+            name: "Kilobyte abbreviation",
+            unit: units.InformationKilobyte,
+            want: "kB",
+        },
+        {
+            name: "Megabyte abbreviation",
+            unit: units.InformationMegabyte,
+            want: "MB",
+        },
+        {
+            name: "Gigabyte abbreviation",
+            unit: units.InformationGigabyte,
+            want: "GB",
+        },
+        {
+            name: "Terabyte abbreviation",
+            unit: units.InformationTerabyte,
+            want: "TB",
+        },
+        {
+            name: "Petabyte abbreviation",
+            unit: units.InformationPetabyte,
+            want: "PB",
+        },
+        {
+            name: "Exabyte abbreviation",
+            unit: units.InformationExabyte,
+            want: "EB",
+        },
+        {
+            name: "Kibibyte abbreviation",
+            unit: units.InformationKibibyte,
+            want: "KiBB",
+        },
+        {
+            name: "Mebibyte abbreviation",
+            unit: units.InformationMebibyte,
+            want: "MiBB",
+        },
+        {
+            name: "Gibibyte abbreviation",
+            unit: units.InformationGibibyte,
+            want: "GiBB",
+        },
+        {
+            name: "Tebibyte abbreviation",
+            unit: units.InformationTebibyte,
+            want: "TiBB",
+        },
+        {
+            name: "Pebibyte abbreviation",
+            unit: units.InformationPebibyte,
+            want: "PiBB",
+        },
+        {
+            name: "Exbibyte abbreviation",
+            unit: units.InformationExbibyte,
+            want: "EiBB",
+        },
+        {
+            name: "Kilobit abbreviation",
+            unit: units.InformationKilobit,
+            want: "kb",
+        },
+        {
+            name: "Megabit abbreviation",
+            unit: units.InformationMegabit,
+            want: "Mb",
+        },
+        {
+            name: "Gigabit abbreviation",
+            unit: units.InformationGigabit,
+            want: "Gb",
+        },
+        {
+            name: "Terabit abbreviation",
+            unit: units.InformationTerabit,
+            want: "Tb",
+        },
+        {
+            name: "Petabit abbreviation",
+            unit: units.InformationPetabit,
+            want: "Pb",
+        },
+        {
+            name: "Exabit abbreviation",
+            unit: units.InformationExabit,
+            want: "Eb",
+        },
+        {
+            name: "Kibibit abbreviation",
+            unit: units.InformationKibibit,
+            want: "KiBb",
+        },
+        {
+            name: "Mebibit abbreviation",
+            unit: units.InformationMebibit,
+            want: "MiBb",
+        },
+        {
+            name: "Gibibit abbreviation",
+            unit: units.InformationGibibit,
+            want: "GiBb",
+        },
+        {
+            name: "Tebibit abbreviation",
+            unit: units.InformationTebibit,
+            want: "TiBb",
+        },
+        {
+            name: "Pebibit abbreviation",
+            unit: units.InformationPebibit,
+            want: "PiBb",
+        },
+        {
+            name: "Exbibit abbreviation",
+            unit: units.InformationExbibit,
+            want: "EiBb",
+        },
+        {
+            name: "invalid unit",
+            unit: units.InformationUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetInformationAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetInformationAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestInformation_String(t *testing.T) {
+    factory := units.InformationFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateInformation(tt.value, units.InformationBit)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Information.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

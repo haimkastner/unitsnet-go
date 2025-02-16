@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to Coulombs.
 		// No expected conversion value provided for Coulombs, verifying result is not NaN.
 		result := a.Coulombs()
-		if math.IsNaN(result) {
+		cacheResult := a.Coulombs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Coulombs returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to AmpereHours.
 		// No expected conversion value provided for AmpereHours, verifying result is not NaN.
 		result := a.AmpereHours()
-		if math.IsNaN(result) {
+		cacheResult := a.AmpereHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AmpereHours returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to Picocoulombs.
 		// No expected conversion value provided for Picocoulombs, verifying result is not NaN.
 		result := a.Picocoulombs()
-		if math.IsNaN(result) {
+		cacheResult := a.Picocoulombs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picocoulombs returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to Nanocoulombs.
 		// No expected conversion value provided for Nanocoulombs, verifying result is not NaN.
 		result := a.Nanocoulombs()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanocoulombs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanocoulombs returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to Microcoulombs.
 		// No expected conversion value provided for Microcoulombs, verifying result is not NaN.
 		result := a.Microcoulombs()
-		if math.IsNaN(result) {
+		cacheResult := a.Microcoulombs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microcoulombs returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to Millicoulombs.
 		// No expected conversion value provided for Millicoulombs, verifying result is not NaN.
 		result := a.Millicoulombs()
-		if math.IsNaN(result) {
+		cacheResult := a.Millicoulombs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millicoulombs returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to Kilocoulombs.
 		// No expected conversion value provided for Kilocoulombs, verifying result is not NaN.
 		result := a.Kilocoulombs()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilocoulombs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilocoulombs returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to Megacoulombs.
 		// No expected conversion value provided for Megacoulombs, verifying result is not NaN.
 		result := a.Megacoulombs()
-		if math.IsNaN(result) {
+		cacheResult := a.Megacoulombs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megacoulombs returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to MilliampereHours.
 		// No expected conversion value provided for MilliampereHours, verifying result is not NaN.
 		result := a.MilliampereHours()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliampereHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliampereHours returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to KiloampereHours.
 		// No expected conversion value provided for KiloampereHours, verifying result is not NaN.
 		result := a.KiloampereHours()
-		if math.IsNaN(result) {
+		cacheResult := a.KiloampereHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KiloampereHours returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestElectricChargeConversions(t *testing.T) {
 		// Test conversion to MegaampereHours.
 		// No expected conversion value provided for MegaampereHours, verifying result is not NaN.
 		result := a.MegaampereHours()
-		if math.IsNaN(result) {
+		cacheResult := a.MegaampereHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegaampereHours returned NaN")
 		}
 	}
@@ -1166,4 +1178,145 @@ func TestElectricCharge_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricChargeAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricChargeUnits
+        want string
+    }{
+        {
+            name: "Coulomb abbreviation",
+            unit: units.ElectricChargeCoulomb,
+            want: "C",
+        },
+        {
+            name: "AmpereHour abbreviation",
+            unit: units.ElectricChargeAmpereHour,
+            want: "A-h",
+        },
+        {
+            name: "Picocoulomb abbreviation",
+            unit: units.ElectricChargePicocoulomb,
+            want: "pC",
+        },
+        {
+            name: "Nanocoulomb abbreviation",
+            unit: units.ElectricChargeNanocoulomb,
+            want: "nC",
+        },
+        {
+            name: "Microcoulomb abbreviation",
+            unit: units.ElectricChargeMicrocoulomb,
+            want: "μC",
+        },
+        {
+            name: "Millicoulomb abbreviation",
+            unit: units.ElectricChargeMillicoulomb,
+            want: "mC",
+        },
+        {
+            name: "Kilocoulomb abbreviation",
+            unit: units.ElectricChargeKilocoulomb,
+            want: "kC",
+        },
+        {
+            name: "Megacoulomb abbreviation",
+            unit: units.ElectricChargeMegacoulomb,
+            want: "MC",
+        },
+        {
+            name: "MilliampereHour abbreviation",
+            unit: units.ElectricChargeMilliampereHour,
+            want: "mA-h",
+        },
+        {
+            name: "KiloampereHour abbreviation",
+            unit: units.ElectricChargeKiloampereHour,
+            want: "kA-h",
+        },
+        {
+            name: "MegaampereHour abbreviation",
+            unit: units.ElectricChargeMegaampereHour,
+            want: "MA-h",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricChargeUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricChargeAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricChargeAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricCharge_String(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricCharge(tt.value, units.ElectricChargeCoulomb)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricCharge.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

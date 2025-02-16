@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMagneticFieldConversions(t *testing.T) {
 		// Test conversion to Teslas.
 		// No expected conversion value provided for Teslas, verifying result is not NaN.
 		result := a.Teslas()
-		if math.IsNaN(result) {
+		cacheResult := a.Teslas()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Teslas returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMagneticFieldConversions(t *testing.T) {
 		// Test conversion to Gausses.
 		// No expected conversion value provided for Gausses, verifying result is not NaN.
 		result := a.Gausses()
-		if math.IsNaN(result) {
+		cacheResult := a.Gausses()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gausses returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMagneticFieldConversions(t *testing.T) {
 		// Test conversion to Nanoteslas.
 		// No expected conversion value provided for Nanoteslas, verifying result is not NaN.
 		result := a.Nanoteslas()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanoteslas()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanoteslas returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestMagneticFieldConversions(t *testing.T) {
 		// Test conversion to Microteslas.
 		// No expected conversion value provided for Microteslas, verifying result is not NaN.
 		result := a.Microteslas()
-		if math.IsNaN(result) {
+		cacheResult := a.Microteslas()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microteslas returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestMagneticFieldConversions(t *testing.T) {
 		// Test conversion to Milliteslas.
 		// No expected conversion value provided for Milliteslas, verifying result is not NaN.
 		result := a.Milliteslas()
-		if math.IsNaN(result) {
+		cacheResult := a.Milliteslas()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milliteslas returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestMagneticFieldConversions(t *testing.T) {
 		// Test conversion to Milligausses.
 		// No expected conversion value provided for Milligausses, verifying result is not NaN.
 		result := a.Milligausses()
-		if math.IsNaN(result) {
+		cacheResult := a.Milligausses()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milligausses returned NaN")
 		}
 	}
@@ -766,4 +773,120 @@ func TestMagneticField_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMagneticFieldAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MagneticFieldUnits
+        want string
+    }{
+        {
+            name: "Tesla abbreviation",
+            unit: units.MagneticFieldTesla,
+            want: "T",
+        },
+        {
+            name: "Gauss abbreviation",
+            unit: units.MagneticFieldGauss,
+            want: "G",
+        },
+        {
+            name: "Nanotesla abbreviation",
+            unit: units.MagneticFieldNanotesla,
+            want: "nT",
+        },
+        {
+            name: "Microtesla abbreviation",
+            unit: units.MagneticFieldMicrotesla,
+            want: "μT",
+        },
+        {
+            name: "Millitesla abbreviation",
+            unit: units.MagneticFieldMillitesla,
+            want: "mT",
+        },
+        {
+            name: "Milligauss abbreviation",
+            unit: units.MagneticFieldMilligauss,
+            want: "mG",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MagneticFieldUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMagneticFieldAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMagneticFieldAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMagneticField_String(t *testing.T) {
+    factory := units.MagneticFieldFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMagneticField(tt.value, units.MagneticFieldTesla)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("MagneticField.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

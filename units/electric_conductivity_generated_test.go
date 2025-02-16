@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricConductivityConversions(t *testing.T) {
 		// Test conversion to SiemensPerMeter.
 		// No expected conversion value provided for SiemensPerMeter, verifying result is not NaN.
 		result := a.SiemensPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.SiemensPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SiemensPerMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricConductivityConversions(t *testing.T) {
 		// Test conversion to SiemensPerInch.
 		// No expected conversion value provided for SiemensPerInch, verifying result is not NaN.
 		result := a.SiemensPerInch()
-		if math.IsNaN(result) {
+		cacheResult := a.SiemensPerInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SiemensPerInch returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricConductivityConversions(t *testing.T) {
 		// Test conversion to SiemensPerFoot.
 		// No expected conversion value provided for SiemensPerFoot, verifying result is not NaN.
 		result := a.SiemensPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.SiemensPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SiemensPerFoot returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricConductivityConversions(t *testing.T) {
 		// Test conversion to SiemensPerCentimeter.
 		// No expected conversion value provided for SiemensPerCentimeter, verifying result is not NaN.
 		result := a.SiemensPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.SiemensPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SiemensPerCentimeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricConductivityConversions(t *testing.T) {
 		// Test conversion to MicrosiemensPerCentimeter.
 		// No expected conversion value provided for MicrosiemensPerCentimeter, verifying result is not NaN.
 		result := a.MicrosiemensPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrosiemensPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrosiemensPerCentimeter returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricConductivityConversions(t *testing.T) {
 		// Test conversion to MillisiemensPerCentimeter.
 		// No expected conversion value provided for MillisiemensPerCentimeter, verifying result is not NaN.
 		result := a.MillisiemensPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MillisiemensPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillisiemensPerCentimeter returned NaN")
 		}
 	}
@@ -766,4 +773,120 @@ func TestElectricConductivity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricConductivityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricConductivityUnits
+        want string
+    }{
+        {
+            name: "SiemensPerMeter abbreviation",
+            unit: units.ElectricConductivitySiemensPerMeter,
+            want: "S/m",
+        },
+        {
+            name: "SiemensPerInch abbreviation",
+            unit: units.ElectricConductivitySiemensPerInch,
+            want: "S/in",
+        },
+        {
+            name: "SiemensPerFoot abbreviation",
+            unit: units.ElectricConductivitySiemensPerFoot,
+            want: "S/ft",
+        },
+        {
+            name: "SiemensPerCentimeter abbreviation",
+            unit: units.ElectricConductivitySiemensPerCentimeter,
+            want: "S/cm",
+        },
+        {
+            name: "MicrosiemensPerCentimeter abbreviation",
+            unit: units.ElectricConductivityMicrosiemensPerCentimeter,
+            want: "μS/cm",
+        },
+        {
+            name: "MillisiemensPerCentimeter abbreviation",
+            unit: units.ElectricConductivityMillisiemensPerCentimeter,
+            want: "mS/cm",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricConductivityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricConductivityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricConductivityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricConductivity_String(t *testing.T) {
+    factory := units.ElectricConductivityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricConductivity(tt.value, units.ElectricConductivitySiemensPerMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricConductivity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

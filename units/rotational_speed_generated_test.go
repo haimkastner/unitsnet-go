@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to RadiansPerSecond.
 		// No expected conversion value provided for RadiansPerSecond, verifying result is not NaN.
 		result := a.RadiansPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.RadiansPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to RadiansPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to DegreesPerSecond.
 		// No expected conversion value provided for DegreesPerSecond, verifying result is not NaN.
 		result := a.DegreesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesPerSecond returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to DegreesPerMinute.
 		// No expected conversion value provided for DegreesPerMinute, verifying result is not NaN.
 		result := a.DegreesPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesPerMinute returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to RevolutionsPerSecond.
 		// No expected conversion value provided for RevolutionsPerSecond, verifying result is not NaN.
 		result := a.RevolutionsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.RevolutionsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to RevolutionsPerSecond returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to RevolutionsPerMinute.
 		// No expected conversion value provided for RevolutionsPerMinute, verifying result is not NaN.
 		result := a.RevolutionsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.RevolutionsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to RevolutionsPerMinute returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to NanoradiansPerSecond.
 		// No expected conversion value provided for NanoradiansPerSecond, verifying result is not NaN.
 		result := a.NanoradiansPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.NanoradiansPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanoradiansPerSecond returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to MicroradiansPerSecond.
 		// No expected conversion value provided for MicroradiansPerSecond, verifying result is not NaN.
 		result := a.MicroradiansPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MicroradiansPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicroradiansPerSecond returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to MilliradiansPerSecond.
 		// No expected conversion value provided for MilliradiansPerSecond, verifying result is not NaN.
 		result := a.MilliradiansPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliradiansPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliradiansPerSecond returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to CentiradiansPerSecond.
 		// No expected conversion value provided for CentiradiansPerSecond, verifying result is not NaN.
 		result := a.CentiradiansPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CentiradiansPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentiradiansPerSecond returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to DeciradiansPerSecond.
 		// No expected conversion value provided for DeciradiansPerSecond, verifying result is not NaN.
 		result := a.DeciradiansPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DeciradiansPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DeciradiansPerSecond returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to NanodegreesPerSecond.
 		// No expected conversion value provided for NanodegreesPerSecond, verifying result is not NaN.
 		result := a.NanodegreesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.NanodegreesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanodegreesPerSecond returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to MicrodegreesPerSecond.
 		// No expected conversion value provided for MicrodegreesPerSecond, verifying result is not NaN.
 		result := a.MicrodegreesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrodegreesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrodegreesPerSecond returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestRotationalSpeedConversions(t *testing.T) {
 		// Test conversion to MillidegreesPerSecond.
 		// No expected conversion value provided for MillidegreesPerSecond, verifying result is not NaN.
 		result := a.MillidegreesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MillidegreesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillidegreesPerSecond returned NaN")
 		}
 	}
@@ -1326,4 +1340,155 @@ func TestRotationalSpeed_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetRotationalSpeedAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.RotationalSpeedUnits
+        want string
+    }{
+        {
+            name: "RadianPerSecond abbreviation",
+            unit: units.RotationalSpeedRadianPerSecond,
+            want: "rad/s",
+        },
+        {
+            name: "DegreePerSecond abbreviation",
+            unit: units.RotationalSpeedDegreePerSecond,
+            want: "°/s",
+        },
+        {
+            name: "DegreePerMinute abbreviation",
+            unit: units.RotationalSpeedDegreePerMinute,
+            want: "°/min",
+        },
+        {
+            name: "RevolutionPerSecond abbreviation",
+            unit: units.RotationalSpeedRevolutionPerSecond,
+            want: "r/s",
+        },
+        {
+            name: "RevolutionPerMinute abbreviation",
+            unit: units.RotationalSpeedRevolutionPerMinute,
+            want: "rpm",
+        },
+        {
+            name: "NanoradianPerSecond abbreviation",
+            unit: units.RotationalSpeedNanoradianPerSecond,
+            want: "nrad/s",
+        },
+        {
+            name: "MicroradianPerSecond abbreviation",
+            unit: units.RotationalSpeedMicroradianPerSecond,
+            want: "μrad/s",
+        },
+        {
+            name: "MilliradianPerSecond abbreviation",
+            unit: units.RotationalSpeedMilliradianPerSecond,
+            want: "mrad/s",
+        },
+        {
+            name: "CentiradianPerSecond abbreviation",
+            unit: units.RotationalSpeedCentiradianPerSecond,
+            want: "crad/s",
+        },
+        {
+            name: "DeciradianPerSecond abbreviation",
+            unit: units.RotationalSpeedDeciradianPerSecond,
+            want: "drad/s",
+        },
+        {
+            name: "NanodegreePerSecond abbreviation",
+            unit: units.RotationalSpeedNanodegreePerSecond,
+            want: "n°/s",
+        },
+        {
+            name: "MicrodegreePerSecond abbreviation",
+            unit: units.RotationalSpeedMicrodegreePerSecond,
+            want: "μ°/s",
+        },
+        {
+            name: "MillidegreePerSecond abbreviation",
+            unit: units.RotationalSpeedMillidegreePerSecond,
+            want: "m°/s",
+        },
+        {
+            name: "invalid unit",
+            unit: units.RotationalSpeedUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetRotationalSpeedAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetRotationalSpeedAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestRotationalSpeed_String(t *testing.T) {
+    factory := units.RotationalSpeedFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateRotationalSpeed(tt.value, units.RotationalSpeedRadianPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("RotationalSpeed.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

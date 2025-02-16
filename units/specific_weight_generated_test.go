@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to NewtonsPerCubicMillimeter.
 		// No expected conversion value provided for NewtonsPerCubicMillimeter, verifying result is not NaN.
 		result := a.NewtonsPerCubicMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonsPerCubicMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonsPerCubicMillimeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to NewtonsPerCubicCentimeter.
 		// No expected conversion value provided for NewtonsPerCubicCentimeter, verifying result is not NaN.
 		result := a.NewtonsPerCubicCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonsPerCubicCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonsPerCubicCentimeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to NewtonsPerCubicMeter.
 		// No expected conversion value provided for NewtonsPerCubicMeter, verifying result is not NaN.
 		result := a.NewtonsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonsPerCubicMeter returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to KilogramsForcePerCubicMillimeter.
 		// No expected conversion value provided for KilogramsForcePerCubicMillimeter, verifying result is not NaN.
 		result := a.KilogramsForcePerCubicMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsForcePerCubicMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsForcePerCubicMillimeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to KilogramsForcePerCubicCentimeter.
 		// No expected conversion value provided for KilogramsForcePerCubicCentimeter, verifying result is not NaN.
 		result := a.KilogramsForcePerCubicCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsForcePerCubicCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsForcePerCubicCentimeter returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to KilogramsForcePerCubicMeter.
 		// No expected conversion value provided for KilogramsForcePerCubicMeter, verifying result is not NaN.
 		result := a.KilogramsForcePerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsForcePerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsForcePerCubicMeter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to PoundsForcePerCubicInch.
 		// No expected conversion value provided for PoundsForcePerCubicInch, verifying result is not NaN.
 		result := a.PoundsForcePerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForcePerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForcePerCubicInch returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to PoundsForcePerCubicFoot.
 		// No expected conversion value provided for PoundsForcePerCubicFoot, verifying result is not NaN.
 		result := a.PoundsForcePerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForcePerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForcePerCubicFoot returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to TonnesForcePerCubicMillimeter.
 		// No expected conversion value provided for TonnesForcePerCubicMillimeter, verifying result is not NaN.
 		result := a.TonnesForcePerCubicMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesForcePerCubicMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesForcePerCubicMillimeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to TonnesForcePerCubicCentimeter.
 		// No expected conversion value provided for TonnesForcePerCubicCentimeter, verifying result is not NaN.
 		result := a.TonnesForcePerCubicCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesForcePerCubicCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesForcePerCubicCentimeter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to TonnesForcePerCubicMeter.
 		// No expected conversion value provided for TonnesForcePerCubicMeter, verifying result is not NaN.
 		result := a.TonnesForcePerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesForcePerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesForcePerCubicMeter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to KilonewtonsPerCubicMillimeter.
 		// No expected conversion value provided for KilonewtonsPerCubicMillimeter, verifying result is not NaN.
 		result := a.KilonewtonsPerCubicMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonsPerCubicMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonsPerCubicMillimeter returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to KilonewtonsPerCubicCentimeter.
 		// No expected conversion value provided for KilonewtonsPerCubicCentimeter, verifying result is not NaN.
 		result := a.KilonewtonsPerCubicCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonsPerCubicCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonsPerCubicCentimeter returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to KilonewtonsPerCubicMeter.
 		// No expected conversion value provided for KilonewtonsPerCubicMeter, verifying result is not NaN.
 		result := a.KilonewtonsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonsPerCubicMeter returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to MeganewtonsPerCubicMeter.
 		// No expected conversion value provided for MeganewtonsPerCubicMeter, verifying result is not NaN.
 		result := a.MeganewtonsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonsPerCubicMeter returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to KilopoundsForcePerCubicInch.
 		// No expected conversion value provided for KilopoundsForcePerCubicInch, verifying result is not NaN.
 		result := a.KilopoundsForcePerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsForcePerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsForcePerCubicInch returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestSpecificWeightConversions(t *testing.T) {
 		// Test conversion to KilopoundsForcePerCubicFoot.
 		// No expected conversion value provided for KilopoundsForcePerCubicFoot, verifying result is not NaN.
 		result := a.KilopoundsForcePerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsForcePerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsForcePerCubicFoot returned NaN")
 		}
 	}
@@ -1646,4 +1664,175 @@ func TestSpecificWeight_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetSpecificWeightAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.SpecificWeightUnits
+        want string
+    }{
+        {
+            name: "NewtonPerCubicMillimeter abbreviation",
+            unit: units.SpecificWeightNewtonPerCubicMillimeter,
+            want: "N/mm³",
+        },
+        {
+            name: "NewtonPerCubicCentimeter abbreviation",
+            unit: units.SpecificWeightNewtonPerCubicCentimeter,
+            want: "N/cm³",
+        },
+        {
+            name: "NewtonPerCubicMeter abbreviation",
+            unit: units.SpecificWeightNewtonPerCubicMeter,
+            want: "N/m³",
+        },
+        {
+            name: "KilogramForcePerCubicMillimeter abbreviation",
+            unit: units.SpecificWeightKilogramForcePerCubicMillimeter,
+            want: "kgf/mm³",
+        },
+        {
+            name: "KilogramForcePerCubicCentimeter abbreviation",
+            unit: units.SpecificWeightKilogramForcePerCubicCentimeter,
+            want: "kgf/cm³",
+        },
+        {
+            name: "KilogramForcePerCubicMeter abbreviation",
+            unit: units.SpecificWeightKilogramForcePerCubicMeter,
+            want: "kgf/m³",
+        },
+        {
+            name: "PoundForcePerCubicInch abbreviation",
+            unit: units.SpecificWeightPoundForcePerCubicInch,
+            want: "lbf/in³",
+        },
+        {
+            name: "PoundForcePerCubicFoot abbreviation",
+            unit: units.SpecificWeightPoundForcePerCubicFoot,
+            want: "lbf/ft³",
+        },
+        {
+            name: "TonneForcePerCubicMillimeter abbreviation",
+            unit: units.SpecificWeightTonneForcePerCubicMillimeter,
+            want: "tf/mm³",
+        },
+        {
+            name: "TonneForcePerCubicCentimeter abbreviation",
+            unit: units.SpecificWeightTonneForcePerCubicCentimeter,
+            want: "tf/cm³",
+        },
+        {
+            name: "TonneForcePerCubicMeter abbreviation",
+            unit: units.SpecificWeightTonneForcePerCubicMeter,
+            want: "tf/m³",
+        },
+        {
+            name: "KilonewtonPerCubicMillimeter abbreviation",
+            unit: units.SpecificWeightKilonewtonPerCubicMillimeter,
+            want: "kN/mm³",
+        },
+        {
+            name: "KilonewtonPerCubicCentimeter abbreviation",
+            unit: units.SpecificWeightKilonewtonPerCubicCentimeter,
+            want: "kN/cm³",
+        },
+        {
+            name: "KilonewtonPerCubicMeter abbreviation",
+            unit: units.SpecificWeightKilonewtonPerCubicMeter,
+            want: "kN/m³",
+        },
+        {
+            name: "MeganewtonPerCubicMeter abbreviation",
+            unit: units.SpecificWeightMeganewtonPerCubicMeter,
+            want: "MN/m³",
+        },
+        {
+            name: "KilopoundForcePerCubicInch abbreviation",
+            unit: units.SpecificWeightKilopoundForcePerCubicInch,
+            want: "klbf/in³",
+        },
+        {
+            name: "KilopoundForcePerCubicFoot abbreviation",
+            unit: units.SpecificWeightKilopoundForcePerCubicFoot,
+            want: "klbf/ft³",
+        },
+        {
+            name: "invalid unit",
+            unit: units.SpecificWeightUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetSpecificWeightAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetSpecificWeightAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestSpecificWeight_String(t *testing.T) {
+    factory := units.SpecificWeightFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateSpecificWeight(tt.value, units.SpecificWeightNewtonPerCubicMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("SpecificWeight.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

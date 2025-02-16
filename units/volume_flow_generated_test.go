@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicMetersPerSecond.
 		// No expected conversion value provided for CubicMetersPerSecond, verifying result is not NaN.
 		result := a.CubicMetersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMetersPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicMetersPerMinute.
 		// No expected conversion value provided for CubicMetersPerMinute, verifying result is not NaN.
 		result := a.CubicMetersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMetersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMetersPerMinute returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicMetersPerHour.
 		// No expected conversion value provided for CubicMetersPerHour, verifying result is not NaN.
 		result := a.CubicMetersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMetersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMetersPerHour returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicMetersPerDay.
 		// No expected conversion value provided for CubicMetersPerDay, verifying result is not NaN.
 		result := a.CubicMetersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMetersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMetersPerDay returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicFeetPerSecond.
 		// No expected conversion value provided for CubicFeetPerSecond, verifying result is not NaN.
 		result := a.CubicFeetPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicFeetPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicFeetPerSecond returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicFeetPerMinute.
 		// No expected conversion value provided for CubicFeetPerMinute, verifying result is not NaN.
 		result := a.CubicFeetPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicFeetPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicFeetPerMinute returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicFeetPerHour.
 		// No expected conversion value provided for CubicFeetPerHour, verifying result is not NaN.
 		result := a.CubicFeetPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicFeetPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicFeetPerHour returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicYardsPerSecond.
 		// No expected conversion value provided for CubicYardsPerSecond, verifying result is not NaN.
 		result := a.CubicYardsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicYardsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicYardsPerSecond returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicYardsPerMinute.
 		// No expected conversion value provided for CubicYardsPerMinute, verifying result is not NaN.
 		result := a.CubicYardsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicYardsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicYardsPerMinute returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicYardsPerHour.
 		// No expected conversion value provided for CubicYardsPerHour, verifying result is not NaN.
 		result := a.CubicYardsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicYardsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicYardsPerHour returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicYardsPerDay.
 		// No expected conversion value provided for CubicYardsPerDay, verifying result is not NaN.
 		result := a.CubicYardsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicYardsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicYardsPerDay returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MillionUsGallonsPerDay.
 		// No expected conversion value provided for MillionUsGallonsPerDay, verifying result is not NaN.
 		result := a.MillionUsGallonsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MillionUsGallonsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillionUsGallonsPerDay returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to UsGallonsPerDay.
 		// No expected conversion value provided for UsGallonsPerDay, verifying result is not NaN.
 		result := a.UsGallonsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.UsGallonsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsGallonsPerDay returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to LitersPerSecond.
 		// No expected conversion value provided for LitersPerSecond, verifying result is not NaN.
 		result := a.LitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPerSecond returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to LitersPerMinute.
 		// No expected conversion value provided for LitersPerMinute, verifying result is not NaN.
 		result := a.LitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPerMinute returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to LitersPerHour.
 		// No expected conversion value provided for LitersPerHour, verifying result is not NaN.
 		result := a.LitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPerHour returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to LitersPerDay.
 		// No expected conversion value provided for LitersPerDay, verifying result is not NaN.
 		result := a.LitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPerDay returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to UsGallonsPerSecond.
 		// No expected conversion value provided for UsGallonsPerSecond, verifying result is not NaN.
 		result := a.UsGallonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.UsGallonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsGallonsPerSecond returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to UsGallonsPerMinute.
 		// No expected conversion value provided for UsGallonsPerMinute, verifying result is not NaN.
 		result := a.UsGallonsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.UsGallonsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsGallonsPerMinute returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to UkGallonsPerDay.
 		// No expected conversion value provided for UkGallonsPerDay, verifying result is not NaN.
 		result := a.UkGallonsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.UkGallonsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UkGallonsPerDay returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to UkGallonsPerHour.
 		// No expected conversion value provided for UkGallonsPerHour, verifying result is not NaN.
 		result := a.UkGallonsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.UkGallonsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UkGallonsPerHour returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to UkGallonsPerMinute.
 		// No expected conversion value provided for UkGallonsPerMinute, verifying result is not NaN.
 		result := a.UkGallonsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.UkGallonsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UkGallonsPerMinute returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to UkGallonsPerSecond.
 		// No expected conversion value provided for UkGallonsPerSecond, verifying result is not NaN.
 		result := a.UkGallonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.UkGallonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UkGallonsPerSecond returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to KilousGallonsPerMinute.
 		// No expected conversion value provided for KilousGallonsPerMinute, verifying result is not NaN.
 		result := a.KilousGallonsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.KilousGallonsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilousGallonsPerMinute returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to UsGallonsPerHour.
 		// No expected conversion value provided for UsGallonsPerHour, verifying result is not NaN.
 		result := a.UsGallonsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.UsGallonsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsGallonsPerHour returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicDecimetersPerMinute.
 		// No expected conversion value provided for CubicDecimetersPerMinute, verifying result is not NaN.
 		result := a.CubicDecimetersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicDecimetersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicDecimetersPerMinute returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to OilBarrelsPerDay.
 		// No expected conversion value provided for OilBarrelsPerDay, verifying result is not NaN.
 		result := a.OilBarrelsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.OilBarrelsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to OilBarrelsPerDay returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to OilBarrelsPerMinute.
 		// No expected conversion value provided for OilBarrelsPerMinute, verifying result is not NaN.
 		result := a.OilBarrelsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.OilBarrelsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to OilBarrelsPerMinute returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to OilBarrelsPerHour.
 		// No expected conversion value provided for OilBarrelsPerHour, verifying result is not NaN.
 		result := a.OilBarrelsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.OilBarrelsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to OilBarrelsPerHour returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to OilBarrelsPerSecond.
 		// No expected conversion value provided for OilBarrelsPerSecond, verifying result is not NaN.
 		result := a.OilBarrelsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.OilBarrelsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to OilBarrelsPerSecond returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicMillimetersPerSecond.
 		// No expected conversion value provided for CubicMillimetersPerSecond, verifying result is not NaN.
 		result := a.CubicMillimetersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMillimetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMillimetersPerSecond returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to AcreFeetPerSecond.
 		// No expected conversion value provided for AcreFeetPerSecond, verifying result is not NaN.
 		result := a.AcreFeetPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.AcreFeetPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AcreFeetPerSecond returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to AcreFeetPerMinute.
 		// No expected conversion value provided for AcreFeetPerMinute, verifying result is not NaN.
 		result := a.AcreFeetPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.AcreFeetPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AcreFeetPerMinute returned NaN")
 		}
 	}
@@ -344,7 +378,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to AcreFeetPerHour.
 		// No expected conversion value provided for AcreFeetPerHour, verifying result is not NaN.
 		result := a.AcreFeetPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.AcreFeetPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AcreFeetPerHour returned NaN")
 		}
 	}
@@ -352,7 +387,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to AcreFeetPerDay.
 		// No expected conversion value provided for AcreFeetPerDay, verifying result is not NaN.
 		result := a.AcreFeetPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.AcreFeetPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AcreFeetPerDay returned NaN")
 		}
 	}
@@ -360,7 +396,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CubicCentimetersPerMinute.
 		// No expected conversion value provided for CubicCentimetersPerMinute, verifying result is not NaN.
 		result := a.CubicCentimetersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicCentimetersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicCentimetersPerMinute returned NaN")
 		}
 	}
@@ -368,7 +405,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MegausGallonsPerDay.
 		// No expected conversion value provided for MegausGallonsPerDay, verifying result is not NaN.
 		result := a.MegausGallonsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MegausGallonsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegausGallonsPerDay returned NaN")
 		}
 	}
@@ -376,7 +414,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to NanolitersPerSecond.
 		// No expected conversion value provided for NanolitersPerSecond, verifying result is not NaN.
 		result := a.NanolitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.NanolitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanolitersPerSecond returned NaN")
 		}
 	}
@@ -384,7 +423,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MicrolitersPerSecond.
 		// No expected conversion value provided for MicrolitersPerSecond, verifying result is not NaN.
 		result := a.MicrolitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrolitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrolitersPerSecond returned NaN")
 		}
 	}
@@ -392,7 +432,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MillilitersPerSecond.
 		// No expected conversion value provided for MillilitersPerSecond, verifying result is not NaN.
 		result := a.MillilitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MillilitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillilitersPerSecond returned NaN")
 		}
 	}
@@ -400,7 +441,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CentilitersPerSecond.
 		// No expected conversion value provided for CentilitersPerSecond, verifying result is not NaN.
 		result := a.CentilitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CentilitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentilitersPerSecond returned NaN")
 		}
 	}
@@ -408,7 +450,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to DecilitersPerSecond.
 		// No expected conversion value provided for DecilitersPerSecond, verifying result is not NaN.
 		result := a.DecilitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DecilitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecilitersPerSecond returned NaN")
 		}
 	}
@@ -416,7 +459,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to DecalitersPerSecond.
 		// No expected conversion value provided for DecalitersPerSecond, verifying result is not NaN.
 		result := a.DecalitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DecalitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecalitersPerSecond returned NaN")
 		}
 	}
@@ -424,7 +468,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to HectolitersPerSecond.
 		// No expected conversion value provided for HectolitersPerSecond, verifying result is not NaN.
 		result := a.HectolitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.HectolitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectolitersPerSecond returned NaN")
 		}
 	}
@@ -432,7 +477,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to KilolitersPerSecond.
 		// No expected conversion value provided for KilolitersPerSecond, verifying result is not NaN.
 		result := a.KilolitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilolitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilolitersPerSecond returned NaN")
 		}
 	}
@@ -440,7 +486,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MegalitersPerSecond.
 		// No expected conversion value provided for MegalitersPerSecond, verifying result is not NaN.
 		result := a.MegalitersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MegalitersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegalitersPerSecond returned NaN")
 		}
 	}
@@ -448,7 +495,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to NanolitersPerMinute.
 		// No expected conversion value provided for NanolitersPerMinute, verifying result is not NaN.
 		result := a.NanolitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.NanolitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanolitersPerMinute returned NaN")
 		}
 	}
@@ -456,7 +504,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MicrolitersPerMinute.
 		// No expected conversion value provided for MicrolitersPerMinute, verifying result is not NaN.
 		result := a.MicrolitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrolitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrolitersPerMinute returned NaN")
 		}
 	}
@@ -464,7 +513,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MillilitersPerMinute.
 		// No expected conversion value provided for MillilitersPerMinute, verifying result is not NaN.
 		result := a.MillilitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.MillilitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillilitersPerMinute returned NaN")
 		}
 	}
@@ -472,7 +522,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CentilitersPerMinute.
 		// No expected conversion value provided for CentilitersPerMinute, verifying result is not NaN.
 		result := a.CentilitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.CentilitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentilitersPerMinute returned NaN")
 		}
 	}
@@ -480,7 +531,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to DecilitersPerMinute.
 		// No expected conversion value provided for DecilitersPerMinute, verifying result is not NaN.
 		result := a.DecilitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.DecilitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecilitersPerMinute returned NaN")
 		}
 	}
@@ -488,7 +540,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to DecalitersPerMinute.
 		// No expected conversion value provided for DecalitersPerMinute, verifying result is not NaN.
 		result := a.DecalitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.DecalitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecalitersPerMinute returned NaN")
 		}
 	}
@@ -496,7 +549,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to HectolitersPerMinute.
 		// No expected conversion value provided for HectolitersPerMinute, verifying result is not NaN.
 		result := a.HectolitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.HectolitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectolitersPerMinute returned NaN")
 		}
 	}
@@ -504,7 +558,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to KilolitersPerMinute.
 		// No expected conversion value provided for KilolitersPerMinute, verifying result is not NaN.
 		result := a.KilolitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.KilolitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilolitersPerMinute returned NaN")
 		}
 	}
@@ -512,7 +567,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MegalitersPerMinute.
 		// No expected conversion value provided for MegalitersPerMinute, verifying result is not NaN.
 		result := a.MegalitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.MegalitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegalitersPerMinute returned NaN")
 		}
 	}
@@ -520,7 +576,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to NanolitersPerHour.
 		// No expected conversion value provided for NanolitersPerHour, verifying result is not NaN.
 		result := a.NanolitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.NanolitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanolitersPerHour returned NaN")
 		}
 	}
@@ -528,7 +585,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MicrolitersPerHour.
 		// No expected conversion value provided for MicrolitersPerHour, verifying result is not NaN.
 		result := a.MicrolitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrolitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrolitersPerHour returned NaN")
 		}
 	}
@@ -536,7 +594,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MillilitersPerHour.
 		// No expected conversion value provided for MillilitersPerHour, verifying result is not NaN.
 		result := a.MillilitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MillilitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillilitersPerHour returned NaN")
 		}
 	}
@@ -544,7 +603,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CentilitersPerHour.
 		// No expected conversion value provided for CentilitersPerHour, verifying result is not NaN.
 		result := a.CentilitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.CentilitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentilitersPerHour returned NaN")
 		}
 	}
@@ -552,7 +612,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to DecilitersPerHour.
 		// No expected conversion value provided for DecilitersPerHour, verifying result is not NaN.
 		result := a.DecilitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.DecilitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecilitersPerHour returned NaN")
 		}
 	}
@@ -560,7 +621,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to DecalitersPerHour.
 		// No expected conversion value provided for DecalitersPerHour, verifying result is not NaN.
 		result := a.DecalitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.DecalitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecalitersPerHour returned NaN")
 		}
 	}
@@ -568,7 +630,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to HectolitersPerHour.
 		// No expected conversion value provided for HectolitersPerHour, verifying result is not NaN.
 		result := a.HectolitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.HectolitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectolitersPerHour returned NaN")
 		}
 	}
@@ -576,7 +639,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to KilolitersPerHour.
 		// No expected conversion value provided for KilolitersPerHour, verifying result is not NaN.
 		result := a.KilolitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.KilolitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilolitersPerHour returned NaN")
 		}
 	}
@@ -584,7 +648,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MegalitersPerHour.
 		// No expected conversion value provided for MegalitersPerHour, verifying result is not NaN.
 		result := a.MegalitersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MegalitersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegalitersPerHour returned NaN")
 		}
 	}
@@ -592,7 +657,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to NanolitersPerDay.
 		// No expected conversion value provided for NanolitersPerDay, verifying result is not NaN.
 		result := a.NanolitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.NanolitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanolitersPerDay returned NaN")
 		}
 	}
@@ -600,7 +666,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MicrolitersPerDay.
 		// No expected conversion value provided for MicrolitersPerDay, verifying result is not NaN.
 		result := a.MicrolitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrolitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrolitersPerDay returned NaN")
 		}
 	}
@@ -608,7 +675,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MillilitersPerDay.
 		// No expected conversion value provided for MillilitersPerDay, verifying result is not NaN.
 		result := a.MillilitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MillilitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillilitersPerDay returned NaN")
 		}
 	}
@@ -616,7 +684,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to CentilitersPerDay.
 		// No expected conversion value provided for CentilitersPerDay, verifying result is not NaN.
 		result := a.CentilitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.CentilitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentilitersPerDay returned NaN")
 		}
 	}
@@ -624,7 +693,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to DecilitersPerDay.
 		// No expected conversion value provided for DecilitersPerDay, verifying result is not NaN.
 		result := a.DecilitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.DecilitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecilitersPerDay returned NaN")
 		}
 	}
@@ -632,7 +702,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to DecalitersPerDay.
 		// No expected conversion value provided for DecalitersPerDay, verifying result is not NaN.
 		result := a.DecalitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.DecalitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecalitersPerDay returned NaN")
 		}
 	}
@@ -640,7 +711,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to HectolitersPerDay.
 		// No expected conversion value provided for HectolitersPerDay, verifying result is not NaN.
 		result := a.HectolitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.HectolitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectolitersPerDay returned NaN")
 		}
 	}
@@ -648,7 +720,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to KilolitersPerDay.
 		// No expected conversion value provided for KilolitersPerDay, verifying result is not NaN.
 		result := a.KilolitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.KilolitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilolitersPerDay returned NaN")
 		}
 	}
@@ -656,7 +729,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MegalitersPerDay.
 		// No expected conversion value provided for MegalitersPerDay, verifying result is not NaN.
 		result := a.MegalitersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MegalitersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegalitersPerDay returned NaN")
 		}
 	}
@@ -664,7 +738,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MegaukGallonsPerDay.
 		// No expected conversion value provided for MegaukGallonsPerDay, verifying result is not NaN.
 		result := a.MegaukGallonsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MegaukGallonsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegaukGallonsPerDay returned NaN")
 		}
 	}
@@ -672,7 +747,8 @@ func TestVolumeFlowConversions(t *testing.T) {
 		// Test conversion to MegaukGallonsPerSecond.
 		// No expected conversion value provided for MegaukGallonsPerSecond, verifying result is not NaN.
 		result := a.MegaukGallonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MegaukGallonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegaukGallonsPerSecond returned NaN")
 		}
 	}
@@ -6286,4 +6362,465 @@ func TestVolumeFlow_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetVolumeFlowAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.VolumeFlowUnits
+        want string
+    }{
+        {
+            name: "CubicMeterPerSecond abbreviation",
+            unit: units.VolumeFlowCubicMeterPerSecond,
+            want: "m³/s",
+        },
+        {
+            name: "CubicMeterPerMinute abbreviation",
+            unit: units.VolumeFlowCubicMeterPerMinute,
+            want: "m³/min",
+        },
+        {
+            name: "CubicMeterPerHour abbreviation",
+            unit: units.VolumeFlowCubicMeterPerHour,
+            want: "m³/h",
+        },
+        {
+            name: "CubicMeterPerDay abbreviation",
+            unit: units.VolumeFlowCubicMeterPerDay,
+            want: "m³/d",
+        },
+        {
+            name: "CubicFootPerSecond abbreviation",
+            unit: units.VolumeFlowCubicFootPerSecond,
+            want: "ft³/s",
+        },
+        {
+            name: "CubicFootPerMinute abbreviation",
+            unit: units.VolumeFlowCubicFootPerMinute,
+            want: "ft³/min",
+        },
+        {
+            name: "CubicFootPerHour abbreviation",
+            unit: units.VolumeFlowCubicFootPerHour,
+            want: "ft³/h",
+        },
+        {
+            name: "CubicYardPerSecond abbreviation",
+            unit: units.VolumeFlowCubicYardPerSecond,
+            want: "yd³/s",
+        },
+        {
+            name: "CubicYardPerMinute abbreviation",
+            unit: units.VolumeFlowCubicYardPerMinute,
+            want: "yd³/min",
+        },
+        {
+            name: "CubicYardPerHour abbreviation",
+            unit: units.VolumeFlowCubicYardPerHour,
+            want: "yd³/h",
+        },
+        {
+            name: "CubicYardPerDay abbreviation",
+            unit: units.VolumeFlowCubicYardPerDay,
+            want: "cy/day",
+        },
+        {
+            name: "MillionUsGallonPerDay abbreviation",
+            unit: units.VolumeFlowMillionUsGallonPerDay,
+            want: "MGD",
+        },
+        {
+            name: "UsGallonPerDay abbreviation",
+            unit: units.VolumeFlowUsGallonPerDay,
+            want: "gpd",
+        },
+        {
+            name: "LiterPerSecond abbreviation",
+            unit: units.VolumeFlowLiterPerSecond,
+            want: "L/s",
+        },
+        {
+            name: "LiterPerMinute abbreviation",
+            unit: units.VolumeFlowLiterPerMinute,
+            want: "L/min",
+        },
+        {
+            name: "LiterPerHour abbreviation",
+            unit: units.VolumeFlowLiterPerHour,
+            want: "L/h",
+        },
+        {
+            name: "LiterPerDay abbreviation",
+            unit: units.VolumeFlowLiterPerDay,
+            want: "l/day",
+        },
+        {
+            name: "UsGallonPerSecond abbreviation",
+            unit: units.VolumeFlowUsGallonPerSecond,
+            want: "gal (U.S.)/s",
+        },
+        {
+            name: "UsGallonPerMinute abbreviation",
+            unit: units.VolumeFlowUsGallonPerMinute,
+            want: "gal (U.S.)/min",
+        },
+        {
+            name: "UkGallonPerDay abbreviation",
+            unit: units.VolumeFlowUkGallonPerDay,
+            want: "gal (U. K.)/d",
+        },
+        {
+            name: "UkGallonPerHour abbreviation",
+            unit: units.VolumeFlowUkGallonPerHour,
+            want: "gal (imp.)/h",
+        },
+        {
+            name: "UkGallonPerMinute abbreviation",
+            unit: units.VolumeFlowUkGallonPerMinute,
+            want: "gal (imp.)/min",
+        },
+        {
+            name: "UkGallonPerSecond abbreviation",
+            unit: units.VolumeFlowUkGallonPerSecond,
+            want: "gal (imp.)/s",
+        },
+        {
+            name: "KilousGallonPerMinute abbreviation",
+            unit: units.VolumeFlowKilousGallonPerMinute,
+            want: "kgal (U.S.)/min",
+        },
+        {
+            name: "UsGallonPerHour abbreviation",
+            unit: units.VolumeFlowUsGallonPerHour,
+            want: "gal (U.S.)/h",
+        },
+        {
+            name: "CubicDecimeterPerMinute abbreviation",
+            unit: units.VolumeFlowCubicDecimeterPerMinute,
+            want: "dm³/min",
+        },
+        {
+            name: "OilBarrelPerDay abbreviation",
+            unit: units.VolumeFlowOilBarrelPerDay,
+            want: "bbl/d",
+        },
+        {
+            name: "OilBarrelPerMinute abbreviation",
+            unit: units.VolumeFlowOilBarrelPerMinute,
+            want: "bbl/min",
+        },
+        {
+            name: "OilBarrelPerHour abbreviation",
+            unit: units.VolumeFlowOilBarrelPerHour,
+            want: "bbl/hr",
+        },
+        {
+            name: "OilBarrelPerSecond abbreviation",
+            unit: units.VolumeFlowOilBarrelPerSecond,
+            want: "bbl/s",
+        },
+        {
+            name: "CubicMillimeterPerSecond abbreviation",
+            unit: units.VolumeFlowCubicMillimeterPerSecond,
+            want: "mm³/s",
+        },
+        {
+            name: "AcreFootPerSecond abbreviation",
+            unit: units.VolumeFlowAcreFootPerSecond,
+            want: "af/s",
+        },
+        {
+            name: "AcreFootPerMinute abbreviation",
+            unit: units.VolumeFlowAcreFootPerMinute,
+            want: "af/m",
+        },
+        {
+            name: "AcreFootPerHour abbreviation",
+            unit: units.VolumeFlowAcreFootPerHour,
+            want: "af/h",
+        },
+        {
+            name: "AcreFootPerDay abbreviation",
+            unit: units.VolumeFlowAcreFootPerDay,
+            want: "af/d",
+        },
+        {
+            name: "CubicCentimeterPerMinute abbreviation",
+            unit: units.VolumeFlowCubicCentimeterPerMinute,
+            want: "cm³/min",
+        },
+        {
+            name: "MegausGallonPerDay abbreviation",
+            unit: units.VolumeFlowMegausGallonPerDay,
+            want: "Mgpd",
+        },
+        {
+            name: "NanoliterPerSecond abbreviation",
+            unit: units.VolumeFlowNanoliterPerSecond,
+            want: "nL/s",
+        },
+        {
+            name: "MicroliterPerSecond abbreviation",
+            unit: units.VolumeFlowMicroliterPerSecond,
+            want: "μL/s",
+        },
+        {
+            name: "MilliliterPerSecond abbreviation",
+            unit: units.VolumeFlowMilliliterPerSecond,
+            want: "mL/s",
+        },
+        {
+            name: "CentiliterPerSecond abbreviation",
+            unit: units.VolumeFlowCentiliterPerSecond,
+            want: "cL/s",
+        },
+        {
+            name: "DeciliterPerSecond abbreviation",
+            unit: units.VolumeFlowDeciliterPerSecond,
+            want: "dL/s",
+        },
+        {
+            name: "DecaliterPerSecond abbreviation",
+            unit: units.VolumeFlowDecaliterPerSecond,
+            want: "daL/s",
+        },
+        {
+            name: "HectoliterPerSecond abbreviation",
+            unit: units.VolumeFlowHectoliterPerSecond,
+            want: "hL/s",
+        },
+        {
+            name: "KiloliterPerSecond abbreviation",
+            unit: units.VolumeFlowKiloliterPerSecond,
+            want: "kL/s",
+        },
+        {
+            name: "MegaliterPerSecond abbreviation",
+            unit: units.VolumeFlowMegaliterPerSecond,
+            want: "ML/s",
+        },
+        {
+            name: "NanoliterPerMinute abbreviation",
+            unit: units.VolumeFlowNanoliterPerMinute,
+            want: "nL/min",
+        },
+        {
+            name: "MicroliterPerMinute abbreviation",
+            unit: units.VolumeFlowMicroliterPerMinute,
+            want: "μL/min",
+        },
+        {
+            name: "MilliliterPerMinute abbreviation",
+            unit: units.VolumeFlowMilliliterPerMinute,
+            want: "mL/min",
+        },
+        {
+            name: "CentiliterPerMinute abbreviation",
+            unit: units.VolumeFlowCentiliterPerMinute,
+            want: "cL/min",
+        },
+        {
+            name: "DeciliterPerMinute abbreviation",
+            unit: units.VolumeFlowDeciliterPerMinute,
+            want: "dL/min",
+        },
+        {
+            name: "DecaliterPerMinute abbreviation",
+            unit: units.VolumeFlowDecaliterPerMinute,
+            want: "daL/min",
+        },
+        {
+            name: "HectoliterPerMinute abbreviation",
+            unit: units.VolumeFlowHectoliterPerMinute,
+            want: "hL/min",
+        },
+        {
+            name: "KiloliterPerMinute abbreviation",
+            unit: units.VolumeFlowKiloliterPerMinute,
+            want: "kL/min",
+        },
+        {
+            name: "MegaliterPerMinute abbreviation",
+            unit: units.VolumeFlowMegaliterPerMinute,
+            want: "ML/min",
+        },
+        {
+            name: "NanoliterPerHour abbreviation",
+            unit: units.VolumeFlowNanoliterPerHour,
+            want: "nL/h",
+        },
+        {
+            name: "MicroliterPerHour abbreviation",
+            unit: units.VolumeFlowMicroliterPerHour,
+            want: "μL/h",
+        },
+        {
+            name: "MilliliterPerHour abbreviation",
+            unit: units.VolumeFlowMilliliterPerHour,
+            want: "mL/h",
+        },
+        {
+            name: "CentiliterPerHour abbreviation",
+            unit: units.VolumeFlowCentiliterPerHour,
+            want: "cL/h",
+        },
+        {
+            name: "DeciliterPerHour abbreviation",
+            unit: units.VolumeFlowDeciliterPerHour,
+            want: "dL/h",
+        },
+        {
+            name: "DecaliterPerHour abbreviation",
+            unit: units.VolumeFlowDecaliterPerHour,
+            want: "daL/h",
+        },
+        {
+            name: "HectoliterPerHour abbreviation",
+            unit: units.VolumeFlowHectoliterPerHour,
+            want: "hL/h",
+        },
+        {
+            name: "KiloliterPerHour abbreviation",
+            unit: units.VolumeFlowKiloliterPerHour,
+            want: "kL/h",
+        },
+        {
+            name: "MegaliterPerHour abbreviation",
+            unit: units.VolumeFlowMegaliterPerHour,
+            want: "ML/h",
+        },
+        {
+            name: "NanoliterPerDay abbreviation",
+            unit: units.VolumeFlowNanoliterPerDay,
+            want: "nl/day",
+        },
+        {
+            name: "MicroliterPerDay abbreviation",
+            unit: units.VolumeFlowMicroliterPerDay,
+            want: "μl/day",
+        },
+        {
+            name: "MilliliterPerDay abbreviation",
+            unit: units.VolumeFlowMilliliterPerDay,
+            want: "ml/day",
+        },
+        {
+            name: "CentiliterPerDay abbreviation",
+            unit: units.VolumeFlowCentiliterPerDay,
+            want: "cl/day",
+        },
+        {
+            name: "DeciliterPerDay abbreviation",
+            unit: units.VolumeFlowDeciliterPerDay,
+            want: "dl/day",
+        },
+        {
+            name: "DecaliterPerDay abbreviation",
+            unit: units.VolumeFlowDecaliterPerDay,
+            want: "dal/day",
+        },
+        {
+            name: "HectoliterPerDay abbreviation",
+            unit: units.VolumeFlowHectoliterPerDay,
+            want: "hl/day",
+        },
+        {
+            name: "KiloliterPerDay abbreviation",
+            unit: units.VolumeFlowKiloliterPerDay,
+            want: "kl/day",
+        },
+        {
+            name: "MegaliterPerDay abbreviation",
+            unit: units.VolumeFlowMegaliterPerDay,
+            want: "Ml/day",
+        },
+        {
+            name: "MegaukGallonPerDay abbreviation",
+            unit: units.VolumeFlowMegaukGallonPerDay,
+            want: "Mgal (U. K.)/d",
+        },
+        {
+            name: "MegaukGallonPerSecond abbreviation",
+            unit: units.VolumeFlowMegaukGallonPerSecond,
+            want: "Mgal (imp.)/s",
+        },
+        {
+            name: "invalid unit",
+            unit: units.VolumeFlowUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetVolumeFlowAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetVolumeFlowAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestVolumeFlow_String(t *testing.T) {
+    factory := units.VolumeFlowFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateVolumeFlow(tt.value, units.VolumeFlowCubicMeterPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("VolumeFlow.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

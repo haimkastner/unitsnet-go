@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricCurrentGradientConversions(t *testing.T) {
 		// Test conversion to AmperesPerSecond.
 		// No expected conversion value provided for AmperesPerSecond, verifying result is not NaN.
 		result := a.AmperesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.AmperesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AmperesPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricCurrentGradientConversions(t *testing.T) {
 		// Test conversion to AmperesPerMinute.
 		// No expected conversion value provided for AmperesPerMinute, verifying result is not NaN.
 		result := a.AmperesPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.AmperesPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AmperesPerMinute returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricCurrentGradientConversions(t *testing.T) {
 		// Test conversion to AmperesPerMillisecond.
 		// No expected conversion value provided for AmperesPerMillisecond, verifying result is not NaN.
 		result := a.AmperesPerMillisecond()
-		if math.IsNaN(result) {
+		cacheResult := a.AmperesPerMillisecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AmperesPerMillisecond returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricCurrentGradientConversions(t *testing.T) {
 		// Test conversion to AmperesPerMicrosecond.
 		// No expected conversion value provided for AmperesPerMicrosecond, verifying result is not NaN.
 		result := a.AmperesPerMicrosecond()
-		if math.IsNaN(result) {
+		cacheResult := a.AmperesPerMicrosecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AmperesPerMicrosecond returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricCurrentGradientConversions(t *testing.T) {
 		// Test conversion to AmperesPerNanosecond.
 		// No expected conversion value provided for AmperesPerNanosecond, verifying result is not NaN.
 		result := a.AmperesPerNanosecond()
-		if math.IsNaN(result) {
+		cacheResult := a.AmperesPerNanosecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AmperesPerNanosecond returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricCurrentGradientConversions(t *testing.T) {
 		// Test conversion to MilliamperesPerSecond.
 		// No expected conversion value provided for MilliamperesPerSecond, verifying result is not NaN.
 		result := a.MilliamperesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliamperesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliamperesPerSecond returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestElectricCurrentGradientConversions(t *testing.T) {
 		// Test conversion to MilliamperesPerMinute.
 		// No expected conversion value provided for MilliamperesPerMinute, verifying result is not NaN.
 		result := a.MilliamperesPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliamperesPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliamperesPerMinute returned NaN")
 		}
 	}
@@ -846,4 +854,125 @@ func TestElectricCurrentGradient_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricCurrentGradientAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricCurrentGradientUnits
+        want string
+    }{
+        {
+            name: "AmperePerSecond abbreviation",
+            unit: units.ElectricCurrentGradientAmperePerSecond,
+            want: "A/s",
+        },
+        {
+            name: "AmperePerMinute abbreviation",
+            unit: units.ElectricCurrentGradientAmperePerMinute,
+            want: "A/min",
+        },
+        {
+            name: "AmperePerMillisecond abbreviation",
+            unit: units.ElectricCurrentGradientAmperePerMillisecond,
+            want: "A/ms",
+        },
+        {
+            name: "AmperePerMicrosecond abbreviation",
+            unit: units.ElectricCurrentGradientAmperePerMicrosecond,
+            want: "A/μs",
+        },
+        {
+            name: "AmperePerNanosecond abbreviation",
+            unit: units.ElectricCurrentGradientAmperePerNanosecond,
+            want: "A/ns",
+        },
+        {
+            name: "MilliamperePerSecond abbreviation",
+            unit: units.ElectricCurrentGradientMilliamperePerSecond,
+            want: "mA/s",
+        },
+        {
+            name: "MilliamperePerMinute abbreviation",
+            unit: units.ElectricCurrentGradientMilliamperePerMinute,
+            want: "mA/min",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricCurrentGradientUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricCurrentGradientAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricCurrentGradientAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricCurrentGradient_String(t *testing.T) {
+    factory := units.ElectricCurrentGradientFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricCurrentGradient(tt.value, units.ElectricCurrentGradientAmperePerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricCurrentGradient.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

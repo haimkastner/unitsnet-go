@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestRatioConversions(t *testing.T) {
 		// Test conversion to DecimalFractions.
 		// No expected conversion value provided for DecimalFractions, verifying result is not NaN.
 		result := a.DecimalFractions()
-		if math.IsNaN(result) {
+		cacheResult := a.DecimalFractions()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecimalFractions returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestRatioConversions(t *testing.T) {
 		// Test conversion to Percent.
 		// No expected conversion value provided for Percent, verifying result is not NaN.
 		result := a.Percent()
-		if math.IsNaN(result) {
+		cacheResult := a.Percent()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Percent returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestRatioConversions(t *testing.T) {
 		// Test conversion to PartsPerThousand.
 		// No expected conversion value provided for PartsPerThousand, verifying result is not NaN.
 		result := a.PartsPerThousand()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerThousand()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerThousand returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestRatioConversions(t *testing.T) {
 		// Test conversion to PartsPerMillion.
 		// No expected conversion value provided for PartsPerMillion, verifying result is not NaN.
 		result := a.PartsPerMillion()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerMillion()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerMillion returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestRatioConversions(t *testing.T) {
 		// Test conversion to PartsPerBillion.
 		// No expected conversion value provided for PartsPerBillion, verifying result is not NaN.
 		result := a.PartsPerBillion()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerBillion()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerBillion returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestRatioConversions(t *testing.T) {
 		// Test conversion to PartsPerTrillion.
 		// No expected conversion value provided for PartsPerTrillion, verifying result is not NaN.
 		result := a.PartsPerTrillion()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerTrillion()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerTrillion returned NaN")
 		}
 	}
@@ -766,4 +773,120 @@ func TestRatio_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetRatioAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.RatioUnits
+        want string
+    }{
+        {
+            name: "DecimalFraction abbreviation",
+            unit: units.RatioDecimalFraction,
+            want: "",
+        },
+        {
+            name: "Percent abbreviation",
+            unit: units.RatioPercent,
+            want: "%",
+        },
+        {
+            name: "PartPerThousand abbreviation",
+            unit: units.RatioPartPerThousand,
+            want: "‰",
+        },
+        {
+            name: "PartPerMillion abbreviation",
+            unit: units.RatioPartPerMillion,
+            want: "ppm",
+        },
+        {
+            name: "PartPerBillion abbreviation",
+            unit: units.RatioPartPerBillion,
+            want: "ppb",
+        },
+        {
+            name: "PartPerTrillion abbreviation",
+            unit: units.RatioPartPerTrillion,
+            want: "ppt",
+        },
+        {
+            name: "invalid unit",
+            unit: units.RatioUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetRatioAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetRatioAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestRatio_String(t *testing.T) {
+    factory := units.RatioFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateRatio(tt.value, units.RatioDecimalFraction)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Ratio.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

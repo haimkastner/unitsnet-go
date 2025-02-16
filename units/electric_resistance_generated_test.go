@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricResistanceConversions(t *testing.T) {
 		// Test conversion to Ohms.
 		// No expected conversion value provided for Ohms, verifying result is not NaN.
 		result := a.Ohms()
-		if math.IsNaN(result) {
+		cacheResult := a.Ohms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Ohms returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricResistanceConversions(t *testing.T) {
 		// Test conversion to Nanoohms.
 		// No expected conversion value provided for Nanoohms, verifying result is not NaN.
 		result := a.Nanoohms()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanoohms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanoohms returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricResistanceConversions(t *testing.T) {
 		// Test conversion to Microohms.
 		// No expected conversion value provided for Microohms, verifying result is not NaN.
 		result := a.Microohms()
-		if math.IsNaN(result) {
+		cacheResult := a.Microohms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microohms returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricResistanceConversions(t *testing.T) {
 		// Test conversion to Milliohms.
 		// No expected conversion value provided for Milliohms, verifying result is not NaN.
 		result := a.Milliohms()
-		if math.IsNaN(result) {
+		cacheResult := a.Milliohms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milliohms returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricResistanceConversions(t *testing.T) {
 		// Test conversion to Kiloohms.
 		// No expected conversion value provided for Kiloohms, verifying result is not NaN.
 		result := a.Kiloohms()
-		if math.IsNaN(result) {
+		cacheResult := a.Kiloohms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kiloohms returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricResistanceConversions(t *testing.T) {
 		// Test conversion to Megaohms.
 		// No expected conversion value provided for Megaohms, verifying result is not NaN.
 		result := a.Megaohms()
-		if math.IsNaN(result) {
+		cacheResult := a.Megaohms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megaohms returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestElectricResistanceConversions(t *testing.T) {
 		// Test conversion to Gigaohms.
 		// No expected conversion value provided for Gigaohms, verifying result is not NaN.
 		result := a.Gigaohms()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigaohms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigaohms returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestElectricResistanceConversions(t *testing.T) {
 		// Test conversion to Teraohms.
 		// No expected conversion value provided for Teraohms, verifying result is not NaN.
 		result := a.Teraohms()
-		if math.IsNaN(result) {
+		cacheResult := a.Teraohms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Teraohms returned NaN")
 		}
 	}
@@ -926,4 +935,130 @@ func TestElectricResistance_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricResistanceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricResistanceUnits
+        want string
+    }{
+        {
+            name: "Ohm abbreviation",
+            unit: units.ElectricResistanceOhm,
+            want: "Ω",
+        },
+        {
+            name: "Nanoohm abbreviation",
+            unit: units.ElectricResistanceNanoohm,
+            want: "nΩ",
+        },
+        {
+            name: "Microohm abbreviation",
+            unit: units.ElectricResistanceMicroohm,
+            want: "μΩ",
+        },
+        {
+            name: "Milliohm abbreviation",
+            unit: units.ElectricResistanceMilliohm,
+            want: "mΩ",
+        },
+        {
+            name: "Kiloohm abbreviation",
+            unit: units.ElectricResistanceKiloohm,
+            want: "kΩ",
+        },
+        {
+            name: "Megaohm abbreviation",
+            unit: units.ElectricResistanceMegaohm,
+            want: "MΩ",
+        },
+        {
+            name: "Gigaohm abbreviation",
+            unit: units.ElectricResistanceGigaohm,
+            want: "GΩ",
+        },
+        {
+            name: "Teraohm abbreviation",
+            unit: units.ElectricResistanceTeraohm,
+            want: "TΩ",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricResistanceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricResistanceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricResistanceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricResistance_String(t *testing.T) {
+    factory := units.ElectricResistanceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricResistance(tt.value, units.ElectricResistanceOhm)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricResistance.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

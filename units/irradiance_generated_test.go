@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to WattsPerSquareMeter.
 		// No expected conversion value provided for WattsPerSquareMeter, verifying result is not NaN.
 		result := a.WattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerSquareMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to WattsPerSquareCentimeter.
 		// No expected conversion value provided for WattsPerSquareCentimeter, verifying result is not NaN.
 		result := a.WattsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to PicowattsPerSquareMeter.
 		// No expected conversion value provided for PicowattsPerSquareMeter, verifying result is not NaN.
 		result := a.PicowattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicowattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicowattsPerSquareMeter returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to NanowattsPerSquareMeter.
 		// No expected conversion value provided for NanowattsPerSquareMeter, verifying result is not NaN.
 		result := a.NanowattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanowattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanowattsPerSquareMeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to MicrowattsPerSquareMeter.
 		// No expected conversion value provided for MicrowattsPerSquareMeter, verifying result is not NaN.
 		result := a.MicrowattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrowattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrowattsPerSquareMeter returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerSquareMeter.
 		// No expected conversion value provided for MilliwattsPerSquareMeter, verifying result is not NaN.
 		result := a.MilliwattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerSquareMeter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to KilowattsPerSquareMeter.
 		// No expected conversion value provided for KilowattsPerSquareMeter, verifying result is not NaN.
 		result := a.KilowattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerSquareMeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to MegawattsPerSquareMeter.
 		// No expected conversion value provided for MegawattsPerSquareMeter, verifying result is not NaN.
 		result := a.MegawattsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerSquareMeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to PicowattsPerSquareCentimeter.
 		// No expected conversion value provided for PicowattsPerSquareCentimeter, verifying result is not NaN.
 		result := a.PicowattsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicowattsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicowattsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to NanowattsPerSquareCentimeter.
 		// No expected conversion value provided for NanowattsPerSquareCentimeter, verifying result is not NaN.
 		result := a.NanowattsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanowattsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanowattsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to MicrowattsPerSquareCentimeter.
 		// No expected conversion value provided for MicrowattsPerSquareCentimeter, verifying result is not NaN.
 		result := a.MicrowattsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrowattsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrowattsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerSquareCentimeter.
 		// No expected conversion value provided for MilliwattsPerSquareCentimeter, verifying result is not NaN.
 		result := a.MilliwattsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to KilowattsPerSquareCentimeter.
 		// No expected conversion value provided for KilowattsPerSquareCentimeter, verifying result is not NaN.
 		result := a.KilowattsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestIrradianceConversions(t *testing.T) {
 		// Test conversion to MegawattsPerSquareCentimeter.
 		// No expected conversion value provided for MegawattsPerSquareCentimeter, verifying result is not NaN.
 		result := a.MegawattsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -1406,4 +1421,160 @@ func TestIrradiance_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetIrradianceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.IrradianceUnits
+        want string
+    }{
+        {
+            name: "WattPerSquareMeter abbreviation",
+            unit: units.IrradianceWattPerSquareMeter,
+            want: "W/m²",
+        },
+        {
+            name: "WattPerSquareCentimeter abbreviation",
+            unit: units.IrradianceWattPerSquareCentimeter,
+            want: "W/cm²",
+        },
+        {
+            name: "PicowattPerSquareMeter abbreviation",
+            unit: units.IrradiancePicowattPerSquareMeter,
+            want: "pW/m²",
+        },
+        {
+            name: "NanowattPerSquareMeter abbreviation",
+            unit: units.IrradianceNanowattPerSquareMeter,
+            want: "nW/m²",
+        },
+        {
+            name: "MicrowattPerSquareMeter abbreviation",
+            unit: units.IrradianceMicrowattPerSquareMeter,
+            want: "μW/m²",
+        },
+        {
+            name: "MilliwattPerSquareMeter abbreviation",
+            unit: units.IrradianceMilliwattPerSquareMeter,
+            want: "mW/m²",
+        },
+        {
+            name: "KilowattPerSquareMeter abbreviation",
+            unit: units.IrradianceKilowattPerSquareMeter,
+            want: "kW/m²",
+        },
+        {
+            name: "MegawattPerSquareMeter abbreviation",
+            unit: units.IrradianceMegawattPerSquareMeter,
+            want: "MW/m²",
+        },
+        {
+            name: "PicowattPerSquareCentimeter abbreviation",
+            unit: units.IrradiancePicowattPerSquareCentimeter,
+            want: "pW/cm²",
+        },
+        {
+            name: "NanowattPerSquareCentimeter abbreviation",
+            unit: units.IrradianceNanowattPerSquareCentimeter,
+            want: "nW/cm²",
+        },
+        {
+            name: "MicrowattPerSquareCentimeter abbreviation",
+            unit: units.IrradianceMicrowattPerSquareCentimeter,
+            want: "μW/cm²",
+        },
+        {
+            name: "MilliwattPerSquareCentimeter abbreviation",
+            unit: units.IrradianceMilliwattPerSquareCentimeter,
+            want: "mW/cm²",
+        },
+        {
+            name: "KilowattPerSquareCentimeter abbreviation",
+            unit: units.IrradianceKilowattPerSquareCentimeter,
+            want: "kW/cm²",
+        },
+        {
+            name: "MegawattPerSquareCentimeter abbreviation",
+            unit: units.IrradianceMegawattPerSquareCentimeter,
+            want: "MW/cm²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.IrradianceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetIrradianceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetIrradianceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestIrradiance_String(t *testing.T) {
+    factory := units.IrradianceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateIrradiance(tt.value, units.IrradianceWattPerSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Irradiance.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

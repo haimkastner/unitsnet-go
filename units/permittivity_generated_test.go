@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestPermittivityConversions(t *testing.T) {
 		// Test conversion to FaradsPerMeter.
 		// No expected conversion value provided for FaradsPerMeter, verifying result is not NaN.
 		result := a.FaradsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.FaradsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FaradsPerMeter returned NaN")
 		}
 	}
@@ -366,4 +368,95 @@ func TestPermittivity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetPermittivityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.PermittivityUnits
+        want string
+    }{
+        {
+            name: "FaradPerMeter abbreviation",
+            unit: units.PermittivityFaradPerMeter,
+            want: "F/m",
+        },
+        {
+            name: "invalid unit",
+            unit: units.PermittivityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetPermittivityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetPermittivityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestPermittivity_String(t *testing.T) {
+    factory := units.PermittivityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreatePermittivity(tt.value, units.PermittivityFaradPerMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Permittivity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

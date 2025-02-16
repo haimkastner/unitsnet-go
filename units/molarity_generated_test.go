@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to MolesPerCubicMeter.
 		// No expected conversion value provided for MolesPerCubicMeter, verifying result is not NaN.
 		result := a.MolesPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MolesPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MolesPerCubicMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to MolesPerLiter.
 		// No expected conversion value provided for MolesPerLiter, verifying result is not NaN.
 		result := a.MolesPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MolesPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MolesPerLiter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to PoundMolesPerCubicFoot.
 		// No expected conversion value provided for PoundMolesPerCubicFoot, verifying result is not NaN.
 		result := a.PoundMolesPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundMolesPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundMolesPerCubicFoot returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to KilomolesPerCubicMeter.
 		// No expected conversion value provided for KilomolesPerCubicMeter, verifying result is not NaN.
 		result := a.KilomolesPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilomolesPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilomolesPerCubicMeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to FemtomolesPerLiter.
 		// No expected conversion value provided for FemtomolesPerLiter, verifying result is not NaN.
 		result := a.FemtomolesPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.FemtomolesPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FemtomolesPerLiter returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to PicomolesPerLiter.
 		// No expected conversion value provided for PicomolesPerLiter, verifying result is not NaN.
 		result := a.PicomolesPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicomolesPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicomolesPerLiter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to NanomolesPerLiter.
 		// No expected conversion value provided for NanomolesPerLiter, verifying result is not NaN.
 		result := a.NanomolesPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanomolesPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanomolesPerLiter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to MicromolesPerLiter.
 		// No expected conversion value provided for MicromolesPerLiter, verifying result is not NaN.
 		result := a.MicromolesPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicromolesPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicromolesPerLiter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to MillimolesPerLiter.
 		// No expected conversion value provided for MillimolesPerLiter, verifying result is not NaN.
 		result := a.MillimolesPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimolesPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimolesPerLiter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to CentimolesPerLiter.
 		// No expected conversion value provided for CentimolesPerLiter, verifying result is not NaN.
 		result := a.CentimolesPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.CentimolesPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentimolesPerLiter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestMolarityConversions(t *testing.T) {
 		// Test conversion to DecimolesPerLiter.
 		// No expected conversion value provided for DecimolesPerLiter, verifying result is not NaN.
 		result := a.DecimolesPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.DecimolesPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecimolesPerLiter returned NaN")
 		}
 	}
@@ -1166,4 +1178,145 @@ func TestMolarity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMolarityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MolarityUnits
+        want string
+    }{
+        {
+            name: "MolePerCubicMeter abbreviation",
+            unit: units.MolarityMolePerCubicMeter,
+            want: "mol/m³",
+        },
+        {
+            name: "MolePerLiter abbreviation",
+            unit: units.MolarityMolePerLiter,
+            want: "mol/L",
+        },
+        {
+            name: "PoundMolePerCubicFoot abbreviation",
+            unit: units.MolarityPoundMolePerCubicFoot,
+            want: "lbmol/ft³",
+        },
+        {
+            name: "KilomolePerCubicMeter abbreviation",
+            unit: units.MolarityKilomolePerCubicMeter,
+            want: "kmol/m³",
+        },
+        {
+            name: "FemtomolePerLiter abbreviation",
+            unit: units.MolarityFemtomolePerLiter,
+            want: "fmol/L",
+        },
+        {
+            name: "PicomolePerLiter abbreviation",
+            unit: units.MolarityPicomolePerLiter,
+            want: "pmol/L",
+        },
+        {
+            name: "NanomolePerLiter abbreviation",
+            unit: units.MolarityNanomolePerLiter,
+            want: "nmol/L",
+        },
+        {
+            name: "MicromolePerLiter abbreviation",
+            unit: units.MolarityMicromolePerLiter,
+            want: "μmol/L",
+        },
+        {
+            name: "MillimolePerLiter abbreviation",
+            unit: units.MolarityMillimolePerLiter,
+            want: "mmol/L",
+        },
+        {
+            name: "CentimolePerLiter abbreviation",
+            unit: units.MolarityCentimolePerLiter,
+            want: "cmol/L",
+        },
+        {
+            name: "DecimolePerLiter abbreviation",
+            unit: units.MolarityDecimolePerLiter,
+            want: "dmol/L",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MolarityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMolarityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMolarityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMolarity_String(t *testing.T) {
+    factory := units.MolarityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMolarity(tt.value, units.MolarityMolePerCubicMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Molarity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

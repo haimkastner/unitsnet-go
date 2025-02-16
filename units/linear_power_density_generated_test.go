@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to WattsPerMeter.
 		// No expected conversion value provided for WattsPerMeter, verifying result is not NaN.
 		result := a.WattsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to WattsPerCentimeter.
 		// No expected conversion value provided for WattsPerCentimeter, verifying result is not NaN.
 		result := a.WattsPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerCentimeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to WattsPerMillimeter.
 		// No expected conversion value provided for WattsPerMillimeter, verifying result is not NaN.
 		result := a.WattsPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerMillimeter returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to WattsPerInch.
 		// No expected conversion value provided for WattsPerInch, verifying result is not NaN.
 		result := a.WattsPerInch()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerInch returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to WattsPerFoot.
 		// No expected conversion value provided for WattsPerFoot, verifying result is not NaN.
 		result := a.WattsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerFoot returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerMeter.
 		// No expected conversion value provided for MilliwattsPerMeter, verifying result is not NaN.
 		result := a.MilliwattsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerMeter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to KilowattsPerMeter.
 		// No expected conversion value provided for KilowattsPerMeter, verifying result is not NaN.
 		result := a.KilowattsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerMeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MegawattsPerMeter.
 		// No expected conversion value provided for MegawattsPerMeter, verifying result is not NaN.
 		result := a.MegawattsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerMeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to GigawattsPerMeter.
 		// No expected conversion value provided for GigawattsPerMeter, verifying result is not NaN.
 		result := a.GigawattsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattsPerMeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerCentimeter.
 		// No expected conversion value provided for MilliwattsPerCentimeter, verifying result is not NaN.
 		result := a.MilliwattsPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerCentimeter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to KilowattsPerCentimeter.
 		// No expected conversion value provided for KilowattsPerCentimeter, verifying result is not NaN.
 		result := a.KilowattsPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerCentimeter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MegawattsPerCentimeter.
 		// No expected conversion value provided for MegawattsPerCentimeter, verifying result is not NaN.
 		result := a.MegawattsPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerCentimeter returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to GigawattsPerCentimeter.
 		// No expected conversion value provided for GigawattsPerCentimeter, verifying result is not NaN.
 		result := a.GigawattsPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattsPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattsPerCentimeter returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerMillimeter.
 		// No expected conversion value provided for MilliwattsPerMillimeter, verifying result is not NaN.
 		result := a.MilliwattsPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerMillimeter returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to KilowattsPerMillimeter.
 		// No expected conversion value provided for KilowattsPerMillimeter, verifying result is not NaN.
 		result := a.KilowattsPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerMillimeter returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MegawattsPerMillimeter.
 		// No expected conversion value provided for MegawattsPerMillimeter, verifying result is not NaN.
 		result := a.MegawattsPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerMillimeter returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to GigawattsPerMillimeter.
 		// No expected conversion value provided for GigawattsPerMillimeter, verifying result is not NaN.
 		result := a.GigawattsPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattsPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattsPerMillimeter returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerInch.
 		// No expected conversion value provided for MilliwattsPerInch, verifying result is not NaN.
 		result := a.MilliwattsPerInch()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerInch returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to KilowattsPerInch.
 		// No expected conversion value provided for KilowattsPerInch, verifying result is not NaN.
 		result := a.KilowattsPerInch()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerInch returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MegawattsPerInch.
 		// No expected conversion value provided for MegawattsPerInch, verifying result is not NaN.
 		result := a.MegawattsPerInch()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerInch returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to GigawattsPerInch.
 		// No expected conversion value provided for GigawattsPerInch, verifying result is not NaN.
 		result := a.GigawattsPerInch()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattsPerInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattsPerInch returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerFoot.
 		// No expected conversion value provided for MilliwattsPerFoot, verifying result is not NaN.
 		result := a.MilliwattsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerFoot returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to KilowattsPerFoot.
 		// No expected conversion value provided for KilowattsPerFoot, verifying result is not NaN.
 		result := a.KilowattsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerFoot returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to MegawattsPerFoot.
 		// No expected conversion value provided for MegawattsPerFoot, verifying result is not NaN.
 		result := a.MegawattsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerFoot returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestLinearPowerDensityConversions(t *testing.T) {
 		// Test conversion to GigawattsPerFoot.
 		// No expected conversion value provided for GigawattsPerFoot, verifying result is not NaN.
 		result := a.GigawattsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattsPerFoot returned NaN")
 		}
 	}
@@ -2286,4 +2312,215 @@ func TestLinearPowerDensity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetLinearPowerDensityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.LinearPowerDensityUnits
+        want string
+    }{
+        {
+            name: "WattPerMeter abbreviation",
+            unit: units.LinearPowerDensityWattPerMeter,
+            want: "W/m",
+        },
+        {
+            name: "WattPerCentimeter abbreviation",
+            unit: units.LinearPowerDensityWattPerCentimeter,
+            want: "W/cm",
+        },
+        {
+            name: "WattPerMillimeter abbreviation",
+            unit: units.LinearPowerDensityWattPerMillimeter,
+            want: "W/mm",
+        },
+        {
+            name: "WattPerInch abbreviation",
+            unit: units.LinearPowerDensityWattPerInch,
+            want: "W/in",
+        },
+        {
+            name: "WattPerFoot abbreviation",
+            unit: units.LinearPowerDensityWattPerFoot,
+            want: "W/ft",
+        },
+        {
+            name: "MilliwattPerMeter abbreviation",
+            unit: units.LinearPowerDensityMilliwattPerMeter,
+            want: "mW/m",
+        },
+        {
+            name: "KilowattPerMeter abbreviation",
+            unit: units.LinearPowerDensityKilowattPerMeter,
+            want: "kW/m",
+        },
+        {
+            name: "MegawattPerMeter abbreviation",
+            unit: units.LinearPowerDensityMegawattPerMeter,
+            want: "MW/m",
+        },
+        {
+            name: "GigawattPerMeter abbreviation",
+            unit: units.LinearPowerDensityGigawattPerMeter,
+            want: "GW/m",
+        },
+        {
+            name: "MilliwattPerCentimeter abbreviation",
+            unit: units.LinearPowerDensityMilliwattPerCentimeter,
+            want: "mW/cm",
+        },
+        {
+            name: "KilowattPerCentimeter abbreviation",
+            unit: units.LinearPowerDensityKilowattPerCentimeter,
+            want: "kW/cm",
+        },
+        {
+            name: "MegawattPerCentimeter abbreviation",
+            unit: units.LinearPowerDensityMegawattPerCentimeter,
+            want: "MW/cm",
+        },
+        {
+            name: "GigawattPerCentimeter abbreviation",
+            unit: units.LinearPowerDensityGigawattPerCentimeter,
+            want: "GW/cm",
+        },
+        {
+            name: "MilliwattPerMillimeter abbreviation",
+            unit: units.LinearPowerDensityMilliwattPerMillimeter,
+            want: "mW/mm",
+        },
+        {
+            name: "KilowattPerMillimeter abbreviation",
+            unit: units.LinearPowerDensityKilowattPerMillimeter,
+            want: "kW/mm",
+        },
+        {
+            name: "MegawattPerMillimeter abbreviation",
+            unit: units.LinearPowerDensityMegawattPerMillimeter,
+            want: "MW/mm",
+        },
+        {
+            name: "GigawattPerMillimeter abbreviation",
+            unit: units.LinearPowerDensityGigawattPerMillimeter,
+            want: "GW/mm",
+        },
+        {
+            name: "MilliwattPerInch abbreviation",
+            unit: units.LinearPowerDensityMilliwattPerInch,
+            want: "mW/in",
+        },
+        {
+            name: "KilowattPerInch abbreviation",
+            unit: units.LinearPowerDensityKilowattPerInch,
+            want: "kW/in",
+        },
+        {
+            name: "MegawattPerInch abbreviation",
+            unit: units.LinearPowerDensityMegawattPerInch,
+            want: "MW/in",
+        },
+        {
+            name: "GigawattPerInch abbreviation",
+            unit: units.LinearPowerDensityGigawattPerInch,
+            want: "GW/in",
+        },
+        {
+            name: "MilliwattPerFoot abbreviation",
+            unit: units.LinearPowerDensityMilliwattPerFoot,
+            want: "mW/ft",
+        },
+        {
+            name: "KilowattPerFoot abbreviation",
+            unit: units.LinearPowerDensityKilowattPerFoot,
+            want: "kW/ft",
+        },
+        {
+            name: "MegawattPerFoot abbreviation",
+            unit: units.LinearPowerDensityMegawattPerFoot,
+            want: "MW/ft",
+        },
+        {
+            name: "GigawattPerFoot abbreviation",
+            unit: units.LinearPowerDensityGigawattPerFoot,
+            want: "GW/ft",
+        },
+        {
+            name: "invalid unit",
+            unit: units.LinearPowerDensityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetLinearPowerDensityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetLinearPowerDensityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestLinearPowerDensity_String(t *testing.T) {
+    factory := units.LinearPowerDensityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateLinearPowerDensity(tt.value, units.LinearPowerDensityWattPerMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("LinearPowerDensity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

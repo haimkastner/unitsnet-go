@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to CandelasPerSquareMeter.
 		// No expected conversion value provided for CandelasPerSquareMeter, verifying result is not NaN.
 		result := a.CandelasPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.CandelasPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CandelasPerSquareMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to CandelasPerSquareFoot.
 		// No expected conversion value provided for CandelasPerSquareFoot, verifying result is not NaN.
 		result := a.CandelasPerSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.CandelasPerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CandelasPerSquareFoot returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to CandelasPerSquareInch.
 		// No expected conversion value provided for CandelasPerSquareInch, verifying result is not NaN.
 		result := a.CandelasPerSquareInch()
-		if math.IsNaN(result) {
+		cacheResult := a.CandelasPerSquareInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CandelasPerSquareInch returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to Nits.
 		// No expected conversion value provided for Nits, verifying result is not NaN.
 		result := a.Nits()
-		if math.IsNaN(result) {
+		cacheResult := a.Nits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nits returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to NanocandelasPerSquareMeter.
 		// No expected conversion value provided for NanocandelasPerSquareMeter, verifying result is not NaN.
 		result := a.NanocandelasPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanocandelasPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanocandelasPerSquareMeter returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to MicrocandelasPerSquareMeter.
 		// No expected conversion value provided for MicrocandelasPerSquareMeter, verifying result is not NaN.
 		result := a.MicrocandelasPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrocandelasPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrocandelasPerSquareMeter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to MillicandelasPerSquareMeter.
 		// No expected conversion value provided for MillicandelasPerSquareMeter, verifying result is not NaN.
 		result := a.MillicandelasPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MillicandelasPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillicandelasPerSquareMeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to CenticandelasPerSquareMeter.
 		// No expected conversion value provided for CenticandelasPerSquareMeter, verifying result is not NaN.
 		result := a.CenticandelasPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.CenticandelasPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CenticandelasPerSquareMeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to DecicandelasPerSquareMeter.
 		// No expected conversion value provided for DecicandelasPerSquareMeter, verifying result is not NaN.
 		result := a.DecicandelasPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.DecicandelasPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecicandelasPerSquareMeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestLuminanceConversions(t *testing.T) {
 		// Test conversion to KilocandelasPerSquareMeter.
 		// No expected conversion value provided for KilocandelasPerSquareMeter, verifying result is not NaN.
 		result := a.KilocandelasPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocandelasPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocandelasPerSquareMeter returned NaN")
 		}
 	}
@@ -1086,4 +1097,140 @@ func TestLuminance_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetLuminanceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.LuminanceUnits
+        want string
+    }{
+        {
+            name: "CandelaPerSquareMeter abbreviation",
+            unit: units.LuminanceCandelaPerSquareMeter,
+            want: "Cd/m²",
+        },
+        {
+            name: "CandelaPerSquareFoot abbreviation",
+            unit: units.LuminanceCandelaPerSquareFoot,
+            want: "Cd/ft²",
+        },
+        {
+            name: "CandelaPerSquareInch abbreviation",
+            unit: units.LuminanceCandelaPerSquareInch,
+            want: "Cd/in²",
+        },
+        {
+            name: "Nit abbreviation",
+            unit: units.LuminanceNit,
+            want: "nt",
+        },
+        {
+            name: "NanocandelaPerSquareMeter abbreviation",
+            unit: units.LuminanceNanocandelaPerSquareMeter,
+            want: "nCd/m²",
+        },
+        {
+            name: "MicrocandelaPerSquareMeter abbreviation",
+            unit: units.LuminanceMicrocandelaPerSquareMeter,
+            want: "μCd/m²",
+        },
+        {
+            name: "MillicandelaPerSquareMeter abbreviation",
+            unit: units.LuminanceMillicandelaPerSquareMeter,
+            want: "mCd/m²",
+        },
+        {
+            name: "CenticandelaPerSquareMeter abbreviation",
+            unit: units.LuminanceCenticandelaPerSquareMeter,
+            want: "cCd/m²",
+        },
+        {
+            name: "DecicandelaPerSquareMeter abbreviation",
+            unit: units.LuminanceDecicandelaPerSquareMeter,
+            want: "dCd/m²",
+        },
+        {
+            name: "KilocandelaPerSquareMeter abbreviation",
+            unit: units.LuminanceKilocandelaPerSquareMeter,
+            want: "kCd/m²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.LuminanceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetLuminanceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetLuminanceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestLuminance_String(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateLuminance(tt.value, units.LuminanceCandelaPerSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Luminance.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

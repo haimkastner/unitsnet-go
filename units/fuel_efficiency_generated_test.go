@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestFuelEfficiencyConversions(t *testing.T) {
 		// Test conversion to LitersPer100Kilometers.
 		// No expected conversion value provided for LitersPer100Kilometers, verifying result is not NaN.
 		result := a.LitersPer100Kilometers()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPer100Kilometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPer100Kilometers returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestFuelEfficiencyConversions(t *testing.T) {
 		// Test conversion to MilesPerUsGallon.
 		// No expected conversion value provided for MilesPerUsGallon, verifying result is not NaN.
 		result := a.MilesPerUsGallon()
-		if math.IsNaN(result) {
+		cacheResult := a.MilesPerUsGallon()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilesPerUsGallon returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestFuelEfficiencyConversions(t *testing.T) {
 		// Test conversion to MilesPerUkGallon.
 		// No expected conversion value provided for MilesPerUkGallon, verifying result is not NaN.
 		result := a.MilesPerUkGallon()
-		if math.IsNaN(result) {
+		cacheResult := a.MilesPerUkGallon()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilesPerUkGallon returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestFuelEfficiencyConversions(t *testing.T) {
 		// Test conversion to KilometersPerLiters.
 		// No expected conversion value provided for KilometersPerLiters, verifying result is not NaN.
 		result := a.KilometersPerLiters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilometersPerLiters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilometersPerLiters returned NaN")
 		}
 	}
@@ -606,4 +611,110 @@ func TestFuelEfficiency_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetFuelEfficiencyAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.FuelEfficiencyUnits
+        want string
+    }{
+        {
+            name: "LiterPer100Kilometers abbreviation",
+            unit: units.FuelEfficiencyLiterPer100Kilometers,
+            want: "L/100km",
+        },
+        {
+            name: "MilePerUsGallon abbreviation",
+            unit: units.FuelEfficiencyMilePerUsGallon,
+            want: "mpg (U.S.)",
+        },
+        {
+            name: "MilePerUkGallon abbreviation",
+            unit: units.FuelEfficiencyMilePerUkGallon,
+            want: "mpg (imp.)",
+        },
+        {
+            name: "KilometerPerLiter abbreviation",
+            unit: units.FuelEfficiencyKilometerPerLiter,
+            want: "km/L",
+        },
+        {
+            name: "invalid unit",
+            unit: units.FuelEfficiencyUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetFuelEfficiencyAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetFuelEfficiencyAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestFuelEfficiency_String(t *testing.T) {
+    factory := units.FuelEfficiencyFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateFuelEfficiency(tt.value, units.FuelEfficiencyLiterPer100Kilometers)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("FuelEfficiency.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to GramSquareMeters.
 		// No expected conversion value provided for GramSquareMeters, verifying result is not NaN.
 		result := a.GramSquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GramSquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramSquareMeters returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to GramSquareDecimeters.
 		// No expected conversion value provided for GramSquareDecimeters, verifying result is not NaN.
 		result := a.GramSquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GramSquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramSquareDecimeters returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to GramSquareCentimeters.
 		// No expected conversion value provided for GramSquareCentimeters, verifying result is not NaN.
 		result := a.GramSquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GramSquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramSquareCentimeters returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to GramSquareMillimeters.
 		// No expected conversion value provided for GramSquareMillimeters, verifying result is not NaN.
 		result := a.GramSquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.GramSquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramSquareMillimeters returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to TonneSquareMeters.
 		// No expected conversion value provided for TonneSquareMeters, verifying result is not NaN.
 		result := a.TonneSquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.TonneSquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonneSquareMeters returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to TonneSquareDecimeters.
 		// No expected conversion value provided for TonneSquareDecimeters, verifying result is not NaN.
 		result := a.TonneSquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.TonneSquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonneSquareDecimeters returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to TonneSquareCentimeters.
 		// No expected conversion value provided for TonneSquareCentimeters, verifying result is not NaN.
 		result := a.TonneSquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.TonneSquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonneSquareCentimeters returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to TonneSquareMilimeters.
 		// No expected conversion value provided for TonneSquareMilimeters, verifying result is not NaN.
 		result := a.TonneSquareMilimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.TonneSquareMilimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonneSquareMilimeters returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to PoundSquareFeet.
 		// No expected conversion value provided for PoundSquareFeet, verifying result is not NaN.
 		result := a.PoundSquareFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundSquareFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundSquareFeet returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to PoundSquareInches.
 		// No expected conversion value provided for PoundSquareInches, verifying result is not NaN.
 		result := a.PoundSquareInches()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundSquareInches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundSquareInches returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to SlugSquareFeet.
 		// No expected conversion value provided for SlugSquareFeet, verifying result is not NaN.
 		result := a.SlugSquareFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.SlugSquareFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SlugSquareFeet returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to SlugSquareInches.
 		// No expected conversion value provided for SlugSquareInches, verifying result is not NaN.
 		result := a.SlugSquareInches()
-		if math.IsNaN(result) {
+		cacheResult := a.SlugSquareInches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SlugSquareInches returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MilligramSquareMeters.
 		// No expected conversion value provided for MilligramSquareMeters, verifying result is not NaN.
 		result := a.MilligramSquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramSquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramSquareMeters returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to KilogramSquareMeters.
 		// No expected conversion value provided for KilogramSquareMeters, verifying result is not NaN.
 		result := a.KilogramSquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramSquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramSquareMeters returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MilligramSquareDecimeters.
 		// No expected conversion value provided for MilligramSquareDecimeters, verifying result is not NaN.
 		result := a.MilligramSquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramSquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramSquareDecimeters returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to KilogramSquareDecimeters.
 		// No expected conversion value provided for KilogramSquareDecimeters, verifying result is not NaN.
 		result := a.KilogramSquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramSquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramSquareDecimeters returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MilligramSquareCentimeters.
 		// No expected conversion value provided for MilligramSquareCentimeters, verifying result is not NaN.
 		result := a.MilligramSquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramSquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramSquareCentimeters returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to KilogramSquareCentimeters.
 		// No expected conversion value provided for KilogramSquareCentimeters, verifying result is not NaN.
 		result := a.KilogramSquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramSquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramSquareCentimeters returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MilligramSquareMillimeters.
 		// No expected conversion value provided for MilligramSquareMillimeters, verifying result is not NaN.
 		result := a.MilligramSquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramSquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramSquareMillimeters returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to KilogramSquareMillimeters.
 		// No expected conversion value provided for KilogramSquareMillimeters, verifying result is not NaN.
 		result := a.KilogramSquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramSquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramSquareMillimeters returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to KilotonneSquareMeters.
 		// No expected conversion value provided for KilotonneSquareMeters, verifying result is not NaN.
 		result := a.KilotonneSquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilotonneSquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilotonneSquareMeters returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MegatonneSquareMeters.
 		// No expected conversion value provided for MegatonneSquareMeters, verifying result is not NaN.
 		result := a.MegatonneSquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MegatonneSquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegatonneSquareMeters returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to KilotonneSquareDecimeters.
 		// No expected conversion value provided for KilotonneSquareDecimeters, verifying result is not NaN.
 		result := a.KilotonneSquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilotonneSquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilotonneSquareDecimeters returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MegatonneSquareDecimeters.
 		// No expected conversion value provided for MegatonneSquareDecimeters, verifying result is not NaN.
 		result := a.MegatonneSquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MegatonneSquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegatonneSquareDecimeters returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to KilotonneSquareCentimeters.
 		// No expected conversion value provided for KilotonneSquareCentimeters, verifying result is not NaN.
 		result := a.KilotonneSquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilotonneSquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilotonneSquareCentimeters returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MegatonneSquareCentimeters.
 		// No expected conversion value provided for MegatonneSquareCentimeters, verifying result is not NaN.
 		result := a.MegatonneSquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MegatonneSquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegatonneSquareCentimeters returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to KilotonneSquareMilimeters.
 		// No expected conversion value provided for KilotonneSquareMilimeters, verifying result is not NaN.
 		result := a.KilotonneSquareMilimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilotonneSquareMilimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilotonneSquareMilimeters returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MegatonneSquareMilimeters.
 		// No expected conversion value provided for MegatonneSquareMilimeters, verifying result is not NaN.
 		result := a.MegatonneSquareMilimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MegatonneSquareMilimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegatonneSquareMilimeters returned NaN")
 		}
 	}
@@ -2526,4 +2555,230 @@ func TestMassMomentOfInertia_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMassMomentOfInertiaAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MassMomentOfInertiaUnits
+        want string
+    }{
+        {
+            name: "GramSquareMeter abbreviation",
+            unit: units.MassMomentOfInertiaGramSquareMeter,
+            want: "g·m²",
+        },
+        {
+            name: "GramSquareDecimeter abbreviation",
+            unit: units.MassMomentOfInertiaGramSquareDecimeter,
+            want: "g·dm²",
+        },
+        {
+            name: "GramSquareCentimeter abbreviation",
+            unit: units.MassMomentOfInertiaGramSquareCentimeter,
+            want: "g·cm²",
+        },
+        {
+            name: "GramSquareMillimeter abbreviation",
+            unit: units.MassMomentOfInertiaGramSquareMillimeter,
+            want: "g·mm²",
+        },
+        {
+            name: "TonneSquareMeter abbreviation",
+            unit: units.MassMomentOfInertiaTonneSquareMeter,
+            want: "t·m²",
+        },
+        {
+            name: "TonneSquareDecimeter abbreviation",
+            unit: units.MassMomentOfInertiaTonneSquareDecimeter,
+            want: "t·dm²",
+        },
+        {
+            name: "TonneSquareCentimeter abbreviation",
+            unit: units.MassMomentOfInertiaTonneSquareCentimeter,
+            want: "t·cm²",
+        },
+        {
+            name: "TonneSquareMilimeter abbreviation",
+            unit: units.MassMomentOfInertiaTonneSquareMilimeter,
+            want: "t·mm²",
+        },
+        {
+            name: "PoundSquareFoot abbreviation",
+            unit: units.MassMomentOfInertiaPoundSquareFoot,
+            want: "lb·ft²",
+        },
+        {
+            name: "PoundSquareInch abbreviation",
+            unit: units.MassMomentOfInertiaPoundSquareInch,
+            want: "lb·in²",
+        },
+        {
+            name: "SlugSquareFoot abbreviation",
+            unit: units.MassMomentOfInertiaSlugSquareFoot,
+            want: "slug·ft²",
+        },
+        {
+            name: "SlugSquareInch abbreviation",
+            unit: units.MassMomentOfInertiaSlugSquareInch,
+            want: "slug·in²",
+        },
+        {
+            name: "MilligramSquareMeter abbreviation",
+            unit: units.MassMomentOfInertiaMilligramSquareMeter,
+            want: "mg·m²",
+        },
+        {
+            name: "KilogramSquareMeter abbreviation",
+            unit: units.MassMomentOfInertiaKilogramSquareMeter,
+            want: "kg·m²",
+        },
+        {
+            name: "MilligramSquareDecimeter abbreviation",
+            unit: units.MassMomentOfInertiaMilligramSquareDecimeter,
+            want: "mg·dm²",
+        },
+        {
+            name: "KilogramSquareDecimeter abbreviation",
+            unit: units.MassMomentOfInertiaKilogramSquareDecimeter,
+            want: "kg·dm²",
+        },
+        {
+            name: "MilligramSquareCentimeter abbreviation",
+            unit: units.MassMomentOfInertiaMilligramSquareCentimeter,
+            want: "mg·cm²",
+        },
+        {
+            name: "KilogramSquareCentimeter abbreviation",
+            unit: units.MassMomentOfInertiaKilogramSquareCentimeter,
+            want: "kg·cm²",
+        },
+        {
+            name: "MilligramSquareMillimeter abbreviation",
+            unit: units.MassMomentOfInertiaMilligramSquareMillimeter,
+            want: "mg·mm²",
+        },
+        {
+            name: "KilogramSquareMillimeter abbreviation",
+            unit: units.MassMomentOfInertiaKilogramSquareMillimeter,
+            want: "kg·mm²",
+        },
+        {
+            name: "KilotonneSquareMeter abbreviation",
+            unit: units.MassMomentOfInertiaKilotonneSquareMeter,
+            want: "kt·m²",
+        },
+        {
+            name: "MegatonneSquareMeter abbreviation",
+            unit: units.MassMomentOfInertiaMegatonneSquareMeter,
+            want: "Mt·m²",
+        },
+        {
+            name: "KilotonneSquareDecimeter abbreviation",
+            unit: units.MassMomentOfInertiaKilotonneSquareDecimeter,
+            want: "kt·dm²",
+        },
+        {
+            name: "MegatonneSquareDecimeter abbreviation",
+            unit: units.MassMomentOfInertiaMegatonneSquareDecimeter,
+            want: "Mt·dm²",
+        },
+        {
+            name: "KilotonneSquareCentimeter abbreviation",
+            unit: units.MassMomentOfInertiaKilotonneSquareCentimeter,
+            want: "kt·cm²",
+        },
+        {
+            name: "MegatonneSquareCentimeter abbreviation",
+            unit: units.MassMomentOfInertiaMegatonneSquareCentimeter,
+            want: "Mt·cm²",
+        },
+        {
+            name: "KilotonneSquareMilimeter abbreviation",
+            unit: units.MassMomentOfInertiaKilotonneSquareMilimeter,
+            want: "kt·mm²",
+        },
+        {
+            name: "MegatonneSquareMilimeter abbreviation",
+            unit: units.MassMomentOfInertiaMegatonneSquareMilimeter,
+            want: "Mt·mm²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MassMomentOfInertiaUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMassMomentOfInertiaAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMassMomentOfInertiaAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMassMomentOfInertia_String(t *testing.T) {
+    factory := units.MassMomentOfInertiaFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMassMomentOfInertia(tt.value, units.MassMomentOfInertiaKilogramSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("MassMomentOfInertia.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

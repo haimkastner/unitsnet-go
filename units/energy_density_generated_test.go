@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to JoulesPerCubicMeter.
 		// No expected conversion value provided for JoulesPerCubicMeter, verifying result is not NaN.
 		result := a.JoulesPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerCubicMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to WattHoursPerCubicMeter.
 		// No expected conversion value provided for WattHoursPerCubicMeter, verifying result is not NaN.
 		result := a.WattHoursPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattHoursPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattHoursPerCubicMeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerCubicMeter.
 		// No expected conversion value provided for KilojoulesPerCubicMeter, verifying result is not NaN.
 		result := a.KilojoulesPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerCubicMeter returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to MegajoulesPerCubicMeter.
 		// No expected conversion value provided for MegajoulesPerCubicMeter, verifying result is not NaN.
 		result := a.MegajoulesPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegajoulesPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegajoulesPerCubicMeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to GigajoulesPerCubicMeter.
 		// No expected conversion value provided for GigajoulesPerCubicMeter, verifying result is not NaN.
 		result := a.GigajoulesPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GigajoulesPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigajoulesPerCubicMeter returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to TerajoulesPerCubicMeter.
 		// No expected conversion value provided for TerajoulesPerCubicMeter, verifying result is not NaN.
 		result := a.TerajoulesPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TerajoulesPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerajoulesPerCubicMeter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to PetajoulesPerCubicMeter.
 		// No expected conversion value provided for PetajoulesPerCubicMeter, verifying result is not NaN.
 		result := a.PetajoulesPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.PetajoulesPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PetajoulesPerCubicMeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to KilowattHoursPerCubicMeter.
 		// No expected conversion value provided for KilowattHoursPerCubicMeter, verifying result is not NaN.
 		result := a.KilowattHoursPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattHoursPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattHoursPerCubicMeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to MegawattHoursPerCubicMeter.
 		// No expected conversion value provided for MegawattHoursPerCubicMeter, verifying result is not NaN.
 		result := a.MegawattHoursPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattHoursPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattHoursPerCubicMeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to GigawattHoursPerCubicMeter.
 		// No expected conversion value provided for GigawattHoursPerCubicMeter, verifying result is not NaN.
 		result := a.GigawattHoursPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattHoursPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattHoursPerCubicMeter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to TerawattHoursPerCubicMeter.
 		// No expected conversion value provided for TerawattHoursPerCubicMeter, verifying result is not NaN.
 		result := a.TerawattHoursPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattHoursPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattHoursPerCubicMeter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestEnergyDensityConversions(t *testing.T) {
 		// Test conversion to PetawattHoursPerCubicMeter.
 		// No expected conversion value provided for PetawattHoursPerCubicMeter, verifying result is not NaN.
 		result := a.PetawattHoursPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.PetawattHoursPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PetawattHoursPerCubicMeter returned NaN")
 		}
 	}
@@ -1246,4 +1259,150 @@ func TestEnergyDensity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetEnergyDensityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.EnergyDensityUnits
+        want string
+    }{
+        {
+            name: "JoulePerCubicMeter abbreviation",
+            unit: units.EnergyDensityJoulePerCubicMeter,
+            want: "J/m³",
+        },
+        {
+            name: "WattHourPerCubicMeter abbreviation",
+            unit: units.EnergyDensityWattHourPerCubicMeter,
+            want: "Wh/m³",
+        },
+        {
+            name: "KilojoulePerCubicMeter abbreviation",
+            unit: units.EnergyDensityKilojoulePerCubicMeter,
+            want: "kJ/m³",
+        },
+        {
+            name: "MegajoulePerCubicMeter abbreviation",
+            unit: units.EnergyDensityMegajoulePerCubicMeter,
+            want: "MJ/m³",
+        },
+        {
+            name: "GigajoulePerCubicMeter abbreviation",
+            unit: units.EnergyDensityGigajoulePerCubicMeter,
+            want: "GJ/m³",
+        },
+        {
+            name: "TerajoulePerCubicMeter abbreviation",
+            unit: units.EnergyDensityTerajoulePerCubicMeter,
+            want: "TJ/m³",
+        },
+        {
+            name: "PetajoulePerCubicMeter abbreviation",
+            unit: units.EnergyDensityPetajoulePerCubicMeter,
+            want: "PJ/m³",
+        },
+        {
+            name: "KilowattHourPerCubicMeter abbreviation",
+            unit: units.EnergyDensityKilowattHourPerCubicMeter,
+            want: "kWh/m³",
+        },
+        {
+            name: "MegawattHourPerCubicMeter abbreviation",
+            unit: units.EnergyDensityMegawattHourPerCubicMeter,
+            want: "MWh/m³",
+        },
+        {
+            name: "GigawattHourPerCubicMeter abbreviation",
+            unit: units.EnergyDensityGigawattHourPerCubicMeter,
+            want: "GWh/m³",
+        },
+        {
+            name: "TerawattHourPerCubicMeter abbreviation",
+            unit: units.EnergyDensityTerawattHourPerCubicMeter,
+            want: "TWh/m³",
+        },
+        {
+            name: "PetawattHourPerCubicMeter abbreviation",
+            unit: units.EnergyDensityPetawattHourPerCubicMeter,
+            want: "PWh/m³",
+        },
+        {
+            name: "invalid unit",
+            unit: units.EnergyDensityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetEnergyDensityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetEnergyDensityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestEnergyDensity_String(t *testing.T) {
+    factory := units.EnergyDensityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateEnergyDensity(tt.value, units.EnergyDensityJoulePerCubicMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("EnergyDensity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

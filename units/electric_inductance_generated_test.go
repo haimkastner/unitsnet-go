@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricInductanceConversions(t *testing.T) {
 		// Test conversion to Henries.
 		// No expected conversion value provided for Henries, verifying result is not NaN.
 		result := a.Henries()
-		if math.IsNaN(result) {
+		cacheResult := a.Henries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Henries returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricInductanceConversions(t *testing.T) {
 		// Test conversion to Picohenries.
 		// No expected conversion value provided for Picohenries, verifying result is not NaN.
 		result := a.Picohenries()
-		if math.IsNaN(result) {
+		cacheResult := a.Picohenries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picohenries returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricInductanceConversions(t *testing.T) {
 		// Test conversion to Nanohenries.
 		// No expected conversion value provided for Nanohenries, verifying result is not NaN.
 		result := a.Nanohenries()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanohenries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanohenries returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricInductanceConversions(t *testing.T) {
 		// Test conversion to Microhenries.
 		// No expected conversion value provided for Microhenries, verifying result is not NaN.
 		result := a.Microhenries()
-		if math.IsNaN(result) {
+		cacheResult := a.Microhenries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microhenries returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricInductanceConversions(t *testing.T) {
 		// Test conversion to Millihenries.
 		// No expected conversion value provided for Millihenries, verifying result is not NaN.
 		result := a.Millihenries()
-		if math.IsNaN(result) {
+		cacheResult := a.Millihenries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millihenries returned NaN")
 		}
 	}
@@ -686,4 +692,115 @@ func TestElectricInductance_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricInductanceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricInductanceUnits
+        want string
+    }{
+        {
+            name: "Henry abbreviation",
+            unit: units.ElectricInductanceHenry,
+            want: "H",
+        },
+        {
+            name: "Picohenry abbreviation",
+            unit: units.ElectricInductancePicohenry,
+            want: "pH",
+        },
+        {
+            name: "Nanohenry abbreviation",
+            unit: units.ElectricInductanceNanohenry,
+            want: "nH",
+        },
+        {
+            name: "Microhenry abbreviation",
+            unit: units.ElectricInductanceMicrohenry,
+            want: "μH",
+        },
+        {
+            name: "Millihenry abbreviation",
+            unit: units.ElectricInductanceMillihenry,
+            want: "mH",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricInductanceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricInductanceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricInductanceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricInductance_String(t *testing.T) {
+    factory := units.ElectricInductanceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricInductance(tt.value, units.ElectricInductanceHenry)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricInductance.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

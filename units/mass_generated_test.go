@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Grams.
 		// No expected conversion value provided for Grams, verifying result is not NaN.
 		result := a.Grams()
-		if math.IsNaN(result) {
+		cacheResult := a.Grams()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Grams returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Tonnes.
 		// No expected conversion value provided for Tonnes, verifying result is not NaN.
 		result := a.Tonnes()
-		if math.IsNaN(result) {
+		cacheResult := a.Tonnes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Tonnes returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to ShortTons.
 		// No expected conversion value provided for ShortTons, verifying result is not NaN.
 		result := a.ShortTons()
-		if math.IsNaN(result) {
+		cacheResult := a.ShortTons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ShortTons returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to LongTons.
 		// No expected conversion value provided for LongTons, verifying result is not NaN.
 		result := a.LongTons()
-		if math.IsNaN(result) {
+		cacheResult := a.LongTons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LongTons returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Pounds.
 		// No expected conversion value provided for Pounds, verifying result is not NaN.
 		result := a.Pounds()
-		if math.IsNaN(result) {
+		cacheResult := a.Pounds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Pounds returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Ounces.
 		// No expected conversion value provided for Ounces, verifying result is not NaN.
 		result := a.Ounces()
-		if math.IsNaN(result) {
+		cacheResult := a.Ounces()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Ounces returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Slugs.
 		// No expected conversion value provided for Slugs, verifying result is not NaN.
 		result := a.Slugs()
-		if math.IsNaN(result) {
+		cacheResult := a.Slugs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Slugs returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Stone.
 		// No expected conversion value provided for Stone, verifying result is not NaN.
 		result := a.Stone()
-		if math.IsNaN(result) {
+		cacheResult := a.Stone()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Stone returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to ShortHundredweight.
 		// No expected conversion value provided for ShortHundredweight, verifying result is not NaN.
 		result := a.ShortHundredweight()
-		if math.IsNaN(result) {
+		cacheResult := a.ShortHundredweight()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ShortHundredweight returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to LongHundredweight.
 		// No expected conversion value provided for LongHundredweight, verifying result is not NaN.
 		result := a.LongHundredweight()
-		if math.IsNaN(result) {
+		cacheResult := a.LongHundredweight()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LongHundredweight returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Grains.
 		// No expected conversion value provided for Grains, verifying result is not NaN.
 		result := a.Grains()
-		if math.IsNaN(result) {
+		cacheResult := a.Grains()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Grains returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to SolarMasses.
 		// No expected conversion value provided for SolarMasses, verifying result is not NaN.
 		result := a.SolarMasses()
-		if math.IsNaN(result) {
+		cacheResult := a.SolarMasses()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SolarMasses returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to EarthMasses.
 		// No expected conversion value provided for EarthMasses, verifying result is not NaN.
 		result := a.EarthMasses()
-		if math.IsNaN(result) {
+		cacheResult := a.EarthMasses()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to EarthMasses returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Femtograms.
 		// No expected conversion value provided for Femtograms, verifying result is not NaN.
 		result := a.Femtograms()
-		if math.IsNaN(result) {
+		cacheResult := a.Femtograms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Femtograms returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Picograms.
 		// No expected conversion value provided for Picograms, verifying result is not NaN.
 		result := a.Picograms()
-		if math.IsNaN(result) {
+		cacheResult := a.Picograms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picograms returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Nanograms.
 		// No expected conversion value provided for Nanograms, verifying result is not NaN.
 		result := a.Nanograms()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanograms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanograms returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Micrograms.
 		// No expected conversion value provided for Micrograms, verifying result is not NaN.
 		result := a.Micrograms()
-		if math.IsNaN(result) {
+		cacheResult := a.Micrograms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Micrograms returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Milligrams.
 		// No expected conversion value provided for Milligrams, verifying result is not NaN.
 		result := a.Milligrams()
-		if math.IsNaN(result) {
+		cacheResult := a.Milligrams()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milligrams returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Centigrams.
 		// No expected conversion value provided for Centigrams, verifying result is not NaN.
 		result := a.Centigrams()
-		if math.IsNaN(result) {
+		cacheResult := a.Centigrams()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centigrams returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Decigrams.
 		// No expected conversion value provided for Decigrams, verifying result is not NaN.
 		result := a.Decigrams()
-		if math.IsNaN(result) {
+		cacheResult := a.Decigrams()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decigrams returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Decagrams.
 		// No expected conversion value provided for Decagrams, verifying result is not NaN.
 		result := a.Decagrams()
-		if math.IsNaN(result) {
+		cacheResult := a.Decagrams()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decagrams returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Hectograms.
 		// No expected conversion value provided for Hectograms, verifying result is not NaN.
 		result := a.Hectograms()
-		if math.IsNaN(result) {
+		cacheResult := a.Hectograms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Hectograms returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Kilograms.
 		// No expected conversion value provided for Kilograms, verifying result is not NaN.
 		result := a.Kilograms()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilograms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilograms returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Kilotonnes.
 		// No expected conversion value provided for Kilotonnes, verifying result is not NaN.
 		result := a.Kilotonnes()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilotonnes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilotonnes returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Megatonnes.
 		// No expected conversion value provided for Megatonnes, verifying result is not NaN.
 		result := a.Megatonnes()
-		if math.IsNaN(result) {
+		cacheResult := a.Megatonnes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megatonnes returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Kilopounds.
 		// No expected conversion value provided for Kilopounds, verifying result is not NaN.
 		result := a.Kilopounds()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilopounds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilopounds returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestMassConversions(t *testing.T) {
 		// Test conversion to Megapounds.
 		// No expected conversion value provided for Megapounds, verifying result is not NaN.
 		result := a.Megapounds()
-		if math.IsNaN(result) {
+		cacheResult := a.Megapounds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megapounds returned NaN")
 		}
 	}
@@ -2446,4 +2474,225 @@ func TestMass_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMassAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MassUnits
+        want string
+    }{
+        {
+            name: "Gram abbreviation",
+            unit: units.MassGram,
+            want: "g",
+        },
+        {
+            name: "Tonne abbreviation",
+            unit: units.MassTonne,
+            want: "t",
+        },
+        {
+            name: "ShortTon abbreviation",
+            unit: units.MassShortTon,
+            want: "t (short)",
+        },
+        {
+            name: "LongTon abbreviation",
+            unit: units.MassLongTon,
+            want: "long tn",
+        },
+        {
+            name: "Pound abbreviation",
+            unit: units.MassPound,
+            want: "lb",
+        },
+        {
+            name: "Ounce abbreviation",
+            unit: units.MassOunce,
+            want: "oz",
+        },
+        {
+            name: "Slug abbreviation",
+            unit: units.MassSlug,
+            want: "slug",
+        },
+        {
+            name: "Stone abbreviation",
+            unit: units.MassStone,
+            want: "st",
+        },
+        {
+            name: "ShortHundredweight abbreviation",
+            unit: units.MassShortHundredweight,
+            want: "cwt",
+        },
+        {
+            name: "LongHundredweight abbreviation",
+            unit: units.MassLongHundredweight,
+            want: "cwt",
+        },
+        {
+            name: "Grain abbreviation",
+            unit: units.MassGrain,
+            want: "gr",
+        },
+        {
+            name: "SolarMass abbreviation",
+            unit: units.MassSolarMass,
+            want: "M☉",
+        },
+        {
+            name: "EarthMass abbreviation",
+            unit: units.MassEarthMass,
+            want: "em",
+        },
+        {
+            name: "Femtogram abbreviation",
+            unit: units.MassFemtogram,
+            want: "fg",
+        },
+        {
+            name: "Picogram abbreviation",
+            unit: units.MassPicogram,
+            want: "pg",
+        },
+        {
+            name: "Nanogram abbreviation",
+            unit: units.MassNanogram,
+            want: "ng",
+        },
+        {
+            name: "Microgram abbreviation",
+            unit: units.MassMicrogram,
+            want: "μg",
+        },
+        {
+            name: "Milligram abbreviation",
+            unit: units.MassMilligram,
+            want: "mg",
+        },
+        {
+            name: "Centigram abbreviation",
+            unit: units.MassCentigram,
+            want: "cg",
+        },
+        {
+            name: "Decigram abbreviation",
+            unit: units.MassDecigram,
+            want: "dg",
+        },
+        {
+            name: "Decagram abbreviation",
+            unit: units.MassDecagram,
+            want: "dag",
+        },
+        {
+            name: "Hectogram abbreviation",
+            unit: units.MassHectogram,
+            want: "hg",
+        },
+        {
+            name: "Kilogram abbreviation",
+            unit: units.MassKilogram,
+            want: "kg",
+        },
+        {
+            name: "Kilotonne abbreviation",
+            unit: units.MassKilotonne,
+            want: "kt",
+        },
+        {
+            name: "Megatonne abbreviation",
+            unit: units.MassMegatonne,
+            want: "Mt",
+        },
+        {
+            name: "Kilopound abbreviation",
+            unit: units.MassKilopound,
+            want: "klb",
+        },
+        {
+            name: "Megapound abbreviation",
+            unit: units.MassMegapound,
+            want: "Mlb",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MassUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMassAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMassAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMass_String(t *testing.T) {
+    factory := units.MassFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMass(tt.value, units.MassKilogram)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Mass.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

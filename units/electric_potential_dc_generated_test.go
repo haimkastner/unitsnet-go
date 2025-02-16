@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricPotentialDcConversions(t *testing.T) {
 		// Test conversion to VoltsDc.
 		// No expected conversion value provided for VoltsDc, verifying result is not NaN.
 		result := a.VoltsDc()
-		if math.IsNaN(result) {
+		cacheResult := a.VoltsDc()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to VoltsDc returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricPotentialDcConversions(t *testing.T) {
 		// Test conversion to MicrovoltsDc.
 		// No expected conversion value provided for MicrovoltsDc, verifying result is not NaN.
 		result := a.MicrovoltsDc()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrovoltsDc()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrovoltsDc returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricPotentialDcConversions(t *testing.T) {
 		// Test conversion to MillivoltsDc.
 		// No expected conversion value provided for MillivoltsDc, verifying result is not NaN.
 		result := a.MillivoltsDc()
-		if math.IsNaN(result) {
+		cacheResult := a.MillivoltsDc()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillivoltsDc returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricPotentialDcConversions(t *testing.T) {
 		// Test conversion to KilovoltsDc.
 		// No expected conversion value provided for KilovoltsDc, verifying result is not NaN.
 		result := a.KilovoltsDc()
-		if math.IsNaN(result) {
+		cacheResult := a.KilovoltsDc()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilovoltsDc returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricPotentialDcConversions(t *testing.T) {
 		// Test conversion to MegavoltsDc.
 		// No expected conversion value provided for MegavoltsDc, verifying result is not NaN.
 		result := a.MegavoltsDc()
-		if math.IsNaN(result) {
+		cacheResult := a.MegavoltsDc()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegavoltsDc returned NaN")
 		}
 	}
@@ -686,4 +692,115 @@ func TestElectricPotentialDc_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricPotentialDcAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricPotentialDcUnits
+        want string
+    }{
+        {
+            name: "VoltDc abbreviation",
+            unit: units.ElectricPotentialDcVoltDc,
+            want: "Vdc",
+        },
+        {
+            name: "MicrovoltDc abbreviation",
+            unit: units.ElectricPotentialDcMicrovoltDc,
+            want: "μVdc",
+        },
+        {
+            name: "MillivoltDc abbreviation",
+            unit: units.ElectricPotentialDcMillivoltDc,
+            want: "mVdc",
+        },
+        {
+            name: "KilovoltDc abbreviation",
+            unit: units.ElectricPotentialDcKilovoltDc,
+            want: "kVdc",
+        },
+        {
+            name: "MegavoltDc abbreviation",
+            unit: units.ElectricPotentialDcMegavoltDc,
+            want: "MVdc",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricPotentialDcUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricPotentialDcAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricPotentialDcAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricPotentialDc_String(t *testing.T) {
+    factory := units.ElectricPotentialDcFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricPotentialDc(tt.value, units.ElectricPotentialDcVoltDc)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricPotentialDc.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

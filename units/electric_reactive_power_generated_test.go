@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricReactivePowerConversions(t *testing.T) {
 		// Test conversion to VoltamperesReactive.
 		// No expected conversion value provided for VoltamperesReactive, verifying result is not NaN.
 		result := a.VoltamperesReactive()
-		if math.IsNaN(result) {
+		cacheResult := a.VoltamperesReactive()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to VoltamperesReactive returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricReactivePowerConversions(t *testing.T) {
 		// Test conversion to KilovoltamperesReactive.
 		// No expected conversion value provided for KilovoltamperesReactive, verifying result is not NaN.
 		result := a.KilovoltamperesReactive()
-		if math.IsNaN(result) {
+		cacheResult := a.KilovoltamperesReactive()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilovoltamperesReactive returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricReactivePowerConversions(t *testing.T) {
 		// Test conversion to MegavoltamperesReactive.
 		// No expected conversion value provided for MegavoltamperesReactive, verifying result is not NaN.
 		result := a.MegavoltamperesReactive()
-		if math.IsNaN(result) {
+		cacheResult := a.MegavoltamperesReactive()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegavoltamperesReactive returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricReactivePowerConversions(t *testing.T) {
 		// Test conversion to GigavoltamperesReactive.
 		// No expected conversion value provided for GigavoltamperesReactive, verifying result is not NaN.
 		result := a.GigavoltamperesReactive()
-		if math.IsNaN(result) {
+		cacheResult := a.GigavoltamperesReactive()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigavoltamperesReactive returned NaN")
 		}
 	}
@@ -606,4 +611,110 @@ func TestElectricReactivePower_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricReactivePowerAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricReactivePowerUnits
+        want string
+    }{
+        {
+            name: "VoltampereReactive abbreviation",
+            unit: units.ElectricReactivePowerVoltampereReactive,
+            want: "var",
+        },
+        {
+            name: "KilovoltampereReactive abbreviation",
+            unit: units.ElectricReactivePowerKilovoltampereReactive,
+            want: "kvar",
+        },
+        {
+            name: "MegavoltampereReactive abbreviation",
+            unit: units.ElectricReactivePowerMegavoltampereReactive,
+            want: "Mvar",
+        },
+        {
+            name: "GigavoltampereReactive abbreviation",
+            unit: units.ElectricReactivePowerGigavoltampereReactive,
+            want: "Gvar",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricReactivePowerUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricReactivePowerAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricReactivePowerAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricReactivePower_String(t *testing.T) {
+    factory := units.ElectricReactivePowerFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricReactivePower(tt.value, units.ElectricReactivePowerVoltampereReactive)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricReactivePower.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

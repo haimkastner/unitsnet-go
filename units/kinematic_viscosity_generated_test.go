@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestKinematicViscosityConversions(t *testing.T) {
 		// Test conversion to SquareMetersPerSecond.
 		// No expected conversion value provided for SquareMetersPerSecond, verifying result is not NaN.
 		result := a.SquareMetersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareMetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareMetersPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestKinematicViscosityConversions(t *testing.T) {
 		// Test conversion to Stokes.
 		// No expected conversion value provided for Stokes, verifying result is not NaN.
 		result := a.Stokes()
-		if math.IsNaN(result) {
+		cacheResult := a.Stokes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Stokes returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestKinematicViscosityConversions(t *testing.T) {
 		// Test conversion to SquareFeetPerSecond.
 		// No expected conversion value provided for SquareFeetPerSecond, verifying result is not NaN.
 		result := a.SquareFeetPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareFeetPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareFeetPerSecond returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestKinematicViscosityConversions(t *testing.T) {
 		// Test conversion to Nanostokes.
 		// No expected conversion value provided for Nanostokes, verifying result is not NaN.
 		result := a.Nanostokes()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanostokes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanostokes returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestKinematicViscosityConversions(t *testing.T) {
 		// Test conversion to Microstokes.
 		// No expected conversion value provided for Microstokes, verifying result is not NaN.
 		result := a.Microstokes()
-		if math.IsNaN(result) {
+		cacheResult := a.Microstokes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microstokes returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestKinematicViscosityConversions(t *testing.T) {
 		// Test conversion to Millistokes.
 		// No expected conversion value provided for Millistokes, verifying result is not NaN.
 		result := a.Millistokes()
-		if math.IsNaN(result) {
+		cacheResult := a.Millistokes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millistokes returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestKinematicViscosityConversions(t *testing.T) {
 		// Test conversion to Centistokes.
 		// No expected conversion value provided for Centistokes, verifying result is not NaN.
 		result := a.Centistokes()
-		if math.IsNaN(result) {
+		cacheResult := a.Centistokes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centistokes returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestKinematicViscosityConversions(t *testing.T) {
 		// Test conversion to Decistokes.
 		// No expected conversion value provided for Decistokes, verifying result is not NaN.
 		result := a.Decistokes()
-		if math.IsNaN(result) {
+		cacheResult := a.Decistokes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decistokes returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestKinematicViscosityConversions(t *testing.T) {
 		// Test conversion to Kilostokes.
 		// No expected conversion value provided for Kilostokes, verifying result is not NaN.
 		result := a.Kilostokes()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilostokes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilostokes returned NaN")
 		}
 	}
@@ -1006,4 +1016,135 @@ func TestKinematicViscosity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetKinematicViscosityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.KinematicViscosityUnits
+        want string
+    }{
+        {
+            name: "SquareMeterPerSecond abbreviation",
+            unit: units.KinematicViscositySquareMeterPerSecond,
+            want: "m²/s",
+        },
+        {
+            name: "Stokes abbreviation",
+            unit: units.KinematicViscosityStokes,
+            want: "St",
+        },
+        {
+            name: "SquareFootPerSecond abbreviation",
+            unit: units.KinematicViscositySquareFootPerSecond,
+            want: "ft²/s",
+        },
+        {
+            name: "Nanostokes abbreviation",
+            unit: units.KinematicViscosityNanostokes,
+            want: "nSt",
+        },
+        {
+            name: "Microstokes abbreviation",
+            unit: units.KinematicViscosityMicrostokes,
+            want: "μSt",
+        },
+        {
+            name: "Millistokes abbreviation",
+            unit: units.KinematicViscosityMillistokes,
+            want: "mSt",
+        },
+        {
+            name: "Centistokes abbreviation",
+            unit: units.KinematicViscosityCentistokes,
+            want: "cSt",
+        },
+        {
+            name: "Decistokes abbreviation",
+            unit: units.KinematicViscosityDecistokes,
+            want: "dSt",
+        },
+        {
+            name: "Kilostokes abbreviation",
+            unit: units.KinematicViscosityKilostokes,
+            want: "kSt",
+        },
+        {
+            name: "invalid unit",
+            unit: units.KinematicViscosityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetKinematicViscosityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetKinematicViscosityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestKinematicViscosity_String(t *testing.T) {
+    factory := units.KinematicViscosityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateKinematicViscosity(tt.value, units.KinematicViscositySquareMeterPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("KinematicViscosity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Liters.
 		// No expected conversion value provided for Liters, verifying result is not NaN.
 		result := a.Liters()
-		if math.IsNaN(result) {
+		cacheResult := a.Liters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Liters returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicMeters.
 		// No expected conversion value provided for CubicMeters, verifying result is not NaN.
 		result := a.CubicMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMeters returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicKilometers.
 		// No expected conversion value provided for CubicKilometers, verifying result is not NaN.
 		result := a.CubicKilometers()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicKilometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicKilometers returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicHectometers.
 		// No expected conversion value provided for CubicHectometers, verifying result is not NaN.
 		result := a.CubicHectometers()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicHectometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicHectometers returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicDecimeters.
 		// No expected conversion value provided for CubicDecimeters, verifying result is not NaN.
 		result := a.CubicDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicDecimeters returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicCentimeters.
 		// No expected conversion value provided for CubicCentimeters, verifying result is not NaN.
 		result := a.CubicCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicCentimeters returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicMillimeters.
 		// No expected conversion value provided for CubicMillimeters, verifying result is not NaN.
 		result := a.CubicMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMillimeters returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicMicrometers.
 		// No expected conversion value provided for CubicMicrometers, verifying result is not NaN.
 		result := a.CubicMicrometers()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMicrometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMicrometers returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicMiles.
 		// No expected conversion value provided for CubicMiles, verifying result is not NaN.
 		result := a.CubicMiles()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMiles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMiles returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicYards.
 		// No expected conversion value provided for CubicYards, verifying result is not NaN.
 		result := a.CubicYards()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicYards()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicYards returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicFeet.
 		// No expected conversion value provided for CubicFeet, verifying result is not NaN.
 		result := a.CubicFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicFeet returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to CubicInches.
 		// No expected conversion value provided for CubicInches, verifying result is not NaN.
 		result := a.CubicInches()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicInches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicInches returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to ImperialGallons.
 		// No expected conversion value provided for ImperialGallons, verifying result is not NaN.
 		result := a.ImperialGallons()
-		if math.IsNaN(result) {
+		cacheResult := a.ImperialGallons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ImperialGallons returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to ImperialOunces.
 		// No expected conversion value provided for ImperialOunces, verifying result is not NaN.
 		result := a.ImperialOunces()
-		if math.IsNaN(result) {
+		cacheResult := a.ImperialOunces()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ImperialOunces returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UsGallons.
 		// No expected conversion value provided for UsGallons, verifying result is not NaN.
 		result := a.UsGallons()
-		if math.IsNaN(result) {
+		cacheResult := a.UsGallons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsGallons returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UsOunces.
 		// No expected conversion value provided for UsOunces, verifying result is not NaN.
 		result := a.UsOunces()
-		if math.IsNaN(result) {
+		cacheResult := a.UsOunces()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsOunces returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UsTablespoons.
 		// No expected conversion value provided for UsTablespoons, verifying result is not NaN.
 		result := a.UsTablespoons()
-		if math.IsNaN(result) {
+		cacheResult := a.UsTablespoons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsTablespoons returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to AuTablespoons.
 		// No expected conversion value provided for AuTablespoons, verifying result is not NaN.
 		result := a.AuTablespoons()
-		if math.IsNaN(result) {
+		cacheResult := a.AuTablespoons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AuTablespoons returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UkTablespoons.
 		// No expected conversion value provided for UkTablespoons, verifying result is not NaN.
 		result := a.UkTablespoons()
-		if math.IsNaN(result) {
+		cacheResult := a.UkTablespoons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UkTablespoons returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to MetricTeaspoons.
 		// No expected conversion value provided for MetricTeaspoons, verifying result is not NaN.
 		result := a.MetricTeaspoons()
-		if math.IsNaN(result) {
+		cacheResult := a.MetricTeaspoons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetricTeaspoons returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UsTeaspoons.
 		// No expected conversion value provided for UsTeaspoons, verifying result is not NaN.
 		result := a.UsTeaspoons()
-		if math.IsNaN(result) {
+		cacheResult := a.UsTeaspoons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsTeaspoons returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to MetricCups.
 		// No expected conversion value provided for MetricCups, verifying result is not NaN.
 		result := a.MetricCups()
-		if math.IsNaN(result) {
+		cacheResult := a.MetricCups()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetricCups returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UsCustomaryCups.
 		// No expected conversion value provided for UsCustomaryCups, verifying result is not NaN.
 		result := a.UsCustomaryCups()
-		if math.IsNaN(result) {
+		cacheResult := a.UsCustomaryCups()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsCustomaryCups returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UsLegalCups.
 		// No expected conversion value provided for UsLegalCups, verifying result is not NaN.
 		result := a.UsLegalCups()
-		if math.IsNaN(result) {
+		cacheResult := a.UsLegalCups()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsLegalCups returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to OilBarrels.
 		// No expected conversion value provided for OilBarrels, verifying result is not NaN.
 		result := a.OilBarrels()
-		if math.IsNaN(result) {
+		cacheResult := a.OilBarrels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to OilBarrels returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UsBeerBarrels.
 		// No expected conversion value provided for UsBeerBarrels, verifying result is not NaN.
 		result := a.UsBeerBarrels()
-		if math.IsNaN(result) {
+		cacheResult := a.UsBeerBarrels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsBeerBarrels returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to ImperialBeerBarrels.
 		// No expected conversion value provided for ImperialBeerBarrels, verifying result is not NaN.
 		result := a.ImperialBeerBarrels()
-		if math.IsNaN(result) {
+		cacheResult := a.ImperialBeerBarrels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ImperialBeerBarrels returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UsQuarts.
 		// No expected conversion value provided for UsQuarts, verifying result is not NaN.
 		result := a.UsQuarts()
-		if math.IsNaN(result) {
+		cacheResult := a.UsQuarts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsQuarts returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to ImperialQuarts.
 		// No expected conversion value provided for ImperialQuarts, verifying result is not NaN.
 		result := a.ImperialQuarts()
-		if math.IsNaN(result) {
+		cacheResult := a.ImperialQuarts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ImperialQuarts returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to UsPints.
 		// No expected conversion value provided for UsPints, verifying result is not NaN.
 		result := a.UsPints()
-		if math.IsNaN(result) {
+		cacheResult := a.UsPints()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsPints returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to AcreFeet.
 		// No expected conversion value provided for AcreFeet, verifying result is not NaN.
 		result := a.AcreFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.AcreFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AcreFeet returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to ImperialPints.
 		// No expected conversion value provided for ImperialPints, verifying result is not NaN.
 		result := a.ImperialPints()
-		if math.IsNaN(result) {
+		cacheResult := a.ImperialPints()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ImperialPints returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to BoardFeet.
 		// No expected conversion value provided for BoardFeet, verifying result is not NaN.
 		result := a.BoardFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.BoardFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BoardFeet returned NaN")
 		}
 	}
@@ -344,7 +378,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Nanoliters.
 		// No expected conversion value provided for Nanoliters, verifying result is not NaN.
 		result := a.Nanoliters()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanoliters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanoliters returned NaN")
 		}
 	}
@@ -352,7 +387,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Microliters.
 		// No expected conversion value provided for Microliters, verifying result is not NaN.
 		result := a.Microliters()
-		if math.IsNaN(result) {
+		cacheResult := a.Microliters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microliters returned NaN")
 		}
 	}
@@ -360,7 +396,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Milliliters.
 		// No expected conversion value provided for Milliliters, verifying result is not NaN.
 		result := a.Milliliters()
-		if math.IsNaN(result) {
+		cacheResult := a.Milliliters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milliliters returned NaN")
 		}
 	}
@@ -368,7 +405,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Centiliters.
 		// No expected conversion value provided for Centiliters, verifying result is not NaN.
 		result := a.Centiliters()
-		if math.IsNaN(result) {
+		cacheResult := a.Centiliters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centiliters returned NaN")
 		}
 	}
@@ -376,7 +414,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Deciliters.
 		// No expected conversion value provided for Deciliters, verifying result is not NaN.
 		result := a.Deciliters()
-		if math.IsNaN(result) {
+		cacheResult := a.Deciliters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Deciliters returned NaN")
 		}
 	}
@@ -384,7 +423,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Decaliters.
 		// No expected conversion value provided for Decaliters, verifying result is not NaN.
 		result := a.Decaliters()
-		if math.IsNaN(result) {
+		cacheResult := a.Decaliters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decaliters returned NaN")
 		}
 	}
@@ -392,7 +432,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Hectoliters.
 		// No expected conversion value provided for Hectoliters, verifying result is not NaN.
 		result := a.Hectoliters()
-		if math.IsNaN(result) {
+		cacheResult := a.Hectoliters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Hectoliters returned NaN")
 		}
 	}
@@ -400,7 +441,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Kiloliters.
 		// No expected conversion value provided for Kiloliters, verifying result is not NaN.
 		result := a.Kiloliters()
-		if math.IsNaN(result) {
+		cacheResult := a.Kiloliters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kiloliters returned NaN")
 		}
 	}
@@ -408,7 +450,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to Megaliters.
 		// No expected conversion value provided for Megaliters, verifying result is not NaN.
 		result := a.Megaliters()
-		if math.IsNaN(result) {
+		cacheResult := a.Megaliters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megaliters returned NaN")
 		}
 	}
@@ -416,7 +459,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to HectocubicMeters.
 		// No expected conversion value provided for HectocubicMeters, verifying result is not NaN.
 		result := a.HectocubicMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.HectocubicMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectocubicMeters returned NaN")
 		}
 	}
@@ -424,7 +468,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to KilocubicMeters.
 		// No expected conversion value provided for KilocubicMeters, verifying result is not NaN.
 		result := a.KilocubicMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocubicMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocubicMeters returned NaN")
 		}
 	}
@@ -432,7 +477,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to HectocubicFeet.
 		// No expected conversion value provided for HectocubicFeet, verifying result is not NaN.
 		result := a.HectocubicFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.HectocubicFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectocubicFeet returned NaN")
 		}
 	}
@@ -440,7 +486,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to KilocubicFeet.
 		// No expected conversion value provided for KilocubicFeet, verifying result is not NaN.
 		result := a.KilocubicFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocubicFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocubicFeet returned NaN")
 		}
 	}
@@ -448,7 +495,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to MegacubicFeet.
 		// No expected conversion value provided for MegacubicFeet, verifying result is not NaN.
 		result := a.MegacubicFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.MegacubicFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegacubicFeet returned NaN")
 		}
 	}
@@ -456,7 +504,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to KiloimperialGallons.
 		// No expected conversion value provided for KiloimperialGallons, verifying result is not NaN.
 		result := a.KiloimperialGallons()
-		if math.IsNaN(result) {
+		cacheResult := a.KiloimperialGallons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KiloimperialGallons returned NaN")
 		}
 	}
@@ -464,7 +513,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to MegaimperialGallons.
 		// No expected conversion value provided for MegaimperialGallons, verifying result is not NaN.
 		result := a.MegaimperialGallons()
-		if math.IsNaN(result) {
+		cacheResult := a.MegaimperialGallons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegaimperialGallons returned NaN")
 		}
 	}
@@ -472,7 +522,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to DecausGallons.
 		// No expected conversion value provided for DecausGallons, verifying result is not NaN.
 		result := a.DecausGallons()
-		if math.IsNaN(result) {
+		cacheResult := a.DecausGallons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecausGallons returned NaN")
 		}
 	}
@@ -480,7 +531,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to DeciusGallons.
 		// No expected conversion value provided for DeciusGallons, verifying result is not NaN.
 		result := a.DeciusGallons()
-		if math.IsNaN(result) {
+		cacheResult := a.DeciusGallons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DeciusGallons returned NaN")
 		}
 	}
@@ -488,7 +540,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to HectousGallons.
 		// No expected conversion value provided for HectousGallons, verifying result is not NaN.
 		result := a.HectousGallons()
-		if math.IsNaN(result) {
+		cacheResult := a.HectousGallons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectousGallons returned NaN")
 		}
 	}
@@ -496,7 +549,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to KilousGallons.
 		// No expected conversion value provided for KilousGallons, verifying result is not NaN.
 		result := a.KilousGallons()
-		if math.IsNaN(result) {
+		cacheResult := a.KilousGallons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilousGallons returned NaN")
 		}
 	}
@@ -504,7 +558,8 @@ func TestVolumeConversions(t *testing.T) {
 		// Test conversion to MegausGallons.
 		// No expected conversion value provided for MegausGallons, verifying result is not NaN.
 		result := a.MegausGallons()
-		if math.IsNaN(result) {
+		cacheResult := a.MegausGallons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegausGallons returned NaN")
 		}
 	}
@@ -4606,4 +4661,360 @@ func TestVolume_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetVolumeAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.VolumeUnits
+        want string
+    }{
+        {
+            name: "Liter abbreviation",
+            unit: units.VolumeLiter,
+            want: "l",
+        },
+        {
+            name: "CubicMeter abbreviation",
+            unit: units.VolumeCubicMeter,
+            want: "m³",
+        },
+        {
+            name: "CubicKilometer abbreviation",
+            unit: units.VolumeCubicKilometer,
+            want: "km³",
+        },
+        {
+            name: "CubicHectometer abbreviation",
+            unit: units.VolumeCubicHectometer,
+            want: "hm³",
+        },
+        {
+            name: "CubicDecimeter abbreviation",
+            unit: units.VolumeCubicDecimeter,
+            want: "dm³",
+        },
+        {
+            name: "CubicCentimeter abbreviation",
+            unit: units.VolumeCubicCentimeter,
+            want: "cm³",
+        },
+        {
+            name: "CubicMillimeter abbreviation",
+            unit: units.VolumeCubicMillimeter,
+            want: "mm³",
+        },
+        {
+            name: "CubicMicrometer abbreviation",
+            unit: units.VolumeCubicMicrometer,
+            want: "µm³",
+        },
+        {
+            name: "CubicMile abbreviation",
+            unit: units.VolumeCubicMile,
+            want: "mi³",
+        },
+        {
+            name: "CubicYard abbreviation",
+            unit: units.VolumeCubicYard,
+            want: "yd³",
+        },
+        {
+            name: "CubicFoot abbreviation",
+            unit: units.VolumeCubicFoot,
+            want: "ft³",
+        },
+        {
+            name: "CubicInch abbreviation",
+            unit: units.VolumeCubicInch,
+            want: "in³",
+        },
+        {
+            name: "ImperialGallon abbreviation",
+            unit: units.VolumeImperialGallon,
+            want: "gal (imp.)",
+        },
+        {
+            name: "ImperialOunce abbreviation",
+            unit: units.VolumeImperialOunce,
+            want: "oz (imp.)",
+        },
+        {
+            name: "UsGallon abbreviation",
+            unit: units.VolumeUsGallon,
+            want: "gal (U.S.)",
+        },
+        {
+            name: "UsOunce abbreviation",
+            unit: units.VolumeUsOunce,
+            want: "oz (U.S.)",
+        },
+        {
+            name: "UsTablespoon abbreviation",
+            unit: units.VolumeUsTablespoon,
+            want: "",
+        },
+        {
+            name: "AuTablespoon abbreviation",
+            unit: units.VolumeAuTablespoon,
+            want: "",
+        },
+        {
+            name: "UkTablespoon abbreviation",
+            unit: units.VolumeUkTablespoon,
+            want: "",
+        },
+        {
+            name: "MetricTeaspoon abbreviation",
+            unit: units.VolumeMetricTeaspoon,
+            want: "tsp",
+        },
+        {
+            name: "UsTeaspoon abbreviation",
+            unit: units.VolumeUsTeaspoon,
+            want: "",
+        },
+        {
+            name: "MetricCup abbreviation",
+            unit: units.VolumeMetricCup,
+            want: "",
+        },
+        {
+            name: "UsCustomaryCup abbreviation",
+            unit: units.VolumeUsCustomaryCup,
+            want: "",
+        },
+        {
+            name: "UsLegalCup abbreviation",
+            unit: units.VolumeUsLegalCup,
+            want: "",
+        },
+        {
+            name: "OilBarrel abbreviation",
+            unit: units.VolumeOilBarrel,
+            want: "bbl",
+        },
+        {
+            name: "UsBeerBarrel abbreviation",
+            unit: units.VolumeUsBeerBarrel,
+            want: "bl (U.S.)",
+        },
+        {
+            name: "ImperialBeerBarrel abbreviation",
+            unit: units.VolumeImperialBeerBarrel,
+            want: "bl (imp.)",
+        },
+        {
+            name: "UsQuart abbreviation",
+            unit: units.VolumeUsQuart,
+            want: "qt (U.S.)",
+        },
+        {
+            name: "ImperialQuart abbreviation",
+            unit: units.VolumeImperialQuart,
+            want: "qt (imp.)",
+        },
+        {
+            name: "UsPint abbreviation",
+            unit: units.VolumeUsPint,
+            want: "pt (U.S.)",
+        },
+        {
+            name: "AcreFoot abbreviation",
+            unit: units.VolumeAcreFoot,
+            want: "ac-ft",
+        },
+        {
+            name: "ImperialPint abbreviation",
+            unit: units.VolumeImperialPint,
+            want: "pt (imp.)",
+        },
+        {
+            name: "BoardFoot abbreviation",
+            unit: units.VolumeBoardFoot,
+            want: "bf",
+        },
+        {
+            name: "Nanoliter abbreviation",
+            unit: units.VolumeNanoliter,
+            want: "nl",
+        },
+        {
+            name: "Microliter abbreviation",
+            unit: units.VolumeMicroliter,
+            want: "μl",
+        },
+        {
+            name: "Milliliter abbreviation",
+            unit: units.VolumeMilliliter,
+            want: "ml",
+        },
+        {
+            name: "Centiliter abbreviation",
+            unit: units.VolumeCentiliter,
+            want: "cl",
+        },
+        {
+            name: "Deciliter abbreviation",
+            unit: units.VolumeDeciliter,
+            want: "dl",
+        },
+        {
+            name: "Decaliter abbreviation",
+            unit: units.VolumeDecaliter,
+            want: "dal",
+        },
+        {
+            name: "Hectoliter abbreviation",
+            unit: units.VolumeHectoliter,
+            want: "hl",
+        },
+        {
+            name: "Kiloliter abbreviation",
+            unit: units.VolumeKiloliter,
+            want: "kl",
+        },
+        {
+            name: "Megaliter abbreviation",
+            unit: units.VolumeMegaliter,
+            want: "Ml",
+        },
+        {
+            name: "HectocubicMeter abbreviation",
+            unit: units.VolumeHectocubicMeter,
+            want: "hm³",
+        },
+        {
+            name: "KilocubicMeter abbreviation",
+            unit: units.VolumeKilocubicMeter,
+            want: "km³",
+        },
+        {
+            name: "HectocubicFoot abbreviation",
+            unit: units.VolumeHectocubicFoot,
+            want: "hft³",
+        },
+        {
+            name: "KilocubicFoot abbreviation",
+            unit: units.VolumeKilocubicFoot,
+            want: "kft³",
+        },
+        {
+            name: "MegacubicFoot abbreviation",
+            unit: units.VolumeMegacubicFoot,
+            want: "Mft³",
+        },
+        {
+            name: "KiloimperialGallon abbreviation",
+            unit: units.VolumeKiloimperialGallon,
+            want: "kgal (imp.)",
+        },
+        {
+            name: "MegaimperialGallon abbreviation",
+            unit: units.VolumeMegaimperialGallon,
+            want: "Mgal (imp.)",
+        },
+        {
+            name: "DecausGallon abbreviation",
+            unit: units.VolumeDecausGallon,
+            want: "dagal (U.S.)",
+        },
+        {
+            name: "DeciusGallon abbreviation",
+            unit: units.VolumeDeciusGallon,
+            want: "dgal (U.S.)",
+        },
+        {
+            name: "HectousGallon abbreviation",
+            unit: units.VolumeHectousGallon,
+            want: "hgal (U.S.)",
+        },
+        {
+            name: "KilousGallon abbreviation",
+            unit: units.VolumeKilousGallon,
+            want: "kgal (U.S.)",
+        },
+        {
+            name: "MegausGallon abbreviation",
+            unit: units.VolumeMegausGallon,
+            want: "Mgal (U.S.)",
+        },
+        {
+            name: "invalid unit",
+            unit: units.VolumeUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetVolumeAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetVolumeAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestVolume_String(t *testing.T) {
+    factory := units.VolumeFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateVolume(tt.value, units.VolumeCubicMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Volume.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

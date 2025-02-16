@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestStandardVolumeFlowConversions(t *testing.T) {
 		// Test conversion to StandardCubicMetersPerSecond.
 		// No expected conversion value provided for StandardCubicMetersPerSecond, verifying result is not NaN.
 		result := a.StandardCubicMetersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardCubicMetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardCubicMetersPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestStandardVolumeFlowConversions(t *testing.T) {
 		// Test conversion to StandardCubicMetersPerMinute.
 		// No expected conversion value provided for StandardCubicMetersPerMinute, verifying result is not NaN.
 		result := a.StandardCubicMetersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardCubicMetersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardCubicMetersPerMinute returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestStandardVolumeFlowConversions(t *testing.T) {
 		// Test conversion to StandardCubicMetersPerHour.
 		// No expected conversion value provided for StandardCubicMetersPerHour, verifying result is not NaN.
 		result := a.StandardCubicMetersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardCubicMetersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardCubicMetersPerHour returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestStandardVolumeFlowConversions(t *testing.T) {
 		// Test conversion to StandardCubicMetersPerDay.
 		// No expected conversion value provided for StandardCubicMetersPerDay, verifying result is not NaN.
 		result := a.StandardCubicMetersPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardCubicMetersPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardCubicMetersPerDay returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestStandardVolumeFlowConversions(t *testing.T) {
 		// Test conversion to StandardCubicCentimetersPerMinute.
 		// No expected conversion value provided for StandardCubicCentimetersPerMinute, verifying result is not NaN.
 		result := a.StandardCubicCentimetersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardCubicCentimetersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardCubicCentimetersPerMinute returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestStandardVolumeFlowConversions(t *testing.T) {
 		// Test conversion to StandardLitersPerMinute.
 		// No expected conversion value provided for StandardLitersPerMinute, verifying result is not NaN.
 		result := a.StandardLitersPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardLitersPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardLitersPerMinute returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestStandardVolumeFlowConversions(t *testing.T) {
 		// Test conversion to StandardCubicFeetPerSecond.
 		// No expected conversion value provided for StandardCubicFeetPerSecond, verifying result is not NaN.
 		result := a.StandardCubicFeetPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardCubicFeetPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardCubicFeetPerSecond returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestStandardVolumeFlowConversions(t *testing.T) {
 		// Test conversion to StandardCubicFeetPerMinute.
 		// No expected conversion value provided for StandardCubicFeetPerMinute, verifying result is not NaN.
 		result := a.StandardCubicFeetPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardCubicFeetPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardCubicFeetPerMinute returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestStandardVolumeFlowConversions(t *testing.T) {
 		// Test conversion to StandardCubicFeetPerHour.
 		// No expected conversion value provided for StandardCubicFeetPerHour, verifying result is not NaN.
 		result := a.StandardCubicFeetPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardCubicFeetPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardCubicFeetPerHour returned NaN")
 		}
 	}
@@ -1006,4 +1016,135 @@ func TestStandardVolumeFlow_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetStandardVolumeFlowAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.StandardVolumeFlowUnits
+        want string
+    }{
+        {
+            name: "StandardCubicMeterPerSecond abbreviation",
+            unit: units.StandardVolumeFlowStandardCubicMeterPerSecond,
+            want: "Sm³/s",
+        },
+        {
+            name: "StandardCubicMeterPerMinute abbreviation",
+            unit: units.StandardVolumeFlowStandardCubicMeterPerMinute,
+            want: "Sm³/min",
+        },
+        {
+            name: "StandardCubicMeterPerHour abbreviation",
+            unit: units.StandardVolumeFlowStandardCubicMeterPerHour,
+            want: "Sm³/h",
+        },
+        {
+            name: "StandardCubicMeterPerDay abbreviation",
+            unit: units.StandardVolumeFlowStandardCubicMeterPerDay,
+            want: "Sm³/d",
+        },
+        {
+            name: "StandardCubicCentimeterPerMinute abbreviation",
+            unit: units.StandardVolumeFlowStandardCubicCentimeterPerMinute,
+            want: "sccm",
+        },
+        {
+            name: "StandardLiterPerMinute abbreviation",
+            unit: units.StandardVolumeFlowStandardLiterPerMinute,
+            want: "slm",
+        },
+        {
+            name: "StandardCubicFootPerSecond abbreviation",
+            unit: units.StandardVolumeFlowStandardCubicFootPerSecond,
+            want: "Sft³/s",
+        },
+        {
+            name: "StandardCubicFootPerMinute abbreviation",
+            unit: units.StandardVolumeFlowStandardCubicFootPerMinute,
+            want: "scfm",
+        },
+        {
+            name: "StandardCubicFootPerHour abbreviation",
+            unit: units.StandardVolumeFlowStandardCubicFootPerHour,
+            want: "scfh",
+        },
+        {
+            name: "invalid unit",
+            unit: units.StandardVolumeFlowUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetStandardVolumeFlowAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetStandardVolumeFlowAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestStandardVolumeFlow_String(t *testing.T) {
+    factory := units.StandardVolumeFlowFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateStandardVolumeFlow(tt.value, units.StandardVolumeFlowStandardCubicMeterPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("StandardVolumeFlow.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

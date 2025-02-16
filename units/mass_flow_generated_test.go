@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to GramsPerSecond.
 		// No expected conversion value provided for GramsPerSecond, verifying result is not NaN.
 		result := a.GramsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to GramsPerDay.
 		// No expected conversion value provided for GramsPerDay, verifying result is not NaN.
 		result := a.GramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerDay returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to GramsPerHour.
 		// No expected conversion value provided for GramsPerHour, verifying result is not NaN.
 		result := a.GramsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerHour returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to KilogramsPerHour.
 		// No expected conversion value provided for KilogramsPerHour, verifying result is not NaN.
 		result := a.KilogramsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerHour returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to KilogramsPerMinute.
 		// No expected conversion value provided for KilogramsPerMinute, verifying result is not NaN.
 		result := a.KilogramsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerMinute returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to TonnesPerHour.
 		// No expected conversion value provided for TonnesPerHour, verifying result is not NaN.
 		result := a.TonnesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesPerHour returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to PoundsPerDay.
 		// No expected conversion value provided for PoundsPerDay, verifying result is not NaN.
 		result := a.PoundsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerDay returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to PoundsPerHour.
 		// No expected conversion value provided for PoundsPerHour, verifying result is not NaN.
 		result := a.PoundsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerHour returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to PoundsPerMinute.
 		// No expected conversion value provided for PoundsPerMinute, verifying result is not NaN.
 		result := a.PoundsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerMinute returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to PoundsPerSecond.
 		// No expected conversion value provided for PoundsPerSecond, verifying result is not NaN.
 		result := a.PoundsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerSecond returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to TonnesPerDay.
 		// No expected conversion value provided for TonnesPerDay, verifying result is not NaN.
 		result := a.TonnesPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesPerDay returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to ShortTonsPerHour.
 		// No expected conversion value provided for ShortTonsPerHour, verifying result is not NaN.
 		result := a.ShortTonsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.ShortTonsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ShortTonsPerHour returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to NanogramsPerSecond.
 		// No expected conversion value provided for NanogramsPerSecond, verifying result is not NaN.
 		result := a.NanogramsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.NanogramsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanogramsPerSecond returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerSecond.
 		// No expected conversion value provided for MicrogramsPerSecond, verifying result is not NaN.
 		result := a.MicrogramsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerSecond returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to MilligramsPerSecond.
 		// No expected conversion value provided for MilligramsPerSecond, verifying result is not NaN.
 		result := a.MilligramsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerSecond returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to CentigramsPerSecond.
 		// No expected conversion value provided for CentigramsPerSecond, verifying result is not NaN.
 		result := a.CentigramsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigramsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigramsPerSecond returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to DecigramsPerSecond.
 		// No expected conversion value provided for DecigramsPerSecond, verifying result is not NaN.
 		result := a.DecigramsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigramsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigramsPerSecond returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to DecagramsPerSecond.
 		// No expected conversion value provided for DecagramsPerSecond, verifying result is not NaN.
 		result := a.DecagramsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DecagramsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecagramsPerSecond returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to HectogramsPerSecond.
 		// No expected conversion value provided for HectogramsPerSecond, verifying result is not NaN.
 		result := a.HectogramsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.HectogramsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectogramsPerSecond returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to KilogramsPerSecond.
 		// No expected conversion value provided for KilogramsPerSecond, verifying result is not NaN.
 		result := a.KilogramsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerSecond returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to NanogramsPerDay.
 		// No expected conversion value provided for NanogramsPerDay, verifying result is not NaN.
 		result := a.NanogramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.NanogramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanogramsPerDay returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerDay.
 		// No expected conversion value provided for MicrogramsPerDay, verifying result is not NaN.
 		result := a.MicrogramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerDay returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to MilligramsPerDay.
 		// No expected conversion value provided for MilligramsPerDay, verifying result is not NaN.
 		result := a.MilligramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerDay returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to CentigramsPerDay.
 		// No expected conversion value provided for CentigramsPerDay, verifying result is not NaN.
 		result := a.CentigramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigramsPerDay returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to DecigramsPerDay.
 		// No expected conversion value provided for DecigramsPerDay, verifying result is not NaN.
 		result := a.DecigramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigramsPerDay returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to DecagramsPerDay.
 		// No expected conversion value provided for DecagramsPerDay, verifying result is not NaN.
 		result := a.DecagramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.DecagramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecagramsPerDay returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to HectogramsPerDay.
 		// No expected conversion value provided for HectogramsPerDay, verifying result is not NaN.
 		result := a.HectogramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.HectogramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectogramsPerDay returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to KilogramsPerDay.
 		// No expected conversion value provided for KilogramsPerDay, verifying result is not NaN.
 		result := a.KilogramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerDay returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to MegagramsPerDay.
 		// No expected conversion value provided for MegagramsPerDay, verifying result is not NaN.
 		result := a.MegagramsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MegagramsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegagramsPerDay returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to MegapoundsPerDay.
 		// No expected conversion value provided for MegapoundsPerDay, verifying result is not NaN.
 		result := a.MegapoundsPerDay()
-		if math.IsNaN(result) {
+		cacheResult := a.MegapoundsPerDay()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegapoundsPerDay returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to MegapoundsPerHour.
 		// No expected conversion value provided for MegapoundsPerHour, verifying result is not NaN.
 		result := a.MegapoundsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MegapoundsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegapoundsPerHour returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to MegapoundsPerMinute.
 		// No expected conversion value provided for MegapoundsPerMinute, verifying result is not NaN.
 		result := a.MegapoundsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.MegapoundsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegapoundsPerMinute returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestMassFlowConversions(t *testing.T) {
 		// Test conversion to MegapoundsPerSecond.
 		// No expected conversion value provided for MegapoundsPerSecond, verifying result is not NaN.
 		result := a.MegapoundsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MegapoundsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegapoundsPerSecond returned NaN")
 		}
 	}
@@ -2926,4 +2960,255 @@ func TestMassFlow_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMassFlowAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MassFlowUnits
+        want string
+    }{
+        {
+            name: "GramPerSecond abbreviation",
+            unit: units.MassFlowGramPerSecond,
+            want: "g/s",
+        },
+        {
+            name: "GramPerDay abbreviation",
+            unit: units.MassFlowGramPerDay,
+            want: "g/d",
+        },
+        {
+            name: "GramPerHour abbreviation",
+            unit: units.MassFlowGramPerHour,
+            want: "g/h",
+        },
+        {
+            name: "KilogramPerHour abbreviation",
+            unit: units.MassFlowKilogramPerHour,
+            want: "kg/h",
+        },
+        {
+            name: "KilogramPerMinute abbreviation",
+            unit: units.MassFlowKilogramPerMinute,
+            want: "kg/min",
+        },
+        {
+            name: "TonnePerHour abbreviation",
+            unit: units.MassFlowTonnePerHour,
+            want: "t/h",
+        },
+        {
+            name: "PoundPerDay abbreviation",
+            unit: units.MassFlowPoundPerDay,
+            want: "lb/d",
+        },
+        {
+            name: "PoundPerHour abbreviation",
+            unit: units.MassFlowPoundPerHour,
+            want: "lb/h",
+        },
+        {
+            name: "PoundPerMinute abbreviation",
+            unit: units.MassFlowPoundPerMinute,
+            want: "lb/min",
+        },
+        {
+            name: "PoundPerSecond abbreviation",
+            unit: units.MassFlowPoundPerSecond,
+            want: "lb/s",
+        },
+        {
+            name: "TonnePerDay abbreviation",
+            unit: units.MassFlowTonnePerDay,
+            want: "t/d",
+        },
+        {
+            name: "ShortTonPerHour abbreviation",
+            unit: units.MassFlowShortTonPerHour,
+            want: "short tn/h",
+        },
+        {
+            name: "NanogramPerSecond abbreviation",
+            unit: units.MassFlowNanogramPerSecond,
+            want: "ng/s",
+        },
+        {
+            name: "MicrogramPerSecond abbreviation",
+            unit: units.MassFlowMicrogramPerSecond,
+            want: "μg/s",
+        },
+        {
+            name: "MilligramPerSecond abbreviation",
+            unit: units.MassFlowMilligramPerSecond,
+            want: "mg/s",
+        },
+        {
+            name: "CentigramPerSecond abbreviation",
+            unit: units.MassFlowCentigramPerSecond,
+            want: "cg/s",
+        },
+        {
+            name: "DecigramPerSecond abbreviation",
+            unit: units.MassFlowDecigramPerSecond,
+            want: "dg/s",
+        },
+        {
+            name: "DecagramPerSecond abbreviation",
+            unit: units.MassFlowDecagramPerSecond,
+            want: "dag/s",
+        },
+        {
+            name: "HectogramPerSecond abbreviation",
+            unit: units.MassFlowHectogramPerSecond,
+            want: "hg/s",
+        },
+        {
+            name: "KilogramPerSecond abbreviation",
+            unit: units.MassFlowKilogramPerSecond,
+            want: "kg/s",
+        },
+        {
+            name: "NanogramPerDay abbreviation",
+            unit: units.MassFlowNanogramPerDay,
+            want: "ng/d",
+        },
+        {
+            name: "MicrogramPerDay abbreviation",
+            unit: units.MassFlowMicrogramPerDay,
+            want: "μg/d",
+        },
+        {
+            name: "MilligramPerDay abbreviation",
+            unit: units.MassFlowMilligramPerDay,
+            want: "mg/d",
+        },
+        {
+            name: "CentigramPerDay abbreviation",
+            unit: units.MassFlowCentigramPerDay,
+            want: "cg/d",
+        },
+        {
+            name: "DecigramPerDay abbreviation",
+            unit: units.MassFlowDecigramPerDay,
+            want: "dg/d",
+        },
+        {
+            name: "DecagramPerDay abbreviation",
+            unit: units.MassFlowDecagramPerDay,
+            want: "dag/d",
+        },
+        {
+            name: "HectogramPerDay abbreviation",
+            unit: units.MassFlowHectogramPerDay,
+            want: "hg/d",
+        },
+        {
+            name: "KilogramPerDay abbreviation",
+            unit: units.MassFlowKilogramPerDay,
+            want: "kg/d",
+        },
+        {
+            name: "MegagramPerDay abbreviation",
+            unit: units.MassFlowMegagramPerDay,
+            want: "Mg/d",
+        },
+        {
+            name: "MegapoundPerDay abbreviation",
+            unit: units.MassFlowMegapoundPerDay,
+            want: "Mlb/d",
+        },
+        {
+            name: "MegapoundPerHour abbreviation",
+            unit: units.MassFlowMegapoundPerHour,
+            want: "Mlb/h",
+        },
+        {
+            name: "MegapoundPerMinute abbreviation",
+            unit: units.MassFlowMegapoundPerMinute,
+            want: "Mlb/min",
+        },
+        {
+            name: "MegapoundPerSecond abbreviation",
+            unit: units.MassFlowMegapoundPerSecond,
+            want: "Mlb/s",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MassFlowUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMassFlowAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMassFlowAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMassFlow_String(t *testing.T) {
+    factory := units.MassFlowFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMassFlow(tt.value, units.MassFlowGramPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("MassFlow.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

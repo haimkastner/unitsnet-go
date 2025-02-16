@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestRotationalStiffnessPerLengthConversions(t *testing.T) {
 		// Test conversion to NewtonMetersPerRadianPerMeter.
 		// No expected conversion value provided for NewtonMetersPerRadianPerMeter, verifying result is not NaN.
 		result := a.NewtonMetersPerRadianPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonMetersPerRadianPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonMetersPerRadianPerMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestRotationalStiffnessPerLengthConversions(t *testing.T) {
 		// Test conversion to PoundForceFeetPerDegreesPerFeet.
 		// No expected conversion value provided for PoundForceFeetPerDegreesPerFeet, verifying result is not NaN.
 		result := a.PoundForceFeetPerDegreesPerFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundForceFeetPerDegreesPerFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundForceFeetPerDegreesPerFeet returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestRotationalStiffnessPerLengthConversions(t *testing.T) {
 		// Test conversion to KilopoundForceFeetPerDegreesPerFeet.
 		// No expected conversion value provided for KilopoundForceFeetPerDegreesPerFeet, verifying result is not NaN.
 		result := a.KilopoundForceFeetPerDegreesPerFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundForceFeetPerDegreesPerFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundForceFeetPerDegreesPerFeet returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestRotationalStiffnessPerLengthConversions(t *testing.T) {
 		// Test conversion to KilonewtonMetersPerRadianPerMeter.
 		// No expected conversion value provided for KilonewtonMetersPerRadianPerMeter, verifying result is not NaN.
 		result := a.KilonewtonMetersPerRadianPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonMetersPerRadianPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonMetersPerRadianPerMeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestRotationalStiffnessPerLengthConversions(t *testing.T) {
 		// Test conversion to MeganewtonMetersPerRadianPerMeter.
 		// No expected conversion value provided for MeganewtonMetersPerRadianPerMeter, verifying result is not NaN.
 		result := a.MeganewtonMetersPerRadianPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonMetersPerRadianPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonMetersPerRadianPerMeter returned NaN")
 		}
 	}
@@ -686,4 +692,115 @@ func TestRotationalStiffnessPerLength_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetRotationalStiffnessPerLengthAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.RotationalStiffnessPerLengthUnits
+        want string
+    }{
+        {
+            name: "NewtonMeterPerRadianPerMeter abbreviation",
+            unit: units.RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter,
+            want: "N·m/rad/m",
+        },
+        {
+            name: "PoundForceFootPerDegreesPerFoot abbreviation",
+            unit: units.RotationalStiffnessPerLengthPoundForceFootPerDegreesPerFoot,
+            want: "lbf·ft/deg/ft",
+        },
+        {
+            name: "KilopoundForceFootPerDegreesPerFoot abbreviation",
+            unit: units.RotationalStiffnessPerLengthKilopoundForceFootPerDegreesPerFoot,
+            want: "kipf·ft/°/ft",
+        },
+        {
+            name: "KilonewtonMeterPerRadianPerMeter abbreviation",
+            unit: units.RotationalStiffnessPerLengthKilonewtonMeterPerRadianPerMeter,
+            want: "kN·m/rad/m",
+        },
+        {
+            name: "MeganewtonMeterPerRadianPerMeter abbreviation",
+            unit: units.RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter,
+            want: "MN·m/rad/m",
+        },
+        {
+            name: "invalid unit",
+            unit: units.RotationalStiffnessPerLengthUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetRotationalStiffnessPerLengthAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetRotationalStiffnessPerLengthAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestRotationalStiffnessPerLength_String(t *testing.T) {
+    factory := units.RotationalStiffnessPerLengthFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateRotationalStiffnessPerLength(tt.value, units.RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("RotationalStiffnessPerLength.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

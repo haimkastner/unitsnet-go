@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to DecimalFractions.
 		// No expected conversion value provided for DecimalFractions, verifying result is not NaN.
 		result := a.DecimalFractions()
-		if math.IsNaN(result) {
+		cacheResult := a.DecimalFractions()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecimalFractions returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to LitersPerLiter.
 		// No expected conversion value provided for LitersPerLiter, verifying result is not NaN.
 		result := a.LitersPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPerLiter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to LitersPerMililiter.
 		// No expected conversion value provided for LitersPerMililiter, verifying result is not NaN.
 		result := a.LitersPerMililiter()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPerMililiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPerMililiter returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to Percent.
 		// No expected conversion value provided for Percent, verifying result is not NaN.
 		result := a.Percent()
-		if math.IsNaN(result) {
+		cacheResult := a.Percent()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Percent returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to PartsPerThousand.
 		// No expected conversion value provided for PartsPerThousand, verifying result is not NaN.
 		result := a.PartsPerThousand()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerThousand()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerThousand returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to PartsPerMillion.
 		// No expected conversion value provided for PartsPerMillion, verifying result is not NaN.
 		result := a.PartsPerMillion()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerMillion()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerMillion returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to PartsPerBillion.
 		// No expected conversion value provided for PartsPerBillion, verifying result is not NaN.
 		result := a.PartsPerBillion()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerBillion()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerBillion returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to PartsPerTrillion.
 		// No expected conversion value provided for PartsPerTrillion, verifying result is not NaN.
 		result := a.PartsPerTrillion()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerTrillion()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerTrillion returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to PicolitersPerLiter.
 		// No expected conversion value provided for PicolitersPerLiter, verifying result is not NaN.
 		result := a.PicolitersPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicolitersPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicolitersPerLiter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to NanolitersPerLiter.
 		// No expected conversion value provided for NanolitersPerLiter, verifying result is not NaN.
 		result := a.NanolitersPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanolitersPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanolitersPerLiter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to MicrolitersPerLiter.
 		// No expected conversion value provided for MicrolitersPerLiter, verifying result is not NaN.
 		result := a.MicrolitersPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrolitersPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrolitersPerLiter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to MillilitersPerLiter.
 		// No expected conversion value provided for MillilitersPerLiter, verifying result is not NaN.
 		result := a.MillilitersPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MillilitersPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillilitersPerLiter returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to CentilitersPerLiter.
 		// No expected conversion value provided for CentilitersPerLiter, verifying result is not NaN.
 		result := a.CentilitersPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.CentilitersPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentilitersPerLiter returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to DecilitersPerLiter.
 		// No expected conversion value provided for DecilitersPerLiter, verifying result is not NaN.
 		result := a.DecilitersPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.DecilitersPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecilitersPerLiter returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to PicolitersPerMililiter.
 		// No expected conversion value provided for PicolitersPerMililiter, verifying result is not NaN.
 		result := a.PicolitersPerMililiter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicolitersPerMililiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicolitersPerMililiter returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to NanolitersPerMililiter.
 		// No expected conversion value provided for NanolitersPerMililiter, verifying result is not NaN.
 		result := a.NanolitersPerMililiter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanolitersPerMililiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanolitersPerMililiter returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to MicrolitersPerMililiter.
 		// No expected conversion value provided for MicrolitersPerMililiter, verifying result is not NaN.
 		result := a.MicrolitersPerMililiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrolitersPerMililiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrolitersPerMililiter returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to MillilitersPerMililiter.
 		// No expected conversion value provided for MillilitersPerMililiter, verifying result is not NaN.
 		result := a.MillilitersPerMililiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MillilitersPerMililiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillilitersPerMililiter returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to CentilitersPerMililiter.
 		// No expected conversion value provided for CentilitersPerMililiter, verifying result is not NaN.
 		result := a.CentilitersPerMililiter()
-		if math.IsNaN(result) {
+		cacheResult := a.CentilitersPerMililiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentilitersPerMililiter returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		// Test conversion to DecilitersPerMililiter.
 		// No expected conversion value provided for DecilitersPerMililiter, verifying result is not NaN.
 		result := a.DecilitersPerMililiter()
-		if math.IsNaN(result) {
+		cacheResult := a.DecilitersPerMililiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecilitersPerMililiter returned NaN")
 		}
 	}
@@ -1886,4 +1907,190 @@ func TestVolumeConcentration_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetVolumeConcentrationAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.VolumeConcentrationUnits
+        want string
+    }{
+        {
+            name: "DecimalFraction abbreviation",
+            unit: units.VolumeConcentrationDecimalFraction,
+            want: "",
+        },
+        {
+            name: "LitersPerLiter abbreviation",
+            unit: units.VolumeConcentrationLitersPerLiter,
+            want: "L/L",
+        },
+        {
+            name: "LitersPerMililiter abbreviation",
+            unit: units.VolumeConcentrationLitersPerMililiter,
+            want: "L/mL",
+        },
+        {
+            name: "Percent abbreviation",
+            unit: units.VolumeConcentrationPercent,
+            want: "%",
+        },
+        {
+            name: "PartPerThousand abbreviation",
+            unit: units.VolumeConcentrationPartPerThousand,
+            want: "‰",
+        },
+        {
+            name: "PartPerMillion abbreviation",
+            unit: units.VolumeConcentrationPartPerMillion,
+            want: "ppm",
+        },
+        {
+            name: "PartPerBillion abbreviation",
+            unit: units.VolumeConcentrationPartPerBillion,
+            want: "ppb",
+        },
+        {
+            name: "PartPerTrillion abbreviation",
+            unit: units.VolumeConcentrationPartPerTrillion,
+            want: "ppt",
+        },
+        {
+            name: "PicolitersPerLiter abbreviation",
+            unit: units.VolumeConcentrationPicolitersPerLiter,
+            want: "pL/L",
+        },
+        {
+            name: "NanolitersPerLiter abbreviation",
+            unit: units.VolumeConcentrationNanolitersPerLiter,
+            want: "nL/L",
+        },
+        {
+            name: "MicrolitersPerLiter abbreviation",
+            unit: units.VolumeConcentrationMicrolitersPerLiter,
+            want: "μL/L",
+        },
+        {
+            name: "MillilitersPerLiter abbreviation",
+            unit: units.VolumeConcentrationMillilitersPerLiter,
+            want: "mL/L",
+        },
+        {
+            name: "CentilitersPerLiter abbreviation",
+            unit: units.VolumeConcentrationCentilitersPerLiter,
+            want: "cL/L",
+        },
+        {
+            name: "DecilitersPerLiter abbreviation",
+            unit: units.VolumeConcentrationDecilitersPerLiter,
+            want: "dL/L",
+        },
+        {
+            name: "PicolitersPerMililiter abbreviation",
+            unit: units.VolumeConcentrationPicolitersPerMililiter,
+            want: "pL/mL",
+        },
+        {
+            name: "NanolitersPerMililiter abbreviation",
+            unit: units.VolumeConcentrationNanolitersPerMililiter,
+            want: "nL/mL",
+        },
+        {
+            name: "MicrolitersPerMililiter abbreviation",
+            unit: units.VolumeConcentrationMicrolitersPerMililiter,
+            want: "μL/mL",
+        },
+        {
+            name: "MillilitersPerMililiter abbreviation",
+            unit: units.VolumeConcentrationMillilitersPerMililiter,
+            want: "mL/mL",
+        },
+        {
+            name: "CentilitersPerMililiter abbreviation",
+            unit: units.VolumeConcentrationCentilitersPerMililiter,
+            want: "cL/mL",
+        },
+        {
+            name: "DecilitersPerMililiter abbreviation",
+            unit: units.VolumeConcentrationDecilitersPerMililiter,
+            want: "dL/mL",
+        },
+        {
+            name: "invalid unit",
+            unit: units.VolumeConcentrationUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetVolumeConcentrationAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetVolumeConcentrationAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestVolumeConcentration_String(t *testing.T) {
+    factory := units.VolumeConcentrationFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateVolumeConcentration(tt.value, units.VolumeConcentrationDecimalFraction)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("VolumeConcentration.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

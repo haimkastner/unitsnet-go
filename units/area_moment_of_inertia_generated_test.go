@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestAreaMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MetersToTheFourth.
 		// No expected conversion value provided for MetersToTheFourth, verifying result is not NaN.
 		result := a.MetersToTheFourth()
-		if math.IsNaN(result) {
+		cacheResult := a.MetersToTheFourth()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetersToTheFourth returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestAreaMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to DecimetersToTheFourth.
 		// No expected conversion value provided for DecimetersToTheFourth, verifying result is not NaN.
 		result := a.DecimetersToTheFourth()
-		if math.IsNaN(result) {
+		cacheResult := a.DecimetersToTheFourth()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecimetersToTheFourth returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestAreaMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to CentimetersToTheFourth.
 		// No expected conversion value provided for CentimetersToTheFourth, verifying result is not NaN.
 		result := a.CentimetersToTheFourth()
-		if math.IsNaN(result) {
+		cacheResult := a.CentimetersToTheFourth()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentimetersToTheFourth returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestAreaMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to MillimetersToTheFourth.
 		// No expected conversion value provided for MillimetersToTheFourth, verifying result is not NaN.
 		result := a.MillimetersToTheFourth()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimetersToTheFourth()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimetersToTheFourth returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestAreaMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to FeetToTheFourth.
 		// No expected conversion value provided for FeetToTheFourth, verifying result is not NaN.
 		result := a.FeetToTheFourth()
-		if math.IsNaN(result) {
+		cacheResult := a.FeetToTheFourth()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FeetToTheFourth returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestAreaMomentOfInertiaConversions(t *testing.T) {
 		// Test conversion to InchesToTheFourth.
 		// No expected conversion value provided for InchesToTheFourth, verifying result is not NaN.
 		result := a.InchesToTheFourth()
-		if math.IsNaN(result) {
+		cacheResult := a.InchesToTheFourth()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InchesToTheFourth returned NaN")
 		}
 	}
@@ -766,4 +773,120 @@ func TestAreaMomentOfInertia_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetAreaMomentOfInertiaAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.AreaMomentOfInertiaUnits
+        want string
+    }{
+        {
+            name: "MeterToTheFourth abbreviation",
+            unit: units.AreaMomentOfInertiaMeterToTheFourth,
+            want: "m⁴",
+        },
+        {
+            name: "DecimeterToTheFourth abbreviation",
+            unit: units.AreaMomentOfInertiaDecimeterToTheFourth,
+            want: "dm⁴",
+        },
+        {
+            name: "CentimeterToTheFourth abbreviation",
+            unit: units.AreaMomentOfInertiaCentimeterToTheFourth,
+            want: "cm⁴",
+        },
+        {
+            name: "MillimeterToTheFourth abbreviation",
+            unit: units.AreaMomentOfInertiaMillimeterToTheFourth,
+            want: "mm⁴",
+        },
+        {
+            name: "FootToTheFourth abbreviation",
+            unit: units.AreaMomentOfInertiaFootToTheFourth,
+            want: "ft⁴",
+        },
+        {
+            name: "InchToTheFourth abbreviation",
+            unit: units.AreaMomentOfInertiaInchToTheFourth,
+            want: "in⁴",
+        },
+        {
+            name: "invalid unit",
+            unit: units.AreaMomentOfInertiaUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetAreaMomentOfInertiaAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetAreaMomentOfInertiaAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestAreaMomentOfInertia_String(t *testing.T) {
+    factory := units.AreaMomentOfInertiaFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateAreaMomentOfInertia(tt.value, units.AreaMomentOfInertiaMeterToTheFourth)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("AreaMomentOfInertia.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

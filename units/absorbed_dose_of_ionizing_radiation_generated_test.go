@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Grays.
 		// No expected conversion value provided for Grays, verifying result is not NaN.
 		result := a.Grays()
-		if math.IsNaN(result) {
+		cacheResult := a.Grays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Grays returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Rads.
 		// No expected conversion value provided for Rads, verifying result is not NaN.
 		result := a.Rads()
-		if math.IsNaN(result) {
+		cacheResult := a.Rads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Rads returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Femtograys.
 		// No expected conversion value provided for Femtograys, verifying result is not NaN.
 		result := a.Femtograys()
-		if math.IsNaN(result) {
+		cacheResult := a.Femtograys()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Femtograys returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Picograys.
 		// No expected conversion value provided for Picograys, verifying result is not NaN.
 		result := a.Picograys()
-		if math.IsNaN(result) {
+		cacheResult := a.Picograys()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picograys returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Nanograys.
 		// No expected conversion value provided for Nanograys, verifying result is not NaN.
 		result := a.Nanograys()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanograys()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanograys returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Micrograys.
 		// No expected conversion value provided for Micrograys, verifying result is not NaN.
 		result := a.Micrograys()
-		if math.IsNaN(result) {
+		cacheResult := a.Micrograys()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Micrograys returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Milligrays.
 		// No expected conversion value provided for Milligrays, verifying result is not NaN.
 		result := a.Milligrays()
-		if math.IsNaN(result) {
+		cacheResult := a.Milligrays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milligrays returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Centigrays.
 		// No expected conversion value provided for Centigrays, verifying result is not NaN.
 		result := a.Centigrays()
-		if math.IsNaN(result) {
+		cacheResult := a.Centigrays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centigrays returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Kilograys.
 		// No expected conversion value provided for Kilograys, verifying result is not NaN.
 		result := a.Kilograys()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilograys()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilograys returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Megagrays.
 		// No expected conversion value provided for Megagrays, verifying result is not NaN.
 		result := a.Megagrays()
-		if math.IsNaN(result) {
+		cacheResult := a.Megagrays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megagrays returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Gigagrays.
 		// No expected conversion value provided for Gigagrays, verifying result is not NaN.
 		result := a.Gigagrays()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigagrays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigagrays returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Teragrays.
 		// No expected conversion value provided for Teragrays, verifying result is not NaN.
 		result := a.Teragrays()
-		if math.IsNaN(result) {
+		cacheResult := a.Teragrays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Teragrays returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Petagrays.
 		// No expected conversion value provided for Petagrays, verifying result is not NaN.
 		result := a.Petagrays()
-		if math.IsNaN(result) {
+		cacheResult := a.Petagrays()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Petagrays returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Millirads.
 		// No expected conversion value provided for Millirads, verifying result is not NaN.
 		result := a.Millirads()
-		if math.IsNaN(result) {
+		cacheResult := a.Millirads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millirads returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Kilorads.
 		// No expected conversion value provided for Kilorads, verifying result is not NaN.
 		result := a.Kilorads()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilorads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilorads returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		// Test conversion to Megarads.
 		// No expected conversion value provided for Megarads, verifying result is not NaN.
 		result := a.Megarads()
-		if math.IsNaN(result) {
+		cacheResult := a.Megarads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megarads returned NaN")
 		}
 	}
@@ -1566,4 +1583,170 @@ func TestAbsorbedDoseOfIonizingRadiation_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetAbsorbedDoseOfIonizingRadiationAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.AbsorbedDoseOfIonizingRadiationUnits
+        want string
+    }{
+        {
+            name: "Gray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationGray,
+            want: "Gy",
+        },
+        {
+            name: "Rad abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationRad,
+            want: "rad",
+        },
+        {
+            name: "Femtogray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationFemtogray,
+            want: "fGy",
+        },
+        {
+            name: "Picogray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationPicogray,
+            want: "pGy",
+        },
+        {
+            name: "Nanogray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationNanogray,
+            want: "nGy",
+        },
+        {
+            name: "Microgray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationMicrogray,
+            want: "μGy",
+        },
+        {
+            name: "Milligray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationMilligray,
+            want: "mGy",
+        },
+        {
+            name: "Centigray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationCentigray,
+            want: "cGy",
+        },
+        {
+            name: "Kilogray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationKilogray,
+            want: "kGy",
+        },
+        {
+            name: "Megagray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationMegagray,
+            want: "MGy",
+        },
+        {
+            name: "Gigagray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationGigagray,
+            want: "GGy",
+        },
+        {
+            name: "Teragray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationTeragray,
+            want: "TGy",
+        },
+        {
+            name: "Petagray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationPetagray,
+            want: "PGy",
+        },
+        {
+            name: "Millirad abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationMillirad,
+            want: "mrad",
+        },
+        {
+            name: "Kilorad abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationKilorad,
+            want: "krad",
+        },
+        {
+            name: "Megarad abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationMegarad,
+            want: "Mrad",
+        },
+        {
+            name: "invalid unit",
+            unit: units.AbsorbedDoseOfIonizingRadiationUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetAbsorbedDoseOfIonizingRadiationAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetAbsorbedDoseOfIonizingRadiationAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestAbsorbedDoseOfIonizingRadiation_String(t *testing.T) {
+    factory := units.AbsorbedDoseOfIonizingRadiationFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateAbsorbedDoseOfIonizingRadiation(tt.value, units.AbsorbedDoseOfIonizingRadiationGray)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("AbsorbedDoseOfIonizingRadiation.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

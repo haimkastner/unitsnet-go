@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to BitsPerSecond.
 		// No expected conversion value provided for BitsPerSecond, verifying result is not NaN.
 		result := a.BitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.BitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BitsPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to BytesPerSecond.
 		// No expected conversion value provided for BytesPerSecond, verifying result is not NaN.
 		result := a.BytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.BytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BytesPerSecond returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to KilobitsPerSecond.
 		// No expected conversion value provided for KilobitsPerSecond, verifying result is not NaN.
 		result := a.KilobitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilobitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilobitsPerSecond returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to MegabitsPerSecond.
 		// No expected conversion value provided for MegabitsPerSecond, verifying result is not NaN.
 		result := a.MegabitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MegabitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegabitsPerSecond returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to GigabitsPerSecond.
 		// No expected conversion value provided for GigabitsPerSecond, verifying result is not NaN.
 		result := a.GigabitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.GigabitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigabitsPerSecond returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to TerabitsPerSecond.
 		// No expected conversion value provided for TerabitsPerSecond, verifying result is not NaN.
 		result := a.TerabitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.TerabitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerabitsPerSecond returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to PetabitsPerSecond.
 		// No expected conversion value provided for PetabitsPerSecond, verifying result is not NaN.
 		result := a.PetabitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PetabitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PetabitsPerSecond returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to ExabitsPerSecond.
 		// No expected conversion value provided for ExabitsPerSecond, verifying result is not NaN.
 		result := a.ExabitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.ExabitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ExabitsPerSecond returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to KibibitsPerSecond.
 		// No expected conversion value provided for KibibitsPerSecond, verifying result is not NaN.
 		result := a.KibibitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KibibitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KibibitsPerSecond returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to MebibitsPerSecond.
 		// No expected conversion value provided for MebibitsPerSecond, verifying result is not NaN.
 		result := a.MebibitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MebibitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MebibitsPerSecond returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to GibibitsPerSecond.
 		// No expected conversion value provided for GibibitsPerSecond, verifying result is not NaN.
 		result := a.GibibitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.GibibitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GibibitsPerSecond returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to TebibitsPerSecond.
 		// No expected conversion value provided for TebibitsPerSecond, verifying result is not NaN.
 		result := a.TebibitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.TebibitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TebibitsPerSecond returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to PebibitsPerSecond.
 		// No expected conversion value provided for PebibitsPerSecond, verifying result is not NaN.
 		result := a.PebibitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PebibitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PebibitsPerSecond returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to ExbibitsPerSecond.
 		// No expected conversion value provided for ExbibitsPerSecond, verifying result is not NaN.
 		result := a.ExbibitsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.ExbibitsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ExbibitsPerSecond returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to KilobytesPerSecond.
 		// No expected conversion value provided for KilobytesPerSecond, verifying result is not NaN.
 		result := a.KilobytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilobytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilobytesPerSecond returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to MegabytesPerSecond.
 		// No expected conversion value provided for MegabytesPerSecond, verifying result is not NaN.
 		result := a.MegabytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MegabytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegabytesPerSecond returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to GigabytesPerSecond.
 		// No expected conversion value provided for GigabytesPerSecond, verifying result is not NaN.
 		result := a.GigabytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.GigabytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigabytesPerSecond returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to TerabytesPerSecond.
 		// No expected conversion value provided for TerabytesPerSecond, verifying result is not NaN.
 		result := a.TerabytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.TerabytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerabytesPerSecond returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to PetabytesPerSecond.
 		// No expected conversion value provided for PetabytesPerSecond, verifying result is not NaN.
 		result := a.PetabytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PetabytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PetabytesPerSecond returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to ExabytesPerSecond.
 		// No expected conversion value provided for ExabytesPerSecond, verifying result is not NaN.
 		result := a.ExabytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.ExabytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ExabytesPerSecond returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to KibibytesPerSecond.
 		// No expected conversion value provided for KibibytesPerSecond, verifying result is not NaN.
 		result := a.KibibytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KibibytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KibibytesPerSecond returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to MebibytesPerSecond.
 		// No expected conversion value provided for MebibytesPerSecond, verifying result is not NaN.
 		result := a.MebibytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MebibytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MebibytesPerSecond returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to GibibytesPerSecond.
 		// No expected conversion value provided for GibibytesPerSecond, verifying result is not NaN.
 		result := a.GibibytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.GibibytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GibibytesPerSecond returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to TebibytesPerSecond.
 		// No expected conversion value provided for TebibytesPerSecond, verifying result is not NaN.
 		result := a.TebibytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.TebibytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TebibytesPerSecond returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to PebibytesPerSecond.
 		// No expected conversion value provided for PebibytesPerSecond, verifying result is not NaN.
 		result := a.PebibytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PebibytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PebibytesPerSecond returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestBitRateConversions(t *testing.T) {
 		// Test conversion to ExbibytesPerSecond.
 		// No expected conversion value provided for ExbibytesPerSecond, verifying result is not NaN.
 		result := a.ExbibytesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.ExbibytesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ExbibytesPerSecond returned NaN")
 		}
 	}
@@ -2366,4 +2393,220 @@ func TestBitRate_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetBitRateAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.BitRateUnits
+        want string
+    }{
+        {
+            name: "BitPerSecond abbreviation",
+            unit: units.BitRateBitPerSecond,
+            want: "bit/s",
+        },
+        {
+            name: "BytePerSecond abbreviation",
+            unit: units.BitRateBytePerSecond,
+            want: "B/s",
+        },
+        {
+            name: "KilobitPerSecond abbreviation",
+            unit: units.BitRateKilobitPerSecond,
+            want: "kbit/s",
+        },
+        {
+            name: "MegabitPerSecond abbreviation",
+            unit: units.BitRateMegabitPerSecond,
+            want: "Mbit/s",
+        },
+        {
+            name: "GigabitPerSecond abbreviation",
+            unit: units.BitRateGigabitPerSecond,
+            want: "Gbit/s",
+        },
+        {
+            name: "TerabitPerSecond abbreviation",
+            unit: units.BitRateTerabitPerSecond,
+            want: "Tbit/s",
+        },
+        {
+            name: "PetabitPerSecond abbreviation",
+            unit: units.BitRatePetabitPerSecond,
+            want: "Pbit/s",
+        },
+        {
+            name: "ExabitPerSecond abbreviation",
+            unit: units.BitRateExabitPerSecond,
+            want: "Ebit/s",
+        },
+        {
+            name: "KibibitPerSecond abbreviation",
+            unit: units.BitRateKibibitPerSecond,
+            want: "KiBbit/s",
+        },
+        {
+            name: "MebibitPerSecond abbreviation",
+            unit: units.BitRateMebibitPerSecond,
+            want: "MiBbit/s",
+        },
+        {
+            name: "GibibitPerSecond abbreviation",
+            unit: units.BitRateGibibitPerSecond,
+            want: "GiBbit/s",
+        },
+        {
+            name: "TebibitPerSecond abbreviation",
+            unit: units.BitRateTebibitPerSecond,
+            want: "TiBbit/s",
+        },
+        {
+            name: "PebibitPerSecond abbreviation",
+            unit: units.BitRatePebibitPerSecond,
+            want: "PiBbit/s",
+        },
+        {
+            name: "ExbibitPerSecond abbreviation",
+            unit: units.BitRateExbibitPerSecond,
+            want: "EiBbit/s",
+        },
+        {
+            name: "KilobytePerSecond abbreviation",
+            unit: units.BitRateKilobytePerSecond,
+            want: "kB/s",
+        },
+        {
+            name: "MegabytePerSecond abbreviation",
+            unit: units.BitRateMegabytePerSecond,
+            want: "MB/s",
+        },
+        {
+            name: "GigabytePerSecond abbreviation",
+            unit: units.BitRateGigabytePerSecond,
+            want: "GB/s",
+        },
+        {
+            name: "TerabytePerSecond abbreviation",
+            unit: units.BitRateTerabytePerSecond,
+            want: "TB/s",
+        },
+        {
+            name: "PetabytePerSecond abbreviation",
+            unit: units.BitRatePetabytePerSecond,
+            want: "PB/s",
+        },
+        {
+            name: "ExabytePerSecond abbreviation",
+            unit: units.BitRateExabytePerSecond,
+            want: "EB/s",
+        },
+        {
+            name: "KibibytePerSecond abbreviation",
+            unit: units.BitRateKibibytePerSecond,
+            want: "KiBB/s",
+        },
+        {
+            name: "MebibytePerSecond abbreviation",
+            unit: units.BitRateMebibytePerSecond,
+            want: "MiBB/s",
+        },
+        {
+            name: "GibibytePerSecond abbreviation",
+            unit: units.BitRateGibibytePerSecond,
+            want: "GiBB/s",
+        },
+        {
+            name: "TebibytePerSecond abbreviation",
+            unit: units.BitRateTebibytePerSecond,
+            want: "TiBB/s",
+        },
+        {
+            name: "PebibytePerSecond abbreviation",
+            unit: units.BitRatePebibytePerSecond,
+            want: "PiBB/s",
+        },
+        {
+            name: "ExbibytePerSecond abbreviation",
+            unit: units.BitRateExbibytePerSecond,
+            want: "EiBB/s",
+        },
+        {
+            name: "invalid unit",
+            unit: units.BitRateUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetBitRateAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetBitRateAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestBitRate_String(t *testing.T) {
+    factory := units.BitRateFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateBitRate(tt.value, units.BitRateBitPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("BitRate.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

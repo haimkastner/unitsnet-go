@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Years365.
 		// No expected conversion value provided for Years365, verifying result is not NaN.
 		result := a.Years365()
-		if math.IsNaN(result) {
+		cacheResult := a.Years365()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Years365 returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Months30.
 		// No expected conversion value provided for Months30, verifying result is not NaN.
 		result := a.Months30()
-		if math.IsNaN(result) {
+		cacheResult := a.Months30()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Months30 returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Weeks.
 		// No expected conversion value provided for Weeks, verifying result is not NaN.
 		result := a.Weeks()
-		if math.IsNaN(result) {
+		cacheResult := a.Weeks()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Weeks returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Days.
 		// No expected conversion value provided for Days, verifying result is not NaN.
 		result := a.Days()
-		if math.IsNaN(result) {
+		cacheResult := a.Days()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Days returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Hours.
 		// No expected conversion value provided for Hours, verifying result is not NaN.
 		result := a.Hours()
-		if math.IsNaN(result) {
+		cacheResult := a.Hours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Hours returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Minutes.
 		// No expected conversion value provided for Minutes, verifying result is not NaN.
 		result := a.Minutes()
-		if math.IsNaN(result) {
+		cacheResult := a.Minutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Minutes returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Seconds.
 		// No expected conversion value provided for Seconds, verifying result is not NaN.
 		result := a.Seconds()
-		if math.IsNaN(result) {
+		cacheResult := a.Seconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Seconds returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to JulianYears.
 		// No expected conversion value provided for JulianYears, verifying result is not NaN.
 		result := a.JulianYears()
-		if math.IsNaN(result) {
+		cacheResult := a.JulianYears()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JulianYears returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Sols.
 		// No expected conversion value provided for Sols, verifying result is not NaN.
 		result := a.Sols()
-		if math.IsNaN(result) {
+		cacheResult := a.Sols()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Sols returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Nanoseconds.
 		// No expected conversion value provided for Nanoseconds, verifying result is not NaN.
 		result := a.Nanoseconds()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanoseconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanoseconds returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Microseconds.
 		// No expected conversion value provided for Microseconds, verifying result is not NaN.
 		result := a.Microseconds()
-		if math.IsNaN(result) {
+		cacheResult := a.Microseconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microseconds returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestDurationConversions(t *testing.T) {
 		// Test conversion to Milliseconds.
 		// No expected conversion value provided for Milliseconds, verifying result is not NaN.
 		result := a.Milliseconds()
-		if math.IsNaN(result) {
+		cacheResult := a.Milliseconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milliseconds returned NaN")
 		}
 	}
@@ -1246,4 +1259,150 @@ func TestDuration_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetDurationAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.DurationUnits
+        want string
+    }{
+        {
+            name: "Year365 abbreviation",
+            unit: units.DurationYear365,
+            want: "yr",
+        },
+        {
+            name: "Month30 abbreviation",
+            unit: units.DurationMonth30,
+            want: "mo",
+        },
+        {
+            name: "Week abbreviation",
+            unit: units.DurationWeek,
+            want: "wk",
+        },
+        {
+            name: "Day abbreviation",
+            unit: units.DurationDay,
+            want: "d",
+        },
+        {
+            name: "Hour abbreviation",
+            unit: units.DurationHour,
+            want: "h",
+        },
+        {
+            name: "Minute abbreviation",
+            unit: units.DurationMinute,
+            want: "m",
+        },
+        {
+            name: "Second abbreviation",
+            unit: units.DurationSecond,
+            want: "s",
+        },
+        {
+            name: "JulianYear abbreviation",
+            unit: units.DurationJulianYear,
+            want: "jyr",
+        },
+        {
+            name: "Sol abbreviation",
+            unit: units.DurationSol,
+            want: "sol",
+        },
+        {
+            name: "Nanosecond abbreviation",
+            unit: units.DurationNanosecond,
+            want: "ns",
+        },
+        {
+            name: "Microsecond abbreviation",
+            unit: units.DurationMicrosecond,
+            want: "μs",
+        },
+        {
+            name: "Millisecond abbreviation",
+            unit: units.DurationMillisecond,
+            want: "ms",
+        },
+        {
+            name: "invalid unit",
+            unit: units.DurationUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetDurationAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetDurationAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestDuration_String(t *testing.T) {
+    factory := units.DurationFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateDuration(tt.value, units.DurationSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Duration.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

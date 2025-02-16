@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestSolidAngleConversions(t *testing.T) {
 		// Test conversion to Steradians.
 		// No expected conversion value provided for Steradians, verifying result is not NaN.
 		result := a.Steradians()
-		if math.IsNaN(result) {
+		cacheResult := a.Steradians()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Steradians returned NaN")
 		}
 	}
@@ -366,4 +368,95 @@ func TestSolidAngle_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetSolidAngleAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.SolidAngleUnits
+        want string
+    }{
+        {
+            name: "Steradian abbreviation",
+            unit: units.SolidAngleSteradian,
+            want: "sr",
+        },
+        {
+            name: "invalid unit",
+            unit: units.SolidAngleUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetSolidAngleAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetSolidAngleAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestSolidAngle_String(t *testing.T) {
+    factory := units.SolidAngleFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateSolidAngle(tt.value, units.SolidAngleSteradian)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("SolidAngle.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareMeters.
 		// No expected conversion value provided for InverseSquareMeters, verifying result is not NaN.
 		result := a.InverseSquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareMeters returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareKilometers.
 		// No expected conversion value provided for InverseSquareKilometers, verifying result is not NaN.
 		result := a.InverseSquareKilometers()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareKilometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareKilometers returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareDecimeters.
 		// No expected conversion value provided for InverseSquareDecimeters, verifying result is not NaN.
 		result := a.InverseSquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareDecimeters returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareCentimeters.
 		// No expected conversion value provided for InverseSquareCentimeters, verifying result is not NaN.
 		result := a.InverseSquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareCentimeters returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareMillimeters.
 		// No expected conversion value provided for InverseSquareMillimeters, verifying result is not NaN.
 		result := a.InverseSquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareMillimeters returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareMicrometers.
 		// No expected conversion value provided for InverseSquareMicrometers, verifying result is not NaN.
 		result := a.InverseSquareMicrometers()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareMicrometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareMicrometers returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareMiles.
 		// No expected conversion value provided for InverseSquareMiles, verifying result is not NaN.
 		result := a.InverseSquareMiles()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareMiles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareMiles returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareYards.
 		// No expected conversion value provided for InverseSquareYards, verifying result is not NaN.
 		result := a.InverseSquareYards()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareYards()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareYards returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareFeet.
 		// No expected conversion value provided for InverseSquareFeet, verifying result is not NaN.
 		result := a.InverseSquareFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareFeet returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseUsSurveySquareFeet.
 		// No expected conversion value provided for InverseUsSurveySquareFeet, verifying result is not NaN.
 		result := a.InverseUsSurveySquareFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseUsSurveySquareFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseUsSurveySquareFeet returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestReciprocalAreaConversions(t *testing.T) {
 		// Test conversion to InverseSquareInches.
 		// No expected conversion value provided for InverseSquareInches, verifying result is not NaN.
 		result := a.InverseSquareInches()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseSquareInches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseSquareInches returned NaN")
 		}
 	}
@@ -1166,4 +1178,145 @@ func TestReciprocalArea_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetReciprocalAreaAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ReciprocalAreaUnits
+        want string
+    }{
+        {
+            name: "InverseSquareMeter abbreviation",
+            unit: units.ReciprocalAreaInverseSquareMeter,
+            want: "m⁻²",
+        },
+        {
+            name: "InverseSquareKilometer abbreviation",
+            unit: units.ReciprocalAreaInverseSquareKilometer,
+            want: "km⁻²",
+        },
+        {
+            name: "InverseSquareDecimeter abbreviation",
+            unit: units.ReciprocalAreaInverseSquareDecimeter,
+            want: "dm⁻²",
+        },
+        {
+            name: "InverseSquareCentimeter abbreviation",
+            unit: units.ReciprocalAreaInverseSquareCentimeter,
+            want: "cm⁻²",
+        },
+        {
+            name: "InverseSquareMillimeter abbreviation",
+            unit: units.ReciprocalAreaInverseSquareMillimeter,
+            want: "mm⁻²",
+        },
+        {
+            name: "InverseSquareMicrometer abbreviation",
+            unit: units.ReciprocalAreaInverseSquareMicrometer,
+            want: "µm⁻²",
+        },
+        {
+            name: "InverseSquareMile abbreviation",
+            unit: units.ReciprocalAreaInverseSquareMile,
+            want: "mi⁻²",
+        },
+        {
+            name: "InverseSquareYard abbreviation",
+            unit: units.ReciprocalAreaInverseSquareYard,
+            want: "yd⁻²",
+        },
+        {
+            name: "InverseSquareFoot abbreviation",
+            unit: units.ReciprocalAreaInverseSquareFoot,
+            want: "ft⁻²",
+        },
+        {
+            name: "InverseUsSurveySquareFoot abbreviation",
+            unit: units.ReciprocalAreaInverseUsSurveySquareFoot,
+            want: "ft⁻² (US)",
+        },
+        {
+            name: "InverseSquareInch abbreviation",
+            unit: units.ReciprocalAreaInverseSquareInch,
+            want: "in⁻²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ReciprocalAreaUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetReciprocalAreaAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetReciprocalAreaAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestReciprocalArea_String(t *testing.T) {
+    factory := units.ReciprocalAreaFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateReciprocalArea(tt.value, units.ReciprocalAreaInverseSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ReciprocalArea.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

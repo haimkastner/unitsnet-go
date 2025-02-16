@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestVolumePerLengthConversions(t *testing.T) {
 		// Test conversion to CubicMetersPerMeter.
 		// No expected conversion value provided for CubicMetersPerMeter, verifying result is not NaN.
 		result := a.CubicMetersPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMetersPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMetersPerMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestVolumePerLengthConversions(t *testing.T) {
 		// Test conversion to LitersPerMeter.
 		// No expected conversion value provided for LitersPerMeter, verifying result is not NaN.
 		result := a.LitersPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPerMeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestVolumePerLengthConversions(t *testing.T) {
 		// Test conversion to LitersPerKilometer.
 		// No expected conversion value provided for LitersPerKilometer, verifying result is not NaN.
 		result := a.LitersPerKilometer()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPerKilometer()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPerKilometer returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestVolumePerLengthConversions(t *testing.T) {
 		// Test conversion to LitersPerMillimeter.
 		// No expected conversion value provided for LitersPerMillimeter, verifying result is not NaN.
 		result := a.LitersPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.LitersPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LitersPerMillimeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestVolumePerLengthConversions(t *testing.T) {
 		// Test conversion to OilBarrelsPerFoot.
 		// No expected conversion value provided for OilBarrelsPerFoot, verifying result is not NaN.
 		result := a.OilBarrelsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.OilBarrelsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to OilBarrelsPerFoot returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestVolumePerLengthConversions(t *testing.T) {
 		// Test conversion to CubicYardsPerFoot.
 		// No expected conversion value provided for CubicYardsPerFoot, verifying result is not NaN.
 		result := a.CubicYardsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicYardsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicYardsPerFoot returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestVolumePerLengthConversions(t *testing.T) {
 		// Test conversion to CubicYardsPerUsSurveyFoot.
 		// No expected conversion value provided for CubicYardsPerUsSurveyFoot, verifying result is not NaN.
 		result := a.CubicYardsPerUsSurveyFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicYardsPerUsSurveyFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicYardsPerUsSurveyFoot returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestVolumePerLengthConversions(t *testing.T) {
 		// Test conversion to UsGallonsPerMile.
 		// No expected conversion value provided for UsGallonsPerMile, verifying result is not NaN.
 		result := a.UsGallonsPerMile()
-		if math.IsNaN(result) {
+		cacheResult := a.UsGallonsPerMile()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsGallonsPerMile returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestVolumePerLengthConversions(t *testing.T) {
 		// Test conversion to ImperialGallonsPerMile.
 		// No expected conversion value provided for ImperialGallonsPerMile, verifying result is not NaN.
 		result := a.ImperialGallonsPerMile()
-		if math.IsNaN(result) {
+		cacheResult := a.ImperialGallonsPerMile()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ImperialGallonsPerMile returned NaN")
 		}
 	}
@@ -1006,4 +1016,135 @@ func TestVolumePerLength_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetVolumePerLengthAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.VolumePerLengthUnits
+        want string
+    }{
+        {
+            name: "CubicMeterPerMeter abbreviation",
+            unit: units.VolumePerLengthCubicMeterPerMeter,
+            want: "m³/m",
+        },
+        {
+            name: "LiterPerMeter abbreviation",
+            unit: units.VolumePerLengthLiterPerMeter,
+            want: "l/m",
+        },
+        {
+            name: "LiterPerKilometer abbreviation",
+            unit: units.VolumePerLengthLiterPerKilometer,
+            want: "l/km",
+        },
+        {
+            name: "LiterPerMillimeter abbreviation",
+            unit: units.VolumePerLengthLiterPerMillimeter,
+            want: "l/mm",
+        },
+        {
+            name: "OilBarrelPerFoot abbreviation",
+            unit: units.VolumePerLengthOilBarrelPerFoot,
+            want: "bbl/ft",
+        },
+        {
+            name: "CubicYardPerFoot abbreviation",
+            unit: units.VolumePerLengthCubicYardPerFoot,
+            want: "yd³/ft",
+        },
+        {
+            name: "CubicYardPerUsSurveyFoot abbreviation",
+            unit: units.VolumePerLengthCubicYardPerUsSurveyFoot,
+            want: "yd³/ftUS",
+        },
+        {
+            name: "UsGallonPerMile abbreviation",
+            unit: units.VolumePerLengthUsGallonPerMile,
+            want: "gal (U.S.)/mi",
+        },
+        {
+            name: "ImperialGallonPerMile abbreviation",
+            unit: units.VolumePerLengthImperialGallonPerMile,
+            want: "gal (imp.)/mi",
+        },
+        {
+            name: "invalid unit",
+            unit: units.VolumePerLengthUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetVolumePerLengthAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetVolumePerLengthAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestVolumePerLength_String(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateVolumePerLength(tt.value, units.VolumePerLengthCubicMeterPerMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("VolumePerLength.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Pascals.
 		// No expected conversion value provided for Pascals, verifying result is not NaN.
 		result := a.Pascals()
-		if math.IsNaN(result) {
+		cacheResult := a.Pascals()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Pascals returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Atmospheres.
 		// No expected conversion value provided for Atmospheres, verifying result is not NaN.
 		result := a.Atmospheres()
-		if math.IsNaN(result) {
+		cacheResult := a.Atmospheres()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Atmospheres returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Bars.
 		// No expected conversion value provided for Bars, verifying result is not NaN.
 		result := a.Bars()
-		if math.IsNaN(result) {
+		cacheResult := a.Bars()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Bars returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to KilogramsForcePerSquareMeter.
 		// No expected conversion value provided for KilogramsForcePerSquareMeter, verifying result is not NaN.
 		result := a.KilogramsForcePerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsForcePerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsForcePerSquareMeter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to KilogramsForcePerSquareCentimeter.
 		// No expected conversion value provided for KilogramsForcePerSquareCentimeter, verifying result is not NaN.
 		result := a.KilogramsForcePerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsForcePerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsForcePerSquareCentimeter returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to KilogramsForcePerSquareMillimeter.
 		// No expected conversion value provided for KilogramsForcePerSquareMillimeter, verifying result is not NaN.
 		result := a.KilogramsForcePerSquareMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsForcePerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsForcePerSquareMillimeter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to NewtonsPerSquareMeter.
 		// No expected conversion value provided for NewtonsPerSquareMeter, verifying result is not NaN.
 		result := a.NewtonsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonsPerSquareMeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to NewtonsPerSquareCentimeter.
 		// No expected conversion value provided for NewtonsPerSquareCentimeter, verifying result is not NaN.
 		result := a.NewtonsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to NewtonsPerSquareMillimeter.
 		// No expected conversion value provided for NewtonsPerSquareMillimeter, verifying result is not NaN.
 		result := a.NewtonsPerSquareMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonsPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonsPerSquareMillimeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to TechnicalAtmospheres.
 		// No expected conversion value provided for TechnicalAtmospheres, verifying result is not NaN.
 		result := a.TechnicalAtmospheres()
-		if math.IsNaN(result) {
+		cacheResult := a.TechnicalAtmospheres()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TechnicalAtmospheres returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Torrs.
 		// No expected conversion value provided for Torrs, verifying result is not NaN.
 		result := a.Torrs()
-		if math.IsNaN(result) {
+		cacheResult := a.Torrs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Torrs returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to PoundsForcePerSquareInch.
 		// No expected conversion value provided for PoundsForcePerSquareInch, verifying result is not NaN.
 		result := a.PoundsForcePerSquareInch()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForcePerSquareInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForcePerSquareInch returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to PoundsForcePerSquareMil.
 		// No expected conversion value provided for PoundsForcePerSquareMil, verifying result is not NaN.
 		result := a.PoundsForcePerSquareMil()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForcePerSquareMil()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForcePerSquareMil returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to PoundsForcePerSquareFoot.
 		// No expected conversion value provided for PoundsForcePerSquareFoot, verifying result is not NaN.
 		result := a.PoundsForcePerSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForcePerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForcePerSquareFoot returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to TonnesForcePerSquareMillimeter.
 		// No expected conversion value provided for TonnesForcePerSquareMillimeter, verifying result is not NaN.
 		result := a.TonnesForcePerSquareMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesForcePerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesForcePerSquareMillimeter returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to TonnesForcePerSquareMeter.
 		// No expected conversion value provided for TonnesForcePerSquareMeter, verifying result is not NaN.
 		result := a.TonnesForcePerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesForcePerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesForcePerSquareMeter returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to MetersOfHead.
 		// No expected conversion value provided for MetersOfHead, verifying result is not NaN.
 		result := a.MetersOfHead()
-		if math.IsNaN(result) {
+		cacheResult := a.MetersOfHead()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetersOfHead returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to TonnesForcePerSquareCentimeter.
 		// No expected conversion value provided for TonnesForcePerSquareCentimeter, verifying result is not NaN.
 		result := a.TonnesForcePerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesForcePerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesForcePerSquareCentimeter returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to FeetOfHead.
 		// No expected conversion value provided for FeetOfHead, verifying result is not NaN.
 		result := a.FeetOfHead()
-		if math.IsNaN(result) {
+		cacheResult := a.FeetOfHead()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FeetOfHead returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to MillimetersOfMercury.
 		// No expected conversion value provided for MillimetersOfMercury, verifying result is not NaN.
 		result := a.MillimetersOfMercury()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimetersOfMercury()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimetersOfMercury returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to InchesOfMercury.
 		// No expected conversion value provided for InchesOfMercury, verifying result is not NaN.
 		result := a.InchesOfMercury()
-		if math.IsNaN(result) {
+		cacheResult := a.InchesOfMercury()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InchesOfMercury returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to DynesPerSquareCentimeter.
 		// No expected conversion value provided for DynesPerSquareCentimeter, verifying result is not NaN.
 		result := a.DynesPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.DynesPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DynesPerSquareCentimeter returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to PoundsPerInchSecondSquared.
 		// No expected conversion value provided for PoundsPerInchSecondSquared, verifying result is not NaN.
 		result := a.PoundsPerInchSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerInchSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerInchSecondSquared returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to MetersOfWaterColumn.
 		// No expected conversion value provided for MetersOfWaterColumn, verifying result is not NaN.
 		result := a.MetersOfWaterColumn()
-		if math.IsNaN(result) {
+		cacheResult := a.MetersOfWaterColumn()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetersOfWaterColumn returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to InchesOfWaterColumn.
 		// No expected conversion value provided for InchesOfWaterColumn, verifying result is not NaN.
 		result := a.InchesOfWaterColumn()
-		if math.IsNaN(result) {
+		cacheResult := a.InchesOfWaterColumn()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InchesOfWaterColumn returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to MetersOfElevation.
 		// No expected conversion value provided for MetersOfElevation, verifying result is not NaN.
 		result := a.MetersOfElevation()
-		if math.IsNaN(result) {
+		cacheResult := a.MetersOfElevation()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetersOfElevation returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to FeetOfElevation.
 		// No expected conversion value provided for FeetOfElevation, verifying result is not NaN.
 		result := a.FeetOfElevation()
-		if math.IsNaN(result) {
+		cacheResult := a.FeetOfElevation()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FeetOfElevation returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Micropascals.
 		// No expected conversion value provided for Micropascals, verifying result is not NaN.
 		result := a.Micropascals()
-		if math.IsNaN(result) {
+		cacheResult := a.Micropascals()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Micropascals returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Millipascals.
 		// No expected conversion value provided for Millipascals, verifying result is not NaN.
 		result := a.Millipascals()
-		if math.IsNaN(result) {
+		cacheResult := a.Millipascals()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millipascals returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Decapascals.
 		// No expected conversion value provided for Decapascals, verifying result is not NaN.
 		result := a.Decapascals()
-		if math.IsNaN(result) {
+		cacheResult := a.Decapascals()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decapascals returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Hectopascals.
 		// No expected conversion value provided for Hectopascals, verifying result is not NaN.
 		result := a.Hectopascals()
-		if math.IsNaN(result) {
+		cacheResult := a.Hectopascals()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Hectopascals returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Kilopascals.
 		// No expected conversion value provided for Kilopascals, verifying result is not NaN.
 		result := a.Kilopascals()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilopascals()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilopascals returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Megapascals.
 		// No expected conversion value provided for Megapascals, verifying result is not NaN.
 		result := a.Megapascals()
-		if math.IsNaN(result) {
+		cacheResult := a.Megapascals()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megapascals returned NaN")
 		}
 	}
@@ -344,7 +378,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Gigapascals.
 		// No expected conversion value provided for Gigapascals, verifying result is not NaN.
 		result := a.Gigapascals()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigapascals()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigapascals returned NaN")
 		}
 	}
@@ -352,7 +387,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Microbars.
 		// No expected conversion value provided for Microbars, verifying result is not NaN.
 		result := a.Microbars()
-		if math.IsNaN(result) {
+		cacheResult := a.Microbars()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microbars returned NaN")
 		}
 	}
@@ -360,7 +396,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Millibars.
 		// No expected conversion value provided for Millibars, verifying result is not NaN.
 		result := a.Millibars()
-		if math.IsNaN(result) {
+		cacheResult := a.Millibars()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millibars returned NaN")
 		}
 	}
@@ -368,7 +405,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Centibars.
 		// No expected conversion value provided for Centibars, verifying result is not NaN.
 		result := a.Centibars()
-		if math.IsNaN(result) {
+		cacheResult := a.Centibars()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centibars returned NaN")
 		}
 	}
@@ -376,7 +414,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Decibars.
 		// No expected conversion value provided for Decibars, verifying result is not NaN.
 		result := a.Decibars()
-		if math.IsNaN(result) {
+		cacheResult := a.Decibars()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decibars returned NaN")
 		}
 	}
@@ -384,7 +423,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Kilobars.
 		// No expected conversion value provided for Kilobars, verifying result is not NaN.
 		result := a.Kilobars()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilobars()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilobars returned NaN")
 		}
 	}
@@ -392,7 +432,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to Megabars.
 		// No expected conversion value provided for Megabars, verifying result is not NaN.
 		result := a.Megabars()
-		if math.IsNaN(result) {
+		cacheResult := a.Megabars()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megabars returned NaN")
 		}
 	}
@@ -400,7 +441,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to KilonewtonsPerSquareMeter.
 		// No expected conversion value provided for KilonewtonsPerSquareMeter, verifying result is not NaN.
 		result := a.KilonewtonsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonsPerSquareMeter returned NaN")
 		}
 	}
@@ -408,7 +450,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to MeganewtonsPerSquareMeter.
 		// No expected conversion value provided for MeganewtonsPerSquareMeter, verifying result is not NaN.
 		result := a.MeganewtonsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonsPerSquareMeter returned NaN")
 		}
 	}
@@ -416,7 +459,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to KilonewtonsPerSquareCentimeter.
 		// No expected conversion value provided for KilonewtonsPerSquareCentimeter, verifying result is not NaN.
 		result := a.KilonewtonsPerSquareCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonsPerSquareCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonsPerSquareCentimeter returned NaN")
 		}
 	}
@@ -424,7 +468,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to KilonewtonsPerSquareMillimeter.
 		// No expected conversion value provided for KilonewtonsPerSquareMillimeter, verifying result is not NaN.
 		result := a.KilonewtonsPerSquareMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonsPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonsPerSquareMillimeter returned NaN")
 		}
 	}
@@ -432,7 +477,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to KilopoundsForcePerSquareInch.
 		// No expected conversion value provided for KilopoundsForcePerSquareInch, verifying result is not NaN.
 		result := a.KilopoundsForcePerSquareInch()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsForcePerSquareInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsForcePerSquareInch returned NaN")
 		}
 	}
@@ -440,7 +486,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to KilopoundsForcePerSquareMil.
 		// No expected conversion value provided for KilopoundsForcePerSquareMil, verifying result is not NaN.
 		result := a.KilopoundsForcePerSquareMil()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsForcePerSquareMil()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsForcePerSquareMil returned NaN")
 		}
 	}
@@ -448,7 +495,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to KilopoundsForcePerSquareFoot.
 		// No expected conversion value provided for KilopoundsForcePerSquareFoot, verifying result is not NaN.
 		result := a.KilopoundsForcePerSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsForcePerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsForcePerSquareFoot returned NaN")
 		}
 	}
@@ -456,7 +504,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to MillimetersOfWaterColumn.
 		// No expected conversion value provided for MillimetersOfWaterColumn, verifying result is not NaN.
 		result := a.MillimetersOfWaterColumn()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimetersOfWaterColumn()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimetersOfWaterColumn returned NaN")
 		}
 	}
@@ -464,7 +513,8 @@ func TestPressureConversions(t *testing.T) {
 		// Test conversion to CentimetersOfWaterColumn.
 		// No expected conversion value provided for CentimetersOfWaterColumn, verifying result is not NaN.
 		result := a.CentimetersOfWaterColumn()
-		if math.IsNaN(result) {
+		cacheResult := a.CentimetersOfWaterColumn()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentimetersOfWaterColumn returned NaN")
 		}
 	}
@@ -4206,4 +4256,335 @@ func TestPressure_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetPressureAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.PressureUnits
+        want string
+    }{
+        {
+            name: "Pascal abbreviation",
+            unit: units.PressurePascal,
+            want: "Pa",
+        },
+        {
+            name: "Atmosphere abbreviation",
+            unit: units.PressureAtmosphere,
+            want: "atm",
+        },
+        {
+            name: "Bar abbreviation",
+            unit: units.PressureBar,
+            want: "bar",
+        },
+        {
+            name: "KilogramForcePerSquareMeter abbreviation",
+            unit: units.PressureKilogramForcePerSquareMeter,
+            want: "kgf/m²",
+        },
+        {
+            name: "KilogramForcePerSquareCentimeter abbreviation",
+            unit: units.PressureKilogramForcePerSquareCentimeter,
+            want: "kgf/cm²",
+        },
+        {
+            name: "KilogramForcePerSquareMillimeter abbreviation",
+            unit: units.PressureKilogramForcePerSquareMillimeter,
+            want: "kgf/mm²",
+        },
+        {
+            name: "NewtonPerSquareMeter abbreviation",
+            unit: units.PressureNewtonPerSquareMeter,
+            want: "N/m²",
+        },
+        {
+            name: "NewtonPerSquareCentimeter abbreviation",
+            unit: units.PressureNewtonPerSquareCentimeter,
+            want: "N/cm²",
+        },
+        {
+            name: "NewtonPerSquareMillimeter abbreviation",
+            unit: units.PressureNewtonPerSquareMillimeter,
+            want: "N/mm²",
+        },
+        {
+            name: "TechnicalAtmosphere abbreviation",
+            unit: units.PressureTechnicalAtmosphere,
+            want: "at",
+        },
+        {
+            name: "Torr abbreviation",
+            unit: units.PressureTorr,
+            want: "torr",
+        },
+        {
+            name: "PoundForcePerSquareInch abbreviation",
+            unit: units.PressurePoundForcePerSquareInch,
+            want: "psi",
+        },
+        {
+            name: "PoundForcePerSquareMil abbreviation",
+            unit: units.PressurePoundForcePerSquareMil,
+            want: "lb/mil²",
+        },
+        {
+            name: "PoundForcePerSquareFoot abbreviation",
+            unit: units.PressurePoundForcePerSquareFoot,
+            want: "lb/ft²",
+        },
+        {
+            name: "TonneForcePerSquareMillimeter abbreviation",
+            unit: units.PressureTonneForcePerSquareMillimeter,
+            want: "tf/mm²",
+        },
+        {
+            name: "TonneForcePerSquareMeter abbreviation",
+            unit: units.PressureTonneForcePerSquareMeter,
+            want: "tf/m²",
+        },
+        {
+            name: "MeterOfHead abbreviation",
+            unit: units.PressureMeterOfHead,
+            want: "m of head",
+        },
+        {
+            name: "TonneForcePerSquareCentimeter abbreviation",
+            unit: units.PressureTonneForcePerSquareCentimeter,
+            want: "tf/cm²",
+        },
+        {
+            name: "FootOfHead abbreviation",
+            unit: units.PressureFootOfHead,
+            want: "ft of head",
+        },
+        {
+            name: "MillimeterOfMercury abbreviation",
+            unit: units.PressureMillimeterOfMercury,
+            want: "mmHg",
+        },
+        {
+            name: "InchOfMercury abbreviation",
+            unit: units.PressureInchOfMercury,
+            want: "inHg",
+        },
+        {
+            name: "DynePerSquareCentimeter abbreviation",
+            unit: units.PressureDynePerSquareCentimeter,
+            want: "dyn/cm²",
+        },
+        {
+            name: "PoundPerInchSecondSquared abbreviation",
+            unit: units.PressurePoundPerInchSecondSquared,
+            want: "lbm/(in·s²)",
+        },
+        {
+            name: "MeterOfWaterColumn abbreviation",
+            unit: units.PressureMeterOfWaterColumn,
+            want: "mH₂O",
+        },
+        {
+            name: "InchOfWaterColumn abbreviation",
+            unit: units.PressureInchOfWaterColumn,
+            want: "inH2O",
+        },
+        {
+            name: "MeterOfElevation abbreviation",
+            unit: units.PressureMeterOfElevation,
+            want: "m of elevation",
+        },
+        {
+            name: "FootOfElevation abbreviation",
+            unit: units.PressureFootOfElevation,
+            want: "ft of elevation",
+        },
+        {
+            name: "Micropascal abbreviation",
+            unit: units.PressureMicropascal,
+            want: "μPa",
+        },
+        {
+            name: "Millipascal abbreviation",
+            unit: units.PressureMillipascal,
+            want: "mPa",
+        },
+        {
+            name: "Decapascal abbreviation",
+            unit: units.PressureDecapascal,
+            want: "daPa",
+        },
+        {
+            name: "Hectopascal abbreviation",
+            unit: units.PressureHectopascal,
+            want: "hPa",
+        },
+        {
+            name: "Kilopascal abbreviation",
+            unit: units.PressureKilopascal,
+            want: "kPa",
+        },
+        {
+            name: "Megapascal abbreviation",
+            unit: units.PressureMegapascal,
+            want: "MPa",
+        },
+        {
+            name: "Gigapascal abbreviation",
+            unit: units.PressureGigapascal,
+            want: "GPa",
+        },
+        {
+            name: "Microbar abbreviation",
+            unit: units.PressureMicrobar,
+            want: "μbar",
+        },
+        {
+            name: "Millibar abbreviation",
+            unit: units.PressureMillibar,
+            want: "mbar",
+        },
+        {
+            name: "Centibar abbreviation",
+            unit: units.PressureCentibar,
+            want: "cbar",
+        },
+        {
+            name: "Decibar abbreviation",
+            unit: units.PressureDecibar,
+            want: "dbar",
+        },
+        {
+            name: "Kilobar abbreviation",
+            unit: units.PressureKilobar,
+            want: "kbar",
+        },
+        {
+            name: "Megabar abbreviation",
+            unit: units.PressureMegabar,
+            want: "Mbar",
+        },
+        {
+            name: "KilonewtonPerSquareMeter abbreviation",
+            unit: units.PressureKilonewtonPerSquareMeter,
+            want: "kN/m²",
+        },
+        {
+            name: "MeganewtonPerSquareMeter abbreviation",
+            unit: units.PressureMeganewtonPerSquareMeter,
+            want: "MN/m²",
+        },
+        {
+            name: "KilonewtonPerSquareCentimeter abbreviation",
+            unit: units.PressureKilonewtonPerSquareCentimeter,
+            want: "kN/cm²",
+        },
+        {
+            name: "KilonewtonPerSquareMillimeter abbreviation",
+            unit: units.PressureKilonewtonPerSquareMillimeter,
+            want: "kN/mm²",
+        },
+        {
+            name: "KilopoundForcePerSquareInch abbreviation",
+            unit: units.PressureKilopoundForcePerSquareInch,
+            want: "kpsi",
+        },
+        {
+            name: "KilopoundForcePerSquareMil abbreviation",
+            unit: units.PressureKilopoundForcePerSquareMil,
+            want: "klb/mil²",
+        },
+        {
+            name: "KilopoundForcePerSquareFoot abbreviation",
+            unit: units.PressureKilopoundForcePerSquareFoot,
+            want: "klb/ft²",
+        },
+        {
+            name: "MillimeterOfWaterColumn abbreviation",
+            unit: units.PressureMillimeterOfWaterColumn,
+            want: "mmH₂O",
+        },
+        {
+            name: "CentimeterOfWaterColumn abbreviation",
+            unit: units.PressureCentimeterOfWaterColumn,
+            want: "cmH₂O",
+        },
+        {
+            name: "invalid unit",
+            unit: units.PressureUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetPressureAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetPressureAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestPressure_String(t *testing.T) {
+    factory := units.PressureFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreatePressure(tt.value, units.PressurePascal)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Pressure.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to KilogramMetersPerSecond.
 		// No expected conversion value provided for KilogramMetersPerSecond, verifying result is not NaN.
 		result := a.KilogramMetersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramMetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramMetersPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to NewtonSeconds.
 		// No expected conversion value provided for NewtonSeconds, verifying result is not NaN.
 		result := a.NewtonSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonSeconds returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to PoundFeetPerSecond.
 		// No expected conversion value provided for PoundFeetPerSecond, verifying result is not NaN.
 		result := a.PoundFeetPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundFeetPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundFeetPerSecond returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to PoundForceSeconds.
 		// No expected conversion value provided for PoundForceSeconds, verifying result is not NaN.
 		result := a.PoundForceSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundForceSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundForceSeconds returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to SlugFeetPerSecond.
 		// No expected conversion value provided for SlugFeetPerSecond, verifying result is not NaN.
 		result := a.SlugFeetPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.SlugFeetPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SlugFeetPerSecond returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to NanonewtonSeconds.
 		// No expected conversion value provided for NanonewtonSeconds, verifying result is not NaN.
 		result := a.NanonewtonSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.NanonewtonSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanonewtonSeconds returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to MicronewtonSeconds.
 		// No expected conversion value provided for MicronewtonSeconds, verifying result is not NaN.
 		result := a.MicronewtonSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MicronewtonSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicronewtonSeconds returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to MillinewtonSeconds.
 		// No expected conversion value provided for MillinewtonSeconds, verifying result is not NaN.
 		result := a.MillinewtonSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MillinewtonSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillinewtonSeconds returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to CentinewtonSeconds.
 		// No expected conversion value provided for CentinewtonSeconds, verifying result is not NaN.
 		result := a.CentinewtonSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.CentinewtonSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentinewtonSeconds returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to DecinewtonSeconds.
 		// No expected conversion value provided for DecinewtonSeconds, verifying result is not NaN.
 		result := a.DecinewtonSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.DecinewtonSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecinewtonSeconds returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to DecanewtonSeconds.
 		// No expected conversion value provided for DecanewtonSeconds, verifying result is not NaN.
 		result := a.DecanewtonSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.DecanewtonSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecanewtonSeconds returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to KilonewtonSeconds.
 		// No expected conversion value provided for KilonewtonSeconds, verifying result is not NaN.
 		result := a.KilonewtonSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonSeconds returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestImpulseConversions(t *testing.T) {
 		// Test conversion to MeganewtonSeconds.
 		// No expected conversion value provided for MeganewtonSeconds, verifying result is not NaN.
 		result := a.MeganewtonSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonSeconds returned NaN")
 		}
 	}
@@ -1326,4 +1340,155 @@ func TestImpulse_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetImpulseAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ImpulseUnits
+        want string
+    }{
+        {
+            name: "KilogramMeterPerSecond abbreviation",
+            unit: units.ImpulseKilogramMeterPerSecond,
+            want: "kg·m/s",
+        },
+        {
+            name: "NewtonSecond abbreviation",
+            unit: units.ImpulseNewtonSecond,
+            want: "N·s",
+        },
+        {
+            name: "PoundFootPerSecond abbreviation",
+            unit: units.ImpulsePoundFootPerSecond,
+            want: "lb·ft/s",
+        },
+        {
+            name: "PoundForceSecond abbreviation",
+            unit: units.ImpulsePoundForceSecond,
+            want: "lbf·s",
+        },
+        {
+            name: "SlugFootPerSecond abbreviation",
+            unit: units.ImpulseSlugFootPerSecond,
+            want: "slug·ft/s",
+        },
+        {
+            name: "NanonewtonSecond abbreviation",
+            unit: units.ImpulseNanonewtonSecond,
+            want: "nN·s",
+        },
+        {
+            name: "MicronewtonSecond abbreviation",
+            unit: units.ImpulseMicronewtonSecond,
+            want: "μN·s",
+        },
+        {
+            name: "MillinewtonSecond abbreviation",
+            unit: units.ImpulseMillinewtonSecond,
+            want: "mN·s",
+        },
+        {
+            name: "CentinewtonSecond abbreviation",
+            unit: units.ImpulseCentinewtonSecond,
+            want: "cN·s",
+        },
+        {
+            name: "DecinewtonSecond abbreviation",
+            unit: units.ImpulseDecinewtonSecond,
+            want: "dN·s",
+        },
+        {
+            name: "DecanewtonSecond abbreviation",
+            unit: units.ImpulseDecanewtonSecond,
+            want: "daN·s",
+        },
+        {
+            name: "KilonewtonSecond abbreviation",
+            unit: units.ImpulseKilonewtonSecond,
+            want: "kN·s",
+        },
+        {
+            name: "MeganewtonSecond abbreviation",
+            unit: units.ImpulseMeganewtonSecond,
+            want: "MN·s",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ImpulseUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetImpulseAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetImpulseAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestImpulse_String(t *testing.T) {
+    factory := units.ImpulseFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateImpulse(tt.value, units.ImpulseNewtonSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Impulse.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

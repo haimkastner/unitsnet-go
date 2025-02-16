@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Meters.
 		// No expected conversion value provided for Meters, verifying result is not NaN.
 		result := a.Meters()
-		if math.IsNaN(result) {
+		cacheResult := a.Meters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Meters returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Miles.
 		// No expected conversion value provided for Miles, verifying result is not NaN.
 		result := a.Miles()
-		if math.IsNaN(result) {
+		cacheResult := a.Miles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Miles returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Yards.
 		// No expected conversion value provided for Yards, verifying result is not NaN.
 		result := a.Yards()
-		if math.IsNaN(result) {
+		cacheResult := a.Yards()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Yards returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Feet.
 		// No expected conversion value provided for Feet, verifying result is not NaN.
 		result := a.Feet()
-		if math.IsNaN(result) {
+		cacheResult := a.Feet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Feet returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to UsSurveyFeet.
 		// No expected conversion value provided for UsSurveyFeet, verifying result is not NaN.
 		result := a.UsSurveyFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.UsSurveyFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsSurveyFeet returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Inches.
 		// No expected conversion value provided for Inches, verifying result is not NaN.
 		result := a.Inches()
-		if math.IsNaN(result) {
+		cacheResult := a.Inches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Inches returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Mils.
 		// No expected conversion value provided for Mils, verifying result is not NaN.
 		result := a.Mils()
-		if math.IsNaN(result) {
+		cacheResult := a.Mils()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Mils returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to NauticalMiles.
 		// No expected conversion value provided for NauticalMiles, verifying result is not NaN.
 		result := a.NauticalMiles()
-		if math.IsNaN(result) {
+		cacheResult := a.NauticalMiles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NauticalMiles returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Fathoms.
 		// No expected conversion value provided for Fathoms, verifying result is not NaN.
 		result := a.Fathoms()
-		if math.IsNaN(result) {
+		cacheResult := a.Fathoms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Fathoms returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Shackles.
 		// No expected conversion value provided for Shackles, verifying result is not NaN.
 		result := a.Shackles()
-		if math.IsNaN(result) {
+		cacheResult := a.Shackles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Shackles returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Microinches.
 		// No expected conversion value provided for Microinches, verifying result is not NaN.
 		result := a.Microinches()
-		if math.IsNaN(result) {
+		cacheResult := a.Microinches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microinches returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to PrinterPoints.
 		// No expected conversion value provided for PrinterPoints, verifying result is not NaN.
 		result := a.PrinterPoints()
-		if math.IsNaN(result) {
+		cacheResult := a.PrinterPoints()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PrinterPoints returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to DtpPoints.
 		// No expected conversion value provided for DtpPoints, verifying result is not NaN.
 		result := a.DtpPoints()
-		if math.IsNaN(result) {
+		cacheResult := a.DtpPoints()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DtpPoints returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to PrinterPicas.
 		// No expected conversion value provided for PrinterPicas, verifying result is not NaN.
 		result := a.PrinterPicas()
-		if math.IsNaN(result) {
+		cacheResult := a.PrinterPicas()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PrinterPicas returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to DtpPicas.
 		// No expected conversion value provided for DtpPicas, verifying result is not NaN.
 		result := a.DtpPicas()
-		if math.IsNaN(result) {
+		cacheResult := a.DtpPicas()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DtpPicas returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Twips.
 		// No expected conversion value provided for Twips, verifying result is not NaN.
 		result := a.Twips()
-		if math.IsNaN(result) {
+		cacheResult := a.Twips()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Twips returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Hands.
 		// No expected conversion value provided for Hands, verifying result is not NaN.
 		result := a.Hands()
-		if math.IsNaN(result) {
+		cacheResult := a.Hands()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Hands returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to AstronomicalUnits.
 		// No expected conversion value provided for AstronomicalUnits, verifying result is not NaN.
 		result := a.AstronomicalUnits()
-		if math.IsNaN(result) {
+		cacheResult := a.AstronomicalUnits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to AstronomicalUnits returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Parsecs.
 		// No expected conversion value provided for Parsecs, verifying result is not NaN.
 		result := a.Parsecs()
-		if math.IsNaN(result) {
+		cacheResult := a.Parsecs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Parsecs returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to LightYears.
 		// No expected conversion value provided for LightYears, verifying result is not NaN.
 		result := a.LightYears()
-		if math.IsNaN(result) {
+		cacheResult := a.LightYears()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to LightYears returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to SolarRadiuses.
 		// No expected conversion value provided for SolarRadiuses, verifying result is not NaN.
 		result := a.SolarRadiuses()
-		if math.IsNaN(result) {
+		cacheResult := a.SolarRadiuses()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SolarRadiuses returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Chains.
 		// No expected conversion value provided for Chains, verifying result is not NaN.
 		result := a.Chains()
-		if math.IsNaN(result) {
+		cacheResult := a.Chains()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Chains returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Angstroms.
 		// No expected conversion value provided for Angstroms, verifying result is not NaN.
 		result := a.Angstroms()
-		if math.IsNaN(result) {
+		cacheResult := a.Angstroms()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Angstroms returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to DataMiles.
 		// No expected conversion value provided for DataMiles, verifying result is not NaN.
 		result := a.DataMiles()
-		if math.IsNaN(result) {
+		cacheResult := a.DataMiles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DataMiles returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Femtometers.
 		// No expected conversion value provided for Femtometers, verifying result is not NaN.
 		result := a.Femtometers()
-		if math.IsNaN(result) {
+		cacheResult := a.Femtometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Femtometers returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Picometers.
 		// No expected conversion value provided for Picometers, verifying result is not NaN.
 		result := a.Picometers()
-		if math.IsNaN(result) {
+		cacheResult := a.Picometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picometers returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Nanometers.
 		// No expected conversion value provided for Nanometers, verifying result is not NaN.
 		result := a.Nanometers()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanometers returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Micrometers.
 		// No expected conversion value provided for Micrometers, verifying result is not NaN.
 		result := a.Micrometers()
-		if math.IsNaN(result) {
+		cacheResult := a.Micrometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Micrometers returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Millimeters.
 		// No expected conversion value provided for Millimeters, verifying result is not NaN.
 		result := a.Millimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.Millimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millimeters returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Centimeters.
 		// No expected conversion value provided for Centimeters, verifying result is not NaN.
 		result := a.Centimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.Centimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centimeters returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Decimeters.
 		// No expected conversion value provided for Decimeters, verifying result is not NaN.
 		result := a.Decimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.Decimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decimeters returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Decameters.
 		// No expected conversion value provided for Decameters, verifying result is not NaN.
 		result := a.Decameters()
-		if math.IsNaN(result) {
+		cacheResult := a.Decameters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decameters returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Hectometers.
 		// No expected conversion value provided for Hectometers, verifying result is not NaN.
 		result := a.Hectometers()
-		if math.IsNaN(result) {
+		cacheResult := a.Hectometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Hectometers returned NaN")
 		}
 	}
@@ -344,7 +378,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Kilometers.
 		// No expected conversion value provided for Kilometers, verifying result is not NaN.
 		result := a.Kilometers()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilometers returned NaN")
 		}
 	}
@@ -352,7 +387,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Megameters.
 		// No expected conversion value provided for Megameters, verifying result is not NaN.
 		result := a.Megameters()
-		if math.IsNaN(result) {
+		cacheResult := a.Megameters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megameters returned NaN")
 		}
 	}
@@ -360,7 +396,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Gigameters.
 		// No expected conversion value provided for Gigameters, verifying result is not NaN.
 		result := a.Gigameters()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigameters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigameters returned NaN")
 		}
 	}
@@ -368,7 +405,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Kiloyards.
 		// No expected conversion value provided for Kiloyards, verifying result is not NaN.
 		result := a.Kiloyards()
-		if math.IsNaN(result) {
+		cacheResult := a.Kiloyards()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kiloyards returned NaN")
 		}
 	}
@@ -376,7 +414,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Kilofeet.
 		// No expected conversion value provided for Kilofeet, verifying result is not NaN.
 		result := a.Kilofeet()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilofeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilofeet returned NaN")
 		}
 	}
@@ -384,7 +423,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Kiloparsecs.
 		// No expected conversion value provided for Kiloparsecs, verifying result is not NaN.
 		result := a.Kiloparsecs()
-		if math.IsNaN(result) {
+		cacheResult := a.Kiloparsecs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kiloparsecs returned NaN")
 		}
 	}
@@ -392,7 +432,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to Megaparsecs.
 		// No expected conversion value provided for Megaparsecs, verifying result is not NaN.
 		result := a.Megaparsecs()
-		if math.IsNaN(result) {
+		cacheResult := a.Megaparsecs()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megaparsecs returned NaN")
 		}
 	}
@@ -400,7 +441,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to KilolightYears.
 		// No expected conversion value provided for KilolightYears, verifying result is not NaN.
 		result := a.KilolightYears()
-		if math.IsNaN(result) {
+		cacheResult := a.KilolightYears()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilolightYears returned NaN")
 		}
 	}
@@ -408,7 +450,8 @@ func TestLengthConversions(t *testing.T) {
 		// Test conversion to MegalightYears.
 		// No expected conversion value provided for MegalightYears, verifying result is not NaN.
 		result := a.MegalightYears()
-		if math.IsNaN(result) {
+		cacheResult := a.MegalightYears()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegalightYears returned NaN")
 		}
 	}
@@ -3646,4 +3689,300 @@ func TestLength_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetLengthAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.LengthUnits
+        want string
+    }{
+        {
+            name: "Meter abbreviation",
+            unit: units.LengthMeter,
+            want: "m",
+        },
+        {
+            name: "Mile abbreviation",
+            unit: units.LengthMile,
+            want: "mi",
+        },
+        {
+            name: "Yard abbreviation",
+            unit: units.LengthYard,
+            want: "yd",
+        },
+        {
+            name: "Foot abbreviation",
+            unit: units.LengthFoot,
+            want: "ft",
+        },
+        {
+            name: "UsSurveyFoot abbreviation",
+            unit: units.LengthUsSurveyFoot,
+            want: "ftUS",
+        },
+        {
+            name: "Inch abbreviation",
+            unit: units.LengthInch,
+            want: "in",
+        },
+        {
+            name: "Mil abbreviation",
+            unit: units.LengthMil,
+            want: "mil",
+        },
+        {
+            name: "NauticalMile abbreviation",
+            unit: units.LengthNauticalMile,
+            want: "NM",
+        },
+        {
+            name: "Fathom abbreviation",
+            unit: units.LengthFathom,
+            want: "fathom",
+        },
+        {
+            name: "Shackle abbreviation",
+            unit: units.LengthShackle,
+            want: "shackle",
+        },
+        {
+            name: "Microinch abbreviation",
+            unit: units.LengthMicroinch,
+            want: "µin",
+        },
+        {
+            name: "PrinterPoint abbreviation",
+            unit: units.LengthPrinterPoint,
+            want: "pt",
+        },
+        {
+            name: "DtpPoint abbreviation",
+            unit: units.LengthDtpPoint,
+            want: "pt",
+        },
+        {
+            name: "PrinterPica abbreviation",
+            unit: units.LengthPrinterPica,
+            want: "pica",
+        },
+        {
+            name: "DtpPica abbreviation",
+            unit: units.LengthDtpPica,
+            want: "pica",
+        },
+        {
+            name: "Twip abbreviation",
+            unit: units.LengthTwip,
+            want: "twip",
+        },
+        {
+            name: "Hand abbreviation",
+            unit: units.LengthHand,
+            want: "h",
+        },
+        {
+            name: "AstronomicalUnit abbreviation",
+            unit: units.LengthAstronomicalUnit,
+            want: "au",
+        },
+        {
+            name: "Parsec abbreviation",
+            unit: units.LengthParsec,
+            want: "pc",
+        },
+        {
+            name: "LightYear abbreviation",
+            unit: units.LengthLightYear,
+            want: "ly",
+        },
+        {
+            name: "SolarRadius abbreviation",
+            unit: units.LengthSolarRadius,
+            want: "R⊙",
+        },
+        {
+            name: "Chain abbreviation",
+            unit: units.LengthChain,
+            want: "ch",
+        },
+        {
+            name: "Angstrom abbreviation",
+            unit: units.LengthAngstrom,
+            want: "Å",
+        },
+        {
+            name: "DataMile abbreviation",
+            unit: units.LengthDataMile,
+            want: "DM",
+        },
+        {
+            name: "Femtometer abbreviation",
+            unit: units.LengthFemtometer,
+            want: "fm",
+        },
+        {
+            name: "Picometer abbreviation",
+            unit: units.LengthPicometer,
+            want: "pm",
+        },
+        {
+            name: "Nanometer abbreviation",
+            unit: units.LengthNanometer,
+            want: "nm",
+        },
+        {
+            name: "Micrometer abbreviation",
+            unit: units.LengthMicrometer,
+            want: "μm",
+        },
+        {
+            name: "Millimeter abbreviation",
+            unit: units.LengthMillimeter,
+            want: "mm",
+        },
+        {
+            name: "Centimeter abbreviation",
+            unit: units.LengthCentimeter,
+            want: "cm",
+        },
+        {
+            name: "Decimeter abbreviation",
+            unit: units.LengthDecimeter,
+            want: "dm",
+        },
+        {
+            name: "Decameter abbreviation",
+            unit: units.LengthDecameter,
+            want: "dam",
+        },
+        {
+            name: "Hectometer abbreviation",
+            unit: units.LengthHectometer,
+            want: "hm",
+        },
+        {
+            name: "Kilometer abbreviation",
+            unit: units.LengthKilometer,
+            want: "km",
+        },
+        {
+            name: "Megameter abbreviation",
+            unit: units.LengthMegameter,
+            want: "Mm",
+        },
+        {
+            name: "Gigameter abbreviation",
+            unit: units.LengthGigameter,
+            want: "Gm",
+        },
+        {
+            name: "Kiloyard abbreviation",
+            unit: units.LengthKiloyard,
+            want: "kyd",
+        },
+        {
+            name: "Kilofoot abbreviation",
+            unit: units.LengthKilofoot,
+            want: "kft",
+        },
+        {
+            name: "Kiloparsec abbreviation",
+            unit: units.LengthKiloparsec,
+            want: "kpc",
+        },
+        {
+            name: "Megaparsec abbreviation",
+            unit: units.LengthMegaparsec,
+            want: "Mpc",
+        },
+        {
+            name: "KilolightYear abbreviation",
+            unit: units.LengthKilolightYear,
+            want: "kly",
+        },
+        {
+            name: "MegalightYear abbreviation",
+            unit: units.LengthMegalightYear,
+            want: "Mly",
+        },
+        {
+            name: "invalid unit",
+            unit: units.LengthUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetLengthAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetLengthAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestLength_String(t *testing.T) {
+    factory := units.LengthFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateLength(tt.value, units.LengthMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Length.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

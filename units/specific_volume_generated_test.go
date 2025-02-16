@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestSpecificVolumeConversions(t *testing.T) {
 		// Test conversion to CubicMetersPerKilogram.
 		// No expected conversion value provided for CubicMetersPerKilogram, verifying result is not NaN.
 		result := a.CubicMetersPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMetersPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMetersPerKilogram returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestSpecificVolumeConversions(t *testing.T) {
 		// Test conversion to CubicFeetPerPound.
 		// No expected conversion value provided for CubicFeetPerPound, verifying result is not NaN.
 		result := a.CubicFeetPerPound()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicFeetPerPound()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicFeetPerPound returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestSpecificVolumeConversions(t *testing.T) {
 		// Test conversion to MillicubicMetersPerKilogram.
 		// No expected conversion value provided for MillicubicMetersPerKilogram, verifying result is not NaN.
 		result := a.MillicubicMetersPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MillicubicMetersPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillicubicMetersPerKilogram returned NaN")
 		}
 	}
@@ -526,4 +530,105 @@ func TestSpecificVolume_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetSpecificVolumeAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.SpecificVolumeUnits
+        want string
+    }{
+        {
+            name: "CubicMeterPerKilogram abbreviation",
+            unit: units.SpecificVolumeCubicMeterPerKilogram,
+            want: "m³/kg",
+        },
+        {
+            name: "CubicFootPerPound abbreviation",
+            unit: units.SpecificVolumeCubicFootPerPound,
+            want: "ft³/lb",
+        },
+        {
+            name: "MillicubicMeterPerKilogram abbreviation",
+            unit: units.SpecificVolumeMillicubicMeterPerKilogram,
+            want: "mm³/kg",
+        },
+        {
+            name: "invalid unit",
+            unit: units.SpecificVolumeUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetSpecificVolumeAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetSpecificVolumeAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestSpecificVolume_String(t *testing.T) {
+    factory := units.SpecificVolumeFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateSpecificVolume(tt.value, units.SpecificVolumeCubicMeterPerKilogram)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("SpecificVolume.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

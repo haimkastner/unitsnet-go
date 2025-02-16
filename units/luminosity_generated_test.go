@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Watts.
 		// No expected conversion value provided for Watts, verifying result is not NaN.
 		result := a.Watts()
-		if math.IsNaN(result) {
+		cacheResult := a.Watts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Watts returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to SolarLuminosities.
 		// No expected conversion value provided for SolarLuminosities, verifying result is not NaN.
 		result := a.SolarLuminosities()
-		if math.IsNaN(result) {
+		cacheResult := a.SolarLuminosities()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SolarLuminosities returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Femtowatts.
 		// No expected conversion value provided for Femtowatts, verifying result is not NaN.
 		result := a.Femtowatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Femtowatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Femtowatts returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Picowatts.
 		// No expected conversion value provided for Picowatts, verifying result is not NaN.
 		result := a.Picowatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Picowatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picowatts returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Nanowatts.
 		// No expected conversion value provided for Nanowatts, verifying result is not NaN.
 		result := a.Nanowatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanowatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanowatts returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Microwatts.
 		// No expected conversion value provided for Microwatts, verifying result is not NaN.
 		result := a.Microwatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Microwatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microwatts returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Milliwatts.
 		// No expected conversion value provided for Milliwatts, verifying result is not NaN.
 		result := a.Milliwatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Milliwatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milliwatts returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Deciwatts.
 		// No expected conversion value provided for Deciwatts, verifying result is not NaN.
 		result := a.Deciwatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Deciwatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Deciwatts returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Decawatts.
 		// No expected conversion value provided for Decawatts, verifying result is not NaN.
 		result := a.Decawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Decawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decawatts returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Kilowatts.
 		// No expected conversion value provided for Kilowatts, verifying result is not NaN.
 		result := a.Kilowatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilowatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilowatts returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Megawatts.
 		// No expected conversion value provided for Megawatts, verifying result is not NaN.
 		result := a.Megawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Megawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megawatts returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Gigawatts.
 		// No expected conversion value provided for Gigawatts, verifying result is not NaN.
 		result := a.Gigawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigawatts returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Terawatts.
 		// No expected conversion value provided for Terawatts, verifying result is not NaN.
 		result := a.Terawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Terawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Terawatts returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestLuminosityConversions(t *testing.T) {
 		// Test conversion to Petawatts.
 		// No expected conversion value provided for Petawatts, verifying result is not NaN.
 		result := a.Petawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Petawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Petawatts returned NaN")
 		}
 	}
@@ -1406,4 +1421,160 @@ func TestLuminosity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetLuminosityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.LuminosityUnits
+        want string
+    }{
+        {
+            name: "Watt abbreviation",
+            unit: units.LuminosityWatt,
+            want: "W",
+        },
+        {
+            name: "SolarLuminosity abbreviation",
+            unit: units.LuminositySolarLuminosity,
+            want: "L⊙",
+        },
+        {
+            name: "Femtowatt abbreviation",
+            unit: units.LuminosityFemtowatt,
+            want: "fW",
+        },
+        {
+            name: "Picowatt abbreviation",
+            unit: units.LuminosityPicowatt,
+            want: "pW",
+        },
+        {
+            name: "Nanowatt abbreviation",
+            unit: units.LuminosityNanowatt,
+            want: "nW",
+        },
+        {
+            name: "Microwatt abbreviation",
+            unit: units.LuminosityMicrowatt,
+            want: "μW",
+        },
+        {
+            name: "Milliwatt abbreviation",
+            unit: units.LuminosityMilliwatt,
+            want: "mW",
+        },
+        {
+            name: "Deciwatt abbreviation",
+            unit: units.LuminosityDeciwatt,
+            want: "dW",
+        },
+        {
+            name: "Decawatt abbreviation",
+            unit: units.LuminosityDecawatt,
+            want: "daW",
+        },
+        {
+            name: "Kilowatt abbreviation",
+            unit: units.LuminosityKilowatt,
+            want: "kW",
+        },
+        {
+            name: "Megawatt abbreviation",
+            unit: units.LuminosityMegawatt,
+            want: "MW",
+        },
+        {
+            name: "Gigawatt abbreviation",
+            unit: units.LuminosityGigawatt,
+            want: "GW",
+        },
+        {
+            name: "Terawatt abbreviation",
+            unit: units.LuminosityTerawatt,
+            want: "TW",
+        },
+        {
+            name: "Petawatt abbreviation",
+            unit: units.LuminosityPetawatt,
+            want: "PW",
+        },
+        {
+            name: "invalid unit",
+            unit: units.LuminosityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetLuminosityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetLuminosityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestLuminosity_String(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateLuminosity(tt.value, units.LuminosityWatt)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Luminosity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

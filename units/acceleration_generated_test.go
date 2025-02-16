@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to MetersPerSecondSquared.
 		// No expected conversion value provided for MetersPerSecondSquared, verifying result is not NaN.
 		result := a.MetersPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.MetersPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetersPerSecondSquared returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to InchesPerSecondSquared.
 		// No expected conversion value provided for InchesPerSecondSquared, verifying result is not NaN.
 		result := a.InchesPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.InchesPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InchesPerSecondSquared returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to FeetPerSecondSquared.
 		// No expected conversion value provided for FeetPerSecondSquared, verifying result is not NaN.
 		result := a.FeetPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.FeetPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FeetPerSecondSquared returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to KnotsPerSecond.
 		// No expected conversion value provided for KnotsPerSecond, verifying result is not NaN.
 		result := a.KnotsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KnotsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KnotsPerSecond returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to KnotsPerMinute.
 		// No expected conversion value provided for KnotsPerMinute, verifying result is not NaN.
 		result := a.KnotsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.KnotsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KnotsPerMinute returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to KnotsPerHour.
 		// No expected conversion value provided for KnotsPerHour, verifying result is not NaN.
 		result := a.KnotsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.KnotsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KnotsPerHour returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to StandardGravity.
 		// No expected conversion value provided for StandardGravity, verifying result is not NaN.
 		result := a.StandardGravity()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardGravity()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardGravity returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to NanometersPerSecondSquared.
 		// No expected conversion value provided for NanometersPerSecondSquared, verifying result is not NaN.
 		result := a.NanometersPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.NanometersPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanometersPerSecondSquared returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to MicrometersPerSecondSquared.
 		// No expected conversion value provided for MicrometersPerSecondSquared, verifying result is not NaN.
 		result := a.MicrometersPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrometersPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrometersPerSecondSquared returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to MillimetersPerSecondSquared.
 		// No expected conversion value provided for MillimetersPerSecondSquared, verifying result is not NaN.
 		result := a.MillimetersPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimetersPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimetersPerSecondSquared returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to CentimetersPerSecondSquared.
 		// No expected conversion value provided for CentimetersPerSecondSquared, verifying result is not NaN.
 		result := a.CentimetersPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.CentimetersPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentimetersPerSecondSquared returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to DecimetersPerSecondSquared.
 		// No expected conversion value provided for DecimetersPerSecondSquared, verifying result is not NaN.
 		result := a.DecimetersPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.DecimetersPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecimetersPerSecondSquared returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to KilometersPerSecondSquared.
 		// No expected conversion value provided for KilometersPerSecondSquared, verifying result is not NaN.
 		result := a.KilometersPerSecondSquared()
-		if math.IsNaN(result) {
+		cacheResult := a.KilometersPerSecondSquared()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilometersPerSecondSquared returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestAccelerationConversions(t *testing.T) {
 		// Test conversion to MillistandardGravity.
 		// No expected conversion value provided for MillistandardGravity, verifying result is not NaN.
 		result := a.MillistandardGravity()
-		if math.IsNaN(result) {
+		cacheResult := a.MillistandardGravity()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillistandardGravity returned NaN")
 		}
 	}
@@ -1406,4 +1421,160 @@ func TestAcceleration_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetAccelerationAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.AccelerationUnits
+        want string
+    }{
+        {
+            name: "MeterPerSecondSquared abbreviation",
+            unit: units.AccelerationMeterPerSecondSquared,
+            want: "m/s²",
+        },
+        {
+            name: "InchPerSecondSquared abbreviation",
+            unit: units.AccelerationInchPerSecondSquared,
+            want: "in/s²",
+        },
+        {
+            name: "FootPerSecondSquared abbreviation",
+            unit: units.AccelerationFootPerSecondSquared,
+            want: "ft/s²",
+        },
+        {
+            name: "KnotPerSecond abbreviation",
+            unit: units.AccelerationKnotPerSecond,
+            want: "kn/s",
+        },
+        {
+            name: "KnotPerMinute abbreviation",
+            unit: units.AccelerationKnotPerMinute,
+            want: "kn/min",
+        },
+        {
+            name: "KnotPerHour abbreviation",
+            unit: units.AccelerationKnotPerHour,
+            want: "kn/h",
+        },
+        {
+            name: "StandardGravity abbreviation",
+            unit: units.AccelerationStandardGravity,
+            want: "g",
+        },
+        {
+            name: "NanometerPerSecondSquared abbreviation",
+            unit: units.AccelerationNanometerPerSecondSquared,
+            want: "nm/s²",
+        },
+        {
+            name: "MicrometerPerSecondSquared abbreviation",
+            unit: units.AccelerationMicrometerPerSecondSquared,
+            want: "μm/s²",
+        },
+        {
+            name: "MillimeterPerSecondSquared abbreviation",
+            unit: units.AccelerationMillimeterPerSecondSquared,
+            want: "mm/s²",
+        },
+        {
+            name: "CentimeterPerSecondSquared abbreviation",
+            unit: units.AccelerationCentimeterPerSecondSquared,
+            want: "cm/s²",
+        },
+        {
+            name: "DecimeterPerSecondSquared abbreviation",
+            unit: units.AccelerationDecimeterPerSecondSquared,
+            want: "dm/s²",
+        },
+        {
+            name: "KilometerPerSecondSquared abbreviation",
+            unit: units.AccelerationKilometerPerSecondSquared,
+            want: "km/s²",
+        },
+        {
+            name: "MillistandardGravity abbreviation",
+            unit: units.AccelerationMillistandardGravity,
+            want: "mg",
+        },
+        {
+            name: "invalid unit",
+            unit: units.AccelerationUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetAccelerationAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetAccelerationAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestAcceleration_String(t *testing.T) {
+    factory := units.AccelerationFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateAcceleration(tt.value, units.AccelerationMeterPerSecondSquared)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Acceleration.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

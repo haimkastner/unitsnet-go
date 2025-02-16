@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Moles.
 		// No expected conversion value provided for Moles, verifying result is not NaN.
 		result := a.Moles()
-		if math.IsNaN(result) {
+		cacheResult := a.Moles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Moles returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to PoundMoles.
 		// No expected conversion value provided for PoundMoles, verifying result is not NaN.
 		result := a.PoundMoles()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundMoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundMoles returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Femtomoles.
 		// No expected conversion value provided for Femtomoles, verifying result is not NaN.
 		result := a.Femtomoles()
-		if math.IsNaN(result) {
+		cacheResult := a.Femtomoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Femtomoles returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Picomoles.
 		// No expected conversion value provided for Picomoles, verifying result is not NaN.
 		result := a.Picomoles()
-		if math.IsNaN(result) {
+		cacheResult := a.Picomoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picomoles returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Nanomoles.
 		// No expected conversion value provided for Nanomoles, verifying result is not NaN.
 		result := a.Nanomoles()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanomoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanomoles returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Micromoles.
 		// No expected conversion value provided for Micromoles, verifying result is not NaN.
 		result := a.Micromoles()
-		if math.IsNaN(result) {
+		cacheResult := a.Micromoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Micromoles returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Millimoles.
 		// No expected conversion value provided for Millimoles, verifying result is not NaN.
 		result := a.Millimoles()
-		if math.IsNaN(result) {
+		cacheResult := a.Millimoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millimoles returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Centimoles.
 		// No expected conversion value provided for Centimoles, verifying result is not NaN.
 		result := a.Centimoles()
-		if math.IsNaN(result) {
+		cacheResult := a.Centimoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centimoles returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Decimoles.
 		// No expected conversion value provided for Decimoles, verifying result is not NaN.
 		result := a.Decimoles()
-		if math.IsNaN(result) {
+		cacheResult := a.Decimoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decimoles returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Kilomoles.
 		// No expected conversion value provided for Kilomoles, verifying result is not NaN.
 		result := a.Kilomoles()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilomoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilomoles returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to Megamoles.
 		// No expected conversion value provided for Megamoles, verifying result is not NaN.
 		result := a.Megamoles()
-		if math.IsNaN(result) {
+		cacheResult := a.Megamoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megamoles returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to NanopoundMoles.
 		// No expected conversion value provided for NanopoundMoles, verifying result is not NaN.
 		result := a.NanopoundMoles()
-		if math.IsNaN(result) {
+		cacheResult := a.NanopoundMoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanopoundMoles returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to MicropoundMoles.
 		// No expected conversion value provided for MicropoundMoles, verifying result is not NaN.
 		result := a.MicropoundMoles()
-		if math.IsNaN(result) {
+		cacheResult := a.MicropoundMoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicropoundMoles returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to MillipoundMoles.
 		// No expected conversion value provided for MillipoundMoles, verifying result is not NaN.
 		result := a.MillipoundMoles()
-		if math.IsNaN(result) {
+		cacheResult := a.MillipoundMoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillipoundMoles returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to CentipoundMoles.
 		// No expected conversion value provided for CentipoundMoles, verifying result is not NaN.
 		result := a.CentipoundMoles()
-		if math.IsNaN(result) {
+		cacheResult := a.CentipoundMoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentipoundMoles returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to DecipoundMoles.
 		// No expected conversion value provided for DecipoundMoles, verifying result is not NaN.
 		result := a.DecipoundMoles()
-		if math.IsNaN(result) {
+		cacheResult := a.DecipoundMoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecipoundMoles returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestAmountOfSubstanceConversions(t *testing.T) {
 		// Test conversion to KilopoundMoles.
 		// No expected conversion value provided for KilopoundMoles, verifying result is not NaN.
 		result := a.KilopoundMoles()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundMoles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundMoles returned NaN")
 		}
 	}
@@ -1646,4 +1664,175 @@ func TestAmountOfSubstance_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetAmountOfSubstanceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.AmountOfSubstanceUnits
+        want string
+    }{
+        {
+            name: "Mole abbreviation",
+            unit: units.AmountOfSubstanceMole,
+            want: "mol",
+        },
+        {
+            name: "PoundMole abbreviation",
+            unit: units.AmountOfSubstancePoundMole,
+            want: "lbmol",
+        },
+        {
+            name: "Femtomole abbreviation",
+            unit: units.AmountOfSubstanceFemtomole,
+            want: "fmol",
+        },
+        {
+            name: "Picomole abbreviation",
+            unit: units.AmountOfSubstancePicomole,
+            want: "pmol",
+        },
+        {
+            name: "Nanomole abbreviation",
+            unit: units.AmountOfSubstanceNanomole,
+            want: "nmol",
+        },
+        {
+            name: "Micromole abbreviation",
+            unit: units.AmountOfSubstanceMicromole,
+            want: "μmol",
+        },
+        {
+            name: "Millimole abbreviation",
+            unit: units.AmountOfSubstanceMillimole,
+            want: "mmol",
+        },
+        {
+            name: "Centimole abbreviation",
+            unit: units.AmountOfSubstanceCentimole,
+            want: "cmol",
+        },
+        {
+            name: "Decimole abbreviation",
+            unit: units.AmountOfSubstanceDecimole,
+            want: "dmol",
+        },
+        {
+            name: "Kilomole abbreviation",
+            unit: units.AmountOfSubstanceKilomole,
+            want: "kmol",
+        },
+        {
+            name: "Megamole abbreviation",
+            unit: units.AmountOfSubstanceMegamole,
+            want: "Mmol",
+        },
+        {
+            name: "NanopoundMole abbreviation",
+            unit: units.AmountOfSubstanceNanopoundMole,
+            want: "nlbmol",
+        },
+        {
+            name: "MicropoundMole abbreviation",
+            unit: units.AmountOfSubstanceMicropoundMole,
+            want: "μlbmol",
+        },
+        {
+            name: "MillipoundMole abbreviation",
+            unit: units.AmountOfSubstanceMillipoundMole,
+            want: "mlbmol",
+        },
+        {
+            name: "CentipoundMole abbreviation",
+            unit: units.AmountOfSubstanceCentipoundMole,
+            want: "clbmol",
+        },
+        {
+            name: "DecipoundMole abbreviation",
+            unit: units.AmountOfSubstanceDecipoundMole,
+            want: "dlbmol",
+        },
+        {
+            name: "KilopoundMole abbreviation",
+            unit: units.AmountOfSubstanceKilopoundMole,
+            want: "klbmol",
+        },
+        {
+            name: "invalid unit",
+            unit: units.AmountOfSubstanceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetAmountOfSubstanceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetAmountOfSubstanceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestAmountOfSubstance_String(t *testing.T) {
+    factory := units.AmountOfSubstanceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateAmountOfSubstance(tt.value, units.AmountOfSubstanceMole)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("AmountOfSubstance.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

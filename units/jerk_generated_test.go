@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to MetersPerSecondCubed.
 		// No expected conversion value provided for MetersPerSecondCubed, verifying result is not NaN.
 		result := a.MetersPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.MetersPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetersPerSecondCubed returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to InchesPerSecondCubed.
 		// No expected conversion value provided for InchesPerSecondCubed, verifying result is not NaN.
 		result := a.InchesPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.InchesPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InchesPerSecondCubed returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to FeetPerSecondCubed.
 		// No expected conversion value provided for FeetPerSecondCubed, verifying result is not NaN.
 		result := a.FeetPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.FeetPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FeetPerSecondCubed returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to StandardGravitiesPerSecond.
 		// No expected conversion value provided for StandardGravitiesPerSecond, verifying result is not NaN.
 		result := a.StandardGravitiesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.StandardGravitiesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to StandardGravitiesPerSecond returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to NanometersPerSecondCubed.
 		// No expected conversion value provided for NanometersPerSecondCubed, verifying result is not NaN.
 		result := a.NanometersPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.NanometersPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanometersPerSecondCubed returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to MicrometersPerSecondCubed.
 		// No expected conversion value provided for MicrometersPerSecondCubed, verifying result is not NaN.
 		result := a.MicrometersPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrometersPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrometersPerSecondCubed returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to MillimetersPerSecondCubed.
 		// No expected conversion value provided for MillimetersPerSecondCubed, verifying result is not NaN.
 		result := a.MillimetersPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimetersPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimetersPerSecondCubed returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to CentimetersPerSecondCubed.
 		// No expected conversion value provided for CentimetersPerSecondCubed, verifying result is not NaN.
 		result := a.CentimetersPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.CentimetersPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentimetersPerSecondCubed returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to DecimetersPerSecondCubed.
 		// No expected conversion value provided for DecimetersPerSecondCubed, verifying result is not NaN.
 		result := a.DecimetersPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.DecimetersPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecimetersPerSecondCubed returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to KilometersPerSecondCubed.
 		// No expected conversion value provided for KilometersPerSecondCubed, verifying result is not NaN.
 		result := a.KilometersPerSecondCubed()
-		if math.IsNaN(result) {
+		cacheResult := a.KilometersPerSecondCubed()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilometersPerSecondCubed returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestJerkConversions(t *testing.T) {
 		// Test conversion to MillistandardGravitiesPerSecond.
 		// No expected conversion value provided for MillistandardGravitiesPerSecond, verifying result is not NaN.
 		result := a.MillistandardGravitiesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MillistandardGravitiesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillistandardGravitiesPerSecond returned NaN")
 		}
 	}
@@ -1166,4 +1178,145 @@ func TestJerk_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetJerkAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.JerkUnits
+        want string
+    }{
+        {
+            name: "MeterPerSecondCubed abbreviation",
+            unit: units.JerkMeterPerSecondCubed,
+            want: "m/s³",
+        },
+        {
+            name: "InchPerSecondCubed abbreviation",
+            unit: units.JerkInchPerSecondCubed,
+            want: "in/s³",
+        },
+        {
+            name: "FootPerSecondCubed abbreviation",
+            unit: units.JerkFootPerSecondCubed,
+            want: "ft/s³",
+        },
+        {
+            name: "StandardGravitiesPerSecond abbreviation",
+            unit: units.JerkStandardGravitiesPerSecond,
+            want: "g/s",
+        },
+        {
+            name: "NanometerPerSecondCubed abbreviation",
+            unit: units.JerkNanometerPerSecondCubed,
+            want: "nm/s³",
+        },
+        {
+            name: "MicrometerPerSecondCubed abbreviation",
+            unit: units.JerkMicrometerPerSecondCubed,
+            want: "μm/s³",
+        },
+        {
+            name: "MillimeterPerSecondCubed abbreviation",
+            unit: units.JerkMillimeterPerSecondCubed,
+            want: "mm/s³",
+        },
+        {
+            name: "CentimeterPerSecondCubed abbreviation",
+            unit: units.JerkCentimeterPerSecondCubed,
+            want: "cm/s³",
+        },
+        {
+            name: "DecimeterPerSecondCubed abbreviation",
+            unit: units.JerkDecimeterPerSecondCubed,
+            want: "dm/s³",
+        },
+        {
+            name: "KilometerPerSecondCubed abbreviation",
+            unit: units.JerkKilometerPerSecondCubed,
+            want: "km/s³",
+        },
+        {
+            name: "MillistandardGravitiesPerSecond abbreviation",
+            unit: units.JerkMillistandardGravitiesPerSecond,
+            want: "mg/s",
+        },
+        {
+            name: "invalid unit",
+            unit: units.JerkUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetJerkAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetJerkAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestJerk_String(t *testing.T) {
+    factory := units.JerkFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateJerk(tt.value, units.JerkMeterPerSecondCubed)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Jerk.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

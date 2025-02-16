@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestSpecificFuelConsumptionConversions(t *testing.T) {
 		// Test conversion to PoundsMassPerPoundForceHour.
 		// No expected conversion value provided for PoundsMassPerPoundForceHour, verifying result is not NaN.
 		result := a.PoundsMassPerPoundForceHour()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsMassPerPoundForceHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsMassPerPoundForceHour returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestSpecificFuelConsumptionConversions(t *testing.T) {
 		// Test conversion to KilogramsPerKilogramForceHour.
 		// No expected conversion value provided for KilogramsPerKilogramForceHour, verifying result is not NaN.
 		result := a.KilogramsPerKilogramForceHour()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerKilogramForceHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerKilogramForceHour returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestSpecificFuelConsumptionConversions(t *testing.T) {
 		// Test conversion to GramsPerKiloNewtonSecond.
 		// No expected conversion value provided for GramsPerKiloNewtonSecond, verifying result is not NaN.
 		result := a.GramsPerKiloNewtonSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerKiloNewtonSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerKiloNewtonSecond returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestSpecificFuelConsumptionConversions(t *testing.T) {
 		// Test conversion to KilogramsPerKiloNewtonSecond.
 		// No expected conversion value provided for KilogramsPerKiloNewtonSecond, verifying result is not NaN.
 		result := a.KilogramsPerKiloNewtonSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerKiloNewtonSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerKiloNewtonSecond returned NaN")
 		}
 	}
@@ -606,4 +611,110 @@ func TestSpecificFuelConsumption_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetSpecificFuelConsumptionAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.SpecificFuelConsumptionUnits
+        want string
+    }{
+        {
+            name: "PoundMassPerPoundForceHour abbreviation",
+            unit: units.SpecificFuelConsumptionPoundMassPerPoundForceHour,
+            want: "lb/(lbf·h)",
+        },
+        {
+            name: "KilogramPerKilogramForceHour abbreviation",
+            unit: units.SpecificFuelConsumptionKilogramPerKilogramForceHour,
+            want: "kg/(kgf�h)",
+        },
+        {
+            name: "GramPerKiloNewtonSecond abbreviation",
+            unit: units.SpecificFuelConsumptionGramPerKiloNewtonSecond,
+            want: "g/(kN�s)",
+        },
+        {
+            name: "KilogramPerKiloNewtonSecond abbreviation",
+            unit: units.SpecificFuelConsumptionKilogramPerKiloNewtonSecond,
+            want: "kg/(kN�s)",
+        },
+        {
+            name: "invalid unit",
+            unit: units.SpecificFuelConsumptionUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetSpecificFuelConsumptionAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetSpecificFuelConsumptionAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestSpecificFuelConsumption_String(t *testing.T) {
+    factory := units.SpecificFuelConsumptionFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateSpecificFuelConsumption(tt.value, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("SpecificFuelConsumption.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

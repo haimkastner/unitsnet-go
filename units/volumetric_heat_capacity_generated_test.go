@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestVolumetricHeatCapacityConversions(t *testing.T) {
 		// Test conversion to JoulesPerCubicMeterKelvin.
 		// No expected conversion value provided for JoulesPerCubicMeterKelvin, verifying result is not NaN.
 		result := a.JoulesPerCubicMeterKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerCubicMeterKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerCubicMeterKelvin returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestVolumetricHeatCapacityConversions(t *testing.T) {
 		// Test conversion to JoulesPerCubicMeterDegreeCelsius.
 		// No expected conversion value provided for JoulesPerCubicMeterDegreeCelsius, verifying result is not NaN.
 		result := a.JoulesPerCubicMeterDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerCubicMeterDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerCubicMeterDegreeCelsius returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestVolumetricHeatCapacityConversions(t *testing.T) {
 		// Test conversion to CaloriesPerCubicCentimeterDegreeCelsius.
 		// No expected conversion value provided for CaloriesPerCubicCentimeterDegreeCelsius, verifying result is not NaN.
 		result := a.CaloriesPerCubicCentimeterDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.CaloriesPerCubicCentimeterDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CaloriesPerCubicCentimeterDegreeCelsius returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestVolumetricHeatCapacityConversions(t *testing.T) {
 		// Test conversion to BtusPerCubicFootDegreeFahrenheit.
 		// No expected conversion value provided for BtusPerCubicFootDegreeFahrenheit, verifying result is not NaN.
 		result := a.BtusPerCubicFootDegreeFahrenheit()
-		if math.IsNaN(result) {
+		cacheResult := a.BtusPerCubicFootDegreeFahrenheit()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BtusPerCubicFootDegreeFahrenheit returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestVolumetricHeatCapacityConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerCubicMeterKelvin.
 		// No expected conversion value provided for KilojoulesPerCubicMeterKelvin, verifying result is not NaN.
 		result := a.KilojoulesPerCubicMeterKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerCubicMeterKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerCubicMeterKelvin returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestVolumetricHeatCapacityConversions(t *testing.T) {
 		// Test conversion to MegajoulesPerCubicMeterKelvin.
 		// No expected conversion value provided for MegajoulesPerCubicMeterKelvin, verifying result is not NaN.
 		result := a.MegajoulesPerCubicMeterKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.MegajoulesPerCubicMeterKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegajoulesPerCubicMeterKelvin returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestVolumetricHeatCapacityConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerCubicMeterDegreeCelsius.
 		// No expected conversion value provided for KilojoulesPerCubicMeterDegreeCelsius, verifying result is not NaN.
 		result := a.KilojoulesPerCubicMeterDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerCubicMeterDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerCubicMeterDegreeCelsius returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestVolumetricHeatCapacityConversions(t *testing.T) {
 		// Test conversion to MegajoulesPerCubicMeterDegreeCelsius.
 		// No expected conversion value provided for MegajoulesPerCubicMeterDegreeCelsius, verifying result is not NaN.
 		result := a.MegajoulesPerCubicMeterDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.MegajoulesPerCubicMeterDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegajoulesPerCubicMeterDegreeCelsius returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestVolumetricHeatCapacityConversions(t *testing.T) {
 		// Test conversion to KilocaloriesPerCubicCentimeterDegreeCelsius.
 		// No expected conversion value provided for KilocaloriesPerCubicCentimeterDegreeCelsius, verifying result is not NaN.
 		result := a.KilocaloriesPerCubicCentimeterDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocaloriesPerCubicCentimeterDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocaloriesPerCubicCentimeterDegreeCelsius returned NaN")
 		}
 	}
@@ -1006,4 +1016,135 @@ func TestVolumetricHeatCapacity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetVolumetricHeatCapacityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.VolumetricHeatCapacityUnits
+        want string
+    }{
+        {
+            name: "JoulePerCubicMeterKelvin abbreviation",
+            unit: units.VolumetricHeatCapacityJoulePerCubicMeterKelvin,
+            want: "J/m³·K",
+        },
+        {
+            name: "JoulePerCubicMeterDegreeCelsius abbreviation",
+            unit: units.VolumetricHeatCapacityJoulePerCubicMeterDegreeCelsius,
+            want: "J/m³·°C",
+        },
+        {
+            name: "CaloriePerCubicCentimeterDegreeCelsius abbreviation",
+            unit: units.VolumetricHeatCapacityCaloriePerCubicCentimeterDegreeCelsius,
+            want: "cal/cm³·°C",
+        },
+        {
+            name: "BtuPerCubicFootDegreeFahrenheit abbreviation",
+            unit: units.VolumetricHeatCapacityBtuPerCubicFootDegreeFahrenheit,
+            want: "BTU/ft³·°F",
+        },
+        {
+            name: "KilojoulePerCubicMeterKelvin abbreviation",
+            unit: units.VolumetricHeatCapacityKilojoulePerCubicMeterKelvin,
+            want: "kJ/m³·K",
+        },
+        {
+            name: "MegajoulePerCubicMeterKelvin abbreviation",
+            unit: units.VolumetricHeatCapacityMegajoulePerCubicMeterKelvin,
+            want: "MJ/m³·K",
+        },
+        {
+            name: "KilojoulePerCubicMeterDegreeCelsius abbreviation",
+            unit: units.VolumetricHeatCapacityKilojoulePerCubicMeterDegreeCelsius,
+            want: "kJ/m³·°C",
+        },
+        {
+            name: "MegajoulePerCubicMeterDegreeCelsius abbreviation",
+            unit: units.VolumetricHeatCapacityMegajoulePerCubicMeterDegreeCelsius,
+            want: "MJ/m³·°C",
+        },
+        {
+            name: "KilocaloriePerCubicCentimeterDegreeCelsius abbreviation",
+            unit: units.VolumetricHeatCapacityKilocaloriePerCubicCentimeterDegreeCelsius,
+            want: "kcal/cm³·°C",
+        },
+        {
+            name: "invalid unit",
+            unit: units.VolumetricHeatCapacityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetVolumetricHeatCapacityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetVolumetricHeatCapacityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestVolumetricHeatCapacity_String(t *testing.T) {
+    factory := units.VolumetricHeatCapacityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateVolumetricHeatCapacity(tt.value, units.VolumetricHeatCapacityJoulePerCubicMeterKelvin)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("VolumetricHeatCapacity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

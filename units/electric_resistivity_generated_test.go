@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to OhmMeters.
 		// No expected conversion value provided for OhmMeters, verifying result is not NaN.
 		result := a.OhmMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.OhmMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to OhmMeters returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to OhmsCentimeter.
 		// No expected conversion value provided for OhmsCentimeter, verifying result is not NaN.
 		result := a.OhmsCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.OhmsCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to OhmsCentimeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to PicoohmMeters.
 		// No expected conversion value provided for PicoohmMeters, verifying result is not NaN.
 		result := a.PicoohmMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.PicoohmMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicoohmMeters returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to NanoohmMeters.
 		// No expected conversion value provided for NanoohmMeters, verifying result is not NaN.
 		result := a.NanoohmMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.NanoohmMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanoohmMeters returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to MicroohmMeters.
 		// No expected conversion value provided for MicroohmMeters, verifying result is not NaN.
 		result := a.MicroohmMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MicroohmMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicroohmMeters returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to MilliohmMeters.
 		// No expected conversion value provided for MilliohmMeters, verifying result is not NaN.
 		result := a.MilliohmMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliohmMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliohmMeters returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to KiloohmMeters.
 		// No expected conversion value provided for KiloohmMeters, verifying result is not NaN.
 		result := a.KiloohmMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.KiloohmMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KiloohmMeters returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to MegaohmMeters.
 		// No expected conversion value provided for MegaohmMeters, verifying result is not NaN.
 		result := a.MegaohmMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.MegaohmMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegaohmMeters returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to PicoohmsCentimeter.
 		// No expected conversion value provided for PicoohmsCentimeter, verifying result is not NaN.
 		result := a.PicoohmsCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicoohmsCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicoohmsCentimeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to NanoohmsCentimeter.
 		// No expected conversion value provided for NanoohmsCentimeter, verifying result is not NaN.
 		result := a.NanoohmsCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanoohmsCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanoohmsCentimeter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to MicroohmsCentimeter.
 		// No expected conversion value provided for MicroohmsCentimeter, verifying result is not NaN.
 		result := a.MicroohmsCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicroohmsCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicroohmsCentimeter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to MilliohmsCentimeter.
 		// No expected conversion value provided for MilliohmsCentimeter, verifying result is not NaN.
 		result := a.MilliohmsCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliohmsCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliohmsCentimeter returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to KiloohmsCentimeter.
 		// No expected conversion value provided for KiloohmsCentimeter, verifying result is not NaN.
 		result := a.KiloohmsCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KiloohmsCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KiloohmsCentimeter returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestElectricResistivityConversions(t *testing.T) {
 		// Test conversion to MegaohmsCentimeter.
 		// No expected conversion value provided for MegaohmsCentimeter, verifying result is not NaN.
 		result := a.MegaohmsCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegaohmsCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegaohmsCentimeter returned NaN")
 		}
 	}
@@ -1406,4 +1421,160 @@ func TestElectricResistivity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricResistivityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricResistivityUnits
+        want string
+    }{
+        {
+            name: "OhmMeter abbreviation",
+            unit: units.ElectricResistivityOhmMeter,
+            want: "Ω·m",
+        },
+        {
+            name: "OhmCentimeter abbreviation",
+            unit: units.ElectricResistivityOhmCentimeter,
+            want: "Ω·cm",
+        },
+        {
+            name: "PicoohmMeter abbreviation",
+            unit: units.ElectricResistivityPicoohmMeter,
+            want: "pΩ·m",
+        },
+        {
+            name: "NanoohmMeter abbreviation",
+            unit: units.ElectricResistivityNanoohmMeter,
+            want: "nΩ·m",
+        },
+        {
+            name: "MicroohmMeter abbreviation",
+            unit: units.ElectricResistivityMicroohmMeter,
+            want: "μΩ·m",
+        },
+        {
+            name: "MilliohmMeter abbreviation",
+            unit: units.ElectricResistivityMilliohmMeter,
+            want: "mΩ·m",
+        },
+        {
+            name: "KiloohmMeter abbreviation",
+            unit: units.ElectricResistivityKiloohmMeter,
+            want: "kΩ·m",
+        },
+        {
+            name: "MegaohmMeter abbreviation",
+            unit: units.ElectricResistivityMegaohmMeter,
+            want: "MΩ·m",
+        },
+        {
+            name: "PicoohmCentimeter abbreviation",
+            unit: units.ElectricResistivityPicoohmCentimeter,
+            want: "pΩ·cm",
+        },
+        {
+            name: "NanoohmCentimeter abbreviation",
+            unit: units.ElectricResistivityNanoohmCentimeter,
+            want: "nΩ·cm",
+        },
+        {
+            name: "MicroohmCentimeter abbreviation",
+            unit: units.ElectricResistivityMicroohmCentimeter,
+            want: "μΩ·cm",
+        },
+        {
+            name: "MilliohmCentimeter abbreviation",
+            unit: units.ElectricResistivityMilliohmCentimeter,
+            want: "mΩ·cm",
+        },
+        {
+            name: "KiloohmCentimeter abbreviation",
+            unit: units.ElectricResistivityKiloohmCentimeter,
+            want: "kΩ·cm",
+        },
+        {
+            name: "MegaohmCentimeter abbreviation",
+            unit: units.ElectricResistivityMegaohmCentimeter,
+            want: "MΩ·cm",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricResistivityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricResistivityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricResistivityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricResistivity_String(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricResistivity(tt.value, units.ElectricResistivityOhmMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricResistivity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricCapacitanceConversions(t *testing.T) {
 		// Test conversion to Farads.
 		// No expected conversion value provided for Farads, verifying result is not NaN.
 		result := a.Farads()
-		if math.IsNaN(result) {
+		cacheResult := a.Farads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Farads returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricCapacitanceConversions(t *testing.T) {
 		// Test conversion to Picofarads.
 		// No expected conversion value provided for Picofarads, verifying result is not NaN.
 		result := a.Picofarads()
-		if math.IsNaN(result) {
+		cacheResult := a.Picofarads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picofarads returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricCapacitanceConversions(t *testing.T) {
 		// Test conversion to Nanofarads.
 		// No expected conversion value provided for Nanofarads, verifying result is not NaN.
 		result := a.Nanofarads()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanofarads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanofarads returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricCapacitanceConversions(t *testing.T) {
 		// Test conversion to Microfarads.
 		// No expected conversion value provided for Microfarads, verifying result is not NaN.
 		result := a.Microfarads()
-		if math.IsNaN(result) {
+		cacheResult := a.Microfarads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microfarads returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricCapacitanceConversions(t *testing.T) {
 		// Test conversion to Millifarads.
 		// No expected conversion value provided for Millifarads, verifying result is not NaN.
 		result := a.Millifarads()
-		if math.IsNaN(result) {
+		cacheResult := a.Millifarads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millifarads returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricCapacitanceConversions(t *testing.T) {
 		// Test conversion to Kilofarads.
 		// No expected conversion value provided for Kilofarads, verifying result is not NaN.
 		result := a.Kilofarads()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilofarads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilofarads returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestElectricCapacitanceConversions(t *testing.T) {
 		// Test conversion to Megafarads.
 		// No expected conversion value provided for Megafarads, verifying result is not NaN.
 		result := a.Megafarads()
-		if math.IsNaN(result) {
+		cacheResult := a.Megafarads()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megafarads returned NaN")
 		}
 	}
@@ -846,4 +854,125 @@ func TestElectricCapacitance_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricCapacitanceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricCapacitanceUnits
+        want string
+    }{
+        {
+            name: "Farad abbreviation",
+            unit: units.ElectricCapacitanceFarad,
+            want: "F",
+        },
+        {
+            name: "Picofarad abbreviation",
+            unit: units.ElectricCapacitancePicofarad,
+            want: "pF",
+        },
+        {
+            name: "Nanofarad abbreviation",
+            unit: units.ElectricCapacitanceNanofarad,
+            want: "nF",
+        },
+        {
+            name: "Microfarad abbreviation",
+            unit: units.ElectricCapacitanceMicrofarad,
+            want: "μF",
+        },
+        {
+            name: "Millifarad abbreviation",
+            unit: units.ElectricCapacitanceMillifarad,
+            want: "mF",
+        },
+        {
+            name: "Kilofarad abbreviation",
+            unit: units.ElectricCapacitanceKilofarad,
+            want: "kF",
+        },
+        {
+            name: "Megafarad abbreviation",
+            unit: units.ElectricCapacitanceMegafarad,
+            want: "MF",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricCapacitanceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricCapacitanceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricCapacitanceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricCapacitance_String(t *testing.T) {
+    factory := units.ElectricCapacitanceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricCapacitance(tt.value, units.ElectricCapacitanceFarad)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricCapacitance.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

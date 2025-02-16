@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Watts.
 		// No expected conversion value provided for Watts, verifying result is not NaN.
 		result := a.Watts()
-		if math.IsNaN(result) {
+		cacheResult := a.Watts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Watts returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to MechanicalHorsepower.
 		// No expected conversion value provided for MechanicalHorsepower, verifying result is not NaN.
 		result := a.MechanicalHorsepower()
-		if math.IsNaN(result) {
+		cacheResult := a.MechanicalHorsepower()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MechanicalHorsepower returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to MetricHorsepower.
 		// No expected conversion value provided for MetricHorsepower, verifying result is not NaN.
 		result := a.MetricHorsepower()
-		if math.IsNaN(result) {
+		cacheResult := a.MetricHorsepower()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetricHorsepower returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to ElectricalHorsepower.
 		// No expected conversion value provided for ElectricalHorsepower, verifying result is not NaN.
 		result := a.ElectricalHorsepower()
-		if math.IsNaN(result) {
+		cacheResult := a.ElectricalHorsepower()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ElectricalHorsepower returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to BoilerHorsepower.
 		// No expected conversion value provided for BoilerHorsepower, verifying result is not NaN.
 		result := a.BoilerHorsepower()
-		if math.IsNaN(result) {
+		cacheResult := a.BoilerHorsepower()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BoilerHorsepower returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to HydraulicHorsepower.
 		// No expected conversion value provided for HydraulicHorsepower, verifying result is not NaN.
 		result := a.HydraulicHorsepower()
-		if math.IsNaN(result) {
+		cacheResult := a.HydraulicHorsepower()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HydraulicHorsepower returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to BritishThermalUnitsPerHour.
 		// No expected conversion value provided for BritishThermalUnitsPerHour, verifying result is not NaN.
 		result := a.BritishThermalUnitsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.BritishThermalUnitsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BritishThermalUnitsPerHour returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to JoulesPerHour.
 		// No expected conversion value provided for JoulesPerHour, verifying result is not NaN.
 		result := a.JoulesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerHour returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to TonsOfRefrigeration.
 		// No expected conversion value provided for TonsOfRefrigeration, verifying result is not NaN.
 		result := a.TonsOfRefrigeration()
-		if math.IsNaN(result) {
+		cacheResult := a.TonsOfRefrigeration()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonsOfRefrigeration returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Femtowatts.
 		// No expected conversion value provided for Femtowatts, verifying result is not NaN.
 		result := a.Femtowatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Femtowatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Femtowatts returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Picowatts.
 		// No expected conversion value provided for Picowatts, verifying result is not NaN.
 		result := a.Picowatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Picowatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picowatts returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Nanowatts.
 		// No expected conversion value provided for Nanowatts, verifying result is not NaN.
 		result := a.Nanowatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanowatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanowatts returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Microwatts.
 		// No expected conversion value provided for Microwatts, verifying result is not NaN.
 		result := a.Microwatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Microwatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microwatts returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Milliwatts.
 		// No expected conversion value provided for Milliwatts, verifying result is not NaN.
 		result := a.Milliwatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Milliwatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milliwatts returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Deciwatts.
 		// No expected conversion value provided for Deciwatts, verifying result is not NaN.
 		result := a.Deciwatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Deciwatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Deciwatts returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Decawatts.
 		// No expected conversion value provided for Decawatts, verifying result is not NaN.
 		result := a.Decawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Decawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decawatts returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Kilowatts.
 		// No expected conversion value provided for Kilowatts, verifying result is not NaN.
 		result := a.Kilowatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilowatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilowatts returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Megawatts.
 		// No expected conversion value provided for Megawatts, verifying result is not NaN.
 		result := a.Megawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Megawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megawatts returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Gigawatts.
 		// No expected conversion value provided for Gigawatts, verifying result is not NaN.
 		result := a.Gigawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigawatts returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Terawatts.
 		// No expected conversion value provided for Terawatts, verifying result is not NaN.
 		result := a.Terawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Terawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Terawatts returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to Petawatts.
 		// No expected conversion value provided for Petawatts, verifying result is not NaN.
 		result := a.Petawatts()
-		if math.IsNaN(result) {
+		cacheResult := a.Petawatts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Petawatts returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to KilobritishThermalUnitsPerHour.
 		// No expected conversion value provided for KilobritishThermalUnitsPerHour, verifying result is not NaN.
 		result := a.KilobritishThermalUnitsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.KilobritishThermalUnitsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilobritishThermalUnitsPerHour returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to MegabritishThermalUnitsPerHour.
 		// No expected conversion value provided for MegabritishThermalUnitsPerHour, verifying result is not NaN.
 		result := a.MegabritishThermalUnitsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MegabritishThermalUnitsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegabritishThermalUnitsPerHour returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to MillijoulesPerHour.
 		// No expected conversion value provided for MillijoulesPerHour, verifying result is not NaN.
 		result := a.MillijoulesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MillijoulesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillijoulesPerHour returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerHour.
 		// No expected conversion value provided for KilojoulesPerHour, verifying result is not NaN.
 		result := a.KilojoulesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerHour returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to MegajoulesPerHour.
 		// No expected conversion value provided for MegajoulesPerHour, verifying result is not NaN.
 		result := a.MegajoulesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MegajoulesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegajoulesPerHour returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestPowerConversions(t *testing.T) {
 		// Test conversion to GigajoulesPerHour.
 		// No expected conversion value provided for GigajoulesPerHour, verifying result is not NaN.
 		result := a.GigajoulesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.GigajoulesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigajoulesPerHour returned NaN")
 		}
 	}
@@ -2446,4 +2474,225 @@ func TestPower_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetPowerAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.PowerUnits
+        want string
+    }{
+        {
+            name: "Watt abbreviation",
+            unit: units.PowerWatt,
+            want: "W",
+        },
+        {
+            name: "MechanicalHorsepower abbreviation",
+            unit: units.PowerMechanicalHorsepower,
+            want: "hp(I)",
+        },
+        {
+            name: "MetricHorsepower abbreviation",
+            unit: units.PowerMetricHorsepower,
+            want: "hp(M)",
+        },
+        {
+            name: "ElectricalHorsepower abbreviation",
+            unit: units.PowerElectricalHorsepower,
+            want: "hp(E)",
+        },
+        {
+            name: "BoilerHorsepower abbreviation",
+            unit: units.PowerBoilerHorsepower,
+            want: "hp(S)",
+        },
+        {
+            name: "HydraulicHorsepower abbreviation",
+            unit: units.PowerHydraulicHorsepower,
+            want: "hp(H)",
+        },
+        {
+            name: "BritishThermalUnitPerHour abbreviation",
+            unit: units.PowerBritishThermalUnitPerHour,
+            want: "Btu/h",
+        },
+        {
+            name: "JoulePerHour abbreviation",
+            unit: units.PowerJoulePerHour,
+            want: "J/h",
+        },
+        {
+            name: "TonOfRefrigeration abbreviation",
+            unit: units.PowerTonOfRefrigeration,
+            want: "TR",
+        },
+        {
+            name: "Femtowatt abbreviation",
+            unit: units.PowerFemtowatt,
+            want: "fW",
+        },
+        {
+            name: "Picowatt abbreviation",
+            unit: units.PowerPicowatt,
+            want: "pW",
+        },
+        {
+            name: "Nanowatt abbreviation",
+            unit: units.PowerNanowatt,
+            want: "nW",
+        },
+        {
+            name: "Microwatt abbreviation",
+            unit: units.PowerMicrowatt,
+            want: "μW",
+        },
+        {
+            name: "Milliwatt abbreviation",
+            unit: units.PowerMilliwatt,
+            want: "mW",
+        },
+        {
+            name: "Deciwatt abbreviation",
+            unit: units.PowerDeciwatt,
+            want: "dW",
+        },
+        {
+            name: "Decawatt abbreviation",
+            unit: units.PowerDecawatt,
+            want: "daW",
+        },
+        {
+            name: "Kilowatt abbreviation",
+            unit: units.PowerKilowatt,
+            want: "kW",
+        },
+        {
+            name: "Megawatt abbreviation",
+            unit: units.PowerMegawatt,
+            want: "MW",
+        },
+        {
+            name: "Gigawatt abbreviation",
+            unit: units.PowerGigawatt,
+            want: "GW",
+        },
+        {
+            name: "Terawatt abbreviation",
+            unit: units.PowerTerawatt,
+            want: "TW",
+        },
+        {
+            name: "Petawatt abbreviation",
+            unit: units.PowerPetawatt,
+            want: "PW",
+        },
+        {
+            name: "KilobritishThermalUnitPerHour abbreviation",
+            unit: units.PowerKilobritishThermalUnitPerHour,
+            want: "kBtu/h",
+        },
+        {
+            name: "MegabritishThermalUnitPerHour abbreviation",
+            unit: units.PowerMegabritishThermalUnitPerHour,
+            want: "MBtu/h",
+        },
+        {
+            name: "MillijoulePerHour abbreviation",
+            unit: units.PowerMillijoulePerHour,
+            want: "mJ/h",
+        },
+        {
+            name: "KilojoulePerHour abbreviation",
+            unit: units.PowerKilojoulePerHour,
+            want: "kJ/h",
+        },
+        {
+            name: "MegajoulePerHour abbreviation",
+            unit: units.PowerMegajoulePerHour,
+            want: "MJ/h",
+        },
+        {
+            name: "GigajoulePerHour abbreviation",
+            unit: units.PowerGigajoulePerHour,
+            want: "GJ/h",
+        },
+        {
+            name: "invalid unit",
+            unit: units.PowerUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetPowerAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetPowerAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestPower_String(t *testing.T) {
+    factory := units.PowerFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreatePower(tt.value, units.PowerWatt)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Power.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

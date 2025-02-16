@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricApparentPowerConversions(t *testing.T) {
 		// Test conversion to Voltamperes.
 		// No expected conversion value provided for Voltamperes, verifying result is not NaN.
 		result := a.Voltamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Voltamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Voltamperes returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricApparentPowerConversions(t *testing.T) {
 		// Test conversion to Microvoltamperes.
 		// No expected conversion value provided for Microvoltamperes, verifying result is not NaN.
 		result := a.Microvoltamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Microvoltamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microvoltamperes returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricApparentPowerConversions(t *testing.T) {
 		// Test conversion to Millivoltamperes.
 		// No expected conversion value provided for Millivoltamperes, verifying result is not NaN.
 		result := a.Millivoltamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Millivoltamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millivoltamperes returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricApparentPowerConversions(t *testing.T) {
 		// Test conversion to Kilovoltamperes.
 		// No expected conversion value provided for Kilovoltamperes, verifying result is not NaN.
 		result := a.Kilovoltamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilovoltamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilovoltamperes returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricApparentPowerConversions(t *testing.T) {
 		// Test conversion to Megavoltamperes.
 		// No expected conversion value provided for Megavoltamperes, verifying result is not NaN.
 		result := a.Megavoltamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Megavoltamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megavoltamperes returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricApparentPowerConversions(t *testing.T) {
 		// Test conversion to Gigavoltamperes.
 		// No expected conversion value provided for Gigavoltamperes, verifying result is not NaN.
 		result := a.Gigavoltamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigavoltamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigavoltamperes returned NaN")
 		}
 	}
@@ -766,4 +773,120 @@ func TestElectricApparentPower_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricApparentPowerAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricApparentPowerUnits
+        want string
+    }{
+        {
+            name: "Voltampere abbreviation",
+            unit: units.ElectricApparentPowerVoltampere,
+            want: "VA",
+        },
+        {
+            name: "Microvoltampere abbreviation",
+            unit: units.ElectricApparentPowerMicrovoltampere,
+            want: "μVA",
+        },
+        {
+            name: "Millivoltampere abbreviation",
+            unit: units.ElectricApparentPowerMillivoltampere,
+            want: "mVA",
+        },
+        {
+            name: "Kilovoltampere abbreviation",
+            unit: units.ElectricApparentPowerKilovoltampere,
+            want: "kVA",
+        },
+        {
+            name: "Megavoltampere abbreviation",
+            unit: units.ElectricApparentPowerMegavoltampere,
+            want: "MVA",
+        },
+        {
+            name: "Gigavoltampere abbreviation",
+            unit: units.ElectricApparentPowerGigavoltampere,
+            want: "GVA",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricApparentPowerUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricApparentPowerAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricApparentPowerAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricApparentPower_String(t *testing.T) {
+    factory := units.ElectricApparentPowerFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricApparentPower(tt.value, units.ElectricApparentPowerVoltampere)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricApparentPower.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

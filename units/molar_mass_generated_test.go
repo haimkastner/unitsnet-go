@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to GramsPerMole.
 		// No expected conversion value provided for GramsPerMole, verifying result is not NaN.
 		result := a.GramsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerMole returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to KilogramsPerKilomole.
 		// No expected conversion value provided for KilogramsPerKilomole, verifying result is not NaN.
 		result := a.KilogramsPerKilomole()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerKilomole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerKilomole returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to PoundsPerMole.
 		// No expected conversion value provided for PoundsPerMole, verifying result is not NaN.
 		result := a.PoundsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerMole returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to NanogramsPerMole.
 		// No expected conversion value provided for NanogramsPerMole, verifying result is not NaN.
 		result := a.NanogramsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.NanogramsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanogramsPerMole returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerMole.
 		// No expected conversion value provided for MicrogramsPerMole, verifying result is not NaN.
 		result := a.MicrogramsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerMole returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to MilligramsPerMole.
 		// No expected conversion value provided for MilligramsPerMole, verifying result is not NaN.
 		result := a.MilligramsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerMole returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to CentigramsPerMole.
 		// No expected conversion value provided for CentigramsPerMole, verifying result is not NaN.
 		result := a.CentigramsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigramsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigramsPerMole returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to DecigramsPerMole.
 		// No expected conversion value provided for DecigramsPerMole, verifying result is not NaN.
 		result := a.DecigramsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigramsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigramsPerMole returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to DecagramsPerMole.
 		// No expected conversion value provided for DecagramsPerMole, verifying result is not NaN.
 		result := a.DecagramsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.DecagramsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecagramsPerMole returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to HectogramsPerMole.
 		// No expected conversion value provided for HectogramsPerMole, verifying result is not NaN.
 		result := a.HectogramsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.HectogramsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectogramsPerMole returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to KilogramsPerMole.
 		// No expected conversion value provided for KilogramsPerMole, verifying result is not NaN.
 		result := a.KilogramsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerMole returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to KilopoundsPerMole.
 		// No expected conversion value provided for KilopoundsPerMole, verifying result is not NaN.
 		result := a.KilopoundsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsPerMole returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestMolarMassConversions(t *testing.T) {
 		// Test conversion to MegapoundsPerMole.
 		// No expected conversion value provided for MegapoundsPerMole, verifying result is not NaN.
 		result := a.MegapoundsPerMole()
-		if math.IsNaN(result) {
+		cacheResult := a.MegapoundsPerMole()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegapoundsPerMole returned NaN")
 		}
 	}
@@ -1326,4 +1340,155 @@ func TestMolarMass_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMolarMassAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MolarMassUnits
+        want string
+    }{
+        {
+            name: "GramPerMole abbreviation",
+            unit: units.MolarMassGramPerMole,
+            want: "g/mol",
+        },
+        {
+            name: "KilogramPerKilomole abbreviation",
+            unit: units.MolarMassKilogramPerKilomole,
+            want: "kg/kmol",
+        },
+        {
+            name: "PoundPerMole abbreviation",
+            unit: units.MolarMassPoundPerMole,
+            want: "lb/mol",
+        },
+        {
+            name: "NanogramPerMole abbreviation",
+            unit: units.MolarMassNanogramPerMole,
+            want: "ng/mol",
+        },
+        {
+            name: "MicrogramPerMole abbreviation",
+            unit: units.MolarMassMicrogramPerMole,
+            want: "μg/mol",
+        },
+        {
+            name: "MilligramPerMole abbreviation",
+            unit: units.MolarMassMilligramPerMole,
+            want: "mg/mol",
+        },
+        {
+            name: "CentigramPerMole abbreviation",
+            unit: units.MolarMassCentigramPerMole,
+            want: "cg/mol",
+        },
+        {
+            name: "DecigramPerMole abbreviation",
+            unit: units.MolarMassDecigramPerMole,
+            want: "dg/mol",
+        },
+        {
+            name: "DecagramPerMole abbreviation",
+            unit: units.MolarMassDecagramPerMole,
+            want: "dag/mol",
+        },
+        {
+            name: "HectogramPerMole abbreviation",
+            unit: units.MolarMassHectogramPerMole,
+            want: "hg/mol",
+        },
+        {
+            name: "KilogramPerMole abbreviation",
+            unit: units.MolarMassKilogramPerMole,
+            want: "kg/mol",
+        },
+        {
+            name: "KilopoundPerMole abbreviation",
+            unit: units.MolarMassKilopoundPerMole,
+            want: "klb/mol",
+        },
+        {
+            name: "MegapoundPerMole abbreviation",
+            unit: units.MolarMassMegapoundPerMole,
+            want: "Mlb/mol",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MolarMassUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMolarMassAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMolarMassAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMolarMass_String(t *testing.T) {
+    factory := units.MolarMassFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMolarMass(tt.value, units.MolarMassKilogramPerMole)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("MolarMass.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

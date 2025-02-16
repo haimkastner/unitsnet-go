@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to NewtonsPerMinute.
 		// No expected conversion value provided for NewtonsPerMinute, verifying result is not NaN.
 		result := a.NewtonsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonsPerMinute returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to NewtonsPerSecond.
 		// No expected conversion value provided for NewtonsPerSecond, verifying result is not NaN.
 		result := a.NewtonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonsPerSecond returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to PoundsForcePerMinute.
 		// No expected conversion value provided for PoundsForcePerMinute, verifying result is not NaN.
 		result := a.PoundsForcePerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForcePerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForcePerMinute returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to PoundsForcePerSecond.
 		// No expected conversion value provided for PoundsForcePerSecond, verifying result is not NaN.
 		result := a.PoundsForcePerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForcePerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForcePerSecond returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to DecanewtonsPerMinute.
 		// No expected conversion value provided for DecanewtonsPerMinute, verifying result is not NaN.
 		result := a.DecanewtonsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.DecanewtonsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecanewtonsPerMinute returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to KilonewtonsPerMinute.
 		// No expected conversion value provided for KilonewtonsPerMinute, verifying result is not NaN.
 		result := a.KilonewtonsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonsPerMinute returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to NanonewtonsPerSecond.
 		// No expected conversion value provided for NanonewtonsPerSecond, verifying result is not NaN.
 		result := a.NanonewtonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.NanonewtonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanonewtonsPerSecond returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to MicronewtonsPerSecond.
 		// No expected conversion value provided for MicronewtonsPerSecond, verifying result is not NaN.
 		result := a.MicronewtonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MicronewtonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicronewtonsPerSecond returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to MillinewtonsPerSecond.
 		// No expected conversion value provided for MillinewtonsPerSecond, verifying result is not NaN.
 		result := a.MillinewtonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MillinewtonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillinewtonsPerSecond returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to CentinewtonsPerSecond.
 		// No expected conversion value provided for CentinewtonsPerSecond, verifying result is not NaN.
 		result := a.CentinewtonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CentinewtonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentinewtonsPerSecond returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to DecinewtonsPerSecond.
 		// No expected conversion value provided for DecinewtonsPerSecond, verifying result is not NaN.
 		result := a.DecinewtonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DecinewtonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecinewtonsPerSecond returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to DecanewtonsPerSecond.
 		// No expected conversion value provided for DecanewtonsPerSecond, verifying result is not NaN.
 		result := a.DecanewtonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DecanewtonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecanewtonsPerSecond returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to KilonewtonsPerSecond.
 		// No expected conversion value provided for KilonewtonsPerSecond, verifying result is not NaN.
 		result := a.KilonewtonsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonsPerSecond returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to KilopoundsForcePerMinute.
 		// No expected conversion value provided for KilopoundsForcePerMinute, verifying result is not NaN.
 		result := a.KilopoundsForcePerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsForcePerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsForcePerMinute returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestForceChangeRateConversions(t *testing.T) {
 		// Test conversion to KilopoundsForcePerSecond.
 		// No expected conversion value provided for KilopoundsForcePerSecond, verifying result is not NaN.
 		result := a.KilopoundsForcePerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsForcePerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsForcePerSecond returned NaN")
 		}
 	}
@@ -1486,4 +1502,165 @@ func TestForceChangeRate_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetForceChangeRateAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ForceChangeRateUnits
+        want string
+    }{
+        {
+            name: "NewtonPerMinute abbreviation",
+            unit: units.ForceChangeRateNewtonPerMinute,
+            want: "N/min",
+        },
+        {
+            name: "NewtonPerSecond abbreviation",
+            unit: units.ForceChangeRateNewtonPerSecond,
+            want: "N/s",
+        },
+        {
+            name: "PoundForcePerMinute abbreviation",
+            unit: units.ForceChangeRatePoundForcePerMinute,
+            want: "lbf/min",
+        },
+        {
+            name: "PoundForcePerSecond abbreviation",
+            unit: units.ForceChangeRatePoundForcePerSecond,
+            want: "lbf/s",
+        },
+        {
+            name: "DecanewtonPerMinute abbreviation",
+            unit: units.ForceChangeRateDecanewtonPerMinute,
+            want: "daN/min",
+        },
+        {
+            name: "KilonewtonPerMinute abbreviation",
+            unit: units.ForceChangeRateKilonewtonPerMinute,
+            want: "kN/min",
+        },
+        {
+            name: "NanonewtonPerSecond abbreviation",
+            unit: units.ForceChangeRateNanonewtonPerSecond,
+            want: "nN/s",
+        },
+        {
+            name: "MicronewtonPerSecond abbreviation",
+            unit: units.ForceChangeRateMicronewtonPerSecond,
+            want: "μN/s",
+        },
+        {
+            name: "MillinewtonPerSecond abbreviation",
+            unit: units.ForceChangeRateMillinewtonPerSecond,
+            want: "mN/s",
+        },
+        {
+            name: "CentinewtonPerSecond abbreviation",
+            unit: units.ForceChangeRateCentinewtonPerSecond,
+            want: "cN/s",
+        },
+        {
+            name: "DecinewtonPerSecond abbreviation",
+            unit: units.ForceChangeRateDecinewtonPerSecond,
+            want: "dN/s",
+        },
+        {
+            name: "DecanewtonPerSecond abbreviation",
+            unit: units.ForceChangeRateDecanewtonPerSecond,
+            want: "daN/s",
+        },
+        {
+            name: "KilonewtonPerSecond abbreviation",
+            unit: units.ForceChangeRateKilonewtonPerSecond,
+            want: "kN/s",
+        },
+        {
+            name: "KilopoundForcePerMinute abbreviation",
+            unit: units.ForceChangeRateKilopoundForcePerMinute,
+            want: "klbf/min",
+        },
+        {
+            name: "KilopoundForcePerSecond abbreviation",
+            unit: units.ForceChangeRateKilopoundForcePerSecond,
+            want: "klbf/s",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ForceChangeRateUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetForceChangeRateAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetForceChangeRateAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestForceChangeRate_String(t *testing.T) {
+    factory := units.ForceChangeRateFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateForceChangeRate(tt.value, units.ForceChangeRateNewtonPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ForceChangeRate.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestAreaDensityConversions(t *testing.T) {
 		// Test conversion to KilogramsPerSquareMeter.
 		// No expected conversion value provided for KilogramsPerSquareMeter, verifying result is not NaN.
 		result := a.KilogramsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerSquareMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestAreaDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerSquareMeter.
 		// No expected conversion value provided for GramsPerSquareMeter, verifying result is not NaN.
 		result := a.GramsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerSquareMeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestAreaDensityConversions(t *testing.T) {
 		// Test conversion to MilligramsPerSquareMeter.
 		// No expected conversion value provided for MilligramsPerSquareMeter, verifying result is not NaN.
 		result := a.MilligramsPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerSquareMeter returned NaN")
 		}
 	}
@@ -526,4 +530,105 @@ func TestAreaDensity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetAreaDensityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.AreaDensityUnits
+        want string
+    }{
+        {
+            name: "KilogramPerSquareMeter abbreviation",
+            unit: units.AreaDensityKilogramPerSquareMeter,
+            want: "kg/m²",
+        },
+        {
+            name: "GramPerSquareMeter abbreviation",
+            unit: units.AreaDensityGramPerSquareMeter,
+            want: "g/m²",
+        },
+        {
+            name: "MilligramPerSquareMeter abbreviation",
+            unit: units.AreaDensityMilligramPerSquareMeter,
+            want: "mg/m²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.AreaDensityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetAreaDensityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetAreaDensityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestAreaDensity_String(t *testing.T) {
+    factory := units.AreaDensityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateAreaDensity(tt.value, units.AreaDensityKilogramPerSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("AreaDensity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMolalityConversions(t *testing.T) {
 		// Test conversion to MolesPerKilogram.
 		// No expected conversion value provided for MolesPerKilogram, verifying result is not NaN.
 		result := a.MolesPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MolesPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MolesPerKilogram returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMolalityConversions(t *testing.T) {
 		// Test conversion to MolesPerGram.
 		// No expected conversion value provided for MolesPerGram, verifying result is not NaN.
 		result := a.MolesPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.MolesPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MolesPerGram returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMolalityConversions(t *testing.T) {
 		// Test conversion to MillimolesPerKilogram.
 		// No expected conversion value provided for MillimolesPerKilogram, verifying result is not NaN.
 		result := a.MillimolesPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimolesPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimolesPerKilogram returned NaN")
 		}
 	}
@@ -526,4 +530,105 @@ func TestMolality_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMolalityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MolalityUnits
+        want string
+    }{
+        {
+            name: "MolePerKilogram abbreviation",
+            unit: units.MolalityMolePerKilogram,
+            want: "mol/kg",
+        },
+        {
+            name: "MolePerGram abbreviation",
+            unit: units.MolalityMolePerGram,
+            want: "mol/g",
+        },
+        {
+            name: "MillimolePerKilogram abbreviation",
+            unit: units.MolalityMillimolePerKilogram,
+            want: "mmol/kg",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MolalityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMolalityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMolalityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMolality_String(t *testing.T) {
+    factory := units.MolalityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMolality(tt.value, units.MolalityMolePerKilogram)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Molality.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

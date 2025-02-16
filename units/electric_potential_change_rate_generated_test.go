@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to VoltsPerSeconds.
 		// No expected conversion value provided for VoltsPerSeconds, verifying result is not NaN.
 		result := a.VoltsPerSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.VoltsPerSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to VoltsPerSeconds returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to VoltsPerMicroseconds.
 		// No expected conversion value provided for VoltsPerMicroseconds, verifying result is not NaN.
 		result := a.VoltsPerMicroseconds()
-		if math.IsNaN(result) {
+		cacheResult := a.VoltsPerMicroseconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to VoltsPerMicroseconds returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to VoltsPerMinutes.
 		// No expected conversion value provided for VoltsPerMinutes, verifying result is not NaN.
 		result := a.VoltsPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.VoltsPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to VoltsPerMinutes returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to VoltsPerHours.
 		// No expected conversion value provided for VoltsPerHours, verifying result is not NaN.
 		result := a.VoltsPerHours()
-		if math.IsNaN(result) {
+		cacheResult := a.VoltsPerHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to VoltsPerHours returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MicrovoltsPerSeconds.
 		// No expected conversion value provided for MicrovoltsPerSeconds, verifying result is not NaN.
 		result := a.MicrovoltsPerSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrovoltsPerSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrovoltsPerSeconds returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MillivoltsPerSeconds.
 		// No expected conversion value provided for MillivoltsPerSeconds, verifying result is not NaN.
 		result := a.MillivoltsPerSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MillivoltsPerSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillivoltsPerSeconds returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to KilovoltsPerSeconds.
 		// No expected conversion value provided for KilovoltsPerSeconds, verifying result is not NaN.
 		result := a.KilovoltsPerSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.KilovoltsPerSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilovoltsPerSeconds returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MegavoltsPerSeconds.
 		// No expected conversion value provided for MegavoltsPerSeconds, verifying result is not NaN.
 		result := a.MegavoltsPerSeconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MegavoltsPerSeconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegavoltsPerSeconds returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MicrovoltsPerMicroseconds.
 		// No expected conversion value provided for MicrovoltsPerMicroseconds, verifying result is not NaN.
 		result := a.MicrovoltsPerMicroseconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrovoltsPerMicroseconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrovoltsPerMicroseconds returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MillivoltsPerMicroseconds.
 		// No expected conversion value provided for MillivoltsPerMicroseconds, verifying result is not NaN.
 		result := a.MillivoltsPerMicroseconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MillivoltsPerMicroseconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillivoltsPerMicroseconds returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to KilovoltsPerMicroseconds.
 		// No expected conversion value provided for KilovoltsPerMicroseconds, verifying result is not NaN.
 		result := a.KilovoltsPerMicroseconds()
-		if math.IsNaN(result) {
+		cacheResult := a.KilovoltsPerMicroseconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilovoltsPerMicroseconds returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MegavoltsPerMicroseconds.
 		// No expected conversion value provided for MegavoltsPerMicroseconds, verifying result is not NaN.
 		result := a.MegavoltsPerMicroseconds()
-		if math.IsNaN(result) {
+		cacheResult := a.MegavoltsPerMicroseconds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegavoltsPerMicroseconds returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MicrovoltsPerMinutes.
 		// No expected conversion value provided for MicrovoltsPerMinutes, verifying result is not NaN.
 		result := a.MicrovoltsPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrovoltsPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrovoltsPerMinutes returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MillivoltsPerMinutes.
 		// No expected conversion value provided for MillivoltsPerMinutes, verifying result is not NaN.
 		result := a.MillivoltsPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.MillivoltsPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillivoltsPerMinutes returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to KilovoltsPerMinutes.
 		// No expected conversion value provided for KilovoltsPerMinutes, verifying result is not NaN.
 		result := a.KilovoltsPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.KilovoltsPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilovoltsPerMinutes returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MegavoltsPerMinutes.
 		// No expected conversion value provided for MegavoltsPerMinutes, verifying result is not NaN.
 		result := a.MegavoltsPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.MegavoltsPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegavoltsPerMinutes returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MicrovoltsPerHours.
 		// No expected conversion value provided for MicrovoltsPerHours, verifying result is not NaN.
 		result := a.MicrovoltsPerHours()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrovoltsPerHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrovoltsPerHours returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MillivoltsPerHours.
 		// No expected conversion value provided for MillivoltsPerHours, verifying result is not NaN.
 		result := a.MillivoltsPerHours()
-		if math.IsNaN(result) {
+		cacheResult := a.MillivoltsPerHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillivoltsPerHours returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to KilovoltsPerHours.
 		// No expected conversion value provided for KilovoltsPerHours, verifying result is not NaN.
 		result := a.KilovoltsPerHours()
-		if math.IsNaN(result) {
+		cacheResult := a.KilovoltsPerHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilovoltsPerHours returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		// Test conversion to MegavoltsPerHours.
 		// No expected conversion value provided for MegavoltsPerHours, verifying result is not NaN.
 		result := a.MegavoltsPerHours()
-		if math.IsNaN(result) {
+		cacheResult := a.MegavoltsPerHours()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegavoltsPerHours returned NaN")
 		}
 	}
@@ -1886,4 +1907,190 @@ func TestElectricPotentialChangeRate_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricPotentialChangeRateAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricPotentialChangeRateUnits
+        want string
+    }{
+        {
+            name: "VoltPerSecond abbreviation",
+            unit: units.ElectricPotentialChangeRateVoltPerSecond,
+            want: "V/s",
+        },
+        {
+            name: "VoltPerMicrosecond abbreviation",
+            unit: units.ElectricPotentialChangeRateVoltPerMicrosecond,
+            want: "V/μs",
+        },
+        {
+            name: "VoltPerMinute abbreviation",
+            unit: units.ElectricPotentialChangeRateVoltPerMinute,
+            want: "V/min",
+        },
+        {
+            name: "VoltPerHour abbreviation",
+            unit: units.ElectricPotentialChangeRateVoltPerHour,
+            want: "V/h",
+        },
+        {
+            name: "MicrovoltPerSecond abbreviation",
+            unit: units.ElectricPotentialChangeRateMicrovoltPerSecond,
+            want: "μV/s",
+        },
+        {
+            name: "MillivoltPerSecond abbreviation",
+            unit: units.ElectricPotentialChangeRateMillivoltPerSecond,
+            want: "mV/s",
+        },
+        {
+            name: "KilovoltPerSecond abbreviation",
+            unit: units.ElectricPotentialChangeRateKilovoltPerSecond,
+            want: "kV/s",
+        },
+        {
+            name: "MegavoltPerSecond abbreviation",
+            unit: units.ElectricPotentialChangeRateMegavoltPerSecond,
+            want: "MV/s",
+        },
+        {
+            name: "MicrovoltPerMicrosecond abbreviation",
+            unit: units.ElectricPotentialChangeRateMicrovoltPerMicrosecond,
+            want: "μV/μs",
+        },
+        {
+            name: "MillivoltPerMicrosecond abbreviation",
+            unit: units.ElectricPotentialChangeRateMillivoltPerMicrosecond,
+            want: "mV/μs",
+        },
+        {
+            name: "KilovoltPerMicrosecond abbreviation",
+            unit: units.ElectricPotentialChangeRateKilovoltPerMicrosecond,
+            want: "kV/μs",
+        },
+        {
+            name: "MegavoltPerMicrosecond abbreviation",
+            unit: units.ElectricPotentialChangeRateMegavoltPerMicrosecond,
+            want: "MV/μs",
+        },
+        {
+            name: "MicrovoltPerMinute abbreviation",
+            unit: units.ElectricPotentialChangeRateMicrovoltPerMinute,
+            want: "μV/min",
+        },
+        {
+            name: "MillivoltPerMinute abbreviation",
+            unit: units.ElectricPotentialChangeRateMillivoltPerMinute,
+            want: "mV/min",
+        },
+        {
+            name: "KilovoltPerMinute abbreviation",
+            unit: units.ElectricPotentialChangeRateKilovoltPerMinute,
+            want: "kV/min",
+        },
+        {
+            name: "MegavoltPerMinute abbreviation",
+            unit: units.ElectricPotentialChangeRateMegavoltPerMinute,
+            want: "MV/min",
+        },
+        {
+            name: "MicrovoltPerHour abbreviation",
+            unit: units.ElectricPotentialChangeRateMicrovoltPerHour,
+            want: "μV/h",
+        },
+        {
+            name: "MillivoltPerHour abbreviation",
+            unit: units.ElectricPotentialChangeRateMillivoltPerHour,
+            want: "mV/h",
+        },
+        {
+            name: "KilovoltPerHour abbreviation",
+            unit: units.ElectricPotentialChangeRateKilovoltPerHour,
+            want: "kV/h",
+        },
+        {
+            name: "MegavoltPerHour abbreviation",
+            unit: units.ElectricPotentialChangeRateMegavoltPerHour,
+            want: "MV/h",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricPotentialChangeRateUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricPotentialChangeRateAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricPotentialChangeRateAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricPotentialChangeRate_String(t *testing.T) {
+    factory := units.ElectricPotentialChangeRateFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricPotentialChangeRate(tt.value, units.ElectricPotentialChangeRateVoltPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricPotentialChangeRate.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

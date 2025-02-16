@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestTurbidityConversions(t *testing.T) {
 		// Test conversion to NTU.
 		// No expected conversion value provided for NTU, verifying result is not NaN.
 		result := a.NTU()
-		if math.IsNaN(result) {
+		cacheResult := a.NTU()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NTU returned NaN")
 		}
 	}
@@ -366,4 +368,95 @@ func TestTurbidity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetTurbidityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.TurbidityUnits
+        want string
+    }{
+        {
+            name: "NTU abbreviation",
+            unit: units.TurbidityNTU,
+            want: "NTU",
+        },
+        {
+            name: "invalid unit",
+            unit: units.TurbidityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetTurbidityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetTurbidityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestTurbidity_String(t *testing.T) {
+    factory := units.TurbidityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateTurbidity(tt.value, units.TurbidityNTU)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Turbidity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestVolumeFlowPerAreaConversions(t *testing.T) {
 		// Test conversion to CubicMetersPerSecondPerSquareMeter.
 		// No expected conversion value provided for CubicMetersPerSecondPerSquareMeter, verifying result is not NaN.
 		result := a.CubicMetersPerSecondPerSquareMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicMetersPerSecondPerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicMetersPerSecondPerSquareMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestVolumeFlowPerAreaConversions(t *testing.T) {
 		// Test conversion to CubicFeetPerMinutePerSquareFoot.
 		// No expected conversion value provided for CubicFeetPerMinutePerSquareFoot, verifying result is not NaN.
 		result := a.CubicFeetPerMinutePerSquareFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.CubicFeetPerMinutePerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CubicFeetPerMinutePerSquareFoot returned NaN")
 		}
 	}
@@ -446,4 +449,100 @@ func TestVolumeFlowPerArea_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetVolumeFlowPerAreaAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.VolumeFlowPerAreaUnits
+        want string
+    }{
+        {
+            name: "CubicMeterPerSecondPerSquareMeter abbreviation",
+            unit: units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter,
+            want: "m³/(s·m²)",
+        },
+        {
+            name: "CubicFootPerMinutePerSquareFoot abbreviation",
+            unit: units.VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot,
+            want: "CFM/ft²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.VolumeFlowPerAreaUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetVolumeFlowPerAreaAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetVolumeFlowPerAreaAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestVolumeFlowPerArea_String(t *testing.T) {
+    factory := units.VolumeFlowPerAreaFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateVolumeFlowPerArea(tt.value, units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("VolumeFlowPerArea.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerCubicMillimeter.
 		// No expected conversion value provided for GramsPerCubicMillimeter, verifying result is not NaN.
 		result := a.GramsPerCubicMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerCubicMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerCubicMillimeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerCubicCentimeter.
 		// No expected conversion value provided for GramsPerCubicCentimeter, verifying result is not NaN.
 		result := a.GramsPerCubicCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerCubicCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerCubicCentimeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerCubicMeter.
 		// No expected conversion value provided for GramsPerCubicMeter, verifying result is not NaN.
 		result := a.GramsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerCubicMeter returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerCubicInch.
 		// No expected conversion value provided for PoundsPerCubicInch, verifying result is not NaN.
 		result := a.PoundsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerCubicInch returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerCubicFoot.
 		// No expected conversion value provided for PoundsPerCubicFoot, verifying result is not NaN.
 		result := a.PoundsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerCubicFoot returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerCubicYard.
 		// No expected conversion value provided for PoundsPerCubicYard, verifying result is not NaN.
 		result := a.PoundsPerCubicYard()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerCubicYard()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerCubicYard returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to TonnesPerCubicMillimeter.
 		// No expected conversion value provided for TonnesPerCubicMillimeter, verifying result is not NaN.
 		result := a.TonnesPerCubicMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesPerCubicMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesPerCubicMillimeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to TonnesPerCubicCentimeter.
 		// No expected conversion value provided for TonnesPerCubicCentimeter, verifying result is not NaN.
 		result := a.TonnesPerCubicCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesPerCubicCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesPerCubicCentimeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to TonnesPerCubicMeter.
 		// No expected conversion value provided for TonnesPerCubicMeter, verifying result is not NaN.
 		result := a.TonnesPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesPerCubicMeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to SlugsPerCubicFoot.
 		// No expected conversion value provided for SlugsPerCubicFoot, verifying result is not NaN.
 		result := a.SlugsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.SlugsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SlugsPerCubicFoot returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerLiter.
 		// No expected conversion value provided for GramsPerLiter, verifying result is not NaN.
 		result := a.GramsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerLiter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerDeciLiter.
 		// No expected conversion value provided for GramsPerDeciLiter, verifying result is not NaN.
 		result := a.GramsPerDeciLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerDeciLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerDeciLiter returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerMilliliter.
 		// No expected conversion value provided for GramsPerMilliliter, verifying result is not NaN.
 		result := a.GramsPerMilliliter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerMilliliter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerMilliliter returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerUSGallon.
 		// No expected conversion value provided for PoundsPerUSGallon, verifying result is not NaN.
 		result := a.PoundsPerUSGallon()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerUSGallon()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerUSGallon returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerImperialGallon.
 		// No expected conversion value provided for PoundsPerImperialGallon, verifying result is not NaN.
 		result := a.PoundsPerImperialGallon()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerImperialGallon()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerImperialGallon returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to KilogramsPerLiter.
 		// No expected conversion value provided for KilogramsPerLiter, verifying result is not NaN.
 		result := a.KilogramsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerLiter returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to TonnesPerCubicFoot.
 		// No expected conversion value provided for TonnesPerCubicFoot, verifying result is not NaN.
 		result := a.TonnesPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesPerCubicFoot returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to TonnesPerCubicInch.
 		// No expected conversion value provided for TonnesPerCubicInch, verifying result is not NaN.
 		result := a.TonnesPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesPerCubicInch returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerCubicFoot.
 		// No expected conversion value provided for GramsPerCubicFoot, verifying result is not NaN.
 		result := a.GramsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerCubicFoot returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerCubicInch.
 		// No expected conversion value provided for GramsPerCubicInch, verifying result is not NaN.
 		result := a.GramsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerCubicInch returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerCubicMeter.
 		// No expected conversion value provided for PoundsPerCubicMeter, verifying result is not NaN.
 		result := a.PoundsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerCubicMeter returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerCubicCentimeter.
 		// No expected conversion value provided for PoundsPerCubicCentimeter, verifying result is not NaN.
 		result := a.PoundsPerCubicCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerCubicCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerCubicCentimeter returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerCubicMillimeter.
 		// No expected conversion value provided for PoundsPerCubicMillimeter, verifying result is not NaN.
 		result := a.PoundsPerCubicMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerCubicMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerCubicMillimeter returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to SlugsPerCubicMeter.
 		// No expected conversion value provided for SlugsPerCubicMeter, verifying result is not NaN.
 		result := a.SlugsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.SlugsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SlugsPerCubicMeter returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to SlugsPerCubicCentimeter.
 		// No expected conversion value provided for SlugsPerCubicCentimeter, verifying result is not NaN.
 		result := a.SlugsPerCubicCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.SlugsPerCubicCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SlugsPerCubicCentimeter returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to SlugsPerCubicMillimeter.
 		// No expected conversion value provided for SlugsPerCubicMillimeter, verifying result is not NaN.
 		result := a.SlugsPerCubicMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.SlugsPerCubicMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SlugsPerCubicMillimeter returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to SlugsPerCubicInch.
 		// No expected conversion value provided for SlugsPerCubicInch, verifying result is not NaN.
 		result := a.SlugsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.SlugsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SlugsPerCubicInch returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to KilogramsPerCubicMillimeter.
 		// No expected conversion value provided for KilogramsPerCubicMillimeter, verifying result is not NaN.
 		result := a.KilogramsPerCubicMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerCubicMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerCubicMillimeter returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to KilogramsPerCubicCentimeter.
 		// No expected conversion value provided for KilogramsPerCubicCentimeter, verifying result is not NaN.
 		result := a.KilogramsPerCubicCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerCubicCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerCubicCentimeter returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to KilogramsPerCubicMeter.
 		// No expected conversion value provided for KilogramsPerCubicMeter, verifying result is not NaN.
 		result := a.KilogramsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerCubicMeter returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to MilligramsPerCubicMeter.
 		// No expected conversion value provided for MilligramsPerCubicMeter, verifying result is not NaN.
 		result := a.MilligramsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerCubicMeter returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerCubicMeter.
 		// No expected conversion value provided for MicrogramsPerCubicMeter, verifying result is not NaN.
 		result := a.MicrogramsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerCubicMeter returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to KilopoundsPerCubicInch.
 		// No expected conversion value provided for KilopoundsPerCubicInch, verifying result is not NaN.
 		result := a.KilopoundsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsPerCubicInch returned NaN")
 		}
 	}
@@ -344,7 +378,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to KilopoundsPerCubicFoot.
 		// No expected conversion value provided for KilopoundsPerCubicFoot, verifying result is not NaN.
 		result := a.KilopoundsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsPerCubicFoot returned NaN")
 		}
 	}
@@ -352,7 +387,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to KilopoundsPerCubicYard.
 		// No expected conversion value provided for KilopoundsPerCubicYard, verifying result is not NaN.
 		result := a.KilopoundsPerCubicYard()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsPerCubicYard()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsPerCubicYard returned NaN")
 		}
 	}
@@ -360,7 +396,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to FemtogramsPerLiter.
 		// No expected conversion value provided for FemtogramsPerLiter, verifying result is not NaN.
 		result := a.FemtogramsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.FemtogramsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FemtogramsPerLiter returned NaN")
 		}
 	}
@@ -368,7 +405,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PicogramsPerLiter.
 		// No expected conversion value provided for PicogramsPerLiter, verifying result is not NaN.
 		result := a.PicogramsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicogramsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicogramsPerLiter returned NaN")
 		}
 	}
@@ -376,7 +414,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to NanogramsPerLiter.
 		// No expected conversion value provided for NanogramsPerLiter, verifying result is not NaN.
 		result := a.NanogramsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanogramsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanogramsPerLiter returned NaN")
 		}
 	}
@@ -384,7 +423,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerLiter.
 		// No expected conversion value provided for MicrogramsPerLiter, verifying result is not NaN.
 		result := a.MicrogramsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerLiter returned NaN")
 		}
 	}
@@ -392,7 +432,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to MilligramsPerLiter.
 		// No expected conversion value provided for MilligramsPerLiter, verifying result is not NaN.
 		result := a.MilligramsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerLiter returned NaN")
 		}
 	}
@@ -400,7 +441,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to CentigramsPerLiter.
 		// No expected conversion value provided for CentigramsPerLiter, verifying result is not NaN.
 		result := a.CentigramsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigramsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigramsPerLiter returned NaN")
 		}
 	}
@@ -408,7 +450,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to DecigramsPerLiter.
 		// No expected conversion value provided for DecigramsPerLiter, verifying result is not NaN.
 		result := a.DecigramsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigramsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigramsPerLiter returned NaN")
 		}
 	}
@@ -416,7 +459,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to FemtogramsPerDeciLiter.
 		// No expected conversion value provided for FemtogramsPerDeciLiter, verifying result is not NaN.
 		result := a.FemtogramsPerDeciLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.FemtogramsPerDeciLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FemtogramsPerDeciLiter returned NaN")
 		}
 	}
@@ -424,7 +468,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PicogramsPerDeciLiter.
 		// No expected conversion value provided for PicogramsPerDeciLiter, verifying result is not NaN.
 		result := a.PicogramsPerDeciLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicogramsPerDeciLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicogramsPerDeciLiter returned NaN")
 		}
 	}
@@ -432,7 +477,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to NanogramsPerDeciLiter.
 		// No expected conversion value provided for NanogramsPerDeciLiter, verifying result is not NaN.
 		result := a.NanogramsPerDeciLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanogramsPerDeciLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanogramsPerDeciLiter returned NaN")
 		}
 	}
@@ -440,7 +486,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerDeciLiter.
 		// No expected conversion value provided for MicrogramsPerDeciLiter, verifying result is not NaN.
 		result := a.MicrogramsPerDeciLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerDeciLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerDeciLiter returned NaN")
 		}
 	}
@@ -448,7 +495,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to MilligramsPerDeciLiter.
 		// No expected conversion value provided for MilligramsPerDeciLiter, verifying result is not NaN.
 		result := a.MilligramsPerDeciLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerDeciLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerDeciLiter returned NaN")
 		}
 	}
@@ -456,7 +504,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to CentigramsPerDeciLiter.
 		// No expected conversion value provided for CentigramsPerDeciLiter, verifying result is not NaN.
 		result := a.CentigramsPerDeciLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigramsPerDeciLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigramsPerDeciLiter returned NaN")
 		}
 	}
@@ -464,7 +513,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to DecigramsPerDeciLiter.
 		// No expected conversion value provided for DecigramsPerDeciLiter, verifying result is not NaN.
 		result := a.DecigramsPerDeciLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigramsPerDeciLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigramsPerDeciLiter returned NaN")
 		}
 	}
@@ -472,7 +522,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to FemtogramsPerMilliliter.
 		// No expected conversion value provided for FemtogramsPerMilliliter, verifying result is not NaN.
 		result := a.FemtogramsPerMilliliter()
-		if math.IsNaN(result) {
+		cacheResult := a.FemtogramsPerMilliliter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FemtogramsPerMilliliter returned NaN")
 		}
 	}
@@ -480,7 +531,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to PicogramsPerMilliliter.
 		// No expected conversion value provided for PicogramsPerMilliliter, verifying result is not NaN.
 		result := a.PicogramsPerMilliliter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicogramsPerMilliliter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicogramsPerMilliliter returned NaN")
 		}
 	}
@@ -488,7 +540,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to NanogramsPerMilliliter.
 		// No expected conversion value provided for NanogramsPerMilliliter, verifying result is not NaN.
 		result := a.NanogramsPerMilliliter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanogramsPerMilliliter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanogramsPerMilliliter returned NaN")
 		}
 	}
@@ -496,7 +549,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerMilliliter.
 		// No expected conversion value provided for MicrogramsPerMilliliter, verifying result is not NaN.
 		result := a.MicrogramsPerMilliliter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerMilliliter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerMilliliter returned NaN")
 		}
 	}
@@ -504,7 +558,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to MilligramsPerMilliliter.
 		// No expected conversion value provided for MilligramsPerMilliliter, verifying result is not NaN.
 		result := a.MilligramsPerMilliliter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerMilliliter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerMilliliter returned NaN")
 		}
 	}
@@ -512,7 +567,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to CentigramsPerMilliliter.
 		// No expected conversion value provided for CentigramsPerMilliliter, verifying result is not NaN.
 		result := a.CentigramsPerMilliliter()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigramsPerMilliliter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigramsPerMilliliter returned NaN")
 		}
 	}
@@ -520,7 +576,8 @@ func TestDensityConversions(t *testing.T) {
 		// Test conversion to DecigramsPerMilliliter.
 		// No expected conversion value provided for DecigramsPerMilliliter, verifying result is not NaN.
 		result := a.DecigramsPerMilliliter()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigramsPerMilliliter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigramsPerMilliliter returned NaN")
 		}
 	}
@@ -4766,4 +4823,370 @@ func TestDensity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetDensityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.DensityUnits
+        want string
+    }{
+        {
+            name: "GramPerCubicMillimeter abbreviation",
+            unit: units.DensityGramPerCubicMillimeter,
+            want: "g/mm³",
+        },
+        {
+            name: "GramPerCubicCentimeter abbreviation",
+            unit: units.DensityGramPerCubicCentimeter,
+            want: "g/cm³",
+        },
+        {
+            name: "GramPerCubicMeter abbreviation",
+            unit: units.DensityGramPerCubicMeter,
+            want: "g/m³",
+        },
+        {
+            name: "PoundPerCubicInch abbreviation",
+            unit: units.DensityPoundPerCubicInch,
+            want: "lb/in³",
+        },
+        {
+            name: "PoundPerCubicFoot abbreviation",
+            unit: units.DensityPoundPerCubicFoot,
+            want: "lb/ft³",
+        },
+        {
+            name: "PoundPerCubicYard abbreviation",
+            unit: units.DensityPoundPerCubicYard,
+            want: "lb/yd³",
+        },
+        {
+            name: "TonnePerCubicMillimeter abbreviation",
+            unit: units.DensityTonnePerCubicMillimeter,
+            want: "t/mm³",
+        },
+        {
+            name: "TonnePerCubicCentimeter abbreviation",
+            unit: units.DensityTonnePerCubicCentimeter,
+            want: "t/cm³",
+        },
+        {
+            name: "TonnePerCubicMeter abbreviation",
+            unit: units.DensityTonnePerCubicMeter,
+            want: "t/m³",
+        },
+        {
+            name: "SlugPerCubicFoot abbreviation",
+            unit: units.DensitySlugPerCubicFoot,
+            want: "slug/ft³",
+        },
+        {
+            name: "GramPerLiter abbreviation",
+            unit: units.DensityGramPerLiter,
+            want: "g/L",
+        },
+        {
+            name: "GramPerDeciliter abbreviation",
+            unit: units.DensityGramPerDeciliter,
+            want: "g/dl",
+        },
+        {
+            name: "GramPerMilliliter abbreviation",
+            unit: units.DensityGramPerMilliliter,
+            want: "g/ml",
+        },
+        {
+            name: "PoundPerUSGallon abbreviation",
+            unit: units.DensityPoundPerUSGallon,
+            want: "ppg (U.S.)",
+        },
+        {
+            name: "PoundPerImperialGallon abbreviation",
+            unit: units.DensityPoundPerImperialGallon,
+            want: "ppg (imp.)",
+        },
+        {
+            name: "KilogramPerLiter abbreviation",
+            unit: units.DensityKilogramPerLiter,
+            want: "kg/l",
+        },
+        {
+            name: "TonnePerCubicFoot abbreviation",
+            unit: units.DensityTonnePerCubicFoot,
+            want: "t/ft³",
+        },
+        {
+            name: "TonnePerCubicInch abbreviation",
+            unit: units.DensityTonnePerCubicInch,
+            want: "t/in³",
+        },
+        {
+            name: "GramPerCubicFoot abbreviation",
+            unit: units.DensityGramPerCubicFoot,
+            want: "g/ft³",
+        },
+        {
+            name: "GramPerCubicInch abbreviation",
+            unit: units.DensityGramPerCubicInch,
+            want: "g/in³",
+        },
+        {
+            name: "PoundPerCubicMeter abbreviation",
+            unit: units.DensityPoundPerCubicMeter,
+            want: "lb/m³",
+        },
+        {
+            name: "PoundPerCubicCentimeter abbreviation",
+            unit: units.DensityPoundPerCubicCentimeter,
+            want: "lb/cm³",
+        },
+        {
+            name: "PoundPerCubicMillimeter abbreviation",
+            unit: units.DensityPoundPerCubicMillimeter,
+            want: "lb/mm³",
+        },
+        {
+            name: "SlugPerCubicMeter abbreviation",
+            unit: units.DensitySlugPerCubicMeter,
+            want: "slug/m³",
+        },
+        {
+            name: "SlugPerCubicCentimeter abbreviation",
+            unit: units.DensitySlugPerCubicCentimeter,
+            want: "slug/cm³",
+        },
+        {
+            name: "SlugPerCubicMillimeter abbreviation",
+            unit: units.DensitySlugPerCubicMillimeter,
+            want: "slug/mm³",
+        },
+        {
+            name: "SlugPerCubicInch abbreviation",
+            unit: units.DensitySlugPerCubicInch,
+            want: "slug/in³",
+        },
+        {
+            name: "KilogramPerCubicMillimeter abbreviation",
+            unit: units.DensityKilogramPerCubicMillimeter,
+            want: "kg/mm³",
+        },
+        {
+            name: "KilogramPerCubicCentimeter abbreviation",
+            unit: units.DensityKilogramPerCubicCentimeter,
+            want: "kg/cm³",
+        },
+        {
+            name: "KilogramPerCubicMeter abbreviation",
+            unit: units.DensityKilogramPerCubicMeter,
+            want: "kg/m³",
+        },
+        {
+            name: "MilligramPerCubicMeter abbreviation",
+            unit: units.DensityMilligramPerCubicMeter,
+            want: "mg/m³",
+        },
+        {
+            name: "MicrogramPerCubicMeter abbreviation",
+            unit: units.DensityMicrogramPerCubicMeter,
+            want: "μg/m³",
+        },
+        {
+            name: "KilopoundPerCubicInch abbreviation",
+            unit: units.DensityKilopoundPerCubicInch,
+            want: "klb/in³",
+        },
+        {
+            name: "KilopoundPerCubicFoot abbreviation",
+            unit: units.DensityKilopoundPerCubicFoot,
+            want: "klb/ft³",
+        },
+        {
+            name: "KilopoundPerCubicYard abbreviation",
+            unit: units.DensityKilopoundPerCubicYard,
+            want: "klb/yd³",
+        },
+        {
+            name: "FemtogramPerLiter abbreviation",
+            unit: units.DensityFemtogramPerLiter,
+            want: "fg/L",
+        },
+        {
+            name: "PicogramPerLiter abbreviation",
+            unit: units.DensityPicogramPerLiter,
+            want: "pg/L",
+        },
+        {
+            name: "NanogramPerLiter abbreviation",
+            unit: units.DensityNanogramPerLiter,
+            want: "ng/L",
+        },
+        {
+            name: "MicrogramPerLiter abbreviation",
+            unit: units.DensityMicrogramPerLiter,
+            want: "μg/L",
+        },
+        {
+            name: "MilligramPerLiter abbreviation",
+            unit: units.DensityMilligramPerLiter,
+            want: "mg/L",
+        },
+        {
+            name: "CentigramPerLiter abbreviation",
+            unit: units.DensityCentigramPerLiter,
+            want: "cg/L",
+        },
+        {
+            name: "DecigramPerLiter abbreviation",
+            unit: units.DensityDecigramPerLiter,
+            want: "dg/L",
+        },
+        {
+            name: "FemtogramPerDeciliter abbreviation",
+            unit: units.DensityFemtogramPerDeciliter,
+            want: "fg/dl",
+        },
+        {
+            name: "PicogramPerDeciliter abbreviation",
+            unit: units.DensityPicogramPerDeciliter,
+            want: "pg/dl",
+        },
+        {
+            name: "NanogramPerDeciliter abbreviation",
+            unit: units.DensityNanogramPerDeciliter,
+            want: "ng/dl",
+        },
+        {
+            name: "MicrogramPerDeciliter abbreviation",
+            unit: units.DensityMicrogramPerDeciliter,
+            want: "μg/dl",
+        },
+        {
+            name: "MilligramPerDeciliter abbreviation",
+            unit: units.DensityMilligramPerDeciliter,
+            want: "mg/dl",
+        },
+        {
+            name: "CentigramPerDeciliter abbreviation",
+            unit: units.DensityCentigramPerDeciliter,
+            want: "cg/dl",
+        },
+        {
+            name: "DecigramPerDeciliter abbreviation",
+            unit: units.DensityDecigramPerDeciliter,
+            want: "dg/dl",
+        },
+        {
+            name: "FemtogramPerMilliliter abbreviation",
+            unit: units.DensityFemtogramPerMilliliter,
+            want: "fg/ml",
+        },
+        {
+            name: "PicogramPerMilliliter abbreviation",
+            unit: units.DensityPicogramPerMilliliter,
+            want: "pg/ml",
+        },
+        {
+            name: "NanogramPerMilliliter abbreviation",
+            unit: units.DensityNanogramPerMilliliter,
+            want: "ng/ml",
+        },
+        {
+            name: "MicrogramPerMilliliter abbreviation",
+            unit: units.DensityMicrogramPerMilliliter,
+            want: "μg/ml",
+        },
+        {
+            name: "MilligramPerMilliliter abbreviation",
+            unit: units.DensityMilligramPerMilliliter,
+            want: "mg/ml",
+        },
+        {
+            name: "CentigramPerMilliliter abbreviation",
+            unit: units.DensityCentigramPerMilliliter,
+            want: "cg/ml",
+        },
+        {
+            name: "DecigramPerMilliliter abbreviation",
+            unit: units.DensityDecigramPerMilliliter,
+            want: "dg/ml",
+        },
+        {
+            name: "invalid unit",
+            unit: units.DensityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetDensityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetDensityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestDensity_String(t *testing.T) {
+    factory := units.DensityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateDensity(tt.value, units.DensityKilogramPerCubicMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Density.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

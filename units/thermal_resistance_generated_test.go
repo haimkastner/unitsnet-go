@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestThermalResistanceConversions(t *testing.T) {
 		// Test conversion to SquareMeterKelvinsPerKilowatt.
 		// No expected conversion value provided for SquareMeterKelvinsPerKilowatt, verifying result is not NaN.
 		result := a.SquareMeterKelvinsPerKilowatt()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareMeterKelvinsPerKilowatt()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareMeterKelvinsPerKilowatt returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestThermalResistanceConversions(t *testing.T) {
 		// Test conversion to SquareMeterKelvinsPerWatt.
 		// No expected conversion value provided for SquareMeterKelvinsPerWatt, verifying result is not NaN.
 		result := a.SquareMeterKelvinsPerWatt()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareMeterKelvinsPerWatt()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareMeterKelvinsPerWatt returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestThermalResistanceConversions(t *testing.T) {
 		// Test conversion to SquareMeterDegreesCelsiusPerWatt.
 		// No expected conversion value provided for SquareMeterDegreesCelsiusPerWatt, verifying result is not NaN.
 		result := a.SquareMeterDegreesCelsiusPerWatt()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareMeterDegreesCelsiusPerWatt()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareMeterDegreesCelsiusPerWatt returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestThermalResistanceConversions(t *testing.T) {
 		// Test conversion to SquareCentimeterKelvinsPerWatt.
 		// No expected conversion value provided for SquareCentimeterKelvinsPerWatt, verifying result is not NaN.
 		result := a.SquareCentimeterKelvinsPerWatt()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareCentimeterKelvinsPerWatt()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareCentimeterKelvinsPerWatt returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestThermalResistanceConversions(t *testing.T) {
 		// Test conversion to SquareCentimeterHourDegreesCelsiusPerKilocalorie.
 		// No expected conversion value provided for SquareCentimeterHourDegreesCelsiusPerKilocalorie, verifying result is not NaN.
 		result := a.SquareCentimeterHourDegreesCelsiusPerKilocalorie()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareCentimeterHourDegreesCelsiusPerKilocalorie()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareCentimeterHourDegreesCelsiusPerKilocalorie returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestThermalResistanceConversions(t *testing.T) {
 		// Test conversion to HourSquareFeetDegreesFahrenheitPerBtu.
 		// No expected conversion value provided for HourSquareFeetDegreesFahrenheitPerBtu, verifying result is not NaN.
 		result := a.HourSquareFeetDegreesFahrenheitPerBtu()
-		if math.IsNaN(result) {
+		cacheResult := a.HourSquareFeetDegreesFahrenheitPerBtu()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HourSquareFeetDegreesFahrenheitPerBtu returned NaN")
 		}
 	}
@@ -766,4 +773,120 @@ func TestThermalResistance_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetThermalResistanceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ThermalResistanceUnits
+        want string
+    }{
+        {
+            name: "SquareMeterKelvinPerKilowatt abbreviation",
+            unit: units.ThermalResistanceSquareMeterKelvinPerKilowatt,
+            want: "m²K/kW",
+        },
+        {
+            name: "SquareMeterKelvinPerWatt abbreviation",
+            unit: units.ThermalResistanceSquareMeterKelvinPerWatt,
+            want: "m²K/W",
+        },
+        {
+            name: "SquareMeterDegreeCelsiusPerWatt abbreviation",
+            unit: units.ThermalResistanceSquareMeterDegreeCelsiusPerWatt,
+            want: "m²°C/W",
+        },
+        {
+            name: "SquareCentimeterKelvinPerWatt abbreviation",
+            unit: units.ThermalResistanceSquareCentimeterKelvinPerWatt,
+            want: "cm²K/W",
+        },
+        {
+            name: "SquareCentimeterHourDegreeCelsiusPerKilocalorie abbreviation",
+            unit: units.ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie,
+            want: "cm²Hr°C/kcal",
+        },
+        {
+            name: "HourSquareFeetDegreeFahrenheitPerBtu abbreviation",
+            unit: units.ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu,
+            want: "Hrft²°F/Btu",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ThermalResistanceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetThermalResistanceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetThermalResistanceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestThermalResistance_String(t *testing.T) {
+    factory := units.ThermalResistanceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateThermalResistance(tt.value, units.ThermalResistanceSquareMeterKelvinPerKilowatt)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ThermalResistance.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

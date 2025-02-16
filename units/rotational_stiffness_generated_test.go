@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to NewtonMetersPerRadian.
 		// No expected conversion value provided for NewtonMetersPerRadian, verifying result is not NaN.
 		result := a.NewtonMetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonMetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonMetersPerRadian returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to PoundForceFeetPerDegrees.
 		// No expected conversion value provided for PoundForceFeetPerDegrees, verifying result is not NaN.
 		result := a.PoundForceFeetPerDegrees()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundForceFeetPerDegrees()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundForceFeetPerDegrees returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to KilopoundForceFeetPerDegrees.
 		// No expected conversion value provided for KilopoundForceFeetPerDegrees, verifying result is not NaN.
 		result := a.KilopoundForceFeetPerDegrees()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundForceFeetPerDegrees()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundForceFeetPerDegrees returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to NewtonMillimetersPerDegree.
 		// No expected conversion value provided for NewtonMillimetersPerDegree, verifying result is not NaN.
 		result := a.NewtonMillimetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonMillimetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonMillimetersPerDegree returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to NewtonMetersPerDegree.
 		// No expected conversion value provided for NewtonMetersPerDegree, verifying result is not NaN.
 		result := a.NewtonMetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonMetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonMetersPerDegree returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to NewtonMillimetersPerRadian.
 		// No expected conversion value provided for NewtonMillimetersPerRadian, verifying result is not NaN.
 		result := a.NewtonMillimetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.NewtonMillimetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NewtonMillimetersPerRadian returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to PoundForceFeetPerRadian.
 		// No expected conversion value provided for PoundForceFeetPerRadian, verifying result is not NaN.
 		result := a.PoundForceFeetPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundForceFeetPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundForceFeetPerRadian returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to KilonewtonMetersPerRadian.
 		// No expected conversion value provided for KilonewtonMetersPerRadian, verifying result is not NaN.
 		result := a.KilonewtonMetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonMetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonMetersPerRadian returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MeganewtonMetersPerRadian.
 		// No expected conversion value provided for MeganewtonMetersPerRadian, verifying result is not NaN.
 		result := a.MeganewtonMetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonMetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonMetersPerRadian returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to NanonewtonMillimetersPerDegree.
 		// No expected conversion value provided for NanonewtonMillimetersPerDegree, verifying result is not NaN.
 		result := a.NanonewtonMillimetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.NanonewtonMillimetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanonewtonMillimetersPerDegree returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MicronewtonMillimetersPerDegree.
 		// No expected conversion value provided for MicronewtonMillimetersPerDegree, verifying result is not NaN.
 		result := a.MicronewtonMillimetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.MicronewtonMillimetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicronewtonMillimetersPerDegree returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MillinewtonMillimetersPerDegree.
 		// No expected conversion value provided for MillinewtonMillimetersPerDegree, verifying result is not NaN.
 		result := a.MillinewtonMillimetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.MillinewtonMillimetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillinewtonMillimetersPerDegree returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to CentinewtonMillimetersPerDegree.
 		// No expected conversion value provided for CentinewtonMillimetersPerDegree, verifying result is not NaN.
 		result := a.CentinewtonMillimetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.CentinewtonMillimetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentinewtonMillimetersPerDegree returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to DecinewtonMillimetersPerDegree.
 		// No expected conversion value provided for DecinewtonMillimetersPerDegree, verifying result is not NaN.
 		result := a.DecinewtonMillimetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.DecinewtonMillimetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecinewtonMillimetersPerDegree returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to DecanewtonMillimetersPerDegree.
 		// No expected conversion value provided for DecanewtonMillimetersPerDegree, verifying result is not NaN.
 		result := a.DecanewtonMillimetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.DecanewtonMillimetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecanewtonMillimetersPerDegree returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to KilonewtonMillimetersPerDegree.
 		// No expected conversion value provided for KilonewtonMillimetersPerDegree, verifying result is not NaN.
 		result := a.KilonewtonMillimetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonMillimetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonMillimetersPerDegree returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MeganewtonMillimetersPerDegree.
 		// No expected conversion value provided for MeganewtonMillimetersPerDegree, verifying result is not NaN.
 		result := a.MeganewtonMillimetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonMillimetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonMillimetersPerDegree returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to NanonewtonMetersPerDegree.
 		// No expected conversion value provided for NanonewtonMetersPerDegree, verifying result is not NaN.
 		result := a.NanonewtonMetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.NanonewtonMetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanonewtonMetersPerDegree returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MicronewtonMetersPerDegree.
 		// No expected conversion value provided for MicronewtonMetersPerDegree, verifying result is not NaN.
 		result := a.MicronewtonMetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.MicronewtonMetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicronewtonMetersPerDegree returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MillinewtonMetersPerDegree.
 		// No expected conversion value provided for MillinewtonMetersPerDegree, verifying result is not NaN.
 		result := a.MillinewtonMetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.MillinewtonMetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillinewtonMetersPerDegree returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to CentinewtonMetersPerDegree.
 		// No expected conversion value provided for CentinewtonMetersPerDegree, verifying result is not NaN.
 		result := a.CentinewtonMetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.CentinewtonMetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentinewtonMetersPerDegree returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to DecinewtonMetersPerDegree.
 		// No expected conversion value provided for DecinewtonMetersPerDegree, verifying result is not NaN.
 		result := a.DecinewtonMetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.DecinewtonMetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecinewtonMetersPerDegree returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to DecanewtonMetersPerDegree.
 		// No expected conversion value provided for DecanewtonMetersPerDegree, verifying result is not NaN.
 		result := a.DecanewtonMetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.DecanewtonMetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecanewtonMetersPerDegree returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to KilonewtonMetersPerDegree.
 		// No expected conversion value provided for KilonewtonMetersPerDegree, verifying result is not NaN.
 		result := a.KilonewtonMetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonMetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonMetersPerDegree returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MeganewtonMetersPerDegree.
 		// No expected conversion value provided for MeganewtonMetersPerDegree, verifying result is not NaN.
 		result := a.MeganewtonMetersPerDegree()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonMetersPerDegree()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonMetersPerDegree returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to NanonewtonMillimetersPerRadian.
 		// No expected conversion value provided for NanonewtonMillimetersPerRadian, verifying result is not NaN.
 		result := a.NanonewtonMillimetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.NanonewtonMillimetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanonewtonMillimetersPerRadian returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MicronewtonMillimetersPerRadian.
 		// No expected conversion value provided for MicronewtonMillimetersPerRadian, verifying result is not NaN.
 		result := a.MicronewtonMillimetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.MicronewtonMillimetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicronewtonMillimetersPerRadian returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MillinewtonMillimetersPerRadian.
 		// No expected conversion value provided for MillinewtonMillimetersPerRadian, verifying result is not NaN.
 		result := a.MillinewtonMillimetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.MillinewtonMillimetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillinewtonMillimetersPerRadian returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to CentinewtonMillimetersPerRadian.
 		// No expected conversion value provided for CentinewtonMillimetersPerRadian, verifying result is not NaN.
 		result := a.CentinewtonMillimetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.CentinewtonMillimetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentinewtonMillimetersPerRadian returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to DecinewtonMillimetersPerRadian.
 		// No expected conversion value provided for DecinewtonMillimetersPerRadian, verifying result is not NaN.
 		result := a.DecinewtonMillimetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.DecinewtonMillimetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecinewtonMillimetersPerRadian returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to DecanewtonMillimetersPerRadian.
 		// No expected conversion value provided for DecanewtonMillimetersPerRadian, verifying result is not NaN.
 		result := a.DecanewtonMillimetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.DecanewtonMillimetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecanewtonMillimetersPerRadian returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to KilonewtonMillimetersPerRadian.
 		// No expected conversion value provided for KilonewtonMillimetersPerRadian, verifying result is not NaN.
 		result := a.KilonewtonMillimetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.KilonewtonMillimetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilonewtonMillimetersPerRadian returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		// Test conversion to MeganewtonMillimetersPerRadian.
 		// No expected conversion value provided for MeganewtonMillimetersPerRadian, verifying result is not NaN.
 		result := a.MeganewtonMillimetersPerRadian()
-		if math.IsNaN(result) {
+		cacheResult := a.MeganewtonMillimetersPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MeganewtonMillimetersPerRadian returned NaN")
 		}
 	}
@@ -2926,4 +2960,255 @@ func TestRotationalStiffness_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetRotationalStiffnessAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.RotationalStiffnessUnits
+        want string
+    }{
+        {
+            name: "NewtonMeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessNewtonMeterPerRadian,
+            want: "N·m/rad",
+        },
+        {
+            name: "PoundForceFootPerDegrees abbreviation",
+            unit: units.RotationalStiffnessPoundForceFootPerDegrees,
+            want: "lbf·ft/deg",
+        },
+        {
+            name: "KilopoundForceFootPerDegrees abbreviation",
+            unit: units.RotationalStiffnessKilopoundForceFootPerDegrees,
+            want: "kipf·ft/°",
+        },
+        {
+            name: "NewtonMillimeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessNewtonMillimeterPerDegree,
+            want: "N·mm/deg",
+        },
+        {
+            name: "NewtonMeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessNewtonMeterPerDegree,
+            want: "N·m/deg",
+        },
+        {
+            name: "NewtonMillimeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessNewtonMillimeterPerRadian,
+            want: "N·mm/rad",
+        },
+        {
+            name: "PoundForceFeetPerRadian abbreviation",
+            unit: units.RotationalStiffnessPoundForceFeetPerRadian,
+            want: "lbf·ft/rad",
+        },
+        {
+            name: "KilonewtonMeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessKilonewtonMeterPerRadian,
+            want: "kN·m/rad",
+        },
+        {
+            name: "MeganewtonMeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessMeganewtonMeterPerRadian,
+            want: "MN·m/rad",
+        },
+        {
+            name: "NanonewtonMillimeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessNanonewtonMillimeterPerDegree,
+            want: "nN·mm/deg",
+        },
+        {
+            name: "MicronewtonMillimeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessMicronewtonMillimeterPerDegree,
+            want: "μN·mm/deg",
+        },
+        {
+            name: "MillinewtonMillimeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessMillinewtonMillimeterPerDegree,
+            want: "mN·mm/deg",
+        },
+        {
+            name: "CentinewtonMillimeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessCentinewtonMillimeterPerDegree,
+            want: "cN·mm/deg",
+        },
+        {
+            name: "DecinewtonMillimeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessDecinewtonMillimeterPerDegree,
+            want: "dN·mm/deg",
+        },
+        {
+            name: "DecanewtonMillimeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessDecanewtonMillimeterPerDegree,
+            want: "daN·mm/deg",
+        },
+        {
+            name: "KilonewtonMillimeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessKilonewtonMillimeterPerDegree,
+            want: "kN·mm/deg",
+        },
+        {
+            name: "MeganewtonMillimeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessMeganewtonMillimeterPerDegree,
+            want: "MN·mm/deg",
+        },
+        {
+            name: "NanonewtonMeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessNanonewtonMeterPerDegree,
+            want: "nN·m/deg",
+        },
+        {
+            name: "MicronewtonMeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessMicronewtonMeterPerDegree,
+            want: "μN·m/deg",
+        },
+        {
+            name: "MillinewtonMeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessMillinewtonMeterPerDegree,
+            want: "mN·m/deg",
+        },
+        {
+            name: "CentinewtonMeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessCentinewtonMeterPerDegree,
+            want: "cN·m/deg",
+        },
+        {
+            name: "DecinewtonMeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessDecinewtonMeterPerDegree,
+            want: "dN·m/deg",
+        },
+        {
+            name: "DecanewtonMeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessDecanewtonMeterPerDegree,
+            want: "daN·m/deg",
+        },
+        {
+            name: "KilonewtonMeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessKilonewtonMeterPerDegree,
+            want: "kN·m/deg",
+        },
+        {
+            name: "MeganewtonMeterPerDegree abbreviation",
+            unit: units.RotationalStiffnessMeganewtonMeterPerDegree,
+            want: "MN·m/deg",
+        },
+        {
+            name: "NanonewtonMillimeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessNanonewtonMillimeterPerRadian,
+            want: "nN·mm/rad",
+        },
+        {
+            name: "MicronewtonMillimeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessMicronewtonMillimeterPerRadian,
+            want: "μN·mm/rad",
+        },
+        {
+            name: "MillinewtonMillimeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessMillinewtonMillimeterPerRadian,
+            want: "mN·mm/rad",
+        },
+        {
+            name: "CentinewtonMillimeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessCentinewtonMillimeterPerRadian,
+            want: "cN·mm/rad",
+        },
+        {
+            name: "DecinewtonMillimeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessDecinewtonMillimeterPerRadian,
+            want: "dN·mm/rad",
+        },
+        {
+            name: "DecanewtonMillimeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessDecanewtonMillimeterPerRadian,
+            want: "daN·mm/rad",
+        },
+        {
+            name: "KilonewtonMillimeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessKilonewtonMillimeterPerRadian,
+            want: "kN·mm/rad",
+        },
+        {
+            name: "MeganewtonMillimeterPerRadian abbreviation",
+            unit: units.RotationalStiffnessMeganewtonMillimeterPerRadian,
+            want: "MN·mm/rad",
+        },
+        {
+            name: "invalid unit",
+            unit: units.RotationalStiffnessUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetRotationalStiffnessAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetRotationalStiffnessAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestRotationalStiffness_String(t *testing.T) {
+    factory := units.RotationalStiffnessFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateRotationalStiffness(tt.value, units.RotationalStiffnessNewtonMeterPerRadian)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("RotationalStiffness.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

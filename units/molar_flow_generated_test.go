@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMolarFlowConversions(t *testing.T) {
 		// Test conversion to MolesPerSecond.
 		// No expected conversion value provided for MolesPerSecond, verifying result is not NaN.
 		result := a.MolesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MolesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MolesPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMolarFlowConversions(t *testing.T) {
 		// Test conversion to MolesPerMinute.
 		// No expected conversion value provided for MolesPerMinute, verifying result is not NaN.
 		result := a.MolesPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.MolesPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MolesPerMinute returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMolarFlowConversions(t *testing.T) {
 		// Test conversion to MolesPerHour.
 		// No expected conversion value provided for MolesPerHour, verifying result is not NaN.
 		result := a.MolesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MolesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MolesPerHour returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestMolarFlowConversions(t *testing.T) {
 		// Test conversion to PoundMolesPerSecond.
 		// No expected conversion value provided for PoundMolesPerSecond, verifying result is not NaN.
 		result := a.PoundMolesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundMolesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundMolesPerSecond returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestMolarFlowConversions(t *testing.T) {
 		// Test conversion to PoundMolesPerMinute.
 		// No expected conversion value provided for PoundMolesPerMinute, verifying result is not NaN.
 		result := a.PoundMolesPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundMolesPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundMolesPerMinute returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestMolarFlowConversions(t *testing.T) {
 		// Test conversion to PoundMolesPerHour.
 		// No expected conversion value provided for PoundMolesPerHour, verifying result is not NaN.
 		result := a.PoundMolesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundMolesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundMolesPerHour returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestMolarFlowConversions(t *testing.T) {
 		// Test conversion to KilomolesPerSecond.
 		// No expected conversion value provided for KilomolesPerSecond, verifying result is not NaN.
 		result := a.KilomolesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilomolesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilomolesPerSecond returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestMolarFlowConversions(t *testing.T) {
 		// Test conversion to KilomolesPerMinute.
 		// No expected conversion value provided for KilomolesPerMinute, verifying result is not NaN.
 		result := a.KilomolesPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.KilomolesPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilomolesPerMinute returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestMolarFlowConversions(t *testing.T) {
 		// Test conversion to KilomolesPerHour.
 		// No expected conversion value provided for KilomolesPerHour, verifying result is not NaN.
 		result := a.KilomolesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.KilomolesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilomolesPerHour returned NaN")
 		}
 	}
@@ -1006,4 +1016,135 @@ func TestMolarFlow_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMolarFlowAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MolarFlowUnits
+        want string
+    }{
+        {
+            name: "MolePerSecond abbreviation",
+            unit: units.MolarFlowMolePerSecond,
+            want: "mol/s",
+        },
+        {
+            name: "MolePerMinute abbreviation",
+            unit: units.MolarFlowMolePerMinute,
+            want: "mol/min",
+        },
+        {
+            name: "MolePerHour abbreviation",
+            unit: units.MolarFlowMolePerHour,
+            want: "kmol/h",
+        },
+        {
+            name: "PoundMolePerSecond abbreviation",
+            unit: units.MolarFlowPoundMolePerSecond,
+            want: "lbmol/s",
+        },
+        {
+            name: "PoundMolePerMinute abbreviation",
+            unit: units.MolarFlowPoundMolePerMinute,
+            want: "lbmol/min",
+        },
+        {
+            name: "PoundMolePerHour abbreviation",
+            unit: units.MolarFlowPoundMolePerHour,
+            want: "lbmol/h",
+        },
+        {
+            name: "KilomolePerSecond abbreviation",
+            unit: units.MolarFlowKilomolePerSecond,
+            want: "kmol/s",
+        },
+        {
+            name: "KilomolePerMinute abbreviation",
+            unit: units.MolarFlowKilomolePerMinute,
+            want: "kmol/min",
+        },
+        {
+            name: "KilomolePerHour abbreviation",
+            unit: units.MolarFlowKilomolePerHour,
+            want: "kkmol/h",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MolarFlowUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMolarFlowAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMolarFlowAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMolarFlow_String(t *testing.T) {
+    factory := units.MolarFlowFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMolarFlow(tt.value, units.MolarFlowMolePerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("MolarFlow.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

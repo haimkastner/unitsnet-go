@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestHeatTransferCoefficientConversions(t *testing.T) {
 		// Test conversion to WattsPerSquareMeterKelvin.
 		// No expected conversion value provided for WattsPerSquareMeterKelvin, verifying result is not NaN.
 		result := a.WattsPerSquareMeterKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerSquareMeterKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerSquareMeterKelvin returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestHeatTransferCoefficientConversions(t *testing.T) {
 		// Test conversion to WattsPerSquareMeterCelsius.
 		// No expected conversion value provided for WattsPerSquareMeterCelsius, verifying result is not NaN.
 		result := a.WattsPerSquareMeterCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerSquareMeterCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerSquareMeterCelsius returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestHeatTransferCoefficientConversions(t *testing.T) {
 		// Test conversion to BtusPerHourSquareFootDegreeFahrenheit.
 		// No expected conversion value provided for BtusPerHourSquareFootDegreeFahrenheit, verifying result is not NaN.
 		result := a.BtusPerHourSquareFootDegreeFahrenheit()
-		if math.IsNaN(result) {
+		cacheResult := a.BtusPerHourSquareFootDegreeFahrenheit()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BtusPerHourSquareFootDegreeFahrenheit returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestHeatTransferCoefficientConversions(t *testing.T) {
 		// Test conversion to CaloriesPerHourSquareMeterDegreeCelsius.
 		// No expected conversion value provided for CaloriesPerHourSquareMeterDegreeCelsius, verifying result is not NaN.
 		result := a.CaloriesPerHourSquareMeterDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.CaloriesPerHourSquareMeterDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CaloriesPerHourSquareMeterDegreeCelsius returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestHeatTransferCoefficientConversions(t *testing.T) {
 		// Test conversion to KilocaloriesPerHourSquareMeterDegreeCelsius.
 		// No expected conversion value provided for KilocaloriesPerHourSquareMeterDegreeCelsius, verifying result is not NaN.
 		result := a.KilocaloriesPerHourSquareMeterDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocaloriesPerHourSquareMeterDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocaloriesPerHourSquareMeterDegreeCelsius returned NaN")
 		}
 	}
@@ -686,4 +692,115 @@ func TestHeatTransferCoefficient_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetHeatTransferCoefficientAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.HeatTransferCoefficientUnits
+        want string
+    }{
+        {
+            name: "WattPerSquareMeterKelvin abbreviation",
+            unit: units.HeatTransferCoefficientWattPerSquareMeterKelvin,
+            want: "W/m²·K",
+        },
+        {
+            name: "WattPerSquareMeterCelsius abbreviation",
+            unit: units.HeatTransferCoefficientWattPerSquareMeterCelsius,
+            want: "W/m²·°C",
+        },
+        {
+            name: "BtuPerHourSquareFootDegreeFahrenheit abbreviation",
+            unit: units.HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit,
+            want: "Btu/h·ft²·°F",
+        },
+        {
+            name: "CaloriePerHourSquareMeterDegreeCelsius abbreviation",
+            unit: units.HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius,
+            want: "kcal/h·m²·°C",
+        },
+        {
+            name: "KilocaloriePerHourSquareMeterDegreeCelsius abbreviation",
+            unit: units.HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius,
+            want: "kkcal/h·m²·°C",
+        },
+        {
+            name: "invalid unit",
+            unit: units.HeatTransferCoefficientUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetHeatTransferCoefficientAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetHeatTransferCoefficientAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestHeatTransferCoefficient_String(t *testing.T) {
+    factory := units.HeatTransferCoefficientFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateHeatTransferCoefficient(tt.value, units.HeatTransferCoefficientWattPerSquareMeterKelvin)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("HeatTransferCoefficient.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

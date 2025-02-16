@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to Kelvins.
 		// No expected conversion value provided for Kelvins, verifying result is not NaN.
 		result := a.Kelvins()
-		if math.IsNaN(result) {
+		cacheResult := a.Kelvins()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kelvins returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to DegreesCelsius.
 		// No expected conversion value provided for DegreesCelsius, verifying result is not NaN.
 		result := a.DegreesCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesCelsius returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to MillidegreesCelsius.
 		// No expected conversion value provided for MillidegreesCelsius, verifying result is not NaN.
 		result := a.MillidegreesCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.MillidegreesCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillidegreesCelsius returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to DegreesDelisle.
 		// No expected conversion value provided for DegreesDelisle, verifying result is not NaN.
 		result := a.DegreesDelisle()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesDelisle()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesDelisle returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to DegreesFahrenheit.
 		// No expected conversion value provided for DegreesFahrenheit, verifying result is not NaN.
 		result := a.DegreesFahrenheit()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesFahrenheit()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesFahrenheit returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to DegreesNewton.
 		// No expected conversion value provided for DegreesNewton, verifying result is not NaN.
 		result := a.DegreesNewton()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesNewton()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesNewton returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to DegreesRankine.
 		// No expected conversion value provided for DegreesRankine, verifying result is not NaN.
 		result := a.DegreesRankine()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesRankine()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesRankine returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to DegreesReaumur.
 		// No expected conversion value provided for DegreesReaumur, verifying result is not NaN.
 		result := a.DegreesReaumur()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesReaumur()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesReaumur returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to DegreesRoemer.
 		// No expected conversion value provided for DegreesRoemer, verifying result is not NaN.
 		result := a.DegreesRoemer()
-		if math.IsNaN(result) {
+		cacheResult := a.DegreesRoemer()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DegreesRoemer returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestTemperatureConversions(t *testing.T) {
 		// Test conversion to SolarTemperatures.
 		// No expected conversion value provided for SolarTemperatures, verifying result is not NaN.
 		result := a.SolarTemperatures()
-		if math.IsNaN(result) {
+		cacheResult := a.SolarTemperatures()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SolarTemperatures returned NaN")
 		}
 	}
@@ -1086,4 +1097,140 @@ func TestTemperature_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetTemperatureAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.TemperatureUnits
+        want string
+    }{
+        {
+            name: "Kelvin abbreviation",
+            unit: units.TemperatureKelvin,
+            want: "K",
+        },
+        {
+            name: "DegreeCelsius abbreviation",
+            unit: units.TemperatureDegreeCelsius,
+            want: "°C",
+        },
+        {
+            name: "MillidegreeCelsius abbreviation",
+            unit: units.TemperatureMillidegreeCelsius,
+            want: "m°C",
+        },
+        {
+            name: "DegreeDelisle abbreviation",
+            unit: units.TemperatureDegreeDelisle,
+            want: "°De",
+        },
+        {
+            name: "DegreeFahrenheit abbreviation",
+            unit: units.TemperatureDegreeFahrenheit,
+            want: "°F",
+        },
+        {
+            name: "DegreeNewton abbreviation",
+            unit: units.TemperatureDegreeNewton,
+            want: "°N",
+        },
+        {
+            name: "DegreeRankine abbreviation",
+            unit: units.TemperatureDegreeRankine,
+            want: "°R",
+        },
+        {
+            name: "DegreeReaumur abbreviation",
+            unit: units.TemperatureDegreeReaumur,
+            want: "°Ré",
+        },
+        {
+            name: "DegreeRoemer abbreviation",
+            unit: units.TemperatureDegreeRoemer,
+            want: "°Rø",
+        },
+        {
+            name: "SolarTemperature abbreviation",
+            unit: units.TemperatureSolarTemperature,
+            want: "T⊙",
+        },
+        {
+            name: "invalid unit",
+            unit: units.TemperatureUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetTemperatureAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetTemperatureAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestTemperature_String(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateTemperature(tt.value, units.TemperatureKelvin)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Temperature.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

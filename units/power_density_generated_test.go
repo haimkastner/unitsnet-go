@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to WattsPerCubicMeter.
 		// No expected conversion value provided for WattsPerCubicMeter, verifying result is not NaN.
 		result := a.WattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerCubicMeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to WattsPerCubicInch.
 		// No expected conversion value provided for WattsPerCubicInch, verifying result is not NaN.
 		result := a.WattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerCubicInch returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to WattsPerCubicFoot.
 		// No expected conversion value provided for WattsPerCubicFoot, verifying result is not NaN.
 		result := a.WattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerCubicFoot returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to WattsPerLiter.
 		// No expected conversion value provided for WattsPerLiter, verifying result is not NaN.
 		result := a.WattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.WattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattsPerLiter returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to PicowattsPerCubicMeter.
 		// No expected conversion value provided for PicowattsPerCubicMeter, verifying result is not NaN.
 		result := a.PicowattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicowattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicowattsPerCubicMeter returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to NanowattsPerCubicMeter.
 		// No expected conversion value provided for NanowattsPerCubicMeter, verifying result is not NaN.
 		result := a.NanowattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanowattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanowattsPerCubicMeter returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MicrowattsPerCubicMeter.
 		// No expected conversion value provided for MicrowattsPerCubicMeter, verifying result is not NaN.
 		result := a.MicrowattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrowattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrowattsPerCubicMeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerCubicMeter.
 		// No expected conversion value provided for MilliwattsPerCubicMeter, verifying result is not NaN.
 		result := a.MilliwattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerCubicMeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to DeciwattsPerCubicMeter.
 		// No expected conversion value provided for DeciwattsPerCubicMeter, verifying result is not NaN.
 		result := a.DeciwattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.DeciwattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DeciwattsPerCubicMeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to DecawattsPerCubicMeter.
 		// No expected conversion value provided for DecawattsPerCubicMeter, verifying result is not NaN.
 		result := a.DecawattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.DecawattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecawattsPerCubicMeter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to KilowattsPerCubicMeter.
 		// No expected conversion value provided for KilowattsPerCubicMeter, verifying result is not NaN.
 		result := a.KilowattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerCubicMeter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MegawattsPerCubicMeter.
 		// No expected conversion value provided for MegawattsPerCubicMeter, verifying result is not NaN.
 		result := a.MegawattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerCubicMeter returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to GigawattsPerCubicMeter.
 		// No expected conversion value provided for GigawattsPerCubicMeter, verifying result is not NaN.
 		result := a.GigawattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattsPerCubicMeter returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to TerawattsPerCubicMeter.
 		// No expected conversion value provided for TerawattsPerCubicMeter, verifying result is not NaN.
 		result := a.TerawattsPerCubicMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattsPerCubicMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattsPerCubicMeter returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to PicowattsPerCubicInch.
 		// No expected conversion value provided for PicowattsPerCubicInch, verifying result is not NaN.
 		result := a.PicowattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.PicowattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicowattsPerCubicInch returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to NanowattsPerCubicInch.
 		// No expected conversion value provided for NanowattsPerCubicInch, verifying result is not NaN.
 		result := a.NanowattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.NanowattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanowattsPerCubicInch returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MicrowattsPerCubicInch.
 		// No expected conversion value provided for MicrowattsPerCubicInch, verifying result is not NaN.
 		result := a.MicrowattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrowattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrowattsPerCubicInch returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerCubicInch.
 		// No expected conversion value provided for MilliwattsPerCubicInch, verifying result is not NaN.
 		result := a.MilliwattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerCubicInch returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to DeciwattsPerCubicInch.
 		// No expected conversion value provided for DeciwattsPerCubicInch, verifying result is not NaN.
 		result := a.DeciwattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.DeciwattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DeciwattsPerCubicInch returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to DecawattsPerCubicInch.
 		// No expected conversion value provided for DecawattsPerCubicInch, verifying result is not NaN.
 		result := a.DecawattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.DecawattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecawattsPerCubicInch returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to KilowattsPerCubicInch.
 		// No expected conversion value provided for KilowattsPerCubicInch, verifying result is not NaN.
 		result := a.KilowattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerCubicInch returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MegawattsPerCubicInch.
 		// No expected conversion value provided for MegawattsPerCubicInch, verifying result is not NaN.
 		result := a.MegawattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerCubicInch returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to GigawattsPerCubicInch.
 		// No expected conversion value provided for GigawattsPerCubicInch, verifying result is not NaN.
 		result := a.GigawattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattsPerCubicInch returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to TerawattsPerCubicInch.
 		// No expected conversion value provided for TerawattsPerCubicInch, verifying result is not NaN.
 		result := a.TerawattsPerCubicInch()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattsPerCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattsPerCubicInch returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to PicowattsPerCubicFoot.
 		// No expected conversion value provided for PicowattsPerCubicFoot, verifying result is not NaN.
 		result := a.PicowattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.PicowattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicowattsPerCubicFoot returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to NanowattsPerCubicFoot.
 		// No expected conversion value provided for NanowattsPerCubicFoot, verifying result is not NaN.
 		result := a.NanowattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.NanowattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanowattsPerCubicFoot returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MicrowattsPerCubicFoot.
 		// No expected conversion value provided for MicrowattsPerCubicFoot, verifying result is not NaN.
 		result := a.MicrowattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrowattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrowattsPerCubicFoot returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerCubicFoot.
 		// No expected conversion value provided for MilliwattsPerCubicFoot, verifying result is not NaN.
 		result := a.MilliwattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerCubicFoot returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to DeciwattsPerCubicFoot.
 		// No expected conversion value provided for DeciwattsPerCubicFoot, verifying result is not NaN.
 		result := a.DeciwattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.DeciwattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DeciwattsPerCubicFoot returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to DecawattsPerCubicFoot.
 		// No expected conversion value provided for DecawattsPerCubicFoot, verifying result is not NaN.
 		result := a.DecawattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.DecawattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecawattsPerCubicFoot returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to KilowattsPerCubicFoot.
 		// No expected conversion value provided for KilowattsPerCubicFoot, verifying result is not NaN.
 		result := a.KilowattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerCubicFoot returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MegawattsPerCubicFoot.
 		// No expected conversion value provided for MegawattsPerCubicFoot, verifying result is not NaN.
 		result := a.MegawattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerCubicFoot returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to GigawattsPerCubicFoot.
 		// No expected conversion value provided for GigawattsPerCubicFoot, verifying result is not NaN.
 		result := a.GigawattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattsPerCubicFoot returned NaN")
 		}
 	}
@@ -344,7 +378,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to TerawattsPerCubicFoot.
 		// No expected conversion value provided for TerawattsPerCubicFoot, verifying result is not NaN.
 		result := a.TerawattsPerCubicFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattsPerCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattsPerCubicFoot returned NaN")
 		}
 	}
@@ -352,7 +387,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to PicowattsPerLiter.
 		// No expected conversion value provided for PicowattsPerLiter, verifying result is not NaN.
 		result := a.PicowattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.PicowattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicowattsPerLiter returned NaN")
 		}
 	}
@@ -360,7 +396,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to NanowattsPerLiter.
 		// No expected conversion value provided for NanowattsPerLiter, verifying result is not NaN.
 		result := a.NanowattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.NanowattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanowattsPerLiter returned NaN")
 		}
 	}
@@ -368,7 +405,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MicrowattsPerLiter.
 		// No expected conversion value provided for MicrowattsPerLiter, verifying result is not NaN.
 		result := a.MicrowattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrowattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrowattsPerLiter returned NaN")
 		}
 	}
@@ -376,7 +414,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MilliwattsPerLiter.
 		// No expected conversion value provided for MilliwattsPerLiter, verifying result is not NaN.
 		result := a.MilliwattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilliwattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilliwattsPerLiter returned NaN")
 		}
 	}
@@ -384,7 +423,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to DeciwattsPerLiter.
 		// No expected conversion value provided for DeciwattsPerLiter, verifying result is not NaN.
 		result := a.DeciwattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.DeciwattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DeciwattsPerLiter returned NaN")
 		}
 	}
@@ -392,7 +432,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to DecawattsPerLiter.
 		// No expected conversion value provided for DecawattsPerLiter, verifying result is not NaN.
 		result := a.DecawattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.DecawattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecawattsPerLiter returned NaN")
 		}
 	}
@@ -400,7 +441,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to KilowattsPerLiter.
 		// No expected conversion value provided for KilowattsPerLiter, verifying result is not NaN.
 		result := a.KilowattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattsPerLiter returned NaN")
 		}
 	}
@@ -408,7 +450,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to MegawattsPerLiter.
 		// No expected conversion value provided for MegawattsPerLiter, verifying result is not NaN.
 		result := a.MegawattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattsPerLiter returned NaN")
 		}
 	}
@@ -416,7 +459,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to GigawattsPerLiter.
 		// No expected conversion value provided for GigawattsPerLiter, verifying result is not NaN.
 		result := a.GigawattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattsPerLiter returned NaN")
 		}
 	}
@@ -424,7 +468,8 @@ func TestPowerDensityConversions(t *testing.T) {
 		// Test conversion to TerawattsPerLiter.
 		// No expected conversion value provided for TerawattsPerLiter, verifying result is not NaN.
 		result := a.TerawattsPerLiter()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattsPerLiter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattsPerLiter returned NaN")
 		}
 	}
@@ -3806,4 +3851,310 @@ func TestPowerDensity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetPowerDensityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.PowerDensityUnits
+        want string
+    }{
+        {
+            name: "WattPerCubicMeter abbreviation",
+            unit: units.PowerDensityWattPerCubicMeter,
+            want: "W/m³",
+        },
+        {
+            name: "WattPerCubicInch abbreviation",
+            unit: units.PowerDensityWattPerCubicInch,
+            want: "W/in³",
+        },
+        {
+            name: "WattPerCubicFoot abbreviation",
+            unit: units.PowerDensityWattPerCubicFoot,
+            want: "W/ft³",
+        },
+        {
+            name: "WattPerLiter abbreviation",
+            unit: units.PowerDensityWattPerLiter,
+            want: "W/l",
+        },
+        {
+            name: "PicowattPerCubicMeter abbreviation",
+            unit: units.PowerDensityPicowattPerCubicMeter,
+            want: "pW/m³",
+        },
+        {
+            name: "NanowattPerCubicMeter abbreviation",
+            unit: units.PowerDensityNanowattPerCubicMeter,
+            want: "nW/m³",
+        },
+        {
+            name: "MicrowattPerCubicMeter abbreviation",
+            unit: units.PowerDensityMicrowattPerCubicMeter,
+            want: "μW/m³",
+        },
+        {
+            name: "MilliwattPerCubicMeter abbreviation",
+            unit: units.PowerDensityMilliwattPerCubicMeter,
+            want: "mW/m³",
+        },
+        {
+            name: "DeciwattPerCubicMeter abbreviation",
+            unit: units.PowerDensityDeciwattPerCubicMeter,
+            want: "dW/m³",
+        },
+        {
+            name: "DecawattPerCubicMeter abbreviation",
+            unit: units.PowerDensityDecawattPerCubicMeter,
+            want: "daW/m³",
+        },
+        {
+            name: "KilowattPerCubicMeter abbreviation",
+            unit: units.PowerDensityKilowattPerCubicMeter,
+            want: "kW/m³",
+        },
+        {
+            name: "MegawattPerCubicMeter abbreviation",
+            unit: units.PowerDensityMegawattPerCubicMeter,
+            want: "MW/m³",
+        },
+        {
+            name: "GigawattPerCubicMeter abbreviation",
+            unit: units.PowerDensityGigawattPerCubicMeter,
+            want: "GW/m³",
+        },
+        {
+            name: "TerawattPerCubicMeter abbreviation",
+            unit: units.PowerDensityTerawattPerCubicMeter,
+            want: "TW/m³",
+        },
+        {
+            name: "PicowattPerCubicInch abbreviation",
+            unit: units.PowerDensityPicowattPerCubicInch,
+            want: "pW/in³",
+        },
+        {
+            name: "NanowattPerCubicInch abbreviation",
+            unit: units.PowerDensityNanowattPerCubicInch,
+            want: "nW/in³",
+        },
+        {
+            name: "MicrowattPerCubicInch abbreviation",
+            unit: units.PowerDensityMicrowattPerCubicInch,
+            want: "μW/in³",
+        },
+        {
+            name: "MilliwattPerCubicInch abbreviation",
+            unit: units.PowerDensityMilliwattPerCubicInch,
+            want: "mW/in³",
+        },
+        {
+            name: "DeciwattPerCubicInch abbreviation",
+            unit: units.PowerDensityDeciwattPerCubicInch,
+            want: "dW/in³",
+        },
+        {
+            name: "DecawattPerCubicInch abbreviation",
+            unit: units.PowerDensityDecawattPerCubicInch,
+            want: "daW/in³",
+        },
+        {
+            name: "KilowattPerCubicInch abbreviation",
+            unit: units.PowerDensityKilowattPerCubicInch,
+            want: "kW/in³",
+        },
+        {
+            name: "MegawattPerCubicInch abbreviation",
+            unit: units.PowerDensityMegawattPerCubicInch,
+            want: "MW/in³",
+        },
+        {
+            name: "GigawattPerCubicInch abbreviation",
+            unit: units.PowerDensityGigawattPerCubicInch,
+            want: "GW/in³",
+        },
+        {
+            name: "TerawattPerCubicInch abbreviation",
+            unit: units.PowerDensityTerawattPerCubicInch,
+            want: "TW/in³",
+        },
+        {
+            name: "PicowattPerCubicFoot abbreviation",
+            unit: units.PowerDensityPicowattPerCubicFoot,
+            want: "pW/ft³",
+        },
+        {
+            name: "NanowattPerCubicFoot abbreviation",
+            unit: units.PowerDensityNanowattPerCubicFoot,
+            want: "nW/ft³",
+        },
+        {
+            name: "MicrowattPerCubicFoot abbreviation",
+            unit: units.PowerDensityMicrowattPerCubicFoot,
+            want: "μW/ft³",
+        },
+        {
+            name: "MilliwattPerCubicFoot abbreviation",
+            unit: units.PowerDensityMilliwattPerCubicFoot,
+            want: "mW/ft³",
+        },
+        {
+            name: "DeciwattPerCubicFoot abbreviation",
+            unit: units.PowerDensityDeciwattPerCubicFoot,
+            want: "dW/ft³",
+        },
+        {
+            name: "DecawattPerCubicFoot abbreviation",
+            unit: units.PowerDensityDecawattPerCubicFoot,
+            want: "daW/ft³",
+        },
+        {
+            name: "KilowattPerCubicFoot abbreviation",
+            unit: units.PowerDensityKilowattPerCubicFoot,
+            want: "kW/ft³",
+        },
+        {
+            name: "MegawattPerCubicFoot abbreviation",
+            unit: units.PowerDensityMegawattPerCubicFoot,
+            want: "MW/ft³",
+        },
+        {
+            name: "GigawattPerCubicFoot abbreviation",
+            unit: units.PowerDensityGigawattPerCubicFoot,
+            want: "GW/ft³",
+        },
+        {
+            name: "TerawattPerCubicFoot abbreviation",
+            unit: units.PowerDensityTerawattPerCubicFoot,
+            want: "TW/ft³",
+        },
+        {
+            name: "PicowattPerLiter abbreviation",
+            unit: units.PowerDensityPicowattPerLiter,
+            want: "pW/l",
+        },
+        {
+            name: "NanowattPerLiter abbreviation",
+            unit: units.PowerDensityNanowattPerLiter,
+            want: "nW/l",
+        },
+        {
+            name: "MicrowattPerLiter abbreviation",
+            unit: units.PowerDensityMicrowattPerLiter,
+            want: "μW/l",
+        },
+        {
+            name: "MilliwattPerLiter abbreviation",
+            unit: units.PowerDensityMilliwattPerLiter,
+            want: "mW/l",
+        },
+        {
+            name: "DeciwattPerLiter abbreviation",
+            unit: units.PowerDensityDeciwattPerLiter,
+            want: "dW/l",
+        },
+        {
+            name: "DecawattPerLiter abbreviation",
+            unit: units.PowerDensityDecawattPerLiter,
+            want: "daW/l",
+        },
+        {
+            name: "KilowattPerLiter abbreviation",
+            unit: units.PowerDensityKilowattPerLiter,
+            want: "kW/l",
+        },
+        {
+            name: "MegawattPerLiter abbreviation",
+            unit: units.PowerDensityMegawattPerLiter,
+            want: "MW/l",
+        },
+        {
+            name: "GigawattPerLiter abbreviation",
+            unit: units.PowerDensityGigawattPerLiter,
+            want: "GW/l",
+        },
+        {
+            name: "TerawattPerLiter abbreviation",
+            unit: units.PowerDensityTerawattPerLiter,
+            want: "TW/l",
+        },
+        {
+            name: "invalid unit",
+            unit: units.PowerDensityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetPowerDensityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetPowerDensityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestPowerDensity_String(t *testing.T) {
+    factory := units.PowerDensityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreatePowerDensity(tt.value, units.PowerDensityWattPerCubicMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("PowerDensity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

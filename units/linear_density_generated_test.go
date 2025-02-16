@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerMillimeter.
 		// No expected conversion value provided for GramsPerMillimeter, verifying result is not NaN.
 		result := a.GramsPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerMillimeter returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerCentimeter.
 		// No expected conversion value provided for GramsPerCentimeter, verifying result is not NaN.
 		result := a.GramsPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerCentimeter returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerMeter.
 		// No expected conversion value provided for GramsPerMeter, verifying result is not NaN.
 		result := a.GramsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerMeter returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerInch.
 		// No expected conversion value provided for PoundsPerInch, verifying result is not NaN.
 		result := a.PoundsPerInch()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerInch()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerInch returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to PoundsPerFoot.
 		// No expected conversion value provided for PoundsPerFoot, verifying result is not NaN.
 		result := a.PoundsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsPerFoot returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to GramsPerFoot.
 		// No expected conversion value provided for GramsPerFoot, verifying result is not NaN.
 		result := a.GramsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerFoot returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerMillimeter.
 		// No expected conversion value provided for MicrogramsPerMillimeter, verifying result is not NaN.
 		result := a.MicrogramsPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerMillimeter returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to MilligramsPerMillimeter.
 		// No expected conversion value provided for MilligramsPerMillimeter, verifying result is not NaN.
 		result := a.MilligramsPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerMillimeter returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to KilogramsPerMillimeter.
 		// No expected conversion value provided for KilogramsPerMillimeter, verifying result is not NaN.
 		result := a.KilogramsPerMillimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerMillimeter returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerCentimeter.
 		// No expected conversion value provided for MicrogramsPerCentimeter, verifying result is not NaN.
 		result := a.MicrogramsPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerCentimeter returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to MilligramsPerCentimeter.
 		// No expected conversion value provided for MilligramsPerCentimeter, verifying result is not NaN.
 		result := a.MilligramsPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerCentimeter returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to KilogramsPerCentimeter.
 		// No expected conversion value provided for KilogramsPerCentimeter, verifying result is not NaN.
 		result := a.KilogramsPerCentimeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerCentimeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerCentimeter returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerMeter.
 		// No expected conversion value provided for MicrogramsPerMeter, verifying result is not NaN.
 		result := a.MicrogramsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerMeter returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to MilligramsPerMeter.
 		// No expected conversion value provided for MilligramsPerMeter, verifying result is not NaN.
 		result := a.MilligramsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerMeter returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to KilogramsPerMeter.
 		// No expected conversion value provided for KilogramsPerMeter, verifying result is not NaN.
 		result := a.KilogramsPerMeter()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerMeter()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerMeter returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerFoot.
 		// No expected conversion value provided for MicrogramsPerFoot, verifying result is not NaN.
 		result := a.MicrogramsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerFoot returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to MilligramsPerFoot.
 		// No expected conversion value provided for MilligramsPerFoot, verifying result is not NaN.
 		result := a.MilligramsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerFoot returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestLinearDensityConversions(t *testing.T) {
 		// Test conversion to KilogramsPerFoot.
 		// No expected conversion value provided for KilogramsPerFoot, verifying result is not NaN.
 		result := a.KilogramsPerFoot()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerFoot()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerFoot returned NaN")
 		}
 	}
@@ -1726,4 +1745,180 @@ func TestLinearDensity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetLinearDensityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.LinearDensityUnits
+        want string
+    }{
+        {
+            name: "GramPerMillimeter abbreviation",
+            unit: units.LinearDensityGramPerMillimeter,
+            want: "g/mm",
+        },
+        {
+            name: "GramPerCentimeter abbreviation",
+            unit: units.LinearDensityGramPerCentimeter,
+            want: "g/cm",
+        },
+        {
+            name: "GramPerMeter abbreviation",
+            unit: units.LinearDensityGramPerMeter,
+            want: "g/m",
+        },
+        {
+            name: "PoundPerInch abbreviation",
+            unit: units.LinearDensityPoundPerInch,
+            want: "lb/in",
+        },
+        {
+            name: "PoundPerFoot abbreviation",
+            unit: units.LinearDensityPoundPerFoot,
+            want: "lb/ft",
+        },
+        {
+            name: "GramPerFoot abbreviation",
+            unit: units.LinearDensityGramPerFoot,
+            want: "g/ft",
+        },
+        {
+            name: "MicrogramPerMillimeter abbreviation",
+            unit: units.LinearDensityMicrogramPerMillimeter,
+            want: "μg/mm",
+        },
+        {
+            name: "MilligramPerMillimeter abbreviation",
+            unit: units.LinearDensityMilligramPerMillimeter,
+            want: "mg/mm",
+        },
+        {
+            name: "KilogramPerMillimeter abbreviation",
+            unit: units.LinearDensityKilogramPerMillimeter,
+            want: "kg/mm",
+        },
+        {
+            name: "MicrogramPerCentimeter abbreviation",
+            unit: units.LinearDensityMicrogramPerCentimeter,
+            want: "μg/cm",
+        },
+        {
+            name: "MilligramPerCentimeter abbreviation",
+            unit: units.LinearDensityMilligramPerCentimeter,
+            want: "mg/cm",
+        },
+        {
+            name: "KilogramPerCentimeter abbreviation",
+            unit: units.LinearDensityKilogramPerCentimeter,
+            want: "kg/cm",
+        },
+        {
+            name: "MicrogramPerMeter abbreviation",
+            unit: units.LinearDensityMicrogramPerMeter,
+            want: "μg/m",
+        },
+        {
+            name: "MilligramPerMeter abbreviation",
+            unit: units.LinearDensityMilligramPerMeter,
+            want: "mg/m",
+        },
+        {
+            name: "KilogramPerMeter abbreviation",
+            unit: units.LinearDensityKilogramPerMeter,
+            want: "kg/m",
+        },
+        {
+            name: "MicrogramPerFoot abbreviation",
+            unit: units.LinearDensityMicrogramPerFoot,
+            want: "μg/ft",
+        },
+        {
+            name: "MilligramPerFoot abbreviation",
+            unit: units.LinearDensityMilligramPerFoot,
+            want: "mg/ft",
+        },
+        {
+            name: "KilogramPerFoot abbreviation",
+            unit: units.LinearDensityKilogramPerFoot,
+            want: "kg/ft",
+        },
+        {
+            name: "invalid unit",
+            unit: units.LinearDensityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetLinearDensityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetLinearDensityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestLinearDensity_String(t *testing.T) {
+    factory := units.LinearDensityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateLinearDensity(tt.value, units.LinearDensityKilogramPerMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("LinearDensity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

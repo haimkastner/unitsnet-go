@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestIlluminanceConversions(t *testing.T) {
 		// Test conversion to Lux.
 		// No expected conversion value provided for Lux, verifying result is not NaN.
 		result := a.Lux()
-		if math.IsNaN(result) {
+		cacheResult := a.Lux()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Lux returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestIlluminanceConversions(t *testing.T) {
 		// Test conversion to Millilux.
 		// No expected conversion value provided for Millilux, verifying result is not NaN.
 		result := a.Millilux()
-		if math.IsNaN(result) {
+		cacheResult := a.Millilux()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millilux returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestIlluminanceConversions(t *testing.T) {
 		// Test conversion to Kilolux.
 		// No expected conversion value provided for Kilolux, verifying result is not NaN.
 		result := a.Kilolux()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilolux()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilolux returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestIlluminanceConversions(t *testing.T) {
 		// Test conversion to Megalux.
 		// No expected conversion value provided for Megalux, verifying result is not NaN.
 		result := a.Megalux()
-		if math.IsNaN(result) {
+		cacheResult := a.Megalux()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megalux returned NaN")
 		}
 	}
@@ -606,4 +611,110 @@ func TestIlluminance_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetIlluminanceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.IlluminanceUnits
+        want string
+    }{
+        {
+            name: "Lux abbreviation",
+            unit: units.IlluminanceLux,
+            want: "lx",
+        },
+        {
+            name: "Millilux abbreviation",
+            unit: units.IlluminanceMillilux,
+            want: "mlx",
+        },
+        {
+            name: "Kilolux abbreviation",
+            unit: units.IlluminanceKilolux,
+            want: "klx",
+        },
+        {
+            name: "Megalux abbreviation",
+            unit: units.IlluminanceMegalux,
+            want: "Mlx",
+        },
+        {
+            name: "invalid unit",
+            unit: units.IlluminanceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetIlluminanceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetIlluminanceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestIlluminance_String(t *testing.T) {
+    factory := units.IlluminanceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateIlluminance(tt.value, units.IlluminanceLux)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Illuminance.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

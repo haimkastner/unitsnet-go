@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to JoulesPerKilogram.
 		// No expected conversion value provided for JoulesPerKilogram, verifying result is not NaN.
 		result := a.JoulesPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerKilogram returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to MegaJoulesPerTonne.
 		// No expected conversion value provided for MegaJoulesPerTonne, verifying result is not NaN.
 		result := a.MegaJoulesPerTonne()
-		if math.IsNaN(result) {
+		cacheResult := a.MegaJoulesPerTonne()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegaJoulesPerTonne returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to CaloriesPerGram.
 		// No expected conversion value provided for CaloriesPerGram, verifying result is not NaN.
 		result := a.CaloriesPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.CaloriesPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CaloriesPerGram returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to WattHoursPerKilogram.
 		// No expected conversion value provided for WattHoursPerKilogram, verifying result is not NaN.
 		result := a.WattHoursPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.WattHoursPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattHoursPerKilogram returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to WattDaysPerKilogram.
 		// No expected conversion value provided for WattDaysPerKilogram, verifying result is not NaN.
 		result := a.WattDaysPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.WattDaysPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattDaysPerKilogram returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to WattDaysPerTonne.
 		// No expected conversion value provided for WattDaysPerTonne, verifying result is not NaN.
 		result := a.WattDaysPerTonne()
-		if math.IsNaN(result) {
+		cacheResult := a.WattDaysPerTonne()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattDaysPerTonne returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to WattDaysPerShortTon.
 		// No expected conversion value provided for WattDaysPerShortTon, verifying result is not NaN.
 		result := a.WattDaysPerShortTon()
-		if math.IsNaN(result) {
+		cacheResult := a.WattDaysPerShortTon()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattDaysPerShortTon returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to WattHoursPerPound.
 		// No expected conversion value provided for WattHoursPerPound, verifying result is not NaN.
 		result := a.WattHoursPerPound()
-		if math.IsNaN(result) {
+		cacheResult := a.WattHoursPerPound()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to WattHoursPerPound returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to BtuPerPound.
 		// No expected conversion value provided for BtuPerPound, verifying result is not NaN.
 		result := a.BtuPerPound()
-		if math.IsNaN(result) {
+		cacheResult := a.BtuPerPound()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BtuPerPound returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerKilogram.
 		// No expected conversion value provided for KilojoulesPerKilogram, verifying result is not NaN.
 		result := a.KilojoulesPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerKilogram returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to MegajoulesPerKilogram.
 		// No expected conversion value provided for MegajoulesPerKilogram, verifying result is not NaN.
 		result := a.MegajoulesPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MegajoulesPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegajoulesPerKilogram returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to KilocaloriesPerGram.
 		// No expected conversion value provided for KilocaloriesPerGram, verifying result is not NaN.
 		result := a.KilocaloriesPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocaloriesPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocaloriesPerGram returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to KilowattHoursPerKilogram.
 		// No expected conversion value provided for KilowattHoursPerKilogram, verifying result is not NaN.
 		result := a.KilowattHoursPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattHoursPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattHoursPerKilogram returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to MegawattHoursPerKilogram.
 		// No expected conversion value provided for MegawattHoursPerKilogram, verifying result is not NaN.
 		result := a.MegawattHoursPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattHoursPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattHoursPerKilogram returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to GigawattHoursPerKilogram.
 		// No expected conversion value provided for GigawattHoursPerKilogram, verifying result is not NaN.
 		result := a.GigawattHoursPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattHoursPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattHoursPerKilogram returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to KilowattDaysPerKilogram.
 		// No expected conversion value provided for KilowattDaysPerKilogram, verifying result is not NaN.
 		result := a.KilowattDaysPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattDaysPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattDaysPerKilogram returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to MegawattDaysPerKilogram.
 		// No expected conversion value provided for MegawattDaysPerKilogram, verifying result is not NaN.
 		result := a.MegawattDaysPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattDaysPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattDaysPerKilogram returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to GigawattDaysPerKilogram.
 		// No expected conversion value provided for GigawattDaysPerKilogram, verifying result is not NaN.
 		result := a.GigawattDaysPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattDaysPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattDaysPerKilogram returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to TerawattDaysPerKilogram.
 		// No expected conversion value provided for TerawattDaysPerKilogram, verifying result is not NaN.
 		result := a.TerawattDaysPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattDaysPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattDaysPerKilogram returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to KilowattDaysPerTonne.
 		// No expected conversion value provided for KilowattDaysPerTonne, verifying result is not NaN.
 		result := a.KilowattDaysPerTonne()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattDaysPerTonne()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattDaysPerTonne returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to MegawattDaysPerTonne.
 		// No expected conversion value provided for MegawattDaysPerTonne, verifying result is not NaN.
 		result := a.MegawattDaysPerTonne()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattDaysPerTonne()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattDaysPerTonne returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to GigawattDaysPerTonne.
 		// No expected conversion value provided for GigawattDaysPerTonne, verifying result is not NaN.
 		result := a.GigawattDaysPerTonne()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattDaysPerTonne()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattDaysPerTonne returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to TerawattDaysPerTonne.
 		// No expected conversion value provided for TerawattDaysPerTonne, verifying result is not NaN.
 		result := a.TerawattDaysPerTonne()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattDaysPerTonne()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattDaysPerTonne returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to KilowattDaysPerShortTon.
 		// No expected conversion value provided for KilowattDaysPerShortTon, verifying result is not NaN.
 		result := a.KilowattDaysPerShortTon()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattDaysPerShortTon()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattDaysPerShortTon returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to MegawattDaysPerShortTon.
 		// No expected conversion value provided for MegawattDaysPerShortTon, verifying result is not NaN.
 		result := a.MegawattDaysPerShortTon()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattDaysPerShortTon()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattDaysPerShortTon returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to GigawattDaysPerShortTon.
 		// No expected conversion value provided for GigawattDaysPerShortTon, verifying result is not NaN.
 		result := a.GigawattDaysPerShortTon()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattDaysPerShortTon()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattDaysPerShortTon returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to TerawattDaysPerShortTon.
 		// No expected conversion value provided for TerawattDaysPerShortTon, verifying result is not NaN.
 		result := a.TerawattDaysPerShortTon()
-		if math.IsNaN(result) {
+		cacheResult := a.TerawattDaysPerShortTon()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TerawattDaysPerShortTon returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to KilowattHoursPerPound.
 		// No expected conversion value provided for KilowattHoursPerPound, verifying result is not NaN.
 		result := a.KilowattHoursPerPound()
-		if math.IsNaN(result) {
+		cacheResult := a.KilowattHoursPerPound()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilowattHoursPerPound returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to MegawattHoursPerPound.
 		// No expected conversion value provided for MegawattHoursPerPound, verifying result is not NaN.
 		result := a.MegawattHoursPerPound()
-		if math.IsNaN(result) {
+		cacheResult := a.MegawattHoursPerPound()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegawattHoursPerPound returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		// Test conversion to GigawattHoursPerPound.
 		// No expected conversion value provided for GigawattHoursPerPound, verifying result is not NaN.
 		result := a.GigawattHoursPerPound()
-		if math.IsNaN(result) {
+		cacheResult := a.GigawattHoursPerPound()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GigawattHoursPerPound returned NaN")
 		}
 	}
@@ -2686,4 +2717,240 @@ func TestSpecificEnergy_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetSpecificEnergyAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.SpecificEnergyUnits
+        want string
+    }{
+        {
+            name: "JoulePerKilogram abbreviation",
+            unit: units.SpecificEnergyJoulePerKilogram,
+            want: "J/kg",
+        },
+        {
+            name: "MegaJoulePerTonne abbreviation",
+            unit: units.SpecificEnergyMegaJoulePerTonne,
+            want: "MJ/t",
+        },
+        {
+            name: "CaloriePerGram abbreviation",
+            unit: units.SpecificEnergyCaloriePerGram,
+            want: "cal/g",
+        },
+        {
+            name: "WattHourPerKilogram abbreviation",
+            unit: units.SpecificEnergyWattHourPerKilogram,
+            want: "Wh/kg",
+        },
+        {
+            name: "WattDayPerKilogram abbreviation",
+            unit: units.SpecificEnergyWattDayPerKilogram,
+            want: "Wd/kg",
+        },
+        {
+            name: "WattDayPerTonne abbreviation",
+            unit: units.SpecificEnergyWattDayPerTonne,
+            want: "Wd/t",
+        },
+        {
+            name: "WattDayPerShortTon abbreviation",
+            unit: units.SpecificEnergyWattDayPerShortTon,
+            want: "Wd/ST",
+        },
+        {
+            name: "WattHourPerPound abbreviation",
+            unit: units.SpecificEnergyWattHourPerPound,
+            want: "Wh/lbs",
+        },
+        {
+            name: "BtuPerPound abbreviation",
+            unit: units.SpecificEnergyBtuPerPound,
+            want: "btu/lb",
+        },
+        {
+            name: "KilojoulePerKilogram abbreviation",
+            unit: units.SpecificEnergyKilojoulePerKilogram,
+            want: "kJ/kg",
+        },
+        {
+            name: "MegajoulePerKilogram abbreviation",
+            unit: units.SpecificEnergyMegajoulePerKilogram,
+            want: "MJ/kg",
+        },
+        {
+            name: "KilocaloriePerGram abbreviation",
+            unit: units.SpecificEnergyKilocaloriePerGram,
+            want: "kcal/g",
+        },
+        {
+            name: "KilowattHourPerKilogram abbreviation",
+            unit: units.SpecificEnergyKilowattHourPerKilogram,
+            want: "kWh/kg",
+        },
+        {
+            name: "MegawattHourPerKilogram abbreviation",
+            unit: units.SpecificEnergyMegawattHourPerKilogram,
+            want: "MWh/kg",
+        },
+        {
+            name: "GigawattHourPerKilogram abbreviation",
+            unit: units.SpecificEnergyGigawattHourPerKilogram,
+            want: "GWh/kg",
+        },
+        {
+            name: "KilowattDayPerKilogram abbreviation",
+            unit: units.SpecificEnergyKilowattDayPerKilogram,
+            want: "kWd/kg",
+        },
+        {
+            name: "MegawattDayPerKilogram abbreviation",
+            unit: units.SpecificEnergyMegawattDayPerKilogram,
+            want: "MWd/kg",
+        },
+        {
+            name: "GigawattDayPerKilogram abbreviation",
+            unit: units.SpecificEnergyGigawattDayPerKilogram,
+            want: "GWd/kg",
+        },
+        {
+            name: "TerawattDayPerKilogram abbreviation",
+            unit: units.SpecificEnergyTerawattDayPerKilogram,
+            want: "TWd/kg",
+        },
+        {
+            name: "KilowattDayPerTonne abbreviation",
+            unit: units.SpecificEnergyKilowattDayPerTonne,
+            want: "kWd/t",
+        },
+        {
+            name: "MegawattDayPerTonne abbreviation",
+            unit: units.SpecificEnergyMegawattDayPerTonne,
+            want: "MWd/t",
+        },
+        {
+            name: "GigawattDayPerTonne abbreviation",
+            unit: units.SpecificEnergyGigawattDayPerTonne,
+            want: "GWd/t",
+        },
+        {
+            name: "TerawattDayPerTonne abbreviation",
+            unit: units.SpecificEnergyTerawattDayPerTonne,
+            want: "TWd/t",
+        },
+        {
+            name: "KilowattDayPerShortTon abbreviation",
+            unit: units.SpecificEnergyKilowattDayPerShortTon,
+            want: "kWd/ST",
+        },
+        {
+            name: "MegawattDayPerShortTon abbreviation",
+            unit: units.SpecificEnergyMegawattDayPerShortTon,
+            want: "MWd/ST",
+        },
+        {
+            name: "GigawattDayPerShortTon abbreviation",
+            unit: units.SpecificEnergyGigawattDayPerShortTon,
+            want: "GWd/ST",
+        },
+        {
+            name: "TerawattDayPerShortTon abbreviation",
+            unit: units.SpecificEnergyTerawattDayPerShortTon,
+            want: "TWd/ST",
+        },
+        {
+            name: "KilowattHourPerPound abbreviation",
+            unit: units.SpecificEnergyKilowattHourPerPound,
+            want: "kWh/lbs",
+        },
+        {
+            name: "MegawattHourPerPound abbreviation",
+            unit: units.SpecificEnergyMegawattHourPerPound,
+            want: "MWh/lbs",
+        },
+        {
+            name: "GigawattHourPerPound abbreviation",
+            unit: units.SpecificEnergyGigawattHourPerPound,
+            want: "GWh/lbs",
+        },
+        {
+            name: "invalid unit",
+            unit: units.SpecificEnergyUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetSpecificEnergyAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetSpecificEnergyAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestSpecificEnergy_String(t *testing.T) {
+    factory := units.SpecificEnergyFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateSpecificEnergy(tt.value, units.SpecificEnergyJoulePerKilogram)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("SpecificEnergy.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

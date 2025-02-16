@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseMeters.
 		// No expected conversion value provided for InverseMeters, verifying result is not NaN.
 		result := a.InverseMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseMeters returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseCentimeters.
 		// No expected conversion value provided for InverseCentimeters, verifying result is not NaN.
 		result := a.InverseCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseCentimeters returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseMillimeters.
 		// No expected conversion value provided for InverseMillimeters, verifying result is not NaN.
 		result := a.InverseMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseMillimeters returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseMiles.
 		// No expected conversion value provided for InverseMiles, verifying result is not NaN.
 		result := a.InverseMiles()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseMiles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseMiles returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseYards.
 		// No expected conversion value provided for InverseYards, verifying result is not NaN.
 		result := a.InverseYards()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseYards()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseYards returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseFeet.
 		// No expected conversion value provided for InverseFeet, verifying result is not NaN.
 		result := a.InverseFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseFeet returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseUsSurveyFeet.
 		// No expected conversion value provided for InverseUsSurveyFeet, verifying result is not NaN.
 		result := a.InverseUsSurveyFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseUsSurveyFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseUsSurveyFeet returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseInches.
 		// No expected conversion value provided for InverseInches, verifying result is not NaN.
 		result := a.InverseInches()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseInches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseInches returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseMils.
 		// No expected conversion value provided for InverseMils, verifying result is not NaN.
 		result := a.InverseMils()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseMils()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseMils returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestReciprocalLengthConversions(t *testing.T) {
 		// Test conversion to InverseMicroinches.
 		// No expected conversion value provided for InverseMicroinches, verifying result is not NaN.
 		result := a.InverseMicroinches()
-		if math.IsNaN(result) {
+		cacheResult := a.InverseMicroinches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InverseMicroinches returned NaN")
 		}
 	}
@@ -1086,4 +1097,140 @@ func TestReciprocalLength_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetReciprocalLengthAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ReciprocalLengthUnits
+        want string
+    }{
+        {
+            name: "InverseMeter abbreviation",
+            unit: units.ReciprocalLengthInverseMeter,
+            want: "m⁻¹",
+        },
+        {
+            name: "InverseCentimeter abbreviation",
+            unit: units.ReciprocalLengthInverseCentimeter,
+            want: "cm⁻¹",
+        },
+        {
+            name: "InverseMillimeter abbreviation",
+            unit: units.ReciprocalLengthInverseMillimeter,
+            want: "mm⁻¹",
+        },
+        {
+            name: "InverseMile abbreviation",
+            unit: units.ReciprocalLengthInverseMile,
+            want: "mi⁻¹",
+        },
+        {
+            name: "InverseYard abbreviation",
+            unit: units.ReciprocalLengthInverseYard,
+            want: "yd⁻¹",
+        },
+        {
+            name: "InverseFoot abbreviation",
+            unit: units.ReciprocalLengthInverseFoot,
+            want: "ft⁻¹",
+        },
+        {
+            name: "InverseUsSurveyFoot abbreviation",
+            unit: units.ReciprocalLengthInverseUsSurveyFoot,
+            want: "ftUS⁻¹",
+        },
+        {
+            name: "InverseInch abbreviation",
+            unit: units.ReciprocalLengthInverseInch,
+            want: "in⁻¹",
+        },
+        {
+            name: "InverseMil abbreviation",
+            unit: units.ReciprocalLengthInverseMil,
+            want: "mil⁻¹",
+        },
+        {
+            name: "InverseMicroinch abbreviation",
+            unit: units.ReciprocalLengthInverseMicroinch,
+            want: "µin⁻¹",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ReciprocalLengthUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetReciprocalLengthAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetReciprocalLengthAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestReciprocalLength_String(t *testing.T) {
+    factory := units.ReciprocalLengthFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateReciprocalLength(tt.value, units.ReciprocalLengthInverseMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ReciprocalLength.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

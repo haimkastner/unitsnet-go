@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to Hertz.
 		// No expected conversion value provided for Hertz, verifying result is not NaN.
 		result := a.Hertz()
-		if math.IsNaN(result) {
+		cacheResult := a.Hertz()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Hertz returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to RadiansPerSecond.
 		// No expected conversion value provided for RadiansPerSecond, verifying result is not NaN.
 		result := a.RadiansPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.RadiansPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to RadiansPerSecond returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to CyclesPerMinute.
 		// No expected conversion value provided for CyclesPerMinute, verifying result is not NaN.
 		result := a.CyclesPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.CyclesPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CyclesPerMinute returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to CyclesPerHour.
 		// No expected conversion value provided for CyclesPerHour, verifying result is not NaN.
 		result := a.CyclesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.CyclesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CyclesPerHour returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to BeatsPerMinute.
 		// No expected conversion value provided for BeatsPerMinute, verifying result is not NaN.
 		result := a.BeatsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.BeatsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BeatsPerMinute returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to PerSecond.
 		// No expected conversion value provided for PerSecond, verifying result is not NaN.
 		result := a.PerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.PerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PerSecond returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to BUnits.
 		// No expected conversion value provided for BUnits, verifying result is not NaN.
 		result := a.BUnits()
-		if math.IsNaN(result) {
+		cacheResult := a.BUnits()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BUnits returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to Microhertz.
 		// No expected conversion value provided for Microhertz, verifying result is not NaN.
 		result := a.Microhertz()
-		if math.IsNaN(result) {
+		cacheResult := a.Microhertz()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microhertz returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to Millihertz.
 		// No expected conversion value provided for Millihertz, verifying result is not NaN.
 		result := a.Millihertz()
-		if math.IsNaN(result) {
+		cacheResult := a.Millihertz()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millihertz returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to Kilohertz.
 		// No expected conversion value provided for Kilohertz, verifying result is not NaN.
 		result := a.Kilohertz()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilohertz()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilohertz returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to Megahertz.
 		// No expected conversion value provided for Megahertz, verifying result is not NaN.
 		result := a.Megahertz()
-		if math.IsNaN(result) {
+		cacheResult := a.Megahertz()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megahertz returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to Gigahertz.
 		// No expected conversion value provided for Gigahertz, verifying result is not NaN.
 		result := a.Gigahertz()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigahertz()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigahertz returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestFrequencyConversions(t *testing.T) {
 		// Test conversion to Terahertz.
 		// No expected conversion value provided for Terahertz, verifying result is not NaN.
 		result := a.Terahertz()
-		if math.IsNaN(result) {
+		cacheResult := a.Terahertz()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Terahertz returned NaN")
 		}
 	}
@@ -1326,4 +1340,155 @@ func TestFrequency_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetFrequencyAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.FrequencyUnits
+        want string
+    }{
+        {
+            name: "Hertz abbreviation",
+            unit: units.FrequencyHertz,
+            want: "Hz",
+        },
+        {
+            name: "RadianPerSecond abbreviation",
+            unit: units.FrequencyRadianPerSecond,
+            want: "rad/s",
+        },
+        {
+            name: "CyclePerMinute abbreviation",
+            unit: units.FrequencyCyclePerMinute,
+            want: "cpm",
+        },
+        {
+            name: "CyclePerHour abbreviation",
+            unit: units.FrequencyCyclePerHour,
+            want: "cph",
+        },
+        {
+            name: "BeatPerMinute abbreviation",
+            unit: units.FrequencyBeatPerMinute,
+            want: "bpm",
+        },
+        {
+            name: "PerSecond abbreviation",
+            unit: units.FrequencyPerSecond,
+            want: "s⁻¹",
+        },
+        {
+            name: "BUnit abbreviation",
+            unit: units.FrequencyBUnit,
+            want: "B Units",
+        },
+        {
+            name: "Microhertz abbreviation",
+            unit: units.FrequencyMicrohertz,
+            want: "μHz",
+        },
+        {
+            name: "Millihertz abbreviation",
+            unit: units.FrequencyMillihertz,
+            want: "mHz",
+        },
+        {
+            name: "Kilohertz abbreviation",
+            unit: units.FrequencyKilohertz,
+            want: "kHz",
+        },
+        {
+            name: "Megahertz abbreviation",
+            unit: units.FrequencyMegahertz,
+            want: "MHz",
+        },
+        {
+            name: "Gigahertz abbreviation",
+            unit: units.FrequencyGigahertz,
+            want: "GHz",
+        },
+        {
+            name: "Terahertz abbreviation",
+            unit: units.FrequencyTerahertz,
+            want: "THz",
+        },
+        {
+            name: "invalid unit",
+            unit: units.FrequencyUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetFrequencyAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetFrequencyAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestFrequency_String(t *testing.T) {
+    factory := units.FrequencyFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateFrequency(tt.value, units.FrequencyHertz)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Frequency.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

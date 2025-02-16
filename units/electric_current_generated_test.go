@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestElectricCurrentConversions(t *testing.T) {
 		// Test conversion to Amperes.
 		// No expected conversion value provided for Amperes, verifying result is not NaN.
 		result := a.Amperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Amperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Amperes returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestElectricCurrentConversions(t *testing.T) {
 		// Test conversion to Femtoamperes.
 		// No expected conversion value provided for Femtoamperes, verifying result is not NaN.
 		result := a.Femtoamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Femtoamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Femtoamperes returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestElectricCurrentConversions(t *testing.T) {
 		// Test conversion to Picoamperes.
 		// No expected conversion value provided for Picoamperes, verifying result is not NaN.
 		result := a.Picoamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Picoamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picoamperes returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestElectricCurrentConversions(t *testing.T) {
 		// Test conversion to Nanoamperes.
 		// No expected conversion value provided for Nanoamperes, verifying result is not NaN.
 		result := a.Nanoamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanoamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanoamperes returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestElectricCurrentConversions(t *testing.T) {
 		// Test conversion to Microamperes.
 		// No expected conversion value provided for Microamperes, verifying result is not NaN.
 		result := a.Microamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Microamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microamperes returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestElectricCurrentConversions(t *testing.T) {
 		// Test conversion to Milliamperes.
 		// No expected conversion value provided for Milliamperes, verifying result is not NaN.
 		result := a.Milliamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Milliamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milliamperes returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestElectricCurrentConversions(t *testing.T) {
 		// Test conversion to Centiamperes.
 		// No expected conversion value provided for Centiamperes, verifying result is not NaN.
 		result := a.Centiamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Centiamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Centiamperes returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestElectricCurrentConversions(t *testing.T) {
 		// Test conversion to Kiloamperes.
 		// No expected conversion value provided for Kiloamperes, verifying result is not NaN.
 		result := a.Kiloamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Kiloamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kiloamperes returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestElectricCurrentConversions(t *testing.T) {
 		// Test conversion to Megaamperes.
 		// No expected conversion value provided for Megaamperes, verifying result is not NaN.
 		result := a.Megaamperes()
-		if math.IsNaN(result) {
+		cacheResult := a.Megaamperes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megaamperes returned NaN")
 		}
 	}
@@ -1006,4 +1016,135 @@ func TestElectricCurrent_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetElectricCurrentAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ElectricCurrentUnits
+        want string
+    }{
+        {
+            name: "Ampere abbreviation",
+            unit: units.ElectricCurrentAmpere,
+            want: "A",
+        },
+        {
+            name: "Femtoampere abbreviation",
+            unit: units.ElectricCurrentFemtoampere,
+            want: "fA",
+        },
+        {
+            name: "Picoampere abbreviation",
+            unit: units.ElectricCurrentPicoampere,
+            want: "pA",
+        },
+        {
+            name: "Nanoampere abbreviation",
+            unit: units.ElectricCurrentNanoampere,
+            want: "nA",
+        },
+        {
+            name: "Microampere abbreviation",
+            unit: units.ElectricCurrentMicroampere,
+            want: "μA",
+        },
+        {
+            name: "Milliampere abbreviation",
+            unit: units.ElectricCurrentMilliampere,
+            want: "mA",
+        },
+        {
+            name: "Centiampere abbreviation",
+            unit: units.ElectricCurrentCentiampere,
+            want: "cA",
+        },
+        {
+            name: "Kiloampere abbreviation",
+            unit: units.ElectricCurrentKiloampere,
+            want: "kA",
+        },
+        {
+            name: "Megaampere abbreviation",
+            unit: units.ElectricCurrentMegaampere,
+            want: "MA",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ElectricCurrentUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetElectricCurrentAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetElectricCurrentAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestElectricCurrent_String(t *testing.T) {
+    factory := units.ElectricCurrentFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateElectricCurrent(tt.value, units.ElectricCurrentAmpere)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("ElectricCurrent.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

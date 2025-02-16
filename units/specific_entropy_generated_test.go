@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestSpecificEntropyConversions(t *testing.T) {
 		// Test conversion to JoulesPerKilogramKelvin.
 		// No expected conversion value provided for JoulesPerKilogramKelvin, verifying result is not NaN.
 		result := a.JoulesPerKilogramKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerKilogramKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerKilogramKelvin returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestSpecificEntropyConversions(t *testing.T) {
 		// Test conversion to JoulesPerKilogramDegreeCelsius.
 		// No expected conversion value provided for JoulesPerKilogramDegreeCelsius, verifying result is not NaN.
 		result := a.JoulesPerKilogramDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.JoulesPerKilogramDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to JoulesPerKilogramDegreeCelsius returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestSpecificEntropyConversions(t *testing.T) {
 		// Test conversion to CaloriesPerGramKelvin.
 		// No expected conversion value provided for CaloriesPerGramKelvin, verifying result is not NaN.
 		result := a.CaloriesPerGramKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.CaloriesPerGramKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CaloriesPerGramKelvin returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestSpecificEntropyConversions(t *testing.T) {
 		// Test conversion to BtusPerPoundFahrenheit.
 		// No expected conversion value provided for BtusPerPoundFahrenheit, verifying result is not NaN.
 		result := a.BtusPerPoundFahrenheit()
-		if math.IsNaN(result) {
+		cacheResult := a.BtusPerPoundFahrenheit()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to BtusPerPoundFahrenheit returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestSpecificEntropyConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerKilogramKelvin.
 		// No expected conversion value provided for KilojoulesPerKilogramKelvin, verifying result is not NaN.
 		result := a.KilojoulesPerKilogramKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerKilogramKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerKilogramKelvin returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestSpecificEntropyConversions(t *testing.T) {
 		// Test conversion to MegajoulesPerKilogramKelvin.
 		// No expected conversion value provided for MegajoulesPerKilogramKelvin, verifying result is not NaN.
 		result := a.MegajoulesPerKilogramKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.MegajoulesPerKilogramKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegajoulesPerKilogramKelvin returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestSpecificEntropyConversions(t *testing.T) {
 		// Test conversion to KilojoulesPerKilogramDegreeCelsius.
 		// No expected conversion value provided for KilojoulesPerKilogramDegreeCelsius, verifying result is not NaN.
 		result := a.KilojoulesPerKilogramDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.KilojoulesPerKilogramDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilojoulesPerKilogramDegreeCelsius returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestSpecificEntropyConversions(t *testing.T) {
 		// Test conversion to MegajoulesPerKilogramDegreeCelsius.
 		// No expected conversion value provided for MegajoulesPerKilogramDegreeCelsius, verifying result is not NaN.
 		result := a.MegajoulesPerKilogramDegreeCelsius()
-		if math.IsNaN(result) {
+		cacheResult := a.MegajoulesPerKilogramDegreeCelsius()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MegajoulesPerKilogramDegreeCelsius returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestSpecificEntropyConversions(t *testing.T) {
 		// Test conversion to KilocaloriesPerGramKelvin.
 		// No expected conversion value provided for KilocaloriesPerGramKelvin, verifying result is not NaN.
 		result := a.KilocaloriesPerGramKelvin()
-		if math.IsNaN(result) {
+		cacheResult := a.KilocaloriesPerGramKelvin()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilocaloriesPerGramKelvin returned NaN")
 		}
 	}
@@ -1006,4 +1016,135 @@ func TestSpecificEntropy_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetSpecificEntropyAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.SpecificEntropyUnits
+        want string
+    }{
+        {
+            name: "JoulePerKilogramKelvin abbreviation",
+            unit: units.SpecificEntropyJoulePerKilogramKelvin,
+            want: "J/kg.K",
+        },
+        {
+            name: "JoulePerKilogramDegreeCelsius abbreviation",
+            unit: units.SpecificEntropyJoulePerKilogramDegreeCelsius,
+            want: "J/kg.C",
+        },
+        {
+            name: "CaloriePerGramKelvin abbreviation",
+            unit: units.SpecificEntropyCaloriePerGramKelvin,
+            want: "cal/g.K",
+        },
+        {
+            name: "BtuPerPoundFahrenheit abbreviation",
+            unit: units.SpecificEntropyBtuPerPoundFahrenheit,
+            want: "BTU/lb·°F",
+        },
+        {
+            name: "KilojoulePerKilogramKelvin abbreviation",
+            unit: units.SpecificEntropyKilojoulePerKilogramKelvin,
+            want: "kJ/kg.K",
+        },
+        {
+            name: "MegajoulePerKilogramKelvin abbreviation",
+            unit: units.SpecificEntropyMegajoulePerKilogramKelvin,
+            want: "MJ/kg.K",
+        },
+        {
+            name: "KilojoulePerKilogramDegreeCelsius abbreviation",
+            unit: units.SpecificEntropyKilojoulePerKilogramDegreeCelsius,
+            want: "kJ/kg.C",
+        },
+        {
+            name: "MegajoulePerKilogramDegreeCelsius abbreviation",
+            unit: units.SpecificEntropyMegajoulePerKilogramDegreeCelsius,
+            want: "MJ/kg.C",
+        },
+        {
+            name: "KilocaloriePerGramKelvin abbreviation",
+            unit: units.SpecificEntropyKilocaloriePerGramKelvin,
+            want: "kcal/g.K",
+        },
+        {
+            name: "invalid unit",
+            unit: units.SpecificEntropyUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetSpecificEntropyAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetSpecificEntropyAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestSpecificEntropy_String(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateSpecificEntropy(tt.value, units.SpecificEntropyJoulePerKilogramKelvin)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("SpecificEntropy.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to Dyne.
 		// No expected conversion value provided for Dyne, verifying result is not NaN.
 		result := a.Dyne()
-		if math.IsNaN(result) {
+		cacheResult := a.Dyne()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Dyne returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to KilogramsForce.
 		// No expected conversion value provided for KilogramsForce, verifying result is not NaN.
 		result := a.KilogramsForce()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsForce()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsForce returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to TonnesForce.
 		// No expected conversion value provided for TonnesForce, verifying result is not NaN.
 		result := a.TonnesForce()
-		if math.IsNaN(result) {
+		cacheResult := a.TonnesForce()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to TonnesForce returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to Newtons.
 		// No expected conversion value provided for Newtons, verifying result is not NaN.
 		result := a.Newtons()
-		if math.IsNaN(result) {
+		cacheResult := a.Newtons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Newtons returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to KiloPonds.
 		// No expected conversion value provided for KiloPonds, verifying result is not NaN.
 		result := a.KiloPonds()
-		if math.IsNaN(result) {
+		cacheResult := a.KiloPonds()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KiloPonds returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to Poundals.
 		// No expected conversion value provided for Poundals, verifying result is not NaN.
 		result := a.Poundals()
-		if math.IsNaN(result) {
+		cacheResult := a.Poundals()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Poundals returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to PoundsForce.
 		// No expected conversion value provided for PoundsForce, verifying result is not NaN.
 		result := a.PoundsForce()
-		if math.IsNaN(result) {
+		cacheResult := a.PoundsForce()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PoundsForce returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to OunceForce.
 		// No expected conversion value provided for OunceForce, verifying result is not NaN.
 		result := a.OunceForce()
-		if math.IsNaN(result) {
+		cacheResult := a.OunceForce()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to OunceForce returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to ShortTonsForce.
 		// No expected conversion value provided for ShortTonsForce, verifying result is not NaN.
 		result := a.ShortTonsForce()
-		if math.IsNaN(result) {
+		cacheResult := a.ShortTonsForce()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to ShortTonsForce returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to Micronewtons.
 		// No expected conversion value provided for Micronewtons, verifying result is not NaN.
 		result := a.Micronewtons()
-		if math.IsNaN(result) {
+		cacheResult := a.Micronewtons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Micronewtons returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to Millinewtons.
 		// No expected conversion value provided for Millinewtons, verifying result is not NaN.
 		result := a.Millinewtons()
-		if math.IsNaN(result) {
+		cacheResult := a.Millinewtons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millinewtons returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to Decanewtons.
 		// No expected conversion value provided for Decanewtons, verifying result is not NaN.
 		result := a.Decanewtons()
-		if math.IsNaN(result) {
+		cacheResult := a.Decanewtons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Decanewtons returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to Kilonewtons.
 		// No expected conversion value provided for Kilonewtons, verifying result is not NaN.
 		result := a.Kilonewtons()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilonewtons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilonewtons returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to Meganewtons.
 		// No expected conversion value provided for Meganewtons, verifying result is not NaN.
 		result := a.Meganewtons()
-		if math.IsNaN(result) {
+		cacheResult := a.Meganewtons()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Meganewtons returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestForceConversions(t *testing.T) {
 		// Test conversion to KilopoundsForce.
 		// No expected conversion value provided for KilopoundsForce, verifying result is not NaN.
 		result := a.KilopoundsForce()
-		if math.IsNaN(result) {
+		cacheResult := a.KilopoundsForce()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilopoundsForce returned NaN")
 		}
 	}
@@ -1486,4 +1502,165 @@ func TestForce_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetForceAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.ForceUnits
+        want string
+    }{
+        {
+            name: "Dyn abbreviation",
+            unit: units.ForceDyn,
+            want: "dyn",
+        },
+        {
+            name: "KilogramForce abbreviation",
+            unit: units.ForceKilogramForce,
+            want: "kgf",
+        },
+        {
+            name: "TonneForce abbreviation",
+            unit: units.ForceTonneForce,
+            want: "tf",
+        },
+        {
+            name: "Newton abbreviation",
+            unit: units.ForceNewton,
+            want: "N",
+        },
+        {
+            name: "KiloPond abbreviation",
+            unit: units.ForceKiloPond,
+            want: "kp",
+        },
+        {
+            name: "Poundal abbreviation",
+            unit: units.ForcePoundal,
+            want: "pdl",
+        },
+        {
+            name: "PoundForce abbreviation",
+            unit: units.ForcePoundForce,
+            want: "lbf",
+        },
+        {
+            name: "OunceForce abbreviation",
+            unit: units.ForceOunceForce,
+            want: "ozf",
+        },
+        {
+            name: "ShortTonForce abbreviation",
+            unit: units.ForceShortTonForce,
+            want: "tf (short)",
+        },
+        {
+            name: "Micronewton abbreviation",
+            unit: units.ForceMicronewton,
+            want: "μN",
+        },
+        {
+            name: "Millinewton abbreviation",
+            unit: units.ForceMillinewton,
+            want: "mN",
+        },
+        {
+            name: "Decanewton abbreviation",
+            unit: units.ForceDecanewton,
+            want: "daN",
+        },
+        {
+            name: "Kilonewton abbreviation",
+            unit: units.ForceKilonewton,
+            want: "kN",
+        },
+        {
+            name: "Meganewton abbreviation",
+            unit: units.ForceMeganewton,
+            want: "MN",
+        },
+        {
+            name: "KilopoundForce abbreviation",
+            unit: units.ForceKilopoundForce,
+            want: "klbf",
+        },
+        {
+            name: "invalid unit",
+            unit: units.ForceUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetForceAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetForceAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestForce_String(t *testing.T) {
+    factory := units.ForceFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateForce(tt.value, units.ForceNewton)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Force.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

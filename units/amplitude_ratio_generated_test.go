@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestAmplitudeRatioConversions(t *testing.T) {
 		// Test conversion to DecibelVolts.
 		// No expected conversion value provided for DecibelVolts, verifying result is not NaN.
 		result := a.DecibelVolts()
-		if math.IsNaN(result) {
+		cacheResult := a.DecibelVolts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecibelVolts returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestAmplitudeRatioConversions(t *testing.T) {
 		// Test conversion to DecibelMicrovolts.
 		// No expected conversion value provided for DecibelMicrovolts, verifying result is not NaN.
 		result := a.DecibelMicrovolts()
-		if math.IsNaN(result) {
+		cacheResult := a.DecibelMicrovolts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecibelMicrovolts returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestAmplitudeRatioConversions(t *testing.T) {
 		// Test conversion to DecibelMillivolts.
 		// No expected conversion value provided for DecibelMillivolts, verifying result is not NaN.
 		result := a.DecibelMillivolts()
-		if math.IsNaN(result) {
+		cacheResult := a.DecibelMillivolts()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecibelMillivolts returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestAmplitudeRatioConversions(t *testing.T) {
 		// Test conversion to DecibelsUnloaded.
 		// No expected conversion value provided for DecibelsUnloaded, verifying result is not NaN.
 		result := a.DecibelsUnloaded()
-		if math.IsNaN(result) {
+		cacheResult := a.DecibelsUnloaded()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecibelsUnloaded returned NaN")
 		}
 	}
@@ -606,4 +611,110 @@ func TestAmplitudeRatio_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetAmplitudeRatioAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.AmplitudeRatioUnits
+        want string
+    }{
+        {
+            name: "DecibelVolt abbreviation",
+            unit: units.AmplitudeRatioDecibelVolt,
+            want: "dBV",
+        },
+        {
+            name: "DecibelMicrovolt abbreviation",
+            unit: units.AmplitudeRatioDecibelMicrovolt,
+            want: "dBµV",
+        },
+        {
+            name: "DecibelMillivolt abbreviation",
+            unit: units.AmplitudeRatioDecibelMillivolt,
+            want: "dBmV",
+        },
+        {
+            name: "DecibelUnloaded abbreviation",
+            unit: units.AmplitudeRatioDecibelUnloaded,
+            want: "dBu",
+        },
+        {
+            name: "invalid unit",
+            unit: units.AmplitudeRatioUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetAmplitudeRatioAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetAmplitudeRatioAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestAmplitudeRatio_String(t *testing.T) {
+    factory := units.AmplitudeRatioFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateAmplitudeRatio(tt.value, units.AmplitudeRatioDecibelVolt)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("AmplitudeRatio.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

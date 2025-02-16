@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestRadiationExposureConversions(t *testing.T) {
 		// Test conversion to CoulombsPerKilogram.
 		// No expected conversion value provided for CoulombsPerKilogram, verifying result is not NaN.
 		result := a.CoulombsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.CoulombsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CoulombsPerKilogram returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestRadiationExposureConversions(t *testing.T) {
 		// Test conversion to Roentgens.
 		// No expected conversion value provided for Roentgens, verifying result is not NaN.
 		result := a.Roentgens()
-		if math.IsNaN(result) {
+		cacheResult := a.Roentgens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Roentgens returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestRadiationExposureConversions(t *testing.T) {
 		// Test conversion to PicocoulombsPerKilogram.
 		// No expected conversion value provided for PicocoulombsPerKilogram, verifying result is not NaN.
 		result := a.PicocoulombsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.PicocoulombsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PicocoulombsPerKilogram returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestRadiationExposureConversions(t *testing.T) {
 		// Test conversion to NanocoulombsPerKilogram.
 		// No expected conversion value provided for NanocoulombsPerKilogram, verifying result is not NaN.
 		result := a.NanocoulombsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.NanocoulombsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanocoulombsPerKilogram returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestRadiationExposureConversions(t *testing.T) {
 		// Test conversion to MicrocoulombsPerKilogram.
 		// No expected conversion value provided for MicrocoulombsPerKilogram, verifying result is not NaN.
 		result := a.MicrocoulombsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrocoulombsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrocoulombsPerKilogram returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestRadiationExposureConversions(t *testing.T) {
 		// Test conversion to MillicoulombsPerKilogram.
 		// No expected conversion value provided for MillicoulombsPerKilogram, verifying result is not NaN.
 		result := a.MillicoulombsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MillicoulombsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillicoulombsPerKilogram returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestRadiationExposureConversions(t *testing.T) {
 		// Test conversion to Microroentgens.
 		// No expected conversion value provided for Microroentgens, verifying result is not NaN.
 		result := a.Microroentgens()
-		if math.IsNaN(result) {
+		cacheResult := a.Microroentgens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microroentgens returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestRadiationExposureConversions(t *testing.T) {
 		// Test conversion to Milliroentgens.
 		// No expected conversion value provided for Milliroentgens, verifying result is not NaN.
 		result := a.Milliroentgens()
-		if math.IsNaN(result) {
+		cacheResult := a.Milliroentgens()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Milliroentgens returned NaN")
 		}
 	}
@@ -926,4 +935,130 @@ func TestRadiationExposure_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetRadiationExposureAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.RadiationExposureUnits
+        want string
+    }{
+        {
+            name: "CoulombPerKilogram abbreviation",
+            unit: units.RadiationExposureCoulombPerKilogram,
+            want: "C/kg",
+        },
+        {
+            name: "Roentgen abbreviation",
+            unit: units.RadiationExposureRoentgen,
+            want: "R",
+        },
+        {
+            name: "PicocoulombPerKilogram abbreviation",
+            unit: units.RadiationExposurePicocoulombPerKilogram,
+            want: "pC/kg",
+        },
+        {
+            name: "NanocoulombPerKilogram abbreviation",
+            unit: units.RadiationExposureNanocoulombPerKilogram,
+            want: "nC/kg",
+        },
+        {
+            name: "MicrocoulombPerKilogram abbreviation",
+            unit: units.RadiationExposureMicrocoulombPerKilogram,
+            want: "μC/kg",
+        },
+        {
+            name: "MillicoulombPerKilogram abbreviation",
+            unit: units.RadiationExposureMillicoulombPerKilogram,
+            want: "mC/kg",
+        },
+        {
+            name: "Microroentgen abbreviation",
+            unit: units.RadiationExposureMicroroentgen,
+            want: "μR",
+        },
+        {
+            name: "Milliroentgen abbreviation",
+            unit: units.RadiationExposureMilliroentgen,
+            want: "mR",
+        },
+        {
+            name: "invalid unit",
+            unit: units.RadiationExposureUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetRadiationExposureAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetRadiationExposureAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestRadiationExposure_String(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateRadiationExposure(tt.value, units.RadiationExposureCoulombPerKilogram)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("RadiationExposure.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

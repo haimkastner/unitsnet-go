@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareKilometers.
 		// No expected conversion value provided for SquareKilometers, verifying result is not NaN.
 		result := a.SquareKilometers()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareKilometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareKilometers returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareMeters.
 		// No expected conversion value provided for SquareMeters, verifying result is not NaN.
 		result := a.SquareMeters()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareMeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareMeters returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareDecimeters.
 		// No expected conversion value provided for SquareDecimeters, verifying result is not NaN.
 		result := a.SquareDecimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareDecimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareDecimeters returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareCentimeters.
 		// No expected conversion value provided for SquareCentimeters, verifying result is not NaN.
 		result := a.SquareCentimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareCentimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareCentimeters returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareMillimeters.
 		// No expected conversion value provided for SquareMillimeters, verifying result is not NaN.
 		result := a.SquareMillimeters()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareMillimeters()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareMillimeters returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareMicrometers.
 		// No expected conversion value provided for SquareMicrometers, verifying result is not NaN.
 		result := a.SquareMicrometers()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareMicrometers()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareMicrometers returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareMiles.
 		// No expected conversion value provided for SquareMiles, verifying result is not NaN.
 		result := a.SquareMiles()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareMiles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareMiles returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareYards.
 		// No expected conversion value provided for SquareYards, verifying result is not NaN.
 		result := a.SquareYards()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareYards()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareYards returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareFeet.
 		// No expected conversion value provided for SquareFeet, verifying result is not NaN.
 		result := a.SquareFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareFeet returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to UsSurveySquareFeet.
 		// No expected conversion value provided for UsSurveySquareFeet, verifying result is not NaN.
 		result := a.UsSurveySquareFeet()
-		if math.IsNaN(result) {
+		cacheResult := a.UsSurveySquareFeet()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsSurveySquareFeet returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareInches.
 		// No expected conversion value provided for SquareInches, verifying result is not NaN.
 		result := a.SquareInches()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareInches()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareInches returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to Acres.
 		// No expected conversion value provided for Acres, verifying result is not NaN.
 		result := a.Acres()
-		if math.IsNaN(result) {
+		cacheResult := a.Acres()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Acres returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to Hectares.
 		// No expected conversion value provided for Hectares, verifying result is not NaN.
 		result := a.Hectares()
-		if math.IsNaN(result) {
+		cacheResult := a.Hectares()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Hectares returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestAreaConversions(t *testing.T) {
 		// Test conversion to SquareNauticalMiles.
 		// No expected conversion value provided for SquareNauticalMiles, verifying result is not NaN.
 		result := a.SquareNauticalMiles()
-		if math.IsNaN(result) {
+		cacheResult := a.SquareNauticalMiles()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to SquareNauticalMiles returned NaN")
 		}
 	}
@@ -1406,4 +1421,160 @@ func TestArea_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetAreaAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.AreaUnits
+        want string
+    }{
+        {
+            name: "SquareKilometer abbreviation",
+            unit: units.AreaSquareKilometer,
+            want: "km²",
+        },
+        {
+            name: "SquareMeter abbreviation",
+            unit: units.AreaSquareMeter,
+            want: "m²",
+        },
+        {
+            name: "SquareDecimeter abbreviation",
+            unit: units.AreaSquareDecimeter,
+            want: "dm²",
+        },
+        {
+            name: "SquareCentimeter abbreviation",
+            unit: units.AreaSquareCentimeter,
+            want: "cm²",
+        },
+        {
+            name: "SquareMillimeter abbreviation",
+            unit: units.AreaSquareMillimeter,
+            want: "mm²",
+        },
+        {
+            name: "SquareMicrometer abbreviation",
+            unit: units.AreaSquareMicrometer,
+            want: "µm²",
+        },
+        {
+            name: "SquareMile abbreviation",
+            unit: units.AreaSquareMile,
+            want: "mi²",
+        },
+        {
+            name: "SquareYard abbreviation",
+            unit: units.AreaSquareYard,
+            want: "yd²",
+        },
+        {
+            name: "SquareFoot abbreviation",
+            unit: units.AreaSquareFoot,
+            want: "ft²",
+        },
+        {
+            name: "UsSurveySquareFoot abbreviation",
+            unit: units.AreaUsSurveySquareFoot,
+            want: "ft² (US)",
+        },
+        {
+            name: "SquareInch abbreviation",
+            unit: units.AreaSquareInch,
+            want: "in²",
+        },
+        {
+            name: "Acre abbreviation",
+            unit: units.AreaAcre,
+            want: "ac",
+        },
+        {
+            name: "Hectare abbreviation",
+            unit: units.AreaHectare,
+            want: "ha",
+        },
+        {
+            name: "SquareNauticalMile abbreviation",
+            unit: units.AreaSquareNauticalMile,
+            want: "nmi²",
+        },
+        {
+            name: "invalid unit",
+            unit: units.AreaUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetAreaAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetAreaAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestArea_String(t *testing.T) {
+    factory := units.AreaFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateArea(tt.value, units.AreaSquareMeter)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Area.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

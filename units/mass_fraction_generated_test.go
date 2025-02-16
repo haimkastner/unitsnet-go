@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to DecimalFractions.
 		// No expected conversion value provided for DecimalFractions, verifying result is not NaN.
 		result := a.DecimalFractions()
-		if math.IsNaN(result) {
+		cacheResult := a.DecimalFractions()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecimalFractions returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to GramsPerGram.
 		// No expected conversion value provided for GramsPerGram, verifying result is not NaN.
 		result := a.GramsPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerGram returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to GramsPerKilogram.
 		// No expected conversion value provided for GramsPerKilogram, verifying result is not NaN.
 		result := a.GramsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.GramsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to GramsPerKilogram returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to Percent.
 		// No expected conversion value provided for Percent, verifying result is not NaN.
 		result := a.Percent()
-		if math.IsNaN(result) {
+		cacheResult := a.Percent()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Percent returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to PartsPerThousand.
 		// No expected conversion value provided for PartsPerThousand, verifying result is not NaN.
 		result := a.PartsPerThousand()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerThousand()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerThousand returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to PartsPerMillion.
 		// No expected conversion value provided for PartsPerMillion, verifying result is not NaN.
 		result := a.PartsPerMillion()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerMillion()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerMillion returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to PartsPerBillion.
 		// No expected conversion value provided for PartsPerBillion, verifying result is not NaN.
 		result := a.PartsPerBillion()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerBillion()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerBillion returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to PartsPerTrillion.
 		// No expected conversion value provided for PartsPerTrillion, verifying result is not NaN.
 		result := a.PartsPerTrillion()
-		if math.IsNaN(result) {
+		cacheResult := a.PartsPerTrillion()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to PartsPerTrillion returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to NanogramsPerGram.
 		// No expected conversion value provided for NanogramsPerGram, verifying result is not NaN.
 		result := a.NanogramsPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.NanogramsPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanogramsPerGram returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerGram.
 		// No expected conversion value provided for MicrogramsPerGram, verifying result is not NaN.
 		result := a.MicrogramsPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerGram returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to MilligramsPerGram.
 		// No expected conversion value provided for MilligramsPerGram, verifying result is not NaN.
 		result := a.MilligramsPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerGram returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to CentigramsPerGram.
 		// No expected conversion value provided for CentigramsPerGram, verifying result is not NaN.
 		result := a.CentigramsPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigramsPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigramsPerGram returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to DecigramsPerGram.
 		// No expected conversion value provided for DecigramsPerGram, verifying result is not NaN.
 		result := a.DecigramsPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigramsPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigramsPerGram returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to DecagramsPerGram.
 		// No expected conversion value provided for DecagramsPerGram, verifying result is not NaN.
 		result := a.DecagramsPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.DecagramsPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecagramsPerGram returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to HectogramsPerGram.
 		// No expected conversion value provided for HectogramsPerGram, verifying result is not NaN.
 		result := a.HectogramsPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.HectogramsPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectogramsPerGram returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to KilogramsPerGram.
 		// No expected conversion value provided for KilogramsPerGram, verifying result is not NaN.
 		result := a.KilogramsPerGram()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerGram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerGram returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to NanogramsPerKilogram.
 		// No expected conversion value provided for NanogramsPerKilogram, verifying result is not NaN.
 		result := a.NanogramsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.NanogramsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanogramsPerKilogram returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to MicrogramsPerKilogram.
 		// No expected conversion value provided for MicrogramsPerKilogram, verifying result is not NaN.
 		result := a.MicrogramsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrogramsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrogramsPerKilogram returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to MilligramsPerKilogram.
 		// No expected conversion value provided for MilligramsPerKilogram, verifying result is not NaN.
 		result := a.MilligramsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.MilligramsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilligramsPerKilogram returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to CentigramsPerKilogram.
 		// No expected conversion value provided for CentigramsPerKilogram, verifying result is not NaN.
 		result := a.CentigramsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.CentigramsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentigramsPerKilogram returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to DecigramsPerKilogram.
 		// No expected conversion value provided for DecigramsPerKilogram, verifying result is not NaN.
 		result := a.DecigramsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.DecigramsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecigramsPerKilogram returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to DecagramsPerKilogram.
 		// No expected conversion value provided for DecagramsPerKilogram, verifying result is not NaN.
 		result := a.DecagramsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.DecagramsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecagramsPerKilogram returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to HectogramsPerKilogram.
 		// No expected conversion value provided for HectogramsPerKilogram, verifying result is not NaN.
 		result := a.HectogramsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.HectogramsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to HectogramsPerKilogram returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestMassFractionConversions(t *testing.T) {
 		// Test conversion to KilogramsPerKilogram.
 		// No expected conversion value provided for KilogramsPerKilogram, verifying result is not NaN.
 		result := a.KilogramsPerKilogram()
-		if math.IsNaN(result) {
+		cacheResult := a.KilogramsPerKilogram()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilogramsPerKilogram returned NaN")
 		}
 	}
@@ -2206,4 +2231,210 @@ func TestMassFraction_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetMassFractionAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.MassFractionUnits
+        want string
+    }{
+        {
+            name: "DecimalFraction abbreviation",
+            unit: units.MassFractionDecimalFraction,
+            want: "",
+        },
+        {
+            name: "GramPerGram abbreviation",
+            unit: units.MassFractionGramPerGram,
+            want: "g/g",
+        },
+        {
+            name: "GramPerKilogram abbreviation",
+            unit: units.MassFractionGramPerKilogram,
+            want: "g/kg",
+        },
+        {
+            name: "Percent abbreviation",
+            unit: units.MassFractionPercent,
+            want: "%",
+        },
+        {
+            name: "PartPerThousand abbreviation",
+            unit: units.MassFractionPartPerThousand,
+            want: "‰",
+        },
+        {
+            name: "PartPerMillion abbreviation",
+            unit: units.MassFractionPartPerMillion,
+            want: "ppm",
+        },
+        {
+            name: "PartPerBillion abbreviation",
+            unit: units.MassFractionPartPerBillion,
+            want: "ppb",
+        },
+        {
+            name: "PartPerTrillion abbreviation",
+            unit: units.MassFractionPartPerTrillion,
+            want: "ppt",
+        },
+        {
+            name: "NanogramPerGram abbreviation",
+            unit: units.MassFractionNanogramPerGram,
+            want: "ng/g",
+        },
+        {
+            name: "MicrogramPerGram abbreviation",
+            unit: units.MassFractionMicrogramPerGram,
+            want: "μg/g",
+        },
+        {
+            name: "MilligramPerGram abbreviation",
+            unit: units.MassFractionMilligramPerGram,
+            want: "mg/g",
+        },
+        {
+            name: "CentigramPerGram abbreviation",
+            unit: units.MassFractionCentigramPerGram,
+            want: "cg/g",
+        },
+        {
+            name: "DecigramPerGram abbreviation",
+            unit: units.MassFractionDecigramPerGram,
+            want: "dg/g",
+        },
+        {
+            name: "DecagramPerGram abbreviation",
+            unit: units.MassFractionDecagramPerGram,
+            want: "dag/g",
+        },
+        {
+            name: "HectogramPerGram abbreviation",
+            unit: units.MassFractionHectogramPerGram,
+            want: "hg/g",
+        },
+        {
+            name: "KilogramPerGram abbreviation",
+            unit: units.MassFractionKilogramPerGram,
+            want: "kg/g",
+        },
+        {
+            name: "NanogramPerKilogram abbreviation",
+            unit: units.MassFractionNanogramPerKilogram,
+            want: "ng/kg",
+        },
+        {
+            name: "MicrogramPerKilogram abbreviation",
+            unit: units.MassFractionMicrogramPerKilogram,
+            want: "μg/kg",
+        },
+        {
+            name: "MilligramPerKilogram abbreviation",
+            unit: units.MassFractionMilligramPerKilogram,
+            want: "mg/kg",
+        },
+        {
+            name: "CentigramPerKilogram abbreviation",
+            unit: units.MassFractionCentigramPerKilogram,
+            want: "cg/kg",
+        },
+        {
+            name: "DecigramPerKilogram abbreviation",
+            unit: units.MassFractionDecigramPerKilogram,
+            want: "dg/kg",
+        },
+        {
+            name: "DecagramPerKilogram abbreviation",
+            unit: units.MassFractionDecagramPerKilogram,
+            want: "dag/kg",
+        },
+        {
+            name: "HectogramPerKilogram abbreviation",
+            unit: units.MassFractionHectogramPerKilogram,
+            want: "hg/kg",
+        },
+        {
+            name: "KilogramPerKilogram abbreviation",
+            unit: units.MassFractionKilogramPerKilogram,
+            want: "kg/kg",
+        },
+        {
+            name: "invalid unit",
+            unit: units.MassFractionUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetMassFractionAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetMassFractionAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestMassFraction_String(t *testing.T) {
+    factory := units.MassFractionFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateMassFraction(tt.value, units.MassFractionDecimalFraction)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("MassFraction.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

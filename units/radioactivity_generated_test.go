@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Becquerels.
 		// No expected conversion value provided for Becquerels, verifying result is not NaN.
 		result := a.Becquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Becquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Becquerels returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Curies.
 		// No expected conversion value provided for Curies, verifying result is not NaN.
 		result := a.Curies()
-		if math.IsNaN(result) {
+		cacheResult := a.Curies()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Curies returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Rutherfords.
 		// No expected conversion value provided for Rutherfords, verifying result is not NaN.
 		result := a.Rutherfords()
-		if math.IsNaN(result) {
+		cacheResult := a.Rutherfords()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Rutherfords returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Picobecquerels.
 		// No expected conversion value provided for Picobecquerels, verifying result is not NaN.
 		result := a.Picobecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Picobecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picobecquerels returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Nanobecquerels.
 		// No expected conversion value provided for Nanobecquerels, verifying result is not NaN.
 		result := a.Nanobecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanobecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanobecquerels returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Microbecquerels.
 		// No expected conversion value provided for Microbecquerels, verifying result is not NaN.
 		result := a.Microbecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Microbecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microbecquerels returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Millibecquerels.
 		// No expected conversion value provided for Millibecquerels, verifying result is not NaN.
 		result := a.Millibecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Millibecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millibecquerels returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Kilobecquerels.
 		// No expected conversion value provided for Kilobecquerels, verifying result is not NaN.
 		result := a.Kilobecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilobecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilobecquerels returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Megabecquerels.
 		// No expected conversion value provided for Megabecquerels, verifying result is not NaN.
 		result := a.Megabecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Megabecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megabecquerels returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Gigabecquerels.
 		// No expected conversion value provided for Gigabecquerels, verifying result is not NaN.
 		result := a.Gigabecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigabecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigabecquerels returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Terabecquerels.
 		// No expected conversion value provided for Terabecquerels, verifying result is not NaN.
 		result := a.Terabecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Terabecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Terabecquerels returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Petabecquerels.
 		// No expected conversion value provided for Petabecquerels, verifying result is not NaN.
 		result := a.Petabecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Petabecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Petabecquerels returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Exabecquerels.
 		// No expected conversion value provided for Exabecquerels, verifying result is not NaN.
 		result := a.Exabecquerels()
-		if math.IsNaN(result) {
+		cacheResult := a.Exabecquerels()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Exabecquerels returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Picocuries.
 		// No expected conversion value provided for Picocuries, verifying result is not NaN.
 		result := a.Picocuries()
-		if math.IsNaN(result) {
+		cacheResult := a.Picocuries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picocuries returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Nanocuries.
 		// No expected conversion value provided for Nanocuries, verifying result is not NaN.
 		result := a.Nanocuries()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanocuries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanocuries returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Microcuries.
 		// No expected conversion value provided for Microcuries, verifying result is not NaN.
 		result := a.Microcuries()
-		if math.IsNaN(result) {
+		cacheResult := a.Microcuries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microcuries returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Millicuries.
 		// No expected conversion value provided for Millicuries, verifying result is not NaN.
 		result := a.Millicuries()
-		if math.IsNaN(result) {
+		cacheResult := a.Millicuries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millicuries returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Kilocuries.
 		// No expected conversion value provided for Kilocuries, verifying result is not NaN.
 		result := a.Kilocuries()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilocuries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilocuries returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Megacuries.
 		// No expected conversion value provided for Megacuries, verifying result is not NaN.
 		result := a.Megacuries()
-		if math.IsNaN(result) {
+		cacheResult := a.Megacuries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megacuries returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Gigacuries.
 		// No expected conversion value provided for Gigacuries, verifying result is not NaN.
 		result := a.Gigacuries()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigacuries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigacuries returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Teracuries.
 		// No expected conversion value provided for Teracuries, verifying result is not NaN.
 		result := a.Teracuries()
-		if math.IsNaN(result) {
+		cacheResult := a.Teracuries()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Teracuries returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Picorutherfords.
 		// No expected conversion value provided for Picorutherfords, verifying result is not NaN.
 		result := a.Picorutherfords()
-		if math.IsNaN(result) {
+		cacheResult := a.Picorutherfords()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Picorutherfords returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Nanorutherfords.
 		// No expected conversion value provided for Nanorutherfords, verifying result is not NaN.
 		result := a.Nanorutherfords()
-		if math.IsNaN(result) {
+		cacheResult := a.Nanorutherfords()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Nanorutherfords returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Microrutherfords.
 		// No expected conversion value provided for Microrutherfords, verifying result is not NaN.
 		result := a.Microrutherfords()
-		if math.IsNaN(result) {
+		cacheResult := a.Microrutherfords()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Microrutherfords returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Millirutherfords.
 		// No expected conversion value provided for Millirutherfords, verifying result is not NaN.
 		result := a.Millirutherfords()
-		if math.IsNaN(result) {
+		cacheResult := a.Millirutherfords()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Millirutherfords returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Kilorutherfords.
 		// No expected conversion value provided for Kilorutherfords, verifying result is not NaN.
 		result := a.Kilorutherfords()
-		if math.IsNaN(result) {
+		cacheResult := a.Kilorutherfords()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Kilorutherfords returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Megarutherfords.
 		// No expected conversion value provided for Megarutherfords, verifying result is not NaN.
 		result := a.Megarutherfords()
-		if math.IsNaN(result) {
+		cacheResult := a.Megarutherfords()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megarutherfords returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Gigarutherfords.
 		// No expected conversion value provided for Gigarutherfords, verifying result is not NaN.
 		result := a.Gigarutherfords()
-		if math.IsNaN(result) {
+		cacheResult := a.Gigarutherfords()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Gigarutherfords returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestRadioactivityConversions(t *testing.T) {
 		// Test conversion to Terarutherfords.
 		// No expected conversion value provided for Terarutherfords, verifying result is not NaN.
 		result := a.Terarutherfords()
-		if math.IsNaN(result) {
+		cacheResult := a.Terarutherfords()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Terarutherfords returned NaN")
 		}
 	}
@@ -2606,4 +2636,235 @@ func TestRadioactivity_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetRadioactivityAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.RadioactivityUnits
+        want string
+    }{
+        {
+            name: "Becquerel abbreviation",
+            unit: units.RadioactivityBecquerel,
+            want: "Bq",
+        },
+        {
+            name: "Curie abbreviation",
+            unit: units.RadioactivityCurie,
+            want: "Ci",
+        },
+        {
+            name: "Rutherford abbreviation",
+            unit: units.RadioactivityRutherford,
+            want: "Rd",
+        },
+        {
+            name: "Picobecquerel abbreviation",
+            unit: units.RadioactivityPicobecquerel,
+            want: "pBq",
+        },
+        {
+            name: "Nanobecquerel abbreviation",
+            unit: units.RadioactivityNanobecquerel,
+            want: "nBq",
+        },
+        {
+            name: "Microbecquerel abbreviation",
+            unit: units.RadioactivityMicrobecquerel,
+            want: "μBq",
+        },
+        {
+            name: "Millibecquerel abbreviation",
+            unit: units.RadioactivityMillibecquerel,
+            want: "mBq",
+        },
+        {
+            name: "Kilobecquerel abbreviation",
+            unit: units.RadioactivityKilobecquerel,
+            want: "kBq",
+        },
+        {
+            name: "Megabecquerel abbreviation",
+            unit: units.RadioactivityMegabecquerel,
+            want: "MBq",
+        },
+        {
+            name: "Gigabecquerel abbreviation",
+            unit: units.RadioactivityGigabecquerel,
+            want: "GBq",
+        },
+        {
+            name: "Terabecquerel abbreviation",
+            unit: units.RadioactivityTerabecquerel,
+            want: "TBq",
+        },
+        {
+            name: "Petabecquerel abbreviation",
+            unit: units.RadioactivityPetabecquerel,
+            want: "PBq",
+        },
+        {
+            name: "Exabecquerel abbreviation",
+            unit: units.RadioactivityExabecquerel,
+            want: "EBq",
+        },
+        {
+            name: "Picocurie abbreviation",
+            unit: units.RadioactivityPicocurie,
+            want: "pCi",
+        },
+        {
+            name: "Nanocurie abbreviation",
+            unit: units.RadioactivityNanocurie,
+            want: "nCi",
+        },
+        {
+            name: "Microcurie abbreviation",
+            unit: units.RadioactivityMicrocurie,
+            want: "μCi",
+        },
+        {
+            name: "Millicurie abbreviation",
+            unit: units.RadioactivityMillicurie,
+            want: "mCi",
+        },
+        {
+            name: "Kilocurie abbreviation",
+            unit: units.RadioactivityKilocurie,
+            want: "kCi",
+        },
+        {
+            name: "Megacurie abbreviation",
+            unit: units.RadioactivityMegacurie,
+            want: "MCi",
+        },
+        {
+            name: "Gigacurie abbreviation",
+            unit: units.RadioactivityGigacurie,
+            want: "GCi",
+        },
+        {
+            name: "Teracurie abbreviation",
+            unit: units.RadioactivityTeracurie,
+            want: "TCi",
+        },
+        {
+            name: "Picorutherford abbreviation",
+            unit: units.RadioactivityPicorutherford,
+            want: "pRd",
+        },
+        {
+            name: "Nanorutherford abbreviation",
+            unit: units.RadioactivityNanorutherford,
+            want: "nRd",
+        },
+        {
+            name: "Microrutherford abbreviation",
+            unit: units.RadioactivityMicrorutherford,
+            want: "μRd",
+        },
+        {
+            name: "Millirutherford abbreviation",
+            unit: units.RadioactivityMillirutherford,
+            want: "mRd",
+        },
+        {
+            name: "Kilorutherford abbreviation",
+            unit: units.RadioactivityKilorutherford,
+            want: "kRd",
+        },
+        {
+            name: "Megarutherford abbreviation",
+            unit: units.RadioactivityMegarutherford,
+            want: "MRd",
+        },
+        {
+            name: "Gigarutherford abbreviation",
+            unit: units.RadioactivityGigarutherford,
+            want: "GRd",
+        },
+        {
+            name: "Terarutherford abbreviation",
+            unit: units.RadioactivityTerarutherford,
+            want: "TRd",
+        },
+        {
+            name: "invalid unit",
+            unit: units.RadioactivityUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetRadioactivityAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetRadioactivityAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestRadioactivity_String(t *testing.T) {
+    factory := units.RadioactivityFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateRadioactivity(tt.value, units.RadioactivityBecquerel)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Radioactivity.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }

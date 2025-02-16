@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"math"
 	"testing"
+	"strings"
 
 	"github.com/haimkastner/unitsnet-go/units"
 
@@ -80,7 +81,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to MetersPerSecond.
 		// No expected conversion value provided for MetersPerSecond, verifying result is not NaN.
 		result := a.MetersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetersPerSecond returned NaN")
 		}
 	}
@@ -88,7 +90,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to MetersPerMinutes.
 		// No expected conversion value provided for MetersPerMinutes, verifying result is not NaN.
 		result := a.MetersPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.MetersPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetersPerMinutes returned NaN")
 		}
 	}
@@ -96,7 +99,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to MetersPerHour.
 		// No expected conversion value provided for MetersPerHour, verifying result is not NaN.
 		result := a.MetersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MetersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MetersPerHour returned NaN")
 		}
 	}
@@ -104,7 +108,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to FeetPerSecond.
 		// No expected conversion value provided for FeetPerSecond, verifying result is not NaN.
 		result := a.FeetPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.FeetPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FeetPerSecond returned NaN")
 		}
 	}
@@ -112,7 +117,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to FeetPerMinute.
 		// No expected conversion value provided for FeetPerMinute, verifying result is not NaN.
 		result := a.FeetPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.FeetPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FeetPerMinute returned NaN")
 		}
 	}
@@ -120,7 +126,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to FeetPerHour.
 		// No expected conversion value provided for FeetPerHour, verifying result is not NaN.
 		result := a.FeetPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.FeetPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to FeetPerHour returned NaN")
 		}
 	}
@@ -128,7 +135,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to UsSurveyFeetPerSecond.
 		// No expected conversion value provided for UsSurveyFeetPerSecond, verifying result is not NaN.
 		result := a.UsSurveyFeetPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.UsSurveyFeetPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsSurveyFeetPerSecond returned NaN")
 		}
 	}
@@ -136,7 +144,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to UsSurveyFeetPerMinute.
 		// No expected conversion value provided for UsSurveyFeetPerMinute, verifying result is not NaN.
 		result := a.UsSurveyFeetPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.UsSurveyFeetPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsSurveyFeetPerMinute returned NaN")
 		}
 	}
@@ -144,7 +153,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to UsSurveyFeetPerHour.
 		// No expected conversion value provided for UsSurveyFeetPerHour, verifying result is not NaN.
 		result := a.UsSurveyFeetPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.UsSurveyFeetPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to UsSurveyFeetPerHour returned NaN")
 		}
 	}
@@ -152,7 +162,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to InchesPerSecond.
 		// No expected conversion value provided for InchesPerSecond, verifying result is not NaN.
 		result := a.InchesPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.InchesPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InchesPerSecond returned NaN")
 		}
 	}
@@ -160,7 +171,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to InchesPerMinute.
 		// No expected conversion value provided for InchesPerMinute, verifying result is not NaN.
 		result := a.InchesPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.InchesPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InchesPerMinute returned NaN")
 		}
 	}
@@ -168,7 +180,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to InchesPerHour.
 		// No expected conversion value provided for InchesPerHour, verifying result is not NaN.
 		result := a.InchesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.InchesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to InchesPerHour returned NaN")
 		}
 	}
@@ -176,7 +189,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to YardsPerSecond.
 		// No expected conversion value provided for YardsPerSecond, verifying result is not NaN.
 		result := a.YardsPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.YardsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to YardsPerSecond returned NaN")
 		}
 	}
@@ -184,7 +198,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to YardsPerMinute.
 		// No expected conversion value provided for YardsPerMinute, verifying result is not NaN.
 		result := a.YardsPerMinute()
-		if math.IsNaN(result) {
+		cacheResult := a.YardsPerMinute()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to YardsPerMinute returned NaN")
 		}
 	}
@@ -192,7 +207,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to YardsPerHour.
 		// No expected conversion value provided for YardsPerHour, verifying result is not NaN.
 		result := a.YardsPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.YardsPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to YardsPerHour returned NaN")
 		}
 	}
@@ -200,7 +216,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to Knots.
 		// No expected conversion value provided for Knots, verifying result is not NaN.
 		result := a.Knots()
-		if math.IsNaN(result) {
+		cacheResult := a.Knots()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Knots returned NaN")
 		}
 	}
@@ -208,7 +225,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to MilesPerHour.
 		// No expected conversion value provided for MilesPerHour, verifying result is not NaN.
 		result := a.MilesPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MilesPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MilesPerHour returned NaN")
 		}
 	}
@@ -216,7 +234,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to Mach.
 		// No expected conversion value provided for Mach, verifying result is not NaN.
 		result := a.Mach()
-		if math.IsNaN(result) {
+		cacheResult := a.Mach()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Mach returned NaN")
 		}
 	}
@@ -224,7 +243,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to NanometersPerSecond.
 		// No expected conversion value provided for NanometersPerSecond, verifying result is not NaN.
 		result := a.NanometersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.NanometersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanometersPerSecond returned NaN")
 		}
 	}
@@ -232,7 +252,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to MicrometersPerSecond.
 		// No expected conversion value provided for MicrometersPerSecond, verifying result is not NaN.
 		result := a.MicrometersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrometersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrometersPerSecond returned NaN")
 		}
 	}
@@ -240,7 +261,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to MillimetersPerSecond.
 		// No expected conversion value provided for MillimetersPerSecond, verifying result is not NaN.
 		result := a.MillimetersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimetersPerSecond returned NaN")
 		}
 	}
@@ -248,7 +270,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to CentimetersPerSecond.
 		// No expected conversion value provided for CentimetersPerSecond, verifying result is not NaN.
 		result := a.CentimetersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.CentimetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentimetersPerSecond returned NaN")
 		}
 	}
@@ -256,7 +279,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to DecimetersPerSecond.
 		// No expected conversion value provided for DecimetersPerSecond, verifying result is not NaN.
 		result := a.DecimetersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.DecimetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecimetersPerSecond returned NaN")
 		}
 	}
@@ -264,7 +288,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to KilometersPerSecond.
 		// No expected conversion value provided for KilometersPerSecond, verifying result is not NaN.
 		result := a.KilometersPerSecond()
-		if math.IsNaN(result) {
+		cacheResult := a.KilometersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilometersPerSecond returned NaN")
 		}
 	}
@@ -272,7 +297,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to NanometersPerMinutes.
 		// No expected conversion value provided for NanometersPerMinutes, verifying result is not NaN.
 		result := a.NanometersPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.NanometersPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to NanometersPerMinutes returned NaN")
 		}
 	}
@@ -280,7 +306,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to MicrometersPerMinutes.
 		// No expected conversion value provided for MicrometersPerMinutes, verifying result is not NaN.
 		result := a.MicrometersPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.MicrometersPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MicrometersPerMinutes returned NaN")
 		}
 	}
@@ -288,7 +315,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to MillimetersPerMinutes.
 		// No expected conversion value provided for MillimetersPerMinutes, verifying result is not NaN.
 		result := a.MillimetersPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimetersPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimetersPerMinutes returned NaN")
 		}
 	}
@@ -296,7 +324,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to CentimetersPerMinutes.
 		// No expected conversion value provided for CentimetersPerMinutes, verifying result is not NaN.
 		result := a.CentimetersPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.CentimetersPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentimetersPerMinutes returned NaN")
 		}
 	}
@@ -304,7 +333,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to DecimetersPerMinutes.
 		// No expected conversion value provided for DecimetersPerMinutes, verifying result is not NaN.
 		result := a.DecimetersPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.DecimetersPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to DecimetersPerMinutes returned NaN")
 		}
 	}
@@ -312,7 +342,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to KilometersPerMinutes.
 		// No expected conversion value provided for KilometersPerMinutes, verifying result is not NaN.
 		result := a.KilometersPerMinutes()
-		if math.IsNaN(result) {
+		cacheResult := a.KilometersPerMinutes()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilometersPerMinutes returned NaN")
 		}
 	}
@@ -320,7 +351,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to MillimetersPerHour.
 		// No expected conversion value provided for MillimetersPerHour, verifying result is not NaN.
 		result := a.MillimetersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.MillimetersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to MillimetersPerHour returned NaN")
 		}
 	}
@@ -328,7 +360,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to CentimetersPerHour.
 		// No expected conversion value provided for CentimetersPerHour, verifying result is not NaN.
 		result := a.CentimetersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.CentimetersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to CentimetersPerHour returned NaN")
 		}
 	}
@@ -336,7 +369,8 @@ func TestSpeedConversions(t *testing.T) {
 		// Test conversion to KilometersPerHour.
 		// No expected conversion value provided for KilometersPerHour, verifying result is not NaN.
 		result := a.KilometersPerHour()
-		if math.IsNaN(result) {
+		cacheResult := a.KilometersPerHour()
+		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to KilometersPerHour returned NaN")
 		}
 	}
@@ -2926,4 +2960,255 @@ func TestSpeed_Arithmetic(t *testing.T) {
 	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
 		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
 	}
+}
+
+
+func TestGetSpeedAbbreviation(t *testing.T) {
+    tests := []struct {
+        name string
+        unit units.SpeedUnits
+        want string
+    }{
+        {
+            name: "MeterPerSecond abbreviation",
+            unit: units.SpeedMeterPerSecond,
+            want: "m/s",
+        },
+        {
+            name: "MeterPerMinute abbreviation",
+            unit: units.SpeedMeterPerMinute,
+            want: "m/min",
+        },
+        {
+            name: "MeterPerHour abbreviation",
+            unit: units.SpeedMeterPerHour,
+            want: "m/h",
+        },
+        {
+            name: "FootPerSecond abbreviation",
+            unit: units.SpeedFootPerSecond,
+            want: "ft/s",
+        },
+        {
+            name: "FootPerMinute abbreviation",
+            unit: units.SpeedFootPerMinute,
+            want: "ft/min",
+        },
+        {
+            name: "FootPerHour abbreviation",
+            unit: units.SpeedFootPerHour,
+            want: "ft/h",
+        },
+        {
+            name: "UsSurveyFootPerSecond abbreviation",
+            unit: units.SpeedUsSurveyFootPerSecond,
+            want: "ftUS/s",
+        },
+        {
+            name: "UsSurveyFootPerMinute abbreviation",
+            unit: units.SpeedUsSurveyFootPerMinute,
+            want: "ftUS/min",
+        },
+        {
+            name: "UsSurveyFootPerHour abbreviation",
+            unit: units.SpeedUsSurveyFootPerHour,
+            want: "ftUS/h",
+        },
+        {
+            name: "InchPerSecond abbreviation",
+            unit: units.SpeedInchPerSecond,
+            want: "in/s",
+        },
+        {
+            name: "InchPerMinute abbreviation",
+            unit: units.SpeedInchPerMinute,
+            want: "in/min",
+        },
+        {
+            name: "InchPerHour abbreviation",
+            unit: units.SpeedInchPerHour,
+            want: "in/h",
+        },
+        {
+            name: "YardPerSecond abbreviation",
+            unit: units.SpeedYardPerSecond,
+            want: "yd/s",
+        },
+        {
+            name: "YardPerMinute abbreviation",
+            unit: units.SpeedYardPerMinute,
+            want: "yd/min",
+        },
+        {
+            name: "YardPerHour abbreviation",
+            unit: units.SpeedYardPerHour,
+            want: "yd/h",
+        },
+        {
+            name: "Knot abbreviation",
+            unit: units.SpeedKnot,
+            want: "kn",
+        },
+        {
+            name: "MilePerHour abbreviation",
+            unit: units.SpeedMilePerHour,
+            want: "mph",
+        },
+        {
+            name: "Mach abbreviation",
+            unit: units.SpeedMach,
+            want: "M",
+        },
+        {
+            name: "NanometerPerSecond abbreviation",
+            unit: units.SpeedNanometerPerSecond,
+            want: "nm/s",
+        },
+        {
+            name: "MicrometerPerSecond abbreviation",
+            unit: units.SpeedMicrometerPerSecond,
+            want: "μm/s",
+        },
+        {
+            name: "MillimeterPerSecond abbreviation",
+            unit: units.SpeedMillimeterPerSecond,
+            want: "mm/s",
+        },
+        {
+            name: "CentimeterPerSecond abbreviation",
+            unit: units.SpeedCentimeterPerSecond,
+            want: "cm/s",
+        },
+        {
+            name: "DecimeterPerSecond abbreviation",
+            unit: units.SpeedDecimeterPerSecond,
+            want: "dm/s",
+        },
+        {
+            name: "KilometerPerSecond abbreviation",
+            unit: units.SpeedKilometerPerSecond,
+            want: "km/s",
+        },
+        {
+            name: "NanometerPerMinute abbreviation",
+            unit: units.SpeedNanometerPerMinute,
+            want: "nm/min",
+        },
+        {
+            name: "MicrometerPerMinute abbreviation",
+            unit: units.SpeedMicrometerPerMinute,
+            want: "μm/min",
+        },
+        {
+            name: "MillimeterPerMinute abbreviation",
+            unit: units.SpeedMillimeterPerMinute,
+            want: "mm/min",
+        },
+        {
+            name: "CentimeterPerMinute abbreviation",
+            unit: units.SpeedCentimeterPerMinute,
+            want: "cm/min",
+        },
+        {
+            name: "DecimeterPerMinute abbreviation",
+            unit: units.SpeedDecimeterPerMinute,
+            want: "dm/min",
+        },
+        {
+            name: "KilometerPerMinute abbreviation",
+            unit: units.SpeedKilometerPerMinute,
+            want: "km/min",
+        },
+        {
+            name: "MillimeterPerHour abbreviation",
+            unit: units.SpeedMillimeterPerHour,
+            want: "mm/h",
+        },
+        {
+            name: "CentimeterPerHour abbreviation",
+            unit: units.SpeedCentimeterPerHour,
+            want: "cm/h",
+        },
+        {
+            name: "KilometerPerHour abbreviation",
+            unit: units.SpeedKilometerPerHour,
+            want: "km/h",
+        },
+        {
+            name: "invalid unit",
+            unit: units.SpeedUnits("invalid"),
+            want: "",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got := units.GetSpeedAbbreviation(tt.unit)
+            if got != tt.want {
+                t.Errorf("GetSpeedAbbreviation(%v) = %v, want %v", 
+                    tt.unit, got, tt.want)
+            }
+        })
+    }
+}
+
+func TestSpeed_String(t *testing.T) {
+    factory := units.SpeedFactory{}
+    
+    tests := []struct {
+        name  string
+        value float64
+        want  string
+    }{
+        {
+            name:  "positive integer",
+            value: 100,
+            want:  "100.00",
+        },
+        {
+            name:  "negative integer",
+            value: -100,
+            want:  "-100.00",
+        },
+        {
+            name:  "zero",
+            value: 0,
+            want:  "0.00",
+        },
+        {
+            name:  "positive decimal",
+            value: 123.456,
+            want:  "123.46",
+        },
+        {
+            name:  "negative decimal",
+            value: -123.456,
+            want:  "-123.46",
+        },
+        {
+            name:  "small decimal",
+            value: 0.123,
+            want:  "0.12",
+        },
+        {
+            name:  "large number",
+            value: 1000000,
+            want:  "1000000.00",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            unit, err := factory.CreateSpeed(tt.value, units.SpeedMeterPerSecond)
+            if err != nil {
+                t.Errorf("Failed to create test unit: %v", err)
+                return
+            }
+
+            got := unit.String()
+            if !strings.HasPrefix(got, tt.want) {
+                t.Errorf("Speed.String() = %v, want %v", got, tt.want)
+            }
+        })
+    }
 }
