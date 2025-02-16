@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -484,41 +484,9 @@ func (a *Duration) ToString(unit DurationUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetDurationAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Duration) getUnitAbbreviation(unit DurationUnits) string {
-	switch unit { 
-	case DurationYear365:
-		return "yr" 
-	case DurationMonth30:
-		return "mo" 
-	case DurationWeek:
-		return "wk" 
-	case DurationDay:
-		return "d" 
-	case DurationHour:
-		return "h" 
-	case DurationMinute:
-		return "m" 
-	case DurationSecond:
-		return "s" 
-	case DurationJulianYear:
-		return "jyr" 
-	case DurationSol:
-		return "sol" 
-	case DurationNanosecond:
-		return "ns" 
-	case DurationMicrosecond:
-		return "μs" 
-	case DurationMillisecond:
-		return "ms" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetDurationAbbreviation(unit))
 }
 
 // Equals checks if the given Duration is equal to the current Duration.
@@ -599,4 +567,36 @@ func (a *Duration) Multiply(other *Duration) *Duration {
 //    *Duration: A new Duration instance representing the quotient of both Duration.
 func (a *Duration) Divide(other *Duration) *Duration {
 	return &Duration{value: a.value / other.BaseValue()}
+}
+
+// GetDurationAbbreviation gets the unit abbreviation.
+func GetDurationAbbreviation(unit DurationUnits) string {
+	switch unit { 
+	case DurationYear365:
+		return "yr" 
+	case DurationMonth30:
+		return "mo" 
+	case DurationWeek:
+		return "wk" 
+	case DurationDay:
+		return "d" 
+	case DurationHour:
+		return "h" 
+	case DurationMinute:
+		return "m" 
+	case DurationSecond:
+		return "s" 
+	case DurationJulianYear:
+		return "jyr" 
+	case DurationSol:
+		return "sol" 
+	case DurationNanosecond:
+		return "ns" 
+	case DurationMicrosecond:
+		return "μs" 
+	case DurationMillisecond:
+		return "ms" 
+	default:
+		return ""
+	}
 }

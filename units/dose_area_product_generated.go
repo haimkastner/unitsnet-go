@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -692,57 +692,9 @@ func (a *DoseAreaProduct) ToString(unit DoseAreaProductUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetDoseAreaProductAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *DoseAreaProduct) getUnitAbbreviation(unit DoseAreaProductUnits) string {
-	switch unit { 
-	case DoseAreaProductGraySquareMeter:
-		return "Gy·m²" 
-	case DoseAreaProductGraySquareDecimeter:
-		return "Gy·dm²" 
-	case DoseAreaProductGraySquareCentimeter:
-		return "Gy·cm²" 
-	case DoseAreaProductGraySquareMillimeter:
-		return "Gy·mm²" 
-	case DoseAreaProductMicrograySquareMeter:
-		return "μGy·m²" 
-	case DoseAreaProductMilligraySquareMeter:
-		return "mGy·m²" 
-	case DoseAreaProductCentigraySquareMeter:
-		return "cGy·m²" 
-	case DoseAreaProductDecigraySquareMeter:
-		return "dGy·m²" 
-	case DoseAreaProductMicrograySquareDecimeter:
-		return "μGy·dm²" 
-	case DoseAreaProductMilligraySquareDecimeter:
-		return "mGy·dm²" 
-	case DoseAreaProductCentigraySquareDecimeter:
-		return "cGy·dm²" 
-	case DoseAreaProductDecigraySquareDecimeter:
-		return "dGy·dm²" 
-	case DoseAreaProductMicrograySquareCentimeter:
-		return "μGy·cm²" 
-	case DoseAreaProductMilligraySquareCentimeter:
-		return "mGy·cm²" 
-	case DoseAreaProductCentigraySquareCentimeter:
-		return "cGy·cm²" 
-	case DoseAreaProductDecigraySquareCentimeter:
-		return "dGy·cm²" 
-	case DoseAreaProductMicrograySquareMillimeter:
-		return "μGy·mm²" 
-	case DoseAreaProductMilligraySquareMillimeter:
-		return "mGy·mm²" 
-	case DoseAreaProductCentigraySquareMillimeter:
-		return "cGy·mm²" 
-	case DoseAreaProductDecigraySquareMillimeter:
-		return "dGy·mm²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetDoseAreaProductAbbreviation(unit))
 }
 
 // Equals checks if the given DoseAreaProduct is equal to the current DoseAreaProduct.
@@ -823,4 +775,52 @@ func (a *DoseAreaProduct) Multiply(other *DoseAreaProduct) *DoseAreaProduct {
 //    *DoseAreaProduct: A new DoseAreaProduct instance representing the quotient of both DoseAreaProduct.
 func (a *DoseAreaProduct) Divide(other *DoseAreaProduct) *DoseAreaProduct {
 	return &DoseAreaProduct{value: a.value / other.BaseValue()}
+}
+
+// GetDoseAreaProductAbbreviation gets the unit abbreviation.
+func GetDoseAreaProductAbbreviation(unit DoseAreaProductUnits) string {
+	switch unit { 
+	case DoseAreaProductGraySquareMeter:
+		return "Gy·m²" 
+	case DoseAreaProductGraySquareDecimeter:
+		return "Gy·dm²" 
+	case DoseAreaProductGraySquareCentimeter:
+		return "Gy·cm²" 
+	case DoseAreaProductGraySquareMillimeter:
+		return "Gy·mm²" 
+	case DoseAreaProductMicrograySquareMeter:
+		return "μGy·m²" 
+	case DoseAreaProductMilligraySquareMeter:
+		return "mGy·m²" 
+	case DoseAreaProductCentigraySquareMeter:
+		return "cGy·m²" 
+	case DoseAreaProductDecigraySquareMeter:
+		return "dGy·m²" 
+	case DoseAreaProductMicrograySquareDecimeter:
+		return "μGy·dm²" 
+	case DoseAreaProductMilligraySquareDecimeter:
+		return "mGy·dm²" 
+	case DoseAreaProductCentigraySquareDecimeter:
+		return "cGy·dm²" 
+	case DoseAreaProductDecigraySquareDecimeter:
+		return "dGy·dm²" 
+	case DoseAreaProductMicrograySquareCentimeter:
+		return "μGy·cm²" 
+	case DoseAreaProductMilligraySquareCentimeter:
+		return "mGy·cm²" 
+	case DoseAreaProductCentigraySquareCentimeter:
+		return "cGy·cm²" 
+	case DoseAreaProductDecigraySquareCentimeter:
+		return "dGy·cm²" 
+	case DoseAreaProductMicrograySquareMillimeter:
+		return "μGy·mm²" 
+	case DoseAreaProductMilligraySquareMillimeter:
+		return "mGy·mm²" 
+	case DoseAreaProductCentigraySquareMillimeter:
+		return "cGy·mm²" 
+	case DoseAreaProductDecigraySquareMillimeter:
+		return "dGy·mm²" 
+	default:
+		return ""
+	}
 }

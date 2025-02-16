@@ -21,10 +21,15 @@ jobs:
           pip install -r units_generator/requirements-dev.txt
           python units_generator/generate_package.py
 
-      - name: Test units
+      - name: Test units with Coverage
         run: |
-          go test ./tests/...
+          go test -coverprofile=coverage.out ./...
       
+      - name: Upload Coverage to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Bump version
         if: github.ref == 'refs/heads/main'
         id: update_version
@@ -61,7 +66,7 @@ jobs:
         with:
           tag_name: ${{ steps.update_version.outputs.VERSION }}
           name: Package Version ${{ steps.update_version.outputs.VERSION }}
-          body: ${{  steps.version_info.outputs.BODY }}
+          body: ${{ steps.version_info.outputs.BODY }}
           draft: false
           prerelease: false
 

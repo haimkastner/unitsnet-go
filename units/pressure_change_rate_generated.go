@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -640,53 +640,9 @@ func (a *PressureChangeRate) ToString(unit PressureChangeRateUnits, fractionalDi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetPressureChangeRateAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *PressureChangeRate) getUnitAbbreviation(unit PressureChangeRateUnits) string {
-	switch unit { 
-	case PressureChangeRatePascalPerSecond:
-		return "Pa/s" 
-	case PressureChangeRatePascalPerMinute:
-		return "Pa/min" 
-	case PressureChangeRateMillimeterOfMercuryPerSecond:
-		return "mmHg/s" 
-	case PressureChangeRateAtmospherePerSecond:
-		return "atm/s" 
-	case PressureChangeRatePoundForcePerSquareInchPerSecond:
-		return "psi/s" 
-	case PressureChangeRatePoundForcePerSquareInchPerMinute:
-		return "psi/min" 
-	case PressureChangeRateBarPerSecond:
-		return "bar/s" 
-	case PressureChangeRateBarPerMinute:
-		return "bar/min" 
-	case PressureChangeRateKilopascalPerSecond:
-		return "kPa/s" 
-	case PressureChangeRateMegapascalPerSecond:
-		return "MPa/s" 
-	case PressureChangeRateKilopascalPerMinute:
-		return "kPa/min" 
-	case PressureChangeRateMegapascalPerMinute:
-		return "MPa/min" 
-	case PressureChangeRateKilopoundForcePerSquareInchPerSecond:
-		return "kpsi/s" 
-	case PressureChangeRateMegapoundForcePerSquareInchPerSecond:
-		return "Mpsi/s" 
-	case PressureChangeRateKilopoundForcePerSquareInchPerMinute:
-		return "kpsi/min" 
-	case PressureChangeRateMegapoundForcePerSquareInchPerMinute:
-		return "Mpsi/min" 
-	case PressureChangeRateMillibarPerSecond:
-		return "mbar/s" 
-	case PressureChangeRateMillibarPerMinute:
-		return "mbar/min" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetPressureChangeRateAbbreviation(unit))
 }
 
 // Equals checks if the given PressureChangeRate is equal to the current PressureChangeRate.
@@ -767,4 +723,48 @@ func (a *PressureChangeRate) Multiply(other *PressureChangeRate) *PressureChange
 //    *PressureChangeRate: A new PressureChangeRate instance representing the quotient of both PressureChangeRate.
 func (a *PressureChangeRate) Divide(other *PressureChangeRate) *PressureChangeRate {
 	return &PressureChangeRate{value: a.value / other.BaseValue()}
+}
+
+// GetPressureChangeRateAbbreviation gets the unit abbreviation.
+func GetPressureChangeRateAbbreviation(unit PressureChangeRateUnits) string {
+	switch unit { 
+	case PressureChangeRatePascalPerSecond:
+		return "Pa/s" 
+	case PressureChangeRatePascalPerMinute:
+		return "Pa/min" 
+	case PressureChangeRateMillimeterOfMercuryPerSecond:
+		return "mmHg/s" 
+	case PressureChangeRateAtmospherePerSecond:
+		return "atm/s" 
+	case PressureChangeRatePoundForcePerSquareInchPerSecond:
+		return "psi/s" 
+	case PressureChangeRatePoundForcePerSquareInchPerMinute:
+		return "psi/min" 
+	case PressureChangeRateBarPerSecond:
+		return "bar/s" 
+	case PressureChangeRateBarPerMinute:
+		return "bar/min" 
+	case PressureChangeRateKilopascalPerSecond:
+		return "kPa/s" 
+	case PressureChangeRateMegapascalPerSecond:
+		return "MPa/s" 
+	case PressureChangeRateKilopascalPerMinute:
+		return "kPa/min" 
+	case PressureChangeRateMegapascalPerMinute:
+		return "MPa/min" 
+	case PressureChangeRateKilopoundForcePerSquareInchPerSecond:
+		return "kpsi/s" 
+	case PressureChangeRateMegapoundForcePerSquareInchPerSecond:
+		return "Mpsi/s" 
+	case PressureChangeRateKilopoundForcePerSquareInchPerMinute:
+		return "kpsi/min" 
+	case PressureChangeRateMegapoundForcePerSquareInchPerMinute:
+		return "Mpsi/min" 
+	case PressureChangeRateMillibarPerSecond:
+		return "mbar/s" 
+	case PressureChangeRateMillibarPerMinute:
+		return "mbar/min" 
+	default:
+		return ""
+	}
 }

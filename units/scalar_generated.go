@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -198,19 +198,9 @@ func (a *Scalar) ToString(unit ScalarUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetScalarAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Scalar) getUnitAbbreviation(unit ScalarUnits) string {
-	switch unit { 
-	case ScalarAmount:
-		return "" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetScalarAbbreviation(unit))
 }
 
 // Equals checks if the given Scalar is equal to the current Scalar.
@@ -291,4 +281,14 @@ func (a *Scalar) Multiply(other *Scalar) *Scalar {
 //    *Scalar: A new Scalar instance representing the quotient of both Scalar.
 func (a *Scalar) Divide(other *Scalar) *Scalar {
 	return &Scalar{value: a.value / other.BaseValue()}
+}
+
+// GetScalarAbbreviation gets the unit abbreviation.
+func GetScalarAbbreviation(unit ScalarUnits) string {
+	switch unit { 
+	case ScalarAmount:
+		return "" 
+	default:
+		return ""
+	}
 }

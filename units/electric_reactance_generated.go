@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -380,33 +380,9 @@ func (a *ElectricReactance) ToString(unit ElectricReactanceUnits, fractionalDigi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricReactanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricReactance) getUnitAbbreviation(unit ElectricReactanceUnits) string {
-	switch unit { 
-	case ElectricReactanceOhm:
-		return "Ω" 
-	case ElectricReactanceNanoohm:
-		return "nΩ" 
-	case ElectricReactanceMicroohm:
-		return "μΩ" 
-	case ElectricReactanceMilliohm:
-		return "mΩ" 
-	case ElectricReactanceKiloohm:
-		return "kΩ" 
-	case ElectricReactanceMegaohm:
-		return "MΩ" 
-	case ElectricReactanceGigaohm:
-		return "GΩ" 
-	case ElectricReactanceTeraohm:
-		return "TΩ" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricReactanceAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricReactance is equal to the current ElectricReactance.
@@ -487,4 +463,28 @@ func (a *ElectricReactance) Multiply(other *ElectricReactance) *ElectricReactanc
 //    *ElectricReactance: A new ElectricReactance instance representing the quotient of both ElectricReactance.
 func (a *ElectricReactance) Divide(other *ElectricReactance) *ElectricReactance {
 	return &ElectricReactance{value: a.value / other.BaseValue()}
+}
+
+// GetElectricReactanceAbbreviation gets the unit abbreviation.
+func GetElectricReactanceAbbreviation(unit ElectricReactanceUnits) string {
+	switch unit { 
+	case ElectricReactanceOhm:
+		return "Ω" 
+	case ElectricReactanceNanoohm:
+		return "nΩ" 
+	case ElectricReactanceMicroohm:
+		return "μΩ" 
+	case ElectricReactanceMilliohm:
+		return "mΩ" 
+	case ElectricReactanceKiloohm:
+		return "kΩ" 
+	case ElectricReactanceMegaohm:
+		return "MΩ" 
+	case ElectricReactanceGigaohm:
+		return "GΩ" 
+	case ElectricReactanceTeraohm:
+		return "TΩ" 
+	default:
+		return ""
+	}
 }

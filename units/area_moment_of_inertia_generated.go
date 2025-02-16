@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -328,29 +328,9 @@ func (a *AreaMomentOfInertia) ToString(unit AreaMomentOfInertiaUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetAreaMomentOfInertiaAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *AreaMomentOfInertia) getUnitAbbreviation(unit AreaMomentOfInertiaUnits) string {
-	switch unit { 
-	case AreaMomentOfInertiaMeterToTheFourth:
-		return "m⁴" 
-	case AreaMomentOfInertiaDecimeterToTheFourth:
-		return "dm⁴" 
-	case AreaMomentOfInertiaCentimeterToTheFourth:
-		return "cm⁴" 
-	case AreaMomentOfInertiaMillimeterToTheFourth:
-		return "mm⁴" 
-	case AreaMomentOfInertiaFootToTheFourth:
-		return "ft⁴" 
-	case AreaMomentOfInertiaInchToTheFourth:
-		return "in⁴" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetAreaMomentOfInertiaAbbreviation(unit))
 }
 
 // Equals checks if the given AreaMomentOfInertia is equal to the current AreaMomentOfInertia.
@@ -431,4 +411,24 @@ func (a *AreaMomentOfInertia) Multiply(other *AreaMomentOfInertia) *AreaMomentOf
 //    *AreaMomentOfInertia: A new AreaMomentOfInertia instance representing the quotient of both AreaMomentOfInertia.
 func (a *AreaMomentOfInertia) Divide(other *AreaMomentOfInertia) *AreaMomentOfInertia {
 	return &AreaMomentOfInertia{value: a.value / other.BaseValue()}
+}
+
+// GetAreaMomentOfInertiaAbbreviation gets the unit abbreviation.
+func GetAreaMomentOfInertiaAbbreviation(unit AreaMomentOfInertiaUnits) string {
+	switch unit { 
+	case AreaMomentOfInertiaMeterToTheFourth:
+		return "m⁴" 
+	case AreaMomentOfInertiaDecimeterToTheFourth:
+		return "dm⁴" 
+	case AreaMomentOfInertiaCentimeterToTheFourth:
+		return "cm⁴" 
+	case AreaMomentOfInertiaMillimeterToTheFourth:
+		return "mm⁴" 
+	case AreaMomentOfInertiaFootToTheFourth:
+		return "ft⁴" 
+	case AreaMomentOfInertiaInchToTheFourth:
+		return "in⁴" 
+	default:
+		return ""
+	}
 }

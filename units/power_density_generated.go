@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -1316,13 +1316,93 @@ func (a *PowerDensity) ToString(unit PowerDensityUnits, fractionalDigits int) st
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetPowerDensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetPowerDensityAbbreviation(unit))
 }
 
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *PowerDensity) getUnitAbbreviation(unit PowerDensityUnits) string {
+// Equals checks if the given PowerDensity is equal to the current PowerDensity.
+//
+// Parameters:
+//    other: The PowerDensity to compare against.
+//
+// Returns:
+//    bool: Returns true if both PowerDensity are equal, false otherwise.
+func (a *PowerDensity) Equals(other *PowerDensity) bool {
+	return a.value == other.BaseValue()
+}
+
+// CompareTo compares the current PowerDensity with another PowerDensity.
+// It returns -1 if the current PowerDensity is less than the other PowerDensity, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The PowerDensity to compare against.
+//
+// Returns:
+//    int: -1 if the current PowerDensity is less, 1 if greater, and 0 if equal.
+func (a *PowerDensity) CompareTo(other *PowerDensity) int {
+	otherValue := other.BaseValue()
+	if a.value < otherValue {
+		return -1
+	} else if a.value > otherValue {
+		return 1
+	}
+
+	// If both are equal
+	return 0
+}
+
+// Add adds the given PowerDensity to the current PowerDensity and returns the result.
+// The result is a new PowerDensity instance with the sum of the values.
+//
+// Parameters:
+//    other: The PowerDensity to add to the current PowerDensity.
+//
+// Returns:
+//    *PowerDensity: A new PowerDensity instance representing the sum of both PowerDensity.
+func (a *PowerDensity) Add(other *PowerDensity) *PowerDensity {
+	return &PowerDensity{value: a.value + other.BaseValue()}
+}
+
+// Subtract subtracts the given PowerDensity from the current PowerDensity and returns the result.
+// The result is a new PowerDensity instance with the difference of the values.
+//
+// Parameters:
+//    other: The PowerDensity to subtract from the current PowerDensity.
+//
+// Returns:
+//    *PowerDensity: A new PowerDensity instance representing the difference of both PowerDensity.
+func (a *PowerDensity) Subtract(other *PowerDensity) *PowerDensity {
+	return &PowerDensity{value: a.value - other.BaseValue()}
+}
+
+// Multiply multiplies the current PowerDensity by the given PowerDensity and returns the result.
+// The result is a new PowerDensity instance with the product of the values.
+//
+// Parameters:
+//    other: The PowerDensity to multiply with the current PowerDensity.
+//
+// Returns:
+//    *PowerDensity: A new PowerDensity instance representing the product of both PowerDensity.
+func (a *PowerDensity) Multiply(other *PowerDensity) *PowerDensity {
+	return &PowerDensity{value: a.value * other.BaseValue()}
+}
+
+// Divide divides the current PowerDensity by the given PowerDensity and returns the result.
+// The result is a new PowerDensity instance with the quotient of the values.
+//
+// Parameters:
+//    other: The PowerDensity to divide the current PowerDensity by.
+//
+// Returns:
+//    *PowerDensity: A new PowerDensity instance representing the quotient of both PowerDensity.
+func (a *PowerDensity) Divide(other *PowerDensity) *PowerDensity {
+	return &PowerDensity{value: a.value / other.BaseValue()}
+}
+
+// GetPowerDensityAbbreviation gets the unit abbreviation.
+func GetPowerDensityAbbreviation(unit PowerDensityUnits) string {
 	switch unit { 
 	case PowerDensityWattPerCubicMeter:
 		return "W/m³" 
@@ -1415,84 +1495,4 @@ func (a *PowerDensity) getUnitAbbreviation(unit PowerDensityUnits) string {
 	default:
 		return ""
 	}
-}
-
-// Equals checks if the given PowerDensity is equal to the current PowerDensity.
-//
-// Parameters:
-//    other: The PowerDensity to compare against.
-//
-// Returns:
-//    bool: Returns true if both PowerDensity are equal, false otherwise.
-func (a *PowerDensity) Equals(other *PowerDensity) bool {
-	return a.value == other.BaseValue()
-}
-
-// CompareTo compares the current PowerDensity with another PowerDensity.
-// It returns -1 if the current PowerDensity is less than the other PowerDensity, 
-// 1 if it is greater, and 0 if they are equal.
-//
-// Parameters:
-//    other: The PowerDensity to compare against.
-//
-// Returns:
-//    int: -1 if the current PowerDensity is less, 1 if greater, and 0 if equal.
-func (a *PowerDensity) CompareTo(other *PowerDensity) int {
-	otherValue := other.BaseValue()
-	if a.value < otherValue {
-		return -1
-	} else if a.value > otherValue {
-		return 1
-	}
-
-	// If both are equal
-	return 0
-}
-
-// Add adds the given PowerDensity to the current PowerDensity and returns the result.
-// The result is a new PowerDensity instance with the sum of the values.
-//
-// Parameters:
-//    other: The PowerDensity to add to the current PowerDensity.
-//
-// Returns:
-//    *PowerDensity: A new PowerDensity instance representing the sum of both PowerDensity.
-func (a *PowerDensity) Add(other *PowerDensity) *PowerDensity {
-	return &PowerDensity{value: a.value + other.BaseValue()}
-}
-
-// Subtract subtracts the given PowerDensity from the current PowerDensity and returns the result.
-// The result is a new PowerDensity instance with the difference of the values.
-//
-// Parameters:
-//    other: The PowerDensity to subtract from the current PowerDensity.
-//
-// Returns:
-//    *PowerDensity: A new PowerDensity instance representing the difference of both PowerDensity.
-func (a *PowerDensity) Subtract(other *PowerDensity) *PowerDensity {
-	return &PowerDensity{value: a.value - other.BaseValue()}
-}
-
-// Multiply multiplies the current PowerDensity by the given PowerDensity and returns the result.
-// The result is a new PowerDensity instance with the product of the values.
-//
-// Parameters:
-//    other: The PowerDensity to multiply with the current PowerDensity.
-//
-// Returns:
-//    *PowerDensity: A new PowerDensity instance representing the product of both PowerDensity.
-func (a *PowerDensity) Multiply(other *PowerDensity) *PowerDensity {
-	return &PowerDensity{value: a.value * other.BaseValue()}
-}
-
-// Divide divides the current PowerDensity by the given PowerDensity and returns the result.
-// The result is a new PowerDensity instance with the quotient of the values.
-//
-// Parameters:
-//    other: The PowerDensity to divide the current PowerDensity by.
-//
-// Returns:
-//    *PowerDensity: A new PowerDensity instance representing the quotient of both PowerDensity.
-func (a *PowerDensity) Divide(other *PowerDensity) *PowerDensity {
-	return &PowerDensity{value: a.value / other.BaseValue()}
 }

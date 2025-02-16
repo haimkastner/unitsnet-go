@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -536,45 +536,9 @@ func (a *Luminosity) ToString(unit LuminosityUnits, fractionalDigits int) string
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetLuminosityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Luminosity) getUnitAbbreviation(unit LuminosityUnits) string {
-	switch unit { 
-	case LuminosityWatt:
-		return "W" 
-	case LuminositySolarLuminosity:
-		return "L⊙" 
-	case LuminosityFemtowatt:
-		return "fW" 
-	case LuminosityPicowatt:
-		return "pW" 
-	case LuminosityNanowatt:
-		return "nW" 
-	case LuminosityMicrowatt:
-		return "μW" 
-	case LuminosityMilliwatt:
-		return "mW" 
-	case LuminosityDeciwatt:
-		return "dW" 
-	case LuminosityDecawatt:
-		return "daW" 
-	case LuminosityKilowatt:
-		return "kW" 
-	case LuminosityMegawatt:
-		return "MW" 
-	case LuminosityGigawatt:
-		return "GW" 
-	case LuminosityTerawatt:
-		return "TW" 
-	case LuminosityPetawatt:
-		return "PW" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetLuminosityAbbreviation(unit))
 }
 
 // Equals checks if the given Luminosity is equal to the current Luminosity.
@@ -655,4 +619,40 @@ func (a *Luminosity) Multiply(other *Luminosity) *Luminosity {
 //    *Luminosity: A new Luminosity instance representing the quotient of both Luminosity.
 func (a *Luminosity) Divide(other *Luminosity) *Luminosity {
 	return &Luminosity{value: a.value / other.BaseValue()}
+}
+
+// GetLuminosityAbbreviation gets the unit abbreviation.
+func GetLuminosityAbbreviation(unit LuminosityUnits) string {
+	switch unit { 
+	case LuminosityWatt:
+		return "W" 
+	case LuminositySolarLuminosity:
+		return "L⊙" 
+	case LuminosityFemtowatt:
+		return "fW" 
+	case LuminosityPicowatt:
+		return "pW" 
+	case LuminosityNanowatt:
+		return "nW" 
+	case LuminosityMicrowatt:
+		return "μW" 
+	case LuminosityMilliwatt:
+		return "mW" 
+	case LuminosityDeciwatt:
+		return "dW" 
+	case LuminosityDecawatt:
+		return "daW" 
+	case LuminosityKilowatt:
+		return "kW" 
+	case LuminosityMegawatt:
+		return "MW" 
+	case LuminosityGigawatt:
+		return "GW" 
+	case LuminosityTerawatt:
+		return "TW" 
+	case LuminosityPetawatt:
+		return "PW" 
+	default:
+		return ""
+	}
 }

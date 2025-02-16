@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -848,69 +848,9 @@ func (a *BitRate) ToString(unit BitRateUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetBitRateAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *BitRate) getUnitAbbreviation(unit BitRateUnits) string {
-	switch unit { 
-	case BitRateBitPerSecond:
-		return "bit/s" 
-	case BitRateBytePerSecond:
-		return "B/s" 
-	case BitRateKilobitPerSecond:
-		return "kbit/s" 
-	case BitRateMegabitPerSecond:
-		return "Mbit/s" 
-	case BitRateGigabitPerSecond:
-		return "Gbit/s" 
-	case BitRateTerabitPerSecond:
-		return "Tbit/s" 
-	case BitRatePetabitPerSecond:
-		return "Pbit/s" 
-	case BitRateExabitPerSecond:
-		return "Ebit/s" 
-	case BitRateKibibitPerSecond:
-		return "KiBbit/s" 
-	case BitRateMebibitPerSecond:
-		return "MiBbit/s" 
-	case BitRateGibibitPerSecond:
-		return "GiBbit/s" 
-	case BitRateTebibitPerSecond:
-		return "TiBbit/s" 
-	case BitRatePebibitPerSecond:
-		return "PiBbit/s" 
-	case BitRateExbibitPerSecond:
-		return "EiBbit/s" 
-	case BitRateKilobytePerSecond:
-		return "kB/s" 
-	case BitRateMegabytePerSecond:
-		return "MB/s" 
-	case BitRateGigabytePerSecond:
-		return "GB/s" 
-	case BitRateTerabytePerSecond:
-		return "TB/s" 
-	case BitRatePetabytePerSecond:
-		return "PB/s" 
-	case BitRateExabytePerSecond:
-		return "EB/s" 
-	case BitRateKibibytePerSecond:
-		return "KiBB/s" 
-	case BitRateMebibytePerSecond:
-		return "MiBB/s" 
-	case BitRateGibibytePerSecond:
-		return "GiBB/s" 
-	case BitRateTebibytePerSecond:
-		return "TiBB/s" 
-	case BitRatePebibytePerSecond:
-		return "PiBB/s" 
-	case BitRateExbibytePerSecond:
-		return "EiBB/s" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetBitRateAbbreviation(unit))
 }
 
 // Equals checks if the given BitRate is equal to the current BitRate.
@@ -991,4 +931,64 @@ func (a *BitRate) Multiply(other *BitRate) *BitRate {
 //    *BitRate: A new BitRate instance representing the quotient of both BitRate.
 func (a *BitRate) Divide(other *BitRate) *BitRate {
 	return &BitRate{value: a.value / other.BaseValue()}
+}
+
+// GetBitRateAbbreviation gets the unit abbreviation.
+func GetBitRateAbbreviation(unit BitRateUnits) string {
+	switch unit { 
+	case BitRateBitPerSecond:
+		return "bit/s" 
+	case BitRateBytePerSecond:
+		return "B/s" 
+	case BitRateKilobitPerSecond:
+		return "kbit/s" 
+	case BitRateMegabitPerSecond:
+		return "Mbit/s" 
+	case BitRateGigabitPerSecond:
+		return "Gbit/s" 
+	case BitRateTerabitPerSecond:
+		return "Tbit/s" 
+	case BitRatePetabitPerSecond:
+		return "Pbit/s" 
+	case BitRateExabitPerSecond:
+		return "Ebit/s" 
+	case BitRateKibibitPerSecond:
+		return "KiBbit/s" 
+	case BitRateMebibitPerSecond:
+		return "MiBbit/s" 
+	case BitRateGibibitPerSecond:
+		return "GiBbit/s" 
+	case BitRateTebibitPerSecond:
+		return "TiBbit/s" 
+	case BitRatePebibitPerSecond:
+		return "PiBbit/s" 
+	case BitRateExbibitPerSecond:
+		return "EiBbit/s" 
+	case BitRateKilobytePerSecond:
+		return "kB/s" 
+	case BitRateMegabytePerSecond:
+		return "MB/s" 
+	case BitRateGigabytePerSecond:
+		return "GB/s" 
+	case BitRateTerabytePerSecond:
+		return "TB/s" 
+	case BitRatePetabytePerSecond:
+		return "PB/s" 
+	case BitRateExabytePerSecond:
+		return "EB/s" 
+	case BitRateKibibytePerSecond:
+		return "KiBB/s" 
+	case BitRateMebibytePerSecond:
+		return "MiBB/s" 
+	case BitRateGibibytePerSecond:
+		return "GiBB/s" 
+	case BitRateTebibytePerSecond:
+		return "TiBB/s" 
+	case BitRatePebibytePerSecond:
+		return "PiBB/s" 
+	case BitRateExbibytePerSecond:
+		return "EiBB/s" 
+	default:
+		return ""
+	}
 }

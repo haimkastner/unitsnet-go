@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -510,43 +510,9 @@ func (a *Impulse) ToString(unit ImpulseUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetImpulseAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Impulse) getUnitAbbreviation(unit ImpulseUnits) string {
-	switch unit { 
-	case ImpulseKilogramMeterPerSecond:
-		return "kg·m/s" 
-	case ImpulseNewtonSecond:
-		return "N·s" 
-	case ImpulsePoundFootPerSecond:
-		return "lb·ft/s" 
-	case ImpulsePoundForceSecond:
-		return "lbf·s" 
-	case ImpulseSlugFootPerSecond:
-		return "slug·ft/s" 
-	case ImpulseNanonewtonSecond:
-		return "nN·s" 
-	case ImpulseMicronewtonSecond:
-		return "μN·s" 
-	case ImpulseMillinewtonSecond:
-		return "mN·s" 
-	case ImpulseCentinewtonSecond:
-		return "cN·s" 
-	case ImpulseDecinewtonSecond:
-		return "dN·s" 
-	case ImpulseDecanewtonSecond:
-		return "daN·s" 
-	case ImpulseKilonewtonSecond:
-		return "kN·s" 
-	case ImpulseMeganewtonSecond:
-		return "MN·s" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetImpulseAbbreviation(unit))
 }
 
 // Equals checks if the given Impulse is equal to the current Impulse.
@@ -627,4 +593,38 @@ func (a *Impulse) Multiply(other *Impulse) *Impulse {
 //    *Impulse: A new Impulse instance representing the quotient of both Impulse.
 func (a *Impulse) Divide(other *Impulse) *Impulse {
 	return &Impulse{value: a.value / other.BaseValue()}
+}
+
+// GetImpulseAbbreviation gets the unit abbreviation.
+func GetImpulseAbbreviation(unit ImpulseUnits) string {
+	switch unit { 
+	case ImpulseKilogramMeterPerSecond:
+		return "kg·m/s" 
+	case ImpulseNewtonSecond:
+		return "N·s" 
+	case ImpulsePoundFootPerSecond:
+		return "lb·ft/s" 
+	case ImpulsePoundForceSecond:
+		return "lbf·s" 
+	case ImpulseSlugFootPerSecond:
+		return "slug·ft/s" 
+	case ImpulseNanonewtonSecond:
+		return "nN·s" 
+	case ImpulseMicronewtonSecond:
+		return "μN·s" 
+	case ImpulseMillinewtonSecond:
+		return "mN·s" 
+	case ImpulseCentinewtonSecond:
+		return "cN·s" 
+	case ImpulseDecinewtonSecond:
+		return "dN·s" 
+	case ImpulseDecanewtonSecond:
+		return "daN·s" 
+	case ImpulseKilonewtonSecond:
+		return "kN·s" 
+	case ImpulseMeganewtonSecond:
+		return "MN·s" 
+	default:
+		return ""
+	}
 }

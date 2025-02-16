@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -1446,13 +1446,93 @@ func (a *MassConcentration) ToString(unit MassConcentrationUnits, fractionalDigi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMassConcentrationAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMassConcentrationAbbreviation(unit))
 }
 
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MassConcentration) getUnitAbbreviation(unit MassConcentrationUnits) string {
+// Equals checks if the given MassConcentration is equal to the current MassConcentration.
+//
+// Parameters:
+//    other: The MassConcentration to compare against.
+//
+// Returns:
+//    bool: Returns true if both MassConcentration are equal, false otherwise.
+func (a *MassConcentration) Equals(other *MassConcentration) bool {
+	return a.value == other.BaseValue()
+}
+
+// CompareTo compares the current MassConcentration with another MassConcentration.
+// It returns -1 if the current MassConcentration is less than the other MassConcentration, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The MassConcentration to compare against.
+//
+// Returns:
+//    int: -1 if the current MassConcentration is less, 1 if greater, and 0 if equal.
+func (a *MassConcentration) CompareTo(other *MassConcentration) int {
+	otherValue := other.BaseValue()
+	if a.value < otherValue {
+		return -1
+	} else if a.value > otherValue {
+		return 1
+	}
+
+	// If both are equal
+	return 0
+}
+
+// Add adds the given MassConcentration to the current MassConcentration and returns the result.
+// The result is a new MassConcentration instance with the sum of the values.
+//
+// Parameters:
+//    other: The MassConcentration to add to the current MassConcentration.
+//
+// Returns:
+//    *MassConcentration: A new MassConcentration instance representing the sum of both MassConcentration.
+func (a *MassConcentration) Add(other *MassConcentration) *MassConcentration {
+	return &MassConcentration{value: a.value + other.BaseValue()}
+}
+
+// Subtract subtracts the given MassConcentration from the current MassConcentration and returns the result.
+// The result is a new MassConcentration instance with the difference of the values.
+//
+// Parameters:
+//    other: The MassConcentration to subtract from the current MassConcentration.
+//
+// Returns:
+//    *MassConcentration: A new MassConcentration instance representing the difference of both MassConcentration.
+func (a *MassConcentration) Subtract(other *MassConcentration) *MassConcentration {
+	return &MassConcentration{value: a.value - other.BaseValue()}
+}
+
+// Multiply multiplies the current MassConcentration by the given MassConcentration and returns the result.
+// The result is a new MassConcentration instance with the product of the values.
+//
+// Parameters:
+//    other: The MassConcentration to multiply with the current MassConcentration.
+//
+// Returns:
+//    *MassConcentration: A new MassConcentration instance representing the product of both MassConcentration.
+func (a *MassConcentration) Multiply(other *MassConcentration) *MassConcentration {
+	return &MassConcentration{value: a.value * other.BaseValue()}
+}
+
+// Divide divides the current MassConcentration by the given MassConcentration and returns the result.
+// The result is a new MassConcentration instance with the quotient of the values.
+//
+// Parameters:
+//    other: The MassConcentration to divide the current MassConcentration by.
+//
+// Returns:
+//    *MassConcentration: A new MassConcentration instance representing the quotient of both MassConcentration.
+func (a *MassConcentration) Divide(other *MassConcentration) *MassConcentration {
+	return &MassConcentration{value: a.value / other.BaseValue()}
+}
+
+// GetMassConcentrationAbbreviation gets the unit abbreviation.
+func GetMassConcentrationAbbreviation(unit MassConcentrationUnits) string {
 	switch unit { 
 	case MassConcentrationGramPerCubicMillimeter:
 		return "g/mm³" 
@@ -1555,84 +1635,4 @@ func (a *MassConcentration) getUnitAbbreviation(unit MassConcentrationUnits) str
 	default:
 		return ""
 	}
-}
-
-// Equals checks if the given MassConcentration is equal to the current MassConcentration.
-//
-// Parameters:
-//    other: The MassConcentration to compare against.
-//
-// Returns:
-//    bool: Returns true if both MassConcentration are equal, false otherwise.
-func (a *MassConcentration) Equals(other *MassConcentration) bool {
-	return a.value == other.BaseValue()
-}
-
-// CompareTo compares the current MassConcentration with another MassConcentration.
-// It returns -1 if the current MassConcentration is less than the other MassConcentration, 
-// 1 if it is greater, and 0 if they are equal.
-//
-// Parameters:
-//    other: The MassConcentration to compare against.
-//
-// Returns:
-//    int: -1 if the current MassConcentration is less, 1 if greater, and 0 if equal.
-func (a *MassConcentration) CompareTo(other *MassConcentration) int {
-	otherValue := other.BaseValue()
-	if a.value < otherValue {
-		return -1
-	} else if a.value > otherValue {
-		return 1
-	}
-
-	// If both are equal
-	return 0
-}
-
-// Add adds the given MassConcentration to the current MassConcentration and returns the result.
-// The result is a new MassConcentration instance with the sum of the values.
-//
-// Parameters:
-//    other: The MassConcentration to add to the current MassConcentration.
-//
-// Returns:
-//    *MassConcentration: A new MassConcentration instance representing the sum of both MassConcentration.
-func (a *MassConcentration) Add(other *MassConcentration) *MassConcentration {
-	return &MassConcentration{value: a.value + other.BaseValue()}
-}
-
-// Subtract subtracts the given MassConcentration from the current MassConcentration and returns the result.
-// The result is a new MassConcentration instance with the difference of the values.
-//
-// Parameters:
-//    other: The MassConcentration to subtract from the current MassConcentration.
-//
-// Returns:
-//    *MassConcentration: A new MassConcentration instance representing the difference of both MassConcentration.
-func (a *MassConcentration) Subtract(other *MassConcentration) *MassConcentration {
-	return &MassConcentration{value: a.value - other.BaseValue()}
-}
-
-// Multiply multiplies the current MassConcentration by the given MassConcentration and returns the result.
-// The result is a new MassConcentration instance with the product of the values.
-//
-// Parameters:
-//    other: The MassConcentration to multiply with the current MassConcentration.
-//
-// Returns:
-//    *MassConcentration: A new MassConcentration instance representing the product of both MassConcentration.
-func (a *MassConcentration) Multiply(other *MassConcentration) *MassConcentration {
-	return &MassConcentration{value: a.value * other.BaseValue()}
-}
-
-// Divide divides the current MassConcentration by the given MassConcentration and returns the result.
-// The result is a new MassConcentration instance with the quotient of the values.
-//
-// Parameters:
-//    other: The MassConcentration to divide the current MassConcentration by.
-//
-// Returns:
-//    *MassConcentration: A new MassConcentration instance representing the quotient of both MassConcentration.
-func (a *MassConcentration) Divide(other *MassConcentration) *MassConcentration {
-	return &MassConcentration{value: a.value / other.BaseValue()}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -536,45 +536,9 @@ func (a *Area) ToString(unit AreaUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetAreaAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Area) getUnitAbbreviation(unit AreaUnits) string {
-	switch unit { 
-	case AreaSquareKilometer:
-		return "km²" 
-	case AreaSquareMeter:
-		return "m²" 
-	case AreaSquareDecimeter:
-		return "dm²" 
-	case AreaSquareCentimeter:
-		return "cm²" 
-	case AreaSquareMillimeter:
-		return "mm²" 
-	case AreaSquareMicrometer:
-		return "µm²" 
-	case AreaSquareMile:
-		return "mi²" 
-	case AreaSquareYard:
-		return "yd²" 
-	case AreaSquareFoot:
-		return "ft²" 
-	case AreaUsSurveySquareFoot:
-		return "ft² (US)" 
-	case AreaSquareInch:
-		return "in²" 
-	case AreaAcre:
-		return "ac" 
-	case AreaHectare:
-		return "ha" 
-	case AreaSquareNauticalMile:
-		return "nmi²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetAreaAbbreviation(unit))
 }
 
 // Equals checks if the given Area is equal to the current Area.
@@ -655,4 +619,40 @@ func (a *Area) Multiply(other *Area) *Area {
 //    *Area: A new Area instance representing the quotient of both Area.
 func (a *Area) Divide(other *Area) *Area {
 	return &Area{value: a.value / other.BaseValue()}
+}
+
+// GetAreaAbbreviation gets the unit abbreviation.
+func GetAreaAbbreviation(unit AreaUnits) string {
+	switch unit { 
+	case AreaSquareKilometer:
+		return "km²" 
+	case AreaSquareMeter:
+		return "m²" 
+	case AreaSquareDecimeter:
+		return "dm²" 
+	case AreaSquareCentimeter:
+		return "cm²" 
+	case AreaSquareMillimeter:
+		return "mm²" 
+	case AreaSquareMicrometer:
+		return "µm²" 
+	case AreaSquareMile:
+		return "mi²" 
+	case AreaSquareYard:
+		return "yd²" 
+	case AreaSquareFoot:
+		return "ft²" 
+	case AreaUsSurveySquareFoot:
+		return "ft² (US)" 
+	case AreaSquareInch:
+		return "in²" 
+	case AreaAcre:
+		return "ac" 
+	case AreaHectare:
+		return "ha" 
+	case AreaSquareNauticalMile:
+		return "nmi²" 
+	default:
+		return ""
+	}
 }

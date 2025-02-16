@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -302,27 +302,9 @@ func (a *RotationalStiffnessPerLength) ToString(unit RotationalStiffnessPerLengt
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRotationalStiffnessPerLengthAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *RotationalStiffnessPerLength) getUnitAbbreviation(unit RotationalStiffnessPerLengthUnits) string {
-	switch unit { 
-	case RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter:
-		return "N·m/rad/m" 
-	case RotationalStiffnessPerLengthPoundForceFootPerDegreesPerFoot:
-		return "lbf·ft/deg/ft" 
-	case RotationalStiffnessPerLengthKilopoundForceFootPerDegreesPerFoot:
-		return "kipf·ft/°/ft" 
-	case RotationalStiffnessPerLengthKilonewtonMeterPerRadianPerMeter:
-		return "kN·m/rad/m" 
-	case RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter:
-		return "MN·m/rad/m" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRotationalStiffnessPerLengthAbbreviation(unit))
 }
 
 // Equals checks if the given RotationalStiffnessPerLength is equal to the current RotationalStiffnessPerLength.
@@ -403,4 +385,22 @@ func (a *RotationalStiffnessPerLength) Multiply(other *RotationalStiffnessPerLen
 //    *RotationalStiffnessPerLength: A new RotationalStiffnessPerLength instance representing the quotient of both RotationalStiffnessPerLength.
 func (a *RotationalStiffnessPerLength) Divide(other *RotationalStiffnessPerLength) *RotationalStiffnessPerLength {
 	return &RotationalStiffnessPerLength{value: a.value / other.BaseValue()}
+}
+
+// GetRotationalStiffnessPerLengthAbbreviation gets the unit abbreviation.
+func GetRotationalStiffnessPerLengthAbbreviation(unit RotationalStiffnessPerLengthUnits) string {
+	switch unit { 
+	case RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter:
+		return "N·m/rad/m" 
+	case RotationalStiffnessPerLengthPoundForceFootPerDegreesPerFoot:
+		return "lbf·ft/deg/ft" 
+	case RotationalStiffnessPerLengthKilopoundForceFootPerDegreesPerFoot:
+		return "kipf·ft/°/ft" 
+	case RotationalStiffnessPerLengthKilonewtonMeterPerRadianPerMeter:
+		return "kN·m/rad/m" 
+	case RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter:
+		return "MN·m/rad/m" 
+	default:
+		return ""
+	}
 }

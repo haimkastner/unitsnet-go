@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -328,29 +328,9 @@ func (a *ElectricConductivity) ToString(unit ElectricConductivityUnits, fraction
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricConductivityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricConductivity) getUnitAbbreviation(unit ElectricConductivityUnits) string {
-	switch unit { 
-	case ElectricConductivitySiemensPerMeter:
-		return "S/m" 
-	case ElectricConductivitySiemensPerInch:
-		return "S/in" 
-	case ElectricConductivitySiemensPerFoot:
-		return "S/ft" 
-	case ElectricConductivitySiemensPerCentimeter:
-		return "S/cm" 
-	case ElectricConductivityMicrosiemensPerCentimeter:
-		return "μS/cm" 
-	case ElectricConductivityMillisiemensPerCentimeter:
-		return "mS/cm" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricConductivityAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricConductivity is equal to the current ElectricConductivity.
@@ -431,4 +411,24 @@ func (a *ElectricConductivity) Multiply(other *ElectricConductivity) *ElectricCo
 //    *ElectricConductivity: A new ElectricConductivity instance representing the quotient of both ElectricConductivity.
 func (a *ElectricConductivity) Divide(other *ElectricConductivity) *ElectricConductivity {
 	return &ElectricConductivity{value: a.value / other.BaseValue()}
+}
+
+// GetElectricConductivityAbbreviation gets the unit abbreviation.
+func GetElectricConductivityAbbreviation(unit ElectricConductivityUnits) string {
+	switch unit { 
+	case ElectricConductivitySiemensPerMeter:
+		return "S/m" 
+	case ElectricConductivitySiemensPerInch:
+		return "S/in" 
+	case ElectricConductivitySiemensPerFoot:
+		return "S/ft" 
+	case ElectricConductivitySiemensPerCentimeter:
+		return "S/cm" 
+	case ElectricConductivityMicrosiemensPerCentimeter:
+		return "μS/cm" 
+	case ElectricConductivityMillisiemensPerCentimeter:
+		return "mS/cm" 
+	default:
+		return ""
+	}
 }

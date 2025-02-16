@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -354,31 +354,9 @@ func (a *Compressibility) ToString(unit CompressibilityUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetCompressibilityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Compressibility) getUnitAbbreviation(unit CompressibilityUnits) string {
-	switch unit { 
-	case CompressibilityInversePascal:
-		return "Pa⁻¹" 
-	case CompressibilityInverseKilopascal:
-		return "kPa⁻¹" 
-	case CompressibilityInverseMegapascal:
-		return "MPa⁻¹" 
-	case CompressibilityInverseAtmosphere:
-		return "atm⁻¹" 
-	case CompressibilityInverseMillibar:
-		return "mbar⁻¹" 
-	case CompressibilityInverseBar:
-		return "bar⁻¹" 
-	case CompressibilityInversePoundForcePerSquareInch:
-		return "psi⁻¹" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetCompressibilityAbbreviation(unit))
 }
 
 // Equals checks if the given Compressibility is equal to the current Compressibility.
@@ -459,4 +437,26 @@ func (a *Compressibility) Multiply(other *Compressibility) *Compressibility {
 //    *Compressibility: A new Compressibility instance representing the quotient of both Compressibility.
 func (a *Compressibility) Divide(other *Compressibility) *Compressibility {
 	return &Compressibility{value: a.value / other.BaseValue()}
+}
+
+// GetCompressibilityAbbreviation gets the unit abbreviation.
+func GetCompressibilityAbbreviation(unit CompressibilityUnits) string {
+	switch unit { 
+	case CompressibilityInversePascal:
+		return "Pa⁻¹" 
+	case CompressibilityInverseKilopascal:
+		return "kPa⁻¹" 
+	case CompressibilityInverseMegapascal:
+		return "MPa⁻¹" 
+	case CompressibilityInverseAtmosphere:
+		return "atm⁻¹" 
+	case CompressibilityInverseMillibar:
+		return "mbar⁻¹" 
+	case CompressibilityInverseBar:
+		return "bar⁻¹" 
+	case CompressibilityInversePoundForcePerSquareInch:
+		return "psi⁻¹" 
+	default:
+		return ""
+	}
 }

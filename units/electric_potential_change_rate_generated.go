@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -692,57 +692,9 @@ func (a *ElectricPotentialChangeRate) ToString(unit ElectricPotentialChangeRateU
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricPotentialChangeRateAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricPotentialChangeRate) getUnitAbbreviation(unit ElectricPotentialChangeRateUnits) string {
-	switch unit { 
-	case ElectricPotentialChangeRateVoltPerSecond:
-		return "V/s" 
-	case ElectricPotentialChangeRateVoltPerMicrosecond:
-		return "V/μs" 
-	case ElectricPotentialChangeRateVoltPerMinute:
-		return "V/min" 
-	case ElectricPotentialChangeRateVoltPerHour:
-		return "V/h" 
-	case ElectricPotentialChangeRateMicrovoltPerSecond:
-		return "μV/s" 
-	case ElectricPotentialChangeRateMillivoltPerSecond:
-		return "mV/s" 
-	case ElectricPotentialChangeRateKilovoltPerSecond:
-		return "kV/s" 
-	case ElectricPotentialChangeRateMegavoltPerSecond:
-		return "MV/s" 
-	case ElectricPotentialChangeRateMicrovoltPerMicrosecond:
-		return "μV/μs" 
-	case ElectricPotentialChangeRateMillivoltPerMicrosecond:
-		return "mV/μs" 
-	case ElectricPotentialChangeRateKilovoltPerMicrosecond:
-		return "kV/μs" 
-	case ElectricPotentialChangeRateMegavoltPerMicrosecond:
-		return "MV/μs" 
-	case ElectricPotentialChangeRateMicrovoltPerMinute:
-		return "μV/min" 
-	case ElectricPotentialChangeRateMillivoltPerMinute:
-		return "mV/min" 
-	case ElectricPotentialChangeRateKilovoltPerMinute:
-		return "kV/min" 
-	case ElectricPotentialChangeRateMegavoltPerMinute:
-		return "MV/min" 
-	case ElectricPotentialChangeRateMicrovoltPerHour:
-		return "μV/h" 
-	case ElectricPotentialChangeRateMillivoltPerHour:
-		return "mV/h" 
-	case ElectricPotentialChangeRateKilovoltPerHour:
-		return "kV/h" 
-	case ElectricPotentialChangeRateMegavoltPerHour:
-		return "MV/h" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricPotentialChangeRateAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricPotentialChangeRate is equal to the current ElectricPotentialChangeRate.
@@ -823,4 +775,52 @@ func (a *ElectricPotentialChangeRate) Multiply(other *ElectricPotentialChangeRat
 //    *ElectricPotentialChangeRate: A new ElectricPotentialChangeRate instance representing the quotient of both ElectricPotentialChangeRate.
 func (a *ElectricPotentialChangeRate) Divide(other *ElectricPotentialChangeRate) *ElectricPotentialChangeRate {
 	return &ElectricPotentialChangeRate{value: a.value / other.BaseValue()}
+}
+
+// GetElectricPotentialChangeRateAbbreviation gets the unit abbreviation.
+func GetElectricPotentialChangeRateAbbreviation(unit ElectricPotentialChangeRateUnits) string {
+	switch unit { 
+	case ElectricPotentialChangeRateVoltPerSecond:
+		return "V/s" 
+	case ElectricPotentialChangeRateVoltPerMicrosecond:
+		return "V/μs" 
+	case ElectricPotentialChangeRateVoltPerMinute:
+		return "V/min" 
+	case ElectricPotentialChangeRateVoltPerHour:
+		return "V/h" 
+	case ElectricPotentialChangeRateMicrovoltPerSecond:
+		return "μV/s" 
+	case ElectricPotentialChangeRateMillivoltPerSecond:
+		return "mV/s" 
+	case ElectricPotentialChangeRateKilovoltPerSecond:
+		return "kV/s" 
+	case ElectricPotentialChangeRateMegavoltPerSecond:
+		return "MV/s" 
+	case ElectricPotentialChangeRateMicrovoltPerMicrosecond:
+		return "μV/μs" 
+	case ElectricPotentialChangeRateMillivoltPerMicrosecond:
+		return "mV/μs" 
+	case ElectricPotentialChangeRateKilovoltPerMicrosecond:
+		return "kV/μs" 
+	case ElectricPotentialChangeRateMegavoltPerMicrosecond:
+		return "MV/μs" 
+	case ElectricPotentialChangeRateMicrovoltPerMinute:
+		return "μV/min" 
+	case ElectricPotentialChangeRateMillivoltPerMinute:
+		return "mV/min" 
+	case ElectricPotentialChangeRateKilovoltPerMinute:
+		return "kV/min" 
+	case ElectricPotentialChangeRateMegavoltPerMinute:
+		return "MV/min" 
+	case ElectricPotentialChangeRateMicrovoltPerHour:
+		return "μV/h" 
+	case ElectricPotentialChangeRateMillivoltPerHour:
+		return "mV/h" 
+	case ElectricPotentialChangeRateKilovoltPerHour:
+		return "kV/h" 
+	case ElectricPotentialChangeRateMegavoltPerHour:
+		return "MV/h" 
+	default:
+		return ""
+	}
 }

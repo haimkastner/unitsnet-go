@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -328,29 +328,9 @@ func (a *ThermalResistance) ToString(unit ThermalResistanceUnits, fractionalDigi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetThermalResistanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ThermalResistance) getUnitAbbreviation(unit ThermalResistanceUnits) string {
-	switch unit { 
-	case ThermalResistanceSquareMeterKelvinPerKilowatt:
-		return "m²K/kW" 
-	case ThermalResistanceSquareMeterKelvinPerWatt:
-		return "m²K/W" 
-	case ThermalResistanceSquareMeterDegreeCelsiusPerWatt:
-		return "m²°C/W" 
-	case ThermalResistanceSquareCentimeterKelvinPerWatt:
-		return "cm²K/W" 
-	case ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie:
-		return "cm²Hr°C/kcal" 
-	case ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu:
-		return "Hrft²°F/Btu" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetThermalResistanceAbbreviation(unit))
 }
 
 // Equals checks if the given ThermalResistance is equal to the current ThermalResistance.
@@ -431,4 +411,24 @@ func (a *ThermalResistance) Multiply(other *ThermalResistance) *ThermalResistanc
 //    *ThermalResistance: A new ThermalResistance instance representing the quotient of both ThermalResistance.
 func (a *ThermalResistance) Divide(other *ThermalResistance) *ThermalResistance {
 	return &ThermalResistance{value: a.value / other.BaseValue()}
+}
+
+// GetThermalResistanceAbbreviation gets the unit abbreviation.
+func GetThermalResistanceAbbreviation(unit ThermalResistanceUnits) string {
+	switch unit { 
+	case ThermalResistanceSquareMeterKelvinPerKilowatt:
+		return "m²K/kW" 
+	case ThermalResistanceSquareMeterKelvinPerWatt:
+		return "m²K/W" 
+	case ThermalResistanceSquareMeterDegreeCelsiusPerWatt:
+		return "m²°C/W" 
+	case ThermalResistanceSquareCentimeterKelvinPerWatt:
+		return "cm²K/W" 
+	case ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie:
+		return "cm²Hr°C/kcal" 
+	case ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu:
+		return "Hrft²°F/Btu" 
+	default:
+		return ""
+	}
 }

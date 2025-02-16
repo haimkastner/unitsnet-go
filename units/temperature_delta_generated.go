@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -406,35 +406,9 @@ func (a *TemperatureDelta) ToString(unit TemperatureDeltaUnits, fractionalDigits
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetTemperatureDeltaAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *TemperatureDelta) getUnitAbbreviation(unit TemperatureDeltaUnits) string {
-	switch unit { 
-	case TemperatureDeltaKelvin:
-		return "∆K" 
-	case TemperatureDeltaDegreeCelsius:
-		return "∆°C" 
-	case TemperatureDeltaDegreeDelisle:
-		return "∆°De" 
-	case TemperatureDeltaDegreeFahrenheit:
-		return "∆°F" 
-	case TemperatureDeltaDegreeNewton:
-		return "∆°N" 
-	case TemperatureDeltaDegreeRankine:
-		return "∆°R" 
-	case TemperatureDeltaDegreeReaumur:
-		return "∆°Ré" 
-	case TemperatureDeltaDegreeRoemer:
-		return "∆°Rø" 
-	case TemperatureDeltaMillidegreeCelsius:
-		return "m∆°C" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetTemperatureDeltaAbbreviation(unit))
 }
 
 // Equals checks if the given TemperatureDelta is equal to the current TemperatureDelta.
@@ -515,4 +489,30 @@ func (a *TemperatureDelta) Multiply(other *TemperatureDelta) *TemperatureDelta {
 //    *TemperatureDelta: A new TemperatureDelta instance representing the quotient of both TemperatureDelta.
 func (a *TemperatureDelta) Divide(other *TemperatureDelta) *TemperatureDelta {
 	return &TemperatureDelta{value: a.value / other.BaseValue()}
+}
+
+// GetTemperatureDeltaAbbreviation gets the unit abbreviation.
+func GetTemperatureDeltaAbbreviation(unit TemperatureDeltaUnits) string {
+	switch unit { 
+	case TemperatureDeltaKelvin:
+		return "∆K" 
+	case TemperatureDeltaDegreeCelsius:
+		return "∆°C" 
+	case TemperatureDeltaDegreeDelisle:
+		return "∆°De" 
+	case TemperatureDeltaDegreeFahrenheit:
+		return "∆°F" 
+	case TemperatureDeltaDegreeNewton:
+		return "∆°N" 
+	case TemperatureDeltaDegreeRankine:
+		return "∆°R" 
+	case TemperatureDeltaDegreeReaumur:
+		return "∆°Ré" 
+	case TemperatureDeltaDegreeRoemer:
+		return "∆°Rø" 
+	case TemperatureDeltaMillidegreeCelsius:
+		return "m∆°C" 
+	default:
+		return ""
+	}
 }

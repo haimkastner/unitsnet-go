@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -302,27 +302,9 @@ func (a *ElectricPotentialDc) ToString(unit ElectricPotentialDcUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricPotentialDcAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricPotentialDc) getUnitAbbreviation(unit ElectricPotentialDcUnits) string {
-	switch unit { 
-	case ElectricPotentialDcVoltDc:
-		return "Vdc" 
-	case ElectricPotentialDcMicrovoltDc:
-		return "μVdc" 
-	case ElectricPotentialDcMillivoltDc:
-		return "mVdc" 
-	case ElectricPotentialDcKilovoltDc:
-		return "kVdc" 
-	case ElectricPotentialDcMegavoltDc:
-		return "MVdc" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricPotentialDcAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricPotentialDc is equal to the current ElectricPotentialDc.
@@ -403,4 +385,22 @@ func (a *ElectricPotentialDc) Multiply(other *ElectricPotentialDc) *ElectricPote
 //    *ElectricPotentialDc: A new ElectricPotentialDc instance representing the quotient of both ElectricPotentialDc.
 func (a *ElectricPotentialDc) Divide(other *ElectricPotentialDc) *ElectricPotentialDc {
 	return &ElectricPotentialDc{value: a.value / other.BaseValue()}
+}
+
+// GetElectricPotentialDcAbbreviation gets the unit abbreviation.
+func GetElectricPotentialDcAbbreviation(unit ElectricPotentialDcUnits) string {
+	switch unit { 
+	case ElectricPotentialDcVoltDc:
+		return "Vdc" 
+	case ElectricPotentialDcMicrovoltDc:
+		return "μVdc" 
+	case ElectricPotentialDcMillivoltDc:
+		return "mVdc" 
+	case ElectricPotentialDcKilovoltDc:
+		return "kVdc" 
+	case ElectricPotentialDcMegavoltDc:
+		return "MVdc" 
+	default:
+		return ""
+	}
 }

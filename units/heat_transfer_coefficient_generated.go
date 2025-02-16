@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -302,27 +302,9 @@ func (a *HeatTransferCoefficient) ToString(unit HeatTransferCoefficientUnits, fr
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetHeatTransferCoefficientAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *HeatTransferCoefficient) getUnitAbbreviation(unit HeatTransferCoefficientUnits) string {
-	switch unit { 
-	case HeatTransferCoefficientWattPerSquareMeterKelvin:
-		return "W/m²·K" 
-	case HeatTransferCoefficientWattPerSquareMeterCelsius:
-		return "W/m²·°C" 
-	case HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit:
-		return "Btu/h·ft²·°F" 
-	case HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius:
-		return "kcal/h·m²·°C" 
-	case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:
-		return "kkcal/h·m²·°C" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetHeatTransferCoefficientAbbreviation(unit))
 }
 
 // Equals checks if the given HeatTransferCoefficient is equal to the current HeatTransferCoefficient.
@@ -403,4 +385,22 @@ func (a *HeatTransferCoefficient) Multiply(other *HeatTransferCoefficient) *Heat
 //    *HeatTransferCoefficient: A new HeatTransferCoefficient instance representing the quotient of both HeatTransferCoefficient.
 func (a *HeatTransferCoefficient) Divide(other *HeatTransferCoefficient) *HeatTransferCoefficient {
 	return &HeatTransferCoefficient{value: a.value / other.BaseValue()}
+}
+
+// GetHeatTransferCoefficientAbbreviation gets the unit abbreviation.
+func GetHeatTransferCoefficientAbbreviation(unit HeatTransferCoefficientUnits) string {
+	switch unit { 
+	case HeatTransferCoefficientWattPerSquareMeterKelvin:
+		return "W/m²·K" 
+	case HeatTransferCoefficientWattPerSquareMeterCelsius:
+		return "W/m²·°C" 
+	case HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit:
+		return "Btu/h·ft²·°F" 
+	case HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius:
+		return "kcal/h·m²·°C" 
+	case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:
+		return "kkcal/h·m²·°C" 
+	default:
+		return ""
+	}
 }

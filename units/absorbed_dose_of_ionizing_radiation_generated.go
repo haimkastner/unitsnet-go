@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -588,49 +588,9 @@ func (a *AbsorbedDoseOfIonizingRadiation) ToString(unit AbsorbedDoseOfIonizingRa
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetAbsorbedDoseOfIonizingRadiationAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *AbsorbedDoseOfIonizingRadiation) getUnitAbbreviation(unit AbsorbedDoseOfIonizingRadiationUnits) string {
-	switch unit { 
-	case AbsorbedDoseOfIonizingRadiationGray:
-		return "Gy" 
-	case AbsorbedDoseOfIonizingRadiationRad:
-		return "rad" 
-	case AbsorbedDoseOfIonizingRadiationFemtogray:
-		return "fGy" 
-	case AbsorbedDoseOfIonizingRadiationPicogray:
-		return "pGy" 
-	case AbsorbedDoseOfIonizingRadiationNanogray:
-		return "nGy" 
-	case AbsorbedDoseOfIonizingRadiationMicrogray:
-		return "μGy" 
-	case AbsorbedDoseOfIonizingRadiationMilligray:
-		return "mGy" 
-	case AbsorbedDoseOfIonizingRadiationCentigray:
-		return "cGy" 
-	case AbsorbedDoseOfIonizingRadiationKilogray:
-		return "kGy" 
-	case AbsorbedDoseOfIonizingRadiationMegagray:
-		return "MGy" 
-	case AbsorbedDoseOfIonizingRadiationGigagray:
-		return "GGy" 
-	case AbsorbedDoseOfIonizingRadiationTeragray:
-		return "TGy" 
-	case AbsorbedDoseOfIonizingRadiationPetagray:
-		return "PGy" 
-	case AbsorbedDoseOfIonizingRadiationMillirad:
-		return "mrad" 
-	case AbsorbedDoseOfIonizingRadiationKilorad:
-		return "krad" 
-	case AbsorbedDoseOfIonizingRadiationMegarad:
-		return "Mrad" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetAbsorbedDoseOfIonizingRadiationAbbreviation(unit))
 }
 
 // Equals checks if the given AbsorbedDoseOfIonizingRadiation is equal to the current AbsorbedDoseOfIonizingRadiation.
@@ -711,4 +671,44 @@ func (a *AbsorbedDoseOfIonizingRadiation) Multiply(other *AbsorbedDoseOfIonizing
 //    *AbsorbedDoseOfIonizingRadiation: A new AbsorbedDoseOfIonizingRadiation instance representing the quotient of both AbsorbedDoseOfIonizingRadiation.
 func (a *AbsorbedDoseOfIonizingRadiation) Divide(other *AbsorbedDoseOfIonizingRadiation) *AbsorbedDoseOfIonizingRadiation {
 	return &AbsorbedDoseOfIonizingRadiation{value: a.value / other.BaseValue()}
+}
+
+// GetAbsorbedDoseOfIonizingRadiationAbbreviation gets the unit abbreviation.
+func GetAbsorbedDoseOfIonizingRadiationAbbreviation(unit AbsorbedDoseOfIonizingRadiationUnits) string {
+	switch unit { 
+	case AbsorbedDoseOfIonizingRadiationGray:
+		return "Gy" 
+	case AbsorbedDoseOfIonizingRadiationRad:
+		return "rad" 
+	case AbsorbedDoseOfIonizingRadiationFemtogray:
+		return "fGy" 
+	case AbsorbedDoseOfIonizingRadiationPicogray:
+		return "pGy" 
+	case AbsorbedDoseOfIonizingRadiationNanogray:
+		return "nGy" 
+	case AbsorbedDoseOfIonizingRadiationMicrogray:
+		return "μGy" 
+	case AbsorbedDoseOfIonizingRadiationMilligray:
+		return "mGy" 
+	case AbsorbedDoseOfIonizingRadiationCentigray:
+		return "cGy" 
+	case AbsorbedDoseOfIonizingRadiationKilogray:
+		return "kGy" 
+	case AbsorbedDoseOfIonizingRadiationMegagray:
+		return "MGy" 
+	case AbsorbedDoseOfIonizingRadiationGigagray:
+		return "GGy" 
+	case AbsorbedDoseOfIonizingRadiationTeragray:
+		return "TGy" 
+	case AbsorbedDoseOfIonizingRadiationPetagray:
+		return "PGy" 
+	case AbsorbedDoseOfIonizingRadiationMillirad:
+		return "mrad" 
+	case AbsorbedDoseOfIonizingRadiationKilorad:
+		return "krad" 
+	case AbsorbedDoseOfIonizingRadiationMegarad:
+		return "Mrad" 
+	default:
+		return ""
+	}
 }

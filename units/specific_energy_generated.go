@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -952,77 +952,9 @@ func (a *SpecificEnergy) ToString(unit SpecificEnergyUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetSpecificEnergyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *SpecificEnergy) getUnitAbbreviation(unit SpecificEnergyUnits) string {
-	switch unit { 
-	case SpecificEnergyJoulePerKilogram:
-		return "J/kg" 
-	case SpecificEnergyMegaJoulePerTonne:
-		return "MJ/t" 
-	case SpecificEnergyCaloriePerGram:
-		return "cal/g" 
-	case SpecificEnergyWattHourPerKilogram:
-		return "Wh/kg" 
-	case SpecificEnergyWattDayPerKilogram:
-		return "Wd/kg" 
-	case SpecificEnergyWattDayPerTonne:
-		return "Wd/t" 
-	case SpecificEnergyWattDayPerShortTon:
-		return "Wd/ST" 
-	case SpecificEnergyWattHourPerPound:
-		return "Wh/lbs" 
-	case SpecificEnergyBtuPerPound:
-		return "btu/lb" 
-	case SpecificEnergyKilojoulePerKilogram:
-		return "kJ/kg" 
-	case SpecificEnergyMegajoulePerKilogram:
-		return "MJ/kg" 
-	case SpecificEnergyKilocaloriePerGram:
-		return "kcal/g" 
-	case SpecificEnergyKilowattHourPerKilogram:
-		return "kWh/kg" 
-	case SpecificEnergyMegawattHourPerKilogram:
-		return "MWh/kg" 
-	case SpecificEnergyGigawattHourPerKilogram:
-		return "GWh/kg" 
-	case SpecificEnergyKilowattDayPerKilogram:
-		return "kWd/kg" 
-	case SpecificEnergyMegawattDayPerKilogram:
-		return "MWd/kg" 
-	case SpecificEnergyGigawattDayPerKilogram:
-		return "GWd/kg" 
-	case SpecificEnergyTerawattDayPerKilogram:
-		return "TWd/kg" 
-	case SpecificEnergyKilowattDayPerTonne:
-		return "kWd/t" 
-	case SpecificEnergyMegawattDayPerTonne:
-		return "MWd/t" 
-	case SpecificEnergyGigawattDayPerTonne:
-		return "GWd/t" 
-	case SpecificEnergyTerawattDayPerTonne:
-		return "TWd/t" 
-	case SpecificEnergyKilowattDayPerShortTon:
-		return "kWd/ST" 
-	case SpecificEnergyMegawattDayPerShortTon:
-		return "MWd/ST" 
-	case SpecificEnergyGigawattDayPerShortTon:
-		return "GWd/ST" 
-	case SpecificEnergyTerawattDayPerShortTon:
-		return "TWd/ST" 
-	case SpecificEnergyKilowattHourPerPound:
-		return "kWh/lbs" 
-	case SpecificEnergyMegawattHourPerPound:
-		return "MWh/lbs" 
-	case SpecificEnergyGigawattHourPerPound:
-		return "GWh/lbs" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetSpecificEnergyAbbreviation(unit))
 }
 
 // Equals checks if the given SpecificEnergy is equal to the current SpecificEnergy.
@@ -1103,4 +1035,72 @@ func (a *SpecificEnergy) Multiply(other *SpecificEnergy) *SpecificEnergy {
 //    *SpecificEnergy: A new SpecificEnergy instance representing the quotient of both SpecificEnergy.
 func (a *SpecificEnergy) Divide(other *SpecificEnergy) *SpecificEnergy {
 	return &SpecificEnergy{value: a.value / other.BaseValue()}
+}
+
+// GetSpecificEnergyAbbreviation gets the unit abbreviation.
+func GetSpecificEnergyAbbreviation(unit SpecificEnergyUnits) string {
+	switch unit { 
+	case SpecificEnergyJoulePerKilogram:
+		return "J/kg" 
+	case SpecificEnergyMegaJoulePerTonne:
+		return "MJ/t" 
+	case SpecificEnergyCaloriePerGram:
+		return "cal/g" 
+	case SpecificEnergyWattHourPerKilogram:
+		return "Wh/kg" 
+	case SpecificEnergyWattDayPerKilogram:
+		return "Wd/kg" 
+	case SpecificEnergyWattDayPerTonne:
+		return "Wd/t" 
+	case SpecificEnergyWattDayPerShortTon:
+		return "Wd/ST" 
+	case SpecificEnergyWattHourPerPound:
+		return "Wh/lbs" 
+	case SpecificEnergyBtuPerPound:
+		return "btu/lb" 
+	case SpecificEnergyKilojoulePerKilogram:
+		return "kJ/kg" 
+	case SpecificEnergyMegajoulePerKilogram:
+		return "MJ/kg" 
+	case SpecificEnergyKilocaloriePerGram:
+		return "kcal/g" 
+	case SpecificEnergyKilowattHourPerKilogram:
+		return "kWh/kg" 
+	case SpecificEnergyMegawattHourPerKilogram:
+		return "MWh/kg" 
+	case SpecificEnergyGigawattHourPerKilogram:
+		return "GWh/kg" 
+	case SpecificEnergyKilowattDayPerKilogram:
+		return "kWd/kg" 
+	case SpecificEnergyMegawattDayPerKilogram:
+		return "MWd/kg" 
+	case SpecificEnergyGigawattDayPerKilogram:
+		return "GWd/kg" 
+	case SpecificEnergyTerawattDayPerKilogram:
+		return "TWd/kg" 
+	case SpecificEnergyKilowattDayPerTonne:
+		return "kWd/t" 
+	case SpecificEnergyMegawattDayPerTonne:
+		return "MWd/t" 
+	case SpecificEnergyGigawattDayPerTonne:
+		return "GWd/t" 
+	case SpecificEnergyTerawattDayPerTonne:
+		return "TWd/t" 
+	case SpecificEnergyKilowattDayPerShortTon:
+		return "kWd/ST" 
+	case SpecificEnergyMegawattDayPerShortTon:
+		return "MWd/ST" 
+	case SpecificEnergyGigawattDayPerShortTon:
+		return "GWd/ST" 
+	case SpecificEnergyTerawattDayPerShortTon:
+		return "TWd/ST" 
+	case SpecificEnergyKilowattHourPerPound:
+		return "kWh/lbs" 
+	case SpecificEnergyMegawattHourPerPound:
+		return "MWh/lbs" 
+	case SpecificEnergyGigawattHourPerPound:
+		return "GWh/lbs" 
+	default:
+		return ""
+	}
 }

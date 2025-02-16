@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -276,25 +276,9 @@ func (a *RotationalAcceleration) ToString(unit RotationalAccelerationUnits, frac
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRotationalAccelerationAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *RotationalAcceleration) getUnitAbbreviation(unit RotationalAccelerationUnits) string {
-	switch unit { 
-	case RotationalAccelerationRadianPerSecondSquared:
-		return "rad/s²" 
-	case RotationalAccelerationDegreePerSecondSquared:
-		return "°/s²" 
-	case RotationalAccelerationRevolutionPerMinutePerSecond:
-		return "rpm/s" 
-	case RotationalAccelerationRevolutionPerSecondSquared:
-		return "r/s²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRotationalAccelerationAbbreviation(unit))
 }
 
 // Equals checks if the given RotationalAcceleration is equal to the current RotationalAcceleration.
@@ -375,4 +359,20 @@ func (a *RotationalAcceleration) Multiply(other *RotationalAcceleration) *Rotati
 //    *RotationalAcceleration: A new RotationalAcceleration instance representing the quotient of both RotationalAcceleration.
 func (a *RotationalAcceleration) Divide(other *RotationalAcceleration) *RotationalAcceleration {
 	return &RotationalAcceleration{value: a.value / other.BaseValue()}
+}
+
+// GetRotationalAccelerationAbbreviation gets the unit abbreviation.
+func GetRotationalAccelerationAbbreviation(unit RotationalAccelerationUnits) string {
+	switch unit { 
+	case RotationalAccelerationRadianPerSecondSquared:
+		return "rad/s²" 
+	case RotationalAccelerationDegreePerSecondSquared:
+		return "°/s²" 
+	case RotationalAccelerationRevolutionPerMinutePerSecond:
+		return "rpm/s" 
+	case RotationalAccelerationRevolutionPerSecondSquared:
+		return "r/s²" 
+	default:
+		return ""
+	}
 }

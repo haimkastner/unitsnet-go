@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -198,19 +198,9 @@ func (a *Permittivity) ToString(unit PermittivityUnits, fractionalDigits int) st
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetPermittivityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Permittivity) getUnitAbbreviation(unit PermittivityUnits) string {
-	switch unit { 
-	case PermittivityFaradPerMeter:
-		return "F/m" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetPermittivityAbbreviation(unit))
 }
 
 // Equals checks if the given Permittivity is equal to the current Permittivity.
@@ -291,4 +281,14 @@ func (a *Permittivity) Multiply(other *Permittivity) *Permittivity {
 //    *Permittivity: A new Permittivity instance representing the quotient of both Permittivity.
 func (a *Permittivity) Divide(other *Permittivity) *Permittivity {
 	return &Permittivity{value: a.value / other.BaseValue()}
+}
+
+// GetPermittivityAbbreviation gets the unit abbreviation.
+func GetPermittivityAbbreviation(unit PermittivityUnits) string {
+	switch unit { 
+	case PermittivityFaradPerMeter:
+		return "F/m" 
+	default:
+		return ""
+	}
 }

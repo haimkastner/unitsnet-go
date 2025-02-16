@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -588,49 +588,9 @@ func (a *ElectricConductance) ToString(unit ElectricConductanceUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricConductanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricConductance) getUnitAbbreviation(unit ElectricConductanceUnits) string {
-	switch unit { 
-	case ElectricConductanceSiemens:
-		return "S" 
-	case ElectricConductanceMho:
-		return "℧" 
-	case ElectricConductanceNanosiemens:
-		return "nS" 
-	case ElectricConductanceMicrosiemens:
-		return "μS" 
-	case ElectricConductanceMillisiemens:
-		return "mS" 
-	case ElectricConductanceKilosiemens:
-		return "kS" 
-	case ElectricConductanceMegasiemens:
-		return "MS" 
-	case ElectricConductanceGigasiemens:
-		return "GS" 
-	case ElectricConductanceTerasiemens:
-		return "TS" 
-	case ElectricConductanceNanomho:
-		return "n℧" 
-	case ElectricConductanceMicromho:
-		return "μ℧" 
-	case ElectricConductanceMillimho:
-		return "m℧" 
-	case ElectricConductanceKilomho:
-		return "k℧" 
-	case ElectricConductanceMegamho:
-		return "M℧" 
-	case ElectricConductanceGigamho:
-		return "G℧" 
-	case ElectricConductanceTeramho:
-		return "T℧" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricConductanceAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricConductance is equal to the current ElectricConductance.
@@ -711,4 +671,44 @@ func (a *ElectricConductance) Multiply(other *ElectricConductance) *ElectricCond
 //    *ElectricConductance: A new ElectricConductance instance representing the quotient of both ElectricConductance.
 func (a *ElectricConductance) Divide(other *ElectricConductance) *ElectricConductance {
 	return &ElectricConductance{value: a.value / other.BaseValue()}
+}
+
+// GetElectricConductanceAbbreviation gets the unit abbreviation.
+func GetElectricConductanceAbbreviation(unit ElectricConductanceUnits) string {
+	switch unit { 
+	case ElectricConductanceSiemens:
+		return "S" 
+	case ElectricConductanceMho:
+		return "℧" 
+	case ElectricConductanceNanosiemens:
+		return "nS" 
+	case ElectricConductanceMicrosiemens:
+		return "μS" 
+	case ElectricConductanceMillisiemens:
+		return "mS" 
+	case ElectricConductanceKilosiemens:
+		return "kS" 
+	case ElectricConductanceMegasiemens:
+		return "MS" 
+	case ElectricConductanceGigasiemens:
+		return "GS" 
+	case ElectricConductanceTerasiemens:
+		return "TS" 
+	case ElectricConductanceNanomho:
+		return "n℧" 
+	case ElectricConductanceMicromho:
+		return "μ℧" 
+	case ElectricConductanceMillimho:
+		return "m℧" 
+	case ElectricConductanceKilomho:
+		return "k℧" 
+	case ElectricConductanceMegamho:
+		return "M℧" 
+	case ElectricConductanceGigamho:
+		return "G℧" 
+	case ElectricConductanceTeramho:
+		return "T℧" 
+	default:
+		return ""
+	}
 }

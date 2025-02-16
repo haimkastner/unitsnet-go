@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -250,23 +250,9 @@ func (a *ReactiveEnergy) ToString(unit ReactiveEnergyUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetReactiveEnergyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ReactiveEnergy) getUnitAbbreviation(unit ReactiveEnergyUnits) string {
-	switch unit { 
-	case ReactiveEnergyVoltampereReactiveHour:
-		return "varh" 
-	case ReactiveEnergyKilovoltampereReactiveHour:
-		return "kvarh" 
-	case ReactiveEnergyMegavoltampereReactiveHour:
-		return "Mvarh" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetReactiveEnergyAbbreviation(unit))
 }
 
 // Equals checks if the given ReactiveEnergy is equal to the current ReactiveEnergy.
@@ -347,4 +333,18 @@ func (a *ReactiveEnergy) Multiply(other *ReactiveEnergy) *ReactiveEnergy {
 //    *ReactiveEnergy: A new ReactiveEnergy instance representing the quotient of both ReactiveEnergy.
 func (a *ReactiveEnergy) Divide(other *ReactiveEnergy) *ReactiveEnergy {
 	return &ReactiveEnergy{value: a.value / other.BaseValue()}
+}
+
+// GetReactiveEnergyAbbreviation gets the unit abbreviation.
+func GetReactiveEnergyAbbreviation(unit ReactiveEnergyUnits) string {
+	switch unit { 
+	case ReactiveEnergyVoltampereReactiveHour:
+		return "varh" 
+	case ReactiveEnergyKilovoltampereReactiveHour:
+		return "kvarh" 
+	case ReactiveEnergyMegavoltampereReactiveHour:
+		return "Mvarh" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -198,19 +198,9 @@ func (a *RelativeHumidity) ToString(unit RelativeHumidityUnits, fractionalDigits
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRelativeHumidityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *RelativeHumidity) getUnitAbbreviation(unit RelativeHumidityUnits) string {
-	switch unit { 
-	case RelativeHumidityPercent:
-		return "%RH" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRelativeHumidityAbbreviation(unit))
 }
 
 // Equals checks if the given RelativeHumidity is equal to the current RelativeHumidity.
@@ -291,4 +281,14 @@ func (a *RelativeHumidity) Multiply(other *RelativeHumidity) *RelativeHumidity {
 //    *RelativeHumidity: A new RelativeHumidity instance representing the quotient of both RelativeHumidity.
 func (a *RelativeHumidity) Divide(other *RelativeHumidity) *RelativeHumidity {
 	return &RelativeHumidity{value: a.value / other.BaseValue()}
+}
+
+// GetRelativeHumidityAbbreviation gets the unit abbreviation.
+func GetRelativeHumidityAbbreviation(unit RelativeHumidityUnits) string {
+	switch unit { 
+	case RelativeHumidityPercent:
+		return "%RH" 
+	default:
+		return ""
+	}
 }

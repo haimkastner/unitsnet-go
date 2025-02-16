@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -328,29 +328,9 @@ func (a *WarpingMomentOfInertia) ToString(unit WarpingMomentOfInertiaUnits, frac
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetWarpingMomentOfInertiaAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *WarpingMomentOfInertia) getUnitAbbreviation(unit WarpingMomentOfInertiaUnits) string {
-	switch unit { 
-	case WarpingMomentOfInertiaMeterToTheSixth:
-		return "m⁶" 
-	case WarpingMomentOfInertiaDecimeterToTheSixth:
-		return "dm⁶" 
-	case WarpingMomentOfInertiaCentimeterToTheSixth:
-		return "cm⁶" 
-	case WarpingMomentOfInertiaMillimeterToTheSixth:
-		return "mm⁶" 
-	case WarpingMomentOfInertiaFootToTheSixth:
-		return "ft⁶" 
-	case WarpingMomentOfInertiaInchToTheSixth:
-		return "in⁶" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetWarpingMomentOfInertiaAbbreviation(unit))
 }
 
 // Equals checks if the given WarpingMomentOfInertia is equal to the current WarpingMomentOfInertia.
@@ -431,4 +411,24 @@ func (a *WarpingMomentOfInertia) Multiply(other *WarpingMomentOfInertia) *Warpin
 //    *WarpingMomentOfInertia: A new WarpingMomentOfInertia instance representing the quotient of both WarpingMomentOfInertia.
 func (a *WarpingMomentOfInertia) Divide(other *WarpingMomentOfInertia) *WarpingMomentOfInertia {
 	return &WarpingMomentOfInertia{value: a.value / other.BaseValue()}
+}
+
+// GetWarpingMomentOfInertiaAbbreviation gets the unit abbreviation.
+func GetWarpingMomentOfInertiaAbbreviation(unit WarpingMomentOfInertiaUnits) string {
+	switch unit { 
+	case WarpingMomentOfInertiaMeterToTheSixth:
+		return "m⁶" 
+	case WarpingMomentOfInertiaDecimeterToTheSixth:
+		return "dm⁶" 
+	case WarpingMomentOfInertiaCentimeterToTheSixth:
+		return "cm⁶" 
+	case WarpingMomentOfInertiaMillimeterToTheSixth:
+		return "mm⁶" 
+	case WarpingMomentOfInertiaFootToTheSixth:
+		return "ft⁶" 
+	case WarpingMomentOfInertiaInchToTheSixth:
+		return "in⁶" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -1628,13 +1628,93 @@ func (a *Density) ToString(unit DensityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetDensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetDensityAbbreviation(unit))
 }
 
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Density) getUnitAbbreviation(unit DensityUnits) string {
+// Equals checks if the given Density is equal to the current Density.
+//
+// Parameters:
+//    other: The Density to compare against.
+//
+// Returns:
+//    bool: Returns true if both Density are equal, false otherwise.
+func (a *Density) Equals(other *Density) bool {
+	return a.value == other.BaseValue()
+}
+
+// CompareTo compares the current Density with another Density.
+// It returns -1 if the current Density is less than the other Density, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Density to compare against.
+//
+// Returns:
+//    int: -1 if the current Density is less, 1 if greater, and 0 if equal.
+func (a *Density) CompareTo(other *Density) int {
+	otherValue := other.BaseValue()
+	if a.value < otherValue {
+		return -1
+	} else if a.value > otherValue {
+		return 1
+	}
+
+	// If both are equal
+	return 0
+}
+
+// Add adds the given Density to the current Density and returns the result.
+// The result is a new Density instance with the sum of the values.
+//
+// Parameters:
+//    other: The Density to add to the current Density.
+//
+// Returns:
+//    *Density: A new Density instance representing the sum of both Density.
+func (a *Density) Add(other *Density) *Density {
+	return &Density{value: a.value + other.BaseValue()}
+}
+
+// Subtract subtracts the given Density from the current Density and returns the result.
+// The result is a new Density instance with the difference of the values.
+//
+// Parameters:
+//    other: The Density to subtract from the current Density.
+//
+// Returns:
+//    *Density: A new Density instance representing the difference of both Density.
+func (a *Density) Subtract(other *Density) *Density {
+	return &Density{value: a.value - other.BaseValue()}
+}
+
+// Multiply multiplies the current Density by the given Density and returns the result.
+// The result is a new Density instance with the product of the values.
+//
+// Parameters:
+//    other: The Density to multiply with the current Density.
+//
+// Returns:
+//    *Density: A new Density instance representing the product of both Density.
+func (a *Density) Multiply(other *Density) *Density {
+	return &Density{value: a.value * other.BaseValue()}
+}
+
+// Divide divides the current Density by the given Density and returns the result.
+// The result is a new Density instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Density to divide the current Density by.
+//
+// Returns:
+//    *Density: A new Density instance representing the quotient of both Density.
+func (a *Density) Divide(other *Density) *Density {
+	return &Density{value: a.value / other.BaseValue()}
+}
+
+// GetDensityAbbreviation gets the unit abbreviation.
+func GetDensityAbbreviation(unit DensityUnits) string {
 	switch unit { 
 	case DensityGramPerCubicMillimeter:
 		return "g/mm³" 
@@ -1751,84 +1831,4 @@ func (a *Density) getUnitAbbreviation(unit DensityUnits) string {
 	default:
 		return ""
 	}
-}
-
-// Equals checks if the given Density is equal to the current Density.
-//
-// Parameters:
-//    other: The Density to compare against.
-//
-// Returns:
-//    bool: Returns true if both Density are equal, false otherwise.
-func (a *Density) Equals(other *Density) bool {
-	return a.value == other.BaseValue()
-}
-
-// CompareTo compares the current Density with another Density.
-// It returns -1 if the current Density is less than the other Density, 
-// 1 if it is greater, and 0 if they are equal.
-//
-// Parameters:
-//    other: The Density to compare against.
-//
-// Returns:
-//    int: -1 if the current Density is less, 1 if greater, and 0 if equal.
-func (a *Density) CompareTo(other *Density) int {
-	otherValue := other.BaseValue()
-	if a.value < otherValue {
-		return -1
-	} else if a.value > otherValue {
-		return 1
-	}
-
-	// If both are equal
-	return 0
-}
-
-// Add adds the given Density to the current Density and returns the result.
-// The result is a new Density instance with the sum of the values.
-//
-// Parameters:
-//    other: The Density to add to the current Density.
-//
-// Returns:
-//    *Density: A new Density instance representing the sum of both Density.
-func (a *Density) Add(other *Density) *Density {
-	return &Density{value: a.value + other.BaseValue()}
-}
-
-// Subtract subtracts the given Density from the current Density and returns the result.
-// The result is a new Density instance with the difference of the values.
-//
-// Parameters:
-//    other: The Density to subtract from the current Density.
-//
-// Returns:
-//    *Density: A new Density instance representing the difference of both Density.
-func (a *Density) Subtract(other *Density) *Density {
-	return &Density{value: a.value - other.BaseValue()}
-}
-
-// Multiply multiplies the current Density by the given Density and returns the result.
-// The result is a new Density instance with the product of the values.
-//
-// Parameters:
-//    other: The Density to multiply with the current Density.
-//
-// Returns:
-//    *Density: A new Density instance representing the product of both Density.
-func (a *Density) Multiply(other *Density) *Density {
-	return &Density{value: a.value * other.BaseValue()}
-}
-
-// Divide divides the current Density by the given Density and returns the result.
-// The result is a new Density instance with the quotient of the values.
-//
-// Parameters:
-//    other: The Density to divide the current Density by.
-//
-// Returns:
-//    *Density: A new Density instance representing the quotient of both Density.
-func (a *Density) Divide(other *Density) *Density {
-	return &Density{value: a.value / other.BaseValue()}
 }

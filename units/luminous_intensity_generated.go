@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -198,19 +198,9 @@ func (a *LuminousIntensity) ToString(unit LuminousIntensityUnits, fractionalDigi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetLuminousIntensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *LuminousIntensity) getUnitAbbreviation(unit LuminousIntensityUnits) string {
-	switch unit { 
-	case LuminousIntensityCandela:
-		return "cd" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetLuminousIntensityAbbreviation(unit))
 }
 
 // Equals checks if the given LuminousIntensity is equal to the current LuminousIntensity.
@@ -291,4 +281,14 @@ func (a *LuminousIntensity) Multiply(other *LuminousIntensity) *LuminousIntensit
 //    *LuminousIntensity: A new LuminousIntensity instance representing the quotient of both LuminousIntensity.
 func (a *LuminousIntensity) Divide(other *LuminousIntensity) *LuminousIntensity {
 	return &LuminousIntensity{value: a.value / other.BaseValue()}
+}
+
+// GetLuminousIntensityAbbreviation gets the unit abbreviation.
+func GetLuminousIntensityAbbreviation(unit LuminousIntensityUnits) string {
+	switch unit { 
+	case LuminousIntensityCandela:
+		return "cd" 
+	default:
+		return ""
+	}
 }

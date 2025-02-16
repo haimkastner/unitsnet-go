@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -484,41 +484,9 @@ func (a *EnergyDensity) ToString(unit EnergyDensityUnits, fractionalDigits int) 
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetEnergyDensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *EnergyDensity) getUnitAbbreviation(unit EnergyDensityUnits) string {
-	switch unit { 
-	case EnergyDensityJoulePerCubicMeter:
-		return "J/m³" 
-	case EnergyDensityWattHourPerCubicMeter:
-		return "Wh/m³" 
-	case EnergyDensityKilojoulePerCubicMeter:
-		return "kJ/m³" 
-	case EnergyDensityMegajoulePerCubicMeter:
-		return "MJ/m³" 
-	case EnergyDensityGigajoulePerCubicMeter:
-		return "GJ/m³" 
-	case EnergyDensityTerajoulePerCubicMeter:
-		return "TJ/m³" 
-	case EnergyDensityPetajoulePerCubicMeter:
-		return "PJ/m³" 
-	case EnergyDensityKilowattHourPerCubicMeter:
-		return "kWh/m³" 
-	case EnergyDensityMegawattHourPerCubicMeter:
-		return "MWh/m³" 
-	case EnergyDensityGigawattHourPerCubicMeter:
-		return "GWh/m³" 
-	case EnergyDensityTerawattHourPerCubicMeter:
-		return "TWh/m³" 
-	case EnergyDensityPetawattHourPerCubicMeter:
-		return "PWh/m³" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetEnergyDensityAbbreviation(unit))
 }
 
 // Equals checks if the given EnergyDensity is equal to the current EnergyDensity.
@@ -599,4 +567,36 @@ func (a *EnergyDensity) Multiply(other *EnergyDensity) *EnergyDensity {
 //    *EnergyDensity: A new EnergyDensity instance representing the quotient of both EnergyDensity.
 func (a *EnergyDensity) Divide(other *EnergyDensity) *EnergyDensity {
 	return &EnergyDensity{value: a.value / other.BaseValue()}
+}
+
+// GetEnergyDensityAbbreviation gets the unit abbreviation.
+func GetEnergyDensityAbbreviation(unit EnergyDensityUnits) string {
+	switch unit { 
+	case EnergyDensityJoulePerCubicMeter:
+		return "J/m³" 
+	case EnergyDensityWattHourPerCubicMeter:
+		return "Wh/m³" 
+	case EnergyDensityKilojoulePerCubicMeter:
+		return "kJ/m³" 
+	case EnergyDensityMegajoulePerCubicMeter:
+		return "MJ/m³" 
+	case EnergyDensityGigajoulePerCubicMeter:
+		return "GJ/m³" 
+	case EnergyDensityTerajoulePerCubicMeter:
+		return "TJ/m³" 
+	case EnergyDensityPetajoulePerCubicMeter:
+		return "PJ/m³" 
+	case EnergyDensityKilowattHourPerCubicMeter:
+		return "kWh/m³" 
+	case EnergyDensityMegawattHourPerCubicMeter:
+		return "MWh/m³" 
+	case EnergyDensityGigawattHourPerCubicMeter:
+		return "GWh/m³" 
+	case EnergyDensityTerawattHourPerCubicMeter:
+		return "TWh/m³" 
+	case EnergyDensityPetawattHourPerCubicMeter:
+		return "PWh/m³" 
+	default:
+		return ""
+	}
 }

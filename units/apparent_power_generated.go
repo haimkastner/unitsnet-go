@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -328,29 +328,9 @@ func (a *ApparentPower) ToString(unit ApparentPowerUnits, fractionalDigits int) 
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetApparentPowerAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ApparentPower) getUnitAbbreviation(unit ApparentPowerUnits) string {
-	switch unit { 
-	case ApparentPowerVoltampere:
-		return "VA" 
-	case ApparentPowerMicrovoltampere:
-		return "μVA" 
-	case ApparentPowerMillivoltampere:
-		return "mVA" 
-	case ApparentPowerKilovoltampere:
-		return "kVA" 
-	case ApparentPowerMegavoltampere:
-		return "MVA" 
-	case ApparentPowerGigavoltampere:
-		return "GVA" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetApparentPowerAbbreviation(unit))
 }
 
 // Equals checks if the given ApparentPower is equal to the current ApparentPower.
@@ -431,4 +411,24 @@ func (a *ApparentPower) Multiply(other *ApparentPower) *ApparentPower {
 //    *ApparentPower: A new ApparentPower instance representing the quotient of both ApparentPower.
 func (a *ApparentPower) Divide(other *ApparentPower) *ApparentPower {
 	return &ApparentPower{value: a.value / other.BaseValue()}
+}
+
+// GetApparentPowerAbbreviation gets the unit abbreviation.
+func GetApparentPowerAbbreviation(unit ApparentPowerUnits) string {
+	switch unit { 
+	case ApparentPowerVoltampere:
+		return "VA" 
+	case ApparentPowerMicrovoltampere:
+		return "μVA" 
+	case ApparentPowerMillivoltampere:
+		return "mVA" 
+	case ApparentPowerKilovoltampere:
+		return "kVA" 
+	case ApparentPowerMegavoltampere:
+		return "MVA" 
+	case ApparentPowerGigavoltampere:
+		return "GVA" 
+	default:
+		return ""
+	}
 }

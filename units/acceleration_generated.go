@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -536,45 +536,9 @@ func (a *Acceleration) ToString(unit AccelerationUnits, fractionalDigits int) st
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetAccelerationAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Acceleration) getUnitAbbreviation(unit AccelerationUnits) string {
-	switch unit { 
-	case AccelerationMeterPerSecondSquared:
-		return "m/s²" 
-	case AccelerationInchPerSecondSquared:
-		return "in/s²" 
-	case AccelerationFootPerSecondSquared:
-		return "ft/s²" 
-	case AccelerationKnotPerSecond:
-		return "kn/s" 
-	case AccelerationKnotPerMinute:
-		return "kn/min" 
-	case AccelerationKnotPerHour:
-		return "kn/h" 
-	case AccelerationStandardGravity:
-		return "g" 
-	case AccelerationNanometerPerSecondSquared:
-		return "nm/s²" 
-	case AccelerationMicrometerPerSecondSquared:
-		return "μm/s²" 
-	case AccelerationMillimeterPerSecondSquared:
-		return "mm/s²" 
-	case AccelerationCentimeterPerSecondSquared:
-		return "cm/s²" 
-	case AccelerationDecimeterPerSecondSquared:
-		return "dm/s²" 
-	case AccelerationKilometerPerSecondSquared:
-		return "km/s²" 
-	case AccelerationMillistandardGravity:
-		return "mg" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetAccelerationAbbreviation(unit))
 }
 
 // Equals checks if the given Acceleration is equal to the current Acceleration.
@@ -655,4 +619,40 @@ func (a *Acceleration) Multiply(other *Acceleration) *Acceleration {
 //    *Acceleration: A new Acceleration instance representing the quotient of both Acceleration.
 func (a *Acceleration) Divide(other *Acceleration) *Acceleration {
 	return &Acceleration{value: a.value / other.BaseValue()}
+}
+
+// GetAccelerationAbbreviation gets the unit abbreviation.
+func GetAccelerationAbbreviation(unit AccelerationUnits) string {
+	switch unit { 
+	case AccelerationMeterPerSecondSquared:
+		return "m/s²" 
+	case AccelerationInchPerSecondSquared:
+		return "in/s²" 
+	case AccelerationFootPerSecondSquared:
+		return "ft/s²" 
+	case AccelerationKnotPerSecond:
+		return "kn/s" 
+	case AccelerationKnotPerMinute:
+		return "kn/min" 
+	case AccelerationKnotPerHour:
+		return "kn/h" 
+	case AccelerationStandardGravity:
+		return "g" 
+	case AccelerationNanometerPerSecondSquared:
+		return "nm/s²" 
+	case AccelerationMicrometerPerSecondSquared:
+		return "μm/s²" 
+	case AccelerationMillimeterPerSecondSquared:
+		return "mm/s²" 
+	case AccelerationCentimeterPerSecondSquared:
+		return "cm/s²" 
+	case AccelerationDecimeterPerSecondSquared:
+		return "dm/s²" 
+	case AccelerationKilometerPerSecondSquared:
+		return "km/s²" 
+	case AccelerationMillistandardGravity:
+		return "mg" 
+	default:
+		return ""
+	}
 }

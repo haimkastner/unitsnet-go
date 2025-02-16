@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -276,25 +276,9 @@ func (a *Illuminance) ToString(unit IlluminanceUnits, fractionalDigits int) stri
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetIlluminanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Illuminance) getUnitAbbreviation(unit IlluminanceUnits) string {
-	switch unit { 
-	case IlluminanceLux:
-		return "lx" 
-	case IlluminanceMillilux:
-		return "mlx" 
-	case IlluminanceKilolux:
-		return "klx" 
-	case IlluminanceMegalux:
-		return "Mlx" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetIlluminanceAbbreviation(unit))
 }
 
 // Equals checks if the given Illuminance is equal to the current Illuminance.
@@ -375,4 +359,20 @@ func (a *Illuminance) Multiply(other *Illuminance) *Illuminance {
 //    *Illuminance: A new Illuminance instance representing the quotient of both Illuminance.
 func (a *Illuminance) Divide(other *Illuminance) *Illuminance {
 	return &Illuminance{value: a.value / other.BaseValue()}
+}
+
+// GetIlluminanceAbbreviation gets the unit abbreviation.
+func GetIlluminanceAbbreviation(unit IlluminanceUnits) string {
+	switch unit { 
+	case IlluminanceLux:
+		return "lx" 
+	case IlluminanceMillilux:
+		return "mlx" 
+	case IlluminanceKilolux:
+		return "klx" 
+	case IlluminanceMegalux:
+		return "Mlx" 
+	default:
+		return ""
+	}
 }

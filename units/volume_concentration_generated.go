@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -692,57 +692,9 @@ func (a *VolumeConcentration) ToString(unit VolumeConcentrationUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetVolumeConcentrationAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *VolumeConcentration) getUnitAbbreviation(unit VolumeConcentrationUnits) string {
-	switch unit { 
-	case VolumeConcentrationDecimalFraction:
-		return "" 
-	case VolumeConcentrationLitersPerLiter:
-		return "L/L" 
-	case VolumeConcentrationLitersPerMililiter:
-		return "L/mL" 
-	case VolumeConcentrationPercent:
-		return "%" 
-	case VolumeConcentrationPartPerThousand:
-		return "‰" 
-	case VolumeConcentrationPartPerMillion:
-		return "ppm" 
-	case VolumeConcentrationPartPerBillion:
-		return "ppb" 
-	case VolumeConcentrationPartPerTrillion:
-		return "ppt" 
-	case VolumeConcentrationPicolitersPerLiter:
-		return "pL/L" 
-	case VolumeConcentrationNanolitersPerLiter:
-		return "nL/L" 
-	case VolumeConcentrationMicrolitersPerLiter:
-		return "μL/L" 
-	case VolumeConcentrationMillilitersPerLiter:
-		return "mL/L" 
-	case VolumeConcentrationCentilitersPerLiter:
-		return "cL/L" 
-	case VolumeConcentrationDecilitersPerLiter:
-		return "dL/L" 
-	case VolumeConcentrationPicolitersPerMililiter:
-		return "pL/mL" 
-	case VolumeConcentrationNanolitersPerMililiter:
-		return "nL/mL" 
-	case VolumeConcentrationMicrolitersPerMililiter:
-		return "μL/mL" 
-	case VolumeConcentrationMillilitersPerMililiter:
-		return "mL/mL" 
-	case VolumeConcentrationCentilitersPerMililiter:
-		return "cL/mL" 
-	case VolumeConcentrationDecilitersPerMililiter:
-		return "dL/mL" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetVolumeConcentrationAbbreviation(unit))
 }
 
 // Equals checks if the given VolumeConcentration is equal to the current VolumeConcentration.
@@ -823,4 +775,52 @@ func (a *VolumeConcentration) Multiply(other *VolumeConcentration) *VolumeConcen
 //    *VolumeConcentration: A new VolumeConcentration instance representing the quotient of both VolumeConcentration.
 func (a *VolumeConcentration) Divide(other *VolumeConcentration) *VolumeConcentration {
 	return &VolumeConcentration{value: a.value / other.BaseValue()}
+}
+
+// GetVolumeConcentrationAbbreviation gets the unit abbreviation.
+func GetVolumeConcentrationAbbreviation(unit VolumeConcentrationUnits) string {
+	switch unit { 
+	case VolumeConcentrationDecimalFraction:
+		return "" 
+	case VolumeConcentrationLitersPerLiter:
+		return "L/L" 
+	case VolumeConcentrationLitersPerMililiter:
+		return "L/mL" 
+	case VolumeConcentrationPercent:
+		return "%" 
+	case VolumeConcentrationPartPerThousand:
+		return "‰" 
+	case VolumeConcentrationPartPerMillion:
+		return "ppm" 
+	case VolumeConcentrationPartPerBillion:
+		return "ppb" 
+	case VolumeConcentrationPartPerTrillion:
+		return "ppt" 
+	case VolumeConcentrationPicolitersPerLiter:
+		return "pL/L" 
+	case VolumeConcentrationNanolitersPerLiter:
+		return "nL/L" 
+	case VolumeConcentrationMicrolitersPerLiter:
+		return "μL/L" 
+	case VolumeConcentrationMillilitersPerLiter:
+		return "mL/L" 
+	case VolumeConcentrationCentilitersPerLiter:
+		return "cL/L" 
+	case VolumeConcentrationDecilitersPerLiter:
+		return "dL/L" 
+	case VolumeConcentrationPicolitersPerMililiter:
+		return "pL/mL" 
+	case VolumeConcentrationNanolitersPerMililiter:
+		return "nL/mL" 
+	case VolumeConcentrationMicrolitersPerMililiter:
+		return "μL/mL" 
+	case VolumeConcentrationMillilitersPerMililiter:
+		return "mL/mL" 
+	case VolumeConcentrationCentilitersPerMililiter:
+		return "cL/mL" 
+	case VolumeConcentrationDecilitersPerMililiter:
+		return "dL/mL" 
+	default:
+		return ""
+	}
 }

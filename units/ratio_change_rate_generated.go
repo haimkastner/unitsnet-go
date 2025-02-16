@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -224,21 +224,9 @@ func (a *RatioChangeRate) ToString(unit RatioChangeRateUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRatioChangeRateAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *RatioChangeRate) getUnitAbbreviation(unit RatioChangeRateUnits) string {
-	switch unit { 
-	case RatioChangeRatePercentPerSecond:
-		return "%/s" 
-	case RatioChangeRateDecimalFractionPerSecond:
-		return "/s" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRatioChangeRateAbbreviation(unit))
 }
 
 // Equals checks if the given RatioChangeRate is equal to the current RatioChangeRate.
@@ -319,4 +307,16 @@ func (a *RatioChangeRate) Multiply(other *RatioChangeRate) *RatioChangeRate {
 //    *RatioChangeRate: A new RatioChangeRate instance representing the quotient of both RatioChangeRate.
 func (a *RatioChangeRate) Divide(other *RatioChangeRate) *RatioChangeRate {
 	return &RatioChangeRate{value: a.value / other.BaseValue()}
+}
+
+// GetRatioChangeRateAbbreviation gets the unit abbreviation.
+func GetRatioChangeRateAbbreviation(unit RatioChangeRateUnits) string {
+	switch unit { 
+	case RatioChangeRatePercentPerSecond:
+		return "%/s" 
+	case RatioChangeRateDecimalFractionPerSecond:
+		return "/s" 
+	default:
+		return ""
+	}
 }

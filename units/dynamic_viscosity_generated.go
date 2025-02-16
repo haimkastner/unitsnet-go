@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -432,37 +432,9 @@ func (a *DynamicViscosity) ToString(unit DynamicViscosityUnits, fractionalDigits
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetDynamicViscosityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *DynamicViscosity) getUnitAbbreviation(unit DynamicViscosityUnits) string {
-	switch unit { 
-	case DynamicViscosityNewtonSecondPerMeterSquared:
-		return "Ns/m²" 
-	case DynamicViscosityPascalSecond:
-		return "Pa·s" 
-	case DynamicViscosityPoise:
-		return "P" 
-	case DynamicViscosityReyn:
-		return "reyn" 
-	case DynamicViscosityPoundForceSecondPerSquareInch:
-		return "lbf·s/in²" 
-	case DynamicViscosityPoundForceSecondPerSquareFoot:
-		return "lbf·s/ft²" 
-	case DynamicViscosityPoundPerFootSecond:
-		return "lb/ft·s" 
-	case DynamicViscosityMillipascalSecond:
-		return "mPa·s" 
-	case DynamicViscosityMicropascalSecond:
-		return "μPa·s" 
-	case DynamicViscosityCentipoise:
-		return "cP" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetDynamicViscosityAbbreviation(unit))
 }
 
 // Equals checks if the given DynamicViscosity is equal to the current DynamicViscosity.
@@ -543,4 +515,32 @@ func (a *DynamicViscosity) Multiply(other *DynamicViscosity) *DynamicViscosity {
 //    *DynamicViscosity: A new DynamicViscosity instance representing the quotient of both DynamicViscosity.
 func (a *DynamicViscosity) Divide(other *DynamicViscosity) *DynamicViscosity {
 	return &DynamicViscosity{value: a.value / other.BaseValue()}
+}
+
+// GetDynamicViscosityAbbreviation gets the unit abbreviation.
+func GetDynamicViscosityAbbreviation(unit DynamicViscosityUnits) string {
+	switch unit { 
+	case DynamicViscosityNewtonSecondPerMeterSquared:
+		return "Ns/m²" 
+	case DynamicViscosityPascalSecond:
+		return "Pa·s" 
+	case DynamicViscosityPoise:
+		return "P" 
+	case DynamicViscosityReyn:
+		return "reyn" 
+	case DynamicViscosityPoundForceSecondPerSquareInch:
+		return "lbf·s/in²" 
+	case DynamicViscosityPoundForceSecondPerSquareFoot:
+		return "lbf·s/ft²" 
+	case DynamicViscosityPoundPerFootSecond:
+		return "lb/ft·s" 
+	case DynamicViscosityMillipascalSecond:
+		return "mPa·s" 
+	case DynamicViscosityMicropascalSecond:
+		return "μPa·s" 
+	case DynamicViscosityCentipoise:
+		return "cP" 
+	default:
+		return ""
+	}
 }

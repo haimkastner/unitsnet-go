@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -276,25 +276,9 @@ func (a *SpecificFuelConsumption) ToString(unit SpecificFuelConsumptionUnits, fr
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetSpecificFuelConsumptionAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *SpecificFuelConsumption) getUnitAbbreviation(unit SpecificFuelConsumptionUnits) string {
-	switch unit { 
-	case SpecificFuelConsumptionPoundMassPerPoundForceHour:
-		return "lb/(lbf·h)" 
-	case SpecificFuelConsumptionKilogramPerKilogramForceHour:
-		return "kg/(kgf�h)" 
-	case SpecificFuelConsumptionGramPerKiloNewtonSecond:
-		return "g/(kN�s)" 
-	case SpecificFuelConsumptionKilogramPerKiloNewtonSecond:
-		return "kg/(kN�s)" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetSpecificFuelConsumptionAbbreviation(unit))
 }
 
 // Equals checks if the given SpecificFuelConsumption is equal to the current SpecificFuelConsumption.
@@ -375,4 +359,20 @@ func (a *SpecificFuelConsumption) Multiply(other *SpecificFuelConsumption) *Spec
 //    *SpecificFuelConsumption: A new SpecificFuelConsumption instance representing the quotient of both SpecificFuelConsumption.
 func (a *SpecificFuelConsumption) Divide(other *SpecificFuelConsumption) *SpecificFuelConsumption {
 	return &SpecificFuelConsumption{value: a.value / other.BaseValue()}
+}
+
+// GetSpecificFuelConsumptionAbbreviation gets the unit abbreviation.
+func GetSpecificFuelConsumptionAbbreviation(unit SpecificFuelConsumptionUnits) string {
+	switch unit { 
+	case SpecificFuelConsumptionPoundMassPerPoundForceHour:
+		return "lb/(lbf·h)" 
+	case SpecificFuelConsumptionKilogramPerKilogramForceHour:
+		return "kg/(kgf�h)" 
+	case SpecificFuelConsumptionGramPerKiloNewtonSecond:
+		return "g/(kN�s)" 
+	case SpecificFuelConsumptionKilogramPerKiloNewtonSecond:
+		return "kg/(kN�s)" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -328,29 +328,9 @@ func (a *MagneticField) ToString(unit MagneticFieldUnits, fractionalDigits int) 
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMagneticFieldAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MagneticField) getUnitAbbreviation(unit MagneticFieldUnits) string {
-	switch unit { 
-	case MagneticFieldTesla:
-		return "T" 
-	case MagneticFieldGauss:
-		return "G" 
-	case MagneticFieldNanotesla:
-		return "nT" 
-	case MagneticFieldMicrotesla:
-		return "μT" 
-	case MagneticFieldMillitesla:
-		return "mT" 
-	case MagneticFieldMilligauss:
-		return "mG" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMagneticFieldAbbreviation(unit))
 }
 
 // Equals checks if the given MagneticField is equal to the current MagneticField.
@@ -431,4 +411,24 @@ func (a *MagneticField) Multiply(other *MagneticField) *MagneticField {
 //    *MagneticField: A new MagneticField instance representing the quotient of both MagneticField.
 func (a *MagneticField) Divide(other *MagneticField) *MagneticField {
 	return &MagneticField{value: a.value / other.BaseValue()}
+}
+
+// GetMagneticFieldAbbreviation gets the unit abbreviation.
+func GetMagneticFieldAbbreviation(unit MagneticFieldUnits) string {
+	switch unit { 
+	case MagneticFieldTesla:
+		return "T" 
+	case MagneticFieldGauss:
+		return "G" 
+	case MagneticFieldNanotesla:
+		return "nT" 
+	case MagneticFieldMicrotesla:
+		return "μT" 
+	case MagneticFieldMillitesla:
+		return "mT" 
+	case MagneticFieldMilligauss:
+		return "mG" 
+	default:
+		return ""
+	}
 }

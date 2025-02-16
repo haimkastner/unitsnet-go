@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -458,39 +458,9 @@ func (a *ElectricCharge) ToString(unit ElectricChargeUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricChargeAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricCharge) getUnitAbbreviation(unit ElectricChargeUnits) string {
-	switch unit { 
-	case ElectricChargeCoulomb:
-		return "C" 
-	case ElectricChargeAmpereHour:
-		return "A-h" 
-	case ElectricChargePicocoulomb:
-		return "pC" 
-	case ElectricChargeNanocoulomb:
-		return "nC" 
-	case ElectricChargeMicrocoulomb:
-		return "μC" 
-	case ElectricChargeMillicoulomb:
-		return "mC" 
-	case ElectricChargeKilocoulomb:
-		return "kC" 
-	case ElectricChargeMegacoulomb:
-		return "MC" 
-	case ElectricChargeMilliampereHour:
-		return "mA-h" 
-	case ElectricChargeKiloampereHour:
-		return "kA-h" 
-	case ElectricChargeMegaampereHour:
-		return "MA-h" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricChargeAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricCharge is equal to the current ElectricCharge.
@@ -571,4 +541,34 @@ func (a *ElectricCharge) Multiply(other *ElectricCharge) *ElectricCharge {
 //    *ElectricCharge: A new ElectricCharge instance representing the quotient of both ElectricCharge.
 func (a *ElectricCharge) Divide(other *ElectricCharge) *ElectricCharge {
 	return &ElectricCharge{value: a.value / other.BaseValue()}
+}
+
+// GetElectricChargeAbbreviation gets the unit abbreviation.
+func GetElectricChargeAbbreviation(unit ElectricChargeUnits) string {
+	switch unit { 
+	case ElectricChargeCoulomb:
+		return "C" 
+	case ElectricChargeAmpereHour:
+		return "A-h" 
+	case ElectricChargePicocoulomb:
+		return "pC" 
+	case ElectricChargeNanocoulomb:
+		return "nC" 
+	case ElectricChargeMicrocoulomb:
+		return "μC" 
+	case ElectricChargeMillicoulomb:
+		return "mC" 
+	case ElectricChargeKilocoulomb:
+		return "kC" 
+	case ElectricChargeMegacoulomb:
+		return "MC" 
+	case ElectricChargeMilliampereHour:
+		return "mA-h" 
+	case ElectricChargeKiloampereHour:
+		return "kA-h" 
+	case ElectricChargeMegaampereHour:
+		return "MA-h" 
+	default:
+		return ""
+	}
 }

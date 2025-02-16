@@ -1,0 +1,203 @@
+// Generated Code - DO NOT EDIT.
+
+package units_test
+
+import (
+	"encoding/json"
+	"math"
+	"testing"
+
+	"github.com/haimkastner/unitsnet-go/units"
+
+)
+
+func Test{{ unit }}DtoFactory_FromJSON(t *testing.T) {
+	validJSON := `{"value": 90, "unit": "{{ base_unit }}"}`
+	
+	factory := units.{{ unit }}DtoFactory{}
+	dto, err := factory.FromJSON([]byte(validJSON))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if dto.Value != 90 {
+		t.Errorf("expected value 90, got %v", dto.Value)
+	}
+	if dto.Unit != units.{{ unit }}{{ base_unit }} {
+		t.Errorf("expected unit %v, got %v", units.{{ unit }}{{ base_unit }}, dto.Unit)
+	}
+
+	invalidJSON := `{"value": "ninety", "unit": "{{ base_unit }}"}`
+
+	_, err = factory.FromJSON([]byte(invalidJSON))
+	if err == nil {
+		t.Error("expected error with invalid JSON, got nil")
+	}
+}
+
+func Test{{ unit }}Dto_ToJSON(t *testing.T) {
+	dto := units.{{ unit }}Dto{
+		Value: 45,
+		Unit:  units.{{ unit }}{{ base_unit }},
+	}
+	data, err := dto.ToJSON()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	var result map[string]interface{}
+	if err := json.Unmarshal(data, &result); err != nil {
+		t.Fatalf("error unmarshalling JSON: %v", err)
+	}
+	if result["value"].(float64) != 45 {
+		t.Errorf("expected value 45, got %v", result["value"])
+	}
+	if result["unit"].(string) != string(units.{{ unit }}{{ base_unit }}) {
+		t.Errorf("expected unit %s, got %v", units.{{ unit }}{{ base_unit }}, result["unit"])
+	}
+}
+
+func TestNew{{ unit }}_InvalidValue(t *testing.T) {
+	factory := units.{{ unit }}Factory{}
+	// NaN value should return an error.
+	_, err := factory.Create{{ unit }}(math.NaN(), units.{{ unit }}{{ base_unit }})
+	if err == nil {
+		t.Error("expected error for NaN value")
+	}
+	// Inf value should return an error.
+	_, err = factory.Create{{ unit }}(math.Inf(1), units.{{ unit }}{{ base_unit }})
+	if err == nil {
+		t.Error("expected error for Inf value")
+	}
+}
+
+func Test{{ unit }}Conversions(t *testing.T) {
+	factory := units.{{ unit }}Factory{}
+	// Creating a value of 180 in the base unit.
+	a, err := factory.Create{{ unit }}(180, units.{{ unit }}{{ base_unit }})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	{%- for method in methods %}
+	{
+		// Test conversion to {{ method.plural_name }}.
+		{%- if method.expected_from_base is defined %}
+		expected := {{ method.expected_from_base }}
+		if math.Abs(a.{{ method.plural_name }}()-expected) > 1e-9 {
+			t.Errorf("expected {{ method.plural_name }} %v, got %v", expected, a.{{ method.plural_name }}())
+		}
+		{%- else %}
+		// No expected conversion value provided for {{ method.plural_name }}, verifying result is not NaN.
+		result := a.{{ method.plural_name }}()
+		if math.IsNaN(result) {
+			t.Errorf("conversion to {{ method.plural_name }} returned NaN")
+		}
+		{%- endif %}
+	}
+	{%- endfor %}
+}
+
+func Test{{ unit }}_ToDtoAndToDtoJSON(t *testing.T) {
+	factory := units.{{ unit }}Factory{}
+	a, err := factory.Create{{ unit }}(90, units.{{ unit }}{{ base_unit }})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// Test default conversion (nil unit parameter should use base unit).
+	dto := a.ToDto(nil)
+	if dto.Unit != units.{{ unit }}{{ base_unit }} {
+		t.Errorf("expected default unit {{ base_unit }}, got %v", dto.Unit)
+	}
+	if math.Abs(dto.Value-90) > 1e-9 {
+		t.Errorf("expected value 90, got %v", dto.Value)
+	}
+
+	// Explicit conversion using first available method.
+	{%- if methods|length > 0 %}
+	holdUnit := units.{{ unit }}{{ methods[0].unit }}
+	dto = a.ToDto(&holdUnit)
+	{%- endif %}
+
+	jsonData, err := a.ToDtoJSON(nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	var result units.{{ unit }}Dto
+	err = json.Unmarshal(jsonData, &result)
+	if err != nil {
+		t.Fatalf("failed unmarshalling JSON: %v", err)
+	}
+	if result.Unit != units.{{ unit }}{{ base_unit }} {
+		t.Errorf("expected unit {{ base_unit }}, got %v", result.Unit)
+	}
+	if math.Abs(result.Value-90) > 1e-9 {
+		t.Errorf("expected value 90, got %v", result.Value)
+	}
+}
+
+func Test{{ unit }}ToString(t *testing.T) {
+	factory := units.{{ unit }}Factory{}
+	a, err := factory.Create{{ unit }}(45, units.{{ unit }}{{ base_unit }})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	formatted := a.ToString(units.{{ unit }}{{ base_unit }}, 2)
+	expected := "45.00 " + units.Get{{ unit }}Abbreviation(units.{{ unit }}{{ base_unit }})
+	if formatted != expected {
+		t.Errorf("expected '%s', got '%s'", expected, formatted)
+	}
+	formatted = a.ToString(units.{{ unit }}{{ base_unit }}, -1)
+	expected = "45 " + units.Get{{ unit }}Abbreviation(units.{{ unit }}{{ base_unit }})
+	if formatted != expected {
+		t.Errorf("expected '%s', got '%s'", expected, formatted)
+	}
+}
+
+func Test{{ unit }}_EqualityAndComparison(t *testing.T) {
+	factory := units.{{ unit }}Factory{}
+	a1, _ := factory.Create{{ unit }}(60, units.{{ unit }}{{ base_unit }})
+	a2, _ := factory.Create{{ unit }}(60, units.{{ unit }}{{ base_unit }})
+	a3, _ := factory.Create{{ unit }}(120, units.{{ unit }}{{ base_unit }})
+
+	if !a1.Equals(a2) {
+		t.Error("expected a1 and a2 to be equal")
+	}
+	if a1.Equals(a3) {
+		t.Error("expected a1 and a3 not to be equal")
+	}
+	if a1.CompareTo(a2) != 0 {
+		t.Error("expected CompareTo to return 0 for equal values")
+	}
+	if a1.CompareTo(a3) != -1 {
+		t.Errorf("expected a1 less than a3, got %d", a1.CompareTo(a3))
+	}
+	if a3.CompareTo(a1) != 1 {
+		t.Errorf("expected a3 greater than a1, got %d", a3.CompareTo(a1))
+	}
+}
+
+func Test{{ unit }}_Arithmetic(t *testing.T) {
+	factory := units.{{ unit }}Factory{}
+	a1, _ := factory.Create{{ unit }}(30, units.{{ unit }}{{ base_unit }})
+	a2, _ := factory.Create{{ unit }}(45, units.{{ unit }}{{ base_unit }})
+
+	added := a1.Add(a2)
+	if math.Abs(added.BaseValue()-75) > 1e-9 {
+		t.Errorf("expected sum 75, got %v", added.BaseValue())
+	}
+
+	subtracted := a2.Subtract(a1)
+	if math.Abs(subtracted.BaseValue()-15) > 1e-9 {
+		t.Errorf("expected difference 15, got %v", subtracted.BaseValue())
+	}
+
+	multiplied := a1.Multiply(a2)
+	if math.Abs(multiplied.BaseValue()-1350) > 1e-9 {
+		t.Errorf("expected product 1350, got %v", multiplied.BaseValue())
+	}
+
+	divided := a2.Divide(a1)
+	if math.Abs(divided.BaseValue()-1.5) > 1e-9 {
+		t.Errorf("expected quotient 1.5, got %v", divided.BaseValue())
+	}
+}

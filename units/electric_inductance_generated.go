@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -302,27 +302,9 @@ func (a *ElectricInductance) ToString(unit ElectricInductanceUnits, fractionalDi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricInductanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricInductance) getUnitAbbreviation(unit ElectricInductanceUnits) string {
-	switch unit { 
-	case ElectricInductanceHenry:
-		return "H" 
-	case ElectricInductancePicohenry:
-		return "pH" 
-	case ElectricInductanceNanohenry:
-		return "nH" 
-	case ElectricInductanceMicrohenry:
-		return "μH" 
-	case ElectricInductanceMillihenry:
-		return "mH" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricInductanceAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricInductance is equal to the current ElectricInductance.
@@ -403,4 +385,22 @@ func (a *ElectricInductance) Multiply(other *ElectricInductance) *ElectricInduct
 //    *ElectricInductance: A new ElectricInductance instance representing the quotient of both ElectricInductance.
 func (a *ElectricInductance) Divide(other *ElectricInductance) *ElectricInductance {
 	return &ElectricInductance{value: a.value / other.BaseValue()}
+}
+
+// GetElectricInductanceAbbreviation gets the unit abbreviation.
+func GetElectricInductanceAbbreviation(unit ElectricInductanceUnits) string {
+	switch unit { 
+	case ElectricInductanceHenry:
+		return "H" 
+	case ElectricInductancePicohenry:
+		return "pH" 
+	case ElectricInductanceNanohenry:
+		return "nH" 
+	case ElectricInductanceMicrohenry:
+		return "μH" 
+	case ElectricInductanceMillihenry:
+		return "mH" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -926,75 +926,9 @@ func (a *Radioactivity) ToString(unit RadioactivityUnits, fractionalDigits int) 
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRadioactivityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Radioactivity) getUnitAbbreviation(unit RadioactivityUnits) string {
-	switch unit { 
-	case RadioactivityBecquerel:
-		return "Bq" 
-	case RadioactivityCurie:
-		return "Ci" 
-	case RadioactivityRutherford:
-		return "Rd" 
-	case RadioactivityPicobecquerel:
-		return "pBq" 
-	case RadioactivityNanobecquerel:
-		return "nBq" 
-	case RadioactivityMicrobecquerel:
-		return "μBq" 
-	case RadioactivityMillibecquerel:
-		return "mBq" 
-	case RadioactivityKilobecquerel:
-		return "kBq" 
-	case RadioactivityMegabecquerel:
-		return "MBq" 
-	case RadioactivityGigabecquerel:
-		return "GBq" 
-	case RadioactivityTerabecquerel:
-		return "TBq" 
-	case RadioactivityPetabecquerel:
-		return "PBq" 
-	case RadioactivityExabecquerel:
-		return "EBq" 
-	case RadioactivityPicocurie:
-		return "pCi" 
-	case RadioactivityNanocurie:
-		return "nCi" 
-	case RadioactivityMicrocurie:
-		return "μCi" 
-	case RadioactivityMillicurie:
-		return "mCi" 
-	case RadioactivityKilocurie:
-		return "kCi" 
-	case RadioactivityMegacurie:
-		return "MCi" 
-	case RadioactivityGigacurie:
-		return "GCi" 
-	case RadioactivityTeracurie:
-		return "TCi" 
-	case RadioactivityPicorutherford:
-		return "pRd" 
-	case RadioactivityNanorutherford:
-		return "nRd" 
-	case RadioactivityMicrorutherford:
-		return "μRd" 
-	case RadioactivityMillirutherford:
-		return "mRd" 
-	case RadioactivityKilorutherford:
-		return "kRd" 
-	case RadioactivityMegarutherford:
-		return "MRd" 
-	case RadioactivityGigarutherford:
-		return "GRd" 
-	case RadioactivityTerarutherford:
-		return "TRd" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRadioactivityAbbreviation(unit))
 }
 
 // Equals checks if the given Radioactivity is equal to the current Radioactivity.
@@ -1075,4 +1009,70 @@ func (a *Radioactivity) Multiply(other *Radioactivity) *Radioactivity {
 //    *Radioactivity: A new Radioactivity instance representing the quotient of both Radioactivity.
 func (a *Radioactivity) Divide(other *Radioactivity) *Radioactivity {
 	return &Radioactivity{value: a.value / other.BaseValue()}
+}
+
+// GetRadioactivityAbbreviation gets the unit abbreviation.
+func GetRadioactivityAbbreviation(unit RadioactivityUnits) string {
+	switch unit { 
+	case RadioactivityBecquerel:
+		return "Bq" 
+	case RadioactivityCurie:
+		return "Ci" 
+	case RadioactivityRutherford:
+		return "Rd" 
+	case RadioactivityPicobecquerel:
+		return "pBq" 
+	case RadioactivityNanobecquerel:
+		return "nBq" 
+	case RadioactivityMicrobecquerel:
+		return "μBq" 
+	case RadioactivityMillibecquerel:
+		return "mBq" 
+	case RadioactivityKilobecquerel:
+		return "kBq" 
+	case RadioactivityMegabecquerel:
+		return "MBq" 
+	case RadioactivityGigabecquerel:
+		return "GBq" 
+	case RadioactivityTerabecquerel:
+		return "TBq" 
+	case RadioactivityPetabecquerel:
+		return "PBq" 
+	case RadioactivityExabecquerel:
+		return "EBq" 
+	case RadioactivityPicocurie:
+		return "pCi" 
+	case RadioactivityNanocurie:
+		return "nCi" 
+	case RadioactivityMicrocurie:
+		return "μCi" 
+	case RadioactivityMillicurie:
+		return "mCi" 
+	case RadioactivityKilocurie:
+		return "kCi" 
+	case RadioactivityMegacurie:
+		return "MCi" 
+	case RadioactivityGigacurie:
+		return "GCi" 
+	case RadioactivityTeracurie:
+		return "TCi" 
+	case RadioactivityPicorutherford:
+		return "pRd" 
+	case RadioactivityNanorutherford:
+		return "nRd" 
+	case RadioactivityMicrorutherford:
+		return "μRd" 
+	case RadioactivityMillirutherford:
+		return "mRd" 
+	case RadioactivityKilorutherford:
+		return "kRd" 
+	case RadioactivityMegarutherford:
+		return "MRd" 
+	case RadioactivityGigarutherford:
+		return "GRd" 
+	case RadioactivityTerarutherford:
+		return "TRd" 
+	default:
+		return ""
+	}
 }

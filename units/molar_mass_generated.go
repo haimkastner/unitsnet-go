@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -510,43 +510,9 @@ func (a *MolarMass) ToString(unit MolarMassUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMolarMassAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MolarMass) getUnitAbbreviation(unit MolarMassUnits) string {
-	switch unit { 
-	case MolarMassGramPerMole:
-		return "g/mol" 
-	case MolarMassKilogramPerKilomole:
-		return "kg/kmol" 
-	case MolarMassPoundPerMole:
-		return "lb/mol" 
-	case MolarMassNanogramPerMole:
-		return "ng/mol" 
-	case MolarMassMicrogramPerMole:
-		return "μg/mol" 
-	case MolarMassMilligramPerMole:
-		return "mg/mol" 
-	case MolarMassCentigramPerMole:
-		return "cg/mol" 
-	case MolarMassDecigramPerMole:
-		return "dg/mol" 
-	case MolarMassDecagramPerMole:
-		return "dag/mol" 
-	case MolarMassHectogramPerMole:
-		return "hg/mol" 
-	case MolarMassKilogramPerMole:
-		return "kg/mol" 
-	case MolarMassKilopoundPerMole:
-		return "klb/mol" 
-	case MolarMassMegapoundPerMole:
-		return "Mlb/mol" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMolarMassAbbreviation(unit))
 }
 
 // Equals checks if the given MolarMass is equal to the current MolarMass.
@@ -627,4 +593,38 @@ func (a *MolarMass) Multiply(other *MolarMass) *MolarMass {
 //    *MolarMass: A new MolarMass instance representing the quotient of both MolarMass.
 func (a *MolarMass) Divide(other *MolarMass) *MolarMass {
 	return &MolarMass{value: a.value / other.BaseValue()}
+}
+
+// GetMolarMassAbbreviation gets the unit abbreviation.
+func GetMolarMassAbbreviation(unit MolarMassUnits) string {
+	switch unit { 
+	case MolarMassGramPerMole:
+		return "g/mol" 
+	case MolarMassKilogramPerKilomole:
+		return "kg/kmol" 
+	case MolarMassPoundPerMole:
+		return "lb/mol" 
+	case MolarMassNanogramPerMole:
+		return "ng/mol" 
+	case MolarMassMicrogramPerMole:
+		return "μg/mol" 
+	case MolarMassMilligramPerMole:
+		return "mg/mol" 
+	case MolarMassCentigramPerMole:
+		return "cg/mol" 
+	case MolarMassDecigramPerMole:
+		return "dg/mol" 
+	case MolarMassDecagramPerMole:
+		return "dag/mol" 
+	case MolarMassHectogramPerMole:
+		return "hg/mol" 
+	case MolarMassKilogramPerMole:
+		return "kg/mol" 
+	case MolarMassKilopoundPerMole:
+		return "klb/mol" 
+	case MolarMassMegapoundPerMole:
+		return "Mlb/mol" 
+	default:
+		return ""
+	}
 }

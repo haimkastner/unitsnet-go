@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -614,51 +614,9 @@ func (a *AmountOfSubstance) ToString(unit AmountOfSubstanceUnits, fractionalDigi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetAmountOfSubstanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *AmountOfSubstance) getUnitAbbreviation(unit AmountOfSubstanceUnits) string {
-	switch unit { 
-	case AmountOfSubstanceMole:
-		return "mol" 
-	case AmountOfSubstancePoundMole:
-		return "lbmol" 
-	case AmountOfSubstanceFemtomole:
-		return "fmol" 
-	case AmountOfSubstancePicomole:
-		return "pmol" 
-	case AmountOfSubstanceNanomole:
-		return "nmol" 
-	case AmountOfSubstanceMicromole:
-		return "μmol" 
-	case AmountOfSubstanceMillimole:
-		return "mmol" 
-	case AmountOfSubstanceCentimole:
-		return "cmol" 
-	case AmountOfSubstanceDecimole:
-		return "dmol" 
-	case AmountOfSubstanceKilomole:
-		return "kmol" 
-	case AmountOfSubstanceMegamole:
-		return "Mmol" 
-	case AmountOfSubstanceNanopoundMole:
-		return "nlbmol" 
-	case AmountOfSubstanceMicropoundMole:
-		return "μlbmol" 
-	case AmountOfSubstanceMillipoundMole:
-		return "mlbmol" 
-	case AmountOfSubstanceCentipoundMole:
-		return "clbmol" 
-	case AmountOfSubstanceDecipoundMole:
-		return "dlbmol" 
-	case AmountOfSubstanceKilopoundMole:
-		return "klbmol" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetAmountOfSubstanceAbbreviation(unit))
 }
 
 // Equals checks if the given AmountOfSubstance is equal to the current AmountOfSubstance.
@@ -739,4 +697,46 @@ func (a *AmountOfSubstance) Multiply(other *AmountOfSubstance) *AmountOfSubstanc
 //    *AmountOfSubstance: A new AmountOfSubstance instance representing the quotient of both AmountOfSubstance.
 func (a *AmountOfSubstance) Divide(other *AmountOfSubstance) *AmountOfSubstance {
 	return &AmountOfSubstance{value: a.value / other.BaseValue()}
+}
+
+// GetAmountOfSubstanceAbbreviation gets the unit abbreviation.
+func GetAmountOfSubstanceAbbreviation(unit AmountOfSubstanceUnits) string {
+	switch unit { 
+	case AmountOfSubstanceMole:
+		return "mol" 
+	case AmountOfSubstancePoundMole:
+		return "lbmol" 
+	case AmountOfSubstanceFemtomole:
+		return "fmol" 
+	case AmountOfSubstancePicomole:
+		return "pmol" 
+	case AmountOfSubstanceNanomole:
+		return "nmol" 
+	case AmountOfSubstanceMicromole:
+		return "μmol" 
+	case AmountOfSubstanceMillimole:
+		return "mmol" 
+	case AmountOfSubstanceCentimole:
+		return "cmol" 
+	case AmountOfSubstanceDecimole:
+		return "dmol" 
+	case AmountOfSubstanceKilomole:
+		return "kmol" 
+	case AmountOfSubstanceMegamole:
+		return "Mmol" 
+	case AmountOfSubstanceNanopoundMole:
+		return "nlbmol" 
+	case AmountOfSubstanceMicropoundMole:
+		return "μlbmol" 
+	case AmountOfSubstanceMillipoundMole:
+		return "mlbmol" 
+	case AmountOfSubstanceCentipoundMole:
+		return "clbmol" 
+	case AmountOfSubstanceDecipoundMole:
+		return "dlbmol" 
+	case AmountOfSubstanceKilopoundMole:
+		return "klbmol" 
+	default:
+		return ""
+	}
 }

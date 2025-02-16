@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -1576,13 +1576,93 @@ func (a *Volume) ToString(unit VolumeUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetVolumeAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetVolumeAbbreviation(unit))
 }
 
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Volume) getUnitAbbreviation(unit VolumeUnits) string {
+// Equals checks if the given Volume is equal to the current Volume.
+//
+// Parameters:
+//    other: The Volume to compare against.
+//
+// Returns:
+//    bool: Returns true if both Volume are equal, false otherwise.
+func (a *Volume) Equals(other *Volume) bool {
+	return a.value == other.BaseValue()
+}
+
+// CompareTo compares the current Volume with another Volume.
+// It returns -1 if the current Volume is less than the other Volume, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Volume to compare against.
+//
+// Returns:
+//    int: -1 if the current Volume is less, 1 if greater, and 0 if equal.
+func (a *Volume) CompareTo(other *Volume) int {
+	otherValue := other.BaseValue()
+	if a.value < otherValue {
+		return -1
+	} else if a.value > otherValue {
+		return 1
+	}
+
+	// If both are equal
+	return 0
+}
+
+// Add adds the given Volume to the current Volume and returns the result.
+// The result is a new Volume instance with the sum of the values.
+//
+// Parameters:
+//    other: The Volume to add to the current Volume.
+//
+// Returns:
+//    *Volume: A new Volume instance representing the sum of both Volume.
+func (a *Volume) Add(other *Volume) *Volume {
+	return &Volume{value: a.value + other.BaseValue()}
+}
+
+// Subtract subtracts the given Volume from the current Volume and returns the result.
+// The result is a new Volume instance with the difference of the values.
+//
+// Parameters:
+//    other: The Volume to subtract from the current Volume.
+//
+// Returns:
+//    *Volume: A new Volume instance representing the difference of both Volume.
+func (a *Volume) Subtract(other *Volume) *Volume {
+	return &Volume{value: a.value - other.BaseValue()}
+}
+
+// Multiply multiplies the current Volume by the given Volume and returns the result.
+// The result is a new Volume instance with the product of the values.
+//
+// Parameters:
+//    other: The Volume to multiply with the current Volume.
+//
+// Returns:
+//    *Volume: A new Volume instance representing the product of both Volume.
+func (a *Volume) Multiply(other *Volume) *Volume {
+	return &Volume{value: a.value * other.BaseValue()}
+}
+
+// Divide divides the current Volume by the given Volume and returns the result.
+// The result is a new Volume instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Volume to divide the current Volume by.
+//
+// Returns:
+//    *Volume: A new Volume instance representing the quotient of both Volume.
+func (a *Volume) Divide(other *Volume) *Volume {
+	return &Volume{value: a.value / other.BaseValue()}
+}
+
+// GetVolumeAbbreviation gets the unit abbreviation.
+func GetVolumeAbbreviation(unit VolumeUnits) string {
 	switch unit { 
 	case VolumeLiter:
 		return "l" 
@@ -1695,84 +1775,4 @@ func (a *Volume) getUnitAbbreviation(unit VolumeUnits) string {
 	default:
 		return ""
 	}
-}
-
-// Equals checks if the given Volume is equal to the current Volume.
-//
-// Parameters:
-//    other: The Volume to compare against.
-//
-// Returns:
-//    bool: Returns true if both Volume are equal, false otherwise.
-func (a *Volume) Equals(other *Volume) bool {
-	return a.value == other.BaseValue()
-}
-
-// CompareTo compares the current Volume with another Volume.
-// It returns -1 if the current Volume is less than the other Volume, 
-// 1 if it is greater, and 0 if they are equal.
-//
-// Parameters:
-//    other: The Volume to compare against.
-//
-// Returns:
-//    int: -1 if the current Volume is less, 1 if greater, and 0 if equal.
-func (a *Volume) CompareTo(other *Volume) int {
-	otherValue := other.BaseValue()
-	if a.value < otherValue {
-		return -1
-	} else if a.value > otherValue {
-		return 1
-	}
-
-	// If both are equal
-	return 0
-}
-
-// Add adds the given Volume to the current Volume and returns the result.
-// The result is a new Volume instance with the sum of the values.
-//
-// Parameters:
-//    other: The Volume to add to the current Volume.
-//
-// Returns:
-//    *Volume: A new Volume instance representing the sum of both Volume.
-func (a *Volume) Add(other *Volume) *Volume {
-	return &Volume{value: a.value + other.BaseValue()}
-}
-
-// Subtract subtracts the given Volume from the current Volume and returns the result.
-// The result is a new Volume instance with the difference of the values.
-//
-// Parameters:
-//    other: The Volume to subtract from the current Volume.
-//
-// Returns:
-//    *Volume: A new Volume instance representing the difference of both Volume.
-func (a *Volume) Subtract(other *Volume) *Volume {
-	return &Volume{value: a.value - other.BaseValue()}
-}
-
-// Multiply multiplies the current Volume by the given Volume and returns the result.
-// The result is a new Volume instance with the product of the values.
-//
-// Parameters:
-//    other: The Volume to multiply with the current Volume.
-//
-// Returns:
-//    *Volume: A new Volume instance representing the product of both Volume.
-func (a *Volume) Multiply(other *Volume) *Volume {
-	return &Volume{value: a.value * other.BaseValue()}
-}
-
-// Divide divides the current Volume by the given Volume and returns the result.
-// The result is a new Volume instance with the quotient of the values.
-//
-// Parameters:
-//    other: The Volume to divide the current Volume by.
-//
-// Returns:
-//    *Volume: A new Volume instance representing the quotient of both Volume.
-func (a *Volume) Divide(other *Volume) *Volume {
-	return &Volume{value: a.value / other.BaseValue()}
 }

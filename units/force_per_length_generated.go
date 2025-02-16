@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -1160,93 +1160,9 @@ func (a *ForcePerLength) ToString(unit ForcePerLengthUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetForcePerLengthAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ForcePerLength) getUnitAbbreviation(unit ForcePerLengthUnits) string {
-	switch unit { 
-	case ForcePerLengthNewtonPerMeter:
-		return "N/m" 
-	case ForcePerLengthNewtonPerCentimeter:
-		return "N/cm" 
-	case ForcePerLengthNewtonPerMillimeter:
-		return "N/mm" 
-	case ForcePerLengthKilogramForcePerMeter:
-		return "kgf/m" 
-	case ForcePerLengthKilogramForcePerCentimeter:
-		return "kgf/cm" 
-	case ForcePerLengthKilogramForcePerMillimeter:
-		return "kgf/mm" 
-	case ForcePerLengthTonneForcePerMeter:
-		return "tf/m" 
-	case ForcePerLengthTonneForcePerCentimeter:
-		return "tf/cm" 
-	case ForcePerLengthTonneForcePerMillimeter:
-		return "tf/mm" 
-	case ForcePerLengthPoundForcePerFoot:
-		return "lbf/ft" 
-	case ForcePerLengthPoundForcePerInch:
-		return "lbf/in" 
-	case ForcePerLengthPoundForcePerYard:
-		return "lbf/yd" 
-	case ForcePerLengthKilopoundForcePerFoot:
-		return "kipf/ft" 
-	case ForcePerLengthKilopoundForcePerInch:
-		return "kipf/in" 
-	case ForcePerLengthNanonewtonPerMeter:
-		return "nN/m" 
-	case ForcePerLengthMicronewtonPerMeter:
-		return "μN/m" 
-	case ForcePerLengthMillinewtonPerMeter:
-		return "mN/m" 
-	case ForcePerLengthCentinewtonPerMeter:
-		return "cN/m" 
-	case ForcePerLengthDecinewtonPerMeter:
-		return "dN/m" 
-	case ForcePerLengthDecanewtonPerMeter:
-		return "daN/m" 
-	case ForcePerLengthKilonewtonPerMeter:
-		return "kN/m" 
-	case ForcePerLengthMeganewtonPerMeter:
-		return "MN/m" 
-	case ForcePerLengthNanonewtonPerCentimeter:
-		return "nN/cm" 
-	case ForcePerLengthMicronewtonPerCentimeter:
-		return "μN/cm" 
-	case ForcePerLengthMillinewtonPerCentimeter:
-		return "mN/cm" 
-	case ForcePerLengthCentinewtonPerCentimeter:
-		return "cN/cm" 
-	case ForcePerLengthDecinewtonPerCentimeter:
-		return "dN/cm" 
-	case ForcePerLengthDecanewtonPerCentimeter:
-		return "daN/cm" 
-	case ForcePerLengthKilonewtonPerCentimeter:
-		return "kN/cm" 
-	case ForcePerLengthMeganewtonPerCentimeter:
-		return "MN/cm" 
-	case ForcePerLengthNanonewtonPerMillimeter:
-		return "nN/mm" 
-	case ForcePerLengthMicronewtonPerMillimeter:
-		return "μN/mm" 
-	case ForcePerLengthMillinewtonPerMillimeter:
-		return "mN/mm" 
-	case ForcePerLengthCentinewtonPerMillimeter:
-		return "cN/mm" 
-	case ForcePerLengthDecinewtonPerMillimeter:
-		return "dN/mm" 
-	case ForcePerLengthDecanewtonPerMillimeter:
-		return "daN/mm" 
-	case ForcePerLengthKilonewtonPerMillimeter:
-		return "kN/mm" 
-	case ForcePerLengthMeganewtonPerMillimeter:
-		return "MN/mm" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetForcePerLengthAbbreviation(unit))
 }
 
 // Equals checks if the given ForcePerLength is equal to the current ForcePerLength.
@@ -1327,4 +1243,88 @@ func (a *ForcePerLength) Multiply(other *ForcePerLength) *ForcePerLength {
 //    *ForcePerLength: A new ForcePerLength instance representing the quotient of both ForcePerLength.
 func (a *ForcePerLength) Divide(other *ForcePerLength) *ForcePerLength {
 	return &ForcePerLength{value: a.value / other.BaseValue()}
+}
+
+// GetForcePerLengthAbbreviation gets the unit abbreviation.
+func GetForcePerLengthAbbreviation(unit ForcePerLengthUnits) string {
+	switch unit { 
+	case ForcePerLengthNewtonPerMeter:
+		return "N/m" 
+	case ForcePerLengthNewtonPerCentimeter:
+		return "N/cm" 
+	case ForcePerLengthNewtonPerMillimeter:
+		return "N/mm" 
+	case ForcePerLengthKilogramForcePerMeter:
+		return "kgf/m" 
+	case ForcePerLengthKilogramForcePerCentimeter:
+		return "kgf/cm" 
+	case ForcePerLengthKilogramForcePerMillimeter:
+		return "kgf/mm" 
+	case ForcePerLengthTonneForcePerMeter:
+		return "tf/m" 
+	case ForcePerLengthTonneForcePerCentimeter:
+		return "tf/cm" 
+	case ForcePerLengthTonneForcePerMillimeter:
+		return "tf/mm" 
+	case ForcePerLengthPoundForcePerFoot:
+		return "lbf/ft" 
+	case ForcePerLengthPoundForcePerInch:
+		return "lbf/in" 
+	case ForcePerLengthPoundForcePerYard:
+		return "lbf/yd" 
+	case ForcePerLengthKilopoundForcePerFoot:
+		return "kipf/ft" 
+	case ForcePerLengthKilopoundForcePerInch:
+		return "kipf/in" 
+	case ForcePerLengthNanonewtonPerMeter:
+		return "nN/m" 
+	case ForcePerLengthMicronewtonPerMeter:
+		return "μN/m" 
+	case ForcePerLengthMillinewtonPerMeter:
+		return "mN/m" 
+	case ForcePerLengthCentinewtonPerMeter:
+		return "cN/m" 
+	case ForcePerLengthDecinewtonPerMeter:
+		return "dN/m" 
+	case ForcePerLengthDecanewtonPerMeter:
+		return "daN/m" 
+	case ForcePerLengthKilonewtonPerMeter:
+		return "kN/m" 
+	case ForcePerLengthMeganewtonPerMeter:
+		return "MN/m" 
+	case ForcePerLengthNanonewtonPerCentimeter:
+		return "nN/cm" 
+	case ForcePerLengthMicronewtonPerCentimeter:
+		return "μN/cm" 
+	case ForcePerLengthMillinewtonPerCentimeter:
+		return "mN/cm" 
+	case ForcePerLengthCentinewtonPerCentimeter:
+		return "cN/cm" 
+	case ForcePerLengthDecinewtonPerCentimeter:
+		return "dN/cm" 
+	case ForcePerLengthDecanewtonPerCentimeter:
+		return "daN/cm" 
+	case ForcePerLengthKilonewtonPerCentimeter:
+		return "kN/cm" 
+	case ForcePerLengthMeganewtonPerCentimeter:
+		return "MN/cm" 
+	case ForcePerLengthNanonewtonPerMillimeter:
+		return "nN/mm" 
+	case ForcePerLengthMicronewtonPerMillimeter:
+		return "μN/mm" 
+	case ForcePerLengthMillinewtonPerMillimeter:
+		return "mN/mm" 
+	case ForcePerLengthCentinewtonPerMillimeter:
+		return "cN/mm" 
+	case ForcePerLengthDecinewtonPerMillimeter:
+		return "dN/mm" 
+	case ForcePerLengthDecanewtonPerMillimeter:
+		return "daN/mm" 
+	case ForcePerLengthKilonewtonPerMillimeter:
+		return "kN/mm" 
+	case ForcePerLengthMeganewtonPerMillimeter:
+		return "MN/mm" 
+	default:
+		return ""
+	}
 }

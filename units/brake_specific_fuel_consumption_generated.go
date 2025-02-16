@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -250,23 +250,9 @@ func (a *BrakeSpecificFuelConsumption) ToString(unit BrakeSpecificFuelConsumptio
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetBrakeSpecificFuelConsumptionAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *BrakeSpecificFuelConsumption) getUnitAbbreviation(unit BrakeSpecificFuelConsumptionUnits) string {
-	switch unit { 
-	case BrakeSpecificFuelConsumptionGramPerKiloWattHour:
-		return "g/kWh" 
-	case BrakeSpecificFuelConsumptionKilogramPerJoule:
-		return "kg/J" 
-	case BrakeSpecificFuelConsumptionPoundPerMechanicalHorsepowerHour:
-		return "lb/hph" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetBrakeSpecificFuelConsumptionAbbreviation(unit))
 }
 
 // Equals checks if the given BrakeSpecificFuelConsumption is equal to the current BrakeSpecificFuelConsumption.
@@ -347,4 +333,18 @@ func (a *BrakeSpecificFuelConsumption) Multiply(other *BrakeSpecificFuelConsumpt
 //    *BrakeSpecificFuelConsumption: A new BrakeSpecificFuelConsumption instance representing the quotient of both BrakeSpecificFuelConsumption.
 func (a *BrakeSpecificFuelConsumption) Divide(other *BrakeSpecificFuelConsumption) *BrakeSpecificFuelConsumption {
 	return &BrakeSpecificFuelConsumption{value: a.value / other.BaseValue()}
+}
+
+// GetBrakeSpecificFuelConsumptionAbbreviation gets the unit abbreviation.
+func GetBrakeSpecificFuelConsumptionAbbreviation(unit BrakeSpecificFuelConsumptionUnits) string {
+	switch unit { 
+	case BrakeSpecificFuelConsumptionGramPerKiloWattHour:
+		return "g/kWh" 
+	case BrakeSpecificFuelConsumptionKilogramPerJoule:
+		return "kg/J" 
+	case BrakeSpecificFuelConsumptionPoundPerMechanicalHorsepowerHour:
+		return "lb/hph" 
+	default:
+		return ""
+	}
 }

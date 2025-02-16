@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -276,25 +276,9 @@ func (a *TemperatureGradient) ToString(unit TemperatureGradientUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetTemperatureGradientAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *TemperatureGradient) getUnitAbbreviation(unit TemperatureGradientUnits) string {
-	switch unit { 
-	case TemperatureGradientKelvinPerMeter:
-		return "∆°K/m" 
-	case TemperatureGradientDegreeCelsiusPerMeter:
-		return "∆°C/m" 
-	case TemperatureGradientDegreeFahrenheitPerFoot:
-		return "∆°F/ft" 
-	case TemperatureGradientDegreeCelsiusPerKilometer:
-		return "∆°C/km" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetTemperatureGradientAbbreviation(unit))
 }
 
 // Equals checks if the given TemperatureGradient is equal to the current TemperatureGradient.
@@ -375,4 +359,20 @@ func (a *TemperatureGradient) Multiply(other *TemperatureGradient) *TemperatureG
 //    *TemperatureGradient: A new TemperatureGradient instance representing the quotient of both TemperatureGradient.
 func (a *TemperatureGradient) Divide(other *TemperatureGradient) *TemperatureGradient {
 	return &TemperatureGradient{value: a.value / other.BaseValue()}
+}
+
+// GetTemperatureGradientAbbreviation gets the unit abbreviation.
+func GetTemperatureGradientAbbreviation(unit TemperatureGradientUnits) string {
+	switch unit { 
+	case TemperatureGradientKelvinPerMeter:
+		return "∆°K/m" 
+	case TemperatureGradientDegreeCelsiusPerMeter:
+		return "∆°C/m" 
+	case TemperatureGradientDegreeFahrenheitPerFoot:
+		return "∆°F/ft" 
+	case TemperatureGradientDegreeCelsiusPerKilometer:
+		return "∆°C/km" 
+	default:
+		return ""
+	}
 }

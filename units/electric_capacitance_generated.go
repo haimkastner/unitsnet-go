@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -354,31 +354,9 @@ func (a *ElectricCapacitance) ToString(unit ElectricCapacitanceUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricCapacitanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricCapacitance) getUnitAbbreviation(unit ElectricCapacitanceUnits) string {
-	switch unit { 
-	case ElectricCapacitanceFarad:
-		return "F" 
-	case ElectricCapacitancePicofarad:
-		return "pF" 
-	case ElectricCapacitanceNanofarad:
-		return "nF" 
-	case ElectricCapacitanceMicrofarad:
-		return "μF" 
-	case ElectricCapacitanceMillifarad:
-		return "mF" 
-	case ElectricCapacitanceKilofarad:
-		return "kF" 
-	case ElectricCapacitanceMegafarad:
-		return "MF" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricCapacitanceAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricCapacitance is equal to the current ElectricCapacitance.
@@ -459,4 +437,26 @@ func (a *ElectricCapacitance) Multiply(other *ElectricCapacitance) *ElectricCapa
 //    *ElectricCapacitance: A new ElectricCapacitance instance representing the quotient of both ElectricCapacitance.
 func (a *ElectricCapacitance) Divide(other *ElectricCapacitance) *ElectricCapacitance {
 	return &ElectricCapacitance{value: a.value / other.BaseValue()}
+}
+
+// GetElectricCapacitanceAbbreviation gets the unit abbreviation.
+func GetElectricCapacitanceAbbreviation(unit ElectricCapacitanceUnits) string {
+	switch unit { 
+	case ElectricCapacitanceFarad:
+		return "F" 
+	case ElectricCapacitancePicofarad:
+		return "pF" 
+	case ElectricCapacitanceNanofarad:
+		return "nF" 
+	case ElectricCapacitanceMicrofarad:
+		return "μF" 
+	case ElectricCapacitanceMillifarad:
+		return "mF" 
+	case ElectricCapacitanceKilofarad:
+		return "kF" 
+	case ElectricCapacitanceMegafarad:
+		return "MF" 
+	default:
+		return ""
+	}
 }

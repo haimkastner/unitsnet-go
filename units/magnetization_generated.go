@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -198,19 +198,9 @@ func (a *Magnetization) ToString(unit MagnetizationUnits, fractionalDigits int) 
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMagnetizationAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Magnetization) getUnitAbbreviation(unit MagnetizationUnits) string {
-	switch unit { 
-	case MagnetizationAmperePerMeter:
-		return "A/m" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMagnetizationAbbreviation(unit))
 }
 
 // Equals checks if the given Magnetization is equal to the current Magnetization.
@@ -291,4 +281,14 @@ func (a *Magnetization) Multiply(other *Magnetization) *Magnetization {
 //    *Magnetization: A new Magnetization instance representing the quotient of both Magnetization.
 func (a *Magnetization) Divide(other *Magnetization) *Magnetization {
 	return &Magnetization{value: a.value / other.BaseValue()}
+}
+
+// GetMagnetizationAbbreviation gets the unit abbreviation.
+func GetMagnetizationAbbreviation(unit MagnetizationUnits) string {
+	switch unit { 
+	case MagnetizationAmperePerMeter:
+		return "A/m" 
+	default:
+		return ""
+	}
 }

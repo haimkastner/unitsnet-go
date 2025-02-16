@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -250,23 +250,9 @@ func (a *AreaDensity) ToString(unit AreaDensityUnits, fractionalDigits int) stri
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetAreaDensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *AreaDensity) getUnitAbbreviation(unit AreaDensityUnits) string {
-	switch unit { 
-	case AreaDensityKilogramPerSquareMeter:
-		return "kg/m²" 
-	case AreaDensityGramPerSquareMeter:
-		return "g/m²" 
-	case AreaDensityMilligramPerSquareMeter:
-		return "mg/m²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetAreaDensityAbbreviation(unit))
 }
 
 // Equals checks if the given AreaDensity is equal to the current AreaDensity.
@@ -347,4 +333,18 @@ func (a *AreaDensity) Multiply(other *AreaDensity) *AreaDensity {
 //    *AreaDensity: A new AreaDensity instance representing the quotient of both AreaDensity.
 func (a *AreaDensity) Divide(other *AreaDensity) *AreaDensity {
 	return &AreaDensity{value: a.value / other.BaseValue()}
+}
+
+// GetAreaDensityAbbreviation gets the unit abbreviation.
+func GetAreaDensityAbbreviation(unit AreaDensityUnits) string {
+	switch unit { 
+	case AreaDensityKilogramPerSquareMeter:
+		return "kg/m²" 
+	case AreaDensityGramPerSquareMeter:
+		return "g/m²" 
+	case AreaDensityMilligramPerSquareMeter:
+		return "mg/m²" 
+	default:
+		return ""
+	}
 }

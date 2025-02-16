@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -224,21 +224,9 @@ func (a *VolumeFlowPerArea) ToString(unit VolumeFlowPerAreaUnits, fractionalDigi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetVolumeFlowPerAreaAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *VolumeFlowPerArea) getUnitAbbreviation(unit VolumeFlowPerAreaUnits) string {
-	switch unit { 
-	case VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter:
-		return "m³/(s·m²)" 
-	case VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot:
-		return "CFM/ft²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetVolumeFlowPerAreaAbbreviation(unit))
 }
 
 // Equals checks if the given VolumeFlowPerArea is equal to the current VolumeFlowPerArea.
@@ -319,4 +307,16 @@ func (a *VolumeFlowPerArea) Multiply(other *VolumeFlowPerArea) *VolumeFlowPerAre
 //    *VolumeFlowPerArea: A new VolumeFlowPerArea instance representing the quotient of both VolumeFlowPerArea.
 func (a *VolumeFlowPerArea) Divide(other *VolumeFlowPerArea) *VolumeFlowPerArea {
 	return &VolumeFlowPerArea{value: a.value / other.BaseValue()}
+}
+
+// GetVolumeFlowPerAreaAbbreviation gets the unit abbreviation.
+func GetVolumeFlowPerAreaAbbreviation(unit VolumeFlowPerAreaUnits) string {
+	switch unit { 
+	case VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter:
+		return "m³/(s·m²)" 
+	case VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot:
+		return "CFM/ft²" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -406,35 +406,9 @@ func (a *VolumePerLength) ToString(unit VolumePerLengthUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetVolumePerLengthAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *VolumePerLength) getUnitAbbreviation(unit VolumePerLengthUnits) string {
-	switch unit { 
-	case VolumePerLengthCubicMeterPerMeter:
-		return "m³/m" 
-	case VolumePerLengthLiterPerMeter:
-		return "l/m" 
-	case VolumePerLengthLiterPerKilometer:
-		return "l/km" 
-	case VolumePerLengthLiterPerMillimeter:
-		return "l/mm" 
-	case VolumePerLengthOilBarrelPerFoot:
-		return "bbl/ft" 
-	case VolumePerLengthCubicYardPerFoot:
-		return "yd³/ft" 
-	case VolumePerLengthCubicYardPerUsSurveyFoot:
-		return "yd³/ftUS" 
-	case VolumePerLengthUsGallonPerMile:
-		return "gal (U.S.)/mi" 
-	case VolumePerLengthImperialGallonPerMile:
-		return "gal (imp.)/mi" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetVolumePerLengthAbbreviation(unit))
 }
 
 // Equals checks if the given VolumePerLength is equal to the current VolumePerLength.
@@ -515,4 +489,30 @@ func (a *VolumePerLength) Multiply(other *VolumePerLength) *VolumePerLength {
 //    *VolumePerLength: A new VolumePerLength instance representing the quotient of both VolumePerLength.
 func (a *VolumePerLength) Divide(other *VolumePerLength) *VolumePerLength {
 	return &VolumePerLength{value: a.value / other.BaseValue()}
+}
+
+// GetVolumePerLengthAbbreviation gets the unit abbreviation.
+func GetVolumePerLengthAbbreviation(unit VolumePerLengthUnits) string {
+	switch unit { 
+	case VolumePerLengthCubicMeterPerMeter:
+		return "m³/m" 
+	case VolumePerLengthLiterPerMeter:
+		return "l/m" 
+	case VolumePerLengthLiterPerKilometer:
+		return "l/km" 
+	case VolumePerLengthLiterPerMillimeter:
+		return "l/mm" 
+	case VolumePerLengthOilBarrelPerFoot:
+		return "bbl/ft" 
+	case VolumePerLengthCubicYardPerFoot:
+		return "yd³/ft" 
+	case VolumePerLengthCubicYardPerUsSurveyFoot:
+		return "yd³/ftUS" 
+	case VolumePerLengthUsGallonPerMile:
+		return "gal (U.S.)/mi" 
+	case VolumePerLengthImperialGallonPerMile:
+		return "gal (imp.)/mi" 
+	default:
+		return ""
+	}
 }

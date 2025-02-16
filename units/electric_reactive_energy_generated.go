@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -250,23 +250,9 @@ func (a *ElectricReactiveEnergy) ToString(unit ElectricReactiveEnergyUnits, frac
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricReactiveEnergyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricReactiveEnergy) getUnitAbbreviation(unit ElectricReactiveEnergyUnits) string {
-	switch unit { 
-	case ElectricReactiveEnergyVoltampereReactiveHour:
-		return "varh" 
-	case ElectricReactiveEnergyKilovoltampereReactiveHour:
-		return "kvarh" 
-	case ElectricReactiveEnergyMegavoltampereReactiveHour:
-		return "Mvarh" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricReactiveEnergyAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricReactiveEnergy is equal to the current ElectricReactiveEnergy.
@@ -347,4 +333,18 @@ func (a *ElectricReactiveEnergy) Multiply(other *ElectricReactiveEnergy) *Electr
 //    *ElectricReactiveEnergy: A new ElectricReactiveEnergy instance representing the quotient of both ElectricReactiveEnergy.
 func (a *ElectricReactiveEnergy) Divide(other *ElectricReactiveEnergy) *ElectricReactiveEnergy {
 	return &ElectricReactiveEnergy{value: a.value / other.BaseValue()}
+}
+
+// GetElectricReactiveEnergyAbbreviation gets the unit abbreviation.
+func GetElectricReactiveEnergyAbbreviation(unit ElectricReactiveEnergyUnits) string {
+	switch unit { 
+	case ElectricReactiveEnergyVoltampereReactiveHour:
+		return "varh" 
+	case ElectricReactiveEnergyKilovoltampereReactiveHour:
+		return "kvarh" 
+	case ElectricReactiveEnergyMegavoltampereReactiveHour:
+		return "Mvarh" 
+	default:
+		return ""
+	}
 }

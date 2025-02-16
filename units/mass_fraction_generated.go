@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -796,65 +796,9 @@ func (a *MassFraction) ToString(unit MassFractionUnits, fractionalDigits int) st
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMassFractionAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MassFraction) getUnitAbbreviation(unit MassFractionUnits) string {
-	switch unit { 
-	case MassFractionDecimalFraction:
-		return "" 
-	case MassFractionGramPerGram:
-		return "g/g" 
-	case MassFractionGramPerKilogram:
-		return "g/kg" 
-	case MassFractionPercent:
-		return "%" 
-	case MassFractionPartPerThousand:
-		return "‰" 
-	case MassFractionPartPerMillion:
-		return "ppm" 
-	case MassFractionPartPerBillion:
-		return "ppb" 
-	case MassFractionPartPerTrillion:
-		return "ppt" 
-	case MassFractionNanogramPerGram:
-		return "ng/g" 
-	case MassFractionMicrogramPerGram:
-		return "μg/g" 
-	case MassFractionMilligramPerGram:
-		return "mg/g" 
-	case MassFractionCentigramPerGram:
-		return "cg/g" 
-	case MassFractionDecigramPerGram:
-		return "dg/g" 
-	case MassFractionDecagramPerGram:
-		return "dag/g" 
-	case MassFractionHectogramPerGram:
-		return "hg/g" 
-	case MassFractionKilogramPerGram:
-		return "kg/g" 
-	case MassFractionNanogramPerKilogram:
-		return "ng/kg" 
-	case MassFractionMicrogramPerKilogram:
-		return "μg/kg" 
-	case MassFractionMilligramPerKilogram:
-		return "mg/kg" 
-	case MassFractionCentigramPerKilogram:
-		return "cg/kg" 
-	case MassFractionDecigramPerKilogram:
-		return "dg/kg" 
-	case MassFractionDecagramPerKilogram:
-		return "dag/kg" 
-	case MassFractionHectogramPerKilogram:
-		return "hg/kg" 
-	case MassFractionKilogramPerKilogram:
-		return "kg/kg" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMassFractionAbbreviation(unit))
 }
 
 // Equals checks if the given MassFraction is equal to the current MassFraction.
@@ -935,4 +879,60 @@ func (a *MassFraction) Multiply(other *MassFraction) *MassFraction {
 //    *MassFraction: A new MassFraction instance representing the quotient of both MassFraction.
 func (a *MassFraction) Divide(other *MassFraction) *MassFraction {
 	return &MassFraction{value: a.value / other.BaseValue()}
+}
+
+// GetMassFractionAbbreviation gets the unit abbreviation.
+func GetMassFractionAbbreviation(unit MassFractionUnits) string {
+	switch unit { 
+	case MassFractionDecimalFraction:
+		return "" 
+	case MassFractionGramPerGram:
+		return "g/g" 
+	case MassFractionGramPerKilogram:
+		return "g/kg" 
+	case MassFractionPercent:
+		return "%" 
+	case MassFractionPartPerThousand:
+		return "‰" 
+	case MassFractionPartPerMillion:
+		return "ppm" 
+	case MassFractionPartPerBillion:
+		return "ppb" 
+	case MassFractionPartPerTrillion:
+		return "ppt" 
+	case MassFractionNanogramPerGram:
+		return "ng/g" 
+	case MassFractionMicrogramPerGram:
+		return "μg/g" 
+	case MassFractionMilligramPerGram:
+		return "mg/g" 
+	case MassFractionCentigramPerGram:
+		return "cg/g" 
+	case MassFractionDecigramPerGram:
+		return "dg/g" 
+	case MassFractionDecagramPerGram:
+		return "dag/g" 
+	case MassFractionHectogramPerGram:
+		return "hg/g" 
+	case MassFractionKilogramPerGram:
+		return "kg/g" 
+	case MassFractionNanogramPerKilogram:
+		return "ng/kg" 
+	case MassFractionMicrogramPerKilogram:
+		return "μg/kg" 
+	case MassFractionMilligramPerKilogram:
+		return "mg/kg" 
+	case MassFractionCentigramPerKilogram:
+		return "cg/kg" 
+	case MassFractionDecigramPerKilogram:
+		return "dg/kg" 
+	case MassFractionDecagramPerKilogram:
+		return "dag/kg" 
+	case MassFractionHectogramPerKilogram:
+		return "hg/kg" 
+	case MassFractionKilogramPerKilogram:
+		return "kg/kg" 
+	default:
+		return ""
+	}
 }

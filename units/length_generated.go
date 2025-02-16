@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -1264,13 +1264,93 @@ func (a *Length) ToString(unit LengthUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetLengthAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetLengthAbbreviation(unit))
 }
 
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Length) getUnitAbbreviation(unit LengthUnits) string {
+// Equals checks if the given Length is equal to the current Length.
+//
+// Parameters:
+//    other: The Length to compare against.
+//
+// Returns:
+//    bool: Returns true if both Length are equal, false otherwise.
+func (a *Length) Equals(other *Length) bool {
+	return a.value == other.BaseValue()
+}
+
+// CompareTo compares the current Length with another Length.
+// It returns -1 if the current Length is less than the other Length, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Length to compare against.
+//
+// Returns:
+//    int: -1 if the current Length is less, 1 if greater, and 0 if equal.
+func (a *Length) CompareTo(other *Length) int {
+	otherValue := other.BaseValue()
+	if a.value < otherValue {
+		return -1
+	} else if a.value > otherValue {
+		return 1
+	}
+
+	// If both are equal
+	return 0
+}
+
+// Add adds the given Length to the current Length and returns the result.
+// The result is a new Length instance with the sum of the values.
+//
+// Parameters:
+//    other: The Length to add to the current Length.
+//
+// Returns:
+//    *Length: A new Length instance representing the sum of both Length.
+func (a *Length) Add(other *Length) *Length {
+	return &Length{value: a.value + other.BaseValue()}
+}
+
+// Subtract subtracts the given Length from the current Length and returns the result.
+// The result is a new Length instance with the difference of the values.
+//
+// Parameters:
+//    other: The Length to subtract from the current Length.
+//
+// Returns:
+//    *Length: A new Length instance representing the difference of both Length.
+func (a *Length) Subtract(other *Length) *Length {
+	return &Length{value: a.value - other.BaseValue()}
+}
+
+// Multiply multiplies the current Length by the given Length and returns the result.
+// The result is a new Length instance with the product of the values.
+//
+// Parameters:
+//    other: The Length to multiply with the current Length.
+//
+// Returns:
+//    *Length: A new Length instance representing the product of both Length.
+func (a *Length) Multiply(other *Length) *Length {
+	return &Length{value: a.value * other.BaseValue()}
+}
+
+// Divide divides the current Length by the given Length and returns the result.
+// The result is a new Length instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Length to divide the current Length by.
+//
+// Returns:
+//    *Length: A new Length instance representing the quotient of both Length.
+func (a *Length) Divide(other *Length) *Length {
+	return &Length{value: a.value / other.BaseValue()}
+}
+
+// GetLengthAbbreviation gets the unit abbreviation.
+func GetLengthAbbreviation(unit LengthUnits) string {
 	switch unit { 
 	case LengthMeter:
 		return "m" 
@@ -1359,84 +1439,4 @@ func (a *Length) getUnitAbbreviation(unit LengthUnits) string {
 	default:
 		return ""
 	}
-}
-
-// Equals checks if the given Length is equal to the current Length.
-//
-// Parameters:
-//    other: The Length to compare against.
-//
-// Returns:
-//    bool: Returns true if both Length are equal, false otherwise.
-func (a *Length) Equals(other *Length) bool {
-	return a.value == other.BaseValue()
-}
-
-// CompareTo compares the current Length with another Length.
-// It returns -1 if the current Length is less than the other Length, 
-// 1 if it is greater, and 0 if they are equal.
-//
-// Parameters:
-//    other: The Length to compare against.
-//
-// Returns:
-//    int: -1 if the current Length is less, 1 if greater, and 0 if equal.
-func (a *Length) CompareTo(other *Length) int {
-	otherValue := other.BaseValue()
-	if a.value < otherValue {
-		return -1
-	} else if a.value > otherValue {
-		return 1
-	}
-
-	// If both are equal
-	return 0
-}
-
-// Add adds the given Length to the current Length and returns the result.
-// The result is a new Length instance with the sum of the values.
-//
-// Parameters:
-//    other: The Length to add to the current Length.
-//
-// Returns:
-//    *Length: A new Length instance representing the sum of both Length.
-func (a *Length) Add(other *Length) *Length {
-	return &Length{value: a.value + other.BaseValue()}
-}
-
-// Subtract subtracts the given Length from the current Length and returns the result.
-// The result is a new Length instance with the difference of the values.
-//
-// Parameters:
-//    other: The Length to subtract from the current Length.
-//
-// Returns:
-//    *Length: A new Length instance representing the difference of both Length.
-func (a *Length) Subtract(other *Length) *Length {
-	return &Length{value: a.value - other.BaseValue()}
-}
-
-// Multiply multiplies the current Length by the given Length and returns the result.
-// The result is a new Length instance with the product of the values.
-//
-// Parameters:
-//    other: The Length to multiply with the current Length.
-//
-// Returns:
-//    *Length: A new Length instance representing the product of both Length.
-func (a *Length) Multiply(other *Length) *Length {
-	return &Length{value: a.value * other.BaseValue()}
-}
-
-// Divide divides the current Length by the given Length and returns the result.
-// The result is a new Length instance with the quotient of the values.
-//
-// Parameters:
-//    other: The Length to divide the current Length by.
-//
-// Returns:
-//    *Length: A new Length instance representing the quotient of both Length.
-func (a *Length) Divide(other *Length) *Length {
-	return &Length{value: a.value / other.BaseValue()}
 }

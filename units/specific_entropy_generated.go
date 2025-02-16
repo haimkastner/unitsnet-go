@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -406,35 +406,9 @@ func (a *SpecificEntropy) ToString(unit SpecificEntropyUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetSpecificEntropyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *SpecificEntropy) getUnitAbbreviation(unit SpecificEntropyUnits) string {
-	switch unit { 
-	case SpecificEntropyJoulePerKilogramKelvin:
-		return "J/kg.K" 
-	case SpecificEntropyJoulePerKilogramDegreeCelsius:
-		return "J/kg.C" 
-	case SpecificEntropyCaloriePerGramKelvin:
-		return "cal/g.K" 
-	case SpecificEntropyBtuPerPoundFahrenheit:
-		return "BTU/lb·°F" 
-	case SpecificEntropyKilojoulePerKilogramKelvin:
-		return "kJ/kg.K" 
-	case SpecificEntropyMegajoulePerKilogramKelvin:
-		return "MJ/kg.K" 
-	case SpecificEntropyKilojoulePerKilogramDegreeCelsius:
-		return "kJ/kg.C" 
-	case SpecificEntropyMegajoulePerKilogramDegreeCelsius:
-		return "MJ/kg.C" 
-	case SpecificEntropyKilocaloriePerGramKelvin:
-		return "kcal/g.K" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetSpecificEntropyAbbreviation(unit))
 }
 
 // Equals checks if the given SpecificEntropy is equal to the current SpecificEntropy.
@@ -515,4 +489,30 @@ func (a *SpecificEntropy) Multiply(other *SpecificEntropy) *SpecificEntropy {
 //    *SpecificEntropy: A new SpecificEntropy instance representing the quotient of both SpecificEntropy.
 func (a *SpecificEntropy) Divide(other *SpecificEntropy) *SpecificEntropy {
 	return &SpecificEntropy{value: a.value / other.BaseValue()}
+}
+
+// GetSpecificEntropyAbbreviation gets the unit abbreviation.
+func GetSpecificEntropyAbbreviation(unit SpecificEntropyUnits) string {
+	switch unit { 
+	case SpecificEntropyJoulePerKilogramKelvin:
+		return "J/kg.K" 
+	case SpecificEntropyJoulePerKilogramDegreeCelsius:
+		return "J/kg.C" 
+	case SpecificEntropyCaloriePerGramKelvin:
+		return "cal/g.K" 
+	case SpecificEntropyBtuPerPoundFahrenheit:
+		return "BTU/lb·°F" 
+	case SpecificEntropyKilojoulePerKilogramKelvin:
+		return "kJ/kg.K" 
+	case SpecificEntropyMegajoulePerKilogramKelvin:
+		return "MJ/kg.K" 
+	case SpecificEntropyKilojoulePerKilogramDegreeCelsius:
+		return "kJ/kg.C" 
+	case SpecificEntropyMegajoulePerKilogramDegreeCelsius:
+		return "MJ/kg.C" 
+	case SpecificEntropyKilocaloriePerGramKelvin:
+		return "kcal/g.K" 
+	default:
+		return ""
+	}
 }

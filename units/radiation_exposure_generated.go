@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -380,33 +380,9 @@ func (a *RadiationExposure) ToString(unit RadiationExposureUnits, fractionalDigi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRadiationExposureAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *RadiationExposure) getUnitAbbreviation(unit RadiationExposureUnits) string {
-	switch unit { 
-	case RadiationExposureCoulombPerKilogram:
-		return "C/kg" 
-	case RadiationExposureRoentgen:
-		return "R" 
-	case RadiationExposurePicocoulombPerKilogram:
-		return "pC/kg" 
-	case RadiationExposureNanocoulombPerKilogram:
-		return "nC/kg" 
-	case RadiationExposureMicrocoulombPerKilogram:
-		return "μC/kg" 
-	case RadiationExposureMillicoulombPerKilogram:
-		return "mC/kg" 
-	case RadiationExposureMicroroentgen:
-		return "μR" 
-	case RadiationExposureMilliroentgen:
-		return "mR" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRadiationExposureAbbreviation(unit))
 }
 
 // Equals checks if the given RadiationExposure is equal to the current RadiationExposure.
@@ -487,4 +463,28 @@ func (a *RadiationExposure) Multiply(other *RadiationExposure) *RadiationExposur
 //    *RadiationExposure: A new RadiationExposure instance representing the quotient of both RadiationExposure.
 func (a *RadiationExposure) Divide(other *RadiationExposure) *RadiationExposure {
 	return &RadiationExposure{value: a.value / other.BaseValue()}
+}
+
+// GetRadiationExposureAbbreviation gets the unit abbreviation.
+func GetRadiationExposureAbbreviation(unit RadiationExposureUnits) string {
+	switch unit { 
+	case RadiationExposureCoulombPerKilogram:
+		return "C/kg" 
+	case RadiationExposureRoentgen:
+		return "R" 
+	case RadiationExposurePicocoulombPerKilogram:
+		return "pC/kg" 
+	case RadiationExposureNanocoulombPerKilogram:
+		return "nC/kg" 
+	case RadiationExposureMicrocoulombPerKilogram:
+		return "μC/kg" 
+	case RadiationExposureMillicoulombPerKilogram:
+		return "mC/kg" 
+	case RadiationExposureMicroroentgen:
+		return "μR" 
+	case RadiationExposureMilliroentgen:
+		return "mR" 
+	default:
+		return ""
+	}
 }

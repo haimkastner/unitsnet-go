@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -406,35 +406,9 @@ func (a *ElectricCurrent) ToString(unit ElectricCurrentUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricCurrentAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricCurrent) getUnitAbbreviation(unit ElectricCurrentUnits) string {
-	switch unit { 
-	case ElectricCurrentAmpere:
-		return "A" 
-	case ElectricCurrentFemtoampere:
-		return "fA" 
-	case ElectricCurrentPicoampere:
-		return "pA" 
-	case ElectricCurrentNanoampere:
-		return "nA" 
-	case ElectricCurrentMicroampere:
-		return "μA" 
-	case ElectricCurrentMilliampere:
-		return "mA" 
-	case ElectricCurrentCentiampere:
-		return "cA" 
-	case ElectricCurrentKiloampere:
-		return "kA" 
-	case ElectricCurrentMegaampere:
-		return "MA" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricCurrentAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricCurrent is equal to the current ElectricCurrent.
@@ -515,4 +489,30 @@ func (a *ElectricCurrent) Multiply(other *ElectricCurrent) *ElectricCurrent {
 //    *ElectricCurrent: A new ElectricCurrent instance representing the quotient of both ElectricCurrent.
 func (a *ElectricCurrent) Divide(other *ElectricCurrent) *ElectricCurrent {
 	return &ElectricCurrent{value: a.value / other.BaseValue()}
+}
+
+// GetElectricCurrentAbbreviation gets the unit abbreviation.
+func GetElectricCurrentAbbreviation(unit ElectricCurrentUnits) string {
+	switch unit { 
+	case ElectricCurrentAmpere:
+		return "A" 
+	case ElectricCurrentFemtoampere:
+		return "fA" 
+	case ElectricCurrentPicoampere:
+		return "pA" 
+	case ElectricCurrentNanoampere:
+		return "nA" 
+	case ElectricCurrentMicroampere:
+		return "μA" 
+	case ElectricCurrentMilliampere:
+		return "mA" 
+	case ElectricCurrentCentiampere:
+		return "cA" 
+	case ElectricCurrentKiloampere:
+		return "kA" 
+	case ElectricCurrentMegaampere:
+		return "MA" 
+	default:
+		return ""
+	}
 }

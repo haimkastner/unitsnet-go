@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -588,49 +588,9 @@ func (a *ElectricSusceptance) ToString(unit ElectricSusceptanceUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricSusceptanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricSusceptance) getUnitAbbreviation(unit ElectricSusceptanceUnits) string {
-	switch unit { 
-	case ElectricSusceptanceSiemens:
-		return "S" 
-	case ElectricSusceptanceMho:
-		return "℧" 
-	case ElectricSusceptanceNanosiemens:
-		return "nS" 
-	case ElectricSusceptanceMicrosiemens:
-		return "μS" 
-	case ElectricSusceptanceMillisiemens:
-		return "mS" 
-	case ElectricSusceptanceKilosiemens:
-		return "kS" 
-	case ElectricSusceptanceMegasiemens:
-		return "MS" 
-	case ElectricSusceptanceGigasiemens:
-		return "GS" 
-	case ElectricSusceptanceTerasiemens:
-		return "TS" 
-	case ElectricSusceptanceNanomho:
-		return "n℧" 
-	case ElectricSusceptanceMicromho:
-		return "μ℧" 
-	case ElectricSusceptanceMillimho:
-		return "m℧" 
-	case ElectricSusceptanceKilomho:
-		return "k℧" 
-	case ElectricSusceptanceMegamho:
-		return "M℧" 
-	case ElectricSusceptanceGigamho:
-		return "G℧" 
-	case ElectricSusceptanceTeramho:
-		return "T℧" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricSusceptanceAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricSusceptance is equal to the current ElectricSusceptance.
@@ -711,4 +671,44 @@ func (a *ElectricSusceptance) Multiply(other *ElectricSusceptance) *ElectricSusc
 //    *ElectricSusceptance: A new ElectricSusceptance instance representing the quotient of both ElectricSusceptance.
 func (a *ElectricSusceptance) Divide(other *ElectricSusceptance) *ElectricSusceptance {
 	return &ElectricSusceptance{value: a.value / other.BaseValue()}
+}
+
+// GetElectricSusceptanceAbbreviation gets the unit abbreviation.
+func GetElectricSusceptanceAbbreviation(unit ElectricSusceptanceUnits) string {
+	switch unit { 
+	case ElectricSusceptanceSiemens:
+		return "S" 
+	case ElectricSusceptanceMho:
+		return "℧" 
+	case ElectricSusceptanceNanosiemens:
+		return "nS" 
+	case ElectricSusceptanceMicrosiemens:
+		return "μS" 
+	case ElectricSusceptanceMillisiemens:
+		return "mS" 
+	case ElectricSusceptanceKilosiemens:
+		return "kS" 
+	case ElectricSusceptanceMegasiemens:
+		return "MS" 
+	case ElectricSusceptanceGigasiemens:
+		return "GS" 
+	case ElectricSusceptanceTerasiemens:
+		return "TS" 
+	case ElectricSusceptanceNanomho:
+		return "n℧" 
+	case ElectricSusceptanceMicromho:
+		return "μ℧" 
+	case ElectricSusceptanceMillimho:
+		return "m℧" 
+	case ElectricSusceptanceKilomho:
+		return "k℧" 
+	case ElectricSusceptanceMegamho:
+		return "M℧" 
+	case ElectricSusceptanceGigamho:
+		return "G℧" 
+	case ElectricSusceptanceTeramho:
+		return "T℧" 
+	default:
+		return ""
+	}
 }
