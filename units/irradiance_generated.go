@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -69,6 +69,10 @@ func (udf IrradianceDtoFactory) FromJSON(data []byte) (*IrradianceDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -536,45 +540,9 @@ func (a *Irradiance) ToString(unit IrradianceUnits, fractionalDigits int) string
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetIrradianceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Irradiance) getUnitAbbreviation(unit IrradianceUnits) string {
-	switch unit { 
-	case IrradianceWattPerSquareMeter:
-		return "W/m²" 
-	case IrradianceWattPerSquareCentimeter:
-		return "W/cm²" 
-	case IrradiancePicowattPerSquareMeter:
-		return "pW/m²" 
-	case IrradianceNanowattPerSquareMeter:
-		return "nW/m²" 
-	case IrradianceMicrowattPerSquareMeter:
-		return "μW/m²" 
-	case IrradianceMilliwattPerSquareMeter:
-		return "mW/m²" 
-	case IrradianceKilowattPerSquareMeter:
-		return "kW/m²" 
-	case IrradianceMegawattPerSquareMeter:
-		return "MW/m²" 
-	case IrradiancePicowattPerSquareCentimeter:
-		return "pW/cm²" 
-	case IrradianceNanowattPerSquareCentimeter:
-		return "nW/cm²" 
-	case IrradianceMicrowattPerSquareCentimeter:
-		return "μW/cm²" 
-	case IrradianceMilliwattPerSquareCentimeter:
-		return "mW/cm²" 
-	case IrradianceKilowattPerSquareCentimeter:
-		return "kW/cm²" 
-	case IrradianceMegawattPerSquareCentimeter:
-		return "MW/cm²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetIrradianceAbbreviation(unit))
 }
 
 // Equals checks if the given Irradiance is equal to the current Irradiance.
@@ -655,4 +623,40 @@ func (a *Irradiance) Multiply(other *Irradiance) *Irradiance {
 //    *Irradiance: A new Irradiance instance representing the quotient of both Irradiance.
 func (a *Irradiance) Divide(other *Irradiance) *Irradiance {
 	return &Irradiance{value: a.value / other.BaseValue()}
+}
+
+// GetIrradianceAbbreviation gets the unit abbreviation.
+func GetIrradianceAbbreviation(unit IrradianceUnits) string {
+	switch unit { 
+	case IrradianceWattPerSquareMeter:
+		return "W/m²" 
+	case IrradianceWattPerSquareCentimeter:
+		return "W/cm²" 
+	case IrradiancePicowattPerSquareMeter:
+		return "pW/m²" 
+	case IrradianceNanowattPerSquareMeter:
+		return "nW/m²" 
+	case IrradianceMicrowattPerSquareMeter:
+		return "μW/m²" 
+	case IrradianceMilliwattPerSquareMeter:
+		return "mW/m²" 
+	case IrradianceKilowattPerSquareMeter:
+		return "kW/m²" 
+	case IrradianceMegawattPerSquareMeter:
+		return "MW/m²" 
+	case IrradiancePicowattPerSquareCentimeter:
+		return "pW/cm²" 
+	case IrradianceNanowattPerSquareCentimeter:
+		return "nW/cm²" 
+	case IrradianceMicrowattPerSquareCentimeter:
+		return "μW/cm²" 
+	case IrradianceMilliwattPerSquareCentimeter:
+		return "mW/cm²" 
+	case IrradianceKilowattPerSquareCentimeter:
+		return "kW/cm²" 
+	case IrradianceMegawattPerSquareCentimeter:
+		return "MW/cm²" 
+	default:
+		return ""
+	}
 }

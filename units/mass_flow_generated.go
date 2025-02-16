@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -107,6 +107,10 @@ func (udf MassFlowDtoFactory) FromJSON(data []byte) (*MassFlowDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -1030,83 +1034,9 @@ func (a *MassFlow) ToString(unit MassFlowUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMassFlowAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MassFlow) getUnitAbbreviation(unit MassFlowUnits) string {
-	switch unit { 
-	case MassFlowGramPerSecond:
-		return "g/s" 
-	case MassFlowGramPerDay:
-		return "g/d" 
-	case MassFlowGramPerHour:
-		return "g/h" 
-	case MassFlowKilogramPerHour:
-		return "kg/h" 
-	case MassFlowKilogramPerMinute:
-		return "kg/min" 
-	case MassFlowTonnePerHour:
-		return "t/h" 
-	case MassFlowPoundPerDay:
-		return "lb/d" 
-	case MassFlowPoundPerHour:
-		return "lb/h" 
-	case MassFlowPoundPerMinute:
-		return "lb/min" 
-	case MassFlowPoundPerSecond:
-		return "lb/s" 
-	case MassFlowTonnePerDay:
-		return "t/d" 
-	case MassFlowShortTonPerHour:
-		return "short tn/h" 
-	case MassFlowNanogramPerSecond:
-		return "ng/s" 
-	case MassFlowMicrogramPerSecond:
-		return "μg/s" 
-	case MassFlowMilligramPerSecond:
-		return "mg/s" 
-	case MassFlowCentigramPerSecond:
-		return "cg/s" 
-	case MassFlowDecigramPerSecond:
-		return "dg/s" 
-	case MassFlowDecagramPerSecond:
-		return "dag/s" 
-	case MassFlowHectogramPerSecond:
-		return "hg/s" 
-	case MassFlowKilogramPerSecond:
-		return "kg/s" 
-	case MassFlowNanogramPerDay:
-		return "ng/d" 
-	case MassFlowMicrogramPerDay:
-		return "μg/d" 
-	case MassFlowMilligramPerDay:
-		return "mg/d" 
-	case MassFlowCentigramPerDay:
-		return "cg/d" 
-	case MassFlowDecigramPerDay:
-		return "dg/d" 
-	case MassFlowDecagramPerDay:
-		return "dag/d" 
-	case MassFlowHectogramPerDay:
-		return "hg/d" 
-	case MassFlowKilogramPerDay:
-		return "kg/d" 
-	case MassFlowMegagramPerDay:
-		return "Mg/d" 
-	case MassFlowMegapoundPerDay:
-		return "Mlb/d" 
-	case MassFlowMegapoundPerHour:
-		return "Mlb/h" 
-	case MassFlowMegapoundPerMinute:
-		return "Mlb/min" 
-	case MassFlowMegapoundPerSecond:
-		return "Mlb/s" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMassFlowAbbreviation(unit))
 }
 
 // Equals checks if the given MassFlow is equal to the current MassFlow.
@@ -1187,4 +1117,78 @@ func (a *MassFlow) Multiply(other *MassFlow) *MassFlow {
 //    *MassFlow: A new MassFlow instance representing the quotient of both MassFlow.
 func (a *MassFlow) Divide(other *MassFlow) *MassFlow {
 	return &MassFlow{value: a.value / other.BaseValue()}
+}
+
+// GetMassFlowAbbreviation gets the unit abbreviation.
+func GetMassFlowAbbreviation(unit MassFlowUnits) string {
+	switch unit { 
+	case MassFlowGramPerSecond:
+		return "g/s" 
+	case MassFlowGramPerDay:
+		return "g/d" 
+	case MassFlowGramPerHour:
+		return "g/h" 
+	case MassFlowKilogramPerHour:
+		return "kg/h" 
+	case MassFlowKilogramPerMinute:
+		return "kg/min" 
+	case MassFlowTonnePerHour:
+		return "t/h" 
+	case MassFlowPoundPerDay:
+		return "lb/d" 
+	case MassFlowPoundPerHour:
+		return "lb/h" 
+	case MassFlowPoundPerMinute:
+		return "lb/min" 
+	case MassFlowPoundPerSecond:
+		return "lb/s" 
+	case MassFlowTonnePerDay:
+		return "t/d" 
+	case MassFlowShortTonPerHour:
+		return "short tn/h" 
+	case MassFlowNanogramPerSecond:
+		return "ng/s" 
+	case MassFlowMicrogramPerSecond:
+		return "μg/s" 
+	case MassFlowMilligramPerSecond:
+		return "mg/s" 
+	case MassFlowCentigramPerSecond:
+		return "cg/s" 
+	case MassFlowDecigramPerSecond:
+		return "dg/s" 
+	case MassFlowDecagramPerSecond:
+		return "dag/s" 
+	case MassFlowHectogramPerSecond:
+		return "hg/s" 
+	case MassFlowKilogramPerSecond:
+		return "kg/s" 
+	case MassFlowNanogramPerDay:
+		return "ng/d" 
+	case MassFlowMicrogramPerDay:
+		return "μg/d" 
+	case MassFlowMilligramPerDay:
+		return "mg/d" 
+	case MassFlowCentigramPerDay:
+		return "cg/d" 
+	case MassFlowDecigramPerDay:
+		return "dg/d" 
+	case MassFlowDecagramPerDay:
+		return "dag/d" 
+	case MassFlowHectogramPerDay:
+		return "hg/d" 
+	case MassFlowKilogramPerDay:
+		return "kg/d" 
+	case MassFlowMegagramPerDay:
+		return "Mg/d" 
+	case MassFlowMegapoundPerDay:
+		return "Mlb/d" 
+	case MassFlowMegapoundPerHour:
+		return "Mlb/h" 
+	case MassFlowMegapoundPerMinute:
+		return "Mlb/min" 
+	case MassFlowMegapoundPerSecond:
+		return "Mlb/s" 
+	default:
+		return ""
+	}
 }

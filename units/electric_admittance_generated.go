@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -73,6 +73,10 @@ func (udf ElectricAdmittanceDtoFactory) FromJSON(data []byte) (*ElectricAdmittan
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -588,49 +592,9 @@ func (a *ElectricAdmittance) ToString(unit ElectricAdmittanceUnits, fractionalDi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricAdmittanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricAdmittance) getUnitAbbreviation(unit ElectricAdmittanceUnits) string {
-	switch unit { 
-	case ElectricAdmittanceSiemens:
-		return "S" 
-	case ElectricAdmittanceMho:
-		return "℧" 
-	case ElectricAdmittanceNanosiemens:
-		return "nS" 
-	case ElectricAdmittanceMicrosiemens:
-		return "μS" 
-	case ElectricAdmittanceMillisiemens:
-		return "mS" 
-	case ElectricAdmittanceKilosiemens:
-		return "kS" 
-	case ElectricAdmittanceMegasiemens:
-		return "MS" 
-	case ElectricAdmittanceGigasiemens:
-		return "GS" 
-	case ElectricAdmittanceTerasiemens:
-		return "TS" 
-	case ElectricAdmittanceNanomho:
-		return "n℧" 
-	case ElectricAdmittanceMicromho:
-		return "μ℧" 
-	case ElectricAdmittanceMillimho:
-		return "m℧" 
-	case ElectricAdmittanceKilomho:
-		return "k℧" 
-	case ElectricAdmittanceMegamho:
-		return "M℧" 
-	case ElectricAdmittanceGigamho:
-		return "G℧" 
-	case ElectricAdmittanceTeramho:
-		return "T℧" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricAdmittanceAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricAdmittance is equal to the current ElectricAdmittance.
@@ -711,4 +675,44 @@ func (a *ElectricAdmittance) Multiply(other *ElectricAdmittance) *ElectricAdmitt
 //    *ElectricAdmittance: A new ElectricAdmittance instance representing the quotient of both ElectricAdmittance.
 func (a *ElectricAdmittance) Divide(other *ElectricAdmittance) *ElectricAdmittance {
 	return &ElectricAdmittance{value: a.value / other.BaseValue()}
+}
+
+// GetElectricAdmittanceAbbreviation gets the unit abbreviation.
+func GetElectricAdmittanceAbbreviation(unit ElectricAdmittanceUnits) string {
+	switch unit { 
+	case ElectricAdmittanceSiemens:
+		return "S" 
+	case ElectricAdmittanceMho:
+		return "℧" 
+	case ElectricAdmittanceNanosiemens:
+		return "nS" 
+	case ElectricAdmittanceMicrosiemens:
+		return "μS" 
+	case ElectricAdmittanceMillisiemens:
+		return "mS" 
+	case ElectricAdmittanceKilosiemens:
+		return "kS" 
+	case ElectricAdmittanceMegasiemens:
+		return "MS" 
+	case ElectricAdmittanceGigasiemens:
+		return "GS" 
+	case ElectricAdmittanceTerasiemens:
+		return "TS" 
+	case ElectricAdmittanceNanomho:
+		return "n℧" 
+	case ElectricAdmittanceMicromho:
+		return "μ℧" 
+	case ElectricAdmittanceMillimho:
+		return "m℧" 
+	case ElectricAdmittanceKilomho:
+		return "k℧" 
+	case ElectricAdmittanceMegamho:
+		return "M℧" 
+	case ElectricAdmittanceGigamho:
+		return "G℧" 
+	case ElectricAdmittanceTeramho:
+		return "T℧" 
+	default:
+		return ""
+	}
 }

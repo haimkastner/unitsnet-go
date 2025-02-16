@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -47,6 +47,10 @@ func (udf ElectricApparentEnergyDtoFactory) FromJSON(data []byte) (*ElectricAppa
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -250,23 +254,9 @@ func (a *ElectricApparentEnergy) ToString(unit ElectricApparentEnergyUnits, frac
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricApparentEnergyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricApparentEnergy) getUnitAbbreviation(unit ElectricApparentEnergyUnits) string {
-	switch unit { 
-	case ElectricApparentEnergyVoltampereHour:
-		return "VAh" 
-	case ElectricApparentEnergyKilovoltampereHour:
-		return "kVAh" 
-	case ElectricApparentEnergyMegavoltampereHour:
-		return "MVAh" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricApparentEnergyAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricApparentEnergy is equal to the current ElectricApparentEnergy.
@@ -347,4 +337,18 @@ func (a *ElectricApparentEnergy) Multiply(other *ElectricApparentEnergy) *Electr
 //    *ElectricApparentEnergy: A new ElectricApparentEnergy instance representing the quotient of both ElectricApparentEnergy.
 func (a *ElectricApparentEnergy) Divide(other *ElectricApparentEnergy) *ElectricApparentEnergy {
 	return &ElectricApparentEnergy{value: a.value / other.BaseValue()}
+}
+
+// GetElectricApparentEnergyAbbreviation gets the unit abbreviation.
+func GetElectricApparentEnergyAbbreviation(unit ElectricApparentEnergyUnits) string {
+	switch unit { 
+	case ElectricApparentEnergyVoltampereHour:
+		return "VAh" 
+	case ElectricApparentEnergyKilovoltampereHour:
+		return "kVAh" 
+	case ElectricApparentEnergyMegavoltampereHour:
+		return "MVAh" 
+	default:
+		return ""
+	}
 }

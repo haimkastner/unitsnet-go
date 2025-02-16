@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -53,6 +53,10 @@ func (udf CoefficientOfThermalExpansionDtoFactory) FromJSON(data []byte) (*Coeff
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -328,29 +332,9 @@ func (a *CoefficientOfThermalExpansion) ToString(unit CoefficientOfThermalExpans
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetCoefficientOfThermalExpansionAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *CoefficientOfThermalExpansion) getUnitAbbreviation(unit CoefficientOfThermalExpansionUnits) string {
-	switch unit { 
-	case CoefficientOfThermalExpansionPerKelvin:
-		return "K⁻¹" 
-	case CoefficientOfThermalExpansionPerDegreeCelsius:
-		return "°C⁻¹" 
-	case CoefficientOfThermalExpansionPerDegreeFahrenheit:
-		return "°F⁻¹" 
-	case CoefficientOfThermalExpansionPpmPerKelvin:
-		return "ppm/K" 
-	case CoefficientOfThermalExpansionPpmPerDegreeCelsius:
-		return "ppm/°C" 
-	case CoefficientOfThermalExpansionPpmPerDegreeFahrenheit:
-		return "ppm/°F" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetCoefficientOfThermalExpansionAbbreviation(unit))
 }
 
 // Equals checks if the given CoefficientOfThermalExpansion is equal to the current CoefficientOfThermalExpansion.
@@ -431,4 +415,24 @@ func (a *CoefficientOfThermalExpansion) Multiply(other *CoefficientOfThermalExpa
 //    *CoefficientOfThermalExpansion: A new CoefficientOfThermalExpansion instance representing the quotient of both CoefficientOfThermalExpansion.
 func (a *CoefficientOfThermalExpansion) Divide(other *CoefficientOfThermalExpansion) *CoefficientOfThermalExpansion {
 	return &CoefficientOfThermalExpansion{value: a.value / other.BaseValue()}
+}
+
+// GetCoefficientOfThermalExpansionAbbreviation gets the unit abbreviation.
+func GetCoefficientOfThermalExpansionAbbreviation(unit CoefficientOfThermalExpansionUnits) string {
+	switch unit { 
+	case CoefficientOfThermalExpansionPerKelvin:
+		return "K⁻¹" 
+	case CoefficientOfThermalExpansionPerDegreeCelsius:
+		return "°C⁻¹" 
+	case CoefficientOfThermalExpansionPerDegreeFahrenheit:
+		return "°F⁻¹" 
+	case CoefficientOfThermalExpansionPpmPerKelvin:
+		return "ppm/K" 
+	case CoefficientOfThermalExpansionPpmPerDegreeCelsius:
+		return "ppm/°C" 
+	case CoefficientOfThermalExpansionPpmPerDegreeFahrenheit:
+		return "ppm/°F" 
+	default:
+		return ""
+	}
 }

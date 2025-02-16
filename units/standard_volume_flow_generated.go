@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -59,6 +59,10 @@ func (udf StandardVolumeFlowDtoFactory) FromJSON(data []byte) (*StandardVolumeFl
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -406,35 +410,9 @@ func (a *StandardVolumeFlow) ToString(unit StandardVolumeFlowUnits, fractionalDi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetStandardVolumeFlowAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *StandardVolumeFlow) getUnitAbbreviation(unit StandardVolumeFlowUnits) string {
-	switch unit { 
-	case StandardVolumeFlowStandardCubicMeterPerSecond:
-		return "Sm³/s" 
-	case StandardVolumeFlowStandardCubicMeterPerMinute:
-		return "Sm³/min" 
-	case StandardVolumeFlowStandardCubicMeterPerHour:
-		return "Sm³/h" 
-	case StandardVolumeFlowStandardCubicMeterPerDay:
-		return "Sm³/d" 
-	case StandardVolumeFlowStandardCubicCentimeterPerMinute:
-		return "sccm" 
-	case StandardVolumeFlowStandardLiterPerMinute:
-		return "slm" 
-	case StandardVolumeFlowStandardCubicFootPerSecond:
-		return "Sft³/s" 
-	case StandardVolumeFlowStandardCubicFootPerMinute:
-		return "scfm" 
-	case StandardVolumeFlowStandardCubicFootPerHour:
-		return "scfh" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetStandardVolumeFlowAbbreviation(unit))
 }
 
 // Equals checks if the given StandardVolumeFlow is equal to the current StandardVolumeFlow.
@@ -515,4 +493,30 @@ func (a *StandardVolumeFlow) Multiply(other *StandardVolumeFlow) *StandardVolume
 //    *StandardVolumeFlow: A new StandardVolumeFlow instance representing the quotient of both StandardVolumeFlow.
 func (a *StandardVolumeFlow) Divide(other *StandardVolumeFlow) *StandardVolumeFlow {
 	return &StandardVolumeFlow{value: a.value / other.BaseValue()}
+}
+
+// GetStandardVolumeFlowAbbreviation gets the unit abbreviation.
+func GetStandardVolumeFlowAbbreviation(unit StandardVolumeFlowUnits) string {
+	switch unit { 
+	case StandardVolumeFlowStandardCubicMeterPerSecond:
+		return "Sm³/s" 
+	case StandardVolumeFlowStandardCubicMeterPerMinute:
+		return "Sm³/min" 
+	case StandardVolumeFlowStandardCubicMeterPerHour:
+		return "Sm³/h" 
+	case StandardVolumeFlowStandardCubicMeterPerDay:
+		return "Sm³/d" 
+	case StandardVolumeFlowStandardCubicCentimeterPerMinute:
+		return "sccm" 
+	case StandardVolumeFlowStandardLiterPerMinute:
+		return "slm" 
+	case StandardVolumeFlowStandardCubicFootPerSecond:
+		return "Sft³/s" 
+	case StandardVolumeFlowStandardCubicFootPerMinute:
+		return "scfm" 
+	case StandardVolumeFlowStandardCubicFootPerHour:
+		return "scfh" 
+	default:
+		return ""
+	}
 }

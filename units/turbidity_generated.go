@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -43,6 +43,10 @@ func (udf TurbidityDtoFactory) FromJSON(data []byte) (*TurbidityDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -198,19 +202,9 @@ func (a *Turbidity) ToString(unit TurbidityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetTurbidityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Turbidity) getUnitAbbreviation(unit TurbidityUnits) string {
-	switch unit { 
-	case TurbidityNTU:
-		return "NTU" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetTurbidityAbbreviation(unit))
 }
 
 // Equals checks if the given Turbidity is equal to the current Turbidity.
@@ -291,4 +285,14 @@ func (a *Turbidity) Multiply(other *Turbidity) *Turbidity {
 //    *Turbidity: A new Turbidity instance representing the quotient of both Turbidity.
 func (a *Turbidity) Divide(other *Turbidity) *Turbidity {
 	return &Turbidity{value: a.value / other.BaseValue()}
+}
+
+// GetTurbidityAbbreviation gets the unit abbreviation.
+func GetTurbidityAbbreviation(unit TurbidityUnits) string {
+	switch unit { 
+	case TurbidityNTU:
+		return "NTU" 
+	default:
+		return ""
+	}
 }

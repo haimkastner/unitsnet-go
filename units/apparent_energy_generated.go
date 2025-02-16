@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -47,6 +47,10 @@ func (udf ApparentEnergyDtoFactory) FromJSON(data []byte) (*ApparentEnergyDto, e
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -250,23 +254,9 @@ func (a *ApparentEnergy) ToString(unit ApparentEnergyUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetApparentEnergyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ApparentEnergy) getUnitAbbreviation(unit ApparentEnergyUnits) string {
-	switch unit { 
-	case ApparentEnergyVoltampereHour:
-		return "VAh" 
-	case ApparentEnergyKilovoltampereHour:
-		return "kVAh" 
-	case ApparentEnergyMegavoltampereHour:
-		return "MVAh" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetApparentEnergyAbbreviation(unit))
 }
 
 // Equals checks if the given ApparentEnergy is equal to the current ApparentEnergy.
@@ -347,4 +337,18 @@ func (a *ApparentEnergy) Multiply(other *ApparentEnergy) *ApparentEnergy {
 //    *ApparentEnergy: A new ApparentEnergy instance representing the quotient of both ApparentEnergy.
 func (a *ApparentEnergy) Divide(other *ApparentEnergy) *ApparentEnergy {
 	return &ApparentEnergy{value: a.value / other.BaseValue()}
+}
+
+// GetApparentEnergyAbbreviation gets the unit abbreviation.
+func GetApparentEnergyAbbreviation(unit ApparentEnergyUnits) string {
+	switch unit { 
+	case ApparentEnergyVoltampereHour:
+		return "VAh" 
+	case ApparentEnergyKilovoltampereHour:
+		return "kVAh" 
+	case ApparentEnergyMegavoltampereHour:
+		return "MVAh" 
+	default:
+		return ""
+	}
 }

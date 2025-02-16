@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -55,6 +55,10 @@ func (udf EntropyDtoFactory) FromJSON(data []byte) (*EntropyDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -354,31 +358,9 @@ func (a *Entropy) ToString(unit EntropyUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetEntropyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Entropy) getUnitAbbreviation(unit EntropyUnits) string {
-	switch unit { 
-	case EntropyJoulePerKelvin:
-		return "J/K" 
-	case EntropyCaloriePerKelvin:
-		return "cal/K" 
-	case EntropyJoulePerDegreeCelsius:
-		return "J/°C" 
-	case EntropyKilojoulePerKelvin:
-		return "kJ/K" 
-	case EntropyMegajoulePerKelvin:
-		return "MJ/K" 
-	case EntropyKilocaloriePerKelvin:
-		return "kcal/K" 
-	case EntropyKilojoulePerDegreeCelsius:
-		return "kJ/°C" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetEntropyAbbreviation(unit))
 }
 
 // Equals checks if the given Entropy is equal to the current Entropy.
@@ -459,4 +441,26 @@ func (a *Entropy) Multiply(other *Entropy) *Entropy {
 //    *Entropy: A new Entropy instance representing the quotient of both Entropy.
 func (a *Entropy) Divide(other *Entropy) *Entropy {
 	return &Entropy{value: a.value / other.BaseValue()}
+}
+
+// GetEntropyAbbreviation gets the unit abbreviation.
+func GetEntropyAbbreviation(unit EntropyUnits) string {
+	switch unit { 
+	case EntropyJoulePerKelvin:
+		return "J/K" 
+	case EntropyCaloriePerKelvin:
+		return "cal/K" 
+	case EntropyJoulePerDegreeCelsius:
+		return "J/°C" 
+	case EntropyKilojoulePerKelvin:
+		return "kJ/K" 
+	case EntropyMegajoulePerKelvin:
+		return "MJ/K" 
+	case EntropyKilocaloriePerKelvin:
+		return "kcal/K" 
+	case EntropyKilojoulePerDegreeCelsius:
+		return "kJ/°C" 
+	default:
+		return ""
+	}
 }

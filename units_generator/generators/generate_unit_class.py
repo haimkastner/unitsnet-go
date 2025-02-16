@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from jinja2 import Template, StrictUndefined
 from common.utils import camel_to_snake, prefixes_factor, prefixes_factor_abbreviation, upper_to_lower_camelcase
-from templates import unit_class_template
+from templates import unit_class_template, unit_class_test_template
 
 
 def __format_formula(original_formula: str):
@@ -136,6 +136,17 @@ def unit_class_generator(unit_definition):
         f"units/{camel_to_snake(unit_name)}_generated.go", "w", encoding="utf-8"
     ) as f:
         f.write(code)
+
+    # Create a Jinja2 template object
+    test_template = Template(unit_class_test_template, undefined=StrictUndefined)
+
+    # Render the template with the data
+    tests = test_template.render(template_data)
+
+    with open(
+        f"units/{camel_to_snake(unit_name)}_generated_test.go", "w", encoding="utf-8"
+    ) as f:
+        f.write(tests)
 
     print(
         f"[unit_class_generator] Generating units for {unit_name} finished successfully"

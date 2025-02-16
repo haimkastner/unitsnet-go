@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -73,6 +73,10 @@ func (udf AngleDtoFactory) FromJSON(data []byte) (*AngleDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -588,49 +592,9 @@ func (a *Angle) ToString(unit AngleUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetAngleAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Angle) getUnitAbbreviation(unit AngleUnits) string {
-	switch unit { 
-	case AngleRadian:
-		return "rad" 
-	case AngleDegree:
-		return "°" 
-	case AngleArcminute:
-		return "'" 
-	case AngleArcsecond:
-		return "″" 
-	case AngleGradian:
-		return "g" 
-	case AngleNatoMil:
-		return "mil" 
-	case AngleRevolution:
-		return "r" 
-	case AngleTilt:
-		return "sin(θ)" 
-	case AngleNanoradian:
-		return "nrad" 
-	case AngleMicroradian:
-		return "μrad" 
-	case AngleMilliradian:
-		return "mrad" 
-	case AngleCentiradian:
-		return "crad" 
-	case AngleDeciradian:
-		return "drad" 
-	case AngleNanodegree:
-		return "n°" 
-	case AngleMicrodegree:
-		return "μ°" 
-	case AngleMillidegree:
-		return "m°" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetAngleAbbreviation(unit))
 }
 
 // Equals checks if the given Angle is equal to the current Angle.
@@ -711,4 +675,44 @@ func (a *Angle) Multiply(other *Angle) *Angle {
 //    *Angle: A new Angle instance representing the quotient of both Angle.
 func (a *Angle) Divide(other *Angle) *Angle {
 	return &Angle{value: a.value / other.BaseValue()}
+}
+
+// GetAngleAbbreviation gets the unit abbreviation.
+func GetAngleAbbreviation(unit AngleUnits) string {
+	switch unit { 
+	case AngleRadian:
+		return "rad" 
+	case AngleDegree:
+		return "°" 
+	case AngleArcminute:
+		return "'" 
+	case AngleArcsecond:
+		return "″" 
+	case AngleGradian:
+		return "g" 
+	case AngleNatoMil:
+		return "mil" 
+	case AngleRevolution:
+		return "r" 
+	case AngleTilt:
+		return "sin(θ)" 
+	case AngleNanoradian:
+		return "nrad" 
+	case AngleMicroradian:
+		return "μrad" 
+	case AngleMilliradian:
+		return "mrad" 
+	case AngleCentiradian:
+		return "crad" 
+	case AngleDeciradian:
+		return "drad" 
+	case AngleNanodegree:
+		return "n°" 
+	case AngleMicrodegree:
+		return "μ°" 
+	case AngleMillidegree:
+		return "m°" 
+	default:
+		return ""
+	}
 }

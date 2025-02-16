@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -47,6 +47,10 @@ func (udf MolalityDtoFactory) FromJSON(data []byte) (*MolalityDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -250,23 +254,9 @@ func (a *Molality) ToString(unit MolalityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMolalityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Molality) getUnitAbbreviation(unit MolalityUnits) string {
-	switch unit { 
-	case MolalityMolePerKilogram:
-		return "mol/kg" 
-	case MolalityMolePerGram:
-		return "mol/g" 
-	case MolalityMillimolePerKilogram:
-		return "mmol/kg" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMolalityAbbreviation(unit))
 }
 
 // Equals checks if the given Molality is equal to the current Molality.
@@ -347,4 +337,18 @@ func (a *Molality) Multiply(other *Molality) *Molality {
 //    *Molality: A new Molality instance representing the quotient of both Molality.
 func (a *Molality) Divide(other *Molality) *Molality {
 	return &Molality{value: a.value / other.BaseValue()}
+}
+
+// GetMolalityAbbreviation gets the unit abbreviation.
+func GetMolalityAbbreviation(unit MolalityUnits) string {
+	switch unit { 
+	case MolalityMolePerKilogram:
+		return "mol/kg" 
+	case MolalityMolePerGram:
+		return "mol/g" 
+	case MolalityMillimolePerKilogram:
+		return "mmol/kg" 
+	default:
+		return ""
+	}
 }

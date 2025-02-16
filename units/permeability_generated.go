@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -43,6 +43,10 @@ func (udf PermeabilityDtoFactory) FromJSON(data []byte) (*PermeabilityDto, error
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -198,19 +202,9 @@ func (a *Permeability) ToString(unit PermeabilityUnits, fractionalDigits int) st
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetPermeabilityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Permeability) getUnitAbbreviation(unit PermeabilityUnits) string {
-	switch unit { 
-	case PermeabilityHenryPerMeter:
-		return "H/m" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetPermeabilityAbbreviation(unit))
 }
 
 // Equals checks if the given Permeability is equal to the current Permeability.
@@ -291,4 +285,14 @@ func (a *Permeability) Multiply(other *Permeability) *Permeability {
 //    *Permeability: A new Permeability instance representing the quotient of both Permeability.
 func (a *Permeability) Divide(other *Permeability) *Permeability {
 	return &Permeability{value: a.value / other.BaseValue()}
+}
+
+// GetPermeabilityAbbreviation gets the unit abbreviation.
+func GetPermeabilityAbbreviation(unit PermeabilityUnits) string {
+	switch unit { 
+	case PermeabilityHenryPerMeter:
+		return "H/m" 
+	default:
+		return ""
+	}
 }

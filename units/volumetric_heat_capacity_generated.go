@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -59,6 +59,10 @@ func (udf VolumetricHeatCapacityDtoFactory) FromJSON(data []byte) (*VolumetricHe
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -406,35 +410,9 @@ func (a *VolumetricHeatCapacity) ToString(unit VolumetricHeatCapacityUnits, frac
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetVolumetricHeatCapacityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *VolumetricHeatCapacity) getUnitAbbreviation(unit VolumetricHeatCapacityUnits) string {
-	switch unit { 
-	case VolumetricHeatCapacityJoulePerCubicMeterKelvin:
-		return "J/m³·K" 
-	case VolumetricHeatCapacityJoulePerCubicMeterDegreeCelsius:
-		return "J/m³·°C" 
-	case VolumetricHeatCapacityCaloriePerCubicCentimeterDegreeCelsius:
-		return "cal/cm³·°C" 
-	case VolumetricHeatCapacityBtuPerCubicFootDegreeFahrenheit:
-		return "BTU/ft³·°F" 
-	case VolumetricHeatCapacityKilojoulePerCubicMeterKelvin:
-		return "kJ/m³·K" 
-	case VolumetricHeatCapacityMegajoulePerCubicMeterKelvin:
-		return "MJ/m³·K" 
-	case VolumetricHeatCapacityKilojoulePerCubicMeterDegreeCelsius:
-		return "kJ/m³·°C" 
-	case VolumetricHeatCapacityMegajoulePerCubicMeterDegreeCelsius:
-		return "MJ/m³·°C" 
-	case VolumetricHeatCapacityKilocaloriePerCubicCentimeterDegreeCelsius:
-		return "kcal/cm³·°C" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetVolumetricHeatCapacityAbbreviation(unit))
 }
 
 // Equals checks if the given VolumetricHeatCapacity is equal to the current VolumetricHeatCapacity.
@@ -515,4 +493,30 @@ func (a *VolumetricHeatCapacity) Multiply(other *VolumetricHeatCapacity) *Volume
 //    *VolumetricHeatCapacity: A new VolumetricHeatCapacity instance representing the quotient of both VolumetricHeatCapacity.
 func (a *VolumetricHeatCapacity) Divide(other *VolumetricHeatCapacity) *VolumetricHeatCapacity {
 	return &VolumetricHeatCapacity{value: a.value / other.BaseValue()}
+}
+
+// GetVolumetricHeatCapacityAbbreviation gets the unit abbreviation.
+func GetVolumetricHeatCapacityAbbreviation(unit VolumetricHeatCapacityUnits) string {
+	switch unit { 
+	case VolumetricHeatCapacityJoulePerCubicMeterKelvin:
+		return "J/m³·K" 
+	case VolumetricHeatCapacityJoulePerCubicMeterDegreeCelsius:
+		return "J/m³·°C" 
+	case VolumetricHeatCapacityCaloriePerCubicCentimeterDegreeCelsius:
+		return "cal/cm³·°C" 
+	case VolumetricHeatCapacityBtuPerCubicFootDegreeFahrenheit:
+		return "BTU/ft³·°F" 
+	case VolumetricHeatCapacityKilojoulePerCubicMeterKelvin:
+		return "kJ/m³·K" 
+	case VolumetricHeatCapacityMegajoulePerCubicMeterKelvin:
+		return "MJ/m³·K" 
+	case VolumetricHeatCapacityKilojoulePerCubicMeterDegreeCelsius:
+		return "kJ/m³·°C" 
+	case VolumetricHeatCapacityMegajoulePerCubicMeterDegreeCelsius:
+		return "MJ/m³·°C" 
+	case VolumetricHeatCapacityKilocaloriePerCubicCentimeterDegreeCelsius:
+		return "kcal/cm³·°C" 
+	default:
+		return ""
+	}
 }

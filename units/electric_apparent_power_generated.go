@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -53,6 +53,10 @@ func (udf ElectricApparentPowerDtoFactory) FromJSON(data []byte) (*ElectricAppar
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -328,29 +332,9 @@ func (a *ElectricApparentPower) ToString(unit ElectricApparentPowerUnits, fracti
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricApparentPowerAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricApparentPower) getUnitAbbreviation(unit ElectricApparentPowerUnits) string {
-	switch unit { 
-	case ElectricApparentPowerVoltampere:
-		return "VA" 
-	case ElectricApparentPowerMicrovoltampere:
-		return "μVA" 
-	case ElectricApparentPowerMillivoltampere:
-		return "mVA" 
-	case ElectricApparentPowerKilovoltampere:
-		return "kVA" 
-	case ElectricApparentPowerMegavoltampere:
-		return "MVA" 
-	case ElectricApparentPowerGigavoltampere:
-		return "GVA" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricApparentPowerAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricApparentPower is equal to the current ElectricApparentPower.
@@ -431,4 +415,24 @@ func (a *ElectricApparentPower) Multiply(other *ElectricApparentPower) *Electric
 //    *ElectricApparentPower: A new ElectricApparentPower instance representing the quotient of both ElectricApparentPower.
 func (a *ElectricApparentPower) Divide(other *ElectricApparentPower) *ElectricApparentPower {
 	return &ElectricApparentPower{value: a.value / other.BaseValue()}
+}
+
+// GetElectricApparentPowerAbbreviation gets the unit abbreviation.
+func GetElectricApparentPowerAbbreviation(unit ElectricApparentPowerUnits) string {
+	switch unit { 
+	case ElectricApparentPowerVoltampere:
+		return "VA" 
+	case ElectricApparentPowerMicrovoltampere:
+		return "μVA" 
+	case ElectricApparentPowerMillivoltampere:
+		return "mVA" 
+	case ElectricApparentPowerKilovoltampere:
+		return "kVA" 
+	case ElectricApparentPowerMegavoltampere:
+		return "MVA" 
+	case ElectricApparentPowerGigavoltampere:
+		return "GVA" 
+	default:
+		return ""
+	}
 }

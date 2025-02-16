@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -43,6 +43,10 @@ func (udf ElectricChargeDensityDtoFactory) FromJSON(data []byte) (*ElectricCharg
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -198,19 +202,9 @@ func (a *ElectricChargeDensity) ToString(unit ElectricChargeDensityUnits, fracti
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricChargeDensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricChargeDensity) getUnitAbbreviation(unit ElectricChargeDensityUnits) string {
-	switch unit { 
-	case ElectricChargeDensityCoulombPerCubicMeter:
-		return "C/m³" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricChargeDensityAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricChargeDensity is equal to the current ElectricChargeDensity.
@@ -291,4 +285,14 @@ func (a *ElectricChargeDensity) Multiply(other *ElectricChargeDensity) *Electric
 //    *ElectricChargeDensity: A new ElectricChargeDensity instance representing the quotient of both ElectricChargeDensity.
 func (a *ElectricChargeDensity) Divide(other *ElectricChargeDensity) *ElectricChargeDensity {
 	return &ElectricChargeDensity{value: a.value / other.BaseValue()}
+}
+
+// GetElectricChargeDensityAbbreviation gets the unit abbreviation.
+func GetElectricChargeDensityAbbreviation(unit ElectricChargeDensityUnits) string {
+	switch unit { 
+	case ElectricChargeDensityCoulombPerCubicMeter:
+		return "C/m³" 
+	default:
+		return ""
+	}
 }

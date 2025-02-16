@@ -8,6 +8,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('units_generator/requirements-dev.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
@@ -16,15 +35,25 @@ jobs:
         with:
           go-version: '1.23.3'
 
-      - name: Generate units
+      - name: Install Python dependencies
         run: |
           pip install -r units_generator/requirements-dev.txt
+
+      - name: Generate units
+        run: |
           python units_generator/generate_package.py
 
-      - name: Test units
+      - name: Test units with Coverage
         run: |
-          go test ./tests/...
-      
+          go test -coverprofile=coverage.out ./...
+
+      - name: Report coverage
+        env:
+          COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          go install github.com/mattn/goveralls@latest
+          goveralls -coverprofile=coverage.out -service=github
+
       - name: Bump version
         if: github.ref == 'refs/heads/main'
         id: update_version
@@ -51,7 +80,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_message: Update to version ${{ steps.update_version.outputs.VERSION }} [skip-ci]
-      
+
       - name: Create Release
         if: github.ref == 'refs/heads/main'
         id: create_release
@@ -61,7 +90,7 @@ jobs:
         with:
           tag_name: ${{ steps.update_version.outputs.VERSION }}
           name: Package Version ${{ steps.update_version.outputs.VERSION }}
-          body: ${{  steps.version_info.outputs.BODY }}
+          body: ${{ steps.version_info.outputs.BODY }}
           draft: false
           prerelease: false
 

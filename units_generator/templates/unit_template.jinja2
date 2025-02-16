@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -43,6 +43,10 @@ func (udf {{ unit }}DtoFactory) FromJSON(data []byte) (*{{ unit }}Dto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -198,19 +202,9 @@ func (a *{{ unit }}) ToString(unit {{ unit }}Units, fractionalDigits int) string
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,Get{{ unit }}Abbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *{{ unit }}) getUnitAbbreviation(unit {{ unit }}Units) string {
-	switch unit { {% for method in methods %}
-	case {{ unit }}{{ method.unit }}:
-		return "{{ method.abbreviation }}" {% endfor %}
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, Get{{ unit }}Abbreviation(unit))
 }
 
 // Equals checks if the given {{ unit }} is equal to the current {{ unit }}.
@@ -291,4 +285,14 @@ func (a *{{ unit }}) Multiply(other *{{ unit }}) *{{ unit }} {
 //    *{{ unit }}: A new {{ unit }} instance representing the quotient of both {{ unit }}.
 func (a *{{ unit }}) Divide(other *{{ unit }}) *{{ unit }} {
 	return &{{ unit }}{value: a.value / other.BaseValue()}
+}
+
+// Get{{ unit }}Abbreviation gets the unit abbreviation.
+func Get{{ unit }}Abbreviation(unit {{ unit }}Units) string {
+	switch unit { {% for method in methods %}
+	case {{ unit }}{{ method.unit }}:
+		return "{{ method.abbreviation }}" {% endfor %}
+	default:
+		return ""
+	}
 }

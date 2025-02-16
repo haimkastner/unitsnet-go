@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -67,6 +67,10 @@ func (udf RotationalSpeedDtoFactory) FromJSON(data []byte) (*RotationalSpeedDto,
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -510,43 +514,9 @@ func (a *RotationalSpeed) ToString(unit RotationalSpeedUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRotationalSpeedAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *RotationalSpeed) getUnitAbbreviation(unit RotationalSpeedUnits) string {
-	switch unit { 
-	case RotationalSpeedRadianPerSecond:
-		return "rad/s" 
-	case RotationalSpeedDegreePerSecond:
-		return "°/s" 
-	case RotationalSpeedDegreePerMinute:
-		return "°/min" 
-	case RotationalSpeedRevolutionPerSecond:
-		return "r/s" 
-	case RotationalSpeedRevolutionPerMinute:
-		return "rpm" 
-	case RotationalSpeedNanoradianPerSecond:
-		return "nrad/s" 
-	case RotationalSpeedMicroradianPerSecond:
-		return "μrad/s" 
-	case RotationalSpeedMilliradianPerSecond:
-		return "mrad/s" 
-	case RotationalSpeedCentiradianPerSecond:
-		return "crad/s" 
-	case RotationalSpeedDeciradianPerSecond:
-		return "drad/s" 
-	case RotationalSpeedNanodegreePerSecond:
-		return "n°/s" 
-	case RotationalSpeedMicrodegreePerSecond:
-		return "μ°/s" 
-	case RotationalSpeedMillidegreePerSecond:
-		return "m°/s" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRotationalSpeedAbbreviation(unit))
 }
 
 // Equals checks if the given RotationalSpeed is equal to the current RotationalSpeed.
@@ -627,4 +597,38 @@ func (a *RotationalSpeed) Multiply(other *RotationalSpeed) *RotationalSpeed {
 //    *RotationalSpeed: A new RotationalSpeed instance representing the quotient of both RotationalSpeed.
 func (a *RotationalSpeed) Divide(other *RotationalSpeed) *RotationalSpeed {
 	return &RotationalSpeed{value: a.value / other.BaseValue()}
+}
+
+// GetRotationalSpeedAbbreviation gets the unit abbreviation.
+func GetRotationalSpeedAbbreviation(unit RotationalSpeedUnits) string {
+	switch unit { 
+	case RotationalSpeedRadianPerSecond:
+		return "rad/s" 
+	case RotationalSpeedDegreePerSecond:
+		return "°/s" 
+	case RotationalSpeedDegreePerMinute:
+		return "°/min" 
+	case RotationalSpeedRevolutionPerSecond:
+		return "r/s" 
+	case RotationalSpeedRevolutionPerMinute:
+		return "rpm" 
+	case RotationalSpeedNanoradianPerSecond:
+		return "nrad/s" 
+	case RotationalSpeedMicroradianPerSecond:
+		return "μrad/s" 
+	case RotationalSpeedMilliradianPerSecond:
+		return "mrad/s" 
+	case RotationalSpeedCentiradianPerSecond:
+		return "crad/s" 
+	case RotationalSpeedDeciradianPerSecond:
+		return "drad/s" 
+	case RotationalSpeedNanodegreePerSecond:
+		return "n°/s" 
+	case RotationalSpeedMicrodegreePerSecond:
+		return "μ°/s" 
+	case RotationalSpeedMillidegreePerSecond:
+		return "m°/s" 
+	default:
+		return ""
+	}
 }

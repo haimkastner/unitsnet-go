@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -61,6 +61,10 @@ func (udf ReciprocalLengthDtoFactory) FromJSON(data []byte) (*ReciprocalLengthDt
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -432,37 +436,9 @@ func (a *ReciprocalLength) ToString(unit ReciprocalLengthUnits, fractionalDigits
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetReciprocalLengthAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ReciprocalLength) getUnitAbbreviation(unit ReciprocalLengthUnits) string {
-	switch unit { 
-	case ReciprocalLengthInverseMeter:
-		return "m⁻¹" 
-	case ReciprocalLengthInverseCentimeter:
-		return "cm⁻¹" 
-	case ReciprocalLengthInverseMillimeter:
-		return "mm⁻¹" 
-	case ReciprocalLengthInverseMile:
-		return "mi⁻¹" 
-	case ReciprocalLengthInverseYard:
-		return "yd⁻¹" 
-	case ReciprocalLengthInverseFoot:
-		return "ft⁻¹" 
-	case ReciprocalLengthInverseUsSurveyFoot:
-		return "ftUS⁻¹" 
-	case ReciprocalLengthInverseInch:
-		return "in⁻¹" 
-	case ReciprocalLengthInverseMil:
-		return "mil⁻¹" 
-	case ReciprocalLengthInverseMicroinch:
-		return "µin⁻¹" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetReciprocalLengthAbbreviation(unit))
 }
 
 // Equals checks if the given ReciprocalLength is equal to the current ReciprocalLength.
@@ -543,4 +519,32 @@ func (a *ReciprocalLength) Multiply(other *ReciprocalLength) *ReciprocalLength {
 //    *ReciprocalLength: A new ReciprocalLength instance representing the quotient of both ReciprocalLength.
 func (a *ReciprocalLength) Divide(other *ReciprocalLength) *ReciprocalLength {
 	return &ReciprocalLength{value: a.value / other.BaseValue()}
+}
+
+// GetReciprocalLengthAbbreviation gets the unit abbreviation.
+func GetReciprocalLengthAbbreviation(unit ReciprocalLengthUnits) string {
+	switch unit { 
+	case ReciprocalLengthInverseMeter:
+		return "m⁻¹" 
+	case ReciprocalLengthInverseCentimeter:
+		return "cm⁻¹" 
+	case ReciprocalLengthInverseMillimeter:
+		return "mm⁻¹" 
+	case ReciprocalLengthInverseMile:
+		return "mi⁻¹" 
+	case ReciprocalLengthInverseYard:
+		return "yd⁻¹" 
+	case ReciprocalLengthInverseFoot:
+		return "ft⁻¹" 
+	case ReciprocalLengthInverseUsSurveyFoot:
+		return "ftUS⁻¹" 
+	case ReciprocalLengthInverseInch:
+		return "in⁻¹" 
+	case ReciprocalLengthInverseMil:
+		return "mil⁻¹" 
+	case ReciprocalLengthInverseMicroinch:
+		return "µin⁻¹" 
+	default:
+		return ""
+	}
 }

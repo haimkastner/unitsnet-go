@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -49,6 +49,10 @@ func (udf FuelEfficiencyDtoFactory) FromJSON(data []byte) (*FuelEfficiencyDto, e
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -276,25 +280,9 @@ func (a *FuelEfficiency) ToString(unit FuelEfficiencyUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetFuelEfficiencyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *FuelEfficiency) getUnitAbbreviation(unit FuelEfficiencyUnits) string {
-	switch unit { 
-	case FuelEfficiencyLiterPer100Kilometers:
-		return "L/100km" 
-	case FuelEfficiencyMilePerUsGallon:
-		return "mpg (U.S.)" 
-	case FuelEfficiencyMilePerUkGallon:
-		return "mpg (imp.)" 
-	case FuelEfficiencyKilometerPerLiter:
-		return "km/L" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetFuelEfficiencyAbbreviation(unit))
 }
 
 // Equals checks if the given FuelEfficiency is equal to the current FuelEfficiency.
@@ -375,4 +363,20 @@ func (a *FuelEfficiency) Multiply(other *FuelEfficiency) *FuelEfficiency {
 //    *FuelEfficiency: A new FuelEfficiency instance representing the quotient of both FuelEfficiency.
 func (a *FuelEfficiency) Divide(other *FuelEfficiency) *FuelEfficiency {
 	return &FuelEfficiency{value: a.value / other.BaseValue()}
+}
+
+// GetFuelEfficiencyAbbreviation gets the unit abbreviation.
+func GetFuelEfficiencyAbbreviation(unit FuelEfficiencyUnits) string {
+	switch unit { 
+	case FuelEfficiencyLiterPer100Kilometers:
+		return "L/100km" 
+	case FuelEfficiencyMilePerUsGallon:
+		return "mpg (U.S.)" 
+	case FuelEfficiencyMilePerUkGallon:
+		return "mpg (imp.)" 
+	case FuelEfficiencyKilometerPerLiter:
+		return "km/L" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -45,6 +45,10 @@ func (udf ThermalConductivityDtoFactory) FromJSON(data []byte) (*ThermalConducti
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -224,21 +228,9 @@ func (a *ThermalConductivity) ToString(unit ThermalConductivityUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetThermalConductivityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ThermalConductivity) getUnitAbbreviation(unit ThermalConductivityUnits) string {
-	switch unit { 
-	case ThermalConductivityWattPerMeterKelvin:
-		return "W/m·K" 
-	case ThermalConductivityBtuPerHourFootFahrenheit:
-		return "BTU/h·ft·°F" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetThermalConductivityAbbreviation(unit))
 }
 
 // Equals checks if the given ThermalConductivity is equal to the current ThermalConductivity.
@@ -319,4 +311,16 @@ func (a *ThermalConductivity) Multiply(other *ThermalConductivity) *ThermalCondu
 //    *ThermalConductivity: A new ThermalConductivity instance representing the quotient of both ThermalConductivity.
 func (a *ThermalConductivity) Divide(other *ThermalConductivity) *ThermalConductivity {
 	return &ThermalConductivity{value: a.value / other.BaseValue()}
+}
+
+// GetThermalConductivityAbbreviation gets the unit abbreviation.
+func GetThermalConductivityAbbreviation(unit ThermalConductivityUnits) string {
+	switch unit { 
+	case ThermalConductivityWattPerMeterKelvin:
+		return "W/m·K" 
+	case ThermalConductivityBtuPerHourFootFahrenheit:
+		return "BTU/h·ft·°F" 
+	default:
+		return ""
+	}
 }

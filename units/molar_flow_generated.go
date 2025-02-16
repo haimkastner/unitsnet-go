@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -59,6 +59,10 @@ func (udf MolarFlowDtoFactory) FromJSON(data []byte) (*MolarFlowDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -406,35 +410,9 @@ func (a *MolarFlow) ToString(unit MolarFlowUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMolarFlowAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MolarFlow) getUnitAbbreviation(unit MolarFlowUnits) string {
-	switch unit { 
-	case MolarFlowMolePerSecond:
-		return "mol/s" 
-	case MolarFlowMolePerMinute:
-		return "mol/min" 
-	case MolarFlowMolePerHour:
-		return "kmol/h" 
-	case MolarFlowPoundMolePerSecond:
-		return "lbmol/s" 
-	case MolarFlowPoundMolePerMinute:
-		return "lbmol/min" 
-	case MolarFlowPoundMolePerHour:
-		return "lbmol/h" 
-	case MolarFlowKilomolePerSecond:
-		return "kmol/s" 
-	case MolarFlowKilomolePerMinute:
-		return "kmol/min" 
-	case MolarFlowKilomolePerHour:
-		return "kkmol/h" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMolarFlowAbbreviation(unit))
 }
 
 // Equals checks if the given MolarFlow is equal to the current MolarFlow.
@@ -515,4 +493,30 @@ func (a *MolarFlow) Multiply(other *MolarFlow) *MolarFlow {
 //    *MolarFlow: A new MolarFlow instance representing the quotient of both MolarFlow.
 func (a *MolarFlow) Divide(other *MolarFlow) *MolarFlow {
 	return &MolarFlow{value: a.value / other.BaseValue()}
+}
+
+// GetMolarFlowAbbreviation gets the unit abbreviation.
+func GetMolarFlowAbbreviation(unit MolarFlowUnits) string {
+	switch unit { 
+	case MolarFlowMolePerSecond:
+		return "mol/s" 
+	case MolarFlowMolePerMinute:
+		return "mol/min" 
+	case MolarFlowMolePerHour:
+		return "kmol/h" 
+	case MolarFlowPoundMolePerSecond:
+		return "lbmol/s" 
+	case MolarFlowPoundMolePerMinute:
+		return "lbmol/min" 
+	case MolarFlowPoundMolePerHour:
+		return "lbmol/h" 
+	case MolarFlowKilomolePerSecond:
+		return "kmol/s" 
+	case MolarFlowKilomolePerMinute:
+		return "kmol/min" 
+	case MolarFlowKilomolePerHour:
+		return "kkmol/h" 
+	default:
+		return ""
+	}
 }

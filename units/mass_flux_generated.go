@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -65,6 +65,10 @@ func (udf MassFluxDtoFactory) FromJSON(data []byte) (*MassFluxDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -484,41 +488,9 @@ func (a *MassFlux) ToString(unit MassFluxUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMassFluxAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MassFlux) getUnitAbbreviation(unit MassFluxUnits) string {
-	switch unit { 
-	case MassFluxGramPerSecondPerSquareMeter:
-		return "g·s⁻¹·m⁻²" 
-	case MassFluxGramPerSecondPerSquareCentimeter:
-		return "g·s⁻¹·cm⁻²" 
-	case MassFluxGramPerSecondPerSquareMillimeter:
-		return "g·s⁻¹·mm⁻²" 
-	case MassFluxGramPerHourPerSquareMeter:
-		return "g·h⁻¹·m⁻²" 
-	case MassFluxGramPerHourPerSquareCentimeter:
-		return "g·h⁻¹·cm⁻²" 
-	case MassFluxGramPerHourPerSquareMillimeter:
-		return "g·h⁻¹·mm⁻²" 
-	case MassFluxKilogramPerSecondPerSquareMeter:
-		return "kg·s⁻¹·m⁻²" 
-	case MassFluxKilogramPerSecondPerSquareCentimeter:
-		return "kg·s⁻¹·cm⁻²" 
-	case MassFluxKilogramPerSecondPerSquareMillimeter:
-		return "kg·s⁻¹·mm⁻²" 
-	case MassFluxKilogramPerHourPerSquareMeter:
-		return "kg·h⁻¹·m⁻²" 
-	case MassFluxKilogramPerHourPerSquareCentimeter:
-		return "kg·h⁻¹·cm⁻²" 
-	case MassFluxKilogramPerHourPerSquareMillimeter:
-		return "kg·h⁻¹·mm⁻²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMassFluxAbbreviation(unit))
 }
 
 // Equals checks if the given MassFlux is equal to the current MassFlux.
@@ -599,4 +571,36 @@ func (a *MassFlux) Multiply(other *MassFlux) *MassFlux {
 //    *MassFlux: A new MassFlux instance representing the quotient of both MassFlux.
 func (a *MassFlux) Divide(other *MassFlux) *MassFlux {
 	return &MassFlux{value: a.value / other.BaseValue()}
+}
+
+// GetMassFluxAbbreviation gets the unit abbreviation.
+func GetMassFluxAbbreviation(unit MassFluxUnits) string {
+	switch unit { 
+	case MassFluxGramPerSecondPerSquareMeter:
+		return "g·s⁻¹·m⁻²" 
+	case MassFluxGramPerSecondPerSquareCentimeter:
+		return "g·s⁻¹·cm⁻²" 
+	case MassFluxGramPerSecondPerSquareMillimeter:
+		return "g·s⁻¹·mm⁻²" 
+	case MassFluxGramPerHourPerSquareMeter:
+		return "g·h⁻¹·m⁻²" 
+	case MassFluxGramPerHourPerSquareCentimeter:
+		return "g·h⁻¹·cm⁻²" 
+	case MassFluxGramPerHourPerSquareMillimeter:
+		return "g·h⁻¹·mm⁻²" 
+	case MassFluxKilogramPerSecondPerSquareMeter:
+		return "kg·s⁻¹·m⁻²" 
+	case MassFluxKilogramPerSecondPerSquareCentimeter:
+		return "kg·s⁻¹·cm⁻²" 
+	case MassFluxKilogramPerSecondPerSquareMillimeter:
+		return "kg·s⁻¹·mm⁻²" 
+	case MassFluxKilogramPerHourPerSquareMeter:
+		return "kg·h⁻¹·m⁻²" 
+	case MassFluxKilogramPerHourPerSquareCentimeter:
+		return "kg·h⁻¹·cm⁻²" 
+	case MassFluxKilogramPerHourPerSquareMillimeter:
+		return "kg·h⁻¹·mm⁻²" 
+	default:
+		return ""
+	}
 }

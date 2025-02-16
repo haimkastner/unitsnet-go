@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -51,6 +51,10 @@ func (udf PorousMediumPermeabilityDtoFactory) FromJSON(data []byte) (*PorousMedi
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -302,27 +306,9 @@ func (a *PorousMediumPermeability) ToString(unit PorousMediumPermeabilityUnits, 
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetPorousMediumPermeabilityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *PorousMediumPermeability) getUnitAbbreviation(unit PorousMediumPermeabilityUnits) string {
-	switch unit { 
-	case PorousMediumPermeabilityDarcy:
-		return "D" 
-	case PorousMediumPermeabilitySquareMeter:
-		return "m²" 
-	case PorousMediumPermeabilitySquareCentimeter:
-		return "cm²" 
-	case PorousMediumPermeabilityMicrodarcy:
-		return "μD" 
-	case PorousMediumPermeabilityMillidarcy:
-		return "mD" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetPorousMediumPermeabilityAbbreviation(unit))
 }
 
 // Equals checks if the given PorousMediumPermeability is equal to the current PorousMediumPermeability.
@@ -403,4 +389,22 @@ func (a *PorousMediumPermeability) Multiply(other *PorousMediumPermeability) *Po
 //    *PorousMediumPermeability: A new PorousMediumPermeability instance representing the quotient of both PorousMediumPermeability.
 func (a *PorousMediumPermeability) Divide(other *PorousMediumPermeability) *PorousMediumPermeability {
 	return &PorousMediumPermeability{value: a.value / other.BaseValue()}
+}
+
+// GetPorousMediumPermeabilityAbbreviation gets the unit abbreviation.
+func GetPorousMediumPermeabilityAbbreviation(unit PorousMediumPermeabilityUnits) string {
+	switch unit { 
+	case PorousMediumPermeabilityDarcy:
+		return "D" 
+	case PorousMediumPermeabilitySquareMeter:
+		return "m²" 
+	case PorousMediumPermeabilitySquareCentimeter:
+		return "cm²" 
+	case PorousMediumPermeabilityMicrodarcy:
+		return "μD" 
+	case PorousMediumPermeabilityMillidarcy:
+		return "mD" 
+	default:
+		return ""
+	}
 }

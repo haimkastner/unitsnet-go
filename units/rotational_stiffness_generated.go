@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -107,6 +107,10 @@ func (udf RotationalStiffnessDtoFactory) FromJSON(data []byte) (*RotationalStiff
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -1030,83 +1034,9 @@ func (a *RotationalStiffness) ToString(unit RotationalStiffnessUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRotationalStiffnessAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *RotationalStiffness) getUnitAbbreviation(unit RotationalStiffnessUnits) string {
-	switch unit { 
-	case RotationalStiffnessNewtonMeterPerRadian:
-		return "N·m/rad" 
-	case RotationalStiffnessPoundForceFootPerDegrees:
-		return "lbf·ft/deg" 
-	case RotationalStiffnessKilopoundForceFootPerDegrees:
-		return "kipf·ft/°" 
-	case RotationalStiffnessNewtonMillimeterPerDegree:
-		return "N·mm/deg" 
-	case RotationalStiffnessNewtonMeterPerDegree:
-		return "N·m/deg" 
-	case RotationalStiffnessNewtonMillimeterPerRadian:
-		return "N·mm/rad" 
-	case RotationalStiffnessPoundForceFeetPerRadian:
-		return "lbf·ft/rad" 
-	case RotationalStiffnessKilonewtonMeterPerRadian:
-		return "kN·m/rad" 
-	case RotationalStiffnessMeganewtonMeterPerRadian:
-		return "MN·m/rad" 
-	case RotationalStiffnessNanonewtonMillimeterPerDegree:
-		return "nN·mm/deg" 
-	case RotationalStiffnessMicronewtonMillimeterPerDegree:
-		return "μN·mm/deg" 
-	case RotationalStiffnessMillinewtonMillimeterPerDegree:
-		return "mN·mm/deg" 
-	case RotationalStiffnessCentinewtonMillimeterPerDegree:
-		return "cN·mm/deg" 
-	case RotationalStiffnessDecinewtonMillimeterPerDegree:
-		return "dN·mm/deg" 
-	case RotationalStiffnessDecanewtonMillimeterPerDegree:
-		return "daN·mm/deg" 
-	case RotationalStiffnessKilonewtonMillimeterPerDegree:
-		return "kN·mm/deg" 
-	case RotationalStiffnessMeganewtonMillimeterPerDegree:
-		return "MN·mm/deg" 
-	case RotationalStiffnessNanonewtonMeterPerDegree:
-		return "nN·m/deg" 
-	case RotationalStiffnessMicronewtonMeterPerDegree:
-		return "μN·m/deg" 
-	case RotationalStiffnessMillinewtonMeterPerDegree:
-		return "mN·m/deg" 
-	case RotationalStiffnessCentinewtonMeterPerDegree:
-		return "cN·m/deg" 
-	case RotationalStiffnessDecinewtonMeterPerDegree:
-		return "dN·m/deg" 
-	case RotationalStiffnessDecanewtonMeterPerDegree:
-		return "daN·m/deg" 
-	case RotationalStiffnessKilonewtonMeterPerDegree:
-		return "kN·m/deg" 
-	case RotationalStiffnessMeganewtonMeterPerDegree:
-		return "MN·m/deg" 
-	case RotationalStiffnessNanonewtonMillimeterPerRadian:
-		return "nN·mm/rad" 
-	case RotationalStiffnessMicronewtonMillimeterPerRadian:
-		return "μN·mm/rad" 
-	case RotationalStiffnessMillinewtonMillimeterPerRadian:
-		return "mN·mm/rad" 
-	case RotationalStiffnessCentinewtonMillimeterPerRadian:
-		return "cN·mm/rad" 
-	case RotationalStiffnessDecinewtonMillimeterPerRadian:
-		return "dN·mm/rad" 
-	case RotationalStiffnessDecanewtonMillimeterPerRadian:
-		return "daN·mm/rad" 
-	case RotationalStiffnessKilonewtonMillimeterPerRadian:
-		return "kN·mm/rad" 
-	case RotationalStiffnessMeganewtonMillimeterPerRadian:
-		return "MN·mm/rad" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRotationalStiffnessAbbreviation(unit))
 }
 
 // Equals checks if the given RotationalStiffness is equal to the current RotationalStiffness.
@@ -1187,4 +1117,78 @@ func (a *RotationalStiffness) Multiply(other *RotationalStiffness) *RotationalSt
 //    *RotationalStiffness: A new RotationalStiffness instance representing the quotient of both RotationalStiffness.
 func (a *RotationalStiffness) Divide(other *RotationalStiffness) *RotationalStiffness {
 	return &RotationalStiffness{value: a.value / other.BaseValue()}
+}
+
+// GetRotationalStiffnessAbbreviation gets the unit abbreviation.
+func GetRotationalStiffnessAbbreviation(unit RotationalStiffnessUnits) string {
+	switch unit { 
+	case RotationalStiffnessNewtonMeterPerRadian:
+		return "N·m/rad" 
+	case RotationalStiffnessPoundForceFootPerDegrees:
+		return "lbf·ft/deg" 
+	case RotationalStiffnessKilopoundForceFootPerDegrees:
+		return "kipf·ft/°" 
+	case RotationalStiffnessNewtonMillimeterPerDegree:
+		return "N·mm/deg" 
+	case RotationalStiffnessNewtonMeterPerDegree:
+		return "N·m/deg" 
+	case RotationalStiffnessNewtonMillimeterPerRadian:
+		return "N·mm/rad" 
+	case RotationalStiffnessPoundForceFeetPerRadian:
+		return "lbf·ft/rad" 
+	case RotationalStiffnessKilonewtonMeterPerRadian:
+		return "kN·m/rad" 
+	case RotationalStiffnessMeganewtonMeterPerRadian:
+		return "MN·m/rad" 
+	case RotationalStiffnessNanonewtonMillimeterPerDegree:
+		return "nN·mm/deg" 
+	case RotationalStiffnessMicronewtonMillimeterPerDegree:
+		return "μN·mm/deg" 
+	case RotationalStiffnessMillinewtonMillimeterPerDegree:
+		return "mN·mm/deg" 
+	case RotationalStiffnessCentinewtonMillimeterPerDegree:
+		return "cN·mm/deg" 
+	case RotationalStiffnessDecinewtonMillimeterPerDegree:
+		return "dN·mm/deg" 
+	case RotationalStiffnessDecanewtonMillimeterPerDegree:
+		return "daN·mm/deg" 
+	case RotationalStiffnessKilonewtonMillimeterPerDegree:
+		return "kN·mm/deg" 
+	case RotationalStiffnessMeganewtonMillimeterPerDegree:
+		return "MN·mm/deg" 
+	case RotationalStiffnessNanonewtonMeterPerDegree:
+		return "nN·m/deg" 
+	case RotationalStiffnessMicronewtonMeterPerDegree:
+		return "μN·m/deg" 
+	case RotationalStiffnessMillinewtonMeterPerDegree:
+		return "mN·m/deg" 
+	case RotationalStiffnessCentinewtonMeterPerDegree:
+		return "cN·m/deg" 
+	case RotationalStiffnessDecinewtonMeterPerDegree:
+		return "dN·m/deg" 
+	case RotationalStiffnessDecanewtonMeterPerDegree:
+		return "daN·m/deg" 
+	case RotationalStiffnessKilonewtonMeterPerDegree:
+		return "kN·m/deg" 
+	case RotationalStiffnessMeganewtonMeterPerDegree:
+		return "MN·m/deg" 
+	case RotationalStiffnessNanonewtonMillimeterPerRadian:
+		return "nN·mm/rad" 
+	case RotationalStiffnessMicronewtonMillimeterPerRadian:
+		return "μN·mm/rad" 
+	case RotationalStiffnessMillinewtonMillimeterPerRadian:
+		return "mN·mm/rad" 
+	case RotationalStiffnessCentinewtonMillimeterPerRadian:
+		return "cN·mm/rad" 
+	case RotationalStiffnessDecinewtonMillimeterPerRadian:
+		return "dN·mm/rad" 
+	case RotationalStiffnessDecanewtonMillimeterPerRadian:
+		return "daN·mm/rad" 
+	case RotationalStiffnessKilonewtonMillimeterPerRadian:
+		return "kN·mm/rad" 
+	case RotationalStiffnessMeganewtonMillimeterPerRadian:
+		return "MN·mm/rad" 
+	default:
+		return ""
+	}
 }

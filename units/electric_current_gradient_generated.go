@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -55,6 +55,10 @@ func (udf ElectricCurrentGradientDtoFactory) FromJSON(data []byte) (*ElectricCur
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -354,31 +358,9 @@ func (a *ElectricCurrentGradient) ToString(unit ElectricCurrentGradientUnits, fr
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricCurrentGradientAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricCurrentGradient) getUnitAbbreviation(unit ElectricCurrentGradientUnits) string {
-	switch unit { 
-	case ElectricCurrentGradientAmperePerSecond:
-		return "A/s" 
-	case ElectricCurrentGradientAmperePerMinute:
-		return "A/min" 
-	case ElectricCurrentGradientAmperePerMillisecond:
-		return "A/ms" 
-	case ElectricCurrentGradientAmperePerMicrosecond:
-		return "A/μs" 
-	case ElectricCurrentGradientAmperePerNanosecond:
-		return "A/ns" 
-	case ElectricCurrentGradientMilliamperePerSecond:
-		return "mA/s" 
-	case ElectricCurrentGradientMilliamperePerMinute:
-		return "mA/min" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricCurrentGradientAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricCurrentGradient is equal to the current ElectricCurrentGradient.
@@ -459,4 +441,26 @@ func (a *ElectricCurrentGradient) Multiply(other *ElectricCurrentGradient) *Elec
 //    *ElectricCurrentGradient: A new ElectricCurrentGradient instance representing the quotient of both ElectricCurrentGradient.
 func (a *ElectricCurrentGradient) Divide(other *ElectricCurrentGradient) *ElectricCurrentGradient {
 	return &ElectricCurrentGradient{value: a.value / other.BaseValue()}
+}
+
+// GetElectricCurrentGradientAbbreviation gets the unit abbreviation.
+func GetElectricCurrentGradientAbbreviation(unit ElectricCurrentGradientUnits) string {
+	switch unit { 
+	case ElectricCurrentGradientAmperePerSecond:
+		return "A/s" 
+	case ElectricCurrentGradientAmperePerMinute:
+		return "A/min" 
+	case ElectricCurrentGradientAmperePerMillisecond:
+		return "A/ms" 
+	case ElectricCurrentGradientAmperePerMicrosecond:
+		return "A/μs" 
+	case ElectricCurrentGradientAmperePerNanosecond:
+		return "A/ns" 
+	case ElectricCurrentGradientMilliamperePerSecond:
+		return "mA/s" 
+	case ElectricCurrentGradientMilliamperePerMinute:
+		return "mA/min" 
+	default:
+		return ""
+	}
 }

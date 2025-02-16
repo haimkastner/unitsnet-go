@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -95,6 +95,10 @@ func (udf MassDtoFactory) FromJSON(data []byte) (*MassDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -874,71 +878,9 @@ func (a *Mass) ToString(unit MassUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMassAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Mass) getUnitAbbreviation(unit MassUnits) string {
-	switch unit { 
-	case MassGram:
-		return "g" 
-	case MassTonne:
-		return "t" 
-	case MassShortTon:
-		return "t (short)" 
-	case MassLongTon:
-		return "long tn" 
-	case MassPound:
-		return "lb" 
-	case MassOunce:
-		return "oz" 
-	case MassSlug:
-		return "slug" 
-	case MassStone:
-		return "st" 
-	case MassShortHundredweight:
-		return "cwt" 
-	case MassLongHundredweight:
-		return "cwt" 
-	case MassGrain:
-		return "gr" 
-	case MassSolarMass:
-		return "M☉" 
-	case MassEarthMass:
-		return "em" 
-	case MassFemtogram:
-		return "fg" 
-	case MassPicogram:
-		return "pg" 
-	case MassNanogram:
-		return "ng" 
-	case MassMicrogram:
-		return "μg" 
-	case MassMilligram:
-		return "mg" 
-	case MassCentigram:
-		return "cg" 
-	case MassDecigram:
-		return "dg" 
-	case MassDecagram:
-		return "dag" 
-	case MassHectogram:
-		return "hg" 
-	case MassKilogram:
-		return "kg" 
-	case MassKilotonne:
-		return "kt" 
-	case MassMegatonne:
-		return "Mt" 
-	case MassKilopound:
-		return "klb" 
-	case MassMegapound:
-		return "Mlb" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMassAbbreviation(unit))
 }
 
 // Equals checks if the given Mass is equal to the current Mass.
@@ -1019,4 +961,66 @@ func (a *Mass) Multiply(other *Mass) *Mass {
 //    *Mass: A new Mass instance representing the quotient of both Mass.
 func (a *Mass) Divide(other *Mass) *Mass {
 	return &Mass{value: a.value / other.BaseValue()}
+}
+
+// GetMassAbbreviation gets the unit abbreviation.
+func GetMassAbbreviation(unit MassUnits) string {
+	switch unit { 
+	case MassGram:
+		return "g" 
+	case MassTonne:
+		return "t" 
+	case MassShortTon:
+		return "t (short)" 
+	case MassLongTon:
+		return "long tn" 
+	case MassPound:
+		return "lb" 
+	case MassOunce:
+		return "oz" 
+	case MassSlug:
+		return "slug" 
+	case MassStone:
+		return "st" 
+	case MassShortHundredweight:
+		return "cwt" 
+	case MassLongHundredweight:
+		return "cwt" 
+	case MassGrain:
+		return "gr" 
+	case MassSolarMass:
+		return "M☉" 
+	case MassEarthMass:
+		return "em" 
+	case MassFemtogram:
+		return "fg" 
+	case MassPicogram:
+		return "pg" 
+	case MassNanogram:
+		return "ng" 
+	case MassMicrogram:
+		return "μg" 
+	case MassMilligram:
+		return "mg" 
+	case MassCentigram:
+		return "cg" 
+	case MassDecigram:
+		return "dg" 
+	case MassDecagram:
+		return "dag" 
+	case MassHectogram:
+		return "hg" 
+	case MassKilogram:
+		return "kg" 
+	case MassKilotonne:
+		return "kt" 
+	case MassMegatonne:
+		return "Mt" 
+	case MassKilopound:
+		return "klb" 
+	case MassMegapound:
+		return "Mlb" 
+	default:
+		return ""
+	}
 }

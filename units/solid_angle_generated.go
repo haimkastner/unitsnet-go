@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -43,6 +43,10 @@ func (udf SolidAngleDtoFactory) FromJSON(data []byte) (*SolidAngleDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -198,19 +202,9 @@ func (a *SolidAngle) ToString(unit SolidAngleUnits, fractionalDigits int) string
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetSolidAngleAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *SolidAngle) getUnitAbbreviation(unit SolidAngleUnits) string {
-	switch unit { 
-	case SolidAngleSteradian:
-		return "sr" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetSolidAngleAbbreviation(unit))
 }
 
 // Equals checks if the given SolidAngle is equal to the current SolidAngle.
@@ -291,4 +285,14 @@ func (a *SolidAngle) Multiply(other *SolidAngle) *SolidAngle {
 //    *SolidAngle: A new SolidAngle instance representing the quotient of both SolidAngle.
 func (a *SolidAngle) Divide(other *SolidAngle) *SolidAngle {
 	return &SolidAngle{value: a.value / other.BaseValue()}
+}
+
+// GetSolidAngleAbbreviation gets the unit abbreviation.
+func GetSolidAngleAbbreviation(unit SolidAngleUnits) string {
+	switch unit { 
+	case SolidAngleSteradian:
+		return "sr" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -43,6 +43,10 @@ func (udf VitaminADtoFactory) FromJSON(data []byte) (*VitaminADto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -198,19 +202,9 @@ func (a *VitaminA) ToString(unit VitaminAUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetVitaminAAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *VitaminA) getUnitAbbreviation(unit VitaminAUnits) string {
-	switch unit { 
-	case VitaminAInternationalUnit:
-		return "IU" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetVitaminAAbbreviation(unit))
 }
 
 // Equals checks if the given VitaminA is equal to the current VitaminA.
@@ -291,4 +285,14 @@ func (a *VitaminA) Multiply(other *VitaminA) *VitaminA {
 //    *VitaminA: A new VitaminA instance representing the quotient of both VitaminA.
 func (a *VitaminA) Divide(other *VitaminA) *VitaminA {
 	return &VitaminA{value: a.value / other.BaseValue()}
+}
+
+// GetVitaminAAbbreviation gets the unit abbreviation.
+func GetVitaminAAbbreviation(unit VitaminAUnits) string {
+	switch unit { 
+	case VitaminAInternationalUnit:
+		return "IU" 
+	default:
+		return ""
+	}
 }

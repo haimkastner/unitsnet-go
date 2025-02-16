@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -47,6 +47,10 @@ func (udf MolarEntropyDtoFactory) FromJSON(data []byte) (*MolarEntropyDto, error
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -250,23 +254,9 @@ func (a *MolarEntropy) ToString(unit MolarEntropyUnits, fractionalDigits int) st
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMolarEntropyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MolarEntropy) getUnitAbbreviation(unit MolarEntropyUnits) string {
-	switch unit { 
-	case MolarEntropyJoulePerMoleKelvin:
-		return "J/(mol·K)" 
-	case MolarEntropyKilojoulePerMoleKelvin:
-		return "kJ/(mol·K)" 
-	case MolarEntropyMegajoulePerMoleKelvin:
-		return "MJ/(mol·K)" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMolarEntropyAbbreviation(unit))
 }
 
 // Equals checks if the given MolarEntropy is equal to the current MolarEntropy.
@@ -347,4 +337,18 @@ func (a *MolarEntropy) Multiply(other *MolarEntropy) *MolarEntropy {
 //    *MolarEntropy: A new MolarEntropy instance representing the quotient of both MolarEntropy.
 func (a *MolarEntropy) Divide(other *MolarEntropy) *MolarEntropy {
 	return &MolarEntropy{value: a.value / other.BaseValue()}
+}
+
+// GetMolarEntropyAbbreviation gets the unit abbreviation.
+func GetMolarEntropyAbbreviation(unit MolarEntropyUnits) string {
+	switch unit { 
+	case MolarEntropyJoulePerMoleKelvin:
+		return "J/(mol·K)" 
+	case MolarEntropyKilojoulePerMoleKelvin:
+		return "kJ/(mol·K)" 
+	case MolarEntropyMegajoulePerMoleKelvin:
+		return "MJ/(mol·K)" 
+	default:
+		return ""
+	}
 }

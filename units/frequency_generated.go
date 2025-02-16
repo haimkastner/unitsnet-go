@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -67,6 +67,10 @@ func (udf FrequencyDtoFactory) FromJSON(data []byte) (*FrequencyDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -510,43 +514,9 @@ func (a *Frequency) ToString(unit FrequencyUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetFrequencyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Frequency) getUnitAbbreviation(unit FrequencyUnits) string {
-	switch unit { 
-	case FrequencyHertz:
-		return "Hz" 
-	case FrequencyRadianPerSecond:
-		return "rad/s" 
-	case FrequencyCyclePerMinute:
-		return "cpm" 
-	case FrequencyCyclePerHour:
-		return "cph" 
-	case FrequencyBeatPerMinute:
-		return "bpm" 
-	case FrequencyPerSecond:
-		return "s⁻¹" 
-	case FrequencyBUnit:
-		return "B Units" 
-	case FrequencyMicrohertz:
-		return "μHz" 
-	case FrequencyMillihertz:
-		return "mHz" 
-	case FrequencyKilohertz:
-		return "kHz" 
-	case FrequencyMegahertz:
-		return "MHz" 
-	case FrequencyGigahertz:
-		return "GHz" 
-	case FrequencyTerahertz:
-		return "THz" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetFrequencyAbbreviation(unit))
 }
 
 // Equals checks if the given Frequency is equal to the current Frequency.
@@ -627,4 +597,38 @@ func (a *Frequency) Multiply(other *Frequency) *Frequency {
 //    *Frequency: A new Frequency instance representing the quotient of both Frequency.
 func (a *Frequency) Divide(other *Frequency) *Frequency {
 	return &Frequency{value: a.value / other.BaseValue()}
+}
+
+// GetFrequencyAbbreviation gets the unit abbreviation.
+func GetFrequencyAbbreviation(unit FrequencyUnits) string {
+	switch unit { 
+	case FrequencyHertz:
+		return "Hz" 
+	case FrequencyRadianPerSecond:
+		return "rad/s" 
+	case FrequencyCyclePerMinute:
+		return "cpm" 
+	case FrequencyCyclePerHour:
+		return "cph" 
+	case FrequencyBeatPerMinute:
+		return "bpm" 
+	case FrequencyPerSecond:
+		return "s⁻¹" 
+	case FrequencyBUnit:
+		return "B Units" 
+	case FrequencyMicrohertz:
+		return "μHz" 
+	case FrequencyMillihertz:
+		return "mHz" 
+	case FrequencyKilohertz:
+		return "kHz" 
+	case FrequencyMegahertz:
+		return "MHz" 
+	case FrequencyGigahertz:
+		return "GHz" 
+	case FrequencyTerahertz:
+		return "THz" 
+	default:
+		return ""
+	}
 }

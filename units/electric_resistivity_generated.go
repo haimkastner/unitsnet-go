@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -69,6 +69,10 @@ func (udf ElectricResistivityDtoFactory) FromJSON(data []byte) (*ElectricResisti
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -536,45 +540,9 @@ func (a *ElectricResistivity) ToString(unit ElectricResistivityUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricResistivityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricResistivity) getUnitAbbreviation(unit ElectricResistivityUnits) string {
-	switch unit { 
-	case ElectricResistivityOhmMeter:
-		return "Ω·m" 
-	case ElectricResistivityOhmCentimeter:
-		return "Ω·cm" 
-	case ElectricResistivityPicoohmMeter:
-		return "pΩ·m" 
-	case ElectricResistivityNanoohmMeter:
-		return "nΩ·m" 
-	case ElectricResistivityMicroohmMeter:
-		return "μΩ·m" 
-	case ElectricResistivityMilliohmMeter:
-		return "mΩ·m" 
-	case ElectricResistivityKiloohmMeter:
-		return "kΩ·m" 
-	case ElectricResistivityMegaohmMeter:
-		return "MΩ·m" 
-	case ElectricResistivityPicoohmCentimeter:
-		return "pΩ·cm" 
-	case ElectricResistivityNanoohmCentimeter:
-		return "nΩ·cm" 
-	case ElectricResistivityMicroohmCentimeter:
-		return "μΩ·cm" 
-	case ElectricResistivityMilliohmCentimeter:
-		return "mΩ·cm" 
-	case ElectricResistivityKiloohmCentimeter:
-		return "kΩ·cm" 
-	case ElectricResistivityMegaohmCentimeter:
-		return "MΩ·cm" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricResistivityAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricResistivity is equal to the current ElectricResistivity.
@@ -655,4 +623,40 @@ func (a *ElectricResistivity) Multiply(other *ElectricResistivity) *ElectricResi
 //    *ElectricResistivity: A new ElectricResistivity instance representing the quotient of both ElectricResistivity.
 func (a *ElectricResistivity) Divide(other *ElectricResistivity) *ElectricResistivity {
 	return &ElectricResistivity{value: a.value / other.BaseValue()}
+}
+
+// GetElectricResistivityAbbreviation gets the unit abbreviation.
+func GetElectricResistivityAbbreviation(unit ElectricResistivityUnits) string {
+	switch unit { 
+	case ElectricResistivityOhmMeter:
+		return "Ω·m" 
+	case ElectricResistivityOhmCentimeter:
+		return "Ω·cm" 
+	case ElectricResistivityPicoohmMeter:
+		return "pΩ·m" 
+	case ElectricResistivityNanoohmMeter:
+		return "nΩ·m" 
+	case ElectricResistivityMicroohmMeter:
+		return "μΩ·m" 
+	case ElectricResistivityMilliohmMeter:
+		return "mΩ·m" 
+	case ElectricResistivityKiloohmMeter:
+		return "kΩ·m" 
+	case ElectricResistivityMegaohmMeter:
+		return "MΩ·m" 
+	case ElectricResistivityPicoohmCentimeter:
+		return "pΩ·cm" 
+	case ElectricResistivityNanoohmCentimeter:
+		return "nΩ·cm" 
+	case ElectricResistivityMicroohmCentimeter:
+		return "μΩ·cm" 
+	case ElectricResistivityMilliohmCentimeter:
+		return "mΩ·cm" 
+	case ElectricResistivityKiloohmCentimeter:
+		return "kΩ·cm" 
+	case ElectricResistivityMegaohmCentimeter:
+		return "MΩ·cm" 
+	default:
+		return ""
+	}
 }

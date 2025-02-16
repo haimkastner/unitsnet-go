@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -93,6 +93,10 @@ func (udf InformationDtoFactory) FromJSON(data []byte) (*InformationDto, error) 
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -848,69 +852,9 @@ func (a *Information) ToString(unit InformationUnits, fractionalDigits int) stri
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetInformationAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Information) getUnitAbbreviation(unit InformationUnits) string {
-	switch unit { 
-	case InformationByte:
-		return "B" 
-	case InformationBit:
-		return "b" 
-	case InformationKilobyte:
-		return "kB" 
-	case InformationMegabyte:
-		return "MB" 
-	case InformationGigabyte:
-		return "GB" 
-	case InformationTerabyte:
-		return "TB" 
-	case InformationPetabyte:
-		return "PB" 
-	case InformationExabyte:
-		return "EB" 
-	case InformationKibibyte:
-		return "KiBB" 
-	case InformationMebibyte:
-		return "MiBB" 
-	case InformationGibibyte:
-		return "GiBB" 
-	case InformationTebibyte:
-		return "TiBB" 
-	case InformationPebibyte:
-		return "PiBB" 
-	case InformationExbibyte:
-		return "EiBB" 
-	case InformationKilobit:
-		return "kb" 
-	case InformationMegabit:
-		return "Mb" 
-	case InformationGigabit:
-		return "Gb" 
-	case InformationTerabit:
-		return "Tb" 
-	case InformationPetabit:
-		return "Pb" 
-	case InformationExabit:
-		return "Eb" 
-	case InformationKibibit:
-		return "KiBb" 
-	case InformationMebibit:
-		return "MiBb" 
-	case InformationGibibit:
-		return "GiBb" 
-	case InformationTebibit:
-		return "TiBb" 
-	case InformationPebibit:
-		return "PiBb" 
-	case InformationExbibit:
-		return "EiBb" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetInformationAbbreviation(unit))
 }
 
 // Equals checks if the given Information is equal to the current Information.
@@ -991,4 +935,64 @@ func (a *Information) Multiply(other *Information) *Information {
 //    *Information: A new Information instance representing the quotient of both Information.
 func (a *Information) Divide(other *Information) *Information {
 	return &Information{value: a.value / other.BaseValue()}
+}
+
+// GetInformationAbbreviation gets the unit abbreviation.
+func GetInformationAbbreviation(unit InformationUnits) string {
+	switch unit { 
+	case InformationByte:
+		return "B" 
+	case InformationBit:
+		return "b" 
+	case InformationKilobyte:
+		return "kB" 
+	case InformationMegabyte:
+		return "MB" 
+	case InformationGigabyte:
+		return "GB" 
+	case InformationTerabyte:
+		return "TB" 
+	case InformationPetabyte:
+		return "PB" 
+	case InformationExabyte:
+		return "EB" 
+	case InformationKibibyte:
+		return "KiBB" 
+	case InformationMebibyte:
+		return "MiBB" 
+	case InformationGibibyte:
+		return "GiBB" 
+	case InformationTebibyte:
+		return "TiBB" 
+	case InformationPebibyte:
+		return "PiBB" 
+	case InformationExbibyte:
+		return "EiBB" 
+	case InformationKilobit:
+		return "kb" 
+	case InformationMegabit:
+		return "Mb" 
+	case InformationGigabit:
+		return "Gb" 
+	case InformationTerabit:
+		return "Tb" 
+	case InformationPetabit:
+		return "Pb" 
+	case InformationExabit:
+		return "Eb" 
+	case InformationKibibit:
+		return "KiBb" 
+	case InformationMebibit:
+		return "MiBb" 
+	case InformationGibibit:
+		return "GiBb" 
+	case InformationTebibit:
+		return "TiBb" 
+	case InformationPebibit:
+		return "PiBb" 
+	case InformationExbibit:
+		return "EiBb" 
+	default:
+		return ""
+	}
 }

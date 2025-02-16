@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -49,6 +49,10 @@ func (udf ElectricReactivePowerDtoFactory) FromJSON(data []byte) (*ElectricReact
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -276,25 +280,9 @@ func (a *ElectricReactivePower) ToString(unit ElectricReactivePowerUnits, fracti
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricReactivePowerAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricReactivePower) getUnitAbbreviation(unit ElectricReactivePowerUnits) string {
-	switch unit { 
-	case ElectricReactivePowerVoltampereReactive:
-		return "var" 
-	case ElectricReactivePowerKilovoltampereReactive:
-		return "kvar" 
-	case ElectricReactivePowerMegavoltampereReactive:
-		return "Mvar" 
-	case ElectricReactivePowerGigavoltampereReactive:
-		return "Gvar" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricReactivePowerAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricReactivePower is equal to the current ElectricReactivePower.
@@ -375,4 +363,20 @@ func (a *ElectricReactivePower) Multiply(other *ElectricReactivePower) *Electric
 //    *ElectricReactivePower: A new ElectricReactivePower instance representing the quotient of both ElectricReactivePower.
 func (a *ElectricReactivePower) Divide(other *ElectricReactivePower) *ElectricReactivePower {
 	return &ElectricReactivePower{value: a.value / other.BaseValue()}
+}
+
+// GetElectricReactivePowerAbbreviation gets the unit abbreviation.
+func GetElectricReactivePowerAbbreviation(unit ElectricReactivePowerUnits) string {
+	switch unit { 
+	case ElectricReactivePowerVoltampereReactive:
+		return "var" 
+	case ElectricReactivePowerKilovoltampereReactive:
+		return "kvar" 
+	case ElectricReactivePowerMegavoltampereReactive:
+		return "Mvar" 
+	case ElectricReactivePowerGigavoltampereReactive:
+		return "Gvar" 
+	default:
+		return ""
+	}
 }

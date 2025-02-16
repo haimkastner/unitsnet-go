@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -45,6 +45,10 @@ func (udf PowerRatioDtoFactory) FromJSON(data []byte) (*PowerRatioDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -224,21 +228,9 @@ func (a *PowerRatio) ToString(unit PowerRatioUnits, fractionalDigits int) string
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetPowerRatioAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *PowerRatio) getUnitAbbreviation(unit PowerRatioUnits) string {
-	switch unit { 
-	case PowerRatioDecibelWatt:
-		return "dBW" 
-	case PowerRatioDecibelMilliwatt:
-		return "dBmW" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetPowerRatioAbbreviation(unit))
 }
 
 // Equals checks if the given PowerRatio is equal to the current PowerRatio.
@@ -319,4 +311,16 @@ func (a *PowerRatio) Multiply(other *PowerRatio) *PowerRatio {
 //    *PowerRatio: A new PowerRatio instance representing the quotient of both PowerRatio.
 func (a *PowerRatio) Divide(other *PowerRatio) *PowerRatio {
 	return &PowerRatio{value: a.value / other.BaseValue()}
+}
+
+// GetPowerRatioAbbreviation gets the unit abbreviation.
+func GetPowerRatioAbbreviation(unit PowerRatioUnits) string {
+	switch unit { 
+	case PowerRatioDecibelWatt:
+		return "dBW" 
+	case PowerRatioDecibelMilliwatt:
+		return "dBmW" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -77,6 +77,10 @@ func (udf LinearDensityDtoFactory) FromJSON(data []byte) (*LinearDensityDto, err
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -640,53 +644,9 @@ func (a *LinearDensity) ToString(unit LinearDensityUnits, fractionalDigits int) 
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetLinearDensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *LinearDensity) getUnitAbbreviation(unit LinearDensityUnits) string {
-	switch unit { 
-	case LinearDensityGramPerMillimeter:
-		return "g/mm" 
-	case LinearDensityGramPerCentimeter:
-		return "g/cm" 
-	case LinearDensityGramPerMeter:
-		return "g/m" 
-	case LinearDensityPoundPerInch:
-		return "lb/in" 
-	case LinearDensityPoundPerFoot:
-		return "lb/ft" 
-	case LinearDensityGramPerFoot:
-		return "g/ft" 
-	case LinearDensityMicrogramPerMillimeter:
-		return "μg/mm" 
-	case LinearDensityMilligramPerMillimeter:
-		return "mg/mm" 
-	case LinearDensityKilogramPerMillimeter:
-		return "kg/mm" 
-	case LinearDensityMicrogramPerCentimeter:
-		return "μg/cm" 
-	case LinearDensityMilligramPerCentimeter:
-		return "mg/cm" 
-	case LinearDensityKilogramPerCentimeter:
-		return "kg/cm" 
-	case LinearDensityMicrogramPerMeter:
-		return "μg/m" 
-	case LinearDensityMilligramPerMeter:
-		return "mg/m" 
-	case LinearDensityKilogramPerMeter:
-		return "kg/m" 
-	case LinearDensityMicrogramPerFoot:
-		return "μg/ft" 
-	case LinearDensityMilligramPerFoot:
-		return "mg/ft" 
-	case LinearDensityKilogramPerFoot:
-		return "kg/ft" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetLinearDensityAbbreviation(unit))
 }
 
 // Equals checks if the given LinearDensity is equal to the current LinearDensity.
@@ -767,4 +727,48 @@ func (a *LinearDensity) Multiply(other *LinearDensity) *LinearDensity {
 //    *LinearDensity: A new LinearDensity instance representing the quotient of both LinearDensity.
 func (a *LinearDensity) Divide(other *LinearDensity) *LinearDensity {
 	return &LinearDensity{value: a.value / other.BaseValue()}
+}
+
+// GetLinearDensityAbbreviation gets the unit abbreviation.
+func GetLinearDensityAbbreviation(unit LinearDensityUnits) string {
+	switch unit { 
+	case LinearDensityGramPerMillimeter:
+		return "g/mm" 
+	case LinearDensityGramPerCentimeter:
+		return "g/cm" 
+	case LinearDensityGramPerMeter:
+		return "g/m" 
+	case LinearDensityPoundPerInch:
+		return "lb/in" 
+	case LinearDensityPoundPerFoot:
+		return "lb/ft" 
+	case LinearDensityGramPerFoot:
+		return "g/ft" 
+	case LinearDensityMicrogramPerMillimeter:
+		return "μg/mm" 
+	case LinearDensityMilligramPerMillimeter:
+		return "mg/mm" 
+	case LinearDensityKilogramPerMillimeter:
+		return "kg/mm" 
+	case LinearDensityMicrogramPerCentimeter:
+		return "μg/cm" 
+	case LinearDensityMilligramPerCentimeter:
+		return "mg/cm" 
+	case LinearDensityKilogramPerCentimeter:
+		return "kg/cm" 
+	case LinearDensityMicrogramPerMeter:
+		return "μg/m" 
+	case LinearDensityMilligramPerMeter:
+		return "mg/m" 
+	case LinearDensityKilogramPerMeter:
+		return "kg/m" 
+	case LinearDensityMicrogramPerFoot:
+		return "μg/ft" 
+	case LinearDensityMilligramPerFoot:
+		return "mg/ft" 
+	case LinearDensityKilogramPerFoot:
+		return "kg/ft" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -49,6 +49,10 @@ func (udf ReactivePowerDtoFactory) FromJSON(data []byte) (*ReactivePowerDto, err
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -276,25 +280,9 @@ func (a *ReactivePower) ToString(unit ReactivePowerUnits, fractionalDigits int) 
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetReactivePowerAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ReactivePower) getUnitAbbreviation(unit ReactivePowerUnits) string {
-	switch unit { 
-	case ReactivePowerVoltampereReactive:
-		return "var" 
-	case ReactivePowerKilovoltampereReactive:
-		return "kvar" 
-	case ReactivePowerMegavoltampereReactive:
-		return "Mvar" 
-	case ReactivePowerGigavoltampereReactive:
-		return "Gvar" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetReactivePowerAbbreviation(unit))
 }
 
 // Equals checks if the given ReactivePower is equal to the current ReactivePower.
@@ -375,4 +363,20 @@ func (a *ReactivePower) Multiply(other *ReactivePower) *ReactivePower {
 //    *ReactivePower: A new ReactivePower instance representing the quotient of both ReactivePower.
 func (a *ReactivePower) Divide(other *ReactivePower) *ReactivePower {
 	return &ReactivePower{value: a.value / other.BaseValue()}
+}
+
+// GetReactivePowerAbbreviation gets the unit abbreviation.
+func GetReactivePowerAbbreviation(unit ReactivePowerUnits) string {
+	switch unit { 
+	case ReactivePowerVoltampereReactive:
+		return "var" 
+	case ReactivePowerKilovoltampereReactive:
+		return "kvar" 
+	case ReactivePowerMegavoltampereReactive:
+		return "Mvar" 
+	case ReactivePowerGigavoltampereReactive:
+		return "Gvar" 
+	default:
+		return ""
+	}
 }

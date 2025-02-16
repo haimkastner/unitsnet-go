@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -191,6 +191,10 @@ func (udf VolumeFlowDtoFactory) FromJSON(data []byte) (*VolumeFlowDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -2122,13 +2126,93 @@ func (a *VolumeFlow) ToString(unit VolumeFlowUnits, fractionalDigits int) string
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetVolumeFlowAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetVolumeFlowAbbreviation(unit))
 }
 
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *VolumeFlow) getUnitAbbreviation(unit VolumeFlowUnits) string {
+// Equals checks if the given VolumeFlow is equal to the current VolumeFlow.
+//
+// Parameters:
+//    other: The VolumeFlow to compare against.
+//
+// Returns:
+//    bool: Returns true if both VolumeFlow are equal, false otherwise.
+func (a *VolumeFlow) Equals(other *VolumeFlow) bool {
+	return a.value == other.BaseValue()
+}
+
+// CompareTo compares the current VolumeFlow with another VolumeFlow.
+// It returns -1 if the current VolumeFlow is less than the other VolumeFlow, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The VolumeFlow to compare against.
+//
+// Returns:
+//    int: -1 if the current VolumeFlow is less, 1 if greater, and 0 if equal.
+func (a *VolumeFlow) CompareTo(other *VolumeFlow) int {
+	otherValue := other.BaseValue()
+	if a.value < otherValue {
+		return -1
+	} else if a.value > otherValue {
+		return 1
+	}
+
+	// If both are equal
+	return 0
+}
+
+// Add adds the given VolumeFlow to the current VolumeFlow and returns the result.
+// The result is a new VolumeFlow instance with the sum of the values.
+//
+// Parameters:
+//    other: The VolumeFlow to add to the current VolumeFlow.
+//
+// Returns:
+//    *VolumeFlow: A new VolumeFlow instance representing the sum of both VolumeFlow.
+func (a *VolumeFlow) Add(other *VolumeFlow) *VolumeFlow {
+	return &VolumeFlow{value: a.value + other.BaseValue()}
+}
+
+// Subtract subtracts the given VolumeFlow from the current VolumeFlow and returns the result.
+// The result is a new VolumeFlow instance with the difference of the values.
+//
+// Parameters:
+//    other: The VolumeFlow to subtract from the current VolumeFlow.
+//
+// Returns:
+//    *VolumeFlow: A new VolumeFlow instance representing the difference of both VolumeFlow.
+func (a *VolumeFlow) Subtract(other *VolumeFlow) *VolumeFlow {
+	return &VolumeFlow{value: a.value - other.BaseValue()}
+}
+
+// Multiply multiplies the current VolumeFlow by the given VolumeFlow and returns the result.
+// The result is a new VolumeFlow instance with the product of the values.
+//
+// Parameters:
+//    other: The VolumeFlow to multiply with the current VolumeFlow.
+//
+// Returns:
+//    *VolumeFlow: A new VolumeFlow instance representing the product of both VolumeFlow.
+func (a *VolumeFlow) Multiply(other *VolumeFlow) *VolumeFlow {
+	return &VolumeFlow{value: a.value * other.BaseValue()}
+}
+
+// Divide divides the current VolumeFlow by the given VolumeFlow and returns the result.
+// The result is a new VolumeFlow instance with the quotient of the values.
+//
+// Parameters:
+//    other: The VolumeFlow to divide the current VolumeFlow by.
+//
+// Returns:
+//    *VolumeFlow: A new VolumeFlow instance representing the quotient of both VolumeFlow.
+func (a *VolumeFlow) Divide(other *VolumeFlow) *VolumeFlow {
+	return &VolumeFlow{value: a.value / other.BaseValue()}
+}
+
+// GetVolumeFlowAbbreviation gets the unit abbreviation.
+func GetVolumeFlowAbbreviation(unit VolumeFlowUnits) string {
 	switch unit { 
 	case VolumeFlowCubicMeterPerSecond:
 		return "m³/s" 
@@ -2283,84 +2367,4 @@ func (a *VolumeFlow) getUnitAbbreviation(unit VolumeFlowUnits) string {
 	default:
 		return ""
 	}
-}
-
-// Equals checks if the given VolumeFlow is equal to the current VolumeFlow.
-//
-// Parameters:
-//    other: The VolumeFlow to compare against.
-//
-// Returns:
-//    bool: Returns true if both VolumeFlow are equal, false otherwise.
-func (a *VolumeFlow) Equals(other *VolumeFlow) bool {
-	return a.value == other.BaseValue()
-}
-
-// CompareTo compares the current VolumeFlow with another VolumeFlow.
-// It returns -1 if the current VolumeFlow is less than the other VolumeFlow, 
-// 1 if it is greater, and 0 if they are equal.
-//
-// Parameters:
-//    other: The VolumeFlow to compare against.
-//
-// Returns:
-//    int: -1 if the current VolumeFlow is less, 1 if greater, and 0 if equal.
-func (a *VolumeFlow) CompareTo(other *VolumeFlow) int {
-	otherValue := other.BaseValue()
-	if a.value < otherValue {
-		return -1
-	} else if a.value > otherValue {
-		return 1
-	}
-
-	// If both are equal
-	return 0
-}
-
-// Add adds the given VolumeFlow to the current VolumeFlow and returns the result.
-// The result is a new VolumeFlow instance with the sum of the values.
-//
-// Parameters:
-//    other: The VolumeFlow to add to the current VolumeFlow.
-//
-// Returns:
-//    *VolumeFlow: A new VolumeFlow instance representing the sum of both VolumeFlow.
-func (a *VolumeFlow) Add(other *VolumeFlow) *VolumeFlow {
-	return &VolumeFlow{value: a.value + other.BaseValue()}
-}
-
-// Subtract subtracts the given VolumeFlow from the current VolumeFlow and returns the result.
-// The result is a new VolumeFlow instance with the difference of the values.
-//
-// Parameters:
-//    other: The VolumeFlow to subtract from the current VolumeFlow.
-//
-// Returns:
-//    *VolumeFlow: A new VolumeFlow instance representing the difference of both VolumeFlow.
-func (a *VolumeFlow) Subtract(other *VolumeFlow) *VolumeFlow {
-	return &VolumeFlow{value: a.value - other.BaseValue()}
-}
-
-// Multiply multiplies the current VolumeFlow by the given VolumeFlow and returns the result.
-// The result is a new VolumeFlow instance with the product of the values.
-//
-// Parameters:
-//    other: The VolumeFlow to multiply with the current VolumeFlow.
-//
-// Returns:
-//    *VolumeFlow: A new VolumeFlow instance representing the product of both VolumeFlow.
-func (a *VolumeFlow) Multiply(other *VolumeFlow) *VolumeFlow {
-	return &VolumeFlow{value: a.value * other.BaseValue()}
-}
-
-// Divide divides the current VolumeFlow by the given VolumeFlow and returns the result.
-// The result is a new VolumeFlow instance with the quotient of the values.
-//
-// Parameters:
-//    other: The VolumeFlow to divide the current VolumeFlow by.
-//
-// Returns:
-//    *VolumeFlow: A new VolumeFlow instance representing the quotient of both VolumeFlow.
-func (a *VolumeFlow) Divide(other *VolumeFlow) *VolumeFlow {
-	return &VolumeFlow{value: a.value / other.BaseValue()}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -47,6 +47,10 @@ func (udf ElectricSurfaceChargeDensityDtoFactory) FromJSON(data []byte) (*Electr
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -250,23 +254,9 @@ func (a *ElectricSurfaceChargeDensity) ToString(unit ElectricSurfaceChargeDensit
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricSurfaceChargeDensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricSurfaceChargeDensity) getUnitAbbreviation(unit ElectricSurfaceChargeDensityUnits) string {
-	switch unit { 
-	case ElectricSurfaceChargeDensityCoulombPerSquareMeter:
-		return "C/m²" 
-	case ElectricSurfaceChargeDensityCoulombPerSquareCentimeter:
-		return "C/cm²" 
-	case ElectricSurfaceChargeDensityCoulombPerSquareInch:
-		return "C/in²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricSurfaceChargeDensityAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricSurfaceChargeDensity is equal to the current ElectricSurfaceChargeDensity.
@@ -347,4 +337,18 @@ func (a *ElectricSurfaceChargeDensity) Multiply(other *ElectricSurfaceChargeDens
 //    *ElectricSurfaceChargeDensity: A new ElectricSurfaceChargeDensity instance representing the quotient of both ElectricSurfaceChargeDensity.
 func (a *ElectricSurfaceChargeDensity) Divide(other *ElectricSurfaceChargeDensity) *ElectricSurfaceChargeDensity {
 	return &ElectricSurfaceChargeDensity{value: a.value / other.BaseValue()}
+}
+
+// GetElectricSurfaceChargeDensityAbbreviation gets the unit abbreviation.
+func GetElectricSurfaceChargeDensityAbbreviation(unit ElectricSurfaceChargeDensityUnits) string {
+	switch unit { 
+	case ElectricSurfaceChargeDensityCoulombPerSquareMeter:
+		return "C/m²" 
+	case ElectricSurfaceChargeDensityCoulombPerSquareCentimeter:
+		return "C/cm²" 
+	case ElectricSurfaceChargeDensityCoulombPerSquareInch:
+		return "C/in²" 
+	default:
+		return ""
+	}
 }

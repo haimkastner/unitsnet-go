@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -71,6 +71,10 @@ func (udf ForceChangeRateDtoFactory) FromJSON(data []byte) (*ForceChangeRateDto,
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -562,47 +566,9 @@ func (a *ForceChangeRate) ToString(unit ForceChangeRateUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetForceChangeRateAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ForceChangeRate) getUnitAbbreviation(unit ForceChangeRateUnits) string {
-	switch unit { 
-	case ForceChangeRateNewtonPerMinute:
-		return "N/min" 
-	case ForceChangeRateNewtonPerSecond:
-		return "N/s" 
-	case ForceChangeRatePoundForcePerMinute:
-		return "lbf/min" 
-	case ForceChangeRatePoundForcePerSecond:
-		return "lbf/s" 
-	case ForceChangeRateDecanewtonPerMinute:
-		return "daN/min" 
-	case ForceChangeRateKilonewtonPerMinute:
-		return "kN/min" 
-	case ForceChangeRateNanonewtonPerSecond:
-		return "nN/s" 
-	case ForceChangeRateMicronewtonPerSecond:
-		return "μN/s" 
-	case ForceChangeRateMillinewtonPerSecond:
-		return "mN/s" 
-	case ForceChangeRateCentinewtonPerSecond:
-		return "cN/s" 
-	case ForceChangeRateDecinewtonPerSecond:
-		return "dN/s" 
-	case ForceChangeRateDecanewtonPerSecond:
-		return "daN/s" 
-	case ForceChangeRateKilonewtonPerSecond:
-		return "kN/s" 
-	case ForceChangeRateKilopoundForcePerMinute:
-		return "klbf/min" 
-	case ForceChangeRateKilopoundForcePerSecond:
-		return "klbf/s" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetForceChangeRateAbbreviation(unit))
 }
 
 // Equals checks if the given ForceChangeRate is equal to the current ForceChangeRate.
@@ -683,4 +649,42 @@ func (a *ForceChangeRate) Multiply(other *ForceChangeRate) *ForceChangeRate {
 //    *ForceChangeRate: A new ForceChangeRate instance representing the quotient of both ForceChangeRate.
 func (a *ForceChangeRate) Divide(other *ForceChangeRate) *ForceChangeRate {
 	return &ForceChangeRate{value: a.value / other.BaseValue()}
+}
+
+// GetForceChangeRateAbbreviation gets the unit abbreviation.
+func GetForceChangeRateAbbreviation(unit ForceChangeRateUnits) string {
+	switch unit { 
+	case ForceChangeRateNewtonPerMinute:
+		return "N/min" 
+	case ForceChangeRateNewtonPerSecond:
+		return "N/s" 
+	case ForceChangeRatePoundForcePerMinute:
+		return "lbf/min" 
+	case ForceChangeRatePoundForcePerSecond:
+		return "lbf/s" 
+	case ForceChangeRateDecanewtonPerMinute:
+		return "daN/min" 
+	case ForceChangeRateKilonewtonPerMinute:
+		return "kN/min" 
+	case ForceChangeRateNanonewtonPerSecond:
+		return "nN/s" 
+	case ForceChangeRateMicronewtonPerSecond:
+		return "μN/s" 
+	case ForceChangeRateMillinewtonPerSecond:
+		return "mN/s" 
+	case ForceChangeRateCentinewtonPerSecond:
+		return "cN/s" 
+	case ForceChangeRateDecinewtonPerSecond:
+		return "dN/s" 
+	case ForceChangeRateDecanewtonPerSecond:
+		return "daN/s" 
+	case ForceChangeRateKilonewtonPerSecond:
+		return "kN/s" 
+	case ForceChangeRateKilopoundForcePerMinute:
+		return "klbf/min" 
+	case ForceChangeRateKilopoundForcePerSecond:
+		return "klbf/s" 
+	default:
+		return ""
+	}
 }

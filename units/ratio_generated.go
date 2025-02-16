@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -53,6 +53,10 @@ func (udf RatioDtoFactory) FromJSON(data []byte) (*RatioDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -328,29 +332,9 @@ func (a *Ratio) ToString(unit RatioUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRatioAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Ratio) getUnitAbbreviation(unit RatioUnits) string {
-	switch unit { 
-	case RatioDecimalFraction:
-		return "" 
-	case RatioPercent:
-		return "%" 
-	case RatioPartPerThousand:
-		return "‰" 
-	case RatioPartPerMillion:
-		return "ppm" 
-	case RatioPartPerBillion:
-		return "ppb" 
-	case RatioPartPerTrillion:
-		return "ppt" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRatioAbbreviation(unit))
 }
 
 // Equals checks if the given Ratio is equal to the current Ratio.
@@ -431,4 +415,24 @@ func (a *Ratio) Multiply(other *Ratio) *Ratio {
 //    *Ratio: A new Ratio instance representing the quotient of both Ratio.
 func (a *Ratio) Divide(other *Ratio) *Ratio {
 	return &Ratio{value: a.value / other.BaseValue()}
+}
+
+// GetRatioAbbreviation gets the unit abbreviation.
+func GetRatioAbbreviation(unit RatioUnits) string {
+	switch unit { 
+	case RatioDecimalFraction:
+		return "" 
+	case RatioPercent:
+		return "%" 
+	case RatioPartPerThousand:
+		return "‰" 
+	case RatioPartPerMillion:
+		return "ppm" 
+	case RatioPartPerBillion:
+		return "ppb" 
+	case RatioPartPerTrillion:
+		return "ppt" 
+	default:
+		return ""
+	}
 }

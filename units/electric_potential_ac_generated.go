@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -51,6 +51,10 @@ func (udf ElectricPotentialAcDtoFactory) FromJSON(data []byte) (*ElectricPotenti
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -302,27 +306,9 @@ func (a *ElectricPotentialAc) ToString(unit ElectricPotentialAcUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricPotentialAcAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricPotentialAc) getUnitAbbreviation(unit ElectricPotentialAcUnits) string {
-	switch unit { 
-	case ElectricPotentialAcVoltAc:
-		return "Vac" 
-	case ElectricPotentialAcMicrovoltAc:
-		return "μVac" 
-	case ElectricPotentialAcMillivoltAc:
-		return "mVac" 
-	case ElectricPotentialAcKilovoltAc:
-		return "kVac" 
-	case ElectricPotentialAcMegavoltAc:
-		return "MVac" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricPotentialAcAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricPotentialAc is equal to the current ElectricPotentialAc.
@@ -403,4 +389,22 @@ func (a *ElectricPotentialAc) Multiply(other *ElectricPotentialAc) *ElectricPote
 //    *ElectricPotentialAc: A new ElectricPotentialAc instance representing the quotient of both ElectricPotentialAc.
 func (a *ElectricPotentialAc) Divide(other *ElectricPotentialAc) *ElectricPotentialAc {
 	return &ElectricPotentialAc{value: a.value / other.BaseValue()}
+}
+
+// GetElectricPotentialAcAbbreviation gets the unit abbreviation.
+func GetElectricPotentialAcAbbreviation(unit ElectricPotentialAcUnits) string {
+	switch unit { 
+	case ElectricPotentialAcVoltAc:
+		return "Vac" 
+	case ElectricPotentialAcMicrovoltAc:
+		return "μVac" 
+	case ElectricPotentialAcMillivoltAc:
+		return "mVac" 
+	case ElectricPotentialAcKilovoltAc:
+		return "kVac" 
+	case ElectricPotentialAcMegavoltAc:
+		return "MVac" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -59,6 +59,10 @@ func (udf IrradiationDtoFactory) FromJSON(data []byte) (*IrradiationDto, error) 
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -406,35 +410,9 @@ func (a *Irradiation) ToString(unit IrradiationUnits, fractionalDigits int) stri
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetIrradiationAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Irradiation) getUnitAbbreviation(unit IrradiationUnits) string {
-	switch unit { 
-	case IrradiationJoulePerSquareMeter:
-		return "J/m²" 
-	case IrradiationJoulePerSquareCentimeter:
-		return "J/cm²" 
-	case IrradiationJoulePerSquareMillimeter:
-		return "J/mm²" 
-	case IrradiationWattHourPerSquareMeter:
-		return "Wh/m²" 
-	case IrradiationBtuPerSquareFoot:
-		return "Btu/ft²" 
-	case IrradiationKilojoulePerSquareMeter:
-		return "kJ/m²" 
-	case IrradiationMillijoulePerSquareCentimeter:
-		return "mJ/cm²" 
-	case IrradiationKilowattHourPerSquareMeter:
-		return "kWh/m²" 
-	case IrradiationKilobtuPerSquareFoot:
-		return "kBtu/ft²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetIrradiationAbbreviation(unit))
 }
 
 // Equals checks if the given Irradiation is equal to the current Irradiation.
@@ -515,4 +493,30 @@ func (a *Irradiation) Multiply(other *Irradiation) *Irradiation {
 //    *Irradiation: A new Irradiation instance representing the quotient of both Irradiation.
 func (a *Irradiation) Divide(other *Irradiation) *Irradiation {
 	return &Irradiation{value: a.value / other.BaseValue()}
+}
+
+// GetIrradiationAbbreviation gets the unit abbreviation.
+func GetIrradiationAbbreviation(unit IrradiationUnits) string {
+	switch unit { 
+	case IrradiationJoulePerSquareMeter:
+		return "J/m²" 
+	case IrradiationJoulePerSquareCentimeter:
+		return "J/cm²" 
+	case IrradiationJoulePerSquareMillimeter:
+		return "J/mm²" 
+	case IrradiationWattHourPerSquareMeter:
+		return "Wh/m²" 
+	case IrradiationBtuPerSquareFoot:
+		return "Btu/ft²" 
+	case IrradiationKilojoulePerSquareMeter:
+		return "kJ/m²" 
+	case IrradiationMillijoulePerSquareCentimeter:
+		return "mJ/cm²" 
+	case IrradiationKilowattHourPerSquareMeter:
+		return "kWh/m²" 
+	case IrradiationKilobtuPerSquareFoot:
+		return "kBtu/ft²" 
+	default:
+		return ""
+	}
 }

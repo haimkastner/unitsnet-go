@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -57,6 +57,10 @@ func (udf ElectricResistanceDtoFactory) FromJSON(data []byte) (*ElectricResistan
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -380,33 +384,9 @@ func (a *ElectricResistance) ToString(unit ElectricResistanceUnits, fractionalDi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricResistanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricResistance) getUnitAbbreviation(unit ElectricResistanceUnits) string {
-	switch unit { 
-	case ElectricResistanceOhm:
-		return "Ω" 
-	case ElectricResistanceNanoohm:
-		return "nΩ" 
-	case ElectricResistanceMicroohm:
-		return "μΩ" 
-	case ElectricResistanceMilliohm:
-		return "mΩ" 
-	case ElectricResistanceKiloohm:
-		return "kΩ" 
-	case ElectricResistanceMegaohm:
-		return "MΩ" 
-	case ElectricResistanceGigaohm:
-		return "GΩ" 
-	case ElectricResistanceTeraohm:
-		return "TΩ" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricResistanceAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricResistance is equal to the current ElectricResistance.
@@ -487,4 +467,28 @@ func (a *ElectricResistance) Multiply(other *ElectricResistance) *ElectricResist
 //    *ElectricResistance: A new ElectricResistance instance representing the quotient of both ElectricResistance.
 func (a *ElectricResistance) Divide(other *ElectricResistance) *ElectricResistance {
 	return &ElectricResistance{value: a.value / other.BaseValue()}
+}
+
+// GetElectricResistanceAbbreviation gets the unit abbreviation.
+func GetElectricResistanceAbbreviation(unit ElectricResistanceUnits) string {
+	switch unit { 
+	case ElectricResistanceOhm:
+		return "Ω" 
+	case ElectricResistanceNanoohm:
+		return "nΩ" 
+	case ElectricResistanceMicroohm:
+		return "μΩ" 
+	case ElectricResistanceMilliohm:
+		return "mΩ" 
+	case ElectricResistanceKiloohm:
+		return "kΩ" 
+	case ElectricResistanceMegaohm:
+		return "MΩ" 
+	case ElectricResistanceGigaohm:
+		return "GΩ" 
+	case ElectricResistanceTeraohm:
+		return "TΩ" 
+	default:
+		return ""
+	}
 }

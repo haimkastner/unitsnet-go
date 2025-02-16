@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -91,6 +91,10 @@ func (udf LinearPowerDensityDtoFactory) FromJSON(data []byte) (*LinearPowerDensi
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -822,67 +826,9 @@ func (a *LinearPowerDensity) ToString(unit LinearPowerDensityUnits, fractionalDi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetLinearPowerDensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *LinearPowerDensity) getUnitAbbreviation(unit LinearPowerDensityUnits) string {
-	switch unit { 
-	case LinearPowerDensityWattPerMeter:
-		return "W/m" 
-	case LinearPowerDensityWattPerCentimeter:
-		return "W/cm" 
-	case LinearPowerDensityWattPerMillimeter:
-		return "W/mm" 
-	case LinearPowerDensityWattPerInch:
-		return "W/in" 
-	case LinearPowerDensityWattPerFoot:
-		return "W/ft" 
-	case LinearPowerDensityMilliwattPerMeter:
-		return "mW/m" 
-	case LinearPowerDensityKilowattPerMeter:
-		return "kW/m" 
-	case LinearPowerDensityMegawattPerMeter:
-		return "MW/m" 
-	case LinearPowerDensityGigawattPerMeter:
-		return "GW/m" 
-	case LinearPowerDensityMilliwattPerCentimeter:
-		return "mW/cm" 
-	case LinearPowerDensityKilowattPerCentimeter:
-		return "kW/cm" 
-	case LinearPowerDensityMegawattPerCentimeter:
-		return "MW/cm" 
-	case LinearPowerDensityGigawattPerCentimeter:
-		return "GW/cm" 
-	case LinearPowerDensityMilliwattPerMillimeter:
-		return "mW/mm" 
-	case LinearPowerDensityKilowattPerMillimeter:
-		return "kW/mm" 
-	case LinearPowerDensityMegawattPerMillimeter:
-		return "MW/mm" 
-	case LinearPowerDensityGigawattPerMillimeter:
-		return "GW/mm" 
-	case LinearPowerDensityMilliwattPerInch:
-		return "mW/in" 
-	case LinearPowerDensityKilowattPerInch:
-		return "kW/in" 
-	case LinearPowerDensityMegawattPerInch:
-		return "MW/in" 
-	case LinearPowerDensityGigawattPerInch:
-		return "GW/in" 
-	case LinearPowerDensityMilliwattPerFoot:
-		return "mW/ft" 
-	case LinearPowerDensityKilowattPerFoot:
-		return "kW/ft" 
-	case LinearPowerDensityMegawattPerFoot:
-		return "MW/ft" 
-	case LinearPowerDensityGigawattPerFoot:
-		return "GW/ft" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetLinearPowerDensityAbbreviation(unit))
 }
 
 // Equals checks if the given LinearPowerDensity is equal to the current LinearPowerDensity.
@@ -963,4 +909,62 @@ func (a *LinearPowerDensity) Multiply(other *LinearPowerDensity) *LinearPowerDen
 //    *LinearPowerDensity: A new LinearPowerDensity instance representing the quotient of both LinearPowerDensity.
 func (a *LinearPowerDensity) Divide(other *LinearPowerDensity) *LinearPowerDensity {
 	return &LinearPowerDensity{value: a.value / other.BaseValue()}
+}
+
+// GetLinearPowerDensityAbbreviation gets the unit abbreviation.
+func GetLinearPowerDensityAbbreviation(unit LinearPowerDensityUnits) string {
+	switch unit { 
+	case LinearPowerDensityWattPerMeter:
+		return "W/m" 
+	case LinearPowerDensityWattPerCentimeter:
+		return "W/cm" 
+	case LinearPowerDensityWattPerMillimeter:
+		return "W/mm" 
+	case LinearPowerDensityWattPerInch:
+		return "W/in" 
+	case LinearPowerDensityWattPerFoot:
+		return "W/ft" 
+	case LinearPowerDensityMilliwattPerMeter:
+		return "mW/m" 
+	case LinearPowerDensityKilowattPerMeter:
+		return "kW/m" 
+	case LinearPowerDensityMegawattPerMeter:
+		return "MW/m" 
+	case LinearPowerDensityGigawattPerMeter:
+		return "GW/m" 
+	case LinearPowerDensityMilliwattPerCentimeter:
+		return "mW/cm" 
+	case LinearPowerDensityKilowattPerCentimeter:
+		return "kW/cm" 
+	case LinearPowerDensityMegawattPerCentimeter:
+		return "MW/cm" 
+	case LinearPowerDensityGigawattPerCentimeter:
+		return "GW/cm" 
+	case LinearPowerDensityMilliwattPerMillimeter:
+		return "mW/mm" 
+	case LinearPowerDensityKilowattPerMillimeter:
+		return "kW/mm" 
+	case LinearPowerDensityMegawattPerMillimeter:
+		return "MW/mm" 
+	case LinearPowerDensityGigawattPerMillimeter:
+		return "GW/mm" 
+	case LinearPowerDensityMilliwattPerInch:
+		return "mW/in" 
+	case LinearPowerDensityKilowattPerInch:
+		return "kW/in" 
+	case LinearPowerDensityMegawattPerInch:
+		return "MW/in" 
+	case LinearPowerDensityGigawattPerInch:
+		return "GW/in" 
+	case LinearPowerDensityMilliwattPerFoot:
+		return "mW/ft" 
+	case LinearPowerDensityKilowattPerFoot:
+		return "kW/ft" 
+	case LinearPowerDensityMegawattPerFoot:
+		return "MW/ft" 
+	case LinearPowerDensityGigawattPerFoot:
+		return "GW/ft" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -59,6 +59,10 @@ func (udf KinematicViscosityDtoFactory) FromJSON(data []byte) (*KinematicViscosi
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -406,35 +410,9 @@ func (a *KinematicViscosity) ToString(unit KinematicViscosityUnits, fractionalDi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetKinematicViscosityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *KinematicViscosity) getUnitAbbreviation(unit KinematicViscosityUnits) string {
-	switch unit { 
-	case KinematicViscositySquareMeterPerSecond:
-		return "m²/s" 
-	case KinematicViscosityStokes:
-		return "St" 
-	case KinematicViscositySquareFootPerSecond:
-		return "ft²/s" 
-	case KinematicViscosityNanostokes:
-		return "nSt" 
-	case KinematicViscosityMicrostokes:
-		return "μSt" 
-	case KinematicViscosityMillistokes:
-		return "mSt" 
-	case KinematicViscosityCentistokes:
-		return "cSt" 
-	case KinematicViscosityDecistokes:
-		return "dSt" 
-	case KinematicViscosityKilostokes:
-		return "kSt" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetKinematicViscosityAbbreviation(unit))
 }
 
 // Equals checks if the given KinematicViscosity is equal to the current KinematicViscosity.
@@ -515,4 +493,30 @@ func (a *KinematicViscosity) Multiply(other *KinematicViscosity) *KinematicVisco
 //    *KinematicViscosity: A new KinematicViscosity instance representing the quotient of both KinematicViscosity.
 func (a *KinematicViscosity) Divide(other *KinematicViscosity) *KinematicViscosity {
 	return &KinematicViscosity{value: a.value / other.BaseValue()}
+}
+
+// GetKinematicViscosityAbbreviation gets the unit abbreviation.
+func GetKinematicViscosityAbbreviation(unit KinematicViscosityUnits) string {
+	switch unit { 
+	case KinematicViscositySquareMeterPerSecond:
+		return "m²/s" 
+	case KinematicViscosityStokes:
+		return "St" 
+	case KinematicViscositySquareFootPerSecond:
+		return "ft²/s" 
+	case KinematicViscosityNanostokes:
+		return "nSt" 
+	case KinematicViscosityMicrostokes:
+		return "μSt" 
+	case KinematicViscosityMillistokes:
+		return "mSt" 
+	case KinematicViscosityCentistokes:
+		return "cSt" 
+	case KinematicViscosityDecistokes:
+		return "dSt" 
+	case KinematicViscosityKilostokes:
+		return "kSt" 
+	default:
+		return ""
+	}
 }

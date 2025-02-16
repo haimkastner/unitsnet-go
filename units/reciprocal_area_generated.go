@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -63,6 +63,10 @@ func (udf ReciprocalAreaDtoFactory) FromJSON(data []byte) (*ReciprocalAreaDto, e
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -458,39 +462,9 @@ func (a *ReciprocalArea) ToString(unit ReciprocalAreaUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetReciprocalAreaAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ReciprocalArea) getUnitAbbreviation(unit ReciprocalAreaUnits) string {
-	switch unit { 
-	case ReciprocalAreaInverseSquareMeter:
-		return "m⁻²" 
-	case ReciprocalAreaInverseSquareKilometer:
-		return "km⁻²" 
-	case ReciprocalAreaInverseSquareDecimeter:
-		return "dm⁻²" 
-	case ReciprocalAreaInverseSquareCentimeter:
-		return "cm⁻²" 
-	case ReciprocalAreaInverseSquareMillimeter:
-		return "mm⁻²" 
-	case ReciprocalAreaInverseSquareMicrometer:
-		return "µm⁻²" 
-	case ReciprocalAreaInverseSquareMile:
-		return "mi⁻²" 
-	case ReciprocalAreaInverseSquareYard:
-		return "yd⁻²" 
-	case ReciprocalAreaInverseSquareFoot:
-		return "ft⁻²" 
-	case ReciprocalAreaInverseUsSurveySquareFoot:
-		return "ft⁻² (US)" 
-	case ReciprocalAreaInverseSquareInch:
-		return "in⁻²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetReciprocalAreaAbbreviation(unit))
 }
 
 // Equals checks if the given ReciprocalArea is equal to the current ReciprocalArea.
@@ -571,4 +545,34 @@ func (a *ReciprocalArea) Multiply(other *ReciprocalArea) *ReciprocalArea {
 //    *ReciprocalArea: A new ReciprocalArea instance representing the quotient of both ReciprocalArea.
 func (a *ReciprocalArea) Divide(other *ReciprocalArea) *ReciprocalArea {
 	return &ReciprocalArea{value: a.value / other.BaseValue()}
+}
+
+// GetReciprocalAreaAbbreviation gets the unit abbreviation.
+func GetReciprocalAreaAbbreviation(unit ReciprocalAreaUnits) string {
+	switch unit { 
+	case ReciprocalAreaInverseSquareMeter:
+		return "m⁻²" 
+	case ReciprocalAreaInverseSquareKilometer:
+		return "km⁻²" 
+	case ReciprocalAreaInverseSquareDecimeter:
+		return "dm⁻²" 
+	case ReciprocalAreaInverseSquareCentimeter:
+		return "cm⁻²" 
+	case ReciprocalAreaInverseSquareMillimeter:
+		return "mm⁻²" 
+	case ReciprocalAreaInverseSquareMicrometer:
+		return "µm⁻²" 
+	case ReciprocalAreaInverseSquareMile:
+		return "mi⁻²" 
+	case ReciprocalAreaInverseSquareYard:
+		return "yd⁻²" 
+	case ReciprocalAreaInverseSquareFoot:
+		return "ft⁻²" 
+	case ReciprocalAreaInverseUsSurveySquareFoot:
+		return "ft⁻² (US)" 
+	case ReciprocalAreaInverseSquareInch:
+		return "in⁻²" 
+	default:
+		return ""
+	}
 }

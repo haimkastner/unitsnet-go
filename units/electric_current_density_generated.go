@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -47,6 +47,10 @@ func (udf ElectricCurrentDensityDtoFactory) FromJSON(data []byte) (*ElectricCurr
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -250,23 +254,9 @@ func (a *ElectricCurrentDensity) ToString(unit ElectricCurrentDensityUnits, frac
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricCurrentDensityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricCurrentDensity) getUnitAbbreviation(unit ElectricCurrentDensityUnits) string {
-	switch unit { 
-	case ElectricCurrentDensityAmperePerSquareMeter:
-		return "A/m²" 
-	case ElectricCurrentDensityAmperePerSquareInch:
-		return "A/in²" 
-	case ElectricCurrentDensityAmperePerSquareFoot:
-		return "A/ft²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricCurrentDensityAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricCurrentDensity is equal to the current ElectricCurrentDensity.
@@ -347,4 +337,18 @@ func (a *ElectricCurrentDensity) Multiply(other *ElectricCurrentDensity) *Electr
 //    *ElectricCurrentDensity: A new ElectricCurrentDensity instance representing the quotient of both ElectricCurrentDensity.
 func (a *ElectricCurrentDensity) Divide(other *ElectricCurrentDensity) *ElectricCurrentDensity {
 	return &ElectricCurrentDensity{value: a.value / other.BaseValue()}
+}
+
+// GetElectricCurrentDensityAbbreviation gets the unit abbreviation.
+func GetElectricCurrentDensityAbbreviation(unit ElectricCurrentDensityUnits) string {
+	switch unit { 
+	case ElectricCurrentDensityAmperePerSquareMeter:
+		return "A/m²" 
+	case ElectricCurrentDensityAmperePerSquareInch:
+		return "A/in²" 
+	case ElectricCurrentDensityAmperePerSquareFoot:
+		return "A/ft²" 
+	default:
+		return ""
+	}
 }

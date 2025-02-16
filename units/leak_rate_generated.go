@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -47,6 +47,10 @@ func (udf LeakRateDtoFactory) FromJSON(data []byte) (*LeakRateDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -250,23 +254,9 @@ func (a *LeakRate) ToString(unit LeakRateUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetLeakRateAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *LeakRate) getUnitAbbreviation(unit LeakRateUnits) string {
-	switch unit { 
-	case LeakRatePascalCubicMeterPerSecond:
-		return "Pa·m³/s" 
-	case LeakRateMillibarLiterPerSecond:
-		return "mbar·l/s" 
-	case LeakRateTorrLiterPerSecond:
-		return "Torr·l/s" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetLeakRateAbbreviation(unit))
 }
 
 // Equals checks if the given LeakRate is equal to the current LeakRate.
@@ -347,4 +337,18 @@ func (a *LeakRate) Multiply(other *LeakRate) *LeakRate {
 //    *LeakRate: A new LeakRate instance representing the quotient of both LeakRate.
 func (a *LeakRate) Divide(other *LeakRate) *LeakRate {
 	return &LeakRate{value: a.value / other.BaseValue()}
+}
+
+// GetLeakRateAbbreviation gets the unit abbreviation.
+func GetLeakRateAbbreviation(unit LeakRateUnits) string {
+	switch unit { 
+	case LeakRatePascalCubicMeterPerSecond:
+		return "Pa·m³/s" 
+	case LeakRateMillibarLiterPerSecond:
+		return "mbar·l/s" 
+	case LeakRateTorrLiterPerSecond:
+		return "Torr·l/s" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -61,6 +61,10 @@ func (udf TemperatureDtoFactory) FromJSON(data []byte) (*TemperatureDto, error) 
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -432,37 +436,9 @@ func (a *Temperature) ToString(unit TemperatureUnits, fractionalDigits int) stri
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetTemperatureAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Temperature) getUnitAbbreviation(unit TemperatureUnits) string {
-	switch unit { 
-	case TemperatureKelvin:
-		return "K" 
-	case TemperatureDegreeCelsius:
-		return "°C" 
-	case TemperatureMillidegreeCelsius:
-		return "m°C" 
-	case TemperatureDegreeDelisle:
-		return "°De" 
-	case TemperatureDegreeFahrenheit:
-		return "°F" 
-	case TemperatureDegreeNewton:
-		return "°N" 
-	case TemperatureDegreeRankine:
-		return "°R" 
-	case TemperatureDegreeReaumur:
-		return "°Ré" 
-	case TemperatureDegreeRoemer:
-		return "°Rø" 
-	case TemperatureSolarTemperature:
-		return "T⊙" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetTemperatureAbbreviation(unit))
 }
 
 // Equals checks if the given Temperature is equal to the current Temperature.
@@ -543,4 +519,32 @@ func (a *Temperature) Multiply(other *Temperature) *Temperature {
 //    *Temperature: A new Temperature instance representing the quotient of both Temperature.
 func (a *Temperature) Divide(other *Temperature) *Temperature {
 	return &Temperature{value: a.value / other.BaseValue()}
+}
+
+// GetTemperatureAbbreviation gets the unit abbreviation.
+func GetTemperatureAbbreviation(unit TemperatureUnits) string {
+	switch unit { 
+	case TemperatureKelvin:
+		return "K" 
+	case TemperatureDegreeCelsius:
+		return "°C" 
+	case TemperatureMillidegreeCelsius:
+		return "m°C" 
+	case TemperatureDegreeDelisle:
+		return "°De" 
+	case TemperatureDegreeFahrenheit:
+		return "°F" 
+	case TemperatureDegreeNewton:
+		return "°N" 
+	case TemperatureDegreeRankine:
+		return "°R" 
+	case TemperatureDegreeReaumur:
+		return "°Ré" 
+	case TemperatureDegreeRoemer:
+		return "°Rø" 
+	case TemperatureSolarTemperature:
+		return "T⊙" 
+	default:
+		return ""
+	}
 }

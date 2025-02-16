@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -75,6 +75,10 @@ func (udf SpecificWeightDtoFactory) FromJSON(data []byte) (*SpecificWeightDto, e
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -614,51 +618,9 @@ func (a *SpecificWeight) ToString(unit SpecificWeightUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetSpecificWeightAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *SpecificWeight) getUnitAbbreviation(unit SpecificWeightUnits) string {
-	switch unit { 
-	case SpecificWeightNewtonPerCubicMillimeter:
-		return "N/mm³" 
-	case SpecificWeightNewtonPerCubicCentimeter:
-		return "N/cm³" 
-	case SpecificWeightNewtonPerCubicMeter:
-		return "N/m³" 
-	case SpecificWeightKilogramForcePerCubicMillimeter:
-		return "kgf/mm³" 
-	case SpecificWeightKilogramForcePerCubicCentimeter:
-		return "kgf/cm³" 
-	case SpecificWeightKilogramForcePerCubicMeter:
-		return "kgf/m³" 
-	case SpecificWeightPoundForcePerCubicInch:
-		return "lbf/in³" 
-	case SpecificWeightPoundForcePerCubicFoot:
-		return "lbf/ft³" 
-	case SpecificWeightTonneForcePerCubicMillimeter:
-		return "tf/mm³" 
-	case SpecificWeightTonneForcePerCubicCentimeter:
-		return "tf/cm³" 
-	case SpecificWeightTonneForcePerCubicMeter:
-		return "tf/m³" 
-	case SpecificWeightKilonewtonPerCubicMillimeter:
-		return "kN/mm³" 
-	case SpecificWeightKilonewtonPerCubicCentimeter:
-		return "kN/cm³" 
-	case SpecificWeightKilonewtonPerCubicMeter:
-		return "kN/m³" 
-	case SpecificWeightMeganewtonPerCubicMeter:
-		return "MN/m³" 
-	case SpecificWeightKilopoundForcePerCubicInch:
-		return "klbf/in³" 
-	case SpecificWeightKilopoundForcePerCubicFoot:
-		return "klbf/ft³" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetSpecificWeightAbbreviation(unit))
 }
 
 // Equals checks if the given SpecificWeight is equal to the current SpecificWeight.
@@ -739,4 +701,46 @@ func (a *SpecificWeight) Multiply(other *SpecificWeight) *SpecificWeight {
 //    *SpecificWeight: A new SpecificWeight instance representing the quotient of both SpecificWeight.
 func (a *SpecificWeight) Divide(other *SpecificWeight) *SpecificWeight {
 	return &SpecificWeight{value: a.value / other.BaseValue()}
+}
+
+// GetSpecificWeightAbbreviation gets the unit abbreviation.
+func GetSpecificWeightAbbreviation(unit SpecificWeightUnits) string {
+	switch unit { 
+	case SpecificWeightNewtonPerCubicMillimeter:
+		return "N/mm³" 
+	case SpecificWeightNewtonPerCubicCentimeter:
+		return "N/cm³" 
+	case SpecificWeightNewtonPerCubicMeter:
+		return "N/m³" 
+	case SpecificWeightKilogramForcePerCubicMillimeter:
+		return "kgf/mm³" 
+	case SpecificWeightKilogramForcePerCubicCentimeter:
+		return "kgf/cm³" 
+	case SpecificWeightKilogramForcePerCubicMeter:
+		return "kgf/m³" 
+	case SpecificWeightPoundForcePerCubicInch:
+		return "lbf/in³" 
+	case SpecificWeightPoundForcePerCubicFoot:
+		return "lbf/ft³" 
+	case SpecificWeightTonneForcePerCubicMillimeter:
+		return "tf/mm³" 
+	case SpecificWeightTonneForcePerCubicCentimeter:
+		return "tf/cm³" 
+	case SpecificWeightTonneForcePerCubicMeter:
+		return "tf/m³" 
+	case SpecificWeightKilonewtonPerCubicMillimeter:
+		return "kN/mm³" 
+	case SpecificWeightKilonewtonPerCubicCentimeter:
+		return "kN/cm³" 
+	case SpecificWeightKilonewtonPerCubicMeter:
+		return "kN/m³" 
+	case SpecificWeightMeganewtonPerCubicMeter:
+		return "MN/m³" 
+	case SpecificWeightKilopoundForcePerCubicInch:
+		return "klbf/in³" 
+	case SpecificWeightKilopoundForcePerCubicFoot:
+		return "klbf/ft³" 
+	default:
+		return ""
+	}
 }

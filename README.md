@@ -1,6 +1,7 @@
 # unitsnet-go
 
 [![unitsnet-go](https://github.com/haimkastner/unitsnet-go/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/haimkastner/unitsnet-go/actions/workflows/build.yml)
+[![Coverage Status](https://coveralls.io/repos/github/haimkastner/unitsnet-go/badge.svg?branch=main)](https://coveralls.io/github/haimkastner/unitsnet-go?branch=main)
  [![Latest Release](https://img.shields.io/github/v/release/haimkastner/unitsnet-go)](https://github.com/haimkastner/unitsnet-go/releases)
 [![GitHub stars](https://img.shields.io/github/stars/haimkastner/unitsnet-go.svg?style=social&label=Stars)](https://github.com/haimkastner/unitsnet-go/stargazers) 
 [![License](https://img.shields.io/github/license/haimkastner/unitsnet-go.svg?style=social)](https://github.com/haimkastner/unitsnet-go/blob/master/LICENSE)

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -91,6 +91,10 @@ func (udf TorqueDtoFactory) FromJSON(data []byte) (*TorqueDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -822,67 +826,9 @@ func (a *Torque) ToString(unit TorqueUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetTorqueAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Torque) getUnitAbbreviation(unit TorqueUnits) string {
-	switch unit { 
-	case TorqueNewtonMillimeter:
-		return "N·mm" 
-	case TorqueNewtonCentimeter:
-		return "N·cm" 
-	case TorqueNewtonMeter:
-		return "N·m" 
-	case TorquePoundalFoot:
-		return "pdl·ft" 
-	case TorquePoundForceInch:
-		return "lbf·in" 
-	case TorquePoundForceFoot:
-		return "lbf·ft" 
-	case TorqueGramForceMillimeter:
-		return "gf·mm" 
-	case TorqueGramForceCentimeter:
-		return "gf·cm" 
-	case TorqueGramForceMeter:
-		return "gf·m" 
-	case TorqueKilogramForceMillimeter:
-		return "kgf·mm" 
-	case TorqueKilogramForceCentimeter:
-		return "kgf·cm" 
-	case TorqueKilogramForceMeter:
-		return "kgf·m" 
-	case TorqueTonneForceMillimeter:
-		return "tf·mm" 
-	case TorqueTonneForceCentimeter:
-		return "tf·cm" 
-	case TorqueTonneForceMeter:
-		return "tf·m" 
-	case TorqueKilonewtonMillimeter:
-		return "kN·mm" 
-	case TorqueMeganewtonMillimeter:
-		return "MN·mm" 
-	case TorqueKilonewtonCentimeter:
-		return "kN·cm" 
-	case TorqueMeganewtonCentimeter:
-		return "MN·cm" 
-	case TorqueKilonewtonMeter:
-		return "kN·m" 
-	case TorqueMeganewtonMeter:
-		return "MN·m" 
-	case TorqueKilopoundForceInch:
-		return "klbf·in" 
-	case TorqueMegapoundForceInch:
-		return "Mlbf·in" 
-	case TorqueKilopoundForceFoot:
-		return "klbf·ft" 
-	case TorqueMegapoundForceFoot:
-		return "Mlbf·ft" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetTorqueAbbreviation(unit))
 }
 
 // Equals checks if the given Torque is equal to the current Torque.
@@ -963,4 +909,62 @@ func (a *Torque) Multiply(other *Torque) *Torque {
 //    *Torque: A new Torque instance representing the quotient of both Torque.
 func (a *Torque) Divide(other *Torque) *Torque {
 	return &Torque{value: a.value / other.BaseValue()}
+}
+
+// GetTorqueAbbreviation gets the unit abbreviation.
+func GetTorqueAbbreviation(unit TorqueUnits) string {
+	switch unit { 
+	case TorqueNewtonMillimeter:
+		return "N·mm" 
+	case TorqueNewtonCentimeter:
+		return "N·cm" 
+	case TorqueNewtonMeter:
+		return "N·m" 
+	case TorquePoundalFoot:
+		return "pdl·ft" 
+	case TorquePoundForceInch:
+		return "lbf·in" 
+	case TorquePoundForceFoot:
+		return "lbf·ft" 
+	case TorqueGramForceMillimeter:
+		return "gf·mm" 
+	case TorqueGramForceCentimeter:
+		return "gf·cm" 
+	case TorqueGramForceMeter:
+		return "gf·m" 
+	case TorqueKilogramForceMillimeter:
+		return "kgf·mm" 
+	case TorqueKilogramForceCentimeter:
+		return "kgf·cm" 
+	case TorqueKilogramForceMeter:
+		return "kgf·m" 
+	case TorqueTonneForceMillimeter:
+		return "tf·mm" 
+	case TorqueTonneForceCentimeter:
+		return "tf·cm" 
+	case TorqueTonneForceMeter:
+		return "tf·m" 
+	case TorqueKilonewtonMillimeter:
+		return "kN·mm" 
+	case TorqueMeganewtonMillimeter:
+		return "MN·mm" 
+	case TorqueKilonewtonCentimeter:
+		return "kN·cm" 
+	case TorqueMeganewtonCentimeter:
+		return "MN·cm" 
+	case TorqueKilonewtonMeter:
+		return "kN·m" 
+	case TorqueMeganewtonMeter:
+		return "MN·m" 
+	case TorqueKilopoundForceInch:
+		return "klbf·in" 
+	case TorqueMegapoundForceInch:
+		return "Mlbf·in" 
+	case TorqueKilopoundForceFoot:
+		return "klbf·ft" 
+	case TorqueMegapoundForceFoot:
+		return "Mlbf·ft" 
+	default:
+		return ""
+	}
 }

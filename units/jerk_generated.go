@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -63,6 +63,10 @@ func (udf JerkDtoFactory) FromJSON(data []byte) (*JerkDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -458,39 +462,9 @@ func (a *Jerk) ToString(unit JerkUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetJerkAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Jerk) getUnitAbbreviation(unit JerkUnits) string {
-	switch unit { 
-	case JerkMeterPerSecondCubed:
-		return "m/s³" 
-	case JerkInchPerSecondCubed:
-		return "in/s³" 
-	case JerkFootPerSecondCubed:
-		return "ft/s³" 
-	case JerkStandardGravitiesPerSecond:
-		return "g/s" 
-	case JerkNanometerPerSecondCubed:
-		return "nm/s³" 
-	case JerkMicrometerPerSecondCubed:
-		return "μm/s³" 
-	case JerkMillimeterPerSecondCubed:
-		return "mm/s³" 
-	case JerkCentimeterPerSecondCubed:
-		return "cm/s³" 
-	case JerkDecimeterPerSecondCubed:
-		return "dm/s³" 
-	case JerkKilometerPerSecondCubed:
-		return "km/s³" 
-	case JerkMillistandardGravitiesPerSecond:
-		return "mg/s" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetJerkAbbreviation(unit))
 }
 
 // Equals checks if the given Jerk is equal to the current Jerk.
@@ -571,4 +545,34 @@ func (a *Jerk) Multiply(other *Jerk) *Jerk {
 //    *Jerk: A new Jerk instance representing the quotient of both Jerk.
 func (a *Jerk) Divide(other *Jerk) *Jerk {
 	return &Jerk{value: a.value / other.BaseValue()}
+}
+
+// GetJerkAbbreviation gets the unit abbreviation.
+func GetJerkAbbreviation(unit JerkUnits) string {
+	switch unit { 
+	case JerkMeterPerSecondCubed:
+		return "m/s³" 
+	case JerkInchPerSecondCubed:
+		return "in/s³" 
+	case JerkFootPerSecondCubed:
+		return "ft/s³" 
+	case JerkStandardGravitiesPerSecond:
+		return "g/s" 
+	case JerkNanometerPerSecondCubed:
+		return "nm/s³" 
+	case JerkMicrometerPerSecondCubed:
+		return "μm/s³" 
+	case JerkMillimeterPerSecondCubed:
+		return "mm/s³" 
+	case JerkCentimeterPerSecondCubed:
+		return "cm/s³" 
+	case JerkDecimeterPerSecondCubed:
+		return "dm/s³" 
+	case JerkKilometerPerSecondCubed:
+		return "km/s³" 
+	case JerkMillistandardGravitiesPerSecond:
+		return "mg/s" 
+	default:
+		return ""
+	}
 }

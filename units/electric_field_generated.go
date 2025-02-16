@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -43,6 +43,10 @@ func (udf ElectricFieldDtoFactory) FromJSON(data []byte) (*ElectricFieldDto, err
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -198,19 +202,9 @@ func (a *ElectricField) ToString(unit ElectricFieldUnits, fractionalDigits int) 
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricFieldAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricField) getUnitAbbreviation(unit ElectricFieldUnits) string {
-	switch unit { 
-	case ElectricFieldVoltPerMeter:
-		return "V/m" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricFieldAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricField is equal to the current ElectricField.
@@ -291,4 +285,14 @@ func (a *ElectricField) Multiply(other *ElectricField) *ElectricField {
 //    *ElectricField: A new ElectricField instance representing the quotient of both ElectricField.
 func (a *ElectricField) Divide(other *ElectricField) *ElectricField {
 	return &ElectricField{value: a.value / other.BaseValue()}
+}
+
+// GetElectricFieldAbbreviation gets the unit abbreviation.
+func GetElectricFieldAbbreviation(unit ElectricFieldUnits) string {
+	switch unit { 
+	case ElectricFieldVoltPerMeter:
+		return "V/m" 
+	default:
+		return ""
+	}
 }

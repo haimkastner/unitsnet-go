@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -97,6 +97,10 @@ func (udf MassMomentOfInertiaDtoFactory) FromJSON(data []byte) (*MassMomentOfIne
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -900,73 +904,9 @@ func (a *MassMomentOfInertia) ToString(unit MassMomentOfInertiaUnits, fractional
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMassMomentOfInertiaAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MassMomentOfInertia) getUnitAbbreviation(unit MassMomentOfInertiaUnits) string {
-	switch unit { 
-	case MassMomentOfInertiaGramSquareMeter:
-		return "g·m²" 
-	case MassMomentOfInertiaGramSquareDecimeter:
-		return "g·dm²" 
-	case MassMomentOfInertiaGramSquareCentimeter:
-		return "g·cm²" 
-	case MassMomentOfInertiaGramSquareMillimeter:
-		return "g·mm²" 
-	case MassMomentOfInertiaTonneSquareMeter:
-		return "t·m²" 
-	case MassMomentOfInertiaTonneSquareDecimeter:
-		return "t·dm²" 
-	case MassMomentOfInertiaTonneSquareCentimeter:
-		return "t·cm²" 
-	case MassMomentOfInertiaTonneSquareMilimeter:
-		return "t·mm²" 
-	case MassMomentOfInertiaPoundSquareFoot:
-		return "lb·ft²" 
-	case MassMomentOfInertiaPoundSquareInch:
-		return "lb·in²" 
-	case MassMomentOfInertiaSlugSquareFoot:
-		return "slug·ft²" 
-	case MassMomentOfInertiaSlugSquareInch:
-		return "slug·in²" 
-	case MassMomentOfInertiaMilligramSquareMeter:
-		return "mg·m²" 
-	case MassMomentOfInertiaKilogramSquareMeter:
-		return "kg·m²" 
-	case MassMomentOfInertiaMilligramSquareDecimeter:
-		return "mg·dm²" 
-	case MassMomentOfInertiaKilogramSquareDecimeter:
-		return "kg·dm²" 
-	case MassMomentOfInertiaMilligramSquareCentimeter:
-		return "mg·cm²" 
-	case MassMomentOfInertiaKilogramSquareCentimeter:
-		return "kg·cm²" 
-	case MassMomentOfInertiaMilligramSquareMillimeter:
-		return "mg·mm²" 
-	case MassMomentOfInertiaKilogramSquareMillimeter:
-		return "kg·mm²" 
-	case MassMomentOfInertiaKilotonneSquareMeter:
-		return "kt·m²" 
-	case MassMomentOfInertiaMegatonneSquareMeter:
-		return "Mt·m²" 
-	case MassMomentOfInertiaKilotonneSquareDecimeter:
-		return "kt·dm²" 
-	case MassMomentOfInertiaMegatonneSquareDecimeter:
-		return "Mt·dm²" 
-	case MassMomentOfInertiaKilotonneSquareCentimeter:
-		return "kt·cm²" 
-	case MassMomentOfInertiaMegatonneSquareCentimeter:
-		return "Mt·cm²" 
-	case MassMomentOfInertiaKilotonneSquareMilimeter:
-		return "kt·mm²" 
-	case MassMomentOfInertiaMegatonneSquareMilimeter:
-		return "Mt·mm²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMassMomentOfInertiaAbbreviation(unit))
 }
 
 // Equals checks if the given MassMomentOfInertia is equal to the current MassMomentOfInertia.
@@ -1047,4 +987,68 @@ func (a *MassMomentOfInertia) Multiply(other *MassMomentOfInertia) *MassMomentOf
 //    *MassMomentOfInertia: A new MassMomentOfInertia instance representing the quotient of both MassMomentOfInertia.
 func (a *MassMomentOfInertia) Divide(other *MassMomentOfInertia) *MassMomentOfInertia {
 	return &MassMomentOfInertia{value: a.value / other.BaseValue()}
+}
+
+// GetMassMomentOfInertiaAbbreviation gets the unit abbreviation.
+func GetMassMomentOfInertiaAbbreviation(unit MassMomentOfInertiaUnits) string {
+	switch unit { 
+	case MassMomentOfInertiaGramSquareMeter:
+		return "g·m²" 
+	case MassMomentOfInertiaGramSquareDecimeter:
+		return "g·dm²" 
+	case MassMomentOfInertiaGramSquareCentimeter:
+		return "g·cm²" 
+	case MassMomentOfInertiaGramSquareMillimeter:
+		return "g·mm²" 
+	case MassMomentOfInertiaTonneSquareMeter:
+		return "t·m²" 
+	case MassMomentOfInertiaTonneSquareDecimeter:
+		return "t·dm²" 
+	case MassMomentOfInertiaTonneSquareCentimeter:
+		return "t·cm²" 
+	case MassMomentOfInertiaTonneSquareMilimeter:
+		return "t·mm²" 
+	case MassMomentOfInertiaPoundSquareFoot:
+		return "lb·ft²" 
+	case MassMomentOfInertiaPoundSquareInch:
+		return "lb·in²" 
+	case MassMomentOfInertiaSlugSquareFoot:
+		return "slug·ft²" 
+	case MassMomentOfInertiaSlugSquareInch:
+		return "slug·in²" 
+	case MassMomentOfInertiaMilligramSquareMeter:
+		return "mg·m²" 
+	case MassMomentOfInertiaKilogramSquareMeter:
+		return "kg·m²" 
+	case MassMomentOfInertiaMilligramSquareDecimeter:
+		return "mg·dm²" 
+	case MassMomentOfInertiaKilogramSquareDecimeter:
+		return "kg·dm²" 
+	case MassMomentOfInertiaMilligramSquareCentimeter:
+		return "mg·cm²" 
+	case MassMomentOfInertiaKilogramSquareCentimeter:
+		return "kg·cm²" 
+	case MassMomentOfInertiaMilligramSquareMillimeter:
+		return "mg·mm²" 
+	case MassMomentOfInertiaKilogramSquareMillimeter:
+		return "kg·mm²" 
+	case MassMomentOfInertiaKilotonneSquareMeter:
+		return "kt·m²" 
+	case MassMomentOfInertiaMegatonneSquareMeter:
+		return "Mt·m²" 
+	case MassMomentOfInertiaKilotonneSquareDecimeter:
+		return "kt·dm²" 
+	case MassMomentOfInertiaMegatonneSquareDecimeter:
+		return "Mt·dm²" 
+	case MassMomentOfInertiaKilotonneSquareCentimeter:
+		return "kt·cm²" 
+	case MassMomentOfInertiaMegatonneSquareCentimeter:
+		return "Mt·cm²" 
+	case MassMomentOfInertiaKilotonneSquareMilimeter:
+		return "kt·mm²" 
+	case MassMomentOfInertiaMegatonneSquareMilimeter:
+		return "Mt·mm²" 
+	default:
+		return ""
+	}
 }

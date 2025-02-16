@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -83,6 +83,10 @@ func (udf TorquePerLengthDtoFactory) FromJSON(data []byte) (*TorquePerLengthDto,
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -718,59 +722,9 @@ func (a *TorquePerLength) ToString(unit TorquePerLengthUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetTorquePerLengthAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *TorquePerLength) getUnitAbbreviation(unit TorquePerLengthUnits) string {
-	switch unit { 
-	case TorquePerLengthNewtonMillimeterPerMeter:
-		return "N·mm/m" 
-	case TorquePerLengthNewtonCentimeterPerMeter:
-		return "N·cm/m" 
-	case TorquePerLengthNewtonMeterPerMeter:
-		return "N·m/m" 
-	case TorquePerLengthPoundForceInchPerFoot:
-		return "lbf·in/ft" 
-	case TorquePerLengthPoundForceFootPerFoot:
-		return "lbf·ft/ft" 
-	case TorquePerLengthKilogramForceMillimeterPerMeter:
-		return "kgf·mm/m" 
-	case TorquePerLengthKilogramForceCentimeterPerMeter:
-		return "kgf·cm/m" 
-	case TorquePerLengthKilogramForceMeterPerMeter:
-		return "kgf·m/m" 
-	case TorquePerLengthTonneForceMillimeterPerMeter:
-		return "tf·mm/m" 
-	case TorquePerLengthTonneForceCentimeterPerMeter:
-		return "tf·cm/m" 
-	case TorquePerLengthTonneForceMeterPerMeter:
-		return "tf·m/m" 
-	case TorquePerLengthKilonewtonMillimeterPerMeter:
-		return "kN·mm/m" 
-	case TorquePerLengthMeganewtonMillimeterPerMeter:
-		return "MN·mm/m" 
-	case TorquePerLengthKilonewtonCentimeterPerMeter:
-		return "kN·cm/m" 
-	case TorquePerLengthMeganewtonCentimeterPerMeter:
-		return "MN·cm/m" 
-	case TorquePerLengthKilonewtonMeterPerMeter:
-		return "kN·m/m" 
-	case TorquePerLengthMeganewtonMeterPerMeter:
-		return "MN·m/m" 
-	case TorquePerLengthKilopoundForceInchPerFoot:
-		return "klbf·in/ft" 
-	case TorquePerLengthMegapoundForceInchPerFoot:
-		return "Mlbf·in/ft" 
-	case TorquePerLengthKilopoundForceFootPerFoot:
-		return "klbf·ft/ft" 
-	case TorquePerLengthMegapoundForceFootPerFoot:
-		return "Mlbf·ft/ft" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetTorquePerLengthAbbreviation(unit))
 }
 
 // Equals checks if the given TorquePerLength is equal to the current TorquePerLength.
@@ -851,4 +805,54 @@ func (a *TorquePerLength) Multiply(other *TorquePerLength) *TorquePerLength {
 //    *TorquePerLength: A new TorquePerLength instance representing the quotient of both TorquePerLength.
 func (a *TorquePerLength) Divide(other *TorquePerLength) *TorquePerLength {
 	return &TorquePerLength{value: a.value / other.BaseValue()}
+}
+
+// GetTorquePerLengthAbbreviation gets the unit abbreviation.
+func GetTorquePerLengthAbbreviation(unit TorquePerLengthUnits) string {
+	switch unit { 
+	case TorquePerLengthNewtonMillimeterPerMeter:
+		return "N·mm/m" 
+	case TorquePerLengthNewtonCentimeterPerMeter:
+		return "N·cm/m" 
+	case TorquePerLengthNewtonMeterPerMeter:
+		return "N·m/m" 
+	case TorquePerLengthPoundForceInchPerFoot:
+		return "lbf·in/ft" 
+	case TorquePerLengthPoundForceFootPerFoot:
+		return "lbf·ft/ft" 
+	case TorquePerLengthKilogramForceMillimeterPerMeter:
+		return "kgf·mm/m" 
+	case TorquePerLengthKilogramForceCentimeterPerMeter:
+		return "kgf·cm/m" 
+	case TorquePerLengthKilogramForceMeterPerMeter:
+		return "kgf·m/m" 
+	case TorquePerLengthTonneForceMillimeterPerMeter:
+		return "tf·mm/m" 
+	case TorquePerLengthTonneForceCentimeterPerMeter:
+		return "tf·cm/m" 
+	case TorquePerLengthTonneForceMeterPerMeter:
+		return "tf·m/m" 
+	case TorquePerLengthKilonewtonMillimeterPerMeter:
+		return "kN·mm/m" 
+	case TorquePerLengthMeganewtonMillimeterPerMeter:
+		return "MN·mm/m" 
+	case TorquePerLengthKilonewtonCentimeterPerMeter:
+		return "kN·cm/m" 
+	case TorquePerLengthMeganewtonCentimeterPerMeter:
+		return "MN·cm/m" 
+	case TorquePerLengthKilonewtonMeterPerMeter:
+		return "kN·m/m" 
+	case TorquePerLengthMeganewtonMeterPerMeter:
+		return "MN·m/m" 
+	case TorquePerLengthKilopoundForceInchPerFoot:
+		return "klbf·in/ft" 
+	case TorquePerLengthMegapoundForceInchPerFoot:
+		return "Mlbf·in/ft" 
+	case TorquePerLengthKilopoundForceFootPerFoot:
+		return "klbf·ft/ft" 
+	case TorquePerLengthMegapoundForceFootPerFoot:
+		return "Mlbf·ft/ft" 
+	default:
+		return ""
+	}
 }

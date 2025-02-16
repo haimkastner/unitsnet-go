@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -121,6 +121,10 @@ func (udf EnergyDtoFactory) FromJSON(data []byte) (*EnergyDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -1212,13 +1216,93 @@ func (a *Energy) ToString(unit EnergyUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetEnergyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetEnergyAbbreviation(unit))
 }
 
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Energy) getUnitAbbreviation(unit EnergyUnits) string {
+// Equals checks if the given Energy is equal to the current Energy.
+//
+// Parameters:
+//    other: The Energy to compare against.
+//
+// Returns:
+//    bool: Returns true if both Energy are equal, false otherwise.
+func (a *Energy) Equals(other *Energy) bool {
+	return a.value == other.BaseValue()
+}
+
+// CompareTo compares the current Energy with another Energy.
+// It returns -1 if the current Energy is less than the other Energy, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Energy to compare against.
+//
+// Returns:
+//    int: -1 if the current Energy is less, 1 if greater, and 0 if equal.
+func (a *Energy) CompareTo(other *Energy) int {
+	otherValue := other.BaseValue()
+	if a.value < otherValue {
+		return -1
+	} else if a.value > otherValue {
+		return 1
+	}
+
+	// If both are equal
+	return 0
+}
+
+// Add adds the given Energy to the current Energy and returns the result.
+// The result is a new Energy instance with the sum of the values.
+//
+// Parameters:
+//    other: The Energy to add to the current Energy.
+//
+// Returns:
+//    *Energy: A new Energy instance representing the sum of both Energy.
+func (a *Energy) Add(other *Energy) *Energy {
+	return &Energy{value: a.value + other.BaseValue()}
+}
+
+// Subtract subtracts the given Energy from the current Energy and returns the result.
+// The result is a new Energy instance with the difference of the values.
+//
+// Parameters:
+//    other: The Energy to subtract from the current Energy.
+//
+// Returns:
+//    *Energy: A new Energy instance representing the difference of both Energy.
+func (a *Energy) Subtract(other *Energy) *Energy {
+	return &Energy{value: a.value - other.BaseValue()}
+}
+
+// Multiply multiplies the current Energy by the given Energy and returns the result.
+// The result is a new Energy instance with the product of the values.
+//
+// Parameters:
+//    other: The Energy to multiply with the current Energy.
+//
+// Returns:
+//    *Energy: A new Energy instance representing the product of both Energy.
+func (a *Energy) Multiply(other *Energy) *Energy {
+	return &Energy{value: a.value * other.BaseValue()}
+}
+
+// Divide divides the current Energy by the given Energy and returns the result.
+// The result is a new Energy instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Energy to divide the current Energy by.
+//
+// Returns:
+//    *Energy: A new Energy instance representing the quotient of both Energy.
+func (a *Energy) Divide(other *Energy) *Energy {
+	return &Energy{value: a.value / other.BaseValue()}
+}
+
+// GetEnergyAbbreviation gets the unit abbreviation.
+func GetEnergyAbbreviation(unit EnergyUnits) string {
 	switch unit { 
 	case EnergyJoule:
 		return "J" 
@@ -1303,84 +1387,4 @@ func (a *Energy) getUnitAbbreviation(unit EnergyUnits) string {
 	default:
 		return ""
 	}
-}
-
-// Equals checks if the given Energy is equal to the current Energy.
-//
-// Parameters:
-//    other: The Energy to compare against.
-//
-// Returns:
-//    bool: Returns true if both Energy are equal, false otherwise.
-func (a *Energy) Equals(other *Energy) bool {
-	return a.value == other.BaseValue()
-}
-
-// CompareTo compares the current Energy with another Energy.
-// It returns -1 if the current Energy is less than the other Energy, 
-// 1 if it is greater, and 0 if they are equal.
-//
-// Parameters:
-//    other: The Energy to compare against.
-//
-// Returns:
-//    int: -1 if the current Energy is less, 1 if greater, and 0 if equal.
-func (a *Energy) CompareTo(other *Energy) int {
-	otherValue := other.BaseValue()
-	if a.value < otherValue {
-		return -1
-	} else if a.value > otherValue {
-		return 1
-	}
-
-	// If both are equal
-	return 0
-}
-
-// Add adds the given Energy to the current Energy and returns the result.
-// The result is a new Energy instance with the sum of the values.
-//
-// Parameters:
-//    other: The Energy to add to the current Energy.
-//
-// Returns:
-//    *Energy: A new Energy instance representing the sum of both Energy.
-func (a *Energy) Add(other *Energy) *Energy {
-	return &Energy{value: a.value + other.BaseValue()}
-}
-
-// Subtract subtracts the given Energy from the current Energy and returns the result.
-// The result is a new Energy instance with the difference of the values.
-//
-// Parameters:
-//    other: The Energy to subtract from the current Energy.
-//
-// Returns:
-//    *Energy: A new Energy instance representing the difference of both Energy.
-func (a *Energy) Subtract(other *Energy) *Energy {
-	return &Energy{value: a.value - other.BaseValue()}
-}
-
-// Multiply multiplies the current Energy by the given Energy and returns the result.
-// The result is a new Energy instance with the product of the values.
-//
-// Parameters:
-//    other: The Energy to multiply with the current Energy.
-//
-// Returns:
-//    *Energy: A new Energy instance representing the product of both Energy.
-func (a *Energy) Multiply(other *Energy) *Energy {
-	return &Energy{value: a.value * other.BaseValue()}
-}
-
-// Divide divides the current Energy by the given Energy and returns the result.
-// The result is a new Energy instance with the quotient of the values.
-//
-// Parameters:
-//    other: The Energy to divide the current Energy by.
-//
-// Returns:
-//    *Energy: A new Energy instance representing the quotient of both Energy.
-func (a *Energy) Divide(other *Energy) *Energy {
-	return &Energy{value: a.value / other.BaseValue()}
 }

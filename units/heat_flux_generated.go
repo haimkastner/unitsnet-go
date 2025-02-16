@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -77,6 +77,10 @@ func (udf HeatFluxDtoFactory) FromJSON(data []byte) (*HeatFluxDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -640,53 +644,9 @@ func (a *HeatFlux) ToString(unit HeatFluxUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetHeatFluxAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *HeatFlux) getUnitAbbreviation(unit HeatFluxUnits) string {
-	switch unit { 
-	case HeatFluxWattPerSquareMeter:
-		return "W/m²" 
-	case HeatFluxWattPerSquareInch:
-		return "W/in²" 
-	case HeatFluxWattPerSquareFoot:
-		return "W/ft²" 
-	case HeatFluxBtuPerSecondSquareInch:
-		return "BTU/s·in²" 
-	case HeatFluxBtuPerSecondSquareFoot:
-		return "BTU/s·ft²" 
-	case HeatFluxBtuPerMinuteSquareFoot:
-		return "BTU/min·ft²" 
-	case HeatFluxBtuPerHourSquareFoot:
-		return "BTU/h·ft²" 
-	case HeatFluxCaloriePerSecondSquareCentimeter:
-		return "cal/s·cm²" 
-	case HeatFluxKilocaloriePerHourSquareMeter:
-		return "kcal/h·m²" 
-	case HeatFluxPoundForcePerFootSecond:
-		return "lbf/(ft·s)" 
-	case HeatFluxPoundPerSecondCubed:
-		return "lb/s³" 
-	case HeatFluxNanowattPerSquareMeter:
-		return "nW/m²" 
-	case HeatFluxMicrowattPerSquareMeter:
-		return "μW/m²" 
-	case HeatFluxMilliwattPerSquareMeter:
-		return "mW/m²" 
-	case HeatFluxCentiwattPerSquareMeter:
-		return "cW/m²" 
-	case HeatFluxDeciwattPerSquareMeter:
-		return "dW/m²" 
-	case HeatFluxKilowattPerSquareMeter:
-		return "kW/m²" 
-	case HeatFluxKilocaloriePerSecondSquareCentimeter:
-		return "kcal/s·cm²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetHeatFluxAbbreviation(unit))
 }
 
 // Equals checks if the given HeatFlux is equal to the current HeatFlux.
@@ -767,4 +727,48 @@ func (a *HeatFlux) Multiply(other *HeatFlux) *HeatFlux {
 //    *HeatFlux: A new HeatFlux instance representing the quotient of both HeatFlux.
 func (a *HeatFlux) Divide(other *HeatFlux) *HeatFlux {
 	return &HeatFlux{value: a.value / other.BaseValue()}
+}
+
+// GetHeatFluxAbbreviation gets the unit abbreviation.
+func GetHeatFluxAbbreviation(unit HeatFluxUnits) string {
+	switch unit { 
+	case HeatFluxWattPerSquareMeter:
+		return "W/m²" 
+	case HeatFluxWattPerSquareInch:
+		return "W/in²" 
+	case HeatFluxWattPerSquareFoot:
+		return "W/ft²" 
+	case HeatFluxBtuPerSecondSquareInch:
+		return "BTU/s·in²" 
+	case HeatFluxBtuPerSecondSquareFoot:
+		return "BTU/s·ft²" 
+	case HeatFluxBtuPerMinuteSquareFoot:
+		return "BTU/min·ft²" 
+	case HeatFluxBtuPerHourSquareFoot:
+		return "BTU/h·ft²" 
+	case HeatFluxCaloriePerSecondSquareCentimeter:
+		return "cal/s·cm²" 
+	case HeatFluxKilocaloriePerHourSquareMeter:
+		return "kcal/h·m²" 
+	case HeatFluxPoundForcePerFootSecond:
+		return "lbf/(ft·s)" 
+	case HeatFluxPoundPerSecondCubed:
+		return "lb/s³" 
+	case HeatFluxNanowattPerSquareMeter:
+		return "nW/m²" 
+	case HeatFluxMicrowattPerSquareMeter:
+		return "μW/m²" 
+	case HeatFluxMilliwattPerSquareMeter:
+		return "mW/m²" 
+	case HeatFluxCentiwattPerSquareMeter:
+		return "cW/m²" 
+	case HeatFluxDeciwattPerSquareMeter:
+		return "dW/m²" 
+	case HeatFluxKilowattPerSquareMeter:
+		return "kW/m²" 
+	case HeatFluxKilocaloriePerSecondSquareCentimeter:
+		return "kcal/s·cm²" 
+	default:
+		return ""
+	}
 }

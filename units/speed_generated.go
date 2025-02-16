@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -107,6 +107,10 @@ func (udf SpeedDtoFactory) FromJSON(data []byte) (*SpeedDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -1030,83 +1034,9 @@ func (a *Speed) ToString(unit SpeedUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetSpeedAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Speed) getUnitAbbreviation(unit SpeedUnits) string {
-	switch unit { 
-	case SpeedMeterPerSecond:
-		return "m/s" 
-	case SpeedMeterPerMinute:
-		return "m/min" 
-	case SpeedMeterPerHour:
-		return "m/h" 
-	case SpeedFootPerSecond:
-		return "ft/s" 
-	case SpeedFootPerMinute:
-		return "ft/min" 
-	case SpeedFootPerHour:
-		return "ft/h" 
-	case SpeedUsSurveyFootPerSecond:
-		return "ftUS/s" 
-	case SpeedUsSurveyFootPerMinute:
-		return "ftUS/min" 
-	case SpeedUsSurveyFootPerHour:
-		return "ftUS/h" 
-	case SpeedInchPerSecond:
-		return "in/s" 
-	case SpeedInchPerMinute:
-		return "in/min" 
-	case SpeedInchPerHour:
-		return "in/h" 
-	case SpeedYardPerSecond:
-		return "yd/s" 
-	case SpeedYardPerMinute:
-		return "yd/min" 
-	case SpeedYardPerHour:
-		return "yd/h" 
-	case SpeedKnot:
-		return "kn" 
-	case SpeedMilePerHour:
-		return "mph" 
-	case SpeedMach:
-		return "M" 
-	case SpeedNanometerPerSecond:
-		return "nm/s" 
-	case SpeedMicrometerPerSecond:
-		return "μm/s" 
-	case SpeedMillimeterPerSecond:
-		return "mm/s" 
-	case SpeedCentimeterPerSecond:
-		return "cm/s" 
-	case SpeedDecimeterPerSecond:
-		return "dm/s" 
-	case SpeedKilometerPerSecond:
-		return "km/s" 
-	case SpeedNanometerPerMinute:
-		return "nm/min" 
-	case SpeedMicrometerPerMinute:
-		return "μm/min" 
-	case SpeedMillimeterPerMinute:
-		return "mm/min" 
-	case SpeedCentimeterPerMinute:
-		return "cm/min" 
-	case SpeedDecimeterPerMinute:
-		return "dm/min" 
-	case SpeedKilometerPerMinute:
-		return "km/min" 
-	case SpeedMillimeterPerHour:
-		return "mm/h" 
-	case SpeedCentimeterPerHour:
-		return "cm/h" 
-	case SpeedKilometerPerHour:
-		return "km/h" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetSpeedAbbreviation(unit))
 }
 
 // Equals checks if the given Speed is equal to the current Speed.
@@ -1187,4 +1117,78 @@ func (a *Speed) Multiply(other *Speed) *Speed {
 //    *Speed: A new Speed instance representing the quotient of both Speed.
 func (a *Speed) Divide(other *Speed) *Speed {
 	return &Speed{value: a.value / other.BaseValue()}
+}
+
+// GetSpeedAbbreviation gets the unit abbreviation.
+func GetSpeedAbbreviation(unit SpeedUnits) string {
+	switch unit { 
+	case SpeedMeterPerSecond:
+		return "m/s" 
+	case SpeedMeterPerMinute:
+		return "m/min" 
+	case SpeedMeterPerHour:
+		return "m/h" 
+	case SpeedFootPerSecond:
+		return "ft/s" 
+	case SpeedFootPerMinute:
+		return "ft/min" 
+	case SpeedFootPerHour:
+		return "ft/h" 
+	case SpeedUsSurveyFootPerSecond:
+		return "ftUS/s" 
+	case SpeedUsSurveyFootPerMinute:
+		return "ftUS/min" 
+	case SpeedUsSurveyFootPerHour:
+		return "ftUS/h" 
+	case SpeedInchPerSecond:
+		return "in/s" 
+	case SpeedInchPerMinute:
+		return "in/min" 
+	case SpeedInchPerHour:
+		return "in/h" 
+	case SpeedYardPerSecond:
+		return "yd/s" 
+	case SpeedYardPerMinute:
+		return "yd/min" 
+	case SpeedYardPerHour:
+		return "yd/h" 
+	case SpeedKnot:
+		return "kn" 
+	case SpeedMilePerHour:
+		return "mph" 
+	case SpeedMach:
+		return "M" 
+	case SpeedNanometerPerSecond:
+		return "nm/s" 
+	case SpeedMicrometerPerSecond:
+		return "μm/s" 
+	case SpeedMillimeterPerSecond:
+		return "mm/s" 
+	case SpeedCentimeterPerSecond:
+		return "cm/s" 
+	case SpeedDecimeterPerSecond:
+		return "dm/s" 
+	case SpeedKilometerPerSecond:
+		return "km/s" 
+	case SpeedNanometerPerMinute:
+		return "nm/min" 
+	case SpeedMicrometerPerMinute:
+		return "μm/min" 
+	case SpeedMillimeterPerMinute:
+		return "mm/min" 
+	case SpeedCentimeterPerMinute:
+		return "cm/min" 
+	case SpeedDecimeterPerMinute:
+		return "dm/min" 
+	case SpeedKilometerPerMinute:
+		return "km/min" 
+	case SpeedMillimeterPerHour:
+		return "mm/h" 
+	case SpeedCentimeterPerHour:
+		return "cm/h" 
+	case SpeedKilometerPerHour:
+		return "km/h" 
+	default:
+		return ""
+	}
 }

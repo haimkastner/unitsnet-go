@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -43,6 +43,10 @@ func (udf LuminousFluxDtoFactory) FromJSON(data []byte) (*LuminousFluxDto, error
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -198,19 +202,9 @@ func (a *LuminousFlux) ToString(unit LuminousFluxUnits, fractionalDigits int) st
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetLuminousFluxAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *LuminousFlux) getUnitAbbreviation(unit LuminousFluxUnits) string {
-	switch unit { 
-	case LuminousFluxLumen:
-		return "lm" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetLuminousFluxAbbreviation(unit))
 }
 
 // Equals checks if the given LuminousFlux is equal to the current LuminousFlux.
@@ -291,4 +285,14 @@ func (a *LuminousFlux) Multiply(other *LuminousFlux) *LuminousFlux {
 //    *LuminousFlux: A new LuminousFlux instance representing the quotient of both LuminousFlux.
 func (a *LuminousFlux) Divide(other *LuminousFlux) *LuminousFlux {
 	return &LuminousFlux{value: a.value / other.BaseValue()}
+}
+
+// GetLuminousFluxAbbreviation gets the unit abbreviation.
+func GetLuminousFluxAbbreviation(unit LuminousFluxUnits) string {
+	switch unit { 
+	case LuminousFluxLumen:
+		return "lm" 
+	default:
+		return ""
+	}
 }

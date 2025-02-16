@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -53,6 +53,10 @@ func (udf RadiationEquivalentDoseDtoFactory) FromJSON(data []byte) (*RadiationEq
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -328,29 +332,9 @@ func (a *RadiationEquivalentDose) ToString(unit RadiationEquivalentDoseUnits, fr
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRadiationEquivalentDoseAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *RadiationEquivalentDose) getUnitAbbreviation(unit RadiationEquivalentDoseUnits) string {
-	switch unit { 
-	case RadiationEquivalentDoseSievert:
-		return "Sv" 
-	case RadiationEquivalentDoseRoentgenEquivalentMan:
-		return "rem" 
-	case RadiationEquivalentDoseNanosievert:
-		return "nSv" 
-	case RadiationEquivalentDoseMicrosievert:
-		return "μSv" 
-	case RadiationEquivalentDoseMillisievert:
-		return "mSv" 
-	case RadiationEquivalentDoseMilliroentgenEquivalentMan:
-		return "mrem" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRadiationEquivalentDoseAbbreviation(unit))
 }
 
 // Equals checks if the given RadiationEquivalentDose is equal to the current RadiationEquivalentDose.
@@ -431,4 +415,24 @@ func (a *RadiationEquivalentDose) Multiply(other *RadiationEquivalentDose) *Radi
 //    *RadiationEquivalentDose: A new RadiationEquivalentDose instance representing the quotient of both RadiationEquivalentDose.
 func (a *RadiationEquivalentDose) Divide(other *RadiationEquivalentDose) *RadiationEquivalentDose {
 	return &RadiationEquivalentDose{value: a.value / other.BaseValue()}
+}
+
+// GetRadiationEquivalentDoseAbbreviation gets the unit abbreviation.
+func GetRadiationEquivalentDoseAbbreviation(unit RadiationEquivalentDoseUnits) string {
+	switch unit { 
+	case RadiationEquivalentDoseSievert:
+		return "Sv" 
+	case RadiationEquivalentDoseRoentgenEquivalentMan:
+		return "rem" 
+	case RadiationEquivalentDoseNanosievert:
+		return "nSv" 
+	case RadiationEquivalentDoseMicrosievert:
+		return "μSv" 
+	case RadiationEquivalentDoseMillisievert:
+		return "mSv" 
+	case RadiationEquivalentDoseMilliroentgenEquivalentMan:
+		return "mrem" 
+	default:
+		return ""
+	}
 }

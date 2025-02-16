@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -47,6 +47,10 @@ func (udf MolarEnergyDtoFactory) FromJSON(data []byte) (*MolarEnergyDto, error) 
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -250,23 +254,9 @@ func (a *MolarEnergy) ToString(unit MolarEnergyUnits, fractionalDigits int) stri
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMolarEnergyAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *MolarEnergy) getUnitAbbreviation(unit MolarEnergyUnits) string {
-	switch unit { 
-	case MolarEnergyJoulePerMole:
-		return "J/mol" 
-	case MolarEnergyKilojoulePerMole:
-		return "kJ/mol" 
-	case MolarEnergyMegajoulePerMole:
-		return "MJ/mol" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMolarEnergyAbbreviation(unit))
 }
 
 // Equals checks if the given MolarEnergy is equal to the current MolarEnergy.
@@ -347,4 +337,18 @@ func (a *MolarEnergy) Multiply(other *MolarEnergy) *MolarEnergy {
 //    *MolarEnergy: A new MolarEnergy instance representing the quotient of both MolarEnergy.
 func (a *MolarEnergy) Divide(other *MolarEnergy) *MolarEnergy {
 	return &MolarEnergy{value: a.value / other.BaseValue()}
+}
+
+// GetMolarEnergyAbbreviation gets the unit abbreviation.
+func GetMolarEnergyAbbreviation(unit MolarEnergyUnits) string {
+	switch unit { 
+	case MolarEnergyJoulePerMole:
+		return "J/mol" 
+	case MolarEnergyKilojoulePerMole:
+		return "kJ/mol" 
+	case MolarEnergyMegajoulePerMole:
+		return "MJ/mol" 
+	default:
+		return ""
+	}
 }

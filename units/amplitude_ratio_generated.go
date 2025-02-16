@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -49,6 +49,10 @@ func (udf AmplitudeRatioDtoFactory) FromJSON(data []byte) (*AmplitudeRatioDto, e
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -276,25 +280,9 @@ func (a *AmplitudeRatio) ToString(unit AmplitudeRatioUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetAmplitudeRatioAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *AmplitudeRatio) getUnitAbbreviation(unit AmplitudeRatioUnits) string {
-	switch unit { 
-	case AmplitudeRatioDecibelVolt:
-		return "dBV" 
-	case AmplitudeRatioDecibelMicrovolt:
-		return "dBµV" 
-	case AmplitudeRatioDecibelMillivolt:
-		return "dBmV" 
-	case AmplitudeRatioDecibelUnloaded:
-		return "dBu" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetAmplitudeRatioAbbreviation(unit))
 }
 
 // Equals checks if the given AmplitudeRatio is equal to the current AmplitudeRatio.
@@ -375,4 +363,20 @@ func (a *AmplitudeRatio) Multiply(other *AmplitudeRatio) *AmplitudeRatio {
 //    *AmplitudeRatio: A new AmplitudeRatio instance representing the quotient of both AmplitudeRatio.
 func (a *AmplitudeRatio) Divide(other *AmplitudeRatio) *AmplitudeRatio {
 	return &AmplitudeRatio{value: a.value / other.BaseValue()}
+}
+
+// GetAmplitudeRatioAbbreviation gets the unit abbreviation.
+func GetAmplitudeRatioAbbreviation(unit AmplitudeRatioUnits) string {
+	switch unit { 
+	case AmplitudeRatioDecibelVolt:
+		return "dBV" 
+	case AmplitudeRatioDecibelMicrovolt:
+		return "dBµV" 
+	case AmplitudeRatioDecibelMillivolt:
+		return "dBmV" 
+	case AmplitudeRatioDecibelUnloaded:
+		return "dBu" 
+	default:
+		return ""
+	}
 }

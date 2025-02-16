@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -57,6 +57,10 @@ func (udf ElectricImpedanceDtoFactory) FromJSON(data []byte) (*ElectricImpedance
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -380,33 +384,9 @@ func (a *ElectricImpedance) ToString(unit ElectricImpedanceUnits, fractionalDigi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricImpedanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricImpedance) getUnitAbbreviation(unit ElectricImpedanceUnits) string {
-	switch unit { 
-	case ElectricImpedanceOhm:
-		return "Ω" 
-	case ElectricImpedanceNanoohm:
-		return "nΩ" 
-	case ElectricImpedanceMicroohm:
-		return "μΩ" 
-	case ElectricImpedanceMilliohm:
-		return "mΩ" 
-	case ElectricImpedanceKiloohm:
-		return "kΩ" 
-	case ElectricImpedanceMegaohm:
-		return "MΩ" 
-	case ElectricImpedanceGigaohm:
-		return "GΩ" 
-	case ElectricImpedanceTeraohm:
-		return "TΩ" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricImpedanceAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricImpedance is equal to the current ElectricImpedance.
@@ -487,4 +467,28 @@ func (a *ElectricImpedance) Multiply(other *ElectricImpedance) *ElectricImpedanc
 //    *ElectricImpedance: A new ElectricImpedance instance representing the quotient of both ElectricImpedance.
 func (a *ElectricImpedance) Divide(other *ElectricImpedance) *ElectricImpedance {
 	return &ElectricImpedance{value: a.value / other.BaseValue()}
+}
+
+// GetElectricImpedanceAbbreviation gets the unit abbreviation.
+func GetElectricImpedanceAbbreviation(unit ElectricImpedanceUnits) string {
+	switch unit { 
+	case ElectricImpedanceOhm:
+		return "Ω" 
+	case ElectricImpedanceNanoohm:
+		return "nΩ" 
+	case ElectricImpedanceMicroohm:
+		return "μΩ" 
+	case ElectricImpedanceMilliohm:
+		return "mΩ" 
+	case ElectricImpedanceKiloohm:
+		return "kΩ" 
+	case ElectricImpedanceMegaohm:
+		return "MΩ" 
+	case ElectricImpedanceGigaohm:
+		return "GΩ" 
+	case ElectricImpedanceTeraohm:
+		return "TΩ" 
+	default:
+		return ""
+	}
 }

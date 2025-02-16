@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -71,6 +71,10 @@ func (udf ForceDtoFactory) FromJSON(data []byte) (*ForceDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -562,47 +566,9 @@ func (a *Force) ToString(unit ForceUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetForceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Force) getUnitAbbreviation(unit ForceUnits) string {
-	switch unit { 
-	case ForceDyn:
-		return "dyn" 
-	case ForceKilogramForce:
-		return "kgf" 
-	case ForceTonneForce:
-		return "tf" 
-	case ForceNewton:
-		return "N" 
-	case ForceKiloPond:
-		return "kp" 
-	case ForcePoundal:
-		return "pdl" 
-	case ForcePoundForce:
-		return "lbf" 
-	case ForceOunceForce:
-		return "ozf" 
-	case ForceShortTonForce:
-		return "tf (short)" 
-	case ForceMicronewton:
-		return "μN" 
-	case ForceMillinewton:
-		return "mN" 
-	case ForceDecanewton:
-		return "daN" 
-	case ForceKilonewton:
-		return "kN" 
-	case ForceMeganewton:
-		return "MN" 
-	case ForceKilopoundForce:
-		return "klbf" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetForceAbbreviation(unit))
 }
 
 // Equals checks if the given Force is equal to the current Force.
@@ -683,4 +649,42 @@ func (a *Force) Multiply(other *Force) *Force {
 //    *Force: A new Force instance representing the quotient of both Force.
 func (a *Force) Divide(other *Force) *Force {
 	return &Force{value: a.value / other.BaseValue()}
+}
+
+// GetForceAbbreviation gets the unit abbreviation.
+func GetForceAbbreviation(unit ForceUnits) string {
+	switch unit { 
+	case ForceDyn:
+		return "dyn" 
+	case ForceKilogramForce:
+		return "kgf" 
+	case ForceTonneForce:
+		return "tf" 
+	case ForceNewton:
+		return "N" 
+	case ForceKiloPond:
+		return "kp" 
+	case ForcePoundal:
+		return "pdl" 
+	case ForcePoundForce:
+		return "lbf" 
+	case ForceOunceForce:
+		return "ozf" 
+	case ForceShortTonForce:
+		return "tf (short)" 
+	case ForceMicronewton:
+		return "μN" 
+	case ForceMillinewton:
+		return "mN" 
+	case ForceDecanewton:
+		return "daN" 
+	case ForceKilonewton:
+		return "kN" 
+	case ForceMeganewton:
+		return "MN" 
+	case ForceKilopoundForce:
+		return "klbf" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -53,6 +53,10 @@ func (udf ElectricPotentialDtoFactory) FromJSON(data []byte) (*ElectricPotential
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -328,29 +332,9 @@ func (a *ElectricPotential) ToString(unit ElectricPotentialUnits, fractionalDigi
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetElectricPotentialAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *ElectricPotential) getUnitAbbreviation(unit ElectricPotentialUnits) string {
-	switch unit { 
-	case ElectricPotentialVolt:
-		return "V" 
-	case ElectricPotentialNanovolt:
-		return "nV" 
-	case ElectricPotentialMicrovolt:
-		return "μV" 
-	case ElectricPotentialMillivolt:
-		return "mV" 
-	case ElectricPotentialKilovolt:
-		return "kV" 
-	case ElectricPotentialMegavolt:
-		return "MV" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetElectricPotentialAbbreviation(unit))
 }
 
 // Equals checks if the given ElectricPotential is equal to the current ElectricPotential.
@@ -431,4 +415,24 @@ func (a *ElectricPotential) Multiply(other *ElectricPotential) *ElectricPotentia
 //    *ElectricPotential: A new ElectricPotential instance representing the quotient of both ElectricPotential.
 func (a *ElectricPotential) Divide(other *ElectricPotential) *ElectricPotential {
 	return &ElectricPotential{value: a.value / other.BaseValue()}
+}
+
+// GetElectricPotentialAbbreviation gets the unit abbreviation.
+func GetElectricPotentialAbbreviation(unit ElectricPotentialUnits) string {
+	switch unit { 
+	case ElectricPotentialVolt:
+		return "V" 
+	case ElectricPotentialNanovolt:
+		return "nV" 
+	case ElectricPotentialMicrovolt:
+		return "μV" 
+	case ElectricPotentialMillivolt:
+		return "mV" 
+	case ElectricPotentialKilovolt:
+		return "kV" 
+	case ElectricPotentialMegavolt:
+		return "MV" 
+	default:
+		return ""
+	}
 }

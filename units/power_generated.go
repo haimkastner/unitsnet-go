@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -95,6 +95,10 @@ func (udf PowerDtoFactory) FromJSON(data []byte) (*PowerDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -874,71 +878,9 @@ func (a *Power) ToString(unit PowerUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetPowerAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Power) getUnitAbbreviation(unit PowerUnits) string {
-	switch unit { 
-	case PowerWatt:
-		return "W" 
-	case PowerMechanicalHorsepower:
-		return "hp(I)" 
-	case PowerMetricHorsepower:
-		return "hp(M)" 
-	case PowerElectricalHorsepower:
-		return "hp(E)" 
-	case PowerBoilerHorsepower:
-		return "hp(S)" 
-	case PowerHydraulicHorsepower:
-		return "hp(H)" 
-	case PowerBritishThermalUnitPerHour:
-		return "Btu/h" 
-	case PowerJoulePerHour:
-		return "J/h" 
-	case PowerTonOfRefrigeration:
-		return "TR" 
-	case PowerFemtowatt:
-		return "fW" 
-	case PowerPicowatt:
-		return "pW" 
-	case PowerNanowatt:
-		return "nW" 
-	case PowerMicrowatt:
-		return "μW" 
-	case PowerMilliwatt:
-		return "mW" 
-	case PowerDeciwatt:
-		return "dW" 
-	case PowerDecawatt:
-		return "daW" 
-	case PowerKilowatt:
-		return "kW" 
-	case PowerMegawatt:
-		return "MW" 
-	case PowerGigawatt:
-		return "GW" 
-	case PowerTerawatt:
-		return "TW" 
-	case PowerPetawatt:
-		return "PW" 
-	case PowerKilobritishThermalUnitPerHour:
-		return "kBtu/h" 
-	case PowerMegabritishThermalUnitPerHour:
-		return "MBtu/h" 
-	case PowerMillijoulePerHour:
-		return "mJ/h" 
-	case PowerKilojoulePerHour:
-		return "kJ/h" 
-	case PowerMegajoulePerHour:
-		return "MJ/h" 
-	case PowerGigajoulePerHour:
-		return "GJ/h" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetPowerAbbreviation(unit))
 }
 
 // Equals checks if the given Power is equal to the current Power.
@@ -1019,4 +961,66 @@ func (a *Power) Multiply(other *Power) *Power {
 //    *Power: A new Power instance representing the quotient of both Power.
 func (a *Power) Divide(other *Power) *Power {
 	return &Power{value: a.value / other.BaseValue()}
+}
+
+// GetPowerAbbreviation gets the unit abbreviation.
+func GetPowerAbbreviation(unit PowerUnits) string {
+	switch unit { 
+	case PowerWatt:
+		return "W" 
+	case PowerMechanicalHorsepower:
+		return "hp(I)" 
+	case PowerMetricHorsepower:
+		return "hp(M)" 
+	case PowerElectricalHorsepower:
+		return "hp(E)" 
+	case PowerBoilerHorsepower:
+		return "hp(S)" 
+	case PowerHydraulicHorsepower:
+		return "hp(H)" 
+	case PowerBritishThermalUnitPerHour:
+		return "Btu/h" 
+	case PowerJoulePerHour:
+		return "J/h" 
+	case PowerTonOfRefrigeration:
+		return "TR" 
+	case PowerFemtowatt:
+		return "fW" 
+	case PowerPicowatt:
+		return "pW" 
+	case PowerNanowatt:
+		return "nW" 
+	case PowerMicrowatt:
+		return "μW" 
+	case PowerMilliwatt:
+		return "mW" 
+	case PowerDeciwatt:
+		return "dW" 
+	case PowerDecawatt:
+		return "daW" 
+	case PowerKilowatt:
+		return "kW" 
+	case PowerMegawatt:
+		return "MW" 
+	case PowerGigawatt:
+		return "GW" 
+	case PowerTerawatt:
+		return "TW" 
+	case PowerPetawatt:
+		return "PW" 
+	case PowerKilobritishThermalUnitPerHour:
+		return "kBtu/h" 
+	case PowerMegabritishThermalUnitPerHour:
+		return "MBtu/h" 
+	case PowerMillijoulePerHour:
+		return "mJ/h" 
+	case PowerKilojoulePerHour:
+		return "kJ/h" 
+	case PowerMegajoulePerHour:
+		return "MJ/h" 
+	case PowerGigajoulePerHour:
+		return "GJ/h" 
+	default:
+		return ""
+	}
 }

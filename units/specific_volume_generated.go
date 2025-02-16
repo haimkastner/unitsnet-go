@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -47,6 +47,10 @@ func (udf SpecificVolumeDtoFactory) FromJSON(data []byte) (*SpecificVolumeDto, e
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -250,23 +254,9 @@ func (a *SpecificVolume) ToString(unit SpecificVolumeUnits, fractionalDigits int
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetSpecificVolumeAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *SpecificVolume) getUnitAbbreviation(unit SpecificVolumeUnits) string {
-	switch unit { 
-	case SpecificVolumeCubicMeterPerKilogram:
-		return "m³/kg" 
-	case SpecificVolumeCubicFootPerPound:
-		return "ft³/lb" 
-	case SpecificVolumeMillicubicMeterPerKilogram:
-		return "mm³/kg" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetSpecificVolumeAbbreviation(unit))
 }
 
 // Equals checks if the given SpecificVolume is equal to the current SpecificVolume.
@@ -347,4 +337,18 @@ func (a *SpecificVolume) Multiply(other *SpecificVolume) *SpecificVolume {
 //    *SpecificVolume: A new SpecificVolume instance representing the quotient of both SpecificVolume.
 func (a *SpecificVolume) Divide(other *SpecificVolume) *SpecificVolume {
 	return &SpecificVolume{value: a.value / other.BaseValue()}
+}
+
+// GetSpecificVolumeAbbreviation gets the unit abbreviation.
+func GetSpecificVolumeAbbreviation(unit SpecificVolumeUnits) string {
+	switch unit { 
+	case SpecificVolumeCubicMeterPerKilogram:
+		return "m³/kg" 
+	case SpecificVolumeCubicFootPerPound:
+		return "ft³/lb" 
+	case SpecificVolumeMillicubicMeterPerKilogram:
+		return "mm³/kg" 
+	default:
+		return ""
+	}
 }

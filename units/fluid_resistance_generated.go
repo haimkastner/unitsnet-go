@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -79,6 +79,10 @@ func (udf FluidResistanceDtoFactory) FromJSON(data []byte) (*FluidResistanceDto,
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -666,55 +670,9 @@ func (a *FluidResistance) ToString(unit FluidResistanceUnits, fractionalDigits i
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetFluidResistanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *FluidResistance) getUnitAbbreviation(unit FluidResistanceUnits) string {
-	switch unit { 
-	case FluidResistancePascalSecondPerLiter:
-		return "Pa·s/l" 
-	case FluidResistancePascalMinutePerLiter:
-		return "Pa·min/l" 
-	case FluidResistancePascalSecondPerMilliliter:
-		return "Pa·s/ml" 
-	case FluidResistancePascalMinutePerMilliliter:
-		return "Pa·min/ml" 
-	case FluidResistancePascalSecondPerCubicMeter:
-		return "Pa·s/m³" 
-	case FluidResistancePascalMinutePerCubicMeter:
-		return "Pa·min/m³" 
-	case FluidResistancePascalSecondPerCubicCentimeter:
-		return "Pa·s/cm³" 
-	case FluidResistancePascalMinutePerCubicCentimeter:
-		return "Pa·min/cm³" 
-	case FluidResistanceDyneSecondPerCentimeterToTheFifth:
-		return "dyn·s/cm⁵" 
-	case FluidResistanceMillimeterMercurySecondPerLiter:
-		return "mmHg·s/l" 
-	case FluidResistanceMillimeterMercuryMinutePerLiter:
-		return "mmHg·min/l" 
-	case FluidResistanceMillimeterMercurySecondPerMilliliter:
-		return "mmHg·s/ml" 
-	case FluidResistanceMillimeterMercuryMinutePerMilliliter:
-		return "mmHg·min/ml" 
-	case FluidResistanceMillimeterMercurySecondPerCubicCentimeter:
-		return "mmHg·s/cm³" 
-	case FluidResistanceMillimeterMercuryMinutePerCubicCentimeter:
-		return "mmHg·min/cm³" 
-	case FluidResistanceMillimeterMercurySecondPerCubicMeter:
-		return "mmHg·s/m³" 
-	case FluidResistanceMillimeterMercuryMinutePerCubicMeter:
-		return "mmHg·min/m³" 
-	case FluidResistanceWoodUnit:
-		return "WU" 
-	case FluidResistanceMegapascalSecondPerCubicMeter:
-		return "MPa·s/m³" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetFluidResistanceAbbreviation(unit))
 }
 
 // Equals checks if the given FluidResistance is equal to the current FluidResistance.
@@ -795,4 +753,50 @@ func (a *FluidResistance) Multiply(other *FluidResistance) *FluidResistance {
 //    *FluidResistance: A new FluidResistance instance representing the quotient of both FluidResistance.
 func (a *FluidResistance) Divide(other *FluidResistance) *FluidResistance {
 	return &FluidResistance{value: a.value / other.BaseValue()}
+}
+
+// GetFluidResistanceAbbreviation gets the unit abbreviation.
+func GetFluidResistanceAbbreviation(unit FluidResistanceUnits) string {
+	switch unit { 
+	case FluidResistancePascalSecondPerLiter:
+		return "Pa·s/l" 
+	case FluidResistancePascalMinutePerLiter:
+		return "Pa·min/l" 
+	case FluidResistancePascalSecondPerMilliliter:
+		return "Pa·s/ml" 
+	case FluidResistancePascalMinutePerMilliliter:
+		return "Pa·min/ml" 
+	case FluidResistancePascalSecondPerCubicMeter:
+		return "Pa·s/m³" 
+	case FluidResistancePascalMinutePerCubicMeter:
+		return "Pa·min/m³" 
+	case FluidResistancePascalSecondPerCubicCentimeter:
+		return "Pa·s/cm³" 
+	case FluidResistancePascalMinutePerCubicCentimeter:
+		return "Pa·min/cm³" 
+	case FluidResistanceDyneSecondPerCentimeterToTheFifth:
+		return "dyn·s/cm⁵" 
+	case FluidResistanceMillimeterMercurySecondPerLiter:
+		return "mmHg·s/l" 
+	case FluidResistanceMillimeterMercuryMinutePerLiter:
+		return "mmHg·min/l" 
+	case FluidResistanceMillimeterMercurySecondPerMilliliter:
+		return "mmHg·s/ml" 
+	case FluidResistanceMillimeterMercuryMinutePerMilliliter:
+		return "mmHg·min/ml" 
+	case FluidResistanceMillimeterMercurySecondPerCubicCentimeter:
+		return "mmHg·s/cm³" 
+	case FluidResistanceMillimeterMercuryMinutePerCubicCentimeter:
+		return "mmHg·min/cm³" 
+	case FluidResistanceMillimeterMercurySecondPerCubicMeter:
+		return "mmHg·s/m³" 
+	case FluidResistanceMillimeterMercuryMinutePerCubicMeter:
+		return "mmHg·min/m³" 
+	case FluidResistanceWoodUnit:
+		return "WU" 
+	case FluidResistanceMegapascalSecondPerCubicMeter:
+		return "MPa·s/m³" 
+	default:
+		return ""
+	}
 }

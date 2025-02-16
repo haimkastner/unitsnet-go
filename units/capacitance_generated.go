@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -55,6 +55,10 @@ func (udf CapacitanceDtoFactory) FromJSON(data []byte) (*CapacitanceDto, error) 
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -354,31 +358,9 @@ func (a *Capacitance) ToString(unit CapacitanceUnits, fractionalDigits int) stri
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetCapacitanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Capacitance) getUnitAbbreviation(unit CapacitanceUnits) string {
-	switch unit { 
-	case CapacitanceFarad:
-		return "F" 
-	case CapacitancePicofarad:
-		return "pF" 
-	case CapacitanceNanofarad:
-		return "nF" 
-	case CapacitanceMicrofarad:
-		return "μF" 
-	case CapacitanceMillifarad:
-		return "mF" 
-	case CapacitanceKilofarad:
-		return "kF" 
-	case CapacitanceMegafarad:
-		return "MF" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetCapacitanceAbbreviation(unit))
 }
 
 // Equals checks if the given Capacitance is equal to the current Capacitance.
@@ -459,4 +441,26 @@ func (a *Capacitance) Multiply(other *Capacitance) *Capacitance {
 //    *Capacitance: A new Capacitance instance representing the quotient of both Capacitance.
 func (a *Capacitance) Divide(other *Capacitance) *Capacitance {
 	return &Capacitance{value: a.value / other.BaseValue()}
+}
+
+// GetCapacitanceAbbreviation gets the unit abbreviation.
+func GetCapacitanceAbbreviation(unit CapacitanceUnits) string {
+	switch unit { 
+	case CapacitanceFarad:
+		return "F" 
+	case CapacitancePicofarad:
+		return "pF" 
+	case CapacitanceNanofarad:
+		return "nF" 
+	case CapacitanceMicrofarad:
+		return "μF" 
+	case CapacitanceMillifarad:
+		return "mF" 
+	case CapacitanceKilofarad:
+		return "kF" 
+	case CapacitanceMegafarad:
+		return "MF" 
+	default:
+		return ""
+	}
 }

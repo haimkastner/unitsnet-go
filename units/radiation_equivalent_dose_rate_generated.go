@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -61,6 +61,10 @@ func (udf RadiationEquivalentDoseRateDtoFactory) FromJSON(data []byte) (*Radiati
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -432,37 +436,9 @@ func (a *RadiationEquivalentDoseRate) ToString(unit RadiationEquivalentDoseRateU
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetRadiationEquivalentDoseRateAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *RadiationEquivalentDoseRate) getUnitAbbreviation(unit RadiationEquivalentDoseRateUnits) string {
-	switch unit { 
-	case RadiationEquivalentDoseRateSievertPerHour:
-		return "Sv/h" 
-	case RadiationEquivalentDoseRateSievertPerSecond:
-		return "Sv/s" 
-	case RadiationEquivalentDoseRateRoentgenEquivalentManPerHour:
-		return "rem/h" 
-	case RadiationEquivalentDoseRateNanosievertPerHour:
-		return "nSv/h" 
-	case RadiationEquivalentDoseRateMicrosievertPerHour:
-		return "μSv/h" 
-	case RadiationEquivalentDoseRateMillisievertPerHour:
-		return "mSv/h" 
-	case RadiationEquivalentDoseRateNanosievertPerSecond:
-		return "nSv/s" 
-	case RadiationEquivalentDoseRateMicrosievertPerSecond:
-		return "μSv/s" 
-	case RadiationEquivalentDoseRateMillisievertPerSecond:
-		return "mSv/s" 
-	case RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour:
-		return "mrem/h" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetRadiationEquivalentDoseRateAbbreviation(unit))
 }
 
 // Equals checks if the given RadiationEquivalentDoseRate is equal to the current RadiationEquivalentDoseRate.
@@ -543,4 +519,32 @@ func (a *RadiationEquivalentDoseRate) Multiply(other *RadiationEquivalentDoseRat
 //    *RadiationEquivalentDoseRate: A new RadiationEquivalentDoseRate instance representing the quotient of both RadiationEquivalentDoseRate.
 func (a *RadiationEquivalentDoseRate) Divide(other *RadiationEquivalentDoseRate) *RadiationEquivalentDoseRate {
 	return &RadiationEquivalentDoseRate{value: a.value / other.BaseValue()}
+}
+
+// GetRadiationEquivalentDoseRateAbbreviation gets the unit abbreviation.
+func GetRadiationEquivalentDoseRateAbbreviation(unit RadiationEquivalentDoseRateUnits) string {
+	switch unit { 
+	case RadiationEquivalentDoseRateSievertPerHour:
+		return "Sv/h" 
+	case RadiationEquivalentDoseRateSievertPerSecond:
+		return "Sv/s" 
+	case RadiationEquivalentDoseRateRoentgenEquivalentManPerHour:
+		return "rem/h" 
+	case RadiationEquivalentDoseRateNanosievertPerHour:
+		return "nSv/h" 
+	case RadiationEquivalentDoseRateMicrosievertPerHour:
+		return "μSv/h" 
+	case RadiationEquivalentDoseRateMillisievertPerHour:
+		return "mSv/h" 
+	case RadiationEquivalentDoseRateNanosievertPerSecond:
+		return "nSv/s" 
+	case RadiationEquivalentDoseRateMicrosievertPerSecond:
+		return "μSv/s" 
+	case RadiationEquivalentDoseRateMillisievertPerSecond:
+		return "mSv/s" 
+	case RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour:
+		return "mrem/h" 
+	default:
+		return ""
+	}
 }

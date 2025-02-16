@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -61,6 +61,10 @@ func (udf LuminanceDtoFactory) FromJSON(data []byte) (*LuminanceDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -432,37 +436,9 @@ func (a *Luminance) ToString(unit LuminanceUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetLuminanceAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Luminance) getUnitAbbreviation(unit LuminanceUnits) string {
-	switch unit { 
-	case LuminanceCandelaPerSquareMeter:
-		return "Cd/m²" 
-	case LuminanceCandelaPerSquareFoot:
-		return "Cd/ft²" 
-	case LuminanceCandelaPerSquareInch:
-		return "Cd/in²" 
-	case LuminanceNit:
-		return "nt" 
-	case LuminanceNanocandelaPerSquareMeter:
-		return "nCd/m²" 
-	case LuminanceMicrocandelaPerSquareMeter:
-		return "μCd/m²" 
-	case LuminanceMillicandelaPerSquareMeter:
-		return "mCd/m²" 
-	case LuminanceCenticandelaPerSquareMeter:
-		return "cCd/m²" 
-	case LuminanceDecicandelaPerSquareMeter:
-		return "dCd/m²" 
-	case LuminanceKilocandelaPerSquareMeter:
-		return "kCd/m²" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetLuminanceAbbreviation(unit))
 }
 
 // Equals checks if the given Luminance is equal to the current Luminance.
@@ -543,4 +519,32 @@ func (a *Luminance) Multiply(other *Luminance) *Luminance {
 //    *Luminance: A new Luminance instance representing the quotient of both Luminance.
 func (a *Luminance) Divide(other *Luminance) *Luminance {
 	return &Luminance{value: a.value / other.BaseValue()}
+}
+
+// GetLuminanceAbbreviation gets the unit abbreviation.
+func GetLuminanceAbbreviation(unit LuminanceUnits) string {
+	switch unit { 
+	case LuminanceCandelaPerSquareMeter:
+		return "Cd/m²" 
+	case LuminanceCandelaPerSquareFoot:
+		return "Cd/ft²" 
+	case LuminanceCandelaPerSquareInch:
+		return "Cd/in²" 
+	case LuminanceNit:
+		return "nt" 
+	case LuminanceNanocandelaPerSquareMeter:
+		return "nCd/m²" 
+	case LuminanceMicrocandelaPerSquareMeter:
+		return "μCd/m²" 
+	case LuminanceMillicandelaPerSquareMeter:
+		return "mCd/m²" 
+	case LuminanceCenticandelaPerSquareMeter:
+		return "cCd/m²" 
+	case LuminanceDecicandelaPerSquareMeter:
+		return "dCd/m²" 
+	case LuminanceKilocandelaPerSquareMeter:
+		return "kCd/m²" 
+	default:
+		return ""
+	}
 }

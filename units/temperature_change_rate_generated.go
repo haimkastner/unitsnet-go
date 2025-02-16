@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -75,6 +75,10 @@ func (udf TemperatureChangeRateDtoFactory) FromJSON(data []byte) (*TemperatureCh
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -614,51 +618,9 @@ func (a *TemperatureChangeRate) ToString(unit TemperatureChangeRateUnits, fracti
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetTemperatureChangeRateAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *TemperatureChangeRate) getUnitAbbreviation(unit TemperatureChangeRateUnits) string {
-	switch unit { 
-	case TemperatureChangeRateDegreeCelsiusPerSecond:
-		return "°C/s" 
-	case TemperatureChangeRateDegreeCelsiusPerMinute:
-		return "°C/min" 
-	case TemperatureChangeRateDegreeKelvinPerMinute:
-		return "K/min" 
-	case TemperatureChangeRateDegreeFahrenheitPerMinute:
-		return "°F/min" 
-	case TemperatureChangeRateDegreeFahrenheitPerSecond:
-		return "°F/s" 
-	case TemperatureChangeRateDegreeKelvinPerSecond:
-		return "K/s" 
-	case TemperatureChangeRateDegreeCelsiusPerHour:
-		return "°C/h" 
-	case TemperatureChangeRateDegreeKelvinPerHour:
-		return "K/h" 
-	case TemperatureChangeRateDegreeFahrenheitPerHour:
-		return "°F/h" 
-	case TemperatureChangeRateNanodegreeCelsiusPerSecond:
-		return "n°C/s" 
-	case TemperatureChangeRateMicrodegreeCelsiusPerSecond:
-		return "μ°C/s" 
-	case TemperatureChangeRateMillidegreeCelsiusPerSecond:
-		return "m°C/s" 
-	case TemperatureChangeRateCentidegreeCelsiusPerSecond:
-		return "c°C/s" 
-	case TemperatureChangeRateDecidegreeCelsiusPerSecond:
-		return "d°C/s" 
-	case TemperatureChangeRateDecadegreeCelsiusPerSecond:
-		return "da°C/s" 
-	case TemperatureChangeRateHectodegreeCelsiusPerSecond:
-		return "h°C/s" 
-	case TemperatureChangeRateKilodegreeCelsiusPerSecond:
-		return "k°C/s" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetTemperatureChangeRateAbbreviation(unit))
 }
 
 // Equals checks if the given TemperatureChangeRate is equal to the current TemperatureChangeRate.
@@ -739,4 +701,46 @@ func (a *TemperatureChangeRate) Multiply(other *TemperatureChangeRate) *Temperat
 //    *TemperatureChangeRate: A new TemperatureChangeRate instance representing the quotient of both TemperatureChangeRate.
 func (a *TemperatureChangeRate) Divide(other *TemperatureChangeRate) *TemperatureChangeRate {
 	return &TemperatureChangeRate{value: a.value / other.BaseValue()}
+}
+
+// GetTemperatureChangeRateAbbreviation gets the unit abbreviation.
+func GetTemperatureChangeRateAbbreviation(unit TemperatureChangeRateUnits) string {
+	switch unit { 
+	case TemperatureChangeRateDegreeCelsiusPerSecond:
+		return "°C/s" 
+	case TemperatureChangeRateDegreeCelsiusPerMinute:
+		return "°C/min" 
+	case TemperatureChangeRateDegreeKelvinPerMinute:
+		return "K/min" 
+	case TemperatureChangeRateDegreeFahrenheitPerMinute:
+		return "°F/min" 
+	case TemperatureChangeRateDegreeFahrenheitPerSecond:
+		return "°F/s" 
+	case TemperatureChangeRateDegreeKelvinPerSecond:
+		return "K/s" 
+	case TemperatureChangeRateDegreeCelsiusPerHour:
+		return "°C/h" 
+	case TemperatureChangeRateDegreeKelvinPerHour:
+		return "K/h" 
+	case TemperatureChangeRateDegreeFahrenheitPerHour:
+		return "°F/h" 
+	case TemperatureChangeRateNanodegreeCelsiusPerSecond:
+		return "n°C/s" 
+	case TemperatureChangeRateMicrodegreeCelsiusPerSecond:
+		return "μ°C/s" 
+	case TemperatureChangeRateMillidegreeCelsiusPerSecond:
+		return "m°C/s" 
+	case TemperatureChangeRateCentidegreeCelsiusPerSecond:
+		return "c°C/s" 
+	case TemperatureChangeRateDecidegreeCelsiusPerSecond:
+		return "d°C/s" 
+	case TemperatureChangeRateDecadegreeCelsiusPerSecond:
+		return "da°C/s" 
+	case TemperatureChangeRateHectodegreeCelsiusPerSecond:
+		return "h°C/s" 
+	case TemperatureChangeRateKilodegreeCelsiusPerSecond:
+		return "k°C/s" 
+	default:
+		return ""
+	}
 }

@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -139,6 +139,10 @@ func (udf PressureDtoFactory) FromJSON(data []byte) (*PressureDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -1446,13 +1450,93 @@ func (a *Pressure) ToString(unit PressureUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetPressureAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetPressureAbbreviation(unit))
 }
 
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Pressure) getUnitAbbreviation(unit PressureUnits) string {
+// Equals checks if the given Pressure is equal to the current Pressure.
+//
+// Parameters:
+//    other: The Pressure to compare against.
+//
+// Returns:
+//    bool: Returns true if both Pressure are equal, false otherwise.
+func (a *Pressure) Equals(other *Pressure) bool {
+	return a.value == other.BaseValue()
+}
+
+// CompareTo compares the current Pressure with another Pressure.
+// It returns -1 if the current Pressure is less than the other Pressure, 
+// 1 if it is greater, and 0 if they are equal.
+//
+// Parameters:
+//    other: The Pressure to compare against.
+//
+// Returns:
+//    int: -1 if the current Pressure is less, 1 if greater, and 0 if equal.
+func (a *Pressure) CompareTo(other *Pressure) int {
+	otherValue := other.BaseValue()
+	if a.value < otherValue {
+		return -1
+	} else if a.value > otherValue {
+		return 1
+	}
+
+	// If both are equal
+	return 0
+}
+
+// Add adds the given Pressure to the current Pressure and returns the result.
+// The result is a new Pressure instance with the sum of the values.
+//
+// Parameters:
+//    other: The Pressure to add to the current Pressure.
+//
+// Returns:
+//    *Pressure: A new Pressure instance representing the sum of both Pressure.
+func (a *Pressure) Add(other *Pressure) *Pressure {
+	return &Pressure{value: a.value + other.BaseValue()}
+}
+
+// Subtract subtracts the given Pressure from the current Pressure and returns the result.
+// The result is a new Pressure instance with the difference of the values.
+//
+// Parameters:
+//    other: The Pressure to subtract from the current Pressure.
+//
+// Returns:
+//    *Pressure: A new Pressure instance representing the difference of both Pressure.
+func (a *Pressure) Subtract(other *Pressure) *Pressure {
+	return &Pressure{value: a.value - other.BaseValue()}
+}
+
+// Multiply multiplies the current Pressure by the given Pressure and returns the result.
+// The result is a new Pressure instance with the product of the values.
+//
+// Parameters:
+//    other: The Pressure to multiply with the current Pressure.
+//
+// Returns:
+//    *Pressure: A new Pressure instance representing the product of both Pressure.
+func (a *Pressure) Multiply(other *Pressure) *Pressure {
+	return &Pressure{value: a.value * other.BaseValue()}
+}
+
+// Divide divides the current Pressure by the given Pressure and returns the result.
+// The result is a new Pressure instance with the quotient of the values.
+//
+// Parameters:
+//    other: The Pressure to divide the current Pressure by.
+//
+// Returns:
+//    *Pressure: A new Pressure instance representing the quotient of both Pressure.
+func (a *Pressure) Divide(other *Pressure) *Pressure {
+	return &Pressure{value: a.value / other.BaseValue()}
+}
+
+// GetPressureAbbreviation gets the unit abbreviation.
+func GetPressureAbbreviation(unit PressureUnits) string {
 	switch unit { 
 	case PressurePascal:
 		return "Pa" 
@@ -1555,84 +1639,4 @@ func (a *Pressure) getUnitAbbreviation(unit PressureUnits) string {
 	default:
 		return ""
 	}
-}
-
-// Equals checks if the given Pressure is equal to the current Pressure.
-//
-// Parameters:
-//    other: The Pressure to compare against.
-//
-// Returns:
-//    bool: Returns true if both Pressure are equal, false otherwise.
-func (a *Pressure) Equals(other *Pressure) bool {
-	return a.value == other.BaseValue()
-}
-
-// CompareTo compares the current Pressure with another Pressure.
-// It returns -1 if the current Pressure is less than the other Pressure, 
-// 1 if it is greater, and 0 if they are equal.
-//
-// Parameters:
-//    other: The Pressure to compare against.
-//
-// Returns:
-//    int: -1 if the current Pressure is less, 1 if greater, and 0 if equal.
-func (a *Pressure) CompareTo(other *Pressure) int {
-	otherValue := other.BaseValue()
-	if a.value < otherValue {
-		return -1
-	} else if a.value > otherValue {
-		return 1
-	}
-
-	// If both are equal
-	return 0
-}
-
-// Add adds the given Pressure to the current Pressure and returns the result.
-// The result is a new Pressure instance with the sum of the values.
-//
-// Parameters:
-//    other: The Pressure to add to the current Pressure.
-//
-// Returns:
-//    *Pressure: A new Pressure instance representing the sum of both Pressure.
-func (a *Pressure) Add(other *Pressure) *Pressure {
-	return &Pressure{value: a.value + other.BaseValue()}
-}
-
-// Subtract subtracts the given Pressure from the current Pressure and returns the result.
-// The result is a new Pressure instance with the difference of the values.
-//
-// Parameters:
-//    other: The Pressure to subtract from the current Pressure.
-//
-// Returns:
-//    *Pressure: A new Pressure instance representing the difference of both Pressure.
-func (a *Pressure) Subtract(other *Pressure) *Pressure {
-	return &Pressure{value: a.value - other.BaseValue()}
-}
-
-// Multiply multiplies the current Pressure by the given Pressure and returns the result.
-// The result is a new Pressure instance with the product of the values.
-//
-// Parameters:
-//    other: The Pressure to multiply with the current Pressure.
-//
-// Returns:
-//    *Pressure: A new Pressure instance representing the product of both Pressure.
-func (a *Pressure) Multiply(other *Pressure) *Pressure {
-	return &Pressure{value: a.value * other.BaseValue()}
-}
-
-// Divide divides the current Pressure by the given Pressure and returns the result.
-// The result is a new Pressure instance with the quotient of the values.
-//
-// Parameters:
-//    other: The Pressure to divide the current Pressure by.
-//
-// Returns:
-//    *Pressure: A new Pressure instance representing the quotient of both Pressure.
-func (a *Pressure) Divide(other *Pressure) *Pressure {
-	return &Pressure{value: a.value / other.BaseValue()}
 }

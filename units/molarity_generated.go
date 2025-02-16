@@ -1,4 +1,4 @@
-// Code generated - DO NOT EDIT.
+// Generated Code - DO NOT EDIT.
 
 package units
 
@@ -63,6 +63,10 @@ func (udf MolarityDtoFactory) FromJSON(data []byte) (*MolarityDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 
@@ -458,39 +462,9 @@ func (a *Molarity) ToString(unit MolarityUnits, fractionalDigits int) string {
 	value := a.Convert(unit)
 	if fractionalDigits < 0 {
 		formatted := strconv.FormatFloat(value, 'g', -1, 64)
-		return fmt.Sprintf(formatted + " " + a.getUnitAbbreviation(unit))
+		return fmt.Sprintf("%s %s", formatted ,GetMolarityAbbreviation(unit))
 	}
-	return fmt.Sprintf("%.*f %s", fractionalDigits, value, a.getUnitAbbreviation(unit))
-}
-
-// GetUnitAbbreviation gets the unit abbreviation.
-func (a *Molarity) getUnitAbbreviation(unit MolarityUnits) string {
-	switch unit { 
-	case MolarityMolePerCubicMeter:
-		return "mol/m³" 
-	case MolarityMolePerLiter:
-		return "mol/L" 
-	case MolarityPoundMolePerCubicFoot:
-		return "lbmol/ft³" 
-	case MolarityKilomolePerCubicMeter:
-		return "kmol/m³" 
-	case MolarityFemtomolePerLiter:
-		return "fmol/L" 
-	case MolarityPicomolePerLiter:
-		return "pmol/L" 
-	case MolarityNanomolePerLiter:
-		return "nmol/L" 
-	case MolarityMicromolePerLiter:
-		return "μmol/L" 
-	case MolarityMillimolePerLiter:
-		return "mmol/L" 
-	case MolarityCentimolePerLiter:
-		return "cmol/L" 
-	case MolarityDecimolePerLiter:
-		return "dmol/L" 
-	default:
-		return ""
-	}
+	return fmt.Sprintf("%.*f %s", fractionalDigits, value, GetMolarityAbbreviation(unit))
 }
 
 // Equals checks if the given Molarity is equal to the current Molarity.
@@ -571,4 +545,34 @@ func (a *Molarity) Multiply(other *Molarity) *Molarity {
 //    *Molarity: A new Molarity instance representing the quotient of both Molarity.
 func (a *Molarity) Divide(other *Molarity) *Molarity {
 	return &Molarity{value: a.value / other.BaseValue()}
+}
+
+// GetMolarityAbbreviation gets the unit abbreviation.
+func GetMolarityAbbreviation(unit MolarityUnits) string {
+	switch unit { 
+	case MolarityMolePerCubicMeter:
+		return "mol/m³" 
+	case MolarityMolePerLiter:
+		return "mol/L" 
+	case MolarityPoundMolePerCubicFoot:
+		return "lbmol/ft³" 
+	case MolarityKilomolePerCubicMeter:
+		return "kmol/m³" 
+	case MolarityFemtomolePerLiter:
+		return "fmol/L" 
+	case MolarityPicomolePerLiter:
+		return "pmol/L" 
+	case MolarityNanomolePerLiter:
+		return "nmol/L" 
+	case MolarityMicromolePerLiter:
+		return "μmol/L" 
+	case MolarityMillimolePerLiter:
+		return "mmol/L" 
+	case MolarityCentimolePerLiter:
+		return "cmol/L" 
+	case MolarityDecimolePerLiter:
+		return "dmol/L" 
+	default:
+		return ""
+	}
 }
