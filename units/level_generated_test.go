@@ -131,6 +131,256 @@ func TestLevel_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestLevelFactory_FromDto(t *testing.T) {
+    factory := units.LevelFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.LevelDto{
+        Value: 100,
+        Unit:  units.LevelDecibel,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.LevelDto{
+        Value: math.NaN(),
+        Unit:  units.LevelDecibel,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Decibel conversion
+    decibelsDto := units.LevelDto{
+        Value: 100,
+        Unit:  units.LevelDecibel,
+    }
+    
+    var decibelsResult *units.Level
+    decibelsResult, err = factory.FromDto(decibelsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Decibel returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibelsResult.Convert(units.LevelDecibel)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Decibel = %v, want %v", converted, 100)
+    }
+    // Test Neper conversion
+    nepersDto := units.LevelDto{
+        Value: 100,
+        Unit:  units.LevelNeper,
+    }
+    
+    var nepersResult *units.Level
+    nepersResult, err = factory.FromDto(nepersDto)
+    if err != nil {
+        t.Errorf("FromDto() with Neper returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nepersResult.Convert(units.LevelNeper)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Neper = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.LevelDto{
+        Value: 0,
+        Unit:  units.LevelDecibel,
+    }
+    
+    var zeroResult *units.Level
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestLevelFactory_FromDtoJSON(t *testing.T) {
+    factory := units.LevelFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "Decibel"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Decibel"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.LevelDto{
+        Value: nanValue,
+        Unit:  units.LevelDecibel,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Decibel unit
+    decibelsJSON := []byte(`{"value": 100, "unit": "Decibel"}`)
+    decibelsResult, err := factory.FromDtoJSON(decibelsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Decibel unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibelsResult.Convert(units.LevelDecibel)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Decibel = %v, want %v", converted, 100)
+    }
+    // Test JSON with Neper unit
+    nepersJSON := []byte(`{"value": 100, "unit": "Neper"}`)
+    nepersResult, err := factory.FromDtoJSON(nepersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Neper unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nepersResult.Convert(units.LevelNeper)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Neper = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "Decibel"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromDecibels function
+func TestLevelFactory_FromDecibels(t *testing.T) {
+    factory := units.LevelFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecibels(100)
+    if err != nil {
+        t.Errorf("FromDecibels() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LevelDecibel)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecibels() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecibels(math.NaN())
+    if err == nil {
+        t.Error("FromDecibels() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecibels(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecibels() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecibels(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecibels() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecibels(0)
+    if err != nil {
+        t.Errorf("FromDecibels() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LevelDecibel)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecibels() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNepers function
+func TestLevelFactory_FromNepers(t *testing.T) {
+    factory := units.LevelFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNepers(100)
+    if err != nil {
+        t.Errorf("FromNepers() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LevelNeper)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNepers() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNepers(math.NaN())
+    if err == nil {
+        t.Error("FromNepers() with NaN value should return error")
+    }
+
+    _, err = factory.FromNepers(math.Inf(1))
+    if err == nil {
+        t.Error("FromNepers() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNepers(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNepers() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNepers(0)
+    if err != nil {
+        t.Errorf("FromNepers() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LevelNeper)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNepers() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestLevelToString(t *testing.T) {
 	factory := units.LevelFactory{}
 	a, err := factory.CreateLevel(45, units.LevelDecibel)

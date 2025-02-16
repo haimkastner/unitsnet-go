@@ -47,6 +47,10 @@ func (udf LeakRateDtoFactory) FromJSON(data []byte) (*LeakRateDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

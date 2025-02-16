@@ -147,6 +147,400 @@ func TestTemperatureGradient_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestTemperatureGradientFactory_FromDto(t *testing.T) {
+    factory := units.TemperatureGradientFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.TemperatureGradientDto{
+        Value: 100,
+        Unit:  units.TemperatureGradientKelvinPerMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.TemperatureGradientDto{
+        Value: math.NaN(),
+        Unit:  units.TemperatureGradientKelvinPerMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test KelvinPerMeter conversion
+    kelvins_per_meterDto := units.TemperatureGradientDto{
+        Value: 100,
+        Unit:  units.TemperatureGradientKelvinPerMeter,
+    }
+    
+    var kelvins_per_meterResult *units.TemperatureGradient
+    kelvins_per_meterResult, err = factory.FromDto(kelvins_per_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KelvinPerMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kelvins_per_meterResult.Convert(units.TemperatureGradientKelvinPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KelvinPerMeter = %v, want %v", converted, 100)
+    }
+    // Test DegreeCelsiusPerMeter conversion
+    degrees_celcius_per_meterDto := units.TemperatureGradientDto{
+        Value: 100,
+        Unit:  units.TemperatureGradientDegreeCelsiusPerMeter,
+    }
+    
+    var degrees_celcius_per_meterResult *units.TemperatureGradient
+    degrees_celcius_per_meterResult, err = factory.FromDto(degrees_celcius_per_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeCelsiusPerMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_celcius_per_meterResult.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeCelsiusPerMeter = %v, want %v", converted, 100)
+    }
+    // Test DegreeFahrenheitPerFoot conversion
+    degrees_fahrenheit_per_footDto := units.TemperatureGradientDto{
+        Value: 100,
+        Unit:  units.TemperatureGradientDegreeFahrenheitPerFoot,
+    }
+    
+    var degrees_fahrenheit_per_footResult *units.TemperatureGradient
+    degrees_fahrenheit_per_footResult, err = factory.FromDto(degrees_fahrenheit_per_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeFahrenheitPerFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_fahrenheit_per_footResult.Convert(units.TemperatureGradientDegreeFahrenheitPerFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeFahrenheitPerFoot = %v, want %v", converted, 100)
+    }
+    // Test DegreeCelsiusPerKilometer conversion
+    degrees_celcius_per_kilometerDto := units.TemperatureGradientDto{
+        Value: 100,
+        Unit:  units.TemperatureGradientDegreeCelsiusPerKilometer,
+    }
+    
+    var degrees_celcius_per_kilometerResult *units.TemperatureGradient
+    degrees_celcius_per_kilometerResult, err = factory.FromDto(degrees_celcius_per_kilometerDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeCelsiusPerKilometer returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_celcius_per_kilometerResult.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeCelsiusPerKilometer = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.TemperatureGradientDto{
+        Value: 0,
+        Unit:  units.TemperatureGradientKelvinPerMeter,
+    }
+    
+    var zeroResult *units.TemperatureGradient
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestTemperatureGradientFactory_FromDtoJSON(t *testing.T) {
+    factory := units.TemperatureGradientFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "KelvinPerMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "KelvinPerMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.TemperatureGradientDto{
+        Value: nanValue,
+        Unit:  units.TemperatureGradientKelvinPerMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with KelvinPerMeter unit
+    kelvins_per_meterJSON := []byte(`{"value": 100, "unit": "KelvinPerMeter"}`)
+    kelvins_per_meterResult, err := factory.FromDtoJSON(kelvins_per_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KelvinPerMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kelvins_per_meterResult.Convert(units.TemperatureGradientKelvinPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KelvinPerMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeCelsiusPerMeter unit
+    degrees_celcius_per_meterJSON := []byte(`{"value": 100, "unit": "DegreeCelsiusPerMeter"}`)
+    degrees_celcius_per_meterResult, err := factory.FromDtoJSON(degrees_celcius_per_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeCelsiusPerMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_celcius_per_meterResult.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeCelsiusPerMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeFahrenheitPerFoot unit
+    degrees_fahrenheit_per_footJSON := []byte(`{"value": 100, "unit": "DegreeFahrenheitPerFoot"}`)
+    degrees_fahrenheit_per_footResult, err := factory.FromDtoJSON(degrees_fahrenheit_per_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeFahrenheitPerFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_fahrenheit_per_footResult.Convert(units.TemperatureGradientDegreeFahrenheitPerFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeFahrenheitPerFoot = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeCelsiusPerKilometer unit
+    degrees_celcius_per_kilometerJSON := []byte(`{"value": 100, "unit": "DegreeCelsiusPerKilometer"}`)
+    degrees_celcius_per_kilometerResult, err := factory.FromDtoJSON(degrees_celcius_per_kilometerJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeCelsiusPerKilometer unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_celcius_per_kilometerResult.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeCelsiusPerKilometer = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "KelvinPerMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromKelvinsPerMeter function
+func TestTemperatureGradientFactory_FromKelvinsPerMeter(t *testing.T) {
+    factory := units.TemperatureGradientFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKelvinsPerMeter(100)
+    if err != nil {
+        t.Errorf("FromKelvinsPerMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureGradientKelvinPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKelvinsPerMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKelvinsPerMeter(math.NaN())
+    if err == nil {
+        t.Error("FromKelvinsPerMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKelvinsPerMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKelvinsPerMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKelvinsPerMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKelvinsPerMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKelvinsPerMeter(0)
+    if err != nil {
+        t.Errorf("FromKelvinsPerMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureGradientKelvinPerMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKelvinsPerMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesCelciusPerMeter function
+func TestTemperatureGradientFactory_FromDegreesCelciusPerMeter(t *testing.T) {
+    factory := units.TemperatureGradientFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesCelciusPerMeter(100)
+    if err != nil {
+        t.Errorf("FromDegreesCelciusPerMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesCelciusPerMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesCelciusPerMeter(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesCelciusPerMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesCelciusPerMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesCelciusPerMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesCelciusPerMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesCelciusPerMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesCelciusPerMeter(0)
+    if err != nil {
+        t.Errorf("FromDegreesCelciusPerMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesCelciusPerMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesFahrenheitPerFoot function
+func TestTemperatureGradientFactory_FromDegreesFahrenheitPerFoot(t *testing.T) {
+    factory := units.TemperatureGradientFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesFahrenheitPerFoot(100)
+    if err != nil {
+        t.Errorf("FromDegreesFahrenheitPerFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureGradientDegreeFahrenheitPerFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesFahrenheitPerFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesFahrenheitPerFoot(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesFahrenheitPerFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesFahrenheitPerFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesFahrenheitPerFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesFahrenheitPerFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesFahrenheitPerFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesFahrenheitPerFoot(0)
+    if err != nil {
+        t.Errorf("FromDegreesFahrenheitPerFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureGradientDegreeFahrenheitPerFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesFahrenheitPerFoot() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesCelciusPerKilometer function
+func TestTemperatureGradientFactory_FromDegreesCelciusPerKilometer(t *testing.T) {
+    factory := units.TemperatureGradientFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesCelciusPerKilometer(100)
+    if err != nil {
+        t.Errorf("FromDegreesCelciusPerKilometer() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesCelciusPerKilometer() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesCelciusPerKilometer(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesCelciusPerKilometer() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesCelciusPerKilometer(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesCelciusPerKilometer() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesCelciusPerKilometer(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesCelciusPerKilometer() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesCelciusPerKilometer(0)
+    if err != nil {
+        t.Errorf("FromDegreesCelciusPerKilometer() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesCelciusPerKilometer() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestTemperatureGradientToString(t *testing.T) {
 	factory := units.TemperatureGradientFactory{}
 	a, err := factory.CreateTemperatureGradient(45, units.TemperatureGradientKelvinPerMeter)

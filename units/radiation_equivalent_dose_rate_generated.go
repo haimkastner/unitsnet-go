@@ -61,6 +61,10 @@ func (udf RadiationEquivalentDoseRateDtoFactory) FromJSON(data []byte) (*Radiati
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

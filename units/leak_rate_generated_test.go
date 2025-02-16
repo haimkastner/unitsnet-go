@@ -139,6 +139,328 @@ func TestLeakRate_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestLeakRateFactory_FromDto(t *testing.T) {
+    factory := units.LeakRateFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.LeakRateDto{
+        Value: 100,
+        Unit:  units.LeakRatePascalCubicMeterPerSecond,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.LeakRateDto{
+        Value: math.NaN(),
+        Unit:  units.LeakRatePascalCubicMeterPerSecond,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test PascalCubicMeterPerSecond conversion
+    pascal_cubic_meters_per_secondDto := units.LeakRateDto{
+        Value: 100,
+        Unit:  units.LeakRatePascalCubicMeterPerSecond,
+    }
+    
+    var pascal_cubic_meters_per_secondResult *units.LeakRate
+    pascal_cubic_meters_per_secondResult, err = factory.FromDto(pascal_cubic_meters_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with PascalCubicMeterPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pascal_cubic_meters_per_secondResult.Convert(units.LeakRatePascalCubicMeterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PascalCubicMeterPerSecond = %v, want %v", converted, 100)
+    }
+    // Test MillibarLiterPerSecond conversion
+    millibar_liters_per_secondDto := units.LeakRateDto{
+        Value: 100,
+        Unit:  units.LeakRateMillibarLiterPerSecond,
+    }
+    
+    var millibar_liters_per_secondResult *units.LeakRate
+    millibar_liters_per_secondResult, err = factory.FromDto(millibar_liters_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillibarLiterPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millibar_liters_per_secondResult.Convert(units.LeakRateMillibarLiterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillibarLiterPerSecond = %v, want %v", converted, 100)
+    }
+    // Test TorrLiterPerSecond conversion
+    torr_liters_per_secondDto := units.LeakRateDto{
+        Value: 100,
+        Unit:  units.LeakRateTorrLiterPerSecond,
+    }
+    
+    var torr_liters_per_secondResult *units.LeakRate
+    torr_liters_per_secondResult, err = factory.FromDto(torr_liters_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with TorrLiterPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = torr_liters_per_secondResult.Convert(units.LeakRateTorrLiterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for TorrLiterPerSecond = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.LeakRateDto{
+        Value: 0,
+        Unit:  units.LeakRatePascalCubicMeterPerSecond,
+    }
+    
+    var zeroResult *units.LeakRate
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestLeakRateFactory_FromDtoJSON(t *testing.T) {
+    factory := units.LeakRateFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "PascalCubicMeterPerSecond"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "PascalCubicMeterPerSecond"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.LeakRateDto{
+        Value: nanValue,
+        Unit:  units.LeakRatePascalCubicMeterPerSecond,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with PascalCubicMeterPerSecond unit
+    pascal_cubic_meters_per_secondJSON := []byte(`{"value": 100, "unit": "PascalCubicMeterPerSecond"}`)
+    pascal_cubic_meters_per_secondResult, err := factory.FromDtoJSON(pascal_cubic_meters_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PascalCubicMeterPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pascal_cubic_meters_per_secondResult.Convert(units.LeakRatePascalCubicMeterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PascalCubicMeterPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillibarLiterPerSecond unit
+    millibar_liters_per_secondJSON := []byte(`{"value": 100, "unit": "MillibarLiterPerSecond"}`)
+    millibar_liters_per_secondResult, err := factory.FromDtoJSON(millibar_liters_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillibarLiterPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millibar_liters_per_secondResult.Convert(units.LeakRateMillibarLiterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillibarLiterPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with TorrLiterPerSecond unit
+    torr_liters_per_secondJSON := []byte(`{"value": 100, "unit": "TorrLiterPerSecond"}`)
+    torr_liters_per_secondResult, err := factory.FromDtoJSON(torr_liters_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with TorrLiterPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = torr_liters_per_secondResult.Convert(units.LeakRateTorrLiterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for TorrLiterPerSecond = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "PascalCubicMeterPerSecond"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromPascalCubicMetersPerSecond function
+func TestLeakRateFactory_FromPascalCubicMetersPerSecond(t *testing.T) {
+    factory := units.LeakRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPascalCubicMetersPerSecond(100)
+    if err != nil {
+        t.Errorf("FromPascalCubicMetersPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LeakRatePascalCubicMeterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPascalCubicMetersPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPascalCubicMetersPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromPascalCubicMetersPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromPascalCubicMetersPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromPascalCubicMetersPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPascalCubicMetersPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPascalCubicMetersPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPascalCubicMetersPerSecond(0)
+    if err != nil {
+        t.Errorf("FromPascalCubicMetersPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LeakRatePascalCubicMeterPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPascalCubicMetersPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillibarLitersPerSecond function
+func TestLeakRateFactory_FromMillibarLitersPerSecond(t *testing.T) {
+    factory := units.LeakRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillibarLitersPerSecond(100)
+    if err != nil {
+        t.Errorf("FromMillibarLitersPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LeakRateMillibarLiterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillibarLitersPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillibarLitersPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromMillibarLitersPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillibarLitersPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillibarLitersPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillibarLitersPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillibarLitersPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillibarLitersPerSecond(0)
+    if err != nil {
+        t.Errorf("FromMillibarLitersPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LeakRateMillibarLiterPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillibarLitersPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromTorrLitersPerSecond function
+func TestLeakRateFactory_FromTorrLitersPerSecond(t *testing.T) {
+    factory := units.LeakRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromTorrLitersPerSecond(100)
+    if err != nil {
+        t.Errorf("FromTorrLitersPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LeakRateTorrLiterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromTorrLitersPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromTorrLitersPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromTorrLitersPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromTorrLitersPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromTorrLitersPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromTorrLitersPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromTorrLitersPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromTorrLitersPerSecond(0)
+    if err != nil {
+        t.Errorf("FromTorrLitersPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LeakRateTorrLiterPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromTorrLitersPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestLeakRateToString(t *testing.T) {
 	factory := units.LeakRateFactory{}
 	a, err := factory.CreateLeakRate(45, units.LeakRatePascalCubicMeterPerSecond)

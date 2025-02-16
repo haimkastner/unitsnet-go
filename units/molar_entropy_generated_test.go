@@ -139,6 +139,328 @@ func TestMolarEntropy_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestMolarEntropyFactory_FromDto(t *testing.T) {
+    factory := units.MolarEntropyFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.MolarEntropyDto{
+        Value: 100,
+        Unit:  units.MolarEntropyJoulePerMoleKelvin,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.MolarEntropyDto{
+        Value: math.NaN(),
+        Unit:  units.MolarEntropyJoulePerMoleKelvin,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test JoulePerMoleKelvin conversion
+    joules_per_mole_kelvinDto := units.MolarEntropyDto{
+        Value: 100,
+        Unit:  units.MolarEntropyJoulePerMoleKelvin,
+    }
+    
+    var joules_per_mole_kelvinResult *units.MolarEntropy
+    joules_per_mole_kelvinResult, err = factory.FromDto(joules_per_mole_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with JoulePerMoleKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = joules_per_mole_kelvinResult.Convert(units.MolarEntropyJoulePerMoleKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for JoulePerMoleKelvin = %v, want %v", converted, 100)
+    }
+    // Test KilojoulePerMoleKelvin conversion
+    kilojoules_per_mole_kelvinDto := units.MolarEntropyDto{
+        Value: 100,
+        Unit:  units.MolarEntropyKilojoulePerMoleKelvin,
+    }
+    
+    var kilojoules_per_mole_kelvinResult *units.MolarEntropy
+    kilojoules_per_mole_kelvinResult, err = factory.FromDto(kilojoules_per_mole_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilojoulePerMoleKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilojoules_per_mole_kelvinResult.Convert(units.MolarEntropyKilojoulePerMoleKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilojoulePerMoleKelvin = %v, want %v", converted, 100)
+    }
+    // Test MegajoulePerMoleKelvin conversion
+    megajoules_per_mole_kelvinDto := units.MolarEntropyDto{
+        Value: 100,
+        Unit:  units.MolarEntropyMegajoulePerMoleKelvin,
+    }
+    
+    var megajoules_per_mole_kelvinResult *units.MolarEntropy
+    megajoules_per_mole_kelvinResult, err = factory.FromDto(megajoules_per_mole_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with MegajoulePerMoleKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megajoules_per_mole_kelvinResult.Convert(units.MolarEntropyMegajoulePerMoleKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegajoulePerMoleKelvin = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.MolarEntropyDto{
+        Value: 0,
+        Unit:  units.MolarEntropyJoulePerMoleKelvin,
+    }
+    
+    var zeroResult *units.MolarEntropy
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestMolarEntropyFactory_FromDtoJSON(t *testing.T) {
+    factory := units.MolarEntropyFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "JoulePerMoleKelvin"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "JoulePerMoleKelvin"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.MolarEntropyDto{
+        Value: nanValue,
+        Unit:  units.MolarEntropyJoulePerMoleKelvin,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with JoulePerMoleKelvin unit
+    joules_per_mole_kelvinJSON := []byte(`{"value": 100, "unit": "JoulePerMoleKelvin"}`)
+    joules_per_mole_kelvinResult, err := factory.FromDtoJSON(joules_per_mole_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with JoulePerMoleKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = joules_per_mole_kelvinResult.Convert(units.MolarEntropyJoulePerMoleKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for JoulePerMoleKelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilojoulePerMoleKelvin unit
+    kilojoules_per_mole_kelvinJSON := []byte(`{"value": 100, "unit": "KilojoulePerMoleKelvin"}`)
+    kilojoules_per_mole_kelvinResult, err := factory.FromDtoJSON(kilojoules_per_mole_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilojoulePerMoleKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilojoules_per_mole_kelvinResult.Convert(units.MolarEntropyKilojoulePerMoleKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilojoulePerMoleKelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with MegajoulePerMoleKelvin unit
+    megajoules_per_mole_kelvinJSON := []byte(`{"value": 100, "unit": "MegajoulePerMoleKelvin"}`)
+    megajoules_per_mole_kelvinResult, err := factory.FromDtoJSON(megajoules_per_mole_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MegajoulePerMoleKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megajoules_per_mole_kelvinResult.Convert(units.MolarEntropyMegajoulePerMoleKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegajoulePerMoleKelvin = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "JoulePerMoleKelvin"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromJoulesPerMoleKelvin function
+func TestMolarEntropyFactory_FromJoulesPerMoleKelvin(t *testing.T) {
+    factory := units.MolarEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromJoulesPerMoleKelvin(100)
+    if err != nil {
+        t.Errorf("FromJoulesPerMoleKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MolarEntropyJoulePerMoleKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromJoulesPerMoleKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromJoulesPerMoleKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromJoulesPerMoleKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromJoulesPerMoleKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromJoulesPerMoleKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromJoulesPerMoleKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromJoulesPerMoleKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromJoulesPerMoleKelvin(0)
+    if err != nil {
+        t.Errorf("FromJoulesPerMoleKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MolarEntropyJoulePerMoleKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromJoulesPerMoleKelvin() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilojoulesPerMoleKelvin function
+func TestMolarEntropyFactory_FromKilojoulesPerMoleKelvin(t *testing.T) {
+    factory := units.MolarEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilojoulesPerMoleKelvin(100)
+    if err != nil {
+        t.Errorf("FromKilojoulesPerMoleKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MolarEntropyKilojoulePerMoleKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilojoulesPerMoleKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilojoulesPerMoleKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromKilojoulesPerMoleKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilojoulesPerMoleKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilojoulesPerMoleKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilojoulesPerMoleKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilojoulesPerMoleKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilojoulesPerMoleKelvin(0)
+    if err != nil {
+        t.Errorf("FromKilojoulesPerMoleKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MolarEntropyKilojoulePerMoleKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilojoulesPerMoleKelvin() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegajoulesPerMoleKelvin function
+func TestMolarEntropyFactory_FromMegajoulesPerMoleKelvin(t *testing.T) {
+    factory := units.MolarEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegajoulesPerMoleKelvin(100)
+    if err != nil {
+        t.Errorf("FromMegajoulesPerMoleKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MolarEntropyMegajoulePerMoleKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegajoulesPerMoleKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegajoulesPerMoleKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromMegajoulesPerMoleKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegajoulesPerMoleKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegajoulesPerMoleKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegajoulesPerMoleKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegajoulesPerMoleKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegajoulesPerMoleKelvin(0)
+    if err != nil {
+        t.Errorf("FromMegajoulesPerMoleKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MolarEntropyMegajoulePerMoleKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegajoulesPerMoleKelvin() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestMolarEntropyToString(t *testing.T) {
 	factory := units.MolarEntropyFactory{}
 	a, err := factory.CreateMolarEntropy(45, units.MolarEntropyJoulePerMoleKelvin)

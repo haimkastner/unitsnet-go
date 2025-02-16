@@ -179,6 +179,688 @@ func TestRadiationExposure_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestRadiationExposureFactory_FromDto(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.RadiationExposureDto{
+        Value: 100,
+        Unit:  units.RadiationExposureCoulombPerKilogram,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.RadiationExposureDto{
+        Value: math.NaN(),
+        Unit:  units.RadiationExposureCoulombPerKilogram,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test CoulombPerKilogram conversion
+    coulombs_per_kilogramDto := units.RadiationExposureDto{
+        Value: 100,
+        Unit:  units.RadiationExposureCoulombPerKilogram,
+    }
+    
+    var coulombs_per_kilogramResult *units.RadiationExposure
+    coulombs_per_kilogramResult, err = factory.FromDto(coulombs_per_kilogramDto)
+    if err != nil {
+        t.Errorf("FromDto() with CoulombPerKilogram returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombs_per_kilogramResult.Convert(units.RadiationExposureCoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test Roentgen conversion
+    roentgensDto := units.RadiationExposureDto{
+        Value: 100,
+        Unit:  units.RadiationExposureRoentgen,
+    }
+    
+    var roentgensResult *units.RadiationExposure
+    roentgensResult, err = factory.FromDto(roentgensDto)
+    if err != nil {
+        t.Errorf("FromDto() with Roentgen returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = roentgensResult.Convert(units.RadiationExposureRoentgen)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Roentgen = %v, want %v", converted, 100)
+    }
+    // Test PicocoulombPerKilogram conversion
+    picocoulombs_per_kilogramDto := units.RadiationExposureDto{
+        Value: 100,
+        Unit:  units.RadiationExposurePicocoulombPerKilogram,
+    }
+    
+    var picocoulombs_per_kilogramResult *units.RadiationExposure
+    picocoulombs_per_kilogramResult, err = factory.FromDto(picocoulombs_per_kilogramDto)
+    if err != nil {
+        t.Errorf("FromDto() with PicocoulombPerKilogram returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picocoulombs_per_kilogramResult.Convert(units.RadiationExposurePicocoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PicocoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test NanocoulombPerKilogram conversion
+    nanocoulombs_per_kilogramDto := units.RadiationExposureDto{
+        Value: 100,
+        Unit:  units.RadiationExposureNanocoulombPerKilogram,
+    }
+    
+    var nanocoulombs_per_kilogramResult *units.RadiationExposure
+    nanocoulombs_per_kilogramResult, err = factory.FromDto(nanocoulombs_per_kilogramDto)
+    if err != nil {
+        t.Errorf("FromDto() with NanocoulombPerKilogram returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanocoulombs_per_kilogramResult.Convert(units.RadiationExposureNanocoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanocoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test MicrocoulombPerKilogram conversion
+    microcoulombs_per_kilogramDto := units.RadiationExposureDto{
+        Value: 100,
+        Unit:  units.RadiationExposureMicrocoulombPerKilogram,
+    }
+    
+    var microcoulombs_per_kilogramResult *units.RadiationExposure
+    microcoulombs_per_kilogramResult, err = factory.FromDto(microcoulombs_per_kilogramDto)
+    if err != nil {
+        t.Errorf("FromDto() with MicrocoulombPerKilogram returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microcoulombs_per_kilogramResult.Convert(units.RadiationExposureMicrocoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrocoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test MillicoulombPerKilogram conversion
+    millicoulombs_per_kilogramDto := units.RadiationExposureDto{
+        Value: 100,
+        Unit:  units.RadiationExposureMillicoulombPerKilogram,
+    }
+    
+    var millicoulombs_per_kilogramResult *units.RadiationExposure
+    millicoulombs_per_kilogramResult, err = factory.FromDto(millicoulombs_per_kilogramDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillicoulombPerKilogram returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millicoulombs_per_kilogramResult.Convert(units.RadiationExposureMillicoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillicoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test Microroentgen conversion
+    microroentgensDto := units.RadiationExposureDto{
+        Value: 100,
+        Unit:  units.RadiationExposureMicroroentgen,
+    }
+    
+    var microroentgensResult *units.RadiationExposure
+    microroentgensResult, err = factory.FromDto(microroentgensDto)
+    if err != nil {
+        t.Errorf("FromDto() with Microroentgen returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microroentgensResult.Convert(units.RadiationExposureMicroroentgen)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microroentgen = %v, want %v", converted, 100)
+    }
+    // Test Milliroentgen conversion
+    milliroentgensDto := units.RadiationExposureDto{
+        Value: 100,
+        Unit:  units.RadiationExposureMilliroentgen,
+    }
+    
+    var milliroentgensResult *units.RadiationExposure
+    milliroentgensResult, err = factory.FromDto(milliroentgensDto)
+    if err != nil {
+        t.Errorf("FromDto() with Milliroentgen returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliroentgensResult.Convert(units.RadiationExposureMilliroentgen)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Milliroentgen = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.RadiationExposureDto{
+        Value: 0,
+        Unit:  units.RadiationExposureCoulombPerKilogram,
+    }
+    
+    var zeroResult *units.RadiationExposure
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestRadiationExposureFactory_FromDtoJSON(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "CoulombPerKilogram"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "CoulombPerKilogram"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.RadiationExposureDto{
+        Value: nanValue,
+        Unit:  units.RadiationExposureCoulombPerKilogram,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with CoulombPerKilogram unit
+    coulombs_per_kilogramJSON := []byte(`{"value": 100, "unit": "CoulombPerKilogram"}`)
+    coulombs_per_kilogramResult, err := factory.FromDtoJSON(coulombs_per_kilogramJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CoulombPerKilogram unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombs_per_kilogramResult.Convert(units.RadiationExposureCoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test JSON with Roentgen unit
+    roentgensJSON := []byte(`{"value": 100, "unit": "Roentgen"}`)
+    roentgensResult, err := factory.FromDtoJSON(roentgensJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Roentgen unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = roentgensResult.Convert(units.RadiationExposureRoentgen)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Roentgen = %v, want %v", converted, 100)
+    }
+    // Test JSON with PicocoulombPerKilogram unit
+    picocoulombs_per_kilogramJSON := []byte(`{"value": 100, "unit": "PicocoulombPerKilogram"}`)
+    picocoulombs_per_kilogramResult, err := factory.FromDtoJSON(picocoulombs_per_kilogramJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PicocoulombPerKilogram unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picocoulombs_per_kilogramResult.Convert(units.RadiationExposurePicocoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PicocoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test JSON with NanocoulombPerKilogram unit
+    nanocoulombs_per_kilogramJSON := []byte(`{"value": 100, "unit": "NanocoulombPerKilogram"}`)
+    nanocoulombs_per_kilogramResult, err := factory.FromDtoJSON(nanocoulombs_per_kilogramJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with NanocoulombPerKilogram unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanocoulombs_per_kilogramResult.Convert(units.RadiationExposureNanocoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanocoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test JSON with MicrocoulombPerKilogram unit
+    microcoulombs_per_kilogramJSON := []byte(`{"value": 100, "unit": "MicrocoulombPerKilogram"}`)
+    microcoulombs_per_kilogramResult, err := factory.FromDtoJSON(microcoulombs_per_kilogramJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MicrocoulombPerKilogram unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microcoulombs_per_kilogramResult.Convert(units.RadiationExposureMicrocoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrocoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillicoulombPerKilogram unit
+    millicoulombs_per_kilogramJSON := []byte(`{"value": 100, "unit": "MillicoulombPerKilogram"}`)
+    millicoulombs_per_kilogramResult, err := factory.FromDtoJSON(millicoulombs_per_kilogramJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillicoulombPerKilogram unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millicoulombs_per_kilogramResult.Convert(units.RadiationExposureMillicoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillicoulombPerKilogram = %v, want %v", converted, 100)
+    }
+    // Test JSON with Microroentgen unit
+    microroentgensJSON := []byte(`{"value": 100, "unit": "Microroentgen"}`)
+    microroentgensResult, err := factory.FromDtoJSON(microroentgensJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Microroentgen unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microroentgensResult.Convert(units.RadiationExposureMicroroentgen)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microroentgen = %v, want %v", converted, 100)
+    }
+    // Test JSON with Milliroentgen unit
+    milliroentgensJSON := []byte(`{"value": 100, "unit": "Milliroentgen"}`)
+    milliroentgensResult, err := factory.FromDtoJSON(milliroentgensJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Milliroentgen unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliroentgensResult.Convert(units.RadiationExposureMilliroentgen)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Milliroentgen = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "CoulombPerKilogram"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromCoulombsPerKilogram function
+func TestRadiationExposureFactory_FromCoulombsPerKilogram(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCoulombsPerKilogram(100)
+    if err != nil {
+        t.Errorf("FromCoulombsPerKilogram() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationExposureCoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCoulombsPerKilogram() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCoulombsPerKilogram(math.NaN())
+    if err == nil {
+        t.Error("FromCoulombsPerKilogram() with NaN value should return error")
+    }
+
+    _, err = factory.FromCoulombsPerKilogram(math.Inf(1))
+    if err == nil {
+        t.Error("FromCoulombsPerKilogram() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCoulombsPerKilogram(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCoulombsPerKilogram() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCoulombsPerKilogram(0)
+    if err != nil {
+        t.Errorf("FromCoulombsPerKilogram() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationExposureCoulombPerKilogram)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCoulombsPerKilogram() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromRoentgens function
+func TestRadiationExposureFactory_FromRoentgens(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromRoentgens(100)
+    if err != nil {
+        t.Errorf("FromRoentgens() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationExposureRoentgen)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromRoentgens() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromRoentgens(math.NaN())
+    if err == nil {
+        t.Error("FromRoentgens() with NaN value should return error")
+    }
+
+    _, err = factory.FromRoentgens(math.Inf(1))
+    if err == nil {
+        t.Error("FromRoentgens() with +Inf value should return error")
+    }
+
+    _, err = factory.FromRoentgens(math.Inf(-1))
+    if err == nil {
+        t.Error("FromRoentgens() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromRoentgens(0)
+    if err != nil {
+        t.Errorf("FromRoentgens() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationExposureRoentgen)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromRoentgens() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPicocoulombsPerKilogram function
+func TestRadiationExposureFactory_FromPicocoulombsPerKilogram(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPicocoulombsPerKilogram(100)
+    if err != nil {
+        t.Errorf("FromPicocoulombsPerKilogram() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationExposurePicocoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPicocoulombsPerKilogram() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPicocoulombsPerKilogram(math.NaN())
+    if err == nil {
+        t.Error("FromPicocoulombsPerKilogram() with NaN value should return error")
+    }
+
+    _, err = factory.FromPicocoulombsPerKilogram(math.Inf(1))
+    if err == nil {
+        t.Error("FromPicocoulombsPerKilogram() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPicocoulombsPerKilogram(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPicocoulombsPerKilogram() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPicocoulombsPerKilogram(0)
+    if err != nil {
+        t.Errorf("FromPicocoulombsPerKilogram() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationExposurePicocoulombPerKilogram)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPicocoulombsPerKilogram() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanocoulombsPerKilogram function
+func TestRadiationExposureFactory_FromNanocoulombsPerKilogram(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanocoulombsPerKilogram(100)
+    if err != nil {
+        t.Errorf("FromNanocoulombsPerKilogram() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationExposureNanocoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanocoulombsPerKilogram() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanocoulombsPerKilogram(math.NaN())
+    if err == nil {
+        t.Error("FromNanocoulombsPerKilogram() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanocoulombsPerKilogram(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanocoulombsPerKilogram() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanocoulombsPerKilogram(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanocoulombsPerKilogram() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanocoulombsPerKilogram(0)
+    if err != nil {
+        t.Errorf("FromNanocoulombsPerKilogram() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationExposureNanocoulombPerKilogram)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanocoulombsPerKilogram() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrocoulombsPerKilogram function
+func TestRadiationExposureFactory_FromMicrocoulombsPerKilogram(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrocoulombsPerKilogram(100)
+    if err != nil {
+        t.Errorf("FromMicrocoulombsPerKilogram() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationExposureMicrocoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrocoulombsPerKilogram() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrocoulombsPerKilogram(math.NaN())
+    if err == nil {
+        t.Error("FromMicrocoulombsPerKilogram() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrocoulombsPerKilogram(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrocoulombsPerKilogram() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrocoulombsPerKilogram(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrocoulombsPerKilogram() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrocoulombsPerKilogram(0)
+    if err != nil {
+        t.Errorf("FromMicrocoulombsPerKilogram() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationExposureMicrocoulombPerKilogram)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrocoulombsPerKilogram() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillicoulombsPerKilogram function
+func TestRadiationExposureFactory_FromMillicoulombsPerKilogram(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillicoulombsPerKilogram(100)
+    if err != nil {
+        t.Errorf("FromMillicoulombsPerKilogram() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationExposureMillicoulombPerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillicoulombsPerKilogram() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillicoulombsPerKilogram(math.NaN())
+    if err == nil {
+        t.Error("FromMillicoulombsPerKilogram() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillicoulombsPerKilogram(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillicoulombsPerKilogram() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillicoulombsPerKilogram(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillicoulombsPerKilogram() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillicoulombsPerKilogram(0)
+    if err != nil {
+        t.Errorf("FromMillicoulombsPerKilogram() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationExposureMillicoulombPerKilogram)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillicoulombsPerKilogram() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicroroentgens function
+func TestRadiationExposureFactory_FromMicroroentgens(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicroroentgens(100)
+    if err != nil {
+        t.Errorf("FromMicroroentgens() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationExposureMicroroentgen)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicroroentgens() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicroroentgens(math.NaN())
+    if err == nil {
+        t.Error("FromMicroroentgens() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicroroentgens(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicroroentgens() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicroroentgens(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicroroentgens() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicroroentgens(0)
+    if err != nil {
+        t.Errorf("FromMicroroentgens() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationExposureMicroroentgen)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicroroentgens() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilliroentgens function
+func TestRadiationExposureFactory_FromMilliroentgens(t *testing.T) {
+    factory := units.RadiationExposureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilliroentgens(100)
+    if err != nil {
+        t.Errorf("FromMilliroentgens() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationExposureMilliroentgen)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilliroentgens() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilliroentgens(math.NaN())
+    if err == nil {
+        t.Error("FromMilliroentgens() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilliroentgens(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilliroentgens() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilliroentgens(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilliroentgens() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilliroentgens(0)
+    if err != nil {
+        t.Errorf("FromMilliroentgens() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationExposureMilliroentgen)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilliroentgens() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestRadiationExposureToString(t *testing.T) {
 	factory := units.RadiationExposureFactory{}
 	a, err := factory.CreateRadiationExposure(45, units.RadiationExposureCoulombPerKilogram)

@@ -43,6 +43,10 @@ func (udf MagneticFluxDtoFactory) FromJSON(data []byte) (*MagneticFluxDto, error
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

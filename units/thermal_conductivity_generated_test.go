@@ -131,6 +131,256 @@ func TestThermalConductivity_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestThermalConductivityFactory_FromDto(t *testing.T) {
+    factory := units.ThermalConductivityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.ThermalConductivityDto{
+        Value: 100,
+        Unit:  units.ThermalConductivityWattPerMeterKelvin,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.ThermalConductivityDto{
+        Value: math.NaN(),
+        Unit:  units.ThermalConductivityWattPerMeterKelvin,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test WattPerMeterKelvin conversion
+    watts_per_meter_kelvinDto := units.ThermalConductivityDto{
+        Value: 100,
+        Unit:  units.ThermalConductivityWattPerMeterKelvin,
+    }
+    
+    var watts_per_meter_kelvinResult *units.ThermalConductivity
+    watts_per_meter_kelvinResult, err = factory.FromDto(watts_per_meter_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with WattPerMeterKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = watts_per_meter_kelvinResult.Convert(units.ThermalConductivityWattPerMeterKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for WattPerMeterKelvin = %v, want %v", converted, 100)
+    }
+    // Test BtuPerHourFootFahrenheit conversion
+    btus_per_hour_foot_fahrenheitDto := units.ThermalConductivityDto{
+        Value: 100,
+        Unit:  units.ThermalConductivityBtuPerHourFootFahrenheit,
+    }
+    
+    var btus_per_hour_foot_fahrenheitResult *units.ThermalConductivity
+    btus_per_hour_foot_fahrenheitResult, err = factory.FromDto(btus_per_hour_foot_fahrenheitDto)
+    if err != nil {
+        t.Errorf("FromDto() with BtuPerHourFootFahrenheit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_hour_foot_fahrenheitResult.Convert(units.ThermalConductivityBtuPerHourFootFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerHourFootFahrenheit = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.ThermalConductivityDto{
+        Value: 0,
+        Unit:  units.ThermalConductivityWattPerMeterKelvin,
+    }
+    
+    var zeroResult *units.ThermalConductivity
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestThermalConductivityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.ThermalConductivityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "WattPerMeterKelvin"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "WattPerMeterKelvin"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.ThermalConductivityDto{
+        Value: nanValue,
+        Unit:  units.ThermalConductivityWattPerMeterKelvin,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with WattPerMeterKelvin unit
+    watts_per_meter_kelvinJSON := []byte(`{"value": 100, "unit": "WattPerMeterKelvin"}`)
+    watts_per_meter_kelvinResult, err := factory.FromDtoJSON(watts_per_meter_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with WattPerMeterKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = watts_per_meter_kelvinResult.Convert(units.ThermalConductivityWattPerMeterKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for WattPerMeterKelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with BtuPerHourFootFahrenheit unit
+    btus_per_hour_foot_fahrenheitJSON := []byte(`{"value": 100, "unit": "BtuPerHourFootFahrenheit"}`)
+    btus_per_hour_foot_fahrenheitResult, err := factory.FromDtoJSON(btus_per_hour_foot_fahrenheitJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with BtuPerHourFootFahrenheit unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_hour_foot_fahrenheitResult.Convert(units.ThermalConductivityBtuPerHourFootFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerHourFootFahrenheit = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "WattPerMeterKelvin"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromWattsPerMeterKelvin function
+func TestThermalConductivityFactory_FromWattsPerMeterKelvin(t *testing.T) {
+    factory := units.ThermalConductivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromWattsPerMeterKelvin(100)
+    if err != nil {
+        t.Errorf("FromWattsPerMeterKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ThermalConductivityWattPerMeterKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromWattsPerMeterKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromWattsPerMeterKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromWattsPerMeterKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromWattsPerMeterKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromWattsPerMeterKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromWattsPerMeterKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromWattsPerMeterKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromWattsPerMeterKelvin(0)
+    if err != nil {
+        t.Errorf("FromWattsPerMeterKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ThermalConductivityWattPerMeterKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromWattsPerMeterKelvin() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromBtusPerHourFootFahrenheit function
+func TestThermalConductivityFactory_FromBtusPerHourFootFahrenheit(t *testing.T) {
+    factory := units.ThermalConductivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromBtusPerHourFootFahrenheit(100)
+    if err != nil {
+        t.Errorf("FromBtusPerHourFootFahrenheit() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ThermalConductivityBtuPerHourFootFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromBtusPerHourFootFahrenheit() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromBtusPerHourFootFahrenheit(math.NaN())
+    if err == nil {
+        t.Error("FromBtusPerHourFootFahrenheit() with NaN value should return error")
+    }
+
+    _, err = factory.FromBtusPerHourFootFahrenheit(math.Inf(1))
+    if err == nil {
+        t.Error("FromBtusPerHourFootFahrenheit() with +Inf value should return error")
+    }
+
+    _, err = factory.FromBtusPerHourFootFahrenheit(math.Inf(-1))
+    if err == nil {
+        t.Error("FromBtusPerHourFootFahrenheit() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromBtusPerHourFootFahrenheit(0)
+    if err != nil {
+        t.Errorf("FromBtusPerHourFootFahrenheit() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ThermalConductivityBtuPerHourFootFahrenheit)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromBtusPerHourFootFahrenheit() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestThermalConductivityToString(t *testing.T) {
 	factory := units.ThermalConductivityFactory{}
 	a, err := factory.CreateThermalConductivity(45, units.ThermalConductivityWattPerMeterKelvin)

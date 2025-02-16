@@ -123,6 +123,184 @@ func TestElectricField_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestElectricFieldFactory_FromDto(t *testing.T) {
+    factory := units.ElectricFieldFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.ElectricFieldDto{
+        Value: 100,
+        Unit:  units.ElectricFieldVoltPerMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.ElectricFieldDto{
+        Value: math.NaN(),
+        Unit:  units.ElectricFieldVoltPerMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test VoltPerMeter conversion
+    volts_per_meterDto := units.ElectricFieldDto{
+        Value: 100,
+        Unit:  units.ElectricFieldVoltPerMeter,
+    }
+    
+    var volts_per_meterResult *units.ElectricField
+    volts_per_meterResult, err = factory.FromDto(volts_per_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with VoltPerMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = volts_per_meterResult.Convert(units.ElectricFieldVoltPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for VoltPerMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.ElectricFieldDto{
+        Value: 0,
+        Unit:  units.ElectricFieldVoltPerMeter,
+    }
+    
+    var zeroResult *units.ElectricField
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestElectricFieldFactory_FromDtoJSON(t *testing.T) {
+    factory := units.ElectricFieldFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "VoltPerMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "VoltPerMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.ElectricFieldDto{
+        Value: nanValue,
+        Unit:  units.ElectricFieldVoltPerMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with VoltPerMeter unit
+    volts_per_meterJSON := []byte(`{"value": 100, "unit": "VoltPerMeter"}`)
+    volts_per_meterResult, err := factory.FromDtoJSON(volts_per_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with VoltPerMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = volts_per_meterResult.Convert(units.ElectricFieldVoltPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for VoltPerMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "VoltPerMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromVoltsPerMeter function
+func TestElectricFieldFactory_FromVoltsPerMeter(t *testing.T) {
+    factory := units.ElectricFieldFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromVoltsPerMeter(100)
+    if err != nil {
+        t.Errorf("FromVoltsPerMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricFieldVoltPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromVoltsPerMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromVoltsPerMeter(math.NaN())
+    if err == nil {
+        t.Error("FromVoltsPerMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromVoltsPerMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromVoltsPerMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromVoltsPerMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromVoltsPerMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromVoltsPerMeter(0)
+    if err != nil {
+        t.Errorf("FromVoltsPerMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricFieldVoltPerMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromVoltsPerMeter() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestElectricFieldToString(t *testing.T) {
 	factory := units.ElectricFieldFactory{}
 	a, err := factory.CreateElectricField(45, units.ElectricFieldVoltPerMeter)

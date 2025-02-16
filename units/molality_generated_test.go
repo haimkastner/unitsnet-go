@@ -139,6 +139,328 @@ func TestMolality_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestMolalityFactory_FromDto(t *testing.T) {
+    factory := units.MolalityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.MolalityDto{
+        Value: 100,
+        Unit:  units.MolalityMolePerKilogram,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.MolalityDto{
+        Value: math.NaN(),
+        Unit:  units.MolalityMolePerKilogram,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test MolePerKilogram conversion
+    moles_per_kilogramDto := units.MolalityDto{
+        Value: 100,
+        Unit:  units.MolalityMolePerKilogram,
+    }
+    
+    var moles_per_kilogramResult *units.Molality
+    moles_per_kilogramResult, err = factory.FromDto(moles_per_kilogramDto)
+    if err != nil {
+        t.Errorf("FromDto() with MolePerKilogram returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = moles_per_kilogramResult.Convert(units.MolalityMolePerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MolePerKilogram = %v, want %v", converted, 100)
+    }
+    // Test MolePerGram conversion
+    moles_per_gramDto := units.MolalityDto{
+        Value: 100,
+        Unit:  units.MolalityMolePerGram,
+    }
+    
+    var moles_per_gramResult *units.Molality
+    moles_per_gramResult, err = factory.FromDto(moles_per_gramDto)
+    if err != nil {
+        t.Errorf("FromDto() with MolePerGram returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = moles_per_gramResult.Convert(units.MolalityMolePerGram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MolePerGram = %v, want %v", converted, 100)
+    }
+    // Test MillimolePerKilogram conversion
+    millimoles_per_kilogramDto := units.MolalityDto{
+        Value: 100,
+        Unit:  units.MolalityMillimolePerKilogram,
+    }
+    
+    var millimoles_per_kilogramResult *units.Molality
+    millimoles_per_kilogramResult, err = factory.FromDto(millimoles_per_kilogramDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillimolePerKilogram returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millimoles_per_kilogramResult.Convert(units.MolalityMillimolePerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillimolePerKilogram = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.MolalityDto{
+        Value: 0,
+        Unit:  units.MolalityMolePerKilogram,
+    }
+    
+    var zeroResult *units.Molality
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestMolalityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.MolalityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "MolePerKilogram"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "MolePerKilogram"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.MolalityDto{
+        Value: nanValue,
+        Unit:  units.MolalityMolePerKilogram,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with MolePerKilogram unit
+    moles_per_kilogramJSON := []byte(`{"value": 100, "unit": "MolePerKilogram"}`)
+    moles_per_kilogramResult, err := factory.FromDtoJSON(moles_per_kilogramJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MolePerKilogram unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = moles_per_kilogramResult.Convert(units.MolalityMolePerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MolePerKilogram = %v, want %v", converted, 100)
+    }
+    // Test JSON with MolePerGram unit
+    moles_per_gramJSON := []byte(`{"value": 100, "unit": "MolePerGram"}`)
+    moles_per_gramResult, err := factory.FromDtoJSON(moles_per_gramJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MolePerGram unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = moles_per_gramResult.Convert(units.MolalityMolePerGram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MolePerGram = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillimolePerKilogram unit
+    millimoles_per_kilogramJSON := []byte(`{"value": 100, "unit": "MillimolePerKilogram"}`)
+    millimoles_per_kilogramResult, err := factory.FromDtoJSON(millimoles_per_kilogramJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillimolePerKilogram unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millimoles_per_kilogramResult.Convert(units.MolalityMillimolePerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillimolePerKilogram = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "MolePerKilogram"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromMolesPerKilogram function
+func TestMolalityFactory_FromMolesPerKilogram(t *testing.T) {
+    factory := units.MolalityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMolesPerKilogram(100)
+    if err != nil {
+        t.Errorf("FromMolesPerKilogram() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MolalityMolePerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMolesPerKilogram() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMolesPerKilogram(math.NaN())
+    if err == nil {
+        t.Error("FromMolesPerKilogram() with NaN value should return error")
+    }
+
+    _, err = factory.FromMolesPerKilogram(math.Inf(1))
+    if err == nil {
+        t.Error("FromMolesPerKilogram() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMolesPerKilogram(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMolesPerKilogram() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMolesPerKilogram(0)
+    if err != nil {
+        t.Errorf("FromMolesPerKilogram() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MolalityMolePerKilogram)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMolesPerKilogram() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMolesPerGram function
+func TestMolalityFactory_FromMolesPerGram(t *testing.T) {
+    factory := units.MolalityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMolesPerGram(100)
+    if err != nil {
+        t.Errorf("FromMolesPerGram() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MolalityMolePerGram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMolesPerGram() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMolesPerGram(math.NaN())
+    if err == nil {
+        t.Error("FromMolesPerGram() with NaN value should return error")
+    }
+
+    _, err = factory.FromMolesPerGram(math.Inf(1))
+    if err == nil {
+        t.Error("FromMolesPerGram() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMolesPerGram(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMolesPerGram() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMolesPerGram(0)
+    if err != nil {
+        t.Errorf("FromMolesPerGram() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MolalityMolePerGram)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMolesPerGram() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillimolesPerKilogram function
+func TestMolalityFactory_FromMillimolesPerKilogram(t *testing.T) {
+    factory := units.MolalityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillimolesPerKilogram(100)
+    if err != nil {
+        t.Errorf("FromMillimolesPerKilogram() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MolalityMillimolePerKilogram)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillimolesPerKilogram() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillimolesPerKilogram(math.NaN())
+    if err == nil {
+        t.Error("FromMillimolesPerKilogram() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillimolesPerKilogram(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillimolesPerKilogram() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillimolesPerKilogram(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillimolesPerKilogram() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillimolesPerKilogram(0)
+    if err != nil {
+        t.Errorf("FromMillimolesPerKilogram() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MolalityMillimolePerKilogram)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillimolesPerKilogram() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestMolalityToString(t *testing.T) {
 	factory := units.MolalityFactory{}
 	a, err := factory.CreateMolality(45, units.MolalityMolePerKilogram)

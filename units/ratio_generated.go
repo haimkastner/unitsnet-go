@@ -53,6 +53,10 @@ func (udf RatioDtoFactory) FromJSON(data []byte) (*RatioDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

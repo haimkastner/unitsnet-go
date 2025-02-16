@@ -123,6 +123,184 @@ func TestMagnetization_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestMagnetizationFactory_FromDto(t *testing.T) {
+    factory := units.MagnetizationFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.MagnetizationDto{
+        Value: 100,
+        Unit:  units.MagnetizationAmperePerMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.MagnetizationDto{
+        Value: math.NaN(),
+        Unit:  units.MagnetizationAmperePerMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test AmperePerMeter conversion
+    amperes_per_meterDto := units.MagnetizationDto{
+        Value: 100,
+        Unit:  units.MagnetizationAmperePerMeter,
+    }
+    
+    var amperes_per_meterResult *units.Magnetization
+    amperes_per_meterResult, err = factory.FromDto(amperes_per_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with AmperePerMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = amperes_per_meterResult.Convert(units.MagnetizationAmperePerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmperePerMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.MagnetizationDto{
+        Value: 0,
+        Unit:  units.MagnetizationAmperePerMeter,
+    }
+    
+    var zeroResult *units.Magnetization
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestMagnetizationFactory_FromDtoJSON(t *testing.T) {
+    factory := units.MagnetizationFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "AmperePerMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "AmperePerMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.MagnetizationDto{
+        Value: nanValue,
+        Unit:  units.MagnetizationAmperePerMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with AmperePerMeter unit
+    amperes_per_meterJSON := []byte(`{"value": 100, "unit": "AmperePerMeter"}`)
+    amperes_per_meterResult, err := factory.FromDtoJSON(amperes_per_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with AmperePerMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = amperes_per_meterResult.Convert(units.MagnetizationAmperePerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmperePerMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "AmperePerMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromAmperesPerMeter function
+func TestMagnetizationFactory_FromAmperesPerMeter(t *testing.T) {
+    factory := units.MagnetizationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromAmperesPerMeter(100)
+    if err != nil {
+        t.Errorf("FromAmperesPerMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MagnetizationAmperePerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromAmperesPerMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromAmperesPerMeter(math.NaN())
+    if err == nil {
+        t.Error("FromAmperesPerMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromAmperesPerMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromAmperesPerMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromAmperesPerMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromAmperesPerMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromAmperesPerMeter(0)
+    if err != nil {
+        t.Errorf("FromAmperesPerMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MagnetizationAmperePerMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromAmperesPerMeter() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestMagnetizationToString(t *testing.T) {
 	factory := units.MagnetizationFactory{}
 	a, err := factory.CreateMagnetization(45, units.MagnetizationAmperePerMeter)

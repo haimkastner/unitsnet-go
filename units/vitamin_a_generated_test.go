@@ -123,6 +123,184 @@ func TestVitaminA_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestVitaminAFactory_FromDto(t *testing.T) {
+    factory := units.VitaminAFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.VitaminADto{
+        Value: 100,
+        Unit:  units.VitaminAInternationalUnit,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.VitaminADto{
+        Value: math.NaN(),
+        Unit:  units.VitaminAInternationalUnit,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test InternationalUnit conversion
+    international_unitsDto := units.VitaminADto{
+        Value: 100,
+        Unit:  units.VitaminAInternationalUnit,
+    }
+    
+    var international_unitsResult *units.VitaminA
+    international_unitsResult, err = factory.FromDto(international_unitsDto)
+    if err != nil {
+        t.Errorf("FromDto() with InternationalUnit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = international_unitsResult.Convert(units.VitaminAInternationalUnit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for InternationalUnit = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.VitaminADto{
+        Value: 0,
+        Unit:  units.VitaminAInternationalUnit,
+    }
+    
+    var zeroResult *units.VitaminA
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestVitaminAFactory_FromDtoJSON(t *testing.T) {
+    factory := units.VitaminAFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "InternationalUnit"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "InternationalUnit"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.VitaminADto{
+        Value: nanValue,
+        Unit:  units.VitaminAInternationalUnit,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with InternationalUnit unit
+    international_unitsJSON := []byte(`{"value": 100, "unit": "InternationalUnit"}`)
+    international_unitsResult, err := factory.FromDtoJSON(international_unitsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with InternationalUnit unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = international_unitsResult.Convert(units.VitaminAInternationalUnit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for InternationalUnit = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "InternationalUnit"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromInternationalUnits function
+func TestVitaminAFactory_FromInternationalUnits(t *testing.T) {
+    factory := units.VitaminAFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromInternationalUnits(100)
+    if err != nil {
+        t.Errorf("FromInternationalUnits() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VitaminAInternationalUnit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromInternationalUnits() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromInternationalUnits(math.NaN())
+    if err == nil {
+        t.Error("FromInternationalUnits() with NaN value should return error")
+    }
+
+    _, err = factory.FromInternationalUnits(math.Inf(1))
+    if err == nil {
+        t.Error("FromInternationalUnits() with +Inf value should return error")
+    }
+
+    _, err = factory.FromInternationalUnits(math.Inf(-1))
+    if err == nil {
+        t.Error("FromInternationalUnits() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromInternationalUnits(0)
+    if err != nil {
+        t.Errorf("FromInternationalUnits() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VitaminAInternationalUnit)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromInternationalUnits() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestVitaminAToString(t *testing.T) {
 	factory := units.VitaminAFactory{}
 	a, err := factory.CreateVitaminA(45, units.VitaminAInternationalUnit)

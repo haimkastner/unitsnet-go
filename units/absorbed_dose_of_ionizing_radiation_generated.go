@@ -73,6 +73,10 @@ func (udf AbsorbedDoseOfIonizingRadiationDtoFactory) FromJSON(data []byte) (*Abs
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

@@ -107,6 +107,10 @@ func (udf MassFlowDtoFactory) FromJSON(data []byte) (*MassFlowDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

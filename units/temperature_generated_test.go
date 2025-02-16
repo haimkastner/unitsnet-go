@@ -195,6 +195,832 @@ func TestTemperature_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestTemperatureFactory_FromDto(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureKelvin,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.TemperatureDto{
+        Value: math.NaN(),
+        Unit:  units.TemperatureKelvin,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Kelvin conversion
+    kelvinsDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureKelvin,
+    }
+    
+    var kelvinsResult *units.Temperature
+    kelvinsResult, err = factory.FromDto(kelvinsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Kelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kelvinsResult.Convert(units.TemperatureKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kelvin = %v, want %v", converted, 100)
+    }
+    // Test DegreeCelsius conversion
+    degrees_celsiusDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureDegreeCelsius,
+    }
+    
+    var degrees_celsiusResult *units.Temperature
+    degrees_celsiusResult, err = factory.FromDto(degrees_celsiusDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeCelsius returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_celsiusResult.Convert(units.TemperatureDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test MillidegreeCelsius conversion
+    millidegrees_celsiusDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureMillidegreeCelsius,
+    }
+    
+    var millidegrees_celsiusResult *units.Temperature
+    millidegrees_celsiusResult, err = factory.FromDto(millidegrees_celsiusDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillidegreeCelsius returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millidegrees_celsiusResult.Convert(units.TemperatureMillidegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillidegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test DegreeDelisle conversion
+    degrees_delisleDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureDegreeDelisle,
+    }
+    
+    var degrees_delisleResult *units.Temperature
+    degrees_delisleResult, err = factory.FromDto(degrees_delisleDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeDelisle returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_delisleResult.Convert(units.TemperatureDegreeDelisle)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeDelisle = %v, want %v", converted, 100)
+    }
+    // Test DegreeFahrenheit conversion
+    degrees_fahrenheitDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureDegreeFahrenheit,
+    }
+    
+    var degrees_fahrenheitResult *units.Temperature
+    degrees_fahrenheitResult, err = factory.FromDto(degrees_fahrenheitDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeFahrenheit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_fahrenheitResult.Convert(units.TemperatureDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeFahrenheit = %v, want %v", converted, 100)
+    }
+    // Test DegreeNewton conversion
+    degrees_newtonDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureDegreeNewton,
+    }
+    
+    var degrees_newtonResult *units.Temperature
+    degrees_newtonResult, err = factory.FromDto(degrees_newtonDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeNewton returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_newtonResult.Convert(units.TemperatureDegreeNewton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeNewton = %v, want %v", converted, 100)
+    }
+    // Test DegreeRankine conversion
+    degrees_rankineDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureDegreeRankine,
+    }
+    
+    var degrees_rankineResult *units.Temperature
+    degrees_rankineResult, err = factory.FromDto(degrees_rankineDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeRankine returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_rankineResult.Convert(units.TemperatureDegreeRankine)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeRankine = %v, want %v", converted, 100)
+    }
+    // Test DegreeReaumur conversion
+    degrees_reaumurDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureDegreeReaumur,
+    }
+    
+    var degrees_reaumurResult *units.Temperature
+    degrees_reaumurResult, err = factory.FromDto(degrees_reaumurDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeReaumur returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_reaumurResult.Convert(units.TemperatureDegreeReaumur)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeReaumur = %v, want %v", converted, 100)
+    }
+    // Test DegreeRoemer conversion
+    degrees_roemerDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureDegreeRoemer,
+    }
+    
+    var degrees_roemerResult *units.Temperature
+    degrees_roemerResult, err = factory.FromDto(degrees_roemerDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreeRoemer returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_roemerResult.Convert(units.TemperatureDegreeRoemer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeRoemer = %v, want %v", converted, 100)
+    }
+    // Test SolarTemperature conversion
+    solar_temperaturesDto := units.TemperatureDto{
+        Value: 100,
+        Unit:  units.TemperatureSolarTemperature,
+    }
+    
+    var solar_temperaturesResult *units.Temperature
+    solar_temperaturesResult, err = factory.FromDto(solar_temperaturesDto)
+    if err != nil {
+        t.Errorf("FromDto() with SolarTemperature returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = solar_temperaturesResult.Convert(units.TemperatureSolarTemperature)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SolarTemperature = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.TemperatureDto{
+        Value: 0,
+        Unit:  units.TemperatureKelvin,
+    }
+    
+    var zeroResult *units.Temperature
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestTemperatureFactory_FromDtoJSON(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "Kelvin"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Kelvin"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.TemperatureDto{
+        Value: nanValue,
+        Unit:  units.TemperatureKelvin,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Kelvin unit
+    kelvinsJSON := []byte(`{"value": 100, "unit": "Kelvin"}`)
+    kelvinsResult, err := factory.FromDtoJSON(kelvinsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Kelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kelvinsResult.Convert(units.TemperatureKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeCelsius unit
+    degrees_celsiusJSON := []byte(`{"value": 100, "unit": "DegreeCelsius"}`)
+    degrees_celsiusResult, err := factory.FromDtoJSON(degrees_celsiusJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeCelsius unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_celsiusResult.Convert(units.TemperatureDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillidegreeCelsius unit
+    millidegrees_celsiusJSON := []byte(`{"value": 100, "unit": "MillidegreeCelsius"}`)
+    millidegrees_celsiusResult, err := factory.FromDtoJSON(millidegrees_celsiusJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillidegreeCelsius unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millidegrees_celsiusResult.Convert(units.TemperatureMillidegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillidegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeDelisle unit
+    degrees_delisleJSON := []byte(`{"value": 100, "unit": "DegreeDelisle"}`)
+    degrees_delisleResult, err := factory.FromDtoJSON(degrees_delisleJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeDelisle unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_delisleResult.Convert(units.TemperatureDegreeDelisle)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeDelisle = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeFahrenheit unit
+    degrees_fahrenheitJSON := []byte(`{"value": 100, "unit": "DegreeFahrenheit"}`)
+    degrees_fahrenheitResult, err := factory.FromDtoJSON(degrees_fahrenheitJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeFahrenheit unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_fahrenheitResult.Convert(units.TemperatureDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeFahrenheit = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeNewton unit
+    degrees_newtonJSON := []byte(`{"value": 100, "unit": "DegreeNewton"}`)
+    degrees_newtonResult, err := factory.FromDtoJSON(degrees_newtonJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeNewton unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_newtonResult.Convert(units.TemperatureDegreeNewton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeNewton = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeRankine unit
+    degrees_rankineJSON := []byte(`{"value": 100, "unit": "DegreeRankine"}`)
+    degrees_rankineResult, err := factory.FromDtoJSON(degrees_rankineJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeRankine unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_rankineResult.Convert(units.TemperatureDegreeRankine)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeRankine = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeReaumur unit
+    degrees_reaumurJSON := []byte(`{"value": 100, "unit": "DegreeReaumur"}`)
+    degrees_reaumurResult, err := factory.FromDtoJSON(degrees_reaumurJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeReaumur unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_reaumurResult.Convert(units.TemperatureDegreeReaumur)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeReaumur = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreeRoemer unit
+    degrees_roemerJSON := []byte(`{"value": 100, "unit": "DegreeRoemer"}`)
+    degrees_roemerResult, err := factory.FromDtoJSON(degrees_roemerJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreeRoemer unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_roemerResult.Convert(units.TemperatureDegreeRoemer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreeRoemer = %v, want %v", converted, 100)
+    }
+    // Test JSON with SolarTemperature unit
+    solar_temperaturesJSON := []byte(`{"value": 100, "unit": "SolarTemperature"}`)
+    solar_temperaturesResult, err := factory.FromDtoJSON(solar_temperaturesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with SolarTemperature unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = solar_temperaturesResult.Convert(units.TemperatureSolarTemperature)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SolarTemperature = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "Kelvin"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromKelvins function
+func TestTemperatureFactory_FromKelvins(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKelvins(100)
+    if err != nil {
+        t.Errorf("FromKelvins() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKelvins() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKelvins(math.NaN())
+    if err == nil {
+        t.Error("FromKelvins() with NaN value should return error")
+    }
+
+    _, err = factory.FromKelvins(math.Inf(1))
+    if err == nil {
+        t.Error("FromKelvins() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKelvins(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKelvins() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKelvins(0)
+    if err != nil {
+        t.Errorf("FromKelvins() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKelvins() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesCelsius function
+func TestTemperatureFactory_FromDegreesCelsius(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesCelsius(100)
+    if err != nil {
+        t.Errorf("FromDegreesCelsius() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesCelsius() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesCelsius(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesCelsius() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesCelsius(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesCelsius() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesCelsius(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesCelsius() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesCelsius(0)
+    if err != nil {
+        t.Errorf("FromDegreesCelsius() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureDegreeCelsius)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesCelsius() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillidegreesCelsius function
+func TestTemperatureFactory_FromMillidegreesCelsius(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillidegreesCelsius(100)
+    if err != nil {
+        t.Errorf("FromMillidegreesCelsius() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureMillidegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillidegreesCelsius() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillidegreesCelsius(math.NaN())
+    if err == nil {
+        t.Error("FromMillidegreesCelsius() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillidegreesCelsius(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillidegreesCelsius() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillidegreesCelsius(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillidegreesCelsius() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillidegreesCelsius(0)
+    if err != nil {
+        t.Errorf("FromMillidegreesCelsius() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureMillidegreeCelsius)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillidegreesCelsius() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesDelisle function
+func TestTemperatureFactory_FromDegreesDelisle(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesDelisle(100)
+    if err != nil {
+        t.Errorf("FromDegreesDelisle() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureDegreeDelisle)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesDelisle() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesDelisle(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesDelisle() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesDelisle(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesDelisle() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesDelisle(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesDelisle() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesDelisle(0)
+    if err != nil {
+        t.Errorf("FromDegreesDelisle() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureDegreeDelisle)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesDelisle() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesFahrenheit function
+func TestTemperatureFactory_FromDegreesFahrenheit(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesFahrenheit(100)
+    if err != nil {
+        t.Errorf("FromDegreesFahrenheit() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesFahrenheit() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesFahrenheit(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesFahrenheit() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesFahrenheit(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesFahrenheit() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesFahrenheit(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesFahrenheit() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesFahrenheit(0)
+    if err != nil {
+        t.Errorf("FromDegreesFahrenheit() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureDegreeFahrenheit)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesFahrenheit() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesNewton function
+func TestTemperatureFactory_FromDegreesNewton(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesNewton(100)
+    if err != nil {
+        t.Errorf("FromDegreesNewton() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureDegreeNewton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesNewton() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesNewton(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesNewton() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesNewton(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesNewton() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesNewton(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesNewton() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesNewton(0)
+    if err != nil {
+        t.Errorf("FromDegreesNewton() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureDegreeNewton)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesNewton() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesRankine function
+func TestTemperatureFactory_FromDegreesRankine(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesRankine(100)
+    if err != nil {
+        t.Errorf("FromDegreesRankine() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureDegreeRankine)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesRankine() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesRankine(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesRankine() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesRankine(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesRankine() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesRankine(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesRankine() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesRankine(0)
+    if err != nil {
+        t.Errorf("FromDegreesRankine() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureDegreeRankine)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesRankine() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesReaumur function
+func TestTemperatureFactory_FromDegreesReaumur(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesReaumur(100)
+    if err != nil {
+        t.Errorf("FromDegreesReaumur() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureDegreeReaumur)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesReaumur() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesReaumur(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesReaumur() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesReaumur(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesReaumur() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesReaumur(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesReaumur() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesReaumur(0)
+    if err != nil {
+        t.Errorf("FromDegreesReaumur() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureDegreeReaumur)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesReaumur() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesRoemer function
+func TestTemperatureFactory_FromDegreesRoemer(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesRoemer(100)
+    if err != nil {
+        t.Errorf("FromDegreesRoemer() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureDegreeRoemer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesRoemer() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesRoemer(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesRoemer() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesRoemer(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesRoemer() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesRoemer(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesRoemer() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesRoemer(0)
+    if err != nil {
+        t.Errorf("FromDegreesRoemer() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureDegreeRoemer)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesRoemer() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromSolarTemperatures function
+func TestTemperatureFactory_FromSolarTemperatures(t *testing.T) {
+    factory := units.TemperatureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromSolarTemperatures(100)
+    if err != nil {
+        t.Errorf("FromSolarTemperatures() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TemperatureSolarTemperature)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromSolarTemperatures() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromSolarTemperatures(math.NaN())
+    if err == nil {
+        t.Error("FromSolarTemperatures() with NaN value should return error")
+    }
+
+    _, err = factory.FromSolarTemperatures(math.Inf(1))
+    if err == nil {
+        t.Error("FromSolarTemperatures() with +Inf value should return error")
+    }
+
+    _, err = factory.FromSolarTemperatures(math.Inf(-1))
+    if err == nil {
+        t.Error("FromSolarTemperatures() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromSolarTemperatures(0)
+    if err != nil {
+        t.Errorf("FromSolarTemperatures() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TemperatureSolarTemperature)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromSolarTemperatures() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestTemperatureToString(t *testing.T) {
 	factory := units.TemperatureFactory{}
 	a, err := factory.CreateTemperature(45, units.TemperatureKelvin)

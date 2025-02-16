@@ -155,6 +155,472 @@ func TestPorousMediumPermeability_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestPorousMediumPermeabilityFactory_FromDto(t *testing.T) {
+    factory := units.PorousMediumPermeabilityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.PorousMediumPermeabilityDto{
+        Value: 100,
+        Unit:  units.PorousMediumPermeabilitySquareMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.PorousMediumPermeabilityDto{
+        Value: math.NaN(),
+        Unit:  units.PorousMediumPermeabilitySquareMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Darcy conversion
+    darcysDto := units.PorousMediumPermeabilityDto{
+        Value: 100,
+        Unit:  units.PorousMediumPermeabilityDarcy,
+    }
+    
+    var darcysResult *units.PorousMediumPermeability
+    darcysResult, err = factory.FromDto(darcysDto)
+    if err != nil {
+        t.Errorf("FromDto() with Darcy returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = darcysResult.Convert(units.PorousMediumPermeabilityDarcy)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Darcy = %v, want %v", converted, 100)
+    }
+    // Test SquareMeter conversion
+    square_metersDto := units.PorousMediumPermeabilityDto{
+        Value: 100,
+        Unit:  units.PorousMediumPermeabilitySquareMeter,
+    }
+    
+    var square_metersResult *units.PorousMediumPermeability
+    square_metersResult, err = factory.FromDto(square_metersDto)
+    if err != nil {
+        t.Errorf("FromDto() with SquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = square_metersResult.Convert(units.PorousMediumPermeabilitySquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SquareMeter = %v, want %v", converted, 100)
+    }
+    // Test SquareCentimeter conversion
+    square_centimetersDto := units.PorousMediumPermeabilityDto{
+        Value: 100,
+        Unit:  units.PorousMediumPermeabilitySquareCentimeter,
+    }
+    
+    var square_centimetersResult *units.PorousMediumPermeability
+    square_centimetersResult, err = factory.FromDto(square_centimetersDto)
+    if err != nil {
+        t.Errorf("FromDto() with SquareCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = square_centimetersResult.Convert(units.PorousMediumPermeabilitySquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test Microdarcy conversion
+    microdarcysDto := units.PorousMediumPermeabilityDto{
+        Value: 100,
+        Unit:  units.PorousMediumPermeabilityMicrodarcy,
+    }
+    
+    var microdarcysResult *units.PorousMediumPermeability
+    microdarcysResult, err = factory.FromDto(microdarcysDto)
+    if err != nil {
+        t.Errorf("FromDto() with Microdarcy returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microdarcysResult.Convert(units.PorousMediumPermeabilityMicrodarcy)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microdarcy = %v, want %v", converted, 100)
+    }
+    // Test Millidarcy conversion
+    millidarcysDto := units.PorousMediumPermeabilityDto{
+        Value: 100,
+        Unit:  units.PorousMediumPermeabilityMillidarcy,
+    }
+    
+    var millidarcysResult *units.PorousMediumPermeability
+    millidarcysResult, err = factory.FromDto(millidarcysDto)
+    if err != nil {
+        t.Errorf("FromDto() with Millidarcy returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millidarcysResult.Convert(units.PorousMediumPermeabilityMillidarcy)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millidarcy = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.PorousMediumPermeabilityDto{
+        Value: 0,
+        Unit:  units.PorousMediumPermeabilitySquareMeter,
+    }
+    
+    var zeroResult *units.PorousMediumPermeability
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestPorousMediumPermeabilityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.PorousMediumPermeabilityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "SquareMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "SquareMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.PorousMediumPermeabilityDto{
+        Value: nanValue,
+        Unit:  units.PorousMediumPermeabilitySquareMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Darcy unit
+    darcysJSON := []byte(`{"value": 100, "unit": "Darcy"}`)
+    darcysResult, err := factory.FromDtoJSON(darcysJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Darcy unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = darcysResult.Convert(units.PorousMediumPermeabilityDarcy)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Darcy = %v, want %v", converted, 100)
+    }
+    // Test JSON with SquareMeter unit
+    square_metersJSON := []byte(`{"value": 100, "unit": "SquareMeter"}`)
+    square_metersResult, err := factory.FromDtoJSON(square_metersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with SquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = square_metersResult.Convert(units.PorousMediumPermeabilitySquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with SquareCentimeter unit
+    square_centimetersJSON := []byte(`{"value": 100, "unit": "SquareCentimeter"}`)
+    square_centimetersResult, err := factory.FromDtoJSON(square_centimetersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with SquareCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = square_centimetersResult.Convert(units.PorousMediumPermeabilitySquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with Microdarcy unit
+    microdarcysJSON := []byte(`{"value": 100, "unit": "Microdarcy"}`)
+    microdarcysResult, err := factory.FromDtoJSON(microdarcysJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Microdarcy unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microdarcysResult.Convert(units.PorousMediumPermeabilityMicrodarcy)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microdarcy = %v, want %v", converted, 100)
+    }
+    // Test JSON with Millidarcy unit
+    millidarcysJSON := []byte(`{"value": 100, "unit": "Millidarcy"}`)
+    millidarcysResult, err := factory.FromDtoJSON(millidarcysJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Millidarcy unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millidarcysResult.Convert(units.PorousMediumPermeabilityMillidarcy)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millidarcy = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "SquareMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromDarcys function
+func TestPorousMediumPermeabilityFactory_FromDarcys(t *testing.T) {
+    factory := units.PorousMediumPermeabilityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDarcys(100)
+    if err != nil {
+        t.Errorf("FromDarcys() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PorousMediumPermeabilityDarcy)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDarcys() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDarcys(math.NaN())
+    if err == nil {
+        t.Error("FromDarcys() with NaN value should return error")
+    }
+
+    _, err = factory.FromDarcys(math.Inf(1))
+    if err == nil {
+        t.Error("FromDarcys() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDarcys(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDarcys() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDarcys(0)
+    if err != nil {
+        t.Errorf("FromDarcys() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PorousMediumPermeabilityDarcy)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDarcys() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromSquareMeters function
+func TestPorousMediumPermeabilityFactory_FromSquareMeters(t *testing.T) {
+    factory := units.PorousMediumPermeabilityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromSquareMeters(100)
+    if err != nil {
+        t.Errorf("FromSquareMeters() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PorousMediumPermeabilitySquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromSquareMeters() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromSquareMeters(math.NaN())
+    if err == nil {
+        t.Error("FromSquareMeters() with NaN value should return error")
+    }
+
+    _, err = factory.FromSquareMeters(math.Inf(1))
+    if err == nil {
+        t.Error("FromSquareMeters() with +Inf value should return error")
+    }
+
+    _, err = factory.FromSquareMeters(math.Inf(-1))
+    if err == nil {
+        t.Error("FromSquareMeters() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromSquareMeters(0)
+    if err != nil {
+        t.Errorf("FromSquareMeters() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PorousMediumPermeabilitySquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromSquareMeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromSquareCentimeters function
+func TestPorousMediumPermeabilityFactory_FromSquareCentimeters(t *testing.T) {
+    factory := units.PorousMediumPermeabilityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromSquareCentimeters(100)
+    if err != nil {
+        t.Errorf("FromSquareCentimeters() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PorousMediumPermeabilitySquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromSquareCentimeters() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromSquareCentimeters(math.NaN())
+    if err == nil {
+        t.Error("FromSquareCentimeters() with NaN value should return error")
+    }
+
+    _, err = factory.FromSquareCentimeters(math.Inf(1))
+    if err == nil {
+        t.Error("FromSquareCentimeters() with +Inf value should return error")
+    }
+
+    _, err = factory.FromSquareCentimeters(math.Inf(-1))
+    if err == nil {
+        t.Error("FromSquareCentimeters() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromSquareCentimeters(0)
+    if err != nil {
+        t.Errorf("FromSquareCentimeters() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PorousMediumPermeabilitySquareCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromSquareCentimeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrodarcys function
+func TestPorousMediumPermeabilityFactory_FromMicrodarcys(t *testing.T) {
+    factory := units.PorousMediumPermeabilityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrodarcys(100)
+    if err != nil {
+        t.Errorf("FromMicrodarcys() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PorousMediumPermeabilityMicrodarcy)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrodarcys() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrodarcys(math.NaN())
+    if err == nil {
+        t.Error("FromMicrodarcys() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrodarcys(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrodarcys() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrodarcys(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrodarcys() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrodarcys(0)
+    if err != nil {
+        t.Errorf("FromMicrodarcys() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PorousMediumPermeabilityMicrodarcy)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrodarcys() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillidarcys function
+func TestPorousMediumPermeabilityFactory_FromMillidarcys(t *testing.T) {
+    factory := units.PorousMediumPermeabilityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillidarcys(100)
+    if err != nil {
+        t.Errorf("FromMillidarcys() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PorousMediumPermeabilityMillidarcy)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillidarcys() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillidarcys(math.NaN())
+    if err == nil {
+        t.Error("FromMillidarcys() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillidarcys(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillidarcys() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillidarcys(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillidarcys() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillidarcys(0)
+    if err != nil {
+        t.Errorf("FromMillidarcys() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PorousMediumPermeabilityMillidarcy)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillidarcys() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestPorousMediumPermeabilityToString(t *testing.T) {
 	factory := units.PorousMediumPermeabilityFactory{}
 	a, err := factory.CreatePorousMediumPermeability(45, units.PorousMediumPermeabilitySquareMeter)

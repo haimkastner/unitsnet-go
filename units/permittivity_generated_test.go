@@ -123,6 +123,184 @@ func TestPermittivity_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestPermittivityFactory_FromDto(t *testing.T) {
+    factory := units.PermittivityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.PermittivityDto{
+        Value: 100,
+        Unit:  units.PermittivityFaradPerMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.PermittivityDto{
+        Value: math.NaN(),
+        Unit:  units.PermittivityFaradPerMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test FaradPerMeter conversion
+    farads_per_meterDto := units.PermittivityDto{
+        Value: 100,
+        Unit:  units.PermittivityFaradPerMeter,
+    }
+    
+    var farads_per_meterResult *units.Permittivity
+    farads_per_meterResult, err = factory.FromDto(farads_per_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with FaradPerMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = farads_per_meterResult.Convert(units.PermittivityFaradPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for FaradPerMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.PermittivityDto{
+        Value: 0,
+        Unit:  units.PermittivityFaradPerMeter,
+    }
+    
+    var zeroResult *units.Permittivity
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestPermittivityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.PermittivityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "FaradPerMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "FaradPerMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.PermittivityDto{
+        Value: nanValue,
+        Unit:  units.PermittivityFaradPerMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with FaradPerMeter unit
+    farads_per_meterJSON := []byte(`{"value": 100, "unit": "FaradPerMeter"}`)
+    farads_per_meterResult, err := factory.FromDtoJSON(farads_per_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with FaradPerMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = farads_per_meterResult.Convert(units.PermittivityFaradPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for FaradPerMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "FaradPerMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromFaradsPerMeter function
+func TestPermittivityFactory_FromFaradsPerMeter(t *testing.T) {
+    factory := units.PermittivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromFaradsPerMeter(100)
+    if err != nil {
+        t.Errorf("FromFaradsPerMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PermittivityFaradPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromFaradsPerMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromFaradsPerMeter(math.NaN())
+    if err == nil {
+        t.Error("FromFaradsPerMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromFaradsPerMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromFaradsPerMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromFaradsPerMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromFaradsPerMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromFaradsPerMeter(0)
+    if err != nil {
+        t.Errorf("FromFaradsPerMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PermittivityFaradPerMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromFaradsPerMeter() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestPermittivityToString(t *testing.T) {
 	factory := units.PermittivityFactory{}
 	a, err := factory.CreatePermittivity(45, units.PermittivityFaradPerMeter)

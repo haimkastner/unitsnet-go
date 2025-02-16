@@ -135,6 +135,192 @@ func Test{{ unit }}_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func Test{{ unit }}Factory_FromDto(t *testing.T) {
+    factory := units.{{ unit }}Factory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.{{ unit }}Dto{
+        Value: 100,
+        Unit:  units.{{ unit }}{{ base_unit }},
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.{{ unit }}Dto{
+        Value: math.NaN(),
+        Unit:  units.{{ unit }}{{ base_unit }},
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    {%- for method in methods %}
+    // Test {{ method.unit }} conversion
+    {{ method.name }}Dto := units.{{ unit }}Dto{
+        Value: 100,
+        Unit:  units.{{ unit }}{{ method.unit }},
+    }
+    
+    var {{ method.name }}Result *units.{{ unit }}
+    {{ method.name }}Result, err = factory.FromDto({{ method.name }}Dto)
+    if err != nil {
+        t.Errorf("FromDto() with {{ method.unit }} returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = {{ method.name }}Result.Convert(units.{{ unit }}{{ method.unit }})
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for {{ method.unit }} = %v, want %v", converted, 100)
+    }
+    {%- endfor %}
+
+    // Test zero value
+    zeroDto := units.{{ unit }}Dto{
+        Value: 0,
+        Unit:  units.{{ unit }}{{ base_unit }},
+    }
+    
+    var zeroResult *units.{{ unit }}
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func Test{{ unit }}Factory_FromDtoJSON(t *testing.T) {
+    factory := units.{{ unit }}Factory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "{{ base_unit }}"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "{{ base_unit }}"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.{{ unit }}Dto{
+        Value: nanValue,
+        Unit:  units.{{ unit }}{{ base_unit }},
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+
+    {%- for method in methods %}
+    // Test JSON with {{ method.unit }} unit
+    {{ method.name }}JSON := []byte(`{"value": 100, "unit": "{{ method.unit }}"}`)
+    {{ method.name }}Result, err := factory.FromDtoJSON({{ method.name }}JSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with {{ method.unit }} unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = {{ method.name }}Result.Convert(units.{{ unit }}{{ method.unit }})
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for {{ method.unit }} = %v, want %v", converted, 100)
+    }
+    {%- endfor %}
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "{{ base_unit }}"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+{%- for method in methods %}
+// Test From{{ method.plural_name }} function
+func Test{{ unit }}Factory_From{{ method.plural_name }}(t *testing.T) {
+    factory := units.{{ unit }}Factory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.From{{ method.plural_name }}(100)
+    if err != nil {
+        t.Errorf("From{{ method.plural_name }}() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.{{ unit }}{{ method.unit }})
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("From{{ method.plural_name }}() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.From{{ method.plural_name }}(math.NaN())
+    if err == nil {
+        t.Error("From{{ method.plural_name }}() with NaN value should return error")
+    }
+
+    _, err = factory.From{{ method.plural_name }}(math.Inf(1))
+    if err == nil {
+        t.Error("From{{ method.plural_name }}() with +Inf value should return error")
+    }
+
+    _, err = factory.From{{ method.plural_name }}(math.Inf(-1))
+    if err == nil {
+        t.Error("From{{ method.plural_name }}() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.From{{ method.plural_name }}(0)
+    if err != nil {
+        t.Errorf("From{{ method.plural_name }}() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.{{ unit }}{{ method.unit }})
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("From{{ method.plural_name }}() with zero value = %v, want 0", converted)
+    }
+}
+{%- endfor %}
+
 func Test{{ unit }}ToString(t *testing.T) {
 	factory := units.{{ unit }}Factory{}
 	a, err := factory.Create{{ unit }}(45, units.{{ unit }}{{ base_unit }})

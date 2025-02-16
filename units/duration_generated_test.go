@@ -211,6 +211,976 @@ func TestDuration_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestDurationFactory_FromDto(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationSecond,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.DurationDto{
+        Value: math.NaN(),
+        Unit:  units.DurationSecond,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Year365 conversion
+    years365Dto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationYear365,
+    }
+    
+    var years365Result *units.Duration
+    years365Result, err = factory.FromDto(years365Dto)
+    if err != nil {
+        t.Errorf("FromDto() with Year365 returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = years365Result.Convert(units.DurationYear365)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Year365 = %v, want %v", converted, 100)
+    }
+    // Test Month30 conversion
+    months30Dto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationMonth30,
+    }
+    
+    var months30Result *units.Duration
+    months30Result, err = factory.FromDto(months30Dto)
+    if err != nil {
+        t.Errorf("FromDto() with Month30 returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = months30Result.Convert(units.DurationMonth30)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Month30 = %v, want %v", converted, 100)
+    }
+    // Test Week conversion
+    weeksDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationWeek,
+    }
+    
+    var weeksResult *units.Duration
+    weeksResult, err = factory.FromDto(weeksDto)
+    if err != nil {
+        t.Errorf("FromDto() with Week returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = weeksResult.Convert(units.DurationWeek)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Week = %v, want %v", converted, 100)
+    }
+    // Test Day conversion
+    daysDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationDay,
+    }
+    
+    var daysResult *units.Duration
+    daysResult, err = factory.FromDto(daysDto)
+    if err != nil {
+        t.Errorf("FromDto() with Day returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = daysResult.Convert(units.DurationDay)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Day = %v, want %v", converted, 100)
+    }
+    // Test Hour conversion
+    hoursDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationHour,
+    }
+    
+    var hoursResult *units.Duration
+    hoursResult, err = factory.FromDto(hoursDto)
+    if err != nil {
+        t.Errorf("FromDto() with Hour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = hoursResult.Convert(units.DurationHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Hour = %v, want %v", converted, 100)
+    }
+    // Test Minute conversion
+    minutesDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationMinute,
+    }
+    
+    var minutesResult *units.Duration
+    minutesResult, err = factory.FromDto(minutesDto)
+    if err != nil {
+        t.Errorf("FromDto() with Minute returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = minutesResult.Convert(units.DurationMinute)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Minute = %v, want %v", converted, 100)
+    }
+    // Test Second conversion
+    secondsDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationSecond,
+    }
+    
+    var secondsResult *units.Duration
+    secondsResult, err = factory.FromDto(secondsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Second returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = secondsResult.Convert(units.DurationSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Second = %v, want %v", converted, 100)
+    }
+    // Test JulianYear conversion
+    julian_yearsDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationJulianYear,
+    }
+    
+    var julian_yearsResult *units.Duration
+    julian_yearsResult, err = factory.FromDto(julian_yearsDto)
+    if err != nil {
+        t.Errorf("FromDto() with JulianYear returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = julian_yearsResult.Convert(units.DurationJulianYear)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for JulianYear = %v, want %v", converted, 100)
+    }
+    // Test Sol conversion
+    solsDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationSol,
+    }
+    
+    var solsResult *units.Duration
+    solsResult, err = factory.FromDto(solsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Sol returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = solsResult.Convert(units.DurationSol)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Sol = %v, want %v", converted, 100)
+    }
+    // Test Nanosecond conversion
+    nanosecondsDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationNanosecond,
+    }
+    
+    var nanosecondsResult *units.Duration
+    nanosecondsResult, err = factory.FromDto(nanosecondsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Nanosecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanosecondsResult.Convert(units.DurationNanosecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nanosecond = %v, want %v", converted, 100)
+    }
+    // Test Microsecond conversion
+    microsecondsDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationMicrosecond,
+    }
+    
+    var microsecondsResult *units.Duration
+    microsecondsResult, err = factory.FromDto(microsecondsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Microsecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microsecondsResult.Convert(units.DurationMicrosecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microsecond = %v, want %v", converted, 100)
+    }
+    // Test Millisecond conversion
+    millisecondsDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationMillisecond,
+    }
+    
+    var millisecondsResult *units.Duration
+    millisecondsResult, err = factory.FromDto(millisecondsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Millisecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millisecondsResult.Convert(units.DurationMillisecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millisecond = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.DurationDto{
+        Value: 0,
+        Unit:  units.DurationSecond,
+    }
+    
+    var zeroResult *units.Duration
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestDurationFactory_FromDtoJSON(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "Second"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Second"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.DurationDto{
+        Value: nanValue,
+        Unit:  units.DurationSecond,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Year365 unit
+    years365JSON := []byte(`{"value": 100, "unit": "Year365"}`)
+    years365Result, err := factory.FromDtoJSON(years365JSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Year365 unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = years365Result.Convert(units.DurationYear365)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Year365 = %v, want %v", converted, 100)
+    }
+    // Test JSON with Month30 unit
+    months30JSON := []byte(`{"value": 100, "unit": "Month30"}`)
+    months30Result, err := factory.FromDtoJSON(months30JSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Month30 unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = months30Result.Convert(units.DurationMonth30)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Month30 = %v, want %v", converted, 100)
+    }
+    // Test JSON with Week unit
+    weeksJSON := []byte(`{"value": 100, "unit": "Week"}`)
+    weeksResult, err := factory.FromDtoJSON(weeksJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Week unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = weeksResult.Convert(units.DurationWeek)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Week = %v, want %v", converted, 100)
+    }
+    // Test JSON with Day unit
+    daysJSON := []byte(`{"value": 100, "unit": "Day"}`)
+    daysResult, err := factory.FromDtoJSON(daysJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Day unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = daysResult.Convert(units.DurationDay)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Day = %v, want %v", converted, 100)
+    }
+    // Test JSON with Hour unit
+    hoursJSON := []byte(`{"value": 100, "unit": "Hour"}`)
+    hoursResult, err := factory.FromDtoJSON(hoursJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Hour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = hoursResult.Convert(units.DurationHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Hour = %v, want %v", converted, 100)
+    }
+    // Test JSON with Minute unit
+    minutesJSON := []byte(`{"value": 100, "unit": "Minute"}`)
+    minutesResult, err := factory.FromDtoJSON(minutesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Minute unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = minutesResult.Convert(units.DurationMinute)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Minute = %v, want %v", converted, 100)
+    }
+    // Test JSON with Second unit
+    secondsJSON := []byte(`{"value": 100, "unit": "Second"}`)
+    secondsResult, err := factory.FromDtoJSON(secondsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Second unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = secondsResult.Convert(units.DurationSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Second = %v, want %v", converted, 100)
+    }
+    // Test JSON with JulianYear unit
+    julian_yearsJSON := []byte(`{"value": 100, "unit": "JulianYear"}`)
+    julian_yearsResult, err := factory.FromDtoJSON(julian_yearsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with JulianYear unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = julian_yearsResult.Convert(units.DurationJulianYear)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for JulianYear = %v, want %v", converted, 100)
+    }
+    // Test JSON with Sol unit
+    solsJSON := []byte(`{"value": 100, "unit": "Sol"}`)
+    solsResult, err := factory.FromDtoJSON(solsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Sol unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = solsResult.Convert(units.DurationSol)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Sol = %v, want %v", converted, 100)
+    }
+    // Test JSON with Nanosecond unit
+    nanosecondsJSON := []byte(`{"value": 100, "unit": "Nanosecond"}`)
+    nanosecondsResult, err := factory.FromDtoJSON(nanosecondsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Nanosecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanosecondsResult.Convert(units.DurationNanosecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nanosecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with Microsecond unit
+    microsecondsJSON := []byte(`{"value": 100, "unit": "Microsecond"}`)
+    microsecondsResult, err := factory.FromDtoJSON(microsecondsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Microsecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microsecondsResult.Convert(units.DurationMicrosecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microsecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with Millisecond unit
+    millisecondsJSON := []byte(`{"value": 100, "unit": "Millisecond"}`)
+    millisecondsResult, err := factory.FromDtoJSON(millisecondsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Millisecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millisecondsResult.Convert(units.DurationMillisecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millisecond = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "Second"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromYears365 function
+func TestDurationFactory_FromYears365(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromYears365(100)
+    if err != nil {
+        t.Errorf("FromYears365() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationYear365)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromYears365() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromYears365(math.NaN())
+    if err == nil {
+        t.Error("FromYears365() with NaN value should return error")
+    }
+
+    _, err = factory.FromYears365(math.Inf(1))
+    if err == nil {
+        t.Error("FromYears365() with +Inf value should return error")
+    }
+
+    _, err = factory.FromYears365(math.Inf(-1))
+    if err == nil {
+        t.Error("FromYears365() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromYears365(0)
+    if err != nil {
+        t.Errorf("FromYears365() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationYear365)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromYears365() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMonths30 function
+func TestDurationFactory_FromMonths30(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMonths30(100)
+    if err != nil {
+        t.Errorf("FromMonths30() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationMonth30)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMonths30() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMonths30(math.NaN())
+    if err == nil {
+        t.Error("FromMonths30() with NaN value should return error")
+    }
+
+    _, err = factory.FromMonths30(math.Inf(1))
+    if err == nil {
+        t.Error("FromMonths30() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMonths30(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMonths30() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMonths30(0)
+    if err != nil {
+        t.Errorf("FromMonths30() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationMonth30)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMonths30() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromWeeks function
+func TestDurationFactory_FromWeeks(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromWeeks(100)
+    if err != nil {
+        t.Errorf("FromWeeks() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationWeek)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromWeeks() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromWeeks(math.NaN())
+    if err == nil {
+        t.Error("FromWeeks() with NaN value should return error")
+    }
+
+    _, err = factory.FromWeeks(math.Inf(1))
+    if err == nil {
+        t.Error("FromWeeks() with +Inf value should return error")
+    }
+
+    _, err = factory.FromWeeks(math.Inf(-1))
+    if err == nil {
+        t.Error("FromWeeks() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromWeeks(0)
+    if err != nil {
+        t.Errorf("FromWeeks() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationWeek)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromWeeks() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDays function
+func TestDurationFactory_FromDays(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDays(100)
+    if err != nil {
+        t.Errorf("FromDays() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationDay)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDays() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDays(math.NaN())
+    if err == nil {
+        t.Error("FromDays() with NaN value should return error")
+    }
+
+    _, err = factory.FromDays(math.Inf(1))
+    if err == nil {
+        t.Error("FromDays() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDays(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDays() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDays(0)
+    if err != nil {
+        t.Errorf("FromDays() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationDay)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDays() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromHours function
+func TestDurationFactory_FromHours(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromHours(100)
+    if err != nil {
+        t.Errorf("FromHours() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromHours() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromHours(math.NaN())
+    if err == nil {
+        t.Error("FromHours() with NaN value should return error")
+    }
+
+    _, err = factory.FromHours(math.Inf(1))
+    if err == nil {
+        t.Error("FromHours() with +Inf value should return error")
+    }
+
+    _, err = factory.FromHours(math.Inf(-1))
+    if err == nil {
+        t.Error("FromHours() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromHours(0)
+    if err != nil {
+        t.Errorf("FromHours() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromHours() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMinutes function
+func TestDurationFactory_FromMinutes(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMinutes(100)
+    if err != nil {
+        t.Errorf("FromMinutes() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationMinute)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMinutes() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMinutes(math.NaN())
+    if err == nil {
+        t.Error("FromMinutes() with NaN value should return error")
+    }
+
+    _, err = factory.FromMinutes(math.Inf(1))
+    if err == nil {
+        t.Error("FromMinutes() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMinutes(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMinutes() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMinutes(0)
+    if err != nil {
+        t.Errorf("FromMinutes() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationMinute)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMinutes() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromSeconds function
+func TestDurationFactory_FromSeconds(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromSeconds(100)
+    if err != nil {
+        t.Errorf("FromSeconds() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromSeconds() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromSeconds(math.NaN())
+    if err == nil {
+        t.Error("FromSeconds() with NaN value should return error")
+    }
+
+    _, err = factory.FromSeconds(math.Inf(1))
+    if err == nil {
+        t.Error("FromSeconds() with +Inf value should return error")
+    }
+
+    _, err = factory.FromSeconds(math.Inf(-1))
+    if err == nil {
+        t.Error("FromSeconds() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromSeconds(0)
+    if err != nil {
+        t.Errorf("FromSeconds() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromSeconds() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromJulianYears function
+func TestDurationFactory_FromJulianYears(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromJulianYears(100)
+    if err != nil {
+        t.Errorf("FromJulianYears() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationJulianYear)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromJulianYears() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromJulianYears(math.NaN())
+    if err == nil {
+        t.Error("FromJulianYears() with NaN value should return error")
+    }
+
+    _, err = factory.FromJulianYears(math.Inf(1))
+    if err == nil {
+        t.Error("FromJulianYears() with +Inf value should return error")
+    }
+
+    _, err = factory.FromJulianYears(math.Inf(-1))
+    if err == nil {
+        t.Error("FromJulianYears() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromJulianYears(0)
+    if err != nil {
+        t.Errorf("FromJulianYears() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationJulianYear)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromJulianYears() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromSols function
+func TestDurationFactory_FromSols(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromSols(100)
+    if err != nil {
+        t.Errorf("FromSols() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationSol)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromSols() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromSols(math.NaN())
+    if err == nil {
+        t.Error("FromSols() with NaN value should return error")
+    }
+
+    _, err = factory.FromSols(math.Inf(1))
+    if err == nil {
+        t.Error("FromSols() with +Inf value should return error")
+    }
+
+    _, err = factory.FromSols(math.Inf(-1))
+    if err == nil {
+        t.Error("FromSols() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromSols(0)
+    if err != nil {
+        t.Errorf("FromSols() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationSol)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromSols() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanoseconds function
+func TestDurationFactory_FromNanoseconds(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanoseconds(100)
+    if err != nil {
+        t.Errorf("FromNanoseconds() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationNanosecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanoseconds() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanoseconds(math.NaN())
+    if err == nil {
+        t.Error("FromNanoseconds() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanoseconds(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanoseconds() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanoseconds(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanoseconds() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanoseconds(0)
+    if err != nil {
+        t.Errorf("FromNanoseconds() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationNanosecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanoseconds() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicroseconds function
+func TestDurationFactory_FromMicroseconds(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicroseconds(100)
+    if err != nil {
+        t.Errorf("FromMicroseconds() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationMicrosecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicroseconds() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicroseconds(math.NaN())
+    if err == nil {
+        t.Error("FromMicroseconds() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicroseconds(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicroseconds() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicroseconds(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicroseconds() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicroseconds(0)
+    if err != nil {
+        t.Errorf("FromMicroseconds() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationMicrosecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicroseconds() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilliseconds function
+func TestDurationFactory_FromMilliseconds(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilliseconds(100)
+    if err != nil {
+        t.Errorf("FromMilliseconds() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationMillisecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilliseconds() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilliseconds(math.NaN())
+    if err == nil {
+        t.Error("FromMilliseconds() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilliseconds(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilliseconds() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilliseconds(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilliseconds() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilliseconds(0)
+    if err != nil {
+        t.Errorf("FromMilliseconds() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationMillisecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilliseconds() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestDurationToString(t *testing.T) {
 	factory := units.DurationFactory{}
 	a, err := factory.CreateDuration(45, units.DurationSecond)

@@ -195,6 +195,832 @@ func TestRadiationEquivalentDoseRate_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestRadiationEquivalentDoseRateFactory_FromDto(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateSievertPerSecond,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.RadiationEquivalentDoseRateDto{
+        Value: math.NaN(),
+        Unit:  units.RadiationEquivalentDoseRateSievertPerSecond,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test SievertPerHour conversion
+    sieverts_per_hourDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateSievertPerHour,
+    }
+    
+    var sieverts_per_hourResult *units.RadiationEquivalentDoseRate
+    sieverts_per_hourResult, err = factory.FromDto(sieverts_per_hourDto)
+    if err != nil {
+        t.Errorf("FromDto() with SievertPerHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = sieverts_per_hourResult.Convert(units.RadiationEquivalentDoseRateSievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SievertPerHour = %v, want %v", converted, 100)
+    }
+    // Test SievertPerSecond conversion
+    sieverts_per_secondDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateSievertPerSecond,
+    }
+    
+    var sieverts_per_secondResult *units.RadiationEquivalentDoseRate
+    sieverts_per_secondResult, err = factory.FromDto(sieverts_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with SievertPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = sieverts_per_secondResult.Convert(units.RadiationEquivalentDoseRateSievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SievertPerSecond = %v, want %v", converted, 100)
+    }
+    // Test RoentgenEquivalentManPerHour conversion
+    roentgens_equivalent_man_per_hourDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateRoentgenEquivalentManPerHour,
+    }
+    
+    var roentgens_equivalent_man_per_hourResult *units.RadiationEquivalentDoseRate
+    roentgens_equivalent_man_per_hourResult, err = factory.FromDto(roentgens_equivalent_man_per_hourDto)
+    if err != nil {
+        t.Errorf("FromDto() with RoentgenEquivalentManPerHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = roentgens_equivalent_man_per_hourResult.Convert(units.RadiationEquivalentDoseRateRoentgenEquivalentManPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for RoentgenEquivalentManPerHour = %v, want %v", converted, 100)
+    }
+    // Test NanosievertPerHour conversion
+    nanosieverts_per_hourDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateNanosievertPerHour,
+    }
+    
+    var nanosieverts_per_hourResult *units.RadiationEquivalentDoseRate
+    nanosieverts_per_hourResult, err = factory.FromDto(nanosieverts_per_hourDto)
+    if err != nil {
+        t.Errorf("FromDto() with NanosievertPerHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanosieverts_per_hourResult.Convert(units.RadiationEquivalentDoseRateNanosievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanosievertPerHour = %v, want %v", converted, 100)
+    }
+    // Test MicrosievertPerHour conversion
+    microsieverts_per_hourDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateMicrosievertPerHour,
+    }
+    
+    var microsieverts_per_hourResult *units.RadiationEquivalentDoseRate
+    microsieverts_per_hourResult, err = factory.FromDto(microsieverts_per_hourDto)
+    if err != nil {
+        t.Errorf("FromDto() with MicrosievertPerHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microsieverts_per_hourResult.Convert(units.RadiationEquivalentDoseRateMicrosievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrosievertPerHour = %v, want %v", converted, 100)
+    }
+    // Test MillisievertPerHour conversion
+    millisieverts_per_hourDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateMillisievertPerHour,
+    }
+    
+    var millisieverts_per_hourResult *units.RadiationEquivalentDoseRate
+    millisieverts_per_hourResult, err = factory.FromDto(millisieverts_per_hourDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillisievertPerHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millisieverts_per_hourResult.Convert(units.RadiationEquivalentDoseRateMillisievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillisievertPerHour = %v, want %v", converted, 100)
+    }
+    // Test NanosievertPerSecond conversion
+    nanosieverts_per_secondDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateNanosievertPerSecond,
+    }
+    
+    var nanosieverts_per_secondResult *units.RadiationEquivalentDoseRate
+    nanosieverts_per_secondResult, err = factory.FromDto(nanosieverts_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with NanosievertPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanosieverts_per_secondResult.Convert(units.RadiationEquivalentDoseRateNanosievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanosievertPerSecond = %v, want %v", converted, 100)
+    }
+    // Test MicrosievertPerSecond conversion
+    microsieverts_per_secondDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateMicrosievertPerSecond,
+    }
+    
+    var microsieverts_per_secondResult *units.RadiationEquivalentDoseRate
+    microsieverts_per_secondResult, err = factory.FromDto(microsieverts_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with MicrosievertPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microsieverts_per_secondResult.Convert(units.RadiationEquivalentDoseRateMicrosievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrosievertPerSecond = %v, want %v", converted, 100)
+    }
+    // Test MillisievertPerSecond conversion
+    millisieverts_per_secondDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateMillisievertPerSecond,
+    }
+    
+    var millisieverts_per_secondResult *units.RadiationEquivalentDoseRate
+    millisieverts_per_secondResult, err = factory.FromDto(millisieverts_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillisievertPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millisieverts_per_secondResult.Convert(units.RadiationEquivalentDoseRateMillisievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillisievertPerSecond = %v, want %v", converted, 100)
+    }
+    // Test MilliroentgenEquivalentManPerHour conversion
+    milliroentgens_equivalent_man_per_hourDto := units.RadiationEquivalentDoseRateDto{
+        Value: 100,
+        Unit:  units.RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour,
+    }
+    
+    var milliroentgens_equivalent_man_per_hourResult *units.RadiationEquivalentDoseRate
+    milliroentgens_equivalent_man_per_hourResult, err = factory.FromDto(milliroentgens_equivalent_man_per_hourDto)
+    if err != nil {
+        t.Errorf("FromDto() with MilliroentgenEquivalentManPerHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliroentgens_equivalent_man_per_hourResult.Convert(units.RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliroentgenEquivalentManPerHour = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.RadiationEquivalentDoseRateDto{
+        Value: 0,
+        Unit:  units.RadiationEquivalentDoseRateSievertPerSecond,
+    }
+    
+    var zeroResult *units.RadiationEquivalentDoseRate
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestRadiationEquivalentDoseRateFactory_FromDtoJSON(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "SievertPerSecond"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "SievertPerSecond"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.RadiationEquivalentDoseRateDto{
+        Value: nanValue,
+        Unit:  units.RadiationEquivalentDoseRateSievertPerSecond,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with SievertPerHour unit
+    sieverts_per_hourJSON := []byte(`{"value": 100, "unit": "SievertPerHour"}`)
+    sieverts_per_hourResult, err := factory.FromDtoJSON(sieverts_per_hourJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with SievertPerHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = sieverts_per_hourResult.Convert(units.RadiationEquivalentDoseRateSievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SievertPerHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with SievertPerSecond unit
+    sieverts_per_secondJSON := []byte(`{"value": 100, "unit": "SievertPerSecond"}`)
+    sieverts_per_secondResult, err := factory.FromDtoJSON(sieverts_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with SievertPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = sieverts_per_secondResult.Convert(units.RadiationEquivalentDoseRateSievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SievertPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with RoentgenEquivalentManPerHour unit
+    roentgens_equivalent_man_per_hourJSON := []byte(`{"value": 100, "unit": "RoentgenEquivalentManPerHour"}`)
+    roentgens_equivalent_man_per_hourResult, err := factory.FromDtoJSON(roentgens_equivalent_man_per_hourJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with RoentgenEquivalentManPerHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = roentgens_equivalent_man_per_hourResult.Convert(units.RadiationEquivalentDoseRateRoentgenEquivalentManPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for RoentgenEquivalentManPerHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with NanosievertPerHour unit
+    nanosieverts_per_hourJSON := []byte(`{"value": 100, "unit": "NanosievertPerHour"}`)
+    nanosieverts_per_hourResult, err := factory.FromDtoJSON(nanosieverts_per_hourJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with NanosievertPerHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanosieverts_per_hourResult.Convert(units.RadiationEquivalentDoseRateNanosievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanosievertPerHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with MicrosievertPerHour unit
+    microsieverts_per_hourJSON := []byte(`{"value": 100, "unit": "MicrosievertPerHour"}`)
+    microsieverts_per_hourResult, err := factory.FromDtoJSON(microsieverts_per_hourJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MicrosievertPerHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microsieverts_per_hourResult.Convert(units.RadiationEquivalentDoseRateMicrosievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrosievertPerHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillisievertPerHour unit
+    millisieverts_per_hourJSON := []byte(`{"value": 100, "unit": "MillisievertPerHour"}`)
+    millisieverts_per_hourResult, err := factory.FromDtoJSON(millisieverts_per_hourJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillisievertPerHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millisieverts_per_hourResult.Convert(units.RadiationEquivalentDoseRateMillisievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillisievertPerHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with NanosievertPerSecond unit
+    nanosieverts_per_secondJSON := []byte(`{"value": 100, "unit": "NanosievertPerSecond"}`)
+    nanosieverts_per_secondResult, err := factory.FromDtoJSON(nanosieverts_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with NanosievertPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanosieverts_per_secondResult.Convert(units.RadiationEquivalentDoseRateNanosievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanosievertPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with MicrosievertPerSecond unit
+    microsieverts_per_secondJSON := []byte(`{"value": 100, "unit": "MicrosievertPerSecond"}`)
+    microsieverts_per_secondResult, err := factory.FromDtoJSON(microsieverts_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MicrosievertPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microsieverts_per_secondResult.Convert(units.RadiationEquivalentDoseRateMicrosievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrosievertPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillisievertPerSecond unit
+    millisieverts_per_secondJSON := []byte(`{"value": 100, "unit": "MillisievertPerSecond"}`)
+    millisieverts_per_secondResult, err := factory.FromDtoJSON(millisieverts_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillisievertPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millisieverts_per_secondResult.Convert(units.RadiationEquivalentDoseRateMillisievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillisievertPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with MilliroentgenEquivalentManPerHour unit
+    milliroentgens_equivalent_man_per_hourJSON := []byte(`{"value": 100, "unit": "MilliroentgenEquivalentManPerHour"}`)
+    milliroentgens_equivalent_man_per_hourResult, err := factory.FromDtoJSON(milliroentgens_equivalent_man_per_hourJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MilliroentgenEquivalentManPerHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliroentgens_equivalent_man_per_hourResult.Convert(units.RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliroentgenEquivalentManPerHour = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "SievertPerSecond"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromSievertsPerHour function
+func TestRadiationEquivalentDoseRateFactory_FromSievertsPerHour(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromSievertsPerHour(100)
+    if err != nil {
+        t.Errorf("FromSievertsPerHour() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateSievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromSievertsPerHour() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromSievertsPerHour(math.NaN())
+    if err == nil {
+        t.Error("FromSievertsPerHour() with NaN value should return error")
+    }
+
+    _, err = factory.FromSievertsPerHour(math.Inf(1))
+    if err == nil {
+        t.Error("FromSievertsPerHour() with +Inf value should return error")
+    }
+
+    _, err = factory.FromSievertsPerHour(math.Inf(-1))
+    if err == nil {
+        t.Error("FromSievertsPerHour() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromSievertsPerHour(0)
+    if err != nil {
+        t.Errorf("FromSievertsPerHour() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateSievertPerHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromSievertsPerHour() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromSievertsPerSecond function
+func TestRadiationEquivalentDoseRateFactory_FromSievertsPerSecond(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromSievertsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromSievertsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateSievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromSievertsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromSievertsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromSievertsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromSievertsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromSievertsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromSievertsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromSievertsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromSievertsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromSievertsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateSievertPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromSievertsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromRoentgensEquivalentManPerHour function
+func TestRadiationEquivalentDoseRateFactory_FromRoentgensEquivalentManPerHour(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromRoentgensEquivalentManPerHour(100)
+    if err != nil {
+        t.Errorf("FromRoentgensEquivalentManPerHour() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateRoentgenEquivalentManPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromRoentgensEquivalentManPerHour() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromRoentgensEquivalentManPerHour(math.NaN())
+    if err == nil {
+        t.Error("FromRoentgensEquivalentManPerHour() with NaN value should return error")
+    }
+
+    _, err = factory.FromRoentgensEquivalentManPerHour(math.Inf(1))
+    if err == nil {
+        t.Error("FromRoentgensEquivalentManPerHour() with +Inf value should return error")
+    }
+
+    _, err = factory.FromRoentgensEquivalentManPerHour(math.Inf(-1))
+    if err == nil {
+        t.Error("FromRoentgensEquivalentManPerHour() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromRoentgensEquivalentManPerHour(0)
+    if err != nil {
+        t.Errorf("FromRoentgensEquivalentManPerHour() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateRoentgenEquivalentManPerHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromRoentgensEquivalentManPerHour() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanosievertsPerHour function
+func TestRadiationEquivalentDoseRateFactory_FromNanosievertsPerHour(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanosievertsPerHour(100)
+    if err != nil {
+        t.Errorf("FromNanosievertsPerHour() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateNanosievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanosievertsPerHour() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanosievertsPerHour(math.NaN())
+    if err == nil {
+        t.Error("FromNanosievertsPerHour() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanosievertsPerHour(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanosievertsPerHour() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanosievertsPerHour(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanosievertsPerHour() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanosievertsPerHour(0)
+    if err != nil {
+        t.Errorf("FromNanosievertsPerHour() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateNanosievertPerHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanosievertsPerHour() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrosievertsPerHour function
+func TestRadiationEquivalentDoseRateFactory_FromMicrosievertsPerHour(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrosievertsPerHour(100)
+    if err != nil {
+        t.Errorf("FromMicrosievertsPerHour() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateMicrosievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrosievertsPerHour() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrosievertsPerHour(math.NaN())
+    if err == nil {
+        t.Error("FromMicrosievertsPerHour() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrosievertsPerHour(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrosievertsPerHour() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrosievertsPerHour(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrosievertsPerHour() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrosievertsPerHour(0)
+    if err != nil {
+        t.Errorf("FromMicrosievertsPerHour() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateMicrosievertPerHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrosievertsPerHour() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillisievertsPerHour function
+func TestRadiationEquivalentDoseRateFactory_FromMillisievertsPerHour(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillisievertsPerHour(100)
+    if err != nil {
+        t.Errorf("FromMillisievertsPerHour() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateMillisievertPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillisievertsPerHour() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillisievertsPerHour(math.NaN())
+    if err == nil {
+        t.Error("FromMillisievertsPerHour() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillisievertsPerHour(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillisievertsPerHour() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillisievertsPerHour(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillisievertsPerHour() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillisievertsPerHour(0)
+    if err != nil {
+        t.Errorf("FromMillisievertsPerHour() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateMillisievertPerHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillisievertsPerHour() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanosievertsPerSecond function
+func TestRadiationEquivalentDoseRateFactory_FromNanosievertsPerSecond(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanosievertsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromNanosievertsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateNanosievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanosievertsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanosievertsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromNanosievertsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanosievertsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanosievertsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanosievertsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanosievertsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanosievertsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromNanosievertsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateNanosievertPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanosievertsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrosievertsPerSecond function
+func TestRadiationEquivalentDoseRateFactory_FromMicrosievertsPerSecond(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrosievertsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromMicrosievertsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateMicrosievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrosievertsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrosievertsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromMicrosievertsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrosievertsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrosievertsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrosievertsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrosievertsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrosievertsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromMicrosievertsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateMicrosievertPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrosievertsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillisievertsPerSecond function
+func TestRadiationEquivalentDoseRateFactory_FromMillisievertsPerSecond(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillisievertsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromMillisievertsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateMillisievertPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillisievertsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillisievertsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromMillisievertsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillisievertsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillisievertsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillisievertsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillisievertsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillisievertsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromMillisievertsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateMillisievertPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillisievertsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilliroentgensEquivalentManPerHour function
+func TestRadiationEquivalentDoseRateFactory_FromMilliroentgensEquivalentManPerHour(t *testing.T) {
+    factory := units.RadiationEquivalentDoseRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilliroentgensEquivalentManPerHour(100)
+    if err != nil {
+        t.Errorf("FromMilliroentgensEquivalentManPerHour() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilliroentgensEquivalentManPerHour() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilliroentgensEquivalentManPerHour(math.NaN())
+    if err == nil {
+        t.Error("FromMilliroentgensEquivalentManPerHour() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilliroentgensEquivalentManPerHour(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilliroentgensEquivalentManPerHour() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilliroentgensEquivalentManPerHour(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilliroentgensEquivalentManPerHour() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilliroentgensEquivalentManPerHour(0)
+    if err != nil {
+        t.Errorf("FromMilliroentgensEquivalentManPerHour() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilliroentgensEquivalentManPerHour() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestRadiationEquivalentDoseRateToString(t *testing.T) {
 	factory := units.RadiationEquivalentDoseRateFactory{}
 	a, err := factory.CreateRadiationEquivalentDoseRate(45, units.RadiationEquivalentDoseRateSievertPerSecond)

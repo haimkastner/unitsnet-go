@@ -123,6 +123,184 @@ func TestTurbidity_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestTurbidityFactory_FromDto(t *testing.T) {
+    factory := units.TurbidityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.TurbidityDto{
+        Value: 100,
+        Unit:  units.TurbidityNTU,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.TurbidityDto{
+        Value: math.NaN(),
+        Unit:  units.TurbidityNTU,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test NTU conversion
+    ntuDto := units.TurbidityDto{
+        Value: 100,
+        Unit:  units.TurbidityNTU,
+    }
+    
+    var ntuResult *units.Turbidity
+    ntuResult, err = factory.FromDto(ntuDto)
+    if err != nil {
+        t.Errorf("FromDto() with NTU returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ntuResult.Convert(units.TurbidityNTU)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NTU = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.TurbidityDto{
+        Value: 0,
+        Unit:  units.TurbidityNTU,
+    }
+    
+    var zeroResult *units.Turbidity
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestTurbidityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.TurbidityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "NTU"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "NTU"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.TurbidityDto{
+        Value: nanValue,
+        Unit:  units.TurbidityNTU,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with NTU unit
+    ntuJSON := []byte(`{"value": 100, "unit": "NTU"}`)
+    ntuResult, err := factory.FromDtoJSON(ntuJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with NTU unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ntuResult.Convert(units.TurbidityNTU)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NTU = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "NTU"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromNTU function
+func TestTurbidityFactory_FromNTU(t *testing.T) {
+    factory := units.TurbidityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNTU(100)
+    if err != nil {
+        t.Errorf("FromNTU() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TurbidityNTU)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNTU() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNTU(math.NaN())
+    if err == nil {
+        t.Error("FromNTU() with NaN value should return error")
+    }
+
+    _, err = factory.FromNTU(math.Inf(1))
+    if err == nil {
+        t.Error("FromNTU() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNTU(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNTU() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNTU(0)
+    if err != nil {
+        t.Errorf("FromNTU() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TurbidityNTU)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNTU() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestTurbidityToString(t *testing.T) {
 	factory := units.TurbidityFactory{}
 	a, err := factory.CreateTurbidity(45, units.TurbidityNTU)

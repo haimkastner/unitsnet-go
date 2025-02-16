@@ -73,6 +73,10 @@ func (udf AngleDtoFactory) FromJSON(data []byte) (*AngleDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

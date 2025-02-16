@@ -163,6 +163,544 @@ func TestElectricApparentPower_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestElectricApparentPowerFactory_FromDto(t *testing.T) {
+    factory := units.ElectricApparentPowerFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.ElectricApparentPowerDto{
+        Value: 100,
+        Unit:  units.ElectricApparentPowerVoltampere,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.ElectricApparentPowerDto{
+        Value: math.NaN(),
+        Unit:  units.ElectricApparentPowerVoltampere,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Voltampere conversion
+    voltamperesDto := units.ElectricApparentPowerDto{
+        Value: 100,
+        Unit:  units.ElectricApparentPowerVoltampere,
+    }
+    
+    var voltamperesResult *units.ElectricApparentPower
+    voltamperesResult, err = factory.FromDto(voltamperesDto)
+    if err != nil {
+        t.Errorf("FromDto() with Voltampere returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = voltamperesResult.Convert(units.ElectricApparentPowerVoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Voltampere = %v, want %v", converted, 100)
+    }
+    // Test Microvoltampere conversion
+    microvoltamperesDto := units.ElectricApparentPowerDto{
+        Value: 100,
+        Unit:  units.ElectricApparentPowerMicrovoltampere,
+    }
+    
+    var microvoltamperesResult *units.ElectricApparentPower
+    microvoltamperesResult, err = factory.FromDto(microvoltamperesDto)
+    if err != nil {
+        t.Errorf("FromDto() with Microvoltampere returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microvoltamperesResult.Convert(units.ElectricApparentPowerMicrovoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microvoltampere = %v, want %v", converted, 100)
+    }
+    // Test Millivoltampere conversion
+    millivoltamperesDto := units.ElectricApparentPowerDto{
+        Value: 100,
+        Unit:  units.ElectricApparentPowerMillivoltampere,
+    }
+    
+    var millivoltamperesResult *units.ElectricApparentPower
+    millivoltamperesResult, err = factory.FromDto(millivoltamperesDto)
+    if err != nil {
+        t.Errorf("FromDto() with Millivoltampere returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millivoltamperesResult.Convert(units.ElectricApparentPowerMillivoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millivoltampere = %v, want %v", converted, 100)
+    }
+    // Test Kilovoltampere conversion
+    kilovoltamperesDto := units.ElectricApparentPowerDto{
+        Value: 100,
+        Unit:  units.ElectricApparentPowerKilovoltampere,
+    }
+    
+    var kilovoltamperesResult *units.ElectricApparentPower
+    kilovoltamperesResult, err = factory.FromDto(kilovoltamperesDto)
+    if err != nil {
+        t.Errorf("FromDto() with Kilovoltampere returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilovoltamperesResult.Convert(units.ElectricApparentPowerKilovoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilovoltampere = %v, want %v", converted, 100)
+    }
+    // Test Megavoltampere conversion
+    megavoltamperesDto := units.ElectricApparentPowerDto{
+        Value: 100,
+        Unit:  units.ElectricApparentPowerMegavoltampere,
+    }
+    
+    var megavoltamperesResult *units.ElectricApparentPower
+    megavoltamperesResult, err = factory.FromDto(megavoltamperesDto)
+    if err != nil {
+        t.Errorf("FromDto() with Megavoltampere returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megavoltamperesResult.Convert(units.ElectricApparentPowerMegavoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megavoltampere = %v, want %v", converted, 100)
+    }
+    // Test Gigavoltampere conversion
+    gigavoltamperesDto := units.ElectricApparentPowerDto{
+        Value: 100,
+        Unit:  units.ElectricApparentPowerGigavoltampere,
+    }
+    
+    var gigavoltamperesResult *units.ElectricApparentPower
+    gigavoltamperesResult, err = factory.FromDto(gigavoltamperesDto)
+    if err != nil {
+        t.Errorf("FromDto() with Gigavoltampere returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigavoltamperesResult.Convert(units.ElectricApparentPowerGigavoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gigavoltampere = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.ElectricApparentPowerDto{
+        Value: 0,
+        Unit:  units.ElectricApparentPowerVoltampere,
+    }
+    
+    var zeroResult *units.ElectricApparentPower
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestElectricApparentPowerFactory_FromDtoJSON(t *testing.T) {
+    factory := units.ElectricApparentPowerFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "Voltampere"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Voltampere"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.ElectricApparentPowerDto{
+        Value: nanValue,
+        Unit:  units.ElectricApparentPowerVoltampere,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Voltampere unit
+    voltamperesJSON := []byte(`{"value": 100, "unit": "Voltampere"}`)
+    voltamperesResult, err := factory.FromDtoJSON(voltamperesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Voltampere unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = voltamperesResult.Convert(units.ElectricApparentPowerVoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Voltampere = %v, want %v", converted, 100)
+    }
+    // Test JSON with Microvoltampere unit
+    microvoltamperesJSON := []byte(`{"value": 100, "unit": "Microvoltampere"}`)
+    microvoltamperesResult, err := factory.FromDtoJSON(microvoltamperesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Microvoltampere unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microvoltamperesResult.Convert(units.ElectricApparentPowerMicrovoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microvoltampere = %v, want %v", converted, 100)
+    }
+    // Test JSON with Millivoltampere unit
+    millivoltamperesJSON := []byte(`{"value": 100, "unit": "Millivoltampere"}`)
+    millivoltamperesResult, err := factory.FromDtoJSON(millivoltamperesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Millivoltampere unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millivoltamperesResult.Convert(units.ElectricApparentPowerMillivoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millivoltampere = %v, want %v", converted, 100)
+    }
+    // Test JSON with Kilovoltampere unit
+    kilovoltamperesJSON := []byte(`{"value": 100, "unit": "Kilovoltampere"}`)
+    kilovoltamperesResult, err := factory.FromDtoJSON(kilovoltamperesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Kilovoltampere unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilovoltamperesResult.Convert(units.ElectricApparentPowerKilovoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilovoltampere = %v, want %v", converted, 100)
+    }
+    // Test JSON with Megavoltampere unit
+    megavoltamperesJSON := []byte(`{"value": 100, "unit": "Megavoltampere"}`)
+    megavoltamperesResult, err := factory.FromDtoJSON(megavoltamperesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Megavoltampere unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megavoltamperesResult.Convert(units.ElectricApparentPowerMegavoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megavoltampere = %v, want %v", converted, 100)
+    }
+    // Test JSON with Gigavoltampere unit
+    gigavoltamperesJSON := []byte(`{"value": 100, "unit": "Gigavoltampere"}`)
+    gigavoltamperesResult, err := factory.FromDtoJSON(gigavoltamperesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Gigavoltampere unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigavoltamperesResult.Convert(units.ElectricApparentPowerGigavoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gigavoltampere = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "Voltampere"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromVoltamperes function
+func TestElectricApparentPowerFactory_FromVoltamperes(t *testing.T) {
+    factory := units.ElectricApparentPowerFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromVoltamperes(100)
+    if err != nil {
+        t.Errorf("FromVoltamperes() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricApparentPowerVoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromVoltamperes() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromVoltamperes(math.NaN())
+    if err == nil {
+        t.Error("FromVoltamperes() with NaN value should return error")
+    }
+
+    _, err = factory.FromVoltamperes(math.Inf(1))
+    if err == nil {
+        t.Error("FromVoltamperes() with +Inf value should return error")
+    }
+
+    _, err = factory.FromVoltamperes(math.Inf(-1))
+    if err == nil {
+        t.Error("FromVoltamperes() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromVoltamperes(0)
+    if err != nil {
+        t.Errorf("FromVoltamperes() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricApparentPowerVoltampere)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromVoltamperes() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrovoltamperes function
+func TestElectricApparentPowerFactory_FromMicrovoltamperes(t *testing.T) {
+    factory := units.ElectricApparentPowerFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrovoltamperes(100)
+    if err != nil {
+        t.Errorf("FromMicrovoltamperes() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricApparentPowerMicrovoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrovoltamperes() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrovoltamperes(math.NaN())
+    if err == nil {
+        t.Error("FromMicrovoltamperes() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrovoltamperes(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrovoltamperes() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrovoltamperes(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrovoltamperes() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrovoltamperes(0)
+    if err != nil {
+        t.Errorf("FromMicrovoltamperes() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricApparentPowerMicrovoltampere)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrovoltamperes() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillivoltamperes function
+func TestElectricApparentPowerFactory_FromMillivoltamperes(t *testing.T) {
+    factory := units.ElectricApparentPowerFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillivoltamperes(100)
+    if err != nil {
+        t.Errorf("FromMillivoltamperes() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricApparentPowerMillivoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillivoltamperes() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillivoltamperes(math.NaN())
+    if err == nil {
+        t.Error("FromMillivoltamperes() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillivoltamperes(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillivoltamperes() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillivoltamperes(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillivoltamperes() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillivoltamperes(0)
+    if err != nil {
+        t.Errorf("FromMillivoltamperes() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricApparentPowerMillivoltampere)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillivoltamperes() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilovoltamperes function
+func TestElectricApparentPowerFactory_FromKilovoltamperes(t *testing.T) {
+    factory := units.ElectricApparentPowerFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilovoltamperes(100)
+    if err != nil {
+        t.Errorf("FromKilovoltamperes() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricApparentPowerKilovoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilovoltamperes() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilovoltamperes(math.NaN())
+    if err == nil {
+        t.Error("FromKilovoltamperes() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilovoltamperes(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilovoltamperes() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilovoltamperes(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilovoltamperes() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilovoltamperes(0)
+    if err != nil {
+        t.Errorf("FromKilovoltamperes() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricApparentPowerKilovoltampere)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilovoltamperes() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegavoltamperes function
+func TestElectricApparentPowerFactory_FromMegavoltamperes(t *testing.T) {
+    factory := units.ElectricApparentPowerFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegavoltamperes(100)
+    if err != nil {
+        t.Errorf("FromMegavoltamperes() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricApparentPowerMegavoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegavoltamperes() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegavoltamperes(math.NaN())
+    if err == nil {
+        t.Error("FromMegavoltamperes() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegavoltamperes(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegavoltamperes() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegavoltamperes(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegavoltamperes() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegavoltamperes(0)
+    if err != nil {
+        t.Errorf("FromMegavoltamperes() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricApparentPowerMegavoltampere)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegavoltamperes() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGigavoltamperes function
+func TestElectricApparentPowerFactory_FromGigavoltamperes(t *testing.T) {
+    factory := units.ElectricApparentPowerFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGigavoltamperes(100)
+    if err != nil {
+        t.Errorf("FromGigavoltamperes() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricApparentPowerGigavoltampere)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGigavoltamperes() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGigavoltamperes(math.NaN())
+    if err == nil {
+        t.Error("FromGigavoltamperes() with NaN value should return error")
+    }
+
+    _, err = factory.FromGigavoltamperes(math.Inf(1))
+    if err == nil {
+        t.Error("FromGigavoltamperes() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGigavoltamperes(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGigavoltamperes() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGigavoltamperes(0)
+    if err != nil {
+        t.Errorf("FromGigavoltamperes() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricApparentPowerGigavoltampere)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGigavoltamperes() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestElectricApparentPowerToString(t *testing.T) {
 	factory := units.ElectricApparentPowerFactory{}
 	a, err := factory.CreateElectricApparentPower(45, units.ElectricApparentPowerVoltampere)

@@ -123,6 +123,184 @@ func TestPermeability_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestPermeabilityFactory_FromDto(t *testing.T) {
+    factory := units.PermeabilityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.PermeabilityDto{
+        Value: 100,
+        Unit:  units.PermeabilityHenryPerMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.PermeabilityDto{
+        Value: math.NaN(),
+        Unit:  units.PermeabilityHenryPerMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test HenryPerMeter conversion
+    henries_per_meterDto := units.PermeabilityDto{
+        Value: 100,
+        Unit:  units.PermeabilityHenryPerMeter,
+    }
+    
+    var henries_per_meterResult *units.Permeability
+    henries_per_meterResult, err = factory.FromDto(henries_per_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with HenryPerMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = henries_per_meterResult.Convert(units.PermeabilityHenryPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for HenryPerMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.PermeabilityDto{
+        Value: 0,
+        Unit:  units.PermeabilityHenryPerMeter,
+    }
+    
+    var zeroResult *units.Permeability
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestPermeabilityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.PermeabilityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "HenryPerMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "HenryPerMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.PermeabilityDto{
+        Value: nanValue,
+        Unit:  units.PermeabilityHenryPerMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with HenryPerMeter unit
+    henries_per_meterJSON := []byte(`{"value": 100, "unit": "HenryPerMeter"}`)
+    henries_per_meterResult, err := factory.FromDtoJSON(henries_per_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with HenryPerMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = henries_per_meterResult.Convert(units.PermeabilityHenryPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for HenryPerMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "HenryPerMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromHenriesPerMeter function
+func TestPermeabilityFactory_FromHenriesPerMeter(t *testing.T) {
+    factory := units.PermeabilityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromHenriesPerMeter(100)
+    if err != nil {
+        t.Errorf("FromHenriesPerMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PermeabilityHenryPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromHenriesPerMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromHenriesPerMeter(math.NaN())
+    if err == nil {
+        t.Error("FromHenriesPerMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromHenriesPerMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromHenriesPerMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromHenriesPerMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromHenriesPerMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromHenriesPerMeter(0)
+    if err != nil {
+        t.Errorf("FromHenriesPerMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PermeabilityHenryPerMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromHenriesPerMeter() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestPermeabilityToString(t *testing.T) {
 	factory := units.PermeabilityFactory{}
 	a, err := factory.CreatePermeability(45, units.PermeabilityHenryPerMeter)

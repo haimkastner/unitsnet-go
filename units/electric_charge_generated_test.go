@@ -203,6 +203,904 @@ func TestElectricCharge_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestElectricChargeFactory_FromDto(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeCoulomb,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.ElectricChargeDto{
+        Value: math.NaN(),
+        Unit:  units.ElectricChargeCoulomb,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Coulomb conversion
+    coulombsDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeCoulomb,
+    }
+    
+    var coulombsResult *units.ElectricCharge
+    coulombsResult, err = factory.FromDto(coulombsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Coulomb returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombsResult.Convert(units.ElectricChargeCoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Coulomb = %v, want %v", converted, 100)
+    }
+    // Test AmpereHour conversion
+    ampere_hoursDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeAmpereHour,
+    }
+    
+    var ampere_hoursResult *units.ElectricCharge
+    ampere_hoursResult, err = factory.FromDto(ampere_hoursDto)
+    if err != nil {
+        t.Errorf("FromDto() with AmpereHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ampere_hoursResult.Convert(units.ElectricChargeAmpereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmpereHour = %v, want %v", converted, 100)
+    }
+    // Test Picocoulomb conversion
+    picocoulombsDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargePicocoulomb,
+    }
+    
+    var picocoulombsResult *units.ElectricCharge
+    picocoulombsResult, err = factory.FromDto(picocoulombsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Picocoulomb returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picocoulombsResult.Convert(units.ElectricChargePicocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Picocoulomb = %v, want %v", converted, 100)
+    }
+    // Test Nanocoulomb conversion
+    nanocoulombsDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeNanocoulomb,
+    }
+    
+    var nanocoulombsResult *units.ElectricCharge
+    nanocoulombsResult, err = factory.FromDto(nanocoulombsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Nanocoulomb returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanocoulombsResult.Convert(units.ElectricChargeNanocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nanocoulomb = %v, want %v", converted, 100)
+    }
+    // Test Microcoulomb conversion
+    microcoulombsDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeMicrocoulomb,
+    }
+    
+    var microcoulombsResult *units.ElectricCharge
+    microcoulombsResult, err = factory.FromDto(microcoulombsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Microcoulomb returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microcoulombsResult.Convert(units.ElectricChargeMicrocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microcoulomb = %v, want %v", converted, 100)
+    }
+    // Test Millicoulomb conversion
+    millicoulombsDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeMillicoulomb,
+    }
+    
+    var millicoulombsResult *units.ElectricCharge
+    millicoulombsResult, err = factory.FromDto(millicoulombsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Millicoulomb returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millicoulombsResult.Convert(units.ElectricChargeMillicoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millicoulomb = %v, want %v", converted, 100)
+    }
+    // Test Kilocoulomb conversion
+    kilocoulombsDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeKilocoulomb,
+    }
+    
+    var kilocoulombsResult *units.ElectricCharge
+    kilocoulombsResult, err = factory.FromDto(kilocoulombsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Kilocoulomb returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilocoulombsResult.Convert(units.ElectricChargeKilocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilocoulomb = %v, want %v", converted, 100)
+    }
+    // Test Megacoulomb conversion
+    megacoulombsDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeMegacoulomb,
+    }
+    
+    var megacoulombsResult *units.ElectricCharge
+    megacoulombsResult, err = factory.FromDto(megacoulombsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Megacoulomb returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megacoulombsResult.Convert(units.ElectricChargeMegacoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megacoulomb = %v, want %v", converted, 100)
+    }
+    // Test MilliampereHour conversion
+    milliampere_hoursDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeMilliampereHour,
+    }
+    
+    var milliampere_hoursResult *units.ElectricCharge
+    milliampere_hoursResult, err = factory.FromDto(milliampere_hoursDto)
+    if err != nil {
+        t.Errorf("FromDto() with MilliampereHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliampere_hoursResult.Convert(units.ElectricChargeMilliampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliampereHour = %v, want %v", converted, 100)
+    }
+    // Test KiloampereHour conversion
+    kiloampere_hoursDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeKiloampereHour,
+    }
+    
+    var kiloampere_hoursResult *units.ElectricCharge
+    kiloampere_hoursResult, err = factory.FromDto(kiloampere_hoursDto)
+    if err != nil {
+        t.Errorf("FromDto() with KiloampereHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kiloampere_hoursResult.Convert(units.ElectricChargeKiloampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KiloampereHour = %v, want %v", converted, 100)
+    }
+    // Test MegaampereHour conversion
+    megaampere_hoursDto := units.ElectricChargeDto{
+        Value: 100,
+        Unit:  units.ElectricChargeMegaampereHour,
+    }
+    
+    var megaampere_hoursResult *units.ElectricCharge
+    megaampere_hoursResult, err = factory.FromDto(megaampere_hoursDto)
+    if err != nil {
+        t.Errorf("FromDto() with MegaampereHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaampere_hoursResult.Convert(units.ElectricChargeMegaampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegaampereHour = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.ElectricChargeDto{
+        Value: 0,
+        Unit:  units.ElectricChargeCoulomb,
+    }
+    
+    var zeroResult *units.ElectricCharge
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestElectricChargeFactory_FromDtoJSON(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "Coulomb"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Coulomb"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.ElectricChargeDto{
+        Value: nanValue,
+        Unit:  units.ElectricChargeCoulomb,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Coulomb unit
+    coulombsJSON := []byte(`{"value": 100, "unit": "Coulomb"}`)
+    coulombsResult, err := factory.FromDtoJSON(coulombsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Coulomb unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombsResult.Convert(units.ElectricChargeCoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Coulomb = %v, want %v", converted, 100)
+    }
+    // Test JSON with AmpereHour unit
+    ampere_hoursJSON := []byte(`{"value": 100, "unit": "AmpereHour"}`)
+    ampere_hoursResult, err := factory.FromDtoJSON(ampere_hoursJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with AmpereHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ampere_hoursResult.Convert(units.ElectricChargeAmpereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmpereHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with Picocoulomb unit
+    picocoulombsJSON := []byte(`{"value": 100, "unit": "Picocoulomb"}`)
+    picocoulombsResult, err := factory.FromDtoJSON(picocoulombsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Picocoulomb unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picocoulombsResult.Convert(units.ElectricChargePicocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Picocoulomb = %v, want %v", converted, 100)
+    }
+    // Test JSON with Nanocoulomb unit
+    nanocoulombsJSON := []byte(`{"value": 100, "unit": "Nanocoulomb"}`)
+    nanocoulombsResult, err := factory.FromDtoJSON(nanocoulombsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Nanocoulomb unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanocoulombsResult.Convert(units.ElectricChargeNanocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nanocoulomb = %v, want %v", converted, 100)
+    }
+    // Test JSON with Microcoulomb unit
+    microcoulombsJSON := []byte(`{"value": 100, "unit": "Microcoulomb"}`)
+    microcoulombsResult, err := factory.FromDtoJSON(microcoulombsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Microcoulomb unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microcoulombsResult.Convert(units.ElectricChargeMicrocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microcoulomb = %v, want %v", converted, 100)
+    }
+    // Test JSON with Millicoulomb unit
+    millicoulombsJSON := []byte(`{"value": 100, "unit": "Millicoulomb"}`)
+    millicoulombsResult, err := factory.FromDtoJSON(millicoulombsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Millicoulomb unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millicoulombsResult.Convert(units.ElectricChargeMillicoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millicoulomb = %v, want %v", converted, 100)
+    }
+    // Test JSON with Kilocoulomb unit
+    kilocoulombsJSON := []byte(`{"value": 100, "unit": "Kilocoulomb"}`)
+    kilocoulombsResult, err := factory.FromDtoJSON(kilocoulombsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Kilocoulomb unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilocoulombsResult.Convert(units.ElectricChargeKilocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilocoulomb = %v, want %v", converted, 100)
+    }
+    // Test JSON with Megacoulomb unit
+    megacoulombsJSON := []byte(`{"value": 100, "unit": "Megacoulomb"}`)
+    megacoulombsResult, err := factory.FromDtoJSON(megacoulombsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Megacoulomb unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megacoulombsResult.Convert(units.ElectricChargeMegacoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megacoulomb = %v, want %v", converted, 100)
+    }
+    // Test JSON with MilliampereHour unit
+    milliampere_hoursJSON := []byte(`{"value": 100, "unit": "MilliampereHour"}`)
+    milliampere_hoursResult, err := factory.FromDtoJSON(milliampere_hoursJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MilliampereHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliampere_hoursResult.Convert(units.ElectricChargeMilliampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliampereHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with KiloampereHour unit
+    kiloampere_hoursJSON := []byte(`{"value": 100, "unit": "KiloampereHour"}`)
+    kiloampere_hoursResult, err := factory.FromDtoJSON(kiloampere_hoursJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KiloampereHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kiloampere_hoursResult.Convert(units.ElectricChargeKiloampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KiloampereHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with MegaampereHour unit
+    megaampere_hoursJSON := []byte(`{"value": 100, "unit": "MegaampereHour"}`)
+    megaampere_hoursResult, err := factory.FromDtoJSON(megaampere_hoursJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MegaampereHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaampere_hoursResult.Convert(units.ElectricChargeMegaampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegaampereHour = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "Coulomb"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromCoulombs function
+func TestElectricChargeFactory_FromCoulombs(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCoulombs(100)
+    if err != nil {
+        t.Errorf("FromCoulombs() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeCoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCoulombs() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCoulombs(math.NaN())
+    if err == nil {
+        t.Error("FromCoulombs() with NaN value should return error")
+    }
+
+    _, err = factory.FromCoulombs(math.Inf(1))
+    if err == nil {
+        t.Error("FromCoulombs() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCoulombs(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCoulombs() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCoulombs(0)
+    if err != nil {
+        t.Errorf("FromCoulombs() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeCoulomb)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCoulombs() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromAmpereHours function
+func TestElectricChargeFactory_FromAmpereHours(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromAmpereHours(100)
+    if err != nil {
+        t.Errorf("FromAmpereHours() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeAmpereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromAmpereHours() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromAmpereHours(math.NaN())
+    if err == nil {
+        t.Error("FromAmpereHours() with NaN value should return error")
+    }
+
+    _, err = factory.FromAmpereHours(math.Inf(1))
+    if err == nil {
+        t.Error("FromAmpereHours() with +Inf value should return error")
+    }
+
+    _, err = factory.FromAmpereHours(math.Inf(-1))
+    if err == nil {
+        t.Error("FromAmpereHours() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromAmpereHours(0)
+    if err != nil {
+        t.Errorf("FromAmpereHours() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeAmpereHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromAmpereHours() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPicocoulombs function
+func TestElectricChargeFactory_FromPicocoulombs(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPicocoulombs(100)
+    if err != nil {
+        t.Errorf("FromPicocoulombs() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargePicocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPicocoulombs() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPicocoulombs(math.NaN())
+    if err == nil {
+        t.Error("FromPicocoulombs() with NaN value should return error")
+    }
+
+    _, err = factory.FromPicocoulombs(math.Inf(1))
+    if err == nil {
+        t.Error("FromPicocoulombs() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPicocoulombs(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPicocoulombs() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPicocoulombs(0)
+    if err != nil {
+        t.Errorf("FromPicocoulombs() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargePicocoulomb)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPicocoulombs() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanocoulombs function
+func TestElectricChargeFactory_FromNanocoulombs(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanocoulombs(100)
+    if err != nil {
+        t.Errorf("FromNanocoulombs() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeNanocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanocoulombs() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanocoulombs(math.NaN())
+    if err == nil {
+        t.Error("FromNanocoulombs() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanocoulombs(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanocoulombs() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanocoulombs(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanocoulombs() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanocoulombs(0)
+    if err != nil {
+        t.Errorf("FromNanocoulombs() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeNanocoulomb)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanocoulombs() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrocoulombs function
+func TestElectricChargeFactory_FromMicrocoulombs(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrocoulombs(100)
+    if err != nil {
+        t.Errorf("FromMicrocoulombs() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeMicrocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrocoulombs() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrocoulombs(math.NaN())
+    if err == nil {
+        t.Error("FromMicrocoulombs() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrocoulombs(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrocoulombs() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrocoulombs(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrocoulombs() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrocoulombs(0)
+    if err != nil {
+        t.Errorf("FromMicrocoulombs() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeMicrocoulomb)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrocoulombs() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillicoulombs function
+func TestElectricChargeFactory_FromMillicoulombs(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillicoulombs(100)
+    if err != nil {
+        t.Errorf("FromMillicoulombs() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeMillicoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillicoulombs() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillicoulombs(math.NaN())
+    if err == nil {
+        t.Error("FromMillicoulombs() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillicoulombs(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillicoulombs() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillicoulombs(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillicoulombs() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillicoulombs(0)
+    if err != nil {
+        t.Errorf("FromMillicoulombs() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeMillicoulomb)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillicoulombs() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilocoulombs function
+func TestElectricChargeFactory_FromKilocoulombs(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilocoulombs(100)
+    if err != nil {
+        t.Errorf("FromKilocoulombs() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeKilocoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilocoulombs() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilocoulombs(math.NaN())
+    if err == nil {
+        t.Error("FromKilocoulombs() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilocoulombs(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilocoulombs() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilocoulombs(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilocoulombs() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilocoulombs(0)
+    if err != nil {
+        t.Errorf("FromKilocoulombs() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeKilocoulomb)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilocoulombs() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegacoulombs function
+func TestElectricChargeFactory_FromMegacoulombs(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegacoulombs(100)
+    if err != nil {
+        t.Errorf("FromMegacoulombs() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeMegacoulomb)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegacoulombs() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegacoulombs(math.NaN())
+    if err == nil {
+        t.Error("FromMegacoulombs() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegacoulombs(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegacoulombs() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegacoulombs(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegacoulombs() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegacoulombs(0)
+    if err != nil {
+        t.Errorf("FromMegacoulombs() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeMegacoulomb)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegacoulombs() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilliampereHours function
+func TestElectricChargeFactory_FromMilliampereHours(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilliampereHours(100)
+    if err != nil {
+        t.Errorf("FromMilliampereHours() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeMilliampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilliampereHours() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilliampereHours(math.NaN())
+    if err == nil {
+        t.Error("FromMilliampereHours() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilliampereHours(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilliampereHours() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilliampereHours(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilliampereHours() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilliampereHours(0)
+    if err != nil {
+        t.Errorf("FromMilliampereHours() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeMilliampereHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilliampereHours() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKiloampereHours function
+func TestElectricChargeFactory_FromKiloampereHours(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKiloampereHours(100)
+    if err != nil {
+        t.Errorf("FromKiloampereHours() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeKiloampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKiloampereHours() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKiloampereHours(math.NaN())
+    if err == nil {
+        t.Error("FromKiloampereHours() with NaN value should return error")
+    }
+
+    _, err = factory.FromKiloampereHours(math.Inf(1))
+    if err == nil {
+        t.Error("FromKiloampereHours() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKiloampereHours(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKiloampereHours() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKiloampereHours(0)
+    if err != nil {
+        t.Errorf("FromKiloampereHours() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeKiloampereHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKiloampereHours() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegaampereHours function
+func TestElectricChargeFactory_FromMegaampereHours(t *testing.T) {
+    factory := units.ElectricChargeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegaampereHours(100)
+    if err != nil {
+        t.Errorf("FromMegaampereHours() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricChargeMegaampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegaampereHours() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegaampereHours(math.NaN())
+    if err == nil {
+        t.Error("FromMegaampereHours() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegaampereHours(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegaampereHours() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegaampereHours(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegaampereHours() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegaampereHours(0)
+    if err != nil {
+        t.Errorf("FromMegaampereHours() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricChargeMegaampereHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegaampereHours() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestElectricChargeToString(t *testing.T) {
 	factory := units.ElectricChargeFactory{}
 	a, err := factory.CreateElectricCharge(45, units.ElectricChargeCoulomb)

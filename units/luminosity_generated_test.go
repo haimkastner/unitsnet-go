@@ -227,6 +227,1120 @@ func TestLuminosity_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestLuminosityFactory_FromDto(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityWatt,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.LuminosityDto{
+        Value: math.NaN(),
+        Unit:  units.LuminosityWatt,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Watt conversion
+    wattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityWatt,
+    }
+    
+    var wattsResult *units.Luminosity
+    wattsResult, err = factory.FromDto(wattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Watt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = wattsResult.Convert(units.LuminosityWatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Watt = %v, want %v", converted, 100)
+    }
+    // Test SolarLuminosity conversion
+    solar_luminositiesDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminositySolarLuminosity,
+    }
+    
+    var solar_luminositiesResult *units.Luminosity
+    solar_luminositiesResult, err = factory.FromDto(solar_luminositiesDto)
+    if err != nil {
+        t.Errorf("FromDto() with SolarLuminosity returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = solar_luminositiesResult.Convert(units.LuminositySolarLuminosity)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SolarLuminosity = %v, want %v", converted, 100)
+    }
+    // Test Femtowatt conversion
+    femtowattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityFemtowatt,
+    }
+    
+    var femtowattsResult *units.Luminosity
+    femtowattsResult, err = factory.FromDto(femtowattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Femtowatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = femtowattsResult.Convert(units.LuminosityFemtowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Femtowatt = %v, want %v", converted, 100)
+    }
+    // Test Picowatt conversion
+    picowattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityPicowatt,
+    }
+    
+    var picowattsResult *units.Luminosity
+    picowattsResult, err = factory.FromDto(picowattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Picowatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picowattsResult.Convert(units.LuminosityPicowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Picowatt = %v, want %v", converted, 100)
+    }
+    // Test Nanowatt conversion
+    nanowattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityNanowatt,
+    }
+    
+    var nanowattsResult *units.Luminosity
+    nanowattsResult, err = factory.FromDto(nanowattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Nanowatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanowattsResult.Convert(units.LuminosityNanowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nanowatt = %v, want %v", converted, 100)
+    }
+    // Test Microwatt conversion
+    microwattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityMicrowatt,
+    }
+    
+    var microwattsResult *units.Luminosity
+    microwattsResult, err = factory.FromDto(microwattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Microwatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microwattsResult.Convert(units.LuminosityMicrowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microwatt = %v, want %v", converted, 100)
+    }
+    // Test Milliwatt conversion
+    milliwattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityMilliwatt,
+    }
+    
+    var milliwattsResult *units.Luminosity
+    milliwattsResult, err = factory.FromDto(milliwattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Milliwatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliwattsResult.Convert(units.LuminosityMilliwatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Milliwatt = %v, want %v", converted, 100)
+    }
+    // Test Deciwatt conversion
+    deciwattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityDeciwatt,
+    }
+    
+    var deciwattsResult *units.Luminosity
+    deciwattsResult, err = factory.FromDto(deciwattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Deciwatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = deciwattsResult.Convert(units.LuminosityDeciwatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Deciwatt = %v, want %v", converted, 100)
+    }
+    // Test Decawatt conversion
+    decawattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityDecawatt,
+    }
+    
+    var decawattsResult *units.Luminosity
+    decawattsResult, err = factory.FromDto(decawattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Decawatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decawattsResult.Convert(units.LuminosityDecawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Decawatt = %v, want %v", converted, 100)
+    }
+    // Test Kilowatt conversion
+    kilowattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityKilowatt,
+    }
+    
+    var kilowattsResult *units.Luminosity
+    kilowattsResult, err = factory.FromDto(kilowattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Kilowatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilowattsResult.Convert(units.LuminosityKilowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilowatt = %v, want %v", converted, 100)
+    }
+    // Test Megawatt conversion
+    megawattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityMegawatt,
+    }
+    
+    var megawattsResult *units.Luminosity
+    megawattsResult, err = factory.FromDto(megawattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Megawatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megawattsResult.Convert(units.LuminosityMegawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megawatt = %v, want %v", converted, 100)
+    }
+    // Test Gigawatt conversion
+    gigawattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityGigawatt,
+    }
+    
+    var gigawattsResult *units.Luminosity
+    gigawattsResult, err = factory.FromDto(gigawattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Gigawatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigawattsResult.Convert(units.LuminosityGigawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gigawatt = %v, want %v", converted, 100)
+    }
+    // Test Terawatt conversion
+    terawattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityTerawatt,
+    }
+    
+    var terawattsResult *units.Luminosity
+    terawattsResult, err = factory.FromDto(terawattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Terawatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = terawattsResult.Convert(units.LuminosityTerawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Terawatt = %v, want %v", converted, 100)
+    }
+    // Test Petawatt conversion
+    petawattsDto := units.LuminosityDto{
+        Value: 100,
+        Unit:  units.LuminosityPetawatt,
+    }
+    
+    var petawattsResult *units.Luminosity
+    petawattsResult, err = factory.FromDto(petawattsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Petawatt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = petawattsResult.Convert(units.LuminosityPetawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Petawatt = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.LuminosityDto{
+        Value: 0,
+        Unit:  units.LuminosityWatt,
+    }
+    
+    var zeroResult *units.Luminosity
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestLuminosityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "Watt"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Watt"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.LuminosityDto{
+        Value: nanValue,
+        Unit:  units.LuminosityWatt,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Watt unit
+    wattsJSON := []byte(`{"value": 100, "unit": "Watt"}`)
+    wattsResult, err := factory.FromDtoJSON(wattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Watt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = wattsResult.Convert(units.LuminosityWatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Watt = %v, want %v", converted, 100)
+    }
+    // Test JSON with SolarLuminosity unit
+    solar_luminositiesJSON := []byte(`{"value": 100, "unit": "SolarLuminosity"}`)
+    solar_luminositiesResult, err := factory.FromDtoJSON(solar_luminositiesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with SolarLuminosity unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = solar_luminositiesResult.Convert(units.LuminositySolarLuminosity)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for SolarLuminosity = %v, want %v", converted, 100)
+    }
+    // Test JSON with Femtowatt unit
+    femtowattsJSON := []byte(`{"value": 100, "unit": "Femtowatt"}`)
+    femtowattsResult, err := factory.FromDtoJSON(femtowattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Femtowatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = femtowattsResult.Convert(units.LuminosityFemtowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Femtowatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Picowatt unit
+    picowattsJSON := []byte(`{"value": 100, "unit": "Picowatt"}`)
+    picowattsResult, err := factory.FromDtoJSON(picowattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Picowatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picowattsResult.Convert(units.LuminosityPicowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Picowatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Nanowatt unit
+    nanowattsJSON := []byte(`{"value": 100, "unit": "Nanowatt"}`)
+    nanowattsResult, err := factory.FromDtoJSON(nanowattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Nanowatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanowattsResult.Convert(units.LuminosityNanowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nanowatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Microwatt unit
+    microwattsJSON := []byte(`{"value": 100, "unit": "Microwatt"}`)
+    microwattsResult, err := factory.FromDtoJSON(microwattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Microwatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microwattsResult.Convert(units.LuminosityMicrowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microwatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Milliwatt unit
+    milliwattsJSON := []byte(`{"value": 100, "unit": "Milliwatt"}`)
+    milliwattsResult, err := factory.FromDtoJSON(milliwattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Milliwatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliwattsResult.Convert(units.LuminosityMilliwatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Milliwatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Deciwatt unit
+    deciwattsJSON := []byte(`{"value": 100, "unit": "Deciwatt"}`)
+    deciwattsResult, err := factory.FromDtoJSON(deciwattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Deciwatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = deciwattsResult.Convert(units.LuminosityDeciwatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Deciwatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Decawatt unit
+    decawattsJSON := []byte(`{"value": 100, "unit": "Decawatt"}`)
+    decawattsResult, err := factory.FromDtoJSON(decawattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Decawatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decawattsResult.Convert(units.LuminosityDecawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Decawatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Kilowatt unit
+    kilowattsJSON := []byte(`{"value": 100, "unit": "Kilowatt"}`)
+    kilowattsResult, err := factory.FromDtoJSON(kilowattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Kilowatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilowattsResult.Convert(units.LuminosityKilowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilowatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Megawatt unit
+    megawattsJSON := []byte(`{"value": 100, "unit": "Megawatt"}`)
+    megawattsResult, err := factory.FromDtoJSON(megawattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Megawatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megawattsResult.Convert(units.LuminosityMegawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megawatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Gigawatt unit
+    gigawattsJSON := []byte(`{"value": 100, "unit": "Gigawatt"}`)
+    gigawattsResult, err := factory.FromDtoJSON(gigawattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Gigawatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigawattsResult.Convert(units.LuminosityGigawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gigawatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Terawatt unit
+    terawattsJSON := []byte(`{"value": 100, "unit": "Terawatt"}`)
+    terawattsResult, err := factory.FromDtoJSON(terawattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Terawatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = terawattsResult.Convert(units.LuminosityTerawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Terawatt = %v, want %v", converted, 100)
+    }
+    // Test JSON with Petawatt unit
+    petawattsJSON := []byte(`{"value": 100, "unit": "Petawatt"}`)
+    petawattsResult, err := factory.FromDtoJSON(petawattsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Petawatt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = petawattsResult.Convert(units.LuminosityPetawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Petawatt = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "Watt"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromWatts function
+func TestLuminosityFactory_FromWatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromWatts(100)
+    if err != nil {
+        t.Errorf("FromWatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityWatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromWatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromWatts(math.NaN())
+    if err == nil {
+        t.Error("FromWatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromWatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromWatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromWatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromWatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromWatts(0)
+    if err != nil {
+        t.Errorf("FromWatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityWatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromWatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromSolarLuminosities function
+func TestLuminosityFactory_FromSolarLuminosities(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromSolarLuminosities(100)
+    if err != nil {
+        t.Errorf("FromSolarLuminosities() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminositySolarLuminosity)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromSolarLuminosities() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromSolarLuminosities(math.NaN())
+    if err == nil {
+        t.Error("FromSolarLuminosities() with NaN value should return error")
+    }
+
+    _, err = factory.FromSolarLuminosities(math.Inf(1))
+    if err == nil {
+        t.Error("FromSolarLuminosities() with +Inf value should return error")
+    }
+
+    _, err = factory.FromSolarLuminosities(math.Inf(-1))
+    if err == nil {
+        t.Error("FromSolarLuminosities() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromSolarLuminosities(0)
+    if err != nil {
+        t.Errorf("FromSolarLuminosities() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminositySolarLuminosity)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromSolarLuminosities() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromFemtowatts function
+func TestLuminosityFactory_FromFemtowatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromFemtowatts(100)
+    if err != nil {
+        t.Errorf("FromFemtowatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityFemtowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromFemtowatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromFemtowatts(math.NaN())
+    if err == nil {
+        t.Error("FromFemtowatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromFemtowatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromFemtowatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromFemtowatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromFemtowatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromFemtowatts(0)
+    if err != nil {
+        t.Errorf("FromFemtowatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityFemtowatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromFemtowatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPicowatts function
+func TestLuminosityFactory_FromPicowatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPicowatts(100)
+    if err != nil {
+        t.Errorf("FromPicowatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityPicowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPicowatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPicowatts(math.NaN())
+    if err == nil {
+        t.Error("FromPicowatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromPicowatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromPicowatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPicowatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPicowatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPicowatts(0)
+    if err != nil {
+        t.Errorf("FromPicowatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityPicowatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPicowatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanowatts function
+func TestLuminosityFactory_FromNanowatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanowatts(100)
+    if err != nil {
+        t.Errorf("FromNanowatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityNanowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanowatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanowatts(math.NaN())
+    if err == nil {
+        t.Error("FromNanowatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanowatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanowatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanowatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanowatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanowatts(0)
+    if err != nil {
+        t.Errorf("FromNanowatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityNanowatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanowatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrowatts function
+func TestLuminosityFactory_FromMicrowatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrowatts(100)
+    if err != nil {
+        t.Errorf("FromMicrowatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityMicrowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrowatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrowatts(math.NaN())
+    if err == nil {
+        t.Error("FromMicrowatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrowatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrowatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrowatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrowatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrowatts(0)
+    if err != nil {
+        t.Errorf("FromMicrowatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityMicrowatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrowatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilliwatts function
+func TestLuminosityFactory_FromMilliwatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilliwatts(100)
+    if err != nil {
+        t.Errorf("FromMilliwatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityMilliwatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilliwatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilliwatts(math.NaN())
+    if err == nil {
+        t.Error("FromMilliwatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilliwatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilliwatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilliwatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilliwatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilliwatts(0)
+    if err != nil {
+        t.Errorf("FromMilliwatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityMilliwatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilliwatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDeciwatts function
+func TestLuminosityFactory_FromDeciwatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDeciwatts(100)
+    if err != nil {
+        t.Errorf("FromDeciwatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityDeciwatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDeciwatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDeciwatts(math.NaN())
+    if err == nil {
+        t.Error("FromDeciwatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromDeciwatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromDeciwatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDeciwatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDeciwatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDeciwatts(0)
+    if err != nil {
+        t.Errorf("FromDeciwatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityDeciwatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDeciwatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecawatts function
+func TestLuminosityFactory_FromDecawatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecawatts(100)
+    if err != nil {
+        t.Errorf("FromDecawatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityDecawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecawatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecawatts(math.NaN())
+    if err == nil {
+        t.Error("FromDecawatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecawatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecawatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecawatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecawatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecawatts(0)
+    if err != nil {
+        t.Errorf("FromDecawatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityDecawatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecawatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilowatts function
+func TestLuminosityFactory_FromKilowatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilowatts(100)
+    if err != nil {
+        t.Errorf("FromKilowatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityKilowatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilowatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilowatts(math.NaN())
+    if err == nil {
+        t.Error("FromKilowatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilowatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilowatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilowatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilowatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilowatts(0)
+    if err != nil {
+        t.Errorf("FromKilowatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityKilowatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilowatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegawatts function
+func TestLuminosityFactory_FromMegawatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegawatts(100)
+    if err != nil {
+        t.Errorf("FromMegawatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityMegawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegawatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegawatts(math.NaN())
+    if err == nil {
+        t.Error("FromMegawatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegawatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegawatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegawatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegawatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegawatts(0)
+    if err != nil {
+        t.Errorf("FromMegawatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityMegawatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegawatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGigawatts function
+func TestLuminosityFactory_FromGigawatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGigawatts(100)
+    if err != nil {
+        t.Errorf("FromGigawatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityGigawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGigawatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGigawatts(math.NaN())
+    if err == nil {
+        t.Error("FromGigawatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromGigawatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromGigawatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGigawatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGigawatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGigawatts(0)
+    if err != nil {
+        t.Errorf("FromGigawatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityGigawatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGigawatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromTerawatts function
+func TestLuminosityFactory_FromTerawatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromTerawatts(100)
+    if err != nil {
+        t.Errorf("FromTerawatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityTerawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromTerawatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromTerawatts(math.NaN())
+    if err == nil {
+        t.Error("FromTerawatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromTerawatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromTerawatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromTerawatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromTerawatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromTerawatts(0)
+    if err != nil {
+        t.Errorf("FromTerawatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityTerawatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromTerawatts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPetawatts function
+func TestLuminosityFactory_FromPetawatts(t *testing.T) {
+    factory := units.LuminosityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPetawatts(100)
+    if err != nil {
+        t.Errorf("FromPetawatts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminosityPetawatt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPetawatts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPetawatts(math.NaN())
+    if err == nil {
+        t.Error("FromPetawatts() with NaN value should return error")
+    }
+
+    _, err = factory.FromPetawatts(math.Inf(1))
+    if err == nil {
+        t.Error("FromPetawatts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPetawatts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPetawatts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPetawatts(0)
+    if err != nil {
+        t.Errorf("FromPetawatts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminosityPetawatt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPetawatts() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestLuminosityToString(t *testing.T) {
 	factory := units.LuminosityFactory{}
 	a, err := factory.CreateLuminosity(45, units.LuminosityWatt)

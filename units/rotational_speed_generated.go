@@ -67,6 +67,10 @@ func (udf RotationalSpeedDtoFactory) FromJSON(data []byte) (*RotationalSpeedDto,
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

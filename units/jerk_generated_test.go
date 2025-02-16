@@ -203,6 +203,904 @@ func TestJerk_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestJerkFactory_FromDto(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkMeterPerSecondCubed,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.JerkDto{
+        Value: math.NaN(),
+        Unit:  units.JerkMeterPerSecondCubed,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test MeterPerSecondCubed conversion
+    meters_per_second_cubedDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkMeterPerSecondCubed,
+    }
+    
+    var meters_per_second_cubedResult *units.Jerk
+    meters_per_second_cubedResult, err = factory.FromDto(meters_per_second_cubedDto)
+    if err != nil {
+        t.Errorf("FromDto() with MeterPerSecondCubed returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = meters_per_second_cubedResult.Convert(units.JerkMeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MeterPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test InchPerSecondCubed conversion
+    inches_per_second_cubedDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkInchPerSecondCubed,
+    }
+    
+    var inches_per_second_cubedResult *units.Jerk
+    inches_per_second_cubedResult, err = factory.FromDto(inches_per_second_cubedDto)
+    if err != nil {
+        t.Errorf("FromDto() with InchPerSecondCubed returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = inches_per_second_cubedResult.Convert(units.JerkInchPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for InchPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test FootPerSecondCubed conversion
+    feet_per_second_cubedDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkFootPerSecondCubed,
+    }
+    
+    var feet_per_second_cubedResult *units.Jerk
+    feet_per_second_cubedResult, err = factory.FromDto(feet_per_second_cubedDto)
+    if err != nil {
+        t.Errorf("FromDto() with FootPerSecondCubed returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = feet_per_second_cubedResult.Convert(units.JerkFootPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for FootPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test StandardGravitiesPerSecond conversion
+    standard_gravities_per_secondDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkStandardGravitiesPerSecond,
+    }
+    
+    var standard_gravities_per_secondResult *units.Jerk
+    standard_gravities_per_secondResult, err = factory.FromDto(standard_gravities_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with StandardGravitiesPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = standard_gravities_per_secondResult.Convert(units.JerkStandardGravitiesPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for StandardGravitiesPerSecond = %v, want %v", converted, 100)
+    }
+    // Test NanometerPerSecondCubed conversion
+    nanometers_per_second_cubedDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkNanometerPerSecondCubed,
+    }
+    
+    var nanometers_per_second_cubedResult *units.Jerk
+    nanometers_per_second_cubedResult, err = factory.FromDto(nanometers_per_second_cubedDto)
+    if err != nil {
+        t.Errorf("FromDto() with NanometerPerSecondCubed returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanometers_per_second_cubedResult.Convert(units.JerkNanometerPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanometerPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test MicrometerPerSecondCubed conversion
+    micrometers_per_second_cubedDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkMicrometerPerSecondCubed,
+    }
+    
+    var micrometers_per_second_cubedResult *units.Jerk
+    micrometers_per_second_cubedResult, err = factory.FromDto(micrometers_per_second_cubedDto)
+    if err != nil {
+        t.Errorf("FromDto() with MicrometerPerSecondCubed returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = micrometers_per_second_cubedResult.Convert(units.JerkMicrometerPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrometerPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test MillimeterPerSecondCubed conversion
+    millimeters_per_second_cubedDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkMillimeterPerSecondCubed,
+    }
+    
+    var millimeters_per_second_cubedResult *units.Jerk
+    millimeters_per_second_cubedResult, err = factory.FromDto(millimeters_per_second_cubedDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillimeterPerSecondCubed returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millimeters_per_second_cubedResult.Convert(units.JerkMillimeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillimeterPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test CentimeterPerSecondCubed conversion
+    centimeters_per_second_cubedDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkCentimeterPerSecondCubed,
+    }
+    
+    var centimeters_per_second_cubedResult *units.Jerk
+    centimeters_per_second_cubedResult, err = factory.FromDto(centimeters_per_second_cubedDto)
+    if err != nil {
+        t.Errorf("FromDto() with CentimeterPerSecondCubed returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centimeters_per_second_cubedResult.Convert(units.JerkCentimeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentimeterPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test DecimeterPerSecondCubed conversion
+    decimeters_per_second_cubedDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkDecimeterPerSecondCubed,
+    }
+    
+    var decimeters_per_second_cubedResult *units.Jerk
+    decimeters_per_second_cubedResult, err = factory.FromDto(decimeters_per_second_cubedDto)
+    if err != nil {
+        t.Errorf("FromDto() with DecimeterPerSecondCubed returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decimeters_per_second_cubedResult.Convert(units.JerkDecimeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecimeterPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test KilometerPerSecondCubed conversion
+    kilometers_per_second_cubedDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkKilometerPerSecondCubed,
+    }
+    
+    var kilometers_per_second_cubedResult *units.Jerk
+    kilometers_per_second_cubedResult, err = factory.FromDto(kilometers_per_second_cubedDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilometerPerSecondCubed returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilometers_per_second_cubedResult.Convert(units.JerkKilometerPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilometerPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test MillistandardGravitiesPerSecond conversion
+    millistandard_gravities_per_secondDto := units.JerkDto{
+        Value: 100,
+        Unit:  units.JerkMillistandardGravitiesPerSecond,
+    }
+    
+    var millistandard_gravities_per_secondResult *units.Jerk
+    millistandard_gravities_per_secondResult, err = factory.FromDto(millistandard_gravities_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillistandardGravitiesPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millistandard_gravities_per_secondResult.Convert(units.JerkMillistandardGravitiesPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillistandardGravitiesPerSecond = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.JerkDto{
+        Value: 0,
+        Unit:  units.JerkMeterPerSecondCubed,
+    }
+    
+    var zeroResult *units.Jerk
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestJerkFactory_FromDtoJSON(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "MeterPerSecondCubed"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "MeterPerSecondCubed"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.JerkDto{
+        Value: nanValue,
+        Unit:  units.JerkMeterPerSecondCubed,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with MeterPerSecondCubed unit
+    meters_per_second_cubedJSON := []byte(`{"value": 100, "unit": "MeterPerSecondCubed"}`)
+    meters_per_second_cubedResult, err := factory.FromDtoJSON(meters_per_second_cubedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MeterPerSecondCubed unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = meters_per_second_cubedResult.Convert(units.JerkMeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MeterPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test JSON with InchPerSecondCubed unit
+    inches_per_second_cubedJSON := []byte(`{"value": 100, "unit": "InchPerSecondCubed"}`)
+    inches_per_second_cubedResult, err := factory.FromDtoJSON(inches_per_second_cubedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with InchPerSecondCubed unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = inches_per_second_cubedResult.Convert(units.JerkInchPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for InchPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test JSON with FootPerSecondCubed unit
+    feet_per_second_cubedJSON := []byte(`{"value": 100, "unit": "FootPerSecondCubed"}`)
+    feet_per_second_cubedResult, err := factory.FromDtoJSON(feet_per_second_cubedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with FootPerSecondCubed unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = feet_per_second_cubedResult.Convert(units.JerkFootPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for FootPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test JSON with StandardGravitiesPerSecond unit
+    standard_gravities_per_secondJSON := []byte(`{"value": 100, "unit": "StandardGravitiesPerSecond"}`)
+    standard_gravities_per_secondResult, err := factory.FromDtoJSON(standard_gravities_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with StandardGravitiesPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = standard_gravities_per_secondResult.Convert(units.JerkStandardGravitiesPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for StandardGravitiesPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with NanometerPerSecondCubed unit
+    nanometers_per_second_cubedJSON := []byte(`{"value": 100, "unit": "NanometerPerSecondCubed"}`)
+    nanometers_per_second_cubedResult, err := factory.FromDtoJSON(nanometers_per_second_cubedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with NanometerPerSecondCubed unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanometers_per_second_cubedResult.Convert(units.JerkNanometerPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanometerPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test JSON with MicrometerPerSecondCubed unit
+    micrometers_per_second_cubedJSON := []byte(`{"value": 100, "unit": "MicrometerPerSecondCubed"}`)
+    micrometers_per_second_cubedResult, err := factory.FromDtoJSON(micrometers_per_second_cubedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MicrometerPerSecondCubed unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = micrometers_per_second_cubedResult.Convert(units.JerkMicrometerPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrometerPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillimeterPerSecondCubed unit
+    millimeters_per_second_cubedJSON := []byte(`{"value": 100, "unit": "MillimeterPerSecondCubed"}`)
+    millimeters_per_second_cubedResult, err := factory.FromDtoJSON(millimeters_per_second_cubedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillimeterPerSecondCubed unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millimeters_per_second_cubedResult.Convert(units.JerkMillimeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillimeterPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test JSON with CentimeterPerSecondCubed unit
+    centimeters_per_second_cubedJSON := []byte(`{"value": 100, "unit": "CentimeterPerSecondCubed"}`)
+    centimeters_per_second_cubedResult, err := factory.FromDtoJSON(centimeters_per_second_cubedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CentimeterPerSecondCubed unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centimeters_per_second_cubedResult.Convert(units.JerkCentimeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentimeterPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test JSON with DecimeterPerSecondCubed unit
+    decimeters_per_second_cubedJSON := []byte(`{"value": 100, "unit": "DecimeterPerSecondCubed"}`)
+    decimeters_per_second_cubedResult, err := factory.FromDtoJSON(decimeters_per_second_cubedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DecimeterPerSecondCubed unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decimeters_per_second_cubedResult.Convert(units.JerkDecimeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecimeterPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilometerPerSecondCubed unit
+    kilometers_per_second_cubedJSON := []byte(`{"value": 100, "unit": "KilometerPerSecondCubed"}`)
+    kilometers_per_second_cubedResult, err := factory.FromDtoJSON(kilometers_per_second_cubedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilometerPerSecondCubed unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilometers_per_second_cubedResult.Convert(units.JerkKilometerPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilometerPerSecondCubed = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillistandardGravitiesPerSecond unit
+    millistandard_gravities_per_secondJSON := []byte(`{"value": 100, "unit": "MillistandardGravitiesPerSecond"}`)
+    millistandard_gravities_per_secondResult, err := factory.FromDtoJSON(millistandard_gravities_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillistandardGravitiesPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millistandard_gravities_per_secondResult.Convert(units.JerkMillistandardGravitiesPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillistandardGravitiesPerSecond = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "MeterPerSecondCubed"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromMetersPerSecondCubed function
+func TestJerkFactory_FromMetersPerSecondCubed(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMetersPerSecondCubed(100)
+    if err != nil {
+        t.Errorf("FromMetersPerSecondCubed() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkMeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMetersPerSecondCubed() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMetersPerSecondCubed(math.NaN())
+    if err == nil {
+        t.Error("FromMetersPerSecondCubed() with NaN value should return error")
+    }
+
+    _, err = factory.FromMetersPerSecondCubed(math.Inf(1))
+    if err == nil {
+        t.Error("FromMetersPerSecondCubed() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMetersPerSecondCubed(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMetersPerSecondCubed() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMetersPerSecondCubed(0)
+    if err != nil {
+        t.Errorf("FromMetersPerSecondCubed() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkMeterPerSecondCubed)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMetersPerSecondCubed() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromInchesPerSecondCubed function
+func TestJerkFactory_FromInchesPerSecondCubed(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromInchesPerSecondCubed(100)
+    if err != nil {
+        t.Errorf("FromInchesPerSecondCubed() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkInchPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromInchesPerSecondCubed() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromInchesPerSecondCubed(math.NaN())
+    if err == nil {
+        t.Error("FromInchesPerSecondCubed() with NaN value should return error")
+    }
+
+    _, err = factory.FromInchesPerSecondCubed(math.Inf(1))
+    if err == nil {
+        t.Error("FromInchesPerSecondCubed() with +Inf value should return error")
+    }
+
+    _, err = factory.FromInchesPerSecondCubed(math.Inf(-1))
+    if err == nil {
+        t.Error("FromInchesPerSecondCubed() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromInchesPerSecondCubed(0)
+    if err != nil {
+        t.Errorf("FromInchesPerSecondCubed() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkInchPerSecondCubed)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromInchesPerSecondCubed() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromFeetPerSecondCubed function
+func TestJerkFactory_FromFeetPerSecondCubed(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromFeetPerSecondCubed(100)
+    if err != nil {
+        t.Errorf("FromFeetPerSecondCubed() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkFootPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromFeetPerSecondCubed() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromFeetPerSecondCubed(math.NaN())
+    if err == nil {
+        t.Error("FromFeetPerSecondCubed() with NaN value should return error")
+    }
+
+    _, err = factory.FromFeetPerSecondCubed(math.Inf(1))
+    if err == nil {
+        t.Error("FromFeetPerSecondCubed() with +Inf value should return error")
+    }
+
+    _, err = factory.FromFeetPerSecondCubed(math.Inf(-1))
+    if err == nil {
+        t.Error("FromFeetPerSecondCubed() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromFeetPerSecondCubed(0)
+    if err != nil {
+        t.Errorf("FromFeetPerSecondCubed() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkFootPerSecondCubed)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromFeetPerSecondCubed() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromStandardGravitiesPerSecond function
+func TestJerkFactory_FromStandardGravitiesPerSecond(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromStandardGravitiesPerSecond(100)
+    if err != nil {
+        t.Errorf("FromStandardGravitiesPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkStandardGravitiesPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromStandardGravitiesPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromStandardGravitiesPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromStandardGravitiesPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromStandardGravitiesPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromStandardGravitiesPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromStandardGravitiesPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromStandardGravitiesPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromStandardGravitiesPerSecond(0)
+    if err != nil {
+        t.Errorf("FromStandardGravitiesPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkStandardGravitiesPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromStandardGravitiesPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanometersPerSecondCubed function
+func TestJerkFactory_FromNanometersPerSecondCubed(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanometersPerSecondCubed(100)
+    if err != nil {
+        t.Errorf("FromNanometersPerSecondCubed() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkNanometerPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanometersPerSecondCubed() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanometersPerSecondCubed(math.NaN())
+    if err == nil {
+        t.Error("FromNanometersPerSecondCubed() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanometersPerSecondCubed(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanometersPerSecondCubed() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanometersPerSecondCubed(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanometersPerSecondCubed() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanometersPerSecondCubed(0)
+    if err != nil {
+        t.Errorf("FromNanometersPerSecondCubed() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkNanometerPerSecondCubed)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanometersPerSecondCubed() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrometersPerSecondCubed function
+func TestJerkFactory_FromMicrometersPerSecondCubed(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrometersPerSecondCubed(100)
+    if err != nil {
+        t.Errorf("FromMicrometersPerSecondCubed() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkMicrometerPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrometersPerSecondCubed() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrometersPerSecondCubed(math.NaN())
+    if err == nil {
+        t.Error("FromMicrometersPerSecondCubed() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrometersPerSecondCubed(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrometersPerSecondCubed() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrometersPerSecondCubed(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrometersPerSecondCubed() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrometersPerSecondCubed(0)
+    if err != nil {
+        t.Errorf("FromMicrometersPerSecondCubed() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkMicrometerPerSecondCubed)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrometersPerSecondCubed() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillimetersPerSecondCubed function
+func TestJerkFactory_FromMillimetersPerSecondCubed(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillimetersPerSecondCubed(100)
+    if err != nil {
+        t.Errorf("FromMillimetersPerSecondCubed() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkMillimeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillimetersPerSecondCubed() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillimetersPerSecondCubed(math.NaN())
+    if err == nil {
+        t.Error("FromMillimetersPerSecondCubed() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillimetersPerSecondCubed(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillimetersPerSecondCubed() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillimetersPerSecondCubed(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillimetersPerSecondCubed() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillimetersPerSecondCubed(0)
+    if err != nil {
+        t.Errorf("FromMillimetersPerSecondCubed() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkMillimeterPerSecondCubed)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillimetersPerSecondCubed() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCentimetersPerSecondCubed function
+func TestJerkFactory_FromCentimetersPerSecondCubed(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCentimetersPerSecondCubed(100)
+    if err != nil {
+        t.Errorf("FromCentimetersPerSecondCubed() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkCentimeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCentimetersPerSecondCubed() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCentimetersPerSecondCubed(math.NaN())
+    if err == nil {
+        t.Error("FromCentimetersPerSecondCubed() with NaN value should return error")
+    }
+
+    _, err = factory.FromCentimetersPerSecondCubed(math.Inf(1))
+    if err == nil {
+        t.Error("FromCentimetersPerSecondCubed() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCentimetersPerSecondCubed(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCentimetersPerSecondCubed() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCentimetersPerSecondCubed(0)
+    if err != nil {
+        t.Errorf("FromCentimetersPerSecondCubed() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkCentimeterPerSecondCubed)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCentimetersPerSecondCubed() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecimetersPerSecondCubed function
+func TestJerkFactory_FromDecimetersPerSecondCubed(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecimetersPerSecondCubed(100)
+    if err != nil {
+        t.Errorf("FromDecimetersPerSecondCubed() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkDecimeterPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecimetersPerSecondCubed() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecimetersPerSecondCubed(math.NaN())
+    if err == nil {
+        t.Error("FromDecimetersPerSecondCubed() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecimetersPerSecondCubed(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecimetersPerSecondCubed() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecimetersPerSecondCubed(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecimetersPerSecondCubed() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecimetersPerSecondCubed(0)
+    if err != nil {
+        t.Errorf("FromDecimetersPerSecondCubed() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkDecimeterPerSecondCubed)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecimetersPerSecondCubed() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilometersPerSecondCubed function
+func TestJerkFactory_FromKilometersPerSecondCubed(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilometersPerSecondCubed(100)
+    if err != nil {
+        t.Errorf("FromKilometersPerSecondCubed() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkKilometerPerSecondCubed)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilometersPerSecondCubed() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilometersPerSecondCubed(math.NaN())
+    if err == nil {
+        t.Error("FromKilometersPerSecondCubed() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilometersPerSecondCubed(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilometersPerSecondCubed() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilometersPerSecondCubed(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilometersPerSecondCubed() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilometersPerSecondCubed(0)
+    if err != nil {
+        t.Errorf("FromKilometersPerSecondCubed() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkKilometerPerSecondCubed)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilometersPerSecondCubed() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillistandardGravitiesPerSecond function
+func TestJerkFactory_FromMillistandardGravitiesPerSecond(t *testing.T) {
+    factory := units.JerkFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillistandardGravitiesPerSecond(100)
+    if err != nil {
+        t.Errorf("FromMillistandardGravitiesPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.JerkMillistandardGravitiesPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillistandardGravitiesPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillistandardGravitiesPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromMillistandardGravitiesPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillistandardGravitiesPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillistandardGravitiesPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillistandardGravitiesPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillistandardGravitiesPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillistandardGravitiesPerSecond(0)
+    if err != nil {
+        t.Errorf("FromMillistandardGravitiesPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.JerkMillistandardGravitiesPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillistandardGravitiesPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestJerkToString(t *testing.T) {
 	factory := units.JerkFactory{}
 	a, err := factory.CreateJerk(45, units.JerkMeterPerSecondCubed)

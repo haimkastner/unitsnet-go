@@ -107,6 +107,10 @@ func (udf SpeedDtoFactory) FromJSON(data []byte) (*SpeedDto, error) {
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

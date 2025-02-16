@@ -139,6 +139,328 @@ func TestApparentEnergy_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestApparentEnergyFactory_FromDto(t *testing.T) {
+    factory := units.ApparentEnergyFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.ApparentEnergyDto{
+        Value: 100,
+        Unit:  units.ApparentEnergyVoltampereHour,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.ApparentEnergyDto{
+        Value: math.NaN(),
+        Unit:  units.ApparentEnergyVoltampereHour,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test VoltampereHour conversion
+    voltampere_hoursDto := units.ApparentEnergyDto{
+        Value: 100,
+        Unit:  units.ApparentEnergyVoltampereHour,
+    }
+    
+    var voltampere_hoursResult *units.ApparentEnergy
+    voltampere_hoursResult, err = factory.FromDto(voltampere_hoursDto)
+    if err != nil {
+        t.Errorf("FromDto() with VoltampereHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = voltampere_hoursResult.Convert(units.ApparentEnergyVoltampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for VoltampereHour = %v, want %v", converted, 100)
+    }
+    // Test KilovoltampereHour conversion
+    kilovoltampere_hoursDto := units.ApparentEnergyDto{
+        Value: 100,
+        Unit:  units.ApparentEnergyKilovoltampereHour,
+    }
+    
+    var kilovoltampere_hoursResult *units.ApparentEnergy
+    kilovoltampere_hoursResult, err = factory.FromDto(kilovoltampere_hoursDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilovoltampereHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilovoltampere_hoursResult.Convert(units.ApparentEnergyKilovoltampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilovoltampereHour = %v, want %v", converted, 100)
+    }
+    // Test MegavoltampereHour conversion
+    megavoltampere_hoursDto := units.ApparentEnergyDto{
+        Value: 100,
+        Unit:  units.ApparentEnergyMegavoltampereHour,
+    }
+    
+    var megavoltampere_hoursResult *units.ApparentEnergy
+    megavoltampere_hoursResult, err = factory.FromDto(megavoltampere_hoursDto)
+    if err != nil {
+        t.Errorf("FromDto() with MegavoltampereHour returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megavoltampere_hoursResult.Convert(units.ApparentEnergyMegavoltampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegavoltampereHour = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.ApparentEnergyDto{
+        Value: 0,
+        Unit:  units.ApparentEnergyVoltampereHour,
+    }
+    
+    var zeroResult *units.ApparentEnergy
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestApparentEnergyFactory_FromDtoJSON(t *testing.T) {
+    factory := units.ApparentEnergyFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "VoltampereHour"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "VoltampereHour"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.ApparentEnergyDto{
+        Value: nanValue,
+        Unit:  units.ApparentEnergyVoltampereHour,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with VoltampereHour unit
+    voltampere_hoursJSON := []byte(`{"value": 100, "unit": "VoltampereHour"}`)
+    voltampere_hoursResult, err := factory.FromDtoJSON(voltampere_hoursJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with VoltampereHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = voltampere_hoursResult.Convert(units.ApparentEnergyVoltampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for VoltampereHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilovoltampereHour unit
+    kilovoltampere_hoursJSON := []byte(`{"value": 100, "unit": "KilovoltampereHour"}`)
+    kilovoltampere_hoursResult, err := factory.FromDtoJSON(kilovoltampere_hoursJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilovoltampereHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilovoltampere_hoursResult.Convert(units.ApparentEnergyKilovoltampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilovoltampereHour = %v, want %v", converted, 100)
+    }
+    // Test JSON with MegavoltampereHour unit
+    megavoltampere_hoursJSON := []byte(`{"value": 100, "unit": "MegavoltampereHour"}`)
+    megavoltampere_hoursResult, err := factory.FromDtoJSON(megavoltampere_hoursJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MegavoltampereHour unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megavoltampere_hoursResult.Convert(units.ApparentEnergyMegavoltampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegavoltampereHour = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "VoltampereHour"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromVoltampereHours function
+func TestApparentEnergyFactory_FromVoltampereHours(t *testing.T) {
+    factory := units.ApparentEnergyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromVoltampereHours(100)
+    if err != nil {
+        t.Errorf("FromVoltampereHours() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ApparentEnergyVoltampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromVoltampereHours() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromVoltampereHours(math.NaN())
+    if err == nil {
+        t.Error("FromVoltampereHours() with NaN value should return error")
+    }
+
+    _, err = factory.FromVoltampereHours(math.Inf(1))
+    if err == nil {
+        t.Error("FromVoltampereHours() with +Inf value should return error")
+    }
+
+    _, err = factory.FromVoltampereHours(math.Inf(-1))
+    if err == nil {
+        t.Error("FromVoltampereHours() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromVoltampereHours(0)
+    if err != nil {
+        t.Errorf("FromVoltampereHours() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ApparentEnergyVoltampereHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromVoltampereHours() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilovoltampereHours function
+func TestApparentEnergyFactory_FromKilovoltampereHours(t *testing.T) {
+    factory := units.ApparentEnergyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilovoltampereHours(100)
+    if err != nil {
+        t.Errorf("FromKilovoltampereHours() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ApparentEnergyKilovoltampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilovoltampereHours() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilovoltampereHours(math.NaN())
+    if err == nil {
+        t.Error("FromKilovoltampereHours() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilovoltampereHours(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilovoltampereHours() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilovoltampereHours(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilovoltampereHours() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilovoltampereHours(0)
+    if err != nil {
+        t.Errorf("FromKilovoltampereHours() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ApparentEnergyKilovoltampereHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilovoltampereHours() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegavoltampereHours function
+func TestApparentEnergyFactory_FromMegavoltampereHours(t *testing.T) {
+    factory := units.ApparentEnergyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegavoltampereHours(100)
+    if err != nil {
+        t.Errorf("FromMegavoltampereHours() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ApparentEnergyMegavoltampereHour)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegavoltampereHours() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegavoltampereHours(math.NaN())
+    if err == nil {
+        t.Error("FromMegavoltampereHours() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegavoltampereHours(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegavoltampereHours() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegavoltampereHours(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegavoltampereHours() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegavoltampereHours(0)
+    if err != nil {
+        t.Errorf("FromMegavoltampereHours() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ApparentEnergyMegavoltampereHour)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegavoltampereHours() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestApparentEnergyToString(t *testing.T) {
 	factory := units.ApparentEnergyFactory{}
 	a, err := factory.CreateApparentEnergy(45, units.ApparentEnergyVoltampereHour)

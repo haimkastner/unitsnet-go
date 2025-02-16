@@ -139,6 +139,328 @@ func TestAreaDensity_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestAreaDensityFactory_FromDto(t *testing.T) {
+    factory := units.AreaDensityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.AreaDensityDto{
+        Value: 100,
+        Unit:  units.AreaDensityKilogramPerSquareMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.AreaDensityDto{
+        Value: math.NaN(),
+        Unit:  units.AreaDensityKilogramPerSquareMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test KilogramPerSquareMeter conversion
+    kilograms_per_square_meterDto := units.AreaDensityDto{
+        Value: 100,
+        Unit:  units.AreaDensityKilogramPerSquareMeter,
+    }
+    
+    var kilograms_per_square_meterResult *units.AreaDensity
+    kilograms_per_square_meterResult, err = factory.FromDto(kilograms_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilogramPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_square_meterResult.Convert(units.AreaDensityKilogramPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test GramPerSquareMeter conversion
+    grams_per_square_meterDto := units.AreaDensityDto{
+        Value: 100,
+        Unit:  units.AreaDensityGramPerSquareMeter,
+    }
+    
+    var grams_per_square_meterResult *units.AreaDensity
+    grams_per_square_meterResult, err = factory.FromDto(grams_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with GramPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_square_meterResult.Convert(units.AreaDensityGramPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test MilligramPerSquareMeter conversion
+    milligrams_per_square_meterDto := units.AreaDensityDto{
+        Value: 100,
+        Unit:  units.AreaDensityMilligramPerSquareMeter,
+    }
+    
+    var milligrams_per_square_meterResult *units.AreaDensity
+    milligrams_per_square_meterResult, err = factory.FromDto(milligrams_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with MilligramPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligrams_per_square_meterResult.Convert(units.AreaDensityMilligramPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilligramPerSquareMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.AreaDensityDto{
+        Value: 0,
+        Unit:  units.AreaDensityKilogramPerSquareMeter,
+    }
+    
+    var zeroResult *units.AreaDensity
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestAreaDensityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.AreaDensityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "KilogramPerSquareMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "KilogramPerSquareMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.AreaDensityDto{
+        Value: nanValue,
+        Unit:  units.AreaDensityKilogramPerSquareMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with KilogramPerSquareMeter unit
+    kilograms_per_square_meterJSON := []byte(`{"value": 100, "unit": "KilogramPerSquareMeter"}`)
+    kilograms_per_square_meterResult, err := factory.FromDtoJSON(kilograms_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilogramPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_square_meterResult.Convert(units.AreaDensityKilogramPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with GramPerSquareMeter unit
+    grams_per_square_meterJSON := []byte(`{"value": 100, "unit": "GramPerSquareMeter"}`)
+    grams_per_square_meterResult, err := factory.FromDtoJSON(grams_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GramPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_square_meterResult.Convert(units.AreaDensityGramPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MilligramPerSquareMeter unit
+    milligrams_per_square_meterJSON := []byte(`{"value": 100, "unit": "MilligramPerSquareMeter"}`)
+    milligrams_per_square_meterResult, err := factory.FromDtoJSON(milligrams_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MilligramPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligrams_per_square_meterResult.Convert(units.AreaDensityMilligramPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilligramPerSquareMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "KilogramPerSquareMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromKilogramsPerSquareMeter function
+func TestAreaDensityFactory_FromKilogramsPerSquareMeter(t *testing.T) {
+    factory := units.AreaDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilogramsPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromKilogramsPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaDensityKilogramPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilogramsPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilogramsPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromKilogramsPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilogramsPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilogramsPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilogramsPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromKilogramsPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaDensityKilogramPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilogramsPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGramsPerSquareMeter function
+func TestAreaDensityFactory_FromGramsPerSquareMeter(t *testing.T) {
+    factory := units.AreaDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGramsPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromGramsPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaDensityGramPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGramsPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGramsPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromGramsPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromGramsPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromGramsPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGramsPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGramsPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGramsPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromGramsPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaDensityGramPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGramsPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilligramsPerSquareMeter function
+func TestAreaDensityFactory_FromMilligramsPerSquareMeter(t *testing.T) {
+    factory := units.AreaDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilligramsPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromMilligramsPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaDensityMilligramPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilligramsPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilligramsPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromMilligramsPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilligramsPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilligramsPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilligramsPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilligramsPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilligramsPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromMilligramsPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaDensityMilligramPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilligramsPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestAreaDensityToString(t *testing.T) {
 	factory := units.AreaDensityFactory{}
 	a, err := factory.CreateAreaDensity(45, units.AreaDensityKilogramPerSquareMeter)

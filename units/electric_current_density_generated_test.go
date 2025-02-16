@@ -139,6 +139,328 @@ func TestElectricCurrentDensity_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestElectricCurrentDensityFactory_FromDto(t *testing.T) {
+    factory := units.ElectricCurrentDensityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.ElectricCurrentDensityDto{
+        Value: 100,
+        Unit:  units.ElectricCurrentDensityAmperePerSquareMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.ElectricCurrentDensityDto{
+        Value: math.NaN(),
+        Unit:  units.ElectricCurrentDensityAmperePerSquareMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test AmperePerSquareMeter conversion
+    amperes_per_square_meterDto := units.ElectricCurrentDensityDto{
+        Value: 100,
+        Unit:  units.ElectricCurrentDensityAmperePerSquareMeter,
+    }
+    
+    var amperes_per_square_meterResult *units.ElectricCurrentDensity
+    amperes_per_square_meterResult, err = factory.FromDto(amperes_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with AmperePerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = amperes_per_square_meterResult.Convert(units.ElectricCurrentDensityAmperePerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmperePerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test AmperePerSquareInch conversion
+    amperes_per_square_inchDto := units.ElectricCurrentDensityDto{
+        Value: 100,
+        Unit:  units.ElectricCurrentDensityAmperePerSquareInch,
+    }
+    
+    var amperes_per_square_inchResult *units.ElectricCurrentDensity
+    amperes_per_square_inchResult, err = factory.FromDto(amperes_per_square_inchDto)
+    if err != nil {
+        t.Errorf("FromDto() with AmperePerSquareInch returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = amperes_per_square_inchResult.Convert(units.ElectricCurrentDensityAmperePerSquareInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmperePerSquareInch = %v, want %v", converted, 100)
+    }
+    // Test AmperePerSquareFoot conversion
+    amperes_per_square_footDto := units.ElectricCurrentDensityDto{
+        Value: 100,
+        Unit:  units.ElectricCurrentDensityAmperePerSquareFoot,
+    }
+    
+    var amperes_per_square_footResult *units.ElectricCurrentDensity
+    amperes_per_square_footResult, err = factory.FromDto(amperes_per_square_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with AmperePerSquareFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = amperes_per_square_footResult.Convert(units.ElectricCurrentDensityAmperePerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmperePerSquareFoot = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.ElectricCurrentDensityDto{
+        Value: 0,
+        Unit:  units.ElectricCurrentDensityAmperePerSquareMeter,
+    }
+    
+    var zeroResult *units.ElectricCurrentDensity
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestElectricCurrentDensityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.ElectricCurrentDensityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "AmperePerSquareMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "AmperePerSquareMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.ElectricCurrentDensityDto{
+        Value: nanValue,
+        Unit:  units.ElectricCurrentDensityAmperePerSquareMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with AmperePerSquareMeter unit
+    amperes_per_square_meterJSON := []byte(`{"value": 100, "unit": "AmperePerSquareMeter"}`)
+    amperes_per_square_meterResult, err := factory.FromDtoJSON(amperes_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with AmperePerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = amperes_per_square_meterResult.Convert(units.ElectricCurrentDensityAmperePerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmperePerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with AmperePerSquareInch unit
+    amperes_per_square_inchJSON := []byte(`{"value": 100, "unit": "AmperePerSquareInch"}`)
+    amperes_per_square_inchResult, err := factory.FromDtoJSON(amperes_per_square_inchJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with AmperePerSquareInch unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = amperes_per_square_inchResult.Convert(units.ElectricCurrentDensityAmperePerSquareInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmperePerSquareInch = %v, want %v", converted, 100)
+    }
+    // Test JSON with AmperePerSquareFoot unit
+    amperes_per_square_footJSON := []byte(`{"value": 100, "unit": "AmperePerSquareFoot"}`)
+    amperes_per_square_footResult, err := factory.FromDtoJSON(amperes_per_square_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with AmperePerSquareFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = amperes_per_square_footResult.Convert(units.ElectricCurrentDensityAmperePerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AmperePerSquareFoot = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "AmperePerSquareMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromAmperesPerSquareMeter function
+func TestElectricCurrentDensityFactory_FromAmperesPerSquareMeter(t *testing.T) {
+    factory := units.ElectricCurrentDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromAmperesPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromAmperesPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricCurrentDensityAmperePerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromAmperesPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromAmperesPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromAmperesPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromAmperesPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromAmperesPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromAmperesPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromAmperesPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromAmperesPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromAmperesPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricCurrentDensityAmperePerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromAmperesPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromAmperesPerSquareInch function
+func TestElectricCurrentDensityFactory_FromAmperesPerSquareInch(t *testing.T) {
+    factory := units.ElectricCurrentDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromAmperesPerSquareInch(100)
+    if err != nil {
+        t.Errorf("FromAmperesPerSquareInch() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricCurrentDensityAmperePerSquareInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromAmperesPerSquareInch() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromAmperesPerSquareInch(math.NaN())
+    if err == nil {
+        t.Error("FromAmperesPerSquareInch() with NaN value should return error")
+    }
+
+    _, err = factory.FromAmperesPerSquareInch(math.Inf(1))
+    if err == nil {
+        t.Error("FromAmperesPerSquareInch() with +Inf value should return error")
+    }
+
+    _, err = factory.FromAmperesPerSquareInch(math.Inf(-1))
+    if err == nil {
+        t.Error("FromAmperesPerSquareInch() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromAmperesPerSquareInch(0)
+    if err != nil {
+        t.Errorf("FromAmperesPerSquareInch() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricCurrentDensityAmperePerSquareInch)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromAmperesPerSquareInch() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromAmperesPerSquareFoot function
+func TestElectricCurrentDensityFactory_FromAmperesPerSquareFoot(t *testing.T) {
+    factory := units.ElectricCurrentDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromAmperesPerSquareFoot(100)
+    if err != nil {
+        t.Errorf("FromAmperesPerSquareFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricCurrentDensityAmperePerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromAmperesPerSquareFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromAmperesPerSquareFoot(math.NaN())
+    if err == nil {
+        t.Error("FromAmperesPerSquareFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromAmperesPerSquareFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromAmperesPerSquareFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromAmperesPerSquareFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromAmperesPerSquareFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromAmperesPerSquareFoot(0)
+    if err != nil {
+        t.Errorf("FromAmperesPerSquareFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricCurrentDensityAmperePerSquareFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromAmperesPerSquareFoot() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestElectricCurrentDensityToString(t *testing.T) {
 	factory := units.ElectricCurrentDensityFactory{}
 	a, err := factory.CreateElectricCurrentDensity(45, units.ElectricCurrentDensityAmperePerSquareMeter)

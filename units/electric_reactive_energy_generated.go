@@ -47,6 +47,10 @@ func (udf ElectricReactiveEnergyDtoFactory) FromJSON(data []byte) (*ElectricReac
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

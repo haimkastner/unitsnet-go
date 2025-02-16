@@ -227,6 +227,1120 @@ func TestElectricResistivity_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestElectricResistivityFactory_FromDto(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityOhmMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.ElectricResistivityDto{
+        Value: math.NaN(),
+        Unit:  units.ElectricResistivityOhmMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test OhmMeter conversion
+    ohm_metersDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityOhmMeter,
+    }
+    
+    var ohm_metersResult *units.ElectricResistivity
+    ohm_metersResult, err = factory.FromDto(ohm_metersDto)
+    if err != nil {
+        t.Errorf("FromDto() with OhmMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ohm_metersResult.Convert(units.ElectricResistivityOhmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OhmMeter = %v, want %v", converted, 100)
+    }
+    // Test OhmCentimeter conversion
+    ohms_centimeterDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityOhmCentimeter,
+    }
+    
+    var ohms_centimeterResult *units.ElectricResistivity
+    ohms_centimeterResult, err = factory.FromDto(ohms_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with OhmCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ohms_centimeterResult.Convert(units.ElectricResistivityOhmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OhmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test PicoohmMeter conversion
+    picoohm_metersDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityPicoohmMeter,
+    }
+    
+    var picoohm_metersResult *units.ElectricResistivity
+    picoohm_metersResult, err = factory.FromDto(picoohm_metersDto)
+    if err != nil {
+        t.Errorf("FromDto() with PicoohmMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picoohm_metersResult.Convert(units.ElectricResistivityPicoohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PicoohmMeter = %v, want %v", converted, 100)
+    }
+    // Test NanoohmMeter conversion
+    nanoohm_metersDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityNanoohmMeter,
+    }
+    
+    var nanoohm_metersResult *units.ElectricResistivity
+    nanoohm_metersResult, err = factory.FromDto(nanoohm_metersDto)
+    if err != nil {
+        t.Errorf("FromDto() with NanoohmMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanoohm_metersResult.Convert(units.ElectricResistivityNanoohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanoohmMeter = %v, want %v", converted, 100)
+    }
+    // Test MicroohmMeter conversion
+    microohm_metersDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityMicroohmMeter,
+    }
+    
+    var microohm_metersResult *units.ElectricResistivity
+    microohm_metersResult, err = factory.FromDto(microohm_metersDto)
+    if err != nil {
+        t.Errorf("FromDto() with MicroohmMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microohm_metersResult.Convert(units.ElectricResistivityMicroohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicroohmMeter = %v, want %v", converted, 100)
+    }
+    // Test MilliohmMeter conversion
+    milliohm_metersDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityMilliohmMeter,
+    }
+    
+    var milliohm_metersResult *units.ElectricResistivity
+    milliohm_metersResult, err = factory.FromDto(milliohm_metersDto)
+    if err != nil {
+        t.Errorf("FromDto() with MilliohmMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliohm_metersResult.Convert(units.ElectricResistivityMilliohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliohmMeter = %v, want %v", converted, 100)
+    }
+    // Test KiloohmMeter conversion
+    kiloohm_metersDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityKiloohmMeter,
+    }
+    
+    var kiloohm_metersResult *units.ElectricResistivity
+    kiloohm_metersResult, err = factory.FromDto(kiloohm_metersDto)
+    if err != nil {
+        t.Errorf("FromDto() with KiloohmMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kiloohm_metersResult.Convert(units.ElectricResistivityKiloohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KiloohmMeter = %v, want %v", converted, 100)
+    }
+    // Test MegaohmMeter conversion
+    megaohm_metersDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityMegaohmMeter,
+    }
+    
+    var megaohm_metersResult *units.ElectricResistivity
+    megaohm_metersResult, err = factory.FromDto(megaohm_metersDto)
+    if err != nil {
+        t.Errorf("FromDto() with MegaohmMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaohm_metersResult.Convert(units.ElectricResistivityMegaohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegaohmMeter = %v, want %v", converted, 100)
+    }
+    // Test PicoohmCentimeter conversion
+    picoohms_centimeterDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityPicoohmCentimeter,
+    }
+    
+    var picoohms_centimeterResult *units.ElectricResistivity
+    picoohms_centimeterResult, err = factory.FromDto(picoohms_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with PicoohmCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picoohms_centimeterResult.Convert(units.ElectricResistivityPicoohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PicoohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test NanoohmCentimeter conversion
+    nanoohms_centimeterDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityNanoohmCentimeter,
+    }
+    
+    var nanoohms_centimeterResult *units.ElectricResistivity
+    nanoohms_centimeterResult, err = factory.FromDto(nanoohms_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with NanoohmCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanoohms_centimeterResult.Convert(units.ElectricResistivityNanoohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanoohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test MicroohmCentimeter conversion
+    microohms_centimeterDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityMicroohmCentimeter,
+    }
+    
+    var microohms_centimeterResult *units.ElectricResistivity
+    microohms_centimeterResult, err = factory.FromDto(microohms_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with MicroohmCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microohms_centimeterResult.Convert(units.ElectricResistivityMicroohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicroohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test MilliohmCentimeter conversion
+    milliohms_centimeterDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityMilliohmCentimeter,
+    }
+    
+    var milliohms_centimeterResult *units.ElectricResistivity
+    milliohms_centimeterResult, err = factory.FromDto(milliohms_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with MilliohmCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliohms_centimeterResult.Convert(units.ElectricResistivityMilliohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test KiloohmCentimeter conversion
+    kiloohms_centimeterDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityKiloohmCentimeter,
+    }
+    
+    var kiloohms_centimeterResult *units.ElectricResistivity
+    kiloohms_centimeterResult, err = factory.FromDto(kiloohms_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KiloohmCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kiloohms_centimeterResult.Convert(units.ElectricResistivityKiloohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KiloohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test MegaohmCentimeter conversion
+    megaohms_centimeterDto := units.ElectricResistivityDto{
+        Value: 100,
+        Unit:  units.ElectricResistivityMegaohmCentimeter,
+    }
+    
+    var megaohms_centimeterResult *units.ElectricResistivity
+    megaohms_centimeterResult, err = factory.FromDto(megaohms_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with MegaohmCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaohms_centimeterResult.Convert(units.ElectricResistivityMegaohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegaohmCentimeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.ElectricResistivityDto{
+        Value: 0,
+        Unit:  units.ElectricResistivityOhmMeter,
+    }
+    
+    var zeroResult *units.ElectricResistivity
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestElectricResistivityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "OhmMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "OhmMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.ElectricResistivityDto{
+        Value: nanValue,
+        Unit:  units.ElectricResistivityOhmMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with OhmMeter unit
+    ohm_metersJSON := []byte(`{"value": 100, "unit": "OhmMeter"}`)
+    ohm_metersResult, err := factory.FromDtoJSON(ohm_metersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with OhmMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ohm_metersResult.Convert(units.ElectricResistivityOhmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OhmMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with OhmCentimeter unit
+    ohms_centimeterJSON := []byte(`{"value": 100, "unit": "OhmCentimeter"}`)
+    ohms_centimeterResult, err := factory.FromDtoJSON(ohms_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with OhmCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ohms_centimeterResult.Convert(units.ElectricResistivityOhmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OhmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with PicoohmMeter unit
+    picoohm_metersJSON := []byte(`{"value": 100, "unit": "PicoohmMeter"}`)
+    picoohm_metersResult, err := factory.FromDtoJSON(picoohm_metersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PicoohmMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picoohm_metersResult.Convert(units.ElectricResistivityPicoohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PicoohmMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with NanoohmMeter unit
+    nanoohm_metersJSON := []byte(`{"value": 100, "unit": "NanoohmMeter"}`)
+    nanoohm_metersResult, err := factory.FromDtoJSON(nanoohm_metersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with NanoohmMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanoohm_metersResult.Convert(units.ElectricResistivityNanoohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanoohmMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MicroohmMeter unit
+    microohm_metersJSON := []byte(`{"value": 100, "unit": "MicroohmMeter"}`)
+    microohm_metersResult, err := factory.FromDtoJSON(microohm_metersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MicroohmMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microohm_metersResult.Convert(units.ElectricResistivityMicroohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicroohmMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MilliohmMeter unit
+    milliohm_metersJSON := []byte(`{"value": 100, "unit": "MilliohmMeter"}`)
+    milliohm_metersResult, err := factory.FromDtoJSON(milliohm_metersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MilliohmMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliohm_metersResult.Convert(units.ElectricResistivityMilliohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliohmMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KiloohmMeter unit
+    kiloohm_metersJSON := []byte(`{"value": 100, "unit": "KiloohmMeter"}`)
+    kiloohm_metersResult, err := factory.FromDtoJSON(kiloohm_metersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KiloohmMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kiloohm_metersResult.Convert(units.ElectricResistivityKiloohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KiloohmMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MegaohmMeter unit
+    megaohm_metersJSON := []byte(`{"value": 100, "unit": "MegaohmMeter"}`)
+    megaohm_metersResult, err := factory.FromDtoJSON(megaohm_metersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MegaohmMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaohm_metersResult.Convert(units.ElectricResistivityMegaohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegaohmMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with PicoohmCentimeter unit
+    picoohms_centimeterJSON := []byte(`{"value": 100, "unit": "PicoohmCentimeter"}`)
+    picoohms_centimeterResult, err := factory.FromDtoJSON(picoohms_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PicoohmCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picoohms_centimeterResult.Convert(units.ElectricResistivityPicoohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PicoohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with NanoohmCentimeter unit
+    nanoohms_centimeterJSON := []byte(`{"value": 100, "unit": "NanoohmCentimeter"}`)
+    nanoohms_centimeterResult, err := factory.FromDtoJSON(nanoohms_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with NanoohmCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanoohms_centimeterResult.Convert(units.ElectricResistivityNanoohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanoohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MicroohmCentimeter unit
+    microohms_centimeterJSON := []byte(`{"value": 100, "unit": "MicroohmCentimeter"}`)
+    microohms_centimeterResult, err := factory.FromDtoJSON(microohms_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MicroohmCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microohms_centimeterResult.Convert(units.ElectricResistivityMicroohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicroohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MilliohmCentimeter unit
+    milliohms_centimeterJSON := []byte(`{"value": 100, "unit": "MilliohmCentimeter"}`)
+    milliohms_centimeterResult, err := factory.FromDtoJSON(milliohms_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MilliohmCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliohms_centimeterResult.Convert(units.ElectricResistivityMilliohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KiloohmCentimeter unit
+    kiloohms_centimeterJSON := []byte(`{"value": 100, "unit": "KiloohmCentimeter"}`)
+    kiloohms_centimeterResult, err := factory.FromDtoJSON(kiloohms_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KiloohmCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kiloohms_centimeterResult.Convert(units.ElectricResistivityKiloohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KiloohmCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MegaohmCentimeter unit
+    megaohms_centimeterJSON := []byte(`{"value": 100, "unit": "MegaohmCentimeter"}`)
+    megaohms_centimeterResult, err := factory.FromDtoJSON(megaohms_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MegaohmCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaohms_centimeterResult.Convert(units.ElectricResistivityMegaohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegaohmCentimeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "OhmMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromOhmMeters function
+func TestElectricResistivityFactory_FromOhmMeters(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromOhmMeters(100)
+    if err != nil {
+        t.Errorf("FromOhmMeters() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityOhmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromOhmMeters() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromOhmMeters(math.NaN())
+    if err == nil {
+        t.Error("FromOhmMeters() with NaN value should return error")
+    }
+
+    _, err = factory.FromOhmMeters(math.Inf(1))
+    if err == nil {
+        t.Error("FromOhmMeters() with +Inf value should return error")
+    }
+
+    _, err = factory.FromOhmMeters(math.Inf(-1))
+    if err == nil {
+        t.Error("FromOhmMeters() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromOhmMeters(0)
+    if err != nil {
+        t.Errorf("FromOhmMeters() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityOhmMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromOhmMeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromOhmsCentimeter function
+func TestElectricResistivityFactory_FromOhmsCentimeter(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromOhmsCentimeter(100)
+    if err != nil {
+        t.Errorf("FromOhmsCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityOhmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromOhmsCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromOhmsCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromOhmsCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromOhmsCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromOhmsCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromOhmsCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromOhmsCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromOhmsCentimeter(0)
+    if err != nil {
+        t.Errorf("FromOhmsCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityOhmCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromOhmsCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPicoohmMeters function
+func TestElectricResistivityFactory_FromPicoohmMeters(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPicoohmMeters(100)
+    if err != nil {
+        t.Errorf("FromPicoohmMeters() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityPicoohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPicoohmMeters() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPicoohmMeters(math.NaN())
+    if err == nil {
+        t.Error("FromPicoohmMeters() with NaN value should return error")
+    }
+
+    _, err = factory.FromPicoohmMeters(math.Inf(1))
+    if err == nil {
+        t.Error("FromPicoohmMeters() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPicoohmMeters(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPicoohmMeters() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPicoohmMeters(0)
+    if err != nil {
+        t.Errorf("FromPicoohmMeters() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityPicoohmMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPicoohmMeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanoohmMeters function
+func TestElectricResistivityFactory_FromNanoohmMeters(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanoohmMeters(100)
+    if err != nil {
+        t.Errorf("FromNanoohmMeters() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityNanoohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanoohmMeters() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanoohmMeters(math.NaN())
+    if err == nil {
+        t.Error("FromNanoohmMeters() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanoohmMeters(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanoohmMeters() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanoohmMeters(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanoohmMeters() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanoohmMeters(0)
+    if err != nil {
+        t.Errorf("FromNanoohmMeters() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityNanoohmMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanoohmMeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicroohmMeters function
+func TestElectricResistivityFactory_FromMicroohmMeters(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicroohmMeters(100)
+    if err != nil {
+        t.Errorf("FromMicroohmMeters() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityMicroohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicroohmMeters() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicroohmMeters(math.NaN())
+    if err == nil {
+        t.Error("FromMicroohmMeters() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicroohmMeters(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicroohmMeters() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicroohmMeters(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicroohmMeters() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicroohmMeters(0)
+    if err != nil {
+        t.Errorf("FromMicroohmMeters() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityMicroohmMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicroohmMeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilliohmMeters function
+func TestElectricResistivityFactory_FromMilliohmMeters(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilliohmMeters(100)
+    if err != nil {
+        t.Errorf("FromMilliohmMeters() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityMilliohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilliohmMeters() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilliohmMeters(math.NaN())
+    if err == nil {
+        t.Error("FromMilliohmMeters() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilliohmMeters(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilliohmMeters() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilliohmMeters(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilliohmMeters() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilliohmMeters(0)
+    if err != nil {
+        t.Errorf("FromMilliohmMeters() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityMilliohmMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilliohmMeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKiloohmMeters function
+func TestElectricResistivityFactory_FromKiloohmMeters(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKiloohmMeters(100)
+    if err != nil {
+        t.Errorf("FromKiloohmMeters() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityKiloohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKiloohmMeters() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKiloohmMeters(math.NaN())
+    if err == nil {
+        t.Error("FromKiloohmMeters() with NaN value should return error")
+    }
+
+    _, err = factory.FromKiloohmMeters(math.Inf(1))
+    if err == nil {
+        t.Error("FromKiloohmMeters() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKiloohmMeters(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKiloohmMeters() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKiloohmMeters(0)
+    if err != nil {
+        t.Errorf("FromKiloohmMeters() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityKiloohmMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKiloohmMeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegaohmMeters function
+func TestElectricResistivityFactory_FromMegaohmMeters(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegaohmMeters(100)
+    if err != nil {
+        t.Errorf("FromMegaohmMeters() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityMegaohmMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegaohmMeters() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegaohmMeters(math.NaN())
+    if err == nil {
+        t.Error("FromMegaohmMeters() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegaohmMeters(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegaohmMeters() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegaohmMeters(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegaohmMeters() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegaohmMeters(0)
+    if err != nil {
+        t.Errorf("FromMegaohmMeters() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityMegaohmMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegaohmMeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPicoohmsCentimeter function
+func TestElectricResistivityFactory_FromPicoohmsCentimeter(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPicoohmsCentimeter(100)
+    if err != nil {
+        t.Errorf("FromPicoohmsCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityPicoohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPicoohmsCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPicoohmsCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromPicoohmsCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromPicoohmsCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromPicoohmsCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPicoohmsCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPicoohmsCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPicoohmsCentimeter(0)
+    if err != nil {
+        t.Errorf("FromPicoohmsCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityPicoohmCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPicoohmsCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanoohmsCentimeter function
+func TestElectricResistivityFactory_FromNanoohmsCentimeter(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanoohmsCentimeter(100)
+    if err != nil {
+        t.Errorf("FromNanoohmsCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityNanoohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanoohmsCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanoohmsCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromNanoohmsCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanoohmsCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanoohmsCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanoohmsCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanoohmsCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanoohmsCentimeter(0)
+    if err != nil {
+        t.Errorf("FromNanoohmsCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityNanoohmCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanoohmsCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicroohmsCentimeter function
+func TestElectricResistivityFactory_FromMicroohmsCentimeter(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicroohmsCentimeter(100)
+    if err != nil {
+        t.Errorf("FromMicroohmsCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityMicroohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicroohmsCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicroohmsCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromMicroohmsCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicroohmsCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicroohmsCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicroohmsCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicroohmsCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicroohmsCentimeter(0)
+    if err != nil {
+        t.Errorf("FromMicroohmsCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityMicroohmCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicroohmsCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilliohmsCentimeter function
+func TestElectricResistivityFactory_FromMilliohmsCentimeter(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilliohmsCentimeter(100)
+    if err != nil {
+        t.Errorf("FromMilliohmsCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityMilliohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilliohmsCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilliohmsCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromMilliohmsCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilliohmsCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilliohmsCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilliohmsCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilliohmsCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilliohmsCentimeter(0)
+    if err != nil {
+        t.Errorf("FromMilliohmsCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityMilliohmCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilliohmsCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKiloohmsCentimeter function
+func TestElectricResistivityFactory_FromKiloohmsCentimeter(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKiloohmsCentimeter(100)
+    if err != nil {
+        t.Errorf("FromKiloohmsCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityKiloohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKiloohmsCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKiloohmsCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromKiloohmsCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKiloohmsCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKiloohmsCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKiloohmsCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKiloohmsCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKiloohmsCentimeter(0)
+    if err != nil {
+        t.Errorf("FromKiloohmsCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityKiloohmCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKiloohmsCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegaohmsCentimeter function
+func TestElectricResistivityFactory_FromMegaohmsCentimeter(t *testing.T) {
+    factory := units.ElectricResistivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegaohmsCentimeter(100)
+    if err != nil {
+        t.Errorf("FromMegaohmsCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricResistivityMegaohmCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegaohmsCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegaohmsCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromMegaohmsCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegaohmsCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegaohmsCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegaohmsCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegaohmsCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegaohmsCentimeter(0)
+    if err != nil {
+        t.Errorf("FromMegaohmsCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricResistivityMegaohmCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegaohmsCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestElectricResistivityToString(t *testing.T) {
 	factory := units.ElectricResistivityFactory{}
 	a, err := factory.CreateElectricResistivity(45, units.ElectricResistivityOhmMeter)

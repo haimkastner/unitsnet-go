@@ -123,6 +123,184 @@ func TestSolidAngle_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestSolidAngleFactory_FromDto(t *testing.T) {
+    factory := units.SolidAngleFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.SolidAngleDto{
+        Value: 100,
+        Unit:  units.SolidAngleSteradian,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.SolidAngleDto{
+        Value: math.NaN(),
+        Unit:  units.SolidAngleSteradian,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Steradian conversion
+    steradiansDto := units.SolidAngleDto{
+        Value: 100,
+        Unit:  units.SolidAngleSteradian,
+    }
+    
+    var steradiansResult *units.SolidAngle
+    steradiansResult, err = factory.FromDto(steradiansDto)
+    if err != nil {
+        t.Errorf("FromDto() with Steradian returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = steradiansResult.Convert(units.SolidAngleSteradian)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Steradian = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.SolidAngleDto{
+        Value: 0,
+        Unit:  units.SolidAngleSteradian,
+    }
+    
+    var zeroResult *units.SolidAngle
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestSolidAngleFactory_FromDtoJSON(t *testing.T) {
+    factory := units.SolidAngleFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "Steradian"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Steradian"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.SolidAngleDto{
+        Value: nanValue,
+        Unit:  units.SolidAngleSteradian,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Steradian unit
+    steradiansJSON := []byte(`{"value": 100, "unit": "Steradian"}`)
+    steradiansResult, err := factory.FromDtoJSON(steradiansJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Steradian unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = steradiansResult.Convert(units.SolidAngleSteradian)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Steradian = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "Steradian"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromSteradians function
+func TestSolidAngleFactory_FromSteradians(t *testing.T) {
+    factory := units.SolidAngleFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromSteradians(100)
+    if err != nil {
+        t.Errorf("FromSteradians() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SolidAngleSteradian)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromSteradians() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromSteradians(math.NaN())
+    if err == nil {
+        t.Error("FromSteradians() with NaN value should return error")
+    }
+
+    _, err = factory.FromSteradians(math.Inf(1))
+    if err == nil {
+        t.Error("FromSteradians() with +Inf value should return error")
+    }
+
+    _, err = factory.FromSteradians(math.Inf(-1))
+    if err == nil {
+        t.Error("FromSteradians() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromSteradians(0)
+    if err != nil {
+        t.Errorf("FromSteradians() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SolidAngleSteradian)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromSteradians() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestSolidAngleToString(t *testing.T) {
 	factory := units.SolidAngleFactory{}
 	a, err := factory.CreateSolidAngle(45, units.SolidAngleSteradian)

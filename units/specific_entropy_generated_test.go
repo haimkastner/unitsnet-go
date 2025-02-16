@@ -187,6 +187,760 @@ func TestSpecificEntropy_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestSpecificEntropyFactory_FromDto(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyJoulePerKilogramKelvin,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.SpecificEntropyDto{
+        Value: math.NaN(),
+        Unit:  units.SpecificEntropyJoulePerKilogramKelvin,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test JoulePerKilogramKelvin conversion
+    joules_per_kilogram_kelvinDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyJoulePerKilogramKelvin,
+    }
+    
+    var joules_per_kilogram_kelvinResult *units.SpecificEntropy
+    joules_per_kilogram_kelvinResult, err = factory.FromDto(joules_per_kilogram_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with JoulePerKilogramKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = joules_per_kilogram_kelvinResult.Convert(units.SpecificEntropyJoulePerKilogramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for JoulePerKilogramKelvin = %v, want %v", converted, 100)
+    }
+    // Test JoulePerKilogramDegreeCelsius conversion
+    joules_per_kilogram_degree_celsiusDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyJoulePerKilogramDegreeCelsius,
+    }
+    
+    var joules_per_kilogram_degree_celsiusResult *units.SpecificEntropy
+    joules_per_kilogram_degree_celsiusResult, err = factory.FromDto(joules_per_kilogram_degree_celsiusDto)
+    if err != nil {
+        t.Errorf("FromDto() with JoulePerKilogramDegreeCelsius returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = joules_per_kilogram_degree_celsiusResult.Convert(units.SpecificEntropyJoulePerKilogramDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for JoulePerKilogramDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test CaloriePerGramKelvin conversion
+    calories_per_gram_kelvinDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyCaloriePerGramKelvin,
+    }
+    
+    var calories_per_gram_kelvinResult *units.SpecificEntropy
+    calories_per_gram_kelvinResult, err = factory.FromDto(calories_per_gram_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with CaloriePerGramKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = calories_per_gram_kelvinResult.Convert(units.SpecificEntropyCaloriePerGramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CaloriePerGramKelvin = %v, want %v", converted, 100)
+    }
+    // Test BtuPerPoundFahrenheit conversion
+    btus_per_pound_fahrenheitDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyBtuPerPoundFahrenheit,
+    }
+    
+    var btus_per_pound_fahrenheitResult *units.SpecificEntropy
+    btus_per_pound_fahrenheitResult, err = factory.FromDto(btus_per_pound_fahrenheitDto)
+    if err != nil {
+        t.Errorf("FromDto() with BtuPerPoundFahrenheit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_pound_fahrenheitResult.Convert(units.SpecificEntropyBtuPerPoundFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerPoundFahrenheit = %v, want %v", converted, 100)
+    }
+    // Test KilojoulePerKilogramKelvin conversion
+    kilojoules_per_kilogram_kelvinDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyKilojoulePerKilogramKelvin,
+    }
+    
+    var kilojoules_per_kilogram_kelvinResult *units.SpecificEntropy
+    kilojoules_per_kilogram_kelvinResult, err = factory.FromDto(kilojoules_per_kilogram_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilojoulePerKilogramKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilojoules_per_kilogram_kelvinResult.Convert(units.SpecificEntropyKilojoulePerKilogramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilojoulePerKilogramKelvin = %v, want %v", converted, 100)
+    }
+    // Test MegajoulePerKilogramKelvin conversion
+    megajoules_per_kilogram_kelvinDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyMegajoulePerKilogramKelvin,
+    }
+    
+    var megajoules_per_kilogram_kelvinResult *units.SpecificEntropy
+    megajoules_per_kilogram_kelvinResult, err = factory.FromDto(megajoules_per_kilogram_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with MegajoulePerKilogramKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megajoules_per_kilogram_kelvinResult.Convert(units.SpecificEntropyMegajoulePerKilogramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegajoulePerKilogramKelvin = %v, want %v", converted, 100)
+    }
+    // Test KilojoulePerKilogramDegreeCelsius conversion
+    kilojoules_per_kilogram_degree_celsiusDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyKilojoulePerKilogramDegreeCelsius,
+    }
+    
+    var kilojoules_per_kilogram_degree_celsiusResult *units.SpecificEntropy
+    kilojoules_per_kilogram_degree_celsiusResult, err = factory.FromDto(kilojoules_per_kilogram_degree_celsiusDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilojoulePerKilogramDegreeCelsius returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilojoules_per_kilogram_degree_celsiusResult.Convert(units.SpecificEntropyKilojoulePerKilogramDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilojoulePerKilogramDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test MegajoulePerKilogramDegreeCelsius conversion
+    megajoules_per_kilogram_degree_celsiusDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyMegajoulePerKilogramDegreeCelsius,
+    }
+    
+    var megajoules_per_kilogram_degree_celsiusResult *units.SpecificEntropy
+    megajoules_per_kilogram_degree_celsiusResult, err = factory.FromDto(megajoules_per_kilogram_degree_celsiusDto)
+    if err != nil {
+        t.Errorf("FromDto() with MegajoulePerKilogramDegreeCelsius returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megajoules_per_kilogram_degree_celsiusResult.Convert(units.SpecificEntropyMegajoulePerKilogramDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegajoulePerKilogramDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test KilocaloriePerGramKelvin conversion
+    kilocalories_per_gram_kelvinDto := units.SpecificEntropyDto{
+        Value: 100,
+        Unit:  units.SpecificEntropyKilocaloriePerGramKelvin,
+    }
+    
+    var kilocalories_per_gram_kelvinResult *units.SpecificEntropy
+    kilocalories_per_gram_kelvinResult, err = factory.FromDto(kilocalories_per_gram_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilocaloriePerGramKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilocalories_per_gram_kelvinResult.Convert(units.SpecificEntropyKilocaloriePerGramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilocaloriePerGramKelvin = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.SpecificEntropyDto{
+        Value: 0,
+        Unit:  units.SpecificEntropyJoulePerKilogramKelvin,
+    }
+    
+    var zeroResult *units.SpecificEntropy
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestSpecificEntropyFactory_FromDtoJSON(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "JoulePerKilogramKelvin"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "JoulePerKilogramKelvin"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.SpecificEntropyDto{
+        Value: nanValue,
+        Unit:  units.SpecificEntropyJoulePerKilogramKelvin,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with JoulePerKilogramKelvin unit
+    joules_per_kilogram_kelvinJSON := []byte(`{"value": 100, "unit": "JoulePerKilogramKelvin"}`)
+    joules_per_kilogram_kelvinResult, err := factory.FromDtoJSON(joules_per_kilogram_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with JoulePerKilogramKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = joules_per_kilogram_kelvinResult.Convert(units.SpecificEntropyJoulePerKilogramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for JoulePerKilogramKelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with JoulePerKilogramDegreeCelsius unit
+    joules_per_kilogram_degree_celsiusJSON := []byte(`{"value": 100, "unit": "JoulePerKilogramDegreeCelsius"}`)
+    joules_per_kilogram_degree_celsiusResult, err := factory.FromDtoJSON(joules_per_kilogram_degree_celsiusJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with JoulePerKilogramDegreeCelsius unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = joules_per_kilogram_degree_celsiusResult.Convert(units.SpecificEntropyJoulePerKilogramDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for JoulePerKilogramDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test JSON with CaloriePerGramKelvin unit
+    calories_per_gram_kelvinJSON := []byte(`{"value": 100, "unit": "CaloriePerGramKelvin"}`)
+    calories_per_gram_kelvinResult, err := factory.FromDtoJSON(calories_per_gram_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CaloriePerGramKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = calories_per_gram_kelvinResult.Convert(units.SpecificEntropyCaloriePerGramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CaloriePerGramKelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with BtuPerPoundFahrenheit unit
+    btus_per_pound_fahrenheitJSON := []byte(`{"value": 100, "unit": "BtuPerPoundFahrenheit"}`)
+    btus_per_pound_fahrenheitResult, err := factory.FromDtoJSON(btus_per_pound_fahrenheitJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with BtuPerPoundFahrenheit unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_pound_fahrenheitResult.Convert(units.SpecificEntropyBtuPerPoundFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerPoundFahrenheit = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilojoulePerKilogramKelvin unit
+    kilojoules_per_kilogram_kelvinJSON := []byte(`{"value": 100, "unit": "KilojoulePerKilogramKelvin"}`)
+    kilojoules_per_kilogram_kelvinResult, err := factory.FromDtoJSON(kilojoules_per_kilogram_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilojoulePerKilogramKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilojoules_per_kilogram_kelvinResult.Convert(units.SpecificEntropyKilojoulePerKilogramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilojoulePerKilogramKelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with MegajoulePerKilogramKelvin unit
+    megajoules_per_kilogram_kelvinJSON := []byte(`{"value": 100, "unit": "MegajoulePerKilogramKelvin"}`)
+    megajoules_per_kilogram_kelvinResult, err := factory.FromDtoJSON(megajoules_per_kilogram_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MegajoulePerKilogramKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megajoules_per_kilogram_kelvinResult.Convert(units.SpecificEntropyMegajoulePerKilogramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegajoulePerKilogramKelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilojoulePerKilogramDegreeCelsius unit
+    kilojoules_per_kilogram_degree_celsiusJSON := []byte(`{"value": 100, "unit": "KilojoulePerKilogramDegreeCelsius"}`)
+    kilojoules_per_kilogram_degree_celsiusResult, err := factory.FromDtoJSON(kilojoules_per_kilogram_degree_celsiusJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilojoulePerKilogramDegreeCelsius unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilojoules_per_kilogram_degree_celsiusResult.Convert(units.SpecificEntropyKilojoulePerKilogramDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilojoulePerKilogramDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test JSON with MegajoulePerKilogramDegreeCelsius unit
+    megajoules_per_kilogram_degree_celsiusJSON := []byte(`{"value": 100, "unit": "MegajoulePerKilogramDegreeCelsius"}`)
+    megajoules_per_kilogram_degree_celsiusResult, err := factory.FromDtoJSON(megajoules_per_kilogram_degree_celsiusJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MegajoulePerKilogramDegreeCelsius unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megajoules_per_kilogram_degree_celsiusResult.Convert(units.SpecificEntropyMegajoulePerKilogramDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegajoulePerKilogramDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilocaloriePerGramKelvin unit
+    kilocalories_per_gram_kelvinJSON := []byte(`{"value": 100, "unit": "KilocaloriePerGramKelvin"}`)
+    kilocalories_per_gram_kelvinResult, err := factory.FromDtoJSON(kilocalories_per_gram_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilocaloriePerGramKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilocalories_per_gram_kelvinResult.Convert(units.SpecificEntropyKilocaloriePerGramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilocaloriePerGramKelvin = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "JoulePerKilogramKelvin"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromJoulesPerKilogramKelvin function
+func TestSpecificEntropyFactory_FromJoulesPerKilogramKelvin(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromJoulesPerKilogramKelvin(100)
+    if err != nil {
+        t.Errorf("FromJoulesPerKilogramKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SpecificEntropyJoulePerKilogramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromJoulesPerKilogramKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromJoulesPerKilogramKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromJoulesPerKilogramKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromJoulesPerKilogramKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromJoulesPerKilogramKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromJoulesPerKilogramKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromJoulesPerKilogramKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromJoulesPerKilogramKelvin(0)
+    if err != nil {
+        t.Errorf("FromJoulesPerKilogramKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SpecificEntropyJoulePerKilogramKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromJoulesPerKilogramKelvin() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromJoulesPerKilogramDegreeCelsius function
+func TestSpecificEntropyFactory_FromJoulesPerKilogramDegreeCelsius(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromJoulesPerKilogramDegreeCelsius(100)
+    if err != nil {
+        t.Errorf("FromJoulesPerKilogramDegreeCelsius() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SpecificEntropyJoulePerKilogramDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromJoulesPerKilogramDegreeCelsius() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromJoulesPerKilogramDegreeCelsius(math.NaN())
+    if err == nil {
+        t.Error("FromJoulesPerKilogramDegreeCelsius() with NaN value should return error")
+    }
+
+    _, err = factory.FromJoulesPerKilogramDegreeCelsius(math.Inf(1))
+    if err == nil {
+        t.Error("FromJoulesPerKilogramDegreeCelsius() with +Inf value should return error")
+    }
+
+    _, err = factory.FromJoulesPerKilogramDegreeCelsius(math.Inf(-1))
+    if err == nil {
+        t.Error("FromJoulesPerKilogramDegreeCelsius() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromJoulesPerKilogramDegreeCelsius(0)
+    if err != nil {
+        t.Errorf("FromJoulesPerKilogramDegreeCelsius() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SpecificEntropyJoulePerKilogramDegreeCelsius)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromJoulesPerKilogramDegreeCelsius() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCaloriesPerGramKelvin function
+func TestSpecificEntropyFactory_FromCaloriesPerGramKelvin(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCaloriesPerGramKelvin(100)
+    if err != nil {
+        t.Errorf("FromCaloriesPerGramKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SpecificEntropyCaloriePerGramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCaloriesPerGramKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCaloriesPerGramKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromCaloriesPerGramKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromCaloriesPerGramKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromCaloriesPerGramKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCaloriesPerGramKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCaloriesPerGramKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCaloriesPerGramKelvin(0)
+    if err != nil {
+        t.Errorf("FromCaloriesPerGramKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SpecificEntropyCaloriePerGramKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCaloriesPerGramKelvin() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromBtusPerPoundFahrenheit function
+func TestSpecificEntropyFactory_FromBtusPerPoundFahrenheit(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromBtusPerPoundFahrenheit(100)
+    if err != nil {
+        t.Errorf("FromBtusPerPoundFahrenheit() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SpecificEntropyBtuPerPoundFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromBtusPerPoundFahrenheit() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromBtusPerPoundFahrenheit(math.NaN())
+    if err == nil {
+        t.Error("FromBtusPerPoundFahrenheit() with NaN value should return error")
+    }
+
+    _, err = factory.FromBtusPerPoundFahrenheit(math.Inf(1))
+    if err == nil {
+        t.Error("FromBtusPerPoundFahrenheit() with +Inf value should return error")
+    }
+
+    _, err = factory.FromBtusPerPoundFahrenheit(math.Inf(-1))
+    if err == nil {
+        t.Error("FromBtusPerPoundFahrenheit() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromBtusPerPoundFahrenheit(0)
+    if err != nil {
+        t.Errorf("FromBtusPerPoundFahrenheit() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SpecificEntropyBtuPerPoundFahrenheit)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromBtusPerPoundFahrenheit() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilojoulesPerKilogramKelvin function
+func TestSpecificEntropyFactory_FromKilojoulesPerKilogramKelvin(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilojoulesPerKilogramKelvin(100)
+    if err != nil {
+        t.Errorf("FromKilojoulesPerKilogramKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SpecificEntropyKilojoulePerKilogramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilojoulesPerKilogramKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilojoulesPerKilogramKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromKilojoulesPerKilogramKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilojoulesPerKilogramKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilojoulesPerKilogramKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilojoulesPerKilogramKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilojoulesPerKilogramKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilojoulesPerKilogramKelvin(0)
+    if err != nil {
+        t.Errorf("FromKilojoulesPerKilogramKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SpecificEntropyKilojoulePerKilogramKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilojoulesPerKilogramKelvin() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegajoulesPerKilogramKelvin function
+func TestSpecificEntropyFactory_FromMegajoulesPerKilogramKelvin(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegajoulesPerKilogramKelvin(100)
+    if err != nil {
+        t.Errorf("FromMegajoulesPerKilogramKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SpecificEntropyMegajoulePerKilogramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegajoulesPerKilogramKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegajoulesPerKilogramKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromMegajoulesPerKilogramKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegajoulesPerKilogramKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegajoulesPerKilogramKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegajoulesPerKilogramKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegajoulesPerKilogramKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegajoulesPerKilogramKelvin(0)
+    if err != nil {
+        t.Errorf("FromMegajoulesPerKilogramKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SpecificEntropyMegajoulePerKilogramKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegajoulesPerKilogramKelvin() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilojoulesPerKilogramDegreeCelsius function
+func TestSpecificEntropyFactory_FromKilojoulesPerKilogramDegreeCelsius(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilojoulesPerKilogramDegreeCelsius(100)
+    if err != nil {
+        t.Errorf("FromKilojoulesPerKilogramDegreeCelsius() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SpecificEntropyKilojoulePerKilogramDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilojoulesPerKilogramDegreeCelsius() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilojoulesPerKilogramDegreeCelsius(math.NaN())
+    if err == nil {
+        t.Error("FromKilojoulesPerKilogramDegreeCelsius() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilojoulesPerKilogramDegreeCelsius(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilojoulesPerKilogramDegreeCelsius() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilojoulesPerKilogramDegreeCelsius(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilojoulesPerKilogramDegreeCelsius() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilojoulesPerKilogramDegreeCelsius(0)
+    if err != nil {
+        t.Errorf("FromKilojoulesPerKilogramDegreeCelsius() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SpecificEntropyKilojoulePerKilogramDegreeCelsius)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilojoulesPerKilogramDegreeCelsius() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegajoulesPerKilogramDegreeCelsius function
+func TestSpecificEntropyFactory_FromMegajoulesPerKilogramDegreeCelsius(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegajoulesPerKilogramDegreeCelsius(100)
+    if err != nil {
+        t.Errorf("FromMegajoulesPerKilogramDegreeCelsius() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SpecificEntropyMegajoulePerKilogramDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegajoulesPerKilogramDegreeCelsius() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegajoulesPerKilogramDegreeCelsius(math.NaN())
+    if err == nil {
+        t.Error("FromMegajoulesPerKilogramDegreeCelsius() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegajoulesPerKilogramDegreeCelsius(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegajoulesPerKilogramDegreeCelsius() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegajoulesPerKilogramDegreeCelsius(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegajoulesPerKilogramDegreeCelsius() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegajoulesPerKilogramDegreeCelsius(0)
+    if err != nil {
+        t.Errorf("FromMegajoulesPerKilogramDegreeCelsius() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SpecificEntropyMegajoulePerKilogramDegreeCelsius)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegajoulesPerKilogramDegreeCelsius() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilocaloriesPerGramKelvin function
+func TestSpecificEntropyFactory_FromKilocaloriesPerGramKelvin(t *testing.T) {
+    factory := units.SpecificEntropyFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilocaloriesPerGramKelvin(100)
+    if err != nil {
+        t.Errorf("FromKilocaloriesPerGramKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.SpecificEntropyKilocaloriePerGramKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilocaloriesPerGramKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilocaloriesPerGramKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromKilocaloriesPerGramKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilocaloriesPerGramKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilocaloriesPerGramKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilocaloriesPerGramKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilocaloriesPerGramKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilocaloriesPerGramKelvin(0)
+    if err != nil {
+        t.Errorf("FromKilocaloriesPerGramKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.SpecificEntropyKilocaloriePerGramKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilocaloriesPerGramKelvin() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestSpecificEntropyToString(t *testing.T) {
 	factory := units.SpecificEntropyFactory{}
 	a, err := factory.CreateSpecificEntropy(45, units.SpecificEntropyJoulePerKilogramKelvin)

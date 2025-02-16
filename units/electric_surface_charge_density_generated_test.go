@@ -139,6 +139,328 @@ func TestElectricSurfaceChargeDensity_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestElectricSurfaceChargeDensityFactory_FromDto(t *testing.T) {
+    factory := units.ElectricSurfaceChargeDensityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.ElectricSurfaceChargeDensityDto{
+        Value: 100,
+        Unit:  units.ElectricSurfaceChargeDensityCoulombPerSquareMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.ElectricSurfaceChargeDensityDto{
+        Value: math.NaN(),
+        Unit:  units.ElectricSurfaceChargeDensityCoulombPerSquareMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test CoulombPerSquareMeter conversion
+    coulombs_per_square_meterDto := units.ElectricSurfaceChargeDensityDto{
+        Value: 100,
+        Unit:  units.ElectricSurfaceChargeDensityCoulombPerSquareMeter,
+    }
+    
+    var coulombs_per_square_meterResult *units.ElectricSurfaceChargeDensity
+    coulombs_per_square_meterResult, err = factory.FromDto(coulombs_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with CoulombPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombs_per_square_meterResult.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CoulombPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test CoulombPerSquareCentimeter conversion
+    coulombs_per_square_centimeterDto := units.ElectricSurfaceChargeDensityDto{
+        Value: 100,
+        Unit:  units.ElectricSurfaceChargeDensityCoulombPerSquareCentimeter,
+    }
+    
+    var coulombs_per_square_centimeterResult *units.ElectricSurfaceChargeDensity
+    coulombs_per_square_centimeterResult, err = factory.FromDto(coulombs_per_square_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with CoulombPerSquareCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombs_per_square_centimeterResult.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CoulombPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test CoulombPerSquareInch conversion
+    coulombs_per_square_inchDto := units.ElectricSurfaceChargeDensityDto{
+        Value: 100,
+        Unit:  units.ElectricSurfaceChargeDensityCoulombPerSquareInch,
+    }
+    
+    var coulombs_per_square_inchResult *units.ElectricSurfaceChargeDensity
+    coulombs_per_square_inchResult, err = factory.FromDto(coulombs_per_square_inchDto)
+    if err != nil {
+        t.Errorf("FromDto() with CoulombPerSquareInch returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombs_per_square_inchResult.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CoulombPerSquareInch = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.ElectricSurfaceChargeDensityDto{
+        Value: 0,
+        Unit:  units.ElectricSurfaceChargeDensityCoulombPerSquareMeter,
+    }
+    
+    var zeroResult *units.ElectricSurfaceChargeDensity
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestElectricSurfaceChargeDensityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.ElectricSurfaceChargeDensityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "CoulombPerSquareMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "CoulombPerSquareMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.ElectricSurfaceChargeDensityDto{
+        Value: nanValue,
+        Unit:  units.ElectricSurfaceChargeDensityCoulombPerSquareMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with CoulombPerSquareMeter unit
+    coulombs_per_square_meterJSON := []byte(`{"value": 100, "unit": "CoulombPerSquareMeter"}`)
+    coulombs_per_square_meterResult, err := factory.FromDtoJSON(coulombs_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CoulombPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombs_per_square_meterResult.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CoulombPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with CoulombPerSquareCentimeter unit
+    coulombs_per_square_centimeterJSON := []byte(`{"value": 100, "unit": "CoulombPerSquareCentimeter"}`)
+    coulombs_per_square_centimeterResult, err := factory.FromDtoJSON(coulombs_per_square_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CoulombPerSquareCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombs_per_square_centimeterResult.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CoulombPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with CoulombPerSquareInch unit
+    coulombs_per_square_inchJSON := []byte(`{"value": 100, "unit": "CoulombPerSquareInch"}`)
+    coulombs_per_square_inchResult, err := factory.FromDtoJSON(coulombs_per_square_inchJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CoulombPerSquareInch unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = coulombs_per_square_inchResult.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CoulombPerSquareInch = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "CoulombPerSquareMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromCoulombsPerSquareMeter function
+func TestElectricSurfaceChargeDensityFactory_FromCoulombsPerSquareMeter(t *testing.T) {
+    factory := units.ElectricSurfaceChargeDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCoulombsPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromCoulombsPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCoulombsPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCoulombsPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromCoulombsPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromCoulombsPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromCoulombsPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCoulombsPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCoulombsPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCoulombsPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromCoulombsPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCoulombsPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCoulombsPerSquareCentimeter function
+func TestElectricSurfaceChargeDensityFactory_FromCoulombsPerSquareCentimeter(t *testing.T) {
+    factory := units.ElectricSurfaceChargeDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCoulombsPerSquareCentimeter(100)
+    if err != nil {
+        t.Errorf("FromCoulombsPerSquareCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCoulombsPerSquareCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCoulombsPerSquareCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromCoulombsPerSquareCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromCoulombsPerSquareCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromCoulombsPerSquareCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCoulombsPerSquareCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCoulombsPerSquareCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCoulombsPerSquareCentimeter(0)
+    if err != nil {
+        t.Errorf("FromCoulombsPerSquareCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCoulombsPerSquareCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCoulombsPerSquareInch function
+func TestElectricSurfaceChargeDensityFactory_FromCoulombsPerSquareInch(t *testing.T) {
+    factory := units.ElectricSurfaceChargeDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCoulombsPerSquareInch(100)
+    if err != nil {
+        t.Errorf("FromCoulombsPerSquareInch() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCoulombsPerSquareInch() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCoulombsPerSquareInch(math.NaN())
+    if err == nil {
+        t.Error("FromCoulombsPerSquareInch() with NaN value should return error")
+    }
+
+    _, err = factory.FromCoulombsPerSquareInch(math.Inf(1))
+    if err == nil {
+        t.Error("FromCoulombsPerSquareInch() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCoulombsPerSquareInch(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCoulombsPerSquareInch() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCoulombsPerSquareInch(0)
+    if err != nil {
+        t.Errorf("FromCoulombsPerSquareInch() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ElectricSurfaceChargeDensityCoulombPerSquareInch)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCoulombsPerSquareInch() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestElectricSurfaceChargeDensityToString(t *testing.T) {
 	factory := units.ElectricSurfaceChargeDensityFactory{}
 	a, err := factory.CreateElectricSurfaceChargeDensity(45, units.ElectricSurfaceChargeDensityCoulombPerSquareMeter)

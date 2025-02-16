@@ -163,6 +163,544 @@ func TestMagneticField_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestMagneticFieldFactory_FromDto(t *testing.T) {
+    factory := units.MagneticFieldFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.MagneticFieldDto{
+        Value: 100,
+        Unit:  units.MagneticFieldTesla,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.MagneticFieldDto{
+        Value: math.NaN(),
+        Unit:  units.MagneticFieldTesla,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Tesla conversion
+    teslasDto := units.MagneticFieldDto{
+        Value: 100,
+        Unit:  units.MagneticFieldTesla,
+    }
+    
+    var teslasResult *units.MagneticField
+    teslasResult, err = factory.FromDto(teslasDto)
+    if err != nil {
+        t.Errorf("FromDto() with Tesla returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = teslasResult.Convert(units.MagneticFieldTesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Tesla = %v, want %v", converted, 100)
+    }
+    // Test Gauss conversion
+    gaussesDto := units.MagneticFieldDto{
+        Value: 100,
+        Unit:  units.MagneticFieldGauss,
+    }
+    
+    var gaussesResult *units.MagneticField
+    gaussesResult, err = factory.FromDto(gaussesDto)
+    if err != nil {
+        t.Errorf("FromDto() with Gauss returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gaussesResult.Convert(units.MagneticFieldGauss)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gauss = %v, want %v", converted, 100)
+    }
+    // Test Nanotesla conversion
+    nanoteslasDto := units.MagneticFieldDto{
+        Value: 100,
+        Unit:  units.MagneticFieldNanotesla,
+    }
+    
+    var nanoteslasResult *units.MagneticField
+    nanoteslasResult, err = factory.FromDto(nanoteslasDto)
+    if err != nil {
+        t.Errorf("FromDto() with Nanotesla returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanoteslasResult.Convert(units.MagneticFieldNanotesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nanotesla = %v, want %v", converted, 100)
+    }
+    // Test Microtesla conversion
+    microteslasDto := units.MagneticFieldDto{
+        Value: 100,
+        Unit:  units.MagneticFieldMicrotesla,
+    }
+    
+    var microteslasResult *units.MagneticField
+    microteslasResult, err = factory.FromDto(microteslasDto)
+    if err != nil {
+        t.Errorf("FromDto() with Microtesla returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microteslasResult.Convert(units.MagneticFieldMicrotesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microtesla = %v, want %v", converted, 100)
+    }
+    // Test Millitesla conversion
+    milliteslasDto := units.MagneticFieldDto{
+        Value: 100,
+        Unit:  units.MagneticFieldMillitesla,
+    }
+    
+    var milliteslasResult *units.MagneticField
+    milliteslasResult, err = factory.FromDto(milliteslasDto)
+    if err != nil {
+        t.Errorf("FromDto() with Millitesla returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliteslasResult.Convert(units.MagneticFieldMillitesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millitesla = %v, want %v", converted, 100)
+    }
+    // Test Milligauss conversion
+    milligaussesDto := units.MagneticFieldDto{
+        Value: 100,
+        Unit:  units.MagneticFieldMilligauss,
+    }
+    
+    var milligaussesResult *units.MagneticField
+    milligaussesResult, err = factory.FromDto(milligaussesDto)
+    if err != nil {
+        t.Errorf("FromDto() with Milligauss returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligaussesResult.Convert(units.MagneticFieldMilligauss)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Milligauss = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.MagneticFieldDto{
+        Value: 0,
+        Unit:  units.MagneticFieldTesla,
+    }
+    
+    var zeroResult *units.MagneticField
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestMagneticFieldFactory_FromDtoJSON(t *testing.T) {
+    factory := units.MagneticFieldFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "Tesla"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Tesla"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.MagneticFieldDto{
+        Value: nanValue,
+        Unit:  units.MagneticFieldTesla,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Tesla unit
+    teslasJSON := []byte(`{"value": 100, "unit": "Tesla"}`)
+    teslasResult, err := factory.FromDtoJSON(teslasJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Tesla unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = teslasResult.Convert(units.MagneticFieldTesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Tesla = %v, want %v", converted, 100)
+    }
+    // Test JSON with Gauss unit
+    gaussesJSON := []byte(`{"value": 100, "unit": "Gauss"}`)
+    gaussesResult, err := factory.FromDtoJSON(gaussesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Gauss unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gaussesResult.Convert(units.MagneticFieldGauss)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gauss = %v, want %v", converted, 100)
+    }
+    // Test JSON with Nanotesla unit
+    nanoteslasJSON := []byte(`{"value": 100, "unit": "Nanotesla"}`)
+    nanoteslasResult, err := factory.FromDtoJSON(nanoteslasJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Nanotesla unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanoteslasResult.Convert(units.MagneticFieldNanotesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nanotesla = %v, want %v", converted, 100)
+    }
+    // Test JSON with Microtesla unit
+    microteslasJSON := []byte(`{"value": 100, "unit": "Microtesla"}`)
+    microteslasResult, err := factory.FromDtoJSON(microteslasJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Microtesla unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microteslasResult.Convert(units.MagneticFieldMicrotesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Microtesla = %v, want %v", converted, 100)
+    }
+    // Test JSON with Millitesla unit
+    milliteslasJSON := []byte(`{"value": 100, "unit": "Millitesla"}`)
+    milliteslasResult, err := factory.FromDtoJSON(milliteslasJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Millitesla unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliteslasResult.Convert(units.MagneticFieldMillitesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millitesla = %v, want %v", converted, 100)
+    }
+    // Test JSON with Milligauss unit
+    milligaussesJSON := []byte(`{"value": 100, "unit": "Milligauss"}`)
+    milligaussesResult, err := factory.FromDtoJSON(milligaussesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Milligauss unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligaussesResult.Convert(units.MagneticFieldMilligauss)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Milligauss = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "Tesla"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromTeslas function
+func TestMagneticFieldFactory_FromTeslas(t *testing.T) {
+    factory := units.MagneticFieldFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromTeslas(100)
+    if err != nil {
+        t.Errorf("FromTeslas() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MagneticFieldTesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromTeslas() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromTeslas(math.NaN())
+    if err == nil {
+        t.Error("FromTeslas() with NaN value should return error")
+    }
+
+    _, err = factory.FromTeslas(math.Inf(1))
+    if err == nil {
+        t.Error("FromTeslas() with +Inf value should return error")
+    }
+
+    _, err = factory.FromTeslas(math.Inf(-1))
+    if err == nil {
+        t.Error("FromTeslas() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromTeslas(0)
+    if err != nil {
+        t.Errorf("FromTeslas() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MagneticFieldTesla)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromTeslas() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGausses function
+func TestMagneticFieldFactory_FromGausses(t *testing.T) {
+    factory := units.MagneticFieldFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGausses(100)
+    if err != nil {
+        t.Errorf("FromGausses() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MagneticFieldGauss)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGausses() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGausses(math.NaN())
+    if err == nil {
+        t.Error("FromGausses() with NaN value should return error")
+    }
+
+    _, err = factory.FromGausses(math.Inf(1))
+    if err == nil {
+        t.Error("FromGausses() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGausses(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGausses() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGausses(0)
+    if err != nil {
+        t.Errorf("FromGausses() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MagneticFieldGauss)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGausses() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanoteslas function
+func TestMagneticFieldFactory_FromNanoteslas(t *testing.T) {
+    factory := units.MagneticFieldFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanoteslas(100)
+    if err != nil {
+        t.Errorf("FromNanoteslas() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MagneticFieldNanotesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanoteslas() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanoteslas(math.NaN())
+    if err == nil {
+        t.Error("FromNanoteslas() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanoteslas(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanoteslas() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanoteslas(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanoteslas() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanoteslas(0)
+    if err != nil {
+        t.Errorf("FromNanoteslas() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MagneticFieldNanotesla)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanoteslas() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicroteslas function
+func TestMagneticFieldFactory_FromMicroteslas(t *testing.T) {
+    factory := units.MagneticFieldFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicroteslas(100)
+    if err != nil {
+        t.Errorf("FromMicroteslas() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MagneticFieldMicrotesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicroteslas() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicroteslas(math.NaN())
+    if err == nil {
+        t.Error("FromMicroteslas() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicroteslas(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicroteslas() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicroteslas(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicroteslas() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicroteslas(0)
+    if err != nil {
+        t.Errorf("FromMicroteslas() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MagneticFieldMicrotesla)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicroteslas() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilliteslas function
+func TestMagneticFieldFactory_FromMilliteslas(t *testing.T) {
+    factory := units.MagneticFieldFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilliteslas(100)
+    if err != nil {
+        t.Errorf("FromMilliteslas() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MagneticFieldMillitesla)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilliteslas() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilliteslas(math.NaN())
+    if err == nil {
+        t.Error("FromMilliteslas() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilliteslas(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilliteslas() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilliteslas(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilliteslas() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilliteslas(0)
+    if err != nil {
+        t.Errorf("FromMilliteslas() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MagneticFieldMillitesla)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilliteslas() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilligausses function
+func TestMagneticFieldFactory_FromMilligausses(t *testing.T) {
+    factory := units.MagneticFieldFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilligausses(100)
+    if err != nil {
+        t.Errorf("FromMilligausses() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MagneticFieldMilligauss)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilligausses() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilligausses(math.NaN())
+    if err == nil {
+        t.Error("FromMilligausses() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilligausses(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilligausses() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilligausses(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilligausses() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilligausses(0)
+    if err != nil {
+        t.Errorf("FromMilligausses() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MagneticFieldMilligauss)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilligausses() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestMagneticFieldToString(t *testing.T) {
 	factory := units.MagneticFieldFactory{}
 	a, err := factory.CreateMagneticField(45, units.MagneticFieldTesla)

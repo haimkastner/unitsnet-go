@@ -195,6 +195,832 @@ func TestLuminance_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestLuminanceFactory_FromDto(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceCandelaPerSquareMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.LuminanceDto{
+        Value: math.NaN(),
+        Unit:  units.LuminanceCandelaPerSquareMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test CandelaPerSquareMeter conversion
+    candelas_per_square_meterDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceCandelaPerSquareMeter,
+    }
+    
+    var candelas_per_square_meterResult *units.Luminance
+    candelas_per_square_meterResult, err = factory.FromDto(candelas_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with CandelaPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = candelas_per_square_meterResult.Convert(units.LuminanceCandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test CandelaPerSquareFoot conversion
+    candelas_per_square_footDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceCandelaPerSquareFoot,
+    }
+    
+    var candelas_per_square_footResult *units.Luminance
+    candelas_per_square_footResult, err = factory.FromDto(candelas_per_square_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with CandelaPerSquareFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = candelas_per_square_footResult.Convert(units.LuminanceCandelaPerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CandelaPerSquareFoot = %v, want %v", converted, 100)
+    }
+    // Test CandelaPerSquareInch conversion
+    candelas_per_square_inchDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceCandelaPerSquareInch,
+    }
+    
+    var candelas_per_square_inchResult *units.Luminance
+    candelas_per_square_inchResult, err = factory.FromDto(candelas_per_square_inchDto)
+    if err != nil {
+        t.Errorf("FromDto() with CandelaPerSquareInch returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = candelas_per_square_inchResult.Convert(units.LuminanceCandelaPerSquareInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CandelaPerSquareInch = %v, want %v", converted, 100)
+    }
+    // Test Nit conversion
+    nitsDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceNit,
+    }
+    
+    var nitsResult *units.Luminance
+    nitsResult, err = factory.FromDto(nitsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Nit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nitsResult.Convert(units.LuminanceNit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nit = %v, want %v", converted, 100)
+    }
+    // Test NanocandelaPerSquareMeter conversion
+    nanocandelas_per_square_meterDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceNanocandelaPerSquareMeter,
+    }
+    
+    var nanocandelas_per_square_meterResult *units.Luminance
+    nanocandelas_per_square_meterResult, err = factory.FromDto(nanocandelas_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with NanocandelaPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanocandelas_per_square_meterResult.Convert(units.LuminanceNanocandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanocandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test MicrocandelaPerSquareMeter conversion
+    microcandelas_per_square_meterDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceMicrocandelaPerSquareMeter,
+    }
+    
+    var microcandelas_per_square_meterResult *units.Luminance
+    microcandelas_per_square_meterResult, err = factory.FromDto(microcandelas_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with MicrocandelaPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microcandelas_per_square_meterResult.Convert(units.LuminanceMicrocandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrocandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test MillicandelaPerSquareMeter conversion
+    millicandelas_per_square_meterDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceMillicandelaPerSquareMeter,
+    }
+    
+    var millicandelas_per_square_meterResult *units.Luminance
+    millicandelas_per_square_meterResult, err = factory.FromDto(millicandelas_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillicandelaPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millicandelas_per_square_meterResult.Convert(units.LuminanceMillicandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillicandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test CenticandelaPerSquareMeter conversion
+    centicandelas_per_square_meterDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceCenticandelaPerSquareMeter,
+    }
+    
+    var centicandelas_per_square_meterResult *units.Luminance
+    centicandelas_per_square_meterResult, err = factory.FromDto(centicandelas_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with CenticandelaPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centicandelas_per_square_meterResult.Convert(units.LuminanceCenticandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CenticandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test DecicandelaPerSquareMeter conversion
+    decicandelas_per_square_meterDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceDecicandelaPerSquareMeter,
+    }
+    
+    var decicandelas_per_square_meterResult *units.Luminance
+    decicandelas_per_square_meterResult, err = factory.FromDto(decicandelas_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with DecicandelaPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decicandelas_per_square_meterResult.Convert(units.LuminanceDecicandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecicandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test KilocandelaPerSquareMeter conversion
+    kilocandelas_per_square_meterDto := units.LuminanceDto{
+        Value: 100,
+        Unit:  units.LuminanceKilocandelaPerSquareMeter,
+    }
+    
+    var kilocandelas_per_square_meterResult *units.Luminance
+    kilocandelas_per_square_meterResult, err = factory.FromDto(kilocandelas_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilocandelaPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilocandelas_per_square_meterResult.Convert(units.LuminanceKilocandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilocandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.LuminanceDto{
+        Value: 0,
+        Unit:  units.LuminanceCandelaPerSquareMeter,
+    }
+    
+    var zeroResult *units.Luminance
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestLuminanceFactory_FromDtoJSON(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "CandelaPerSquareMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "CandelaPerSquareMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.LuminanceDto{
+        Value: nanValue,
+        Unit:  units.LuminanceCandelaPerSquareMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with CandelaPerSquareMeter unit
+    candelas_per_square_meterJSON := []byte(`{"value": 100, "unit": "CandelaPerSquareMeter"}`)
+    candelas_per_square_meterResult, err := factory.FromDtoJSON(candelas_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CandelaPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = candelas_per_square_meterResult.Convert(units.LuminanceCandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with CandelaPerSquareFoot unit
+    candelas_per_square_footJSON := []byte(`{"value": 100, "unit": "CandelaPerSquareFoot"}`)
+    candelas_per_square_footResult, err := factory.FromDtoJSON(candelas_per_square_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CandelaPerSquareFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = candelas_per_square_footResult.Convert(units.LuminanceCandelaPerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CandelaPerSquareFoot = %v, want %v", converted, 100)
+    }
+    // Test JSON with CandelaPerSquareInch unit
+    candelas_per_square_inchJSON := []byte(`{"value": 100, "unit": "CandelaPerSquareInch"}`)
+    candelas_per_square_inchResult, err := factory.FromDtoJSON(candelas_per_square_inchJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CandelaPerSquareInch unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = candelas_per_square_inchResult.Convert(units.LuminanceCandelaPerSquareInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CandelaPerSquareInch = %v, want %v", converted, 100)
+    }
+    // Test JSON with Nit unit
+    nitsJSON := []byte(`{"value": 100, "unit": "Nit"}`)
+    nitsResult, err := factory.FromDtoJSON(nitsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Nit unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nitsResult.Convert(units.LuminanceNit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Nit = %v, want %v", converted, 100)
+    }
+    // Test JSON with NanocandelaPerSquareMeter unit
+    nanocandelas_per_square_meterJSON := []byte(`{"value": 100, "unit": "NanocandelaPerSquareMeter"}`)
+    nanocandelas_per_square_meterResult, err := factory.FromDtoJSON(nanocandelas_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with NanocandelaPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanocandelas_per_square_meterResult.Convert(units.LuminanceNanocandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanocandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MicrocandelaPerSquareMeter unit
+    microcandelas_per_square_meterJSON := []byte(`{"value": 100, "unit": "MicrocandelaPerSquareMeter"}`)
+    microcandelas_per_square_meterResult, err := factory.FromDtoJSON(microcandelas_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MicrocandelaPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microcandelas_per_square_meterResult.Convert(units.LuminanceMicrocandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrocandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillicandelaPerSquareMeter unit
+    millicandelas_per_square_meterJSON := []byte(`{"value": 100, "unit": "MillicandelaPerSquareMeter"}`)
+    millicandelas_per_square_meterResult, err := factory.FromDtoJSON(millicandelas_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillicandelaPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millicandelas_per_square_meterResult.Convert(units.LuminanceMillicandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillicandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with CenticandelaPerSquareMeter unit
+    centicandelas_per_square_meterJSON := []byte(`{"value": 100, "unit": "CenticandelaPerSquareMeter"}`)
+    centicandelas_per_square_meterResult, err := factory.FromDtoJSON(centicandelas_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CenticandelaPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centicandelas_per_square_meterResult.Convert(units.LuminanceCenticandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CenticandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with DecicandelaPerSquareMeter unit
+    decicandelas_per_square_meterJSON := []byte(`{"value": 100, "unit": "DecicandelaPerSquareMeter"}`)
+    decicandelas_per_square_meterResult, err := factory.FromDtoJSON(decicandelas_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DecicandelaPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decicandelas_per_square_meterResult.Convert(units.LuminanceDecicandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecicandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilocandelaPerSquareMeter unit
+    kilocandelas_per_square_meterJSON := []byte(`{"value": 100, "unit": "KilocandelaPerSquareMeter"}`)
+    kilocandelas_per_square_meterResult, err := factory.FromDtoJSON(kilocandelas_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilocandelaPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilocandelas_per_square_meterResult.Convert(units.LuminanceKilocandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilocandelaPerSquareMeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "CandelaPerSquareMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromCandelasPerSquareMeter function
+func TestLuminanceFactory_FromCandelasPerSquareMeter(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCandelasPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromCandelasPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceCandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCandelasPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCandelasPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromCandelasPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromCandelasPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromCandelasPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCandelasPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCandelasPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCandelasPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromCandelasPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceCandelaPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCandelasPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCandelasPerSquareFoot function
+func TestLuminanceFactory_FromCandelasPerSquareFoot(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCandelasPerSquareFoot(100)
+    if err != nil {
+        t.Errorf("FromCandelasPerSquareFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceCandelaPerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCandelasPerSquareFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCandelasPerSquareFoot(math.NaN())
+    if err == nil {
+        t.Error("FromCandelasPerSquareFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromCandelasPerSquareFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromCandelasPerSquareFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCandelasPerSquareFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCandelasPerSquareFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCandelasPerSquareFoot(0)
+    if err != nil {
+        t.Errorf("FromCandelasPerSquareFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceCandelaPerSquareFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCandelasPerSquareFoot() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCandelasPerSquareInch function
+func TestLuminanceFactory_FromCandelasPerSquareInch(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCandelasPerSquareInch(100)
+    if err != nil {
+        t.Errorf("FromCandelasPerSquareInch() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceCandelaPerSquareInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCandelasPerSquareInch() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCandelasPerSquareInch(math.NaN())
+    if err == nil {
+        t.Error("FromCandelasPerSquareInch() with NaN value should return error")
+    }
+
+    _, err = factory.FromCandelasPerSquareInch(math.Inf(1))
+    if err == nil {
+        t.Error("FromCandelasPerSquareInch() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCandelasPerSquareInch(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCandelasPerSquareInch() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCandelasPerSquareInch(0)
+    if err != nil {
+        t.Errorf("FromCandelasPerSquareInch() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceCandelaPerSquareInch)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCandelasPerSquareInch() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNits function
+func TestLuminanceFactory_FromNits(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNits(100)
+    if err != nil {
+        t.Errorf("FromNits() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceNit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNits() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNits(math.NaN())
+    if err == nil {
+        t.Error("FromNits() with NaN value should return error")
+    }
+
+    _, err = factory.FromNits(math.Inf(1))
+    if err == nil {
+        t.Error("FromNits() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNits(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNits() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNits(0)
+    if err != nil {
+        t.Errorf("FromNits() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceNit)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNits() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromNanocandelasPerSquareMeter function
+func TestLuminanceFactory_FromNanocandelasPerSquareMeter(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanocandelasPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromNanocandelasPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceNanocandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanocandelasPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanocandelasPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromNanocandelasPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanocandelasPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanocandelasPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanocandelasPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanocandelasPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanocandelasPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromNanocandelasPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceNanocandelaPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanocandelasPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrocandelasPerSquareMeter function
+func TestLuminanceFactory_FromMicrocandelasPerSquareMeter(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrocandelasPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromMicrocandelasPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceMicrocandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrocandelasPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrocandelasPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromMicrocandelasPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrocandelasPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrocandelasPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrocandelasPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrocandelasPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrocandelasPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromMicrocandelasPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceMicrocandelaPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrocandelasPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillicandelasPerSquareMeter function
+func TestLuminanceFactory_FromMillicandelasPerSquareMeter(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillicandelasPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromMillicandelasPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceMillicandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillicandelasPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillicandelasPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromMillicandelasPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillicandelasPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillicandelasPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillicandelasPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillicandelasPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillicandelasPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromMillicandelasPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceMillicandelaPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillicandelasPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCenticandelasPerSquareMeter function
+func TestLuminanceFactory_FromCenticandelasPerSquareMeter(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCenticandelasPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromCenticandelasPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceCenticandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCenticandelasPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCenticandelasPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromCenticandelasPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromCenticandelasPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromCenticandelasPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCenticandelasPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCenticandelasPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCenticandelasPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromCenticandelasPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceCenticandelaPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCenticandelasPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecicandelasPerSquareMeter function
+func TestLuminanceFactory_FromDecicandelasPerSquareMeter(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecicandelasPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromDecicandelasPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceDecicandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecicandelasPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecicandelasPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromDecicandelasPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecicandelasPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecicandelasPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecicandelasPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecicandelasPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecicandelasPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromDecicandelasPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceDecicandelaPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecicandelasPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilocandelasPerSquareMeter function
+func TestLuminanceFactory_FromKilocandelasPerSquareMeter(t *testing.T) {
+    factory := units.LuminanceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilocandelasPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromKilocandelasPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminanceKilocandelaPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilocandelasPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilocandelasPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromKilocandelasPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilocandelasPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilocandelasPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilocandelasPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilocandelasPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilocandelasPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromKilocandelasPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminanceKilocandelaPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilocandelasPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestLuminanceToString(t *testing.T) {
 	factory := units.LuminanceFactory{}
 	a, err := factory.CreateLuminance(45, units.LuminanceCandelaPerSquareMeter)

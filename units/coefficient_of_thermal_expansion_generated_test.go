@@ -163,6 +163,544 @@ func TestCoefficientOfThermalExpansion_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestCoefficientOfThermalExpansionFactory_FromDto(t *testing.T) {
+    factory := units.CoefficientOfThermalExpansionFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.CoefficientOfThermalExpansionDto{
+        Value: 100,
+        Unit:  units.CoefficientOfThermalExpansionPerKelvin,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.CoefficientOfThermalExpansionDto{
+        Value: math.NaN(),
+        Unit:  units.CoefficientOfThermalExpansionPerKelvin,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test PerKelvin conversion
+    per_kelvinDto := units.CoefficientOfThermalExpansionDto{
+        Value: 100,
+        Unit:  units.CoefficientOfThermalExpansionPerKelvin,
+    }
+    
+    var per_kelvinResult *units.CoefficientOfThermalExpansion
+    per_kelvinResult, err = factory.FromDto(per_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with PerKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = per_kelvinResult.Convert(units.CoefficientOfThermalExpansionPerKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PerKelvin = %v, want %v", converted, 100)
+    }
+    // Test PerDegreeCelsius conversion
+    per_degree_celsiusDto := units.CoefficientOfThermalExpansionDto{
+        Value: 100,
+        Unit:  units.CoefficientOfThermalExpansionPerDegreeCelsius,
+    }
+    
+    var per_degree_celsiusResult *units.CoefficientOfThermalExpansion
+    per_degree_celsiusResult, err = factory.FromDto(per_degree_celsiusDto)
+    if err != nil {
+        t.Errorf("FromDto() with PerDegreeCelsius returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = per_degree_celsiusResult.Convert(units.CoefficientOfThermalExpansionPerDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PerDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test PerDegreeFahrenheit conversion
+    per_degree_fahrenheitDto := units.CoefficientOfThermalExpansionDto{
+        Value: 100,
+        Unit:  units.CoefficientOfThermalExpansionPerDegreeFahrenheit,
+    }
+    
+    var per_degree_fahrenheitResult *units.CoefficientOfThermalExpansion
+    per_degree_fahrenheitResult, err = factory.FromDto(per_degree_fahrenheitDto)
+    if err != nil {
+        t.Errorf("FromDto() with PerDegreeFahrenheit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = per_degree_fahrenheitResult.Convert(units.CoefficientOfThermalExpansionPerDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PerDegreeFahrenheit = %v, want %v", converted, 100)
+    }
+    // Test PpmPerKelvin conversion
+    ppm_per_kelvinDto := units.CoefficientOfThermalExpansionDto{
+        Value: 100,
+        Unit:  units.CoefficientOfThermalExpansionPpmPerKelvin,
+    }
+    
+    var ppm_per_kelvinResult *units.CoefficientOfThermalExpansion
+    ppm_per_kelvinResult, err = factory.FromDto(ppm_per_kelvinDto)
+    if err != nil {
+        t.Errorf("FromDto() with PpmPerKelvin returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ppm_per_kelvinResult.Convert(units.CoefficientOfThermalExpansionPpmPerKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PpmPerKelvin = %v, want %v", converted, 100)
+    }
+    // Test PpmPerDegreeCelsius conversion
+    ppm_per_degree_celsiusDto := units.CoefficientOfThermalExpansionDto{
+        Value: 100,
+        Unit:  units.CoefficientOfThermalExpansionPpmPerDegreeCelsius,
+    }
+    
+    var ppm_per_degree_celsiusResult *units.CoefficientOfThermalExpansion
+    ppm_per_degree_celsiusResult, err = factory.FromDto(ppm_per_degree_celsiusDto)
+    if err != nil {
+        t.Errorf("FromDto() with PpmPerDegreeCelsius returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ppm_per_degree_celsiusResult.Convert(units.CoefficientOfThermalExpansionPpmPerDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PpmPerDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test PpmPerDegreeFahrenheit conversion
+    ppm_per_degree_fahrenheitDto := units.CoefficientOfThermalExpansionDto{
+        Value: 100,
+        Unit:  units.CoefficientOfThermalExpansionPpmPerDegreeFahrenheit,
+    }
+    
+    var ppm_per_degree_fahrenheitResult *units.CoefficientOfThermalExpansion
+    ppm_per_degree_fahrenheitResult, err = factory.FromDto(ppm_per_degree_fahrenheitDto)
+    if err != nil {
+        t.Errorf("FromDto() with PpmPerDegreeFahrenheit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ppm_per_degree_fahrenheitResult.Convert(units.CoefficientOfThermalExpansionPpmPerDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PpmPerDegreeFahrenheit = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.CoefficientOfThermalExpansionDto{
+        Value: 0,
+        Unit:  units.CoefficientOfThermalExpansionPerKelvin,
+    }
+    
+    var zeroResult *units.CoefficientOfThermalExpansion
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestCoefficientOfThermalExpansionFactory_FromDtoJSON(t *testing.T) {
+    factory := units.CoefficientOfThermalExpansionFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "PerKelvin"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "PerKelvin"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.CoefficientOfThermalExpansionDto{
+        Value: nanValue,
+        Unit:  units.CoefficientOfThermalExpansionPerKelvin,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with PerKelvin unit
+    per_kelvinJSON := []byte(`{"value": 100, "unit": "PerKelvin"}`)
+    per_kelvinResult, err := factory.FromDtoJSON(per_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PerKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = per_kelvinResult.Convert(units.CoefficientOfThermalExpansionPerKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PerKelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with PerDegreeCelsius unit
+    per_degree_celsiusJSON := []byte(`{"value": 100, "unit": "PerDegreeCelsius"}`)
+    per_degree_celsiusResult, err := factory.FromDtoJSON(per_degree_celsiusJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PerDegreeCelsius unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = per_degree_celsiusResult.Convert(units.CoefficientOfThermalExpansionPerDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PerDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test JSON with PerDegreeFahrenheit unit
+    per_degree_fahrenheitJSON := []byte(`{"value": 100, "unit": "PerDegreeFahrenheit"}`)
+    per_degree_fahrenheitResult, err := factory.FromDtoJSON(per_degree_fahrenheitJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PerDegreeFahrenheit unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = per_degree_fahrenheitResult.Convert(units.CoefficientOfThermalExpansionPerDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PerDegreeFahrenheit = %v, want %v", converted, 100)
+    }
+    // Test JSON with PpmPerKelvin unit
+    ppm_per_kelvinJSON := []byte(`{"value": 100, "unit": "PpmPerKelvin"}`)
+    ppm_per_kelvinResult, err := factory.FromDtoJSON(ppm_per_kelvinJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PpmPerKelvin unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ppm_per_kelvinResult.Convert(units.CoefficientOfThermalExpansionPpmPerKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PpmPerKelvin = %v, want %v", converted, 100)
+    }
+    // Test JSON with PpmPerDegreeCelsius unit
+    ppm_per_degree_celsiusJSON := []byte(`{"value": 100, "unit": "PpmPerDegreeCelsius"}`)
+    ppm_per_degree_celsiusResult, err := factory.FromDtoJSON(ppm_per_degree_celsiusJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PpmPerDegreeCelsius unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ppm_per_degree_celsiusResult.Convert(units.CoefficientOfThermalExpansionPpmPerDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PpmPerDegreeCelsius = %v, want %v", converted, 100)
+    }
+    // Test JSON with PpmPerDegreeFahrenheit unit
+    ppm_per_degree_fahrenheitJSON := []byte(`{"value": 100, "unit": "PpmPerDegreeFahrenheit"}`)
+    ppm_per_degree_fahrenheitResult, err := factory.FromDtoJSON(ppm_per_degree_fahrenheitJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PpmPerDegreeFahrenheit unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ppm_per_degree_fahrenheitResult.Convert(units.CoefficientOfThermalExpansionPpmPerDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PpmPerDegreeFahrenheit = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "PerKelvin"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromPerKelvin function
+func TestCoefficientOfThermalExpansionFactory_FromPerKelvin(t *testing.T) {
+    factory := units.CoefficientOfThermalExpansionFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPerKelvin(100)
+    if err != nil {
+        t.Errorf("FromPerKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.CoefficientOfThermalExpansionPerKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPerKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPerKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromPerKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromPerKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromPerKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPerKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPerKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPerKelvin(0)
+    if err != nil {
+        t.Errorf("FromPerKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.CoefficientOfThermalExpansionPerKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPerKelvin() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPerDegreeCelsius function
+func TestCoefficientOfThermalExpansionFactory_FromPerDegreeCelsius(t *testing.T) {
+    factory := units.CoefficientOfThermalExpansionFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPerDegreeCelsius(100)
+    if err != nil {
+        t.Errorf("FromPerDegreeCelsius() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.CoefficientOfThermalExpansionPerDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPerDegreeCelsius() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPerDegreeCelsius(math.NaN())
+    if err == nil {
+        t.Error("FromPerDegreeCelsius() with NaN value should return error")
+    }
+
+    _, err = factory.FromPerDegreeCelsius(math.Inf(1))
+    if err == nil {
+        t.Error("FromPerDegreeCelsius() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPerDegreeCelsius(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPerDegreeCelsius() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPerDegreeCelsius(0)
+    if err != nil {
+        t.Errorf("FromPerDegreeCelsius() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.CoefficientOfThermalExpansionPerDegreeCelsius)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPerDegreeCelsius() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPerDegreeFahrenheit function
+func TestCoefficientOfThermalExpansionFactory_FromPerDegreeFahrenheit(t *testing.T) {
+    factory := units.CoefficientOfThermalExpansionFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPerDegreeFahrenheit(100)
+    if err != nil {
+        t.Errorf("FromPerDegreeFahrenheit() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.CoefficientOfThermalExpansionPerDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPerDegreeFahrenheit() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPerDegreeFahrenheit(math.NaN())
+    if err == nil {
+        t.Error("FromPerDegreeFahrenheit() with NaN value should return error")
+    }
+
+    _, err = factory.FromPerDegreeFahrenheit(math.Inf(1))
+    if err == nil {
+        t.Error("FromPerDegreeFahrenheit() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPerDegreeFahrenheit(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPerDegreeFahrenheit() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPerDegreeFahrenheit(0)
+    if err != nil {
+        t.Errorf("FromPerDegreeFahrenheit() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.CoefficientOfThermalExpansionPerDegreeFahrenheit)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPerDegreeFahrenheit() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPpmPerKelvin function
+func TestCoefficientOfThermalExpansionFactory_FromPpmPerKelvin(t *testing.T) {
+    factory := units.CoefficientOfThermalExpansionFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPpmPerKelvin(100)
+    if err != nil {
+        t.Errorf("FromPpmPerKelvin() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.CoefficientOfThermalExpansionPpmPerKelvin)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPpmPerKelvin() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPpmPerKelvin(math.NaN())
+    if err == nil {
+        t.Error("FromPpmPerKelvin() with NaN value should return error")
+    }
+
+    _, err = factory.FromPpmPerKelvin(math.Inf(1))
+    if err == nil {
+        t.Error("FromPpmPerKelvin() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPpmPerKelvin(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPpmPerKelvin() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPpmPerKelvin(0)
+    if err != nil {
+        t.Errorf("FromPpmPerKelvin() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.CoefficientOfThermalExpansionPpmPerKelvin)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPpmPerKelvin() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPpmPerDegreeCelsius function
+func TestCoefficientOfThermalExpansionFactory_FromPpmPerDegreeCelsius(t *testing.T) {
+    factory := units.CoefficientOfThermalExpansionFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPpmPerDegreeCelsius(100)
+    if err != nil {
+        t.Errorf("FromPpmPerDegreeCelsius() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.CoefficientOfThermalExpansionPpmPerDegreeCelsius)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPpmPerDegreeCelsius() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPpmPerDegreeCelsius(math.NaN())
+    if err == nil {
+        t.Error("FromPpmPerDegreeCelsius() with NaN value should return error")
+    }
+
+    _, err = factory.FromPpmPerDegreeCelsius(math.Inf(1))
+    if err == nil {
+        t.Error("FromPpmPerDegreeCelsius() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPpmPerDegreeCelsius(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPpmPerDegreeCelsius() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPpmPerDegreeCelsius(0)
+    if err != nil {
+        t.Errorf("FromPpmPerDegreeCelsius() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.CoefficientOfThermalExpansionPpmPerDegreeCelsius)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPpmPerDegreeCelsius() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPpmPerDegreeFahrenheit function
+func TestCoefficientOfThermalExpansionFactory_FromPpmPerDegreeFahrenheit(t *testing.T) {
+    factory := units.CoefficientOfThermalExpansionFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPpmPerDegreeFahrenheit(100)
+    if err != nil {
+        t.Errorf("FromPpmPerDegreeFahrenheit() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.CoefficientOfThermalExpansionPpmPerDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPpmPerDegreeFahrenheit() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPpmPerDegreeFahrenheit(math.NaN())
+    if err == nil {
+        t.Error("FromPpmPerDegreeFahrenheit() with NaN value should return error")
+    }
+
+    _, err = factory.FromPpmPerDegreeFahrenheit(math.Inf(1))
+    if err == nil {
+        t.Error("FromPpmPerDegreeFahrenheit() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPpmPerDegreeFahrenheit(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPpmPerDegreeFahrenheit() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPpmPerDegreeFahrenheit(0)
+    if err != nil {
+        t.Errorf("FromPpmPerDegreeFahrenheit() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.CoefficientOfThermalExpansionPpmPerDegreeFahrenheit)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPpmPerDegreeFahrenheit() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestCoefficientOfThermalExpansionToString(t *testing.T) {
 	factory := units.CoefficientOfThermalExpansionFactory{}
 	a, err := factory.CreateCoefficientOfThermalExpansion(45, units.CoefficientOfThermalExpansionPerKelvin)

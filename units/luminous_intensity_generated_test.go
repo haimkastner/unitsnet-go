@@ -123,6 +123,184 @@ func TestLuminousIntensity_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestLuminousIntensityFactory_FromDto(t *testing.T) {
+    factory := units.LuminousIntensityFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.LuminousIntensityDto{
+        Value: 100,
+        Unit:  units.LuminousIntensityCandela,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.LuminousIntensityDto{
+        Value: math.NaN(),
+        Unit:  units.LuminousIntensityCandela,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test Candela conversion
+    candelaDto := units.LuminousIntensityDto{
+        Value: 100,
+        Unit:  units.LuminousIntensityCandela,
+    }
+    
+    var candelaResult *units.LuminousIntensity
+    candelaResult, err = factory.FromDto(candelaDto)
+    if err != nil {
+        t.Errorf("FromDto() with Candela returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = candelaResult.Convert(units.LuminousIntensityCandela)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Candela = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.LuminousIntensityDto{
+        Value: 0,
+        Unit:  units.LuminousIntensityCandela,
+    }
+    
+    var zeroResult *units.LuminousIntensity
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestLuminousIntensityFactory_FromDtoJSON(t *testing.T) {
+    factory := units.LuminousIntensityFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "Candela"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Candela"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.LuminousIntensityDto{
+        Value: nanValue,
+        Unit:  units.LuminousIntensityCandela,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with Candela unit
+    candelaJSON := []byte(`{"value": 100, "unit": "Candela"}`)
+    candelaResult, err := factory.FromDtoJSON(candelaJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Candela unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = candelaResult.Convert(units.LuminousIntensityCandela)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Candela = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "Candela"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromCandela function
+func TestLuminousIntensityFactory_FromCandela(t *testing.T) {
+    factory := units.LuminousIntensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCandela(100)
+    if err != nil {
+        t.Errorf("FromCandela() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LuminousIntensityCandela)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCandela() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCandela(math.NaN())
+    if err == nil {
+        t.Error("FromCandela() with NaN value should return error")
+    }
+
+    _, err = factory.FromCandela(math.Inf(1))
+    if err == nil {
+        t.Error("FromCandela() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCandela(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCandela() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCandela(0)
+    if err != nil {
+        t.Errorf("FromCandela() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LuminousIntensityCandela)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCandela() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestLuminousIntensityToString(t *testing.T) {
 	factory := units.LuminousIntensityFactory{}
 	a, err := factory.CreateLuminousIntensity(45, units.LuminousIntensityCandela)

@@ -131,6 +131,256 @@ func TestVolumeFlowPerArea_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestVolumeFlowPerAreaFactory_FromDto(t *testing.T) {
+    factory := units.VolumeFlowPerAreaFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.VolumeFlowPerAreaDto{
+        Value: 100,
+        Unit:  units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.VolumeFlowPerAreaDto{
+        Value: math.NaN(),
+        Unit:  units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test CubicMeterPerSecondPerSquareMeter conversion
+    cubic_meters_per_second_per_square_meterDto := units.VolumeFlowPerAreaDto{
+        Value: 100,
+        Unit:  units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter,
+    }
+    
+    var cubic_meters_per_second_per_square_meterResult *units.VolumeFlowPerArea
+    cubic_meters_per_second_per_square_meterResult, err = factory.FromDto(cubic_meters_per_second_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with CubicMeterPerSecondPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_meters_per_second_per_square_meterResult.Convert(units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicMeterPerSecondPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test CubicFootPerMinutePerSquareFoot conversion
+    cubic_feet_per_minute_per_square_footDto := units.VolumeFlowPerAreaDto{
+        Value: 100,
+        Unit:  units.VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot,
+    }
+    
+    var cubic_feet_per_minute_per_square_footResult *units.VolumeFlowPerArea
+    cubic_feet_per_minute_per_square_footResult, err = factory.FromDto(cubic_feet_per_minute_per_square_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with CubicFootPerMinutePerSquareFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_feet_per_minute_per_square_footResult.Convert(units.VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicFootPerMinutePerSquareFoot = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.VolumeFlowPerAreaDto{
+        Value: 0,
+        Unit:  units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter,
+    }
+    
+    var zeroResult *units.VolumeFlowPerArea
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestVolumeFlowPerAreaFactory_FromDtoJSON(t *testing.T) {
+    factory := units.VolumeFlowPerAreaFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "CubicMeterPerSecondPerSquareMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "CubicMeterPerSecondPerSquareMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.VolumeFlowPerAreaDto{
+        Value: nanValue,
+        Unit:  units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with CubicMeterPerSecondPerSquareMeter unit
+    cubic_meters_per_second_per_square_meterJSON := []byte(`{"value": 100, "unit": "CubicMeterPerSecondPerSquareMeter"}`)
+    cubic_meters_per_second_per_square_meterResult, err := factory.FromDtoJSON(cubic_meters_per_second_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CubicMeterPerSecondPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_meters_per_second_per_square_meterResult.Convert(units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicMeterPerSecondPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with CubicFootPerMinutePerSquareFoot unit
+    cubic_feet_per_minute_per_square_footJSON := []byte(`{"value": 100, "unit": "CubicFootPerMinutePerSquareFoot"}`)
+    cubic_feet_per_minute_per_square_footResult, err := factory.FromDtoJSON(cubic_feet_per_minute_per_square_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CubicFootPerMinutePerSquareFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_feet_per_minute_per_square_footResult.Convert(units.VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicFootPerMinutePerSquareFoot = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "CubicMeterPerSecondPerSquareMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromCubicMetersPerSecondPerSquareMeter function
+func TestVolumeFlowPerAreaFactory_FromCubicMetersPerSecondPerSquareMeter(t *testing.T) {
+    factory := units.VolumeFlowPerAreaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCubicMetersPerSecondPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromCubicMetersPerSecondPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCubicMetersPerSecondPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCubicMetersPerSecondPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromCubicMetersPerSecondPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromCubicMetersPerSecondPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromCubicMetersPerSecondPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCubicMetersPerSecondPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCubicMetersPerSecondPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCubicMetersPerSecondPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromCubicMetersPerSecondPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCubicMetersPerSecondPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCubicFeetPerMinutePerSquareFoot function
+func TestVolumeFlowPerAreaFactory_FromCubicFeetPerMinutePerSquareFoot(t *testing.T) {
+    factory := units.VolumeFlowPerAreaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCubicFeetPerMinutePerSquareFoot(100)
+    if err != nil {
+        t.Errorf("FromCubicFeetPerMinutePerSquareFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCubicFeetPerMinutePerSquareFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCubicFeetPerMinutePerSquareFoot(math.NaN())
+    if err == nil {
+        t.Error("FromCubicFeetPerMinutePerSquareFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromCubicFeetPerMinutePerSquareFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromCubicFeetPerMinutePerSquareFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCubicFeetPerMinutePerSquareFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCubicFeetPerMinutePerSquareFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCubicFeetPerMinutePerSquareFoot(0)
+    if err != nil {
+        t.Errorf("FromCubicFeetPerMinutePerSquareFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCubicFeetPerMinutePerSquareFoot() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestVolumeFlowPerAreaToString(t *testing.T) {
 	factory := units.VolumeFlowPerAreaFactory{}
 	a, err := factory.CreateVolumeFlowPerArea(45, units.VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter)

@@ -187,6 +187,760 @@ func TestVolumePerLength_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestVolumePerLengthFactory_FromDto(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthCubicMeterPerMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.VolumePerLengthDto{
+        Value: math.NaN(),
+        Unit:  units.VolumePerLengthCubicMeterPerMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test CubicMeterPerMeter conversion
+    cubic_meters_per_meterDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthCubicMeterPerMeter,
+    }
+    
+    var cubic_meters_per_meterResult *units.VolumePerLength
+    cubic_meters_per_meterResult, err = factory.FromDto(cubic_meters_per_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with CubicMeterPerMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_meters_per_meterResult.Convert(units.VolumePerLengthCubicMeterPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicMeterPerMeter = %v, want %v", converted, 100)
+    }
+    // Test LiterPerMeter conversion
+    liters_per_meterDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthLiterPerMeter,
+    }
+    
+    var liters_per_meterResult *units.VolumePerLength
+    liters_per_meterResult, err = factory.FromDto(liters_per_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with LiterPerMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = liters_per_meterResult.Convert(units.VolumePerLengthLiterPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for LiterPerMeter = %v, want %v", converted, 100)
+    }
+    // Test LiterPerKilometer conversion
+    liters_per_kilometerDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthLiterPerKilometer,
+    }
+    
+    var liters_per_kilometerResult *units.VolumePerLength
+    liters_per_kilometerResult, err = factory.FromDto(liters_per_kilometerDto)
+    if err != nil {
+        t.Errorf("FromDto() with LiterPerKilometer returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = liters_per_kilometerResult.Convert(units.VolumePerLengthLiterPerKilometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for LiterPerKilometer = %v, want %v", converted, 100)
+    }
+    // Test LiterPerMillimeter conversion
+    liters_per_millimeterDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthLiterPerMillimeter,
+    }
+    
+    var liters_per_millimeterResult *units.VolumePerLength
+    liters_per_millimeterResult, err = factory.FromDto(liters_per_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with LiterPerMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = liters_per_millimeterResult.Convert(units.VolumePerLengthLiterPerMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for LiterPerMillimeter = %v, want %v", converted, 100)
+    }
+    // Test OilBarrelPerFoot conversion
+    oil_barrels_per_footDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthOilBarrelPerFoot,
+    }
+    
+    var oil_barrels_per_footResult *units.VolumePerLength
+    oil_barrels_per_footResult, err = factory.FromDto(oil_barrels_per_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with OilBarrelPerFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = oil_barrels_per_footResult.Convert(units.VolumePerLengthOilBarrelPerFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OilBarrelPerFoot = %v, want %v", converted, 100)
+    }
+    // Test CubicYardPerFoot conversion
+    cubic_yards_per_footDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthCubicYardPerFoot,
+    }
+    
+    var cubic_yards_per_footResult *units.VolumePerLength
+    cubic_yards_per_footResult, err = factory.FromDto(cubic_yards_per_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with CubicYardPerFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_yards_per_footResult.Convert(units.VolumePerLengthCubicYardPerFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicYardPerFoot = %v, want %v", converted, 100)
+    }
+    // Test CubicYardPerUsSurveyFoot conversion
+    cubic_yards_per_us_survey_footDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthCubicYardPerUsSurveyFoot,
+    }
+    
+    var cubic_yards_per_us_survey_footResult *units.VolumePerLength
+    cubic_yards_per_us_survey_footResult, err = factory.FromDto(cubic_yards_per_us_survey_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with CubicYardPerUsSurveyFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_yards_per_us_survey_footResult.Convert(units.VolumePerLengthCubicYardPerUsSurveyFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicYardPerUsSurveyFoot = %v, want %v", converted, 100)
+    }
+    // Test UsGallonPerMile conversion
+    us_gallons_per_mileDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthUsGallonPerMile,
+    }
+    
+    var us_gallons_per_mileResult *units.VolumePerLength
+    us_gallons_per_mileResult, err = factory.FromDto(us_gallons_per_mileDto)
+    if err != nil {
+        t.Errorf("FromDto() with UsGallonPerMile returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = us_gallons_per_mileResult.Convert(units.VolumePerLengthUsGallonPerMile)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for UsGallonPerMile = %v, want %v", converted, 100)
+    }
+    // Test ImperialGallonPerMile conversion
+    imperial_gallons_per_mileDto := units.VolumePerLengthDto{
+        Value: 100,
+        Unit:  units.VolumePerLengthImperialGallonPerMile,
+    }
+    
+    var imperial_gallons_per_mileResult *units.VolumePerLength
+    imperial_gallons_per_mileResult, err = factory.FromDto(imperial_gallons_per_mileDto)
+    if err != nil {
+        t.Errorf("FromDto() with ImperialGallonPerMile returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = imperial_gallons_per_mileResult.Convert(units.VolumePerLengthImperialGallonPerMile)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for ImperialGallonPerMile = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.VolumePerLengthDto{
+        Value: 0,
+        Unit:  units.VolumePerLengthCubicMeterPerMeter,
+    }
+    
+    var zeroResult *units.VolumePerLength
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestVolumePerLengthFactory_FromDtoJSON(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "CubicMeterPerMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "CubicMeterPerMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.VolumePerLengthDto{
+        Value: nanValue,
+        Unit:  units.VolumePerLengthCubicMeterPerMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with CubicMeterPerMeter unit
+    cubic_meters_per_meterJSON := []byte(`{"value": 100, "unit": "CubicMeterPerMeter"}`)
+    cubic_meters_per_meterResult, err := factory.FromDtoJSON(cubic_meters_per_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CubicMeterPerMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_meters_per_meterResult.Convert(units.VolumePerLengthCubicMeterPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicMeterPerMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with LiterPerMeter unit
+    liters_per_meterJSON := []byte(`{"value": 100, "unit": "LiterPerMeter"}`)
+    liters_per_meterResult, err := factory.FromDtoJSON(liters_per_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with LiterPerMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = liters_per_meterResult.Convert(units.VolumePerLengthLiterPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for LiterPerMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with LiterPerKilometer unit
+    liters_per_kilometerJSON := []byte(`{"value": 100, "unit": "LiterPerKilometer"}`)
+    liters_per_kilometerResult, err := factory.FromDtoJSON(liters_per_kilometerJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with LiterPerKilometer unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = liters_per_kilometerResult.Convert(units.VolumePerLengthLiterPerKilometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for LiterPerKilometer = %v, want %v", converted, 100)
+    }
+    // Test JSON with LiterPerMillimeter unit
+    liters_per_millimeterJSON := []byte(`{"value": 100, "unit": "LiterPerMillimeter"}`)
+    liters_per_millimeterResult, err := factory.FromDtoJSON(liters_per_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with LiterPerMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = liters_per_millimeterResult.Convert(units.VolumePerLengthLiterPerMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for LiterPerMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with OilBarrelPerFoot unit
+    oil_barrels_per_footJSON := []byte(`{"value": 100, "unit": "OilBarrelPerFoot"}`)
+    oil_barrels_per_footResult, err := factory.FromDtoJSON(oil_barrels_per_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with OilBarrelPerFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = oil_barrels_per_footResult.Convert(units.VolumePerLengthOilBarrelPerFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OilBarrelPerFoot = %v, want %v", converted, 100)
+    }
+    // Test JSON with CubicYardPerFoot unit
+    cubic_yards_per_footJSON := []byte(`{"value": 100, "unit": "CubicYardPerFoot"}`)
+    cubic_yards_per_footResult, err := factory.FromDtoJSON(cubic_yards_per_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CubicYardPerFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_yards_per_footResult.Convert(units.VolumePerLengthCubicYardPerFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicYardPerFoot = %v, want %v", converted, 100)
+    }
+    // Test JSON with CubicYardPerUsSurveyFoot unit
+    cubic_yards_per_us_survey_footJSON := []byte(`{"value": 100, "unit": "CubicYardPerUsSurveyFoot"}`)
+    cubic_yards_per_us_survey_footResult, err := factory.FromDtoJSON(cubic_yards_per_us_survey_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CubicYardPerUsSurveyFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = cubic_yards_per_us_survey_footResult.Convert(units.VolumePerLengthCubicYardPerUsSurveyFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CubicYardPerUsSurveyFoot = %v, want %v", converted, 100)
+    }
+    // Test JSON with UsGallonPerMile unit
+    us_gallons_per_mileJSON := []byte(`{"value": 100, "unit": "UsGallonPerMile"}`)
+    us_gallons_per_mileResult, err := factory.FromDtoJSON(us_gallons_per_mileJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with UsGallonPerMile unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = us_gallons_per_mileResult.Convert(units.VolumePerLengthUsGallonPerMile)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for UsGallonPerMile = %v, want %v", converted, 100)
+    }
+    // Test JSON with ImperialGallonPerMile unit
+    imperial_gallons_per_mileJSON := []byte(`{"value": 100, "unit": "ImperialGallonPerMile"}`)
+    imperial_gallons_per_mileResult, err := factory.FromDtoJSON(imperial_gallons_per_mileJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with ImperialGallonPerMile unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = imperial_gallons_per_mileResult.Convert(units.VolumePerLengthImperialGallonPerMile)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for ImperialGallonPerMile = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "CubicMeterPerMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromCubicMetersPerMeter function
+func TestVolumePerLengthFactory_FromCubicMetersPerMeter(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCubicMetersPerMeter(100)
+    if err != nil {
+        t.Errorf("FromCubicMetersPerMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumePerLengthCubicMeterPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCubicMetersPerMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCubicMetersPerMeter(math.NaN())
+    if err == nil {
+        t.Error("FromCubicMetersPerMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromCubicMetersPerMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromCubicMetersPerMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCubicMetersPerMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCubicMetersPerMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCubicMetersPerMeter(0)
+    if err != nil {
+        t.Errorf("FromCubicMetersPerMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumePerLengthCubicMeterPerMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCubicMetersPerMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromLitersPerMeter function
+func TestVolumePerLengthFactory_FromLitersPerMeter(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromLitersPerMeter(100)
+    if err != nil {
+        t.Errorf("FromLitersPerMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumePerLengthLiterPerMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromLitersPerMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromLitersPerMeter(math.NaN())
+    if err == nil {
+        t.Error("FromLitersPerMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromLitersPerMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromLitersPerMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromLitersPerMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromLitersPerMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromLitersPerMeter(0)
+    if err != nil {
+        t.Errorf("FromLitersPerMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumePerLengthLiterPerMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromLitersPerMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromLitersPerKilometer function
+func TestVolumePerLengthFactory_FromLitersPerKilometer(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromLitersPerKilometer(100)
+    if err != nil {
+        t.Errorf("FromLitersPerKilometer() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumePerLengthLiterPerKilometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromLitersPerKilometer() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromLitersPerKilometer(math.NaN())
+    if err == nil {
+        t.Error("FromLitersPerKilometer() with NaN value should return error")
+    }
+
+    _, err = factory.FromLitersPerKilometer(math.Inf(1))
+    if err == nil {
+        t.Error("FromLitersPerKilometer() with +Inf value should return error")
+    }
+
+    _, err = factory.FromLitersPerKilometer(math.Inf(-1))
+    if err == nil {
+        t.Error("FromLitersPerKilometer() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromLitersPerKilometer(0)
+    if err != nil {
+        t.Errorf("FromLitersPerKilometer() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumePerLengthLiterPerKilometer)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromLitersPerKilometer() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromLitersPerMillimeter function
+func TestVolumePerLengthFactory_FromLitersPerMillimeter(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromLitersPerMillimeter(100)
+    if err != nil {
+        t.Errorf("FromLitersPerMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumePerLengthLiterPerMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromLitersPerMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromLitersPerMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromLitersPerMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromLitersPerMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromLitersPerMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromLitersPerMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromLitersPerMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromLitersPerMillimeter(0)
+    if err != nil {
+        t.Errorf("FromLitersPerMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumePerLengthLiterPerMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromLitersPerMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromOilBarrelsPerFoot function
+func TestVolumePerLengthFactory_FromOilBarrelsPerFoot(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromOilBarrelsPerFoot(100)
+    if err != nil {
+        t.Errorf("FromOilBarrelsPerFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumePerLengthOilBarrelPerFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromOilBarrelsPerFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromOilBarrelsPerFoot(math.NaN())
+    if err == nil {
+        t.Error("FromOilBarrelsPerFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromOilBarrelsPerFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromOilBarrelsPerFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromOilBarrelsPerFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromOilBarrelsPerFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromOilBarrelsPerFoot(0)
+    if err != nil {
+        t.Errorf("FromOilBarrelsPerFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumePerLengthOilBarrelPerFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromOilBarrelsPerFoot() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCubicYardsPerFoot function
+func TestVolumePerLengthFactory_FromCubicYardsPerFoot(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCubicYardsPerFoot(100)
+    if err != nil {
+        t.Errorf("FromCubicYardsPerFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumePerLengthCubicYardPerFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCubicYardsPerFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCubicYardsPerFoot(math.NaN())
+    if err == nil {
+        t.Error("FromCubicYardsPerFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromCubicYardsPerFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromCubicYardsPerFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCubicYardsPerFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCubicYardsPerFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCubicYardsPerFoot(0)
+    if err != nil {
+        t.Errorf("FromCubicYardsPerFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumePerLengthCubicYardPerFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCubicYardsPerFoot() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCubicYardsPerUsSurveyFoot function
+func TestVolumePerLengthFactory_FromCubicYardsPerUsSurveyFoot(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCubicYardsPerUsSurveyFoot(100)
+    if err != nil {
+        t.Errorf("FromCubicYardsPerUsSurveyFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumePerLengthCubicYardPerUsSurveyFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCubicYardsPerUsSurveyFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCubicYardsPerUsSurveyFoot(math.NaN())
+    if err == nil {
+        t.Error("FromCubicYardsPerUsSurveyFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromCubicYardsPerUsSurveyFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromCubicYardsPerUsSurveyFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCubicYardsPerUsSurveyFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCubicYardsPerUsSurveyFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCubicYardsPerUsSurveyFoot(0)
+    if err != nil {
+        t.Errorf("FromCubicYardsPerUsSurveyFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumePerLengthCubicYardPerUsSurveyFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCubicYardsPerUsSurveyFoot() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromUsGallonsPerMile function
+func TestVolumePerLengthFactory_FromUsGallonsPerMile(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromUsGallonsPerMile(100)
+    if err != nil {
+        t.Errorf("FromUsGallonsPerMile() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumePerLengthUsGallonPerMile)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromUsGallonsPerMile() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromUsGallonsPerMile(math.NaN())
+    if err == nil {
+        t.Error("FromUsGallonsPerMile() with NaN value should return error")
+    }
+
+    _, err = factory.FromUsGallonsPerMile(math.Inf(1))
+    if err == nil {
+        t.Error("FromUsGallonsPerMile() with +Inf value should return error")
+    }
+
+    _, err = factory.FromUsGallonsPerMile(math.Inf(-1))
+    if err == nil {
+        t.Error("FromUsGallonsPerMile() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromUsGallonsPerMile(0)
+    if err != nil {
+        t.Errorf("FromUsGallonsPerMile() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumePerLengthUsGallonPerMile)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromUsGallonsPerMile() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromImperialGallonsPerMile function
+func TestVolumePerLengthFactory_FromImperialGallonsPerMile(t *testing.T) {
+    factory := units.VolumePerLengthFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromImperialGallonsPerMile(100)
+    if err != nil {
+        t.Errorf("FromImperialGallonsPerMile() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumePerLengthImperialGallonPerMile)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromImperialGallonsPerMile() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromImperialGallonsPerMile(math.NaN())
+    if err == nil {
+        t.Error("FromImperialGallonsPerMile() with NaN value should return error")
+    }
+
+    _, err = factory.FromImperialGallonsPerMile(math.Inf(1))
+    if err == nil {
+        t.Error("FromImperialGallonsPerMile() with +Inf value should return error")
+    }
+
+    _, err = factory.FromImperialGallonsPerMile(math.Inf(-1))
+    if err == nil {
+        t.Error("FromImperialGallonsPerMile() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromImperialGallonsPerMile(0)
+    if err != nil {
+        t.Errorf("FromImperialGallonsPerMile() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumePerLengthImperialGallonPerMile)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromImperialGallonsPerMile() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestVolumePerLengthToString(t *testing.T) {
 	factory := units.VolumePerLengthFactory{}
 	a, err := factory.CreateVolumePerLength(45, units.VolumePerLengthCubicMeterPerMeter)

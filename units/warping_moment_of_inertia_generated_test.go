@@ -163,6 +163,544 @@ func TestWarpingMomentOfInertia_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestWarpingMomentOfInertiaFactory_FromDto(t *testing.T) {
+    factory := units.WarpingMomentOfInertiaFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.WarpingMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.WarpingMomentOfInertiaMeterToTheSixth,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.WarpingMomentOfInertiaDto{
+        Value: math.NaN(),
+        Unit:  units.WarpingMomentOfInertiaMeterToTheSixth,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test MeterToTheSixth conversion
+    meters_to_the_sixthDto := units.WarpingMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.WarpingMomentOfInertiaMeterToTheSixth,
+    }
+    
+    var meters_to_the_sixthResult *units.WarpingMomentOfInertia
+    meters_to_the_sixthResult, err = factory.FromDto(meters_to_the_sixthDto)
+    if err != nil {
+        t.Errorf("FromDto() with MeterToTheSixth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = meters_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaMeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MeterToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test DecimeterToTheSixth conversion
+    decimeters_to_the_sixthDto := units.WarpingMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.WarpingMomentOfInertiaDecimeterToTheSixth,
+    }
+    
+    var decimeters_to_the_sixthResult *units.WarpingMomentOfInertia
+    decimeters_to_the_sixthResult, err = factory.FromDto(decimeters_to_the_sixthDto)
+    if err != nil {
+        t.Errorf("FromDto() with DecimeterToTheSixth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decimeters_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaDecimeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecimeterToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test CentimeterToTheSixth conversion
+    centimeters_to_the_sixthDto := units.WarpingMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.WarpingMomentOfInertiaCentimeterToTheSixth,
+    }
+    
+    var centimeters_to_the_sixthResult *units.WarpingMomentOfInertia
+    centimeters_to_the_sixthResult, err = factory.FromDto(centimeters_to_the_sixthDto)
+    if err != nil {
+        t.Errorf("FromDto() with CentimeterToTheSixth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centimeters_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaCentimeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentimeterToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test MillimeterToTheSixth conversion
+    millimeters_to_the_sixthDto := units.WarpingMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.WarpingMomentOfInertiaMillimeterToTheSixth,
+    }
+    
+    var millimeters_to_the_sixthResult *units.WarpingMomentOfInertia
+    millimeters_to_the_sixthResult, err = factory.FromDto(millimeters_to_the_sixthDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillimeterToTheSixth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millimeters_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaMillimeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillimeterToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test FootToTheSixth conversion
+    feet_to_the_sixthDto := units.WarpingMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.WarpingMomentOfInertiaFootToTheSixth,
+    }
+    
+    var feet_to_the_sixthResult *units.WarpingMomentOfInertia
+    feet_to_the_sixthResult, err = factory.FromDto(feet_to_the_sixthDto)
+    if err != nil {
+        t.Errorf("FromDto() with FootToTheSixth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = feet_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaFootToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for FootToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test InchToTheSixth conversion
+    inches_to_the_sixthDto := units.WarpingMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.WarpingMomentOfInertiaInchToTheSixth,
+    }
+    
+    var inches_to_the_sixthResult *units.WarpingMomentOfInertia
+    inches_to_the_sixthResult, err = factory.FromDto(inches_to_the_sixthDto)
+    if err != nil {
+        t.Errorf("FromDto() with InchToTheSixth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = inches_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaInchToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for InchToTheSixth = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.WarpingMomentOfInertiaDto{
+        Value: 0,
+        Unit:  units.WarpingMomentOfInertiaMeterToTheSixth,
+    }
+    
+    var zeroResult *units.WarpingMomentOfInertia
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestWarpingMomentOfInertiaFactory_FromDtoJSON(t *testing.T) {
+    factory := units.WarpingMomentOfInertiaFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "MeterToTheSixth"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "MeterToTheSixth"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.WarpingMomentOfInertiaDto{
+        Value: nanValue,
+        Unit:  units.WarpingMomentOfInertiaMeterToTheSixth,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with MeterToTheSixth unit
+    meters_to_the_sixthJSON := []byte(`{"value": 100, "unit": "MeterToTheSixth"}`)
+    meters_to_the_sixthResult, err := factory.FromDtoJSON(meters_to_the_sixthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MeterToTheSixth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = meters_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaMeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MeterToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test JSON with DecimeterToTheSixth unit
+    decimeters_to_the_sixthJSON := []byte(`{"value": 100, "unit": "DecimeterToTheSixth"}`)
+    decimeters_to_the_sixthResult, err := factory.FromDtoJSON(decimeters_to_the_sixthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DecimeterToTheSixth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decimeters_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaDecimeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecimeterToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test JSON with CentimeterToTheSixth unit
+    centimeters_to_the_sixthJSON := []byte(`{"value": 100, "unit": "CentimeterToTheSixth"}`)
+    centimeters_to_the_sixthResult, err := factory.FromDtoJSON(centimeters_to_the_sixthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CentimeterToTheSixth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centimeters_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaCentimeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentimeterToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillimeterToTheSixth unit
+    millimeters_to_the_sixthJSON := []byte(`{"value": 100, "unit": "MillimeterToTheSixth"}`)
+    millimeters_to_the_sixthResult, err := factory.FromDtoJSON(millimeters_to_the_sixthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillimeterToTheSixth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millimeters_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaMillimeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillimeterToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test JSON with FootToTheSixth unit
+    feet_to_the_sixthJSON := []byte(`{"value": 100, "unit": "FootToTheSixth"}`)
+    feet_to_the_sixthResult, err := factory.FromDtoJSON(feet_to_the_sixthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with FootToTheSixth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = feet_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaFootToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for FootToTheSixth = %v, want %v", converted, 100)
+    }
+    // Test JSON with InchToTheSixth unit
+    inches_to_the_sixthJSON := []byte(`{"value": 100, "unit": "InchToTheSixth"}`)
+    inches_to_the_sixthResult, err := factory.FromDtoJSON(inches_to_the_sixthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with InchToTheSixth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = inches_to_the_sixthResult.Convert(units.WarpingMomentOfInertiaInchToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for InchToTheSixth = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "MeterToTheSixth"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromMetersToTheSixth function
+func TestWarpingMomentOfInertiaFactory_FromMetersToTheSixth(t *testing.T) {
+    factory := units.WarpingMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMetersToTheSixth(100)
+    if err != nil {
+        t.Errorf("FromMetersToTheSixth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.WarpingMomentOfInertiaMeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMetersToTheSixth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMetersToTheSixth(math.NaN())
+    if err == nil {
+        t.Error("FromMetersToTheSixth() with NaN value should return error")
+    }
+
+    _, err = factory.FromMetersToTheSixth(math.Inf(1))
+    if err == nil {
+        t.Error("FromMetersToTheSixth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMetersToTheSixth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMetersToTheSixth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMetersToTheSixth(0)
+    if err != nil {
+        t.Errorf("FromMetersToTheSixth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.WarpingMomentOfInertiaMeterToTheSixth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMetersToTheSixth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecimetersToTheSixth function
+func TestWarpingMomentOfInertiaFactory_FromDecimetersToTheSixth(t *testing.T) {
+    factory := units.WarpingMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecimetersToTheSixth(100)
+    if err != nil {
+        t.Errorf("FromDecimetersToTheSixth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.WarpingMomentOfInertiaDecimeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecimetersToTheSixth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecimetersToTheSixth(math.NaN())
+    if err == nil {
+        t.Error("FromDecimetersToTheSixth() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecimetersToTheSixth(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecimetersToTheSixth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecimetersToTheSixth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecimetersToTheSixth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecimetersToTheSixth(0)
+    if err != nil {
+        t.Errorf("FromDecimetersToTheSixth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.WarpingMomentOfInertiaDecimeterToTheSixth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecimetersToTheSixth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCentimetersToTheSixth function
+func TestWarpingMomentOfInertiaFactory_FromCentimetersToTheSixth(t *testing.T) {
+    factory := units.WarpingMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCentimetersToTheSixth(100)
+    if err != nil {
+        t.Errorf("FromCentimetersToTheSixth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.WarpingMomentOfInertiaCentimeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCentimetersToTheSixth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCentimetersToTheSixth(math.NaN())
+    if err == nil {
+        t.Error("FromCentimetersToTheSixth() with NaN value should return error")
+    }
+
+    _, err = factory.FromCentimetersToTheSixth(math.Inf(1))
+    if err == nil {
+        t.Error("FromCentimetersToTheSixth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCentimetersToTheSixth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCentimetersToTheSixth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCentimetersToTheSixth(0)
+    if err != nil {
+        t.Errorf("FromCentimetersToTheSixth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.WarpingMomentOfInertiaCentimeterToTheSixth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCentimetersToTheSixth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillimetersToTheSixth function
+func TestWarpingMomentOfInertiaFactory_FromMillimetersToTheSixth(t *testing.T) {
+    factory := units.WarpingMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillimetersToTheSixth(100)
+    if err != nil {
+        t.Errorf("FromMillimetersToTheSixth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.WarpingMomentOfInertiaMillimeterToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillimetersToTheSixth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillimetersToTheSixth(math.NaN())
+    if err == nil {
+        t.Error("FromMillimetersToTheSixth() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillimetersToTheSixth(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillimetersToTheSixth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillimetersToTheSixth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillimetersToTheSixth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillimetersToTheSixth(0)
+    if err != nil {
+        t.Errorf("FromMillimetersToTheSixth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.WarpingMomentOfInertiaMillimeterToTheSixth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillimetersToTheSixth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromFeetToTheSixth function
+func TestWarpingMomentOfInertiaFactory_FromFeetToTheSixth(t *testing.T) {
+    factory := units.WarpingMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromFeetToTheSixth(100)
+    if err != nil {
+        t.Errorf("FromFeetToTheSixth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.WarpingMomentOfInertiaFootToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromFeetToTheSixth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromFeetToTheSixth(math.NaN())
+    if err == nil {
+        t.Error("FromFeetToTheSixth() with NaN value should return error")
+    }
+
+    _, err = factory.FromFeetToTheSixth(math.Inf(1))
+    if err == nil {
+        t.Error("FromFeetToTheSixth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromFeetToTheSixth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromFeetToTheSixth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromFeetToTheSixth(0)
+    if err != nil {
+        t.Errorf("FromFeetToTheSixth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.WarpingMomentOfInertiaFootToTheSixth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromFeetToTheSixth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromInchesToTheSixth function
+func TestWarpingMomentOfInertiaFactory_FromInchesToTheSixth(t *testing.T) {
+    factory := units.WarpingMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromInchesToTheSixth(100)
+    if err != nil {
+        t.Errorf("FromInchesToTheSixth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.WarpingMomentOfInertiaInchToTheSixth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromInchesToTheSixth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromInchesToTheSixth(math.NaN())
+    if err == nil {
+        t.Error("FromInchesToTheSixth() with NaN value should return error")
+    }
+
+    _, err = factory.FromInchesToTheSixth(math.Inf(1))
+    if err == nil {
+        t.Error("FromInchesToTheSixth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromInchesToTheSixth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromInchesToTheSixth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromInchesToTheSixth(0)
+    if err != nil {
+        t.Errorf("FromInchesToTheSixth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.WarpingMomentOfInertiaInchToTheSixth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromInchesToTheSixth() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestWarpingMomentOfInertiaToString(t *testing.T) {
 	factory := units.WarpingMomentOfInertiaFactory{}
 	a, err := factory.CreateWarpingMomentOfInertia(45, units.WarpingMomentOfInertiaMeterToTheSixth)

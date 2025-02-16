@@ -47,6 +47,10 @@ func (udf SpecificVolumeDtoFactory) FromJSON(data []byte) (*SpecificVolumeDto, e
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

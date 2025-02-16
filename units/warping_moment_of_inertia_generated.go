@@ -53,6 +53,10 @@ func (udf WarpingMomentOfInertiaDtoFactory) FromJSON(data []byte) (*WarpingMomen
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

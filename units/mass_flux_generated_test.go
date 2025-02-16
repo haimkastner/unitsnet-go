@@ -211,6 +211,976 @@ func TestMassFlux_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestMassFluxFactory_FromDto(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxKilogramPerSecondPerSquareMeter,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.MassFluxDto{
+        Value: math.NaN(),
+        Unit:  units.MassFluxKilogramPerSecondPerSquareMeter,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test GramPerSecondPerSquareMeter conversion
+    grams_per_second_per_square_meterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxGramPerSecondPerSquareMeter,
+    }
+    
+    var grams_per_second_per_square_meterResult *units.MassFlux
+    grams_per_second_per_square_meterResult, err = factory.FromDto(grams_per_second_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with GramPerSecondPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_second_per_square_meterResult.Convert(units.MassFluxGramPerSecondPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerSecondPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test GramPerSecondPerSquareCentimeter conversion
+    grams_per_second_per_square_centimeterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxGramPerSecondPerSquareCentimeter,
+    }
+    
+    var grams_per_second_per_square_centimeterResult *units.MassFlux
+    grams_per_second_per_square_centimeterResult, err = factory.FromDto(grams_per_second_per_square_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with GramPerSecondPerSquareCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_second_per_square_centimeterResult.Convert(units.MassFluxGramPerSecondPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerSecondPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test GramPerSecondPerSquareMillimeter conversion
+    grams_per_second_per_square_millimeterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxGramPerSecondPerSquareMillimeter,
+    }
+    
+    var grams_per_second_per_square_millimeterResult *units.MassFlux
+    grams_per_second_per_square_millimeterResult, err = factory.FromDto(grams_per_second_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with GramPerSecondPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_second_per_square_millimeterResult.Convert(units.MassFluxGramPerSecondPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerSecondPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test GramPerHourPerSquareMeter conversion
+    grams_per_hour_per_square_meterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxGramPerHourPerSquareMeter,
+    }
+    
+    var grams_per_hour_per_square_meterResult *units.MassFlux
+    grams_per_hour_per_square_meterResult, err = factory.FromDto(grams_per_hour_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with GramPerHourPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_hour_per_square_meterResult.Convert(units.MassFluxGramPerHourPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerHourPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test GramPerHourPerSquareCentimeter conversion
+    grams_per_hour_per_square_centimeterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxGramPerHourPerSquareCentimeter,
+    }
+    
+    var grams_per_hour_per_square_centimeterResult *units.MassFlux
+    grams_per_hour_per_square_centimeterResult, err = factory.FromDto(grams_per_hour_per_square_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with GramPerHourPerSquareCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_hour_per_square_centimeterResult.Convert(units.MassFluxGramPerHourPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerHourPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test GramPerHourPerSquareMillimeter conversion
+    grams_per_hour_per_square_millimeterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxGramPerHourPerSquareMillimeter,
+    }
+    
+    var grams_per_hour_per_square_millimeterResult *units.MassFlux
+    grams_per_hour_per_square_millimeterResult, err = factory.FromDto(grams_per_hour_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with GramPerHourPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_hour_per_square_millimeterResult.Convert(units.MassFluxGramPerHourPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerHourPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test KilogramPerSecondPerSquareMeter conversion
+    kilograms_per_second_per_square_meterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxKilogramPerSecondPerSquareMeter,
+    }
+    
+    var kilograms_per_second_per_square_meterResult *units.MassFlux
+    kilograms_per_second_per_square_meterResult, err = factory.FromDto(kilograms_per_second_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilogramPerSecondPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_second_per_square_meterResult.Convert(units.MassFluxKilogramPerSecondPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerSecondPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test KilogramPerSecondPerSquareCentimeter conversion
+    kilograms_per_second_per_square_centimeterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxKilogramPerSecondPerSquareCentimeter,
+    }
+    
+    var kilograms_per_second_per_square_centimeterResult *units.MassFlux
+    kilograms_per_second_per_square_centimeterResult, err = factory.FromDto(kilograms_per_second_per_square_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilogramPerSecondPerSquareCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_second_per_square_centimeterResult.Convert(units.MassFluxKilogramPerSecondPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerSecondPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test KilogramPerSecondPerSquareMillimeter conversion
+    kilograms_per_second_per_square_millimeterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxKilogramPerSecondPerSquareMillimeter,
+    }
+    
+    var kilograms_per_second_per_square_millimeterResult *units.MassFlux
+    kilograms_per_second_per_square_millimeterResult, err = factory.FromDto(kilograms_per_second_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilogramPerSecondPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_second_per_square_millimeterResult.Convert(units.MassFluxKilogramPerSecondPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerSecondPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test KilogramPerHourPerSquareMeter conversion
+    kilograms_per_hour_per_square_meterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxKilogramPerHourPerSquareMeter,
+    }
+    
+    var kilograms_per_hour_per_square_meterResult *units.MassFlux
+    kilograms_per_hour_per_square_meterResult, err = factory.FromDto(kilograms_per_hour_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilogramPerHourPerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_hour_per_square_meterResult.Convert(units.MassFluxKilogramPerHourPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerHourPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test KilogramPerHourPerSquareCentimeter conversion
+    kilograms_per_hour_per_square_centimeterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxKilogramPerHourPerSquareCentimeter,
+    }
+    
+    var kilograms_per_hour_per_square_centimeterResult *units.MassFlux
+    kilograms_per_hour_per_square_centimeterResult, err = factory.FromDto(kilograms_per_hour_per_square_centimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilogramPerHourPerSquareCentimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_hour_per_square_centimeterResult.Convert(units.MassFluxKilogramPerHourPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerHourPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test KilogramPerHourPerSquareMillimeter conversion
+    kilograms_per_hour_per_square_millimeterDto := units.MassFluxDto{
+        Value: 100,
+        Unit:  units.MassFluxKilogramPerHourPerSquareMillimeter,
+    }
+    
+    var kilograms_per_hour_per_square_millimeterResult *units.MassFlux
+    kilograms_per_hour_per_square_millimeterResult, err = factory.FromDto(kilograms_per_hour_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilogramPerHourPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_hour_per_square_millimeterResult.Convert(units.MassFluxKilogramPerHourPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerHourPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.MassFluxDto{
+        Value: 0,
+        Unit:  units.MassFluxKilogramPerSecondPerSquareMeter,
+    }
+    
+    var zeroResult *units.MassFlux
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestMassFluxFactory_FromDtoJSON(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "KilogramPerSecondPerSquareMeter"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "KilogramPerSecondPerSquareMeter"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.MassFluxDto{
+        Value: nanValue,
+        Unit:  units.MassFluxKilogramPerSecondPerSquareMeter,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with GramPerSecondPerSquareMeter unit
+    grams_per_second_per_square_meterJSON := []byte(`{"value": 100, "unit": "GramPerSecondPerSquareMeter"}`)
+    grams_per_second_per_square_meterResult, err := factory.FromDtoJSON(grams_per_second_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GramPerSecondPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_second_per_square_meterResult.Convert(units.MassFluxGramPerSecondPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerSecondPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with GramPerSecondPerSquareCentimeter unit
+    grams_per_second_per_square_centimeterJSON := []byte(`{"value": 100, "unit": "GramPerSecondPerSquareCentimeter"}`)
+    grams_per_second_per_square_centimeterResult, err := factory.FromDtoJSON(grams_per_second_per_square_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GramPerSecondPerSquareCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_second_per_square_centimeterResult.Convert(units.MassFluxGramPerSecondPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerSecondPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with GramPerSecondPerSquareMillimeter unit
+    grams_per_second_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "GramPerSecondPerSquareMillimeter"}`)
+    grams_per_second_per_square_millimeterResult, err := factory.FromDtoJSON(grams_per_second_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GramPerSecondPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_second_per_square_millimeterResult.Convert(units.MassFluxGramPerSecondPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerSecondPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with GramPerHourPerSquareMeter unit
+    grams_per_hour_per_square_meterJSON := []byte(`{"value": 100, "unit": "GramPerHourPerSquareMeter"}`)
+    grams_per_hour_per_square_meterResult, err := factory.FromDtoJSON(grams_per_hour_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GramPerHourPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_hour_per_square_meterResult.Convert(units.MassFluxGramPerHourPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerHourPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with GramPerHourPerSquareCentimeter unit
+    grams_per_hour_per_square_centimeterJSON := []byte(`{"value": 100, "unit": "GramPerHourPerSquareCentimeter"}`)
+    grams_per_hour_per_square_centimeterResult, err := factory.FromDtoJSON(grams_per_hour_per_square_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GramPerHourPerSquareCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_hour_per_square_centimeterResult.Convert(units.MassFluxGramPerHourPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerHourPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with GramPerHourPerSquareMillimeter unit
+    grams_per_hour_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "GramPerHourPerSquareMillimeter"}`)
+    grams_per_hour_per_square_millimeterResult, err := factory.FromDtoJSON(grams_per_hour_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GramPerHourPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_per_hour_per_square_millimeterResult.Convert(units.MassFluxGramPerHourPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramPerHourPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilogramPerSecondPerSquareMeter unit
+    kilograms_per_second_per_square_meterJSON := []byte(`{"value": 100, "unit": "KilogramPerSecondPerSquareMeter"}`)
+    kilograms_per_second_per_square_meterResult, err := factory.FromDtoJSON(kilograms_per_second_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilogramPerSecondPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_second_per_square_meterResult.Convert(units.MassFluxKilogramPerSecondPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerSecondPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilogramPerSecondPerSquareCentimeter unit
+    kilograms_per_second_per_square_centimeterJSON := []byte(`{"value": 100, "unit": "KilogramPerSecondPerSquareCentimeter"}`)
+    kilograms_per_second_per_square_centimeterResult, err := factory.FromDtoJSON(kilograms_per_second_per_square_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilogramPerSecondPerSquareCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_second_per_square_centimeterResult.Convert(units.MassFluxKilogramPerSecondPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerSecondPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilogramPerSecondPerSquareMillimeter unit
+    kilograms_per_second_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "KilogramPerSecondPerSquareMillimeter"}`)
+    kilograms_per_second_per_square_millimeterResult, err := factory.FromDtoJSON(kilograms_per_second_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilogramPerSecondPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_second_per_square_millimeterResult.Convert(units.MassFluxKilogramPerSecondPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerSecondPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilogramPerHourPerSquareMeter unit
+    kilograms_per_hour_per_square_meterJSON := []byte(`{"value": 100, "unit": "KilogramPerHourPerSquareMeter"}`)
+    kilograms_per_hour_per_square_meterResult, err := factory.FromDtoJSON(kilograms_per_hour_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilogramPerHourPerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_hour_per_square_meterResult.Convert(units.MassFluxKilogramPerHourPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerHourPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilogramPerHourPerSquareCentimeter unit
+    kilograms_per_hour_per_square_centimeterJSON := []byte(`{"value": 100, "unit": "KilogramPerHourPerSquareCentimeter"}`)
+    kilograms_per_hour_per_square_centimeterResult, err := factory.FromDtoJSON(kilograms_per_hour_per_square_centimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilogramPerHourPerSquareCentimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_hour_per_square_centimeterResult.Convert(units.MassFluxKilogramPerHourPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerHourPerSquareCentimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilogramPerHourPerSquareMillimeter unit
+    kilograms_per_hour_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "KilogramPerHourPerSquareMillimeter"}`)
+    kilograms_per_hour_per_square_millimeterResult, err := factory.FromDtoJSON(kilograms_per_hour_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilogramPerHourPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilograms_per_hour_per_square_millimeterResult.Convert(units.MassFluxKilogramPerHourPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilogramPerHourPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "KilogramPerSecondPerSquareMeter"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromGramsPerSecondPerSquareMeter function
+func TestMassFluxFactory_FromGramsPerSecondPerSquareMeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGramsPerSecondPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromGramsPerSecondPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxGramPerSecondPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGramsPerSecondPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGramsPerSecondPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromGramsPerSecondPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromGramsPerSecondPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromGramsPerSecondPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGramsPerSecondPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGramsPerSecondPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGramsPerSecondPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromGramsPerSecondPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxGramPerSecondPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGramsPerSecondPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGramsPerSecondPerSquareCentimeter function
+func TestMassFluxFactory_FromGramsPerSecondPerSquareCentimeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGramsPerSecondPerSquareCentimeter(100)
+    if err != nil {
+        t.Errorf("FromGramsPerSecondPerSquareCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxGramPerSecondPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGramsPerSecondPerSquareCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGramsPerSecondPerSquareCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromGramsPerSecondPerSquareCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromGramsPerSecondPerSquareCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromGramsPerSecondPerSquareCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGramsPerSecondPerSquareCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGramsPerSecondPerSquareCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGramsPerSecondPerSquareCentimeter(0)
+    if err != nil {
+        t.Errorf("FromGramsPerSecondPerSquareCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxGramPerSecondPerSquareCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGramsPerSecondPerSquareCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGramsPerSecondPerSquareMillimeter function
+func TestMassFluxFactory_FromGramsPerSecondPerSquareMillimeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGramsPerSecondPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromGramsPerSecondPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxGramPerSecondPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGramsPerSecondPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGramsPerSecondPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromGramsPerSecondPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromGramsPerSecondPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromGramsPerSecondPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGramsPerSecondPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGramsPerSecondPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGramsPerSecondPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromGramsPerSecondPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxGramPerSecondPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGramsPerSecondPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGramsPerHourPerSquareMeter function
+func TestMassFluxFactory_FromGramsPerHourPerSquareMeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGramsPerHourPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromGramsPerHourPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxGramPerHourPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGramsPerHourPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGramsPerHourPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromGramsPerHourPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromGramsPerHourPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromGramsPerHourPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGramsPerHourPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGramsPerHourPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGramsPerHourPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromGramsPerHourPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxGramPerHourPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGramsPerHourPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGramsPerHourPerSquareCentimeter function
+func TestMassFluxFactory_FromGramsPerHourPerSquareCentimeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGramsPerHourPerSquareCentimeter(100)
+    if err != nil {
+        t.Errorf("FromGramsPerHourPerSquareCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxGramPerHourPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGramsPerHourPerSquareCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGramsPerHourPerSquareCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromGramsPerHourPerSquareCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromGramsPerHourPerSquareCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromGramsPerHourPerSquareCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGramsPerHourPerSquareCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGramsPerHourPerSquareCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGramsPerHourPerSquareCentimeter(0)
+    if err != nil {
+        t.Errorf("FromGramsPerHourPerSquareCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxGramPerHourPerSquareCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGramsPerHourPerSquareCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGramsPerHourPerSquareMillimeter function
+func TestMassFluxFactory_FromGramsPerHourPerSquareMillimeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGramsPerHourPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromGramsPerHourPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxGramPerHourPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGramsPerHourPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGramsPerHourPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromGramsPerHourPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromGramsPerHourPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromGramsPerHourPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGramsPerHourPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGramsPerHourPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGramsPerHourPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromGramsPerHourPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxGramPerHourPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGramsPerHourPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilogramsPerSecondPerSquareMeter function
+func TestMassFluxFactory_FromKilogramsPerSecondPerSquareMeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilogramsPerSecondPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromKilogramsPerSecondPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxKilogramPerSecondPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilogramsPerSecondPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilogramsPerSecondPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromKilogramsPerSecondPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerSecondPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilogramsPerSecondPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerSecondPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilogramsPerSecondPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilogramsPerSecondPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromKilogramsPerSecondPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxKilogramPerSecondPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilogramsPerSecondPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilogramsPerSecondPerSquareCentimeter function
+func TestMassFluxFactory_FromKilogramsPerSecondPerSquareCentimeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilogramsPerSecondPerSquareCentimeter(100)
+    if err != nil {
+        t.Errorf("FromKilogramsPerSecondPerSquareCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxKilogramPerSecondPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilogramsPerSecondPerSquareCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilogramsPerSecondPerSquareCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromKilogramsPerSecondPerSquareCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerSecondPerSquareCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilogramsPerSecondPerSquareCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerSecondPerSquareCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilogramsPerSecondPerSquareCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilogramsPerSecondPerSquareCentimeter(0)
+    if err != nil {
+        t.Errorf("FromKilogramsPerSecondPerSquareCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxKilogramPerSecondPerSquareCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilogramsPerSecondPerSquareCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilogramsPerSecondPerSquareMillimeter function
+func TestMassFluxFactory_FromKilogramsPerSecondPerSquareMillimeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilogramsPerSecondPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromKilogramsPerSecondPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxKilogramPerSecondPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilogramsPerSecondPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilogramsPerSecondPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromKilogramsPerSecondPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerSecondPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilogramsPerSecondPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerSecondPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilogramsPerSecondPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilogramsPerSecondPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromKilogramsPerSecondPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxKilogramPerSecondPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilogramsPerSecondPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilogramsPerHourPerSquareMeter function
+func TestMassFluxFactory_FromKilogramsPerHourPerSquareMeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilogramsPerHourPerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromKilogramsPerHourPerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxKilogramPerHourPerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilogramsPerHourPerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilogramsPerHourPerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromKilogramsPerHourPerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerHourPerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilogramsPerHourPerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerHourPerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilogramsPerHourPerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilogramsPerHourPerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromKilogramsPerHourPerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxKilogramPerHourPerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilogramsPerHourPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilogramsPerHourPerSquareCentimeter function
+func TestMassFluxFactory_FromKilogramsPerHourPerSquareCentimeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilogramsPerHourPerSquareCentimeter(100)
+    if err != nil {
+        t.Errorf("FromKilogramsPerHourPerSquareCentimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxKilogramPerHourPerSquareCentimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilogramsPerHourPerSquareCentimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilogramsPerHourPerSquareCentimeter(math.NaN())
+    if err == nil {
+        t.Error("FromKilogramsPerHourPerSquareCentimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerHourPerSquareCentimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilogramsPerHourPerSquareCentimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerHourPerSquareCentimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilogramsPerHourPerSquareCentimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilogramsPerHourPerSquareCentimeter(0)
+    if err != nil {
+        t.Errorf("FromKilogramsPerHourPerSquareCentimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxKilogramPerHourPerSquareCentimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilogramsPerHourPerSquareCentimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilogramsPerHourPerSquareMillimeter function
+func TestMassFluxFactory_FromKilogramsPerHourPerSquareMillimeter(t *testing.T) {
+    factory := units.MassFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilogramsPerHourPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromKilogramsPerHourPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassFluxKilogramPerHourPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilogramsPerHourPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilogramsPerHourPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromKilogramsPerHourPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerHourPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilogramsPerHourPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilogramsPerHourPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilogramsPerHourPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilogramsPerHourPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromKilogramsPerHourPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassFluxKilogramPerHourPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilogramsPerHourPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestMassFluxToString(t *testing.T) {
 	factory := units.MassFluxFactory{}
 	a, err := factory.CreateMassFlux(45, units.MassFluxKilogramPerSecondPerSquareMeter)

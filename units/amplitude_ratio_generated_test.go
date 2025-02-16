@@ -147,6 +147,400 @@ func TestAmplitudeRatio_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestAmplitudeRatioFactory_FromDto(t *testing.T) {
+    factory := units.AmplitudeRatioFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.AmplitudeRatioDto{
+        Value: 100,
+        Unit:  units.AmplitudeRatioDecibelVolt,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.AmplitudeRatioDto{
+        Value: math.NaN(),
+        Unit:  units.AmplitudeRatioDecibelVolt,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test DecibelVolt conversion
+    decibel_voltsDto := units.AmplitudeRatioDto{
+        Value: 100,
+        Unit:  units.AmplitudeRatioDecibelVolt,
+    }
+    
+    var decibel_voltsResult *units.AmplitudeRatio
+    decibel_voltsResult, err = factory.FromDto(decibel_voltsDto)
+    if err != nil {
+        t.Errorf("FromDto() with DecibelVolt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibel_voltsResult.Convert(units.AmplitudeRatioDecibelVolt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecibelVolt = %v, want %v", converted, 100)
+    }
+    // Test DecibelMicrovolt conversion
+    decibel_microvoltsDto := units.AmplitudeRatioDto{
+        Value: 100,
+        Unit:  units.AmplitudeRatioDecibelMicrovolt,
+    }
+    
+    var decibel_microvoltsResult *units.AmplitudeRatio
+    decibel_microvoltsResult, err = factory.FromDto(decibel_microvoltsDto)
+    if err != nil {
+        t.Errorf("FromDto() with DecibelMicrovolt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibel_microvoltsResult.Convert(units.AmplitudeRatioDecibelMicrovolt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecibelMicrovolt = %v, want %v", converted, 100)
+    }
+    // Test DecibelMillivolt conversion
+    decibel_millivoltsDto := units.AmplitudeRatioDto{
+        Value: 100,
+        Unit:  units.AmplitudeRatioDecibelMillivolt,
+    }
+    
+    var decibel_millivoltsResult *units.AmplitudeRatio
+    decibel_millivoltsResult, err = factory.FromDto(decibel_millivoltsDto)
+    if err != nil {
+        t.Errorf("FromDto() with DecibelMillivolt returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibel_millivoltsResult.Convert(units.AmplitudeRatioDecibelMillivolt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecibelMillivolt = %v, want %v", converted, 100)
+    }
+    // Test DecibelUnloaded conversion
+    decibels_unloadedDto := units.AmplitudeRatioDto{
+        Value: 100,
+        Unit:  units.AmplitudeRatioDecibelUnloaded,
+    }
+    
+    var decibels_unloadedResult *units.AmplitudeRatio
+    decibels_unloadedResult, err = factory.FromDto(decibels_unloadedDto)
+    if err != nil {
+        t.Errorf("FromDto() with DecibelUnloaded returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibels_unloadedResult.Convert(units.AmplitudeRatioDecibelUnloaded)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecibelUnloaded = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.AmplitudeRatioDto{
+        Value: 0,
+        Unit:  units.AmplitudeRatioDecibelVolt,
+    }
+    
+    var zeroResult *units.AmplitudeRatio
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestAmplitudeRatioFactory_FromDtoJSON(t *testing.T) {
+    factory := units.AmplitudeRatioFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "DecibelVolt"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "DecibelVolt"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.AmplitudeRatioDto{
+        Value: nanValue,
+        Unit:  units.AmplitudeRatioDecibelVolt,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with DecibelVolt unit
+    decibel_voltsJSON := []byte(`{"value": 100, "unit": "DecibelVolt"}`)
+    decibel_voltsResult, err := factory.FromDtoJSON(decibel_voltsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DecibelVolt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibel_voltsResult.Convert(units.AmplitudeRatioDecibelVolt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecibelVolt = %v, want %v", converted, 100)
+    }
+    // Test JSON with DecibelMicrovolt unit
+    decibel_microvoltsJSON := []byte(`{"value": 100, "unit": "DecibelMicrovolt"}`)
+    decibel_microvoltsResult, err := factory.FromDtoJSON(decibel_microvoltsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DecibelMicrovolt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibel_microvoltsResult.Convert(units.AmplitudeRatioDecibelMicrovolt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecibelMicrovolt = %v, want %v", converted, 100)
+    }
+    // Test JSON with DecibelMillivolt unit
+    decibel_millivoltsJSON := []byte(`{"value": 100, "unit": "DecibelMillivolt"}`)
+    decibel_millivoltsResult, err := factory.FromDtoJSON(decibel_millivoltsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DecibelMillivolt unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibel_millivoltsResult.Convert(units.AmplitudeRatioDecibelMillivolt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecibelMillivolt = %v, want %v", converted, 100)
+    }
+    // Test JSON with DecibelUnloaded unit
+    decibels_unloadedJSON := []byte(`{"value": 100, "unit": "DecibelUnloaded"}`)
+    decibels_unloadedResult, err := factory.FromDtoJSON(decibels_unloadedJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DecibelUnloaded unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decibels_unloadedResult.Convert(units.AmplitudeRatioDecibelUnloaded)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecibelUnloaded = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "DecibelVolt"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromDecibelVolts function
+func TestAmplitudeRatioFactory_FromDecibelVolts(t *testing.T) {
+    factory := units.AmplitudeRatioFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecibelVolts(100)
+    if err != nil {
+        t.Errorf("FromDecibelVolts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AmplitudeRatioDecibelVolt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecibelVolts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecibelVolts(math.NaN())
+    if err == nil {
+        t.Error("FromDecibelVolts() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecibelVolts(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecibelVolts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecibelVolts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecibelVolts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecibelVolts(0)
+    if err != nil {
+        t.Errorf("FromDecibelVolts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AmplitudeRatioDecibelVolt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecibelVolts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecibelMicrovolts function
+func TestAmplitudeRatioFactory_FromDecibelMicrovolts(t *testing.T) {
+    factory := units.AmplitudeRatioFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecibelMicrovolts(100)
+    if err != nil {
+        t.Errorf("FromDecibelMicrovolts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AmplitudeRatioDecibelMicrovolt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecibelMicrovolts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecibelMicrovolts(math.NaN())
+    if err == nil {
+        t.Error("FromDecibelMicrovolts() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecibelMicrovolts(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecibelMicrovolts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecibelMicrovolts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecibelMicrovolts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecibelMicrovolts(0)
+    if err != nil {
+        t.Errorf("FromDecibelMicrovolts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AmplitudeRatioDecibelMicrovolt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecibelMicrovolts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecibelMillivolts function
+func TestAmplitudeRatioFactory_FromDecibelMillivolts(t *testing.T) {
+    factory := units.AmplitudeRatioFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecibelMillivolts(100)
+    if err != nil {
+        t.Errorf("FromDecibelMillivolts() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AmplitudeRatioDecibelMillivolt)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecibelMillivolts() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecibelMillivolts(math.NaN())
+    if err == nil {
+        t.Error("FromDecibelMillivolts() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecibelMillivolts(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecibelMillivolts() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecibelMillivolts(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecibelMillivolts() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecibelMillivolts(0)
+    if err != nil {
+        t.Errorf("FromDecibelMillivolts() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AmplitudeRatioDecibelMillivolt)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecibelMillivolts() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecibelsUnloaded function
+func TestAmplitudeRatioFactory_FromDecibelsUnloaded(t *testing.T) {
+    factory := units.AmplitudeRatioFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecibelsUnloaded(100)
+    if err != nil {
+        t.Errorf("FromDecibelsUnloaded() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AmplitudeRatioDecibelUnloaded)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecibelsUnloaded() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecibelsUnloaded(math.NaN())
+    if err == nil {
+        t.Error("FromDecibelsUnloaded() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecibelsUnloaded(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecibelsUnloaded() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecibelsUnloaded(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecibelsUnloaded() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecibelsUnloaded(0)
+    if err != nil {
+        t.Errorf("FromDecibelsUnloaded() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AmplitudeRatioDecibelUnloaded)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecibelsUnloaded() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestAmplitudeRatioToString(t *testing.T) {
 	factory := units.AmplitudeRatioFactory{}
 	a, err := factory.CreateAmplitudeRatio(45, units.AmplitudeRatioDecibelVolt)

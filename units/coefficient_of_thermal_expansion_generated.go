@@ -53,6 +53,10 @@ func (udf CoefficientOfThermalExpansionDtoFactory) FromJSON(data []byte) (*Coeff
 		return nil, err
 	}
 
+	if a.Unit == "" {
+		return nil, errors.New("unit is required")
+	} 
+	
 	return &a, nil
 }
 

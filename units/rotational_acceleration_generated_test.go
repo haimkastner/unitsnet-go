@@ -147,6 +147,400 @@ func TestRotationalAcceleration_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestRotationalAccelerationFactory_FromDto(t *testing.T) {
+    factory := units.RotationalAccelerationFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.RotationalAccelerationDto{
+        Value: 100,
+        Unit:  units.RotationalAccelerationRadianPerSecondSquared,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.RotationalAccelerationDto{
+        Value: math.NaN(),
+        Unit:  units.RotationalAccelerationRadianPerSecondSquared,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test RadianPerSecondSquared conversion
+    radians_per_second_squaredDto := units.RotationalAccelerationDto{
+        Value: 100,
+        Unit:  units.RotationalAccelerationRadianPerSecondSquared,
+    }
+    
+    var radians_per_second_squaredResult *units.RotationalAcceleration
+    radians_per_second_squaredResult, err = factory.FromDto(radians_per_second_squaredDto)
+    if err != nil {
+        t.Errorf("FromDto() with RadianPerSecondSquared returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = radians_per_second_squaredResult.Convert(units.RotationalAccelerationRadianPerSecondSquared)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for RadianPerSecondSquared = %v, want %v", converted, 100)
+    }
+    // Test DegreePerSecondSquared conversion
+    degrees_per_second_squaredDto := units.RotationalAccelerationDto{
+        Value: 100,
+        Unit:  units.RotationalAccelerationDegreePerSecondSquared,
+    }
+    
+    var degrees_per_second_squaredResult *units.RotationalAcceleration
+    degrees_per_second_squaredResult, err = factory.FromDto(degrees_per_second_squaredDto)
+    if err != nil {
+        t.Errorf("FromDto() with DegreePerSecondSquared returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_per_second_squaredResult.Convert(units.RotationalAccelerationDegreePerSecondSquared)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreePerSecondSquared = %v, want %v", converted, 100)
+    }
+    // Test RevolutionPerMinutePerSecond conversion
+    revolutions_per_minute_per_secondDto := units.RotationalAccelerationDto{
+        Value: 100,
+        Unit:  units.RotationalAccelerationRevolutionPerMinutePerSecond,
+    }
+    
+    var revolutions_per_minute_per_secondResult *units.RotationalAcceleration
+    revolutions_per_minute_per_secondResult, err = factory.FromDto(revolutions_per_minute_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with RevolutionPerMinutePerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = revolutions_per_minute_per_secondResult.Convert(units.RotationalAccelerationRevolutionPerMinutePerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for RevolutionPerMinutePerSecond = %v, want %v", converted, 100)
+    }
+    // Test RevolutionPerSecondSquared conversion
+    revolutions_per_second_squaredDto := units.RotationalAccelerationDto{
+        Value: 100,
+        Unit:  units.RotationalAccelerationRevolutionPerSecondSquared,
+    }
+    
+    var revolutions_per_second_squaredResult *units.RotationalAcceleration
+    revolutions_per_second_squaredResult, err = factory.FromDto(revolutions_per_second_squaredDto)
+    if err != nil {
+        t.Errorf("FromDto() with RevolutionPerSecondSquared returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = revolutions_per_second_squaredResult.Convert(units.RotationalAccelerationRevolutionPerSecondSquared)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for RevolutionPerSecondSquared = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.RotationalAccelerationDto{
+        Value: 0,
+        Unit:  units.RotationalAccelerationRadianPerSecondSquared,
+    }
+    
+    var zeroResult *units.RotationalAcceleration
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestRotationalAccelerationFactory_FromDtoJSON(t *testing.T) {
+    factory := units.RotationalAccelerationFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "RadianPerSecondSquared"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "RadianPerSecondSquared"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.RotationalAccelerationDto{
+        Value: nanValue,
+        Unit:  units.RotationalAccelerationRadianPerSecondSquared,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with RadianPerSecondSquared unit
+    radians_per_second_squaredJSON := []byte(`{"value": 100, "unit": "RadianPerSecondSquared"}`)
+    radians_per_second_squaredResult, err := factory.FromDtoJSON(radians_per_second_squaredJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with RadianPerSecondSquared unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = radians_per_second_squaredResult.Convert(units.RotationalAccelerationRadianPerSecondSquared)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for RadianPerSecondSquared = %v, want %v", converted, 100)
+    }
+    // Test JSON with DegreePerSecondSquared unit
+    degrees_per_second_squaredJSON := []byte(`{"value": 100, "unit": "DegreePerSecondSquared"}`)
+    degrees_per_second_squaredResult, err := factory.FromDtoJSON(degrees_per_second_squaredJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DegreePerSecondSquared unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = degrees_per_second_squaredResult.Convert(units.RotationalAccelerationDegreePerSecondSquared)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DegreePerSecondSquared = %v, want %v", converted, 100)
+    }
+    // Test JSON with RevolutionPerMinutePerSecond unit
+    revolutions_per_minute_per_secondJSON := []byte(`{"value": 100, "unit": "RevolutionPerMinutePerSecond"}`)
+    revolutions_per_minute_per_secondResult, err := factory.FromDtoJSON(revolutions_per_minute_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with RevolutionPerMinutePerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = revolutions_per_minute_per_secondResult.Convert(units.RotationalAccelerationRevolutionPerMinutePerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for RevolutionPerMinutePerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with RevolutionPerSecondSquared unit
+    revolutions_per_second_squaredJSON := []byte(`{"value": 100, "unit": "RevolutionPerSecondSquared"}`)
+    revolutions_per_second_squaredResult, err := factory.FromDtoJSON(revolutions_per_second_squaredJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with RevolutionPerSecondSquared unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = revolutions_per_second_squaredResult.Convert(units.RotationalAccelerationRevolutionPerSecondSquared)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for RevolutionPerSecondSquared = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "RadianPerSecondSquared"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromRadiansPerSecondSquared function
+func TestRotationalAccelerationFactory_FromRadiansPerSecondSquared(t *testing.T) {
+    factory := units.RotationalAccelerationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromRadiansPerSecondSquared(100)
+    if err != nil {
+        t.Errorf("FromRadiansPerSecondSquared() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RotationalAccelerationRadianPerSecondSquared)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromRadiansPerSecondSquared() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromRadiansPerSecondSquared(math.NaN())
+    if err == nil {
+        t.Error("FromRadiansPerSecondSquared() with NaN value should return error")
+    }
+
+    _, err = factory.FromRadiansPerSecondSquared(math.Inf(1))
+    if err == nil {
+        t.Error("FromRadiansPerSecondSquared() with +Inf value should return error")
+    }
+
+    _, err = factory.FromRadiansPerSecondSquared(math.Inf(-1))
+    if err == nil {
+        t.Error("FromRadiansPerSecondSquared() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromRadiansPerSecondSquared(0)
+    if err != nil {
+        t.Errorf("FromRadiansPerSecondSquared() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RotationalAccelerationRadianPerSecondSquared)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromRadiansPerSecondSquared() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDegreesPerSecondSquared function
+func TestRotationalAccelerationFactory_FromDegreesPerSecondSquared(t *testing.T) {
+    factory := units.RotationalAccelerationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDegreesPerSecondSquared(100)
+    if err != nil {
+        t.Errorf("FromDegreesPerSecondSquared() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RotationalAccelerationDegreePerSecondSquared)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDegreesPerSecondSquared() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDegreesPerSecondSquared(math.NaN())
+    if err == nil {
+        t.Error("FromDegreesPerSecondSquared() with NaN value should return error")
+    }
+
+    _, err = factory.FromDegreesPerSecondSquared(math.Inf(1))
+    if err == nil {
+        t.Error("FromDegreesPerSecondSquared() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDegreesPerSecondSquared(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDegreesPerSecondSquared() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDegreesPerSecondSquared(0)
+    if err != nil {
+        t.Errorf("FromDegreesPerSecondSquared() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RotationalAccelerationDegreePerSecondSquared)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDegreesPerSecondSquared() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromRevolutionsPerMinutePerSecond function
+func TestRotationalAccelerationFactory_FromRevolutionsPerMinutePerSecond(t *testing.T) {
+    factory := units.RotationalAccelerationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromRevolutionsPerMinutePerSecond(100)
+    if err != nil {
+        t.Errorf("FromRevolutionsPerMinutePerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RotationalAccelerationRevolutionPerMinutePerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromRevolutionsPerMinutePerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromRevolutionsPerMinutePerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromRevolutionsPerMinutePerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromRevolutionsPerMinutePerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromRevolutionsPerMinutePerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromRevolutionsPerMinutePerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromRevolutionsPerMinutePerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromRevolutionsPerMinutePerSecond(0)
+    if err != nil {
+        t.Errorf("FromRevolutionsPerMinutePerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RotationalAccelerationRevolutionPerMinutePerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromRevolutionsPerMinutePerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromRevolutionsPerSecondSquared function
+func TestRotationalAccelerationFactory_FromRevolutionsPerSecondSquared(t *testing.T) {
+    factory := units.RotationalAccelerationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromRevolutionsPerSecondSquared(100)
+    if err != nil {
+        t.Errorf("FromRevolutionsPerSecondSquared() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RotationalAccelerationRevolutionPerSecondSquared)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromRevolutionsPerSecondSquared() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromRevolutionsPerSecondSquared(math.NaN())
+    if err == nil {
+        t.Error("FromRevolutionsPerSecondSquared() with NaN value should return error")
+    }
+
+    _, err = factory.FromRevolutionsPerSecondSquared(math.Inf(1))
+    if err == nil {
+        t.Error("FromRevolutionsPerSecondSquared() with +Inf value should return error")
+    }
+
+    _, err = factory.FromRevolutionsPerSecondSquared(math.Inf(-1))
+    if err == nil {
+        t.Error("FromRevolutionsPerSecondSquared() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromRevolutionsPerSecondSquared(0)
+    if err != nil {
+        t.Errorf("FromRevolutionsPerSecondSquared() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RotationalAccelerationRevolutionPerSecondSquared)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromRevolutionsPerSecondSquared() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestRotationalAccelerationToString(t *testing.T) {
 	factory := units.RotationalAccelerationFactory{}
 	a, err := factory.CreateRotationalAcceleration(45, units.RotationalAccelerationRadianPerSecondSquared)

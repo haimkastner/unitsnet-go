@@ -163,6 +163,544 @@ func TestAreaMomentOfInertia_ToDtoAndToDtoJSON(t *testing.T) {
 	}
 }
 
+func TestAreaMomentOfInertiaFactory_FromDto(t *testing.T) {
+    factory := units.AreaMomentOfInertiaFactory{}
+    var err error
+    
+    // Test valid base unit conversion
+    baseDto := units.AreaMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.AreaMomentOfInertiaMeterToTheFourth,
+    }
+    
+    baseResult, err := factory.FromDto(baseDto)
+    if err != nil {
+        t.Errorf("FromDto() with base unit returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDto() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid values
+    invalidDto := units.AreaMomentOfInertiaDto{
+        Value: math.NaN(),
+        Unit:  units.AreaMomentOfInertiaMeterToTheFourth,
+    }
+    
+    _, err = factory.FromDto(invalidDto)
+    if err == nil {
+        t.Error("FromDto() with NaN value should return error")
+    }
+
+	var converted float64
+    // Test MeterToTheFourth conversion
+    meters_to_the_fourthDto := units.AreaMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.AreaMomentOfInertiaMeterToTheFourth,
+    }
+    
+    var meters_to_the_fourthResult *units.AreaMomentOfInertia
+    meters_to_the_fourthResult, err = factory.FromDto(meters_to_the_fourthDto)
+    if err != nil {
+        t.Errorf("FromDto() with MeterToTheFourth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = meters_to_the_fourthResult.Convert(units.AreaMomentOfInertiaMeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MeterToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test DecimeterToTheFourth conversion
+    decimeters_to_the_fourthDto := units.AreaMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.AreaMomentOfInertiaDecimeterToTheFourth,
+    }
+    
+    var decimeters_to_the_fourthResult *units.AreaMomentOfInertia
+    decimeters_to_the_fourthResult, err = factory.FromDto(decimeters_to_the_fourthDto)
+    if err != nil {
+        t.Errorf("FromDto() with DecimeterToTheFourth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decimeters_to_the_fourthResult.Convert(units.AreaMomentOfInertiaDecimeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecimeterToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test CentimeterToTheFourth conversion
+    centimeters_to_the_fourthDto := units.AreaMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.AreaMomentOfInertiaCentimeterToTheFourth,
+    }
+    
+    var centimeters_to_the_fourthResult *units.AreaMomentOfInertia
+    centimeters_to_the_fourthResult, err = factory.FromDto(centimeters_to_the_fourthDto)
+    if err != nil {
+        t.Errorf("FromDto() with CentimeterToTheFourth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centimeters_to_the_fourthResult.Convert(units.AreaMomentOfInertiaCentimeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentimeterToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test MillimeterToTheFourth conversion
+    millimeters_to_the_fourthDto := units.AreaMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.AreaMomentOfInertiaMillimeterToTheFourth,
+    }
+    
+    var millimeters_to_the_fourthResult *units.AreaMomentOfInertia
+    millimeters_to_the_fourthResult, err = factory.FromDto(millimeters_to_the_fourthDto)
+    if err != nil {
+        t.Errorf("FromDto() with MillimeterToTheFourth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millimeters_to_the_fourthResult.Convert(units.AreaMomentOfInertiaMillimeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillimeterToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test FootToTheFourth conversion
+    feet_to_the_fourthDto := units.AreaMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.AreaMomentOfInertiaFootToTheFourth,
+    }
+    
+    var feet_to_the_fourthResult *units.AreaMomentOfInertia
+    feet_to_the_fourthResult, err = factory.FromDto(feet_to_the_fourthDto)
+    if err != nil {
+        t.Errorf("FromDto() with FootToTheFourth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = feet_to_the_fourthResult.Convert(units.AreaMomentOfInertiaFootToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for FootToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test InchToTheFourth conversion
+    inches_to_the_fourthDto := units.AreaMomentOfInertiaDto{
+        Value: 100,
+        Unit:  units.AreaMomentOfInertiaInchToTheFourth,
+    }
+    
+    var inches_to_the_fourthResult *units.AreaMomentOfInertia
+    inches_to_the_fourthResult, err = factory.FromDto(inches_to_the_fourthDto)
+    if err != nil {
+        t.Errorf("FromDto() with InchToTheFourth returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = inches_to_the_fourthResult.Convert(units.AreaMomentOfInertiaInchToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for InchToTheFourth = %v, want %v", converted, 100)
+    }
+
+    // Test zero value
+    zeroDto := units.AreaMomentOfInertiaDto{
+        Value: 0,
+        Unit:  units.AreaMomentOfInertiaMeterToTheFourth,
+    }
+    
+    var zeroResult *units.AreaMomentOfInertia
+    zeroResult, err = factory.FromDto(zeroDto)
+    if err != nil {
+        t.Errorf("FromDto() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDto() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+
+func TestAreaMomentOfInertiaFactory_FromDtoJSON(t *testing.T) {
+    factory := units.AreaMomentOfInertiaFactory{}
+    var err error
+
+	var converted float64
+
+    // Test valid JSON with base unit
+    validJSON := []byte(`{"value": 100, "unit": "MeterToTheFourth"}`)
+    baseResult, err := factory.FromDtoJSON(validJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
+    }
+    if baseResult.BaseValue() != 100 {
+        t.Errorf("FromDtoJSON() with base unit = %v, want %v", baseResult.BaseValue(), 100)
+    }
+
+    // Test invalid JSON format
+    invalidJSON := []byte(`{"value": "not a number", "unit": "MeterToTheFourth"}`)
+    _, err = factory.FromDtoJSON(invalidJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with invalid JSON should return error")
+    }
+
+    // Test malformed JSON
+    malformedJSON := []byte(`{malformed json`)
+    _, err = factory.FromDtoJSON(malformedJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with malformed JSON should return error")
+    }
+
+    // Test empty JSON
+    emptyJSON := []byte(`{}`)
+    _, err = factory.FromDtoJSON(emptyJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with empty JSON should return error")
+    }
+
+    // Test JSON with invalid value (NaN)
+    nanValue := math.NaN()
+    nanJSON, _ := json.Marshal(units.AreaMomentOfInertiaDto{
+        Value: nanValue,
+        Unit:  units.AreaMomentOfInertiaMeterToTheFourth,
+    })
+    _, err = factory.FromDtoJSON(nanJSON)
+    if err == nil {
+        t.Error("FromDtoJSON() with NaN value should return error")
+    }
+    // Test JSON with MeterToTheFourth unit
+    meters_to_the_fourthJSON := []byte(`{"value": 100, "unit": "MeterToTheFourth"}`)
+    meters_to_the_fourthResult, err := factory.FromDtoJSON(meters_to_the_fourthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MeterToTheFourth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = meters_to_the_fourthResult.Convert(units.AreaMomentOfInertiaMeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MeterToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test JSON with DecimeterToTheFourth unit
+    decimeters_to_the_fourthJSON := []byte(`{"value": 100, "unit": "DecimeterToTheFourth"}`)
+    decimeters_to_the_fourthResult, err := factory.FromDtoJSON(decimeters_to_the_fourthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DecimeterToTheFourth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decimeters_to_the_fourthResult.Convert(units.AreaMomentOfInertiaDecimeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecimeterToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test JSON with CentimeterToTheFourth unit
+    centimeters_to_the_fourthJSON := []byte(`{"value": 100, "unit": "CentimeterToTheFourth"}`)
+    centimeters_to_the_fourthResult, err := factory.FromDtoJSON(centimeters_to_the_fourthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CentimeterToTheFourth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centimeters_to_the_fourthResult.Convert(units.AreaMomentOfInertiaCentimeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentimeterToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test JSON with MillimeterToTheFourth unit
+    millimeters_to_the_fourthJSON := []byte(`{"value": 100, "unit": "MillimeterToTheFourth"}`)
+    millimeters_to_the_fourthResult, err := factory.FromDtoJSON(millimeters_to_the_fourthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MillimeterToTheFourth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millimeters_to_the_fourthResult.Convert(units.AreaMomentOfInertiaMillimeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MillimeterToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test JSON with FootToTheFourth unit
+    feet_to_the_fourthJSON := []byte(`{"value": 100, "unit": "FootToTheFourth"}`)
+    feet_to_the_fourthResult, err := factory.FromDtoJSON(feet_to_the_fourthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with FootToTheFourth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = feet_to_the_fourthResult.Convert(units.AreaMomentOfInertiaFootToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for FootToTheFourth = %v, want %v", converted, 100)
+    }
+    // Test JSON with InchToTheFourth unit
+    inches_to_the_fourthJSON := []byte(`{"value": 100, "unit": "InchToTheFourth"}`)
+    inches_to_the_fourthResult, err := factory.FromDtoJSON(inches_to_the_fourthJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with InchToTheFourth unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = inches_to_the_fourthResult.Convert(units.AreaMomentOfInertiaInchToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for InchToTheFourth = %v, want %v", converted, 100)
+    }
+
+    // Test zero value JSON
+    zeroJSON := []byte(`{"value": 0, "unit": "MeterToTheFourth"}`)
+    zeroResult, err := factory.FromDtoJSON(zeroJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
+    }
+    if zeroResult.BaseValue() != 0 {
+        t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
+    }
+}
+// Test FromMetersToTheFourth function
+func TestAreaMomentOfInertiaFactory_FromMetersToTheFourth(t *testing.T) {
+    factory := units.AreaMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMetersToTheFourth(100)
+    if err != nil {
+        t.Errorf("FromMetersToTheFourth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaMomentOfInertiaMeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMetersToTheFourth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMetersToTheFourth(math.NaN())
+    if err == nil {
+        t.Error("FromMetersToTheFourth() with NaN value should return error")
+    }
+
+    _, err = factory.FromMetersToTheFourth(math.Inf(1))
+    if err == nil {
+        t.Error("FromMetersToTheFourth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMetersToTheFourth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMetersToTheFourth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMetersToTheFourth(0)
+    if err != nil {
+        t.Errorf("FromMetersToTheFourth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaMomentOfInertiaMeterToTheFourth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMetersToTheFourth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecimetersToTheFourth function
+func TestAreaMomentOfInertiaFactory_FromDecimetersToTheFourth(t *testing.T) {
+    factory := units.AreaMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecimetersToTheFourth(100)
+    if err != nil {
+        t.Errorf("FromDecimetersToTheFourth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaMomentOfInertiaDecimeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecimetersToTheFourth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecimetersToTheFourth(math.NaN())
+    if err == nil {
+        t.Error("FromDecimetersToTheFourth() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecimetersToTheFourth(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecimetersToTheFourth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecimetersToTheFourth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecimetersToTheFourth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecimetersToTheFourth(0)
+    if err != nil {
+        t.Errorf("FromDecimetersToTheFourth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaMomentOfInertiaDecimeterToTheFourth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecimetersToTheFourth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCentimetersToTheFourth function
+func TestAreaMomentOfInertiaFactory_FromCentimetersToTheFourth(t *testing.T) {
+    factory := units.AreaMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCentimetersToTheFourth(100)
+    if err != nil {
+        t.Errorf("FromCentimetersToTheFourth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaMomentOfInertiaCentimeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCentimetersToTheFourth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCentimetersToTheFourth(math.NaN())
+    if err == nil {
+        t.Error("FromCentimetersToTheFourth() with NaN value should return error")
+    }
+
+    _, err = factory.FromCentimetersToTheFourth(math.Inf(1))
+    if err == nil {
+        t.Error("FromCentimetersToTheFourth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCentimetersToTheFourth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCentimetersToTheFourth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCentimetersToTheFourth(0)
+    if err != nil {
+        t.Errorf("FromCentimetersToTheFourth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaMomentOfInertiaCentimeterToTheFourth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCentimetersToTheFourth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMillimetersToTheFourth function
+func TestAreaMomentOfInertiaFactory_FromMillimetersToTheFourth(t *testing.T) {
+    factory := units.AreaMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillimetersToTheFourth(100)
+    if err != nil {
+        t.Errorf("FromMillimetersToTheFourth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaMomentOfInertiaMillimeterToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillimetersToTheFourth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillimetersToTheFourth(math.NaN())
+    if err == nil {
+        t.Error("FromMillimetersToTheFourth() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillimetersToTheFourth(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillimetersToTheFourth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillimetersToTheFourth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillimetersToTheFourth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillimetersToTheFourth(0)
+    if err != nil {
+        t.Errorf("FromMillimetersToTheFourth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaMomentOfInertiaMillimeterToTheFourth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillimetersToTheFourth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromFeetToTheFourth function
+func TestAreaMomentOfInertiaFactory_FromFeetToTheFourth(t *testing.T) {
+    factory := units.AreaMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromFeetToTheFourth(100)
+    if err != nil {
+        t.Errorf("FromFeetToTheFourth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaMomentOfInertiaFootToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromFeetToTheFourth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromFeetToTheFourth(math.NaN())
+    if err == nil {
+        t.Error("FromFeetToTheFourth() with NaN value should return error")
+    }
+
+    _, err = factory.FromFeetToTheFourth(math.Inf(1))
+    if err == nil {
+        t.Error("FromFeetToTheFourth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromFeetToTheFourth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromFeetToTheFourth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromFeetToTheFourth(0)
+    if err != nil {
+        t.Errorf("FromFeetToTheFourth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaMomentOfInertiaFootToTheFourth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromFeetToTheFourth() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromInchesToTheFourth function
+func TestAreaMomentOfInertiaFactory_FromInchesToTheFourth(t *testing.T) {
+    factory := units.AreaMomentOfInertiaFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromInchesToTheFourth(100)
+    if err != nil {
+        t.Errorf("FromInchesToTheFourth() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaMomentOfInertiaInchToTheFourth)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromInchesToTheFourth() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromInchesToTheFourth(math.NaN())
+    if err == nil {
+        t.Error("FromInchesToTheFourth() with NaN value should return error")
+    }
+
+    _, err = factory.FromInchesToTheFourth(math.Inf(1))
+    if err == nil {
+        t.Error("FromInchesToTheFourth() with +Inf value should return error")
+    }
+
+    _, err = factory.FromInchesToTheFourth(math.Inf(-1))
+    if err == nil {
+        t.Error("FromInchesToTheFourth() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromInchesToTheFourth(0)
+    if err != nil {
+        t.Errorf("FromInchesToTheFourth() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaMomentOfInertiaInchToTheFourth)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromInchesToTheFourth() with zero value = %v, want 0", converted)
+    }
+}
+
 func TestAreaMomentOfInertiaToString(t *testing.T) {
 	factory := units.AreaMomentOfInertiaFactory{}
 	a, err := factory.CreateAreaMomentOfInertia(45, units.AreaMomentOfInertiaMeterToTheFourth)
