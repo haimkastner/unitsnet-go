@@ -53,12 +53,33 @@ const (
         AmountOfSubstanceKilopoundMole AmountOfSubstanceUnits = "KilopoundMole"
 )
 
+var internalAmountOfSubstanceUnitsMap = map[AmountOfSubstanceUnits]bool{
+	
+	AmountOfSubstanceMole: true,
+	AmountOfSubstancePoundMole: true,
+	AmountOfSubstanceFemtomole: true,
+	AmountOfSubstancePicomole: true,
+	AmountOfSubstanceNanomole: true,
+	AmountOfSubstanceMicromole: true,
+	AmountOfSubstanceMillimole: true,
+	AmountOfSubstanceCentimole: true,
+	AmountOfSubstanceDecimole: true,
+	AmountOfSubstanceKilomole: true,
+	AmountOfSubstanceMegamole: true,
+	AmountOfSubstanceNanopoundMole: true,
+	AmountOfSubstanceMicropoundMole: true,
+	AmountOfSubstanceMillipoundMole: true,
+	AmountOfSubstanceCentipoundMole: true,
+	AmountOfSubstanceDecipoundMole: true,
+	AmountOfSubstanceKilopoundMole: true,
+}
+
 // AmountOfSubstanceDto represents a AmountOfSubstance measurement with a numerical value and its corresponding unit.
 type AmountOfSubstanceDto struct {
     // Value is the numerical representation of the AmountOfSubstance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the AmountOfSubstance, as defined in the AmountOfSubstanceUnits enumeration.
-	Unit  AmountOfSubstanceUnits `json:"unit"`
+	Unit  AmountOfSubstanceUnits `json:"unit" validate:"required,oneof=Mole,PoundMole,Femtomole,Picomole,Nanomole,Micromole,Millimole,Centimole,Decimole,Kilomole,Megamole,NanopoundMole,MicropoundMole,MillipoundMole,CentipoundMole,DecipoundMole,KilopoundMole"`
 }
 
 // AmountOfSubstanceDtoFactory groups methods for creating and serializing AmountOfSubstanceDto objects.
@@ -229,6 +250,9 @@ func (uf AmountOfSubstanceFactory) FromKilopoundMoles(value float64) (*AmountOfS
 func newAmountOfSubstance(value float64, fromUnit AmountOfSubstanceUnits) (*AmountOfSubstance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalAmountOfSubstanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in AmountOfSubstanceUnits", fromUnit)
 	}
 	a := &AmountOfSubstance{}
 	a.value = a.convertToBase(value, fromUnit)

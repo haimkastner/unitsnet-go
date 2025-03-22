@@ -55,12 +55,34 @@ const (
         HeatFluxKilocaloriePerSecondSquareCentimeter HeatFluxUnits = "KilocaloriePerSecondSquareCentimeter"
 )
 
+var internalHeatFluxUnitsMap = map[HeatFluxUnits]bool{
+	
+	HeatFluxWattPerSquareMeter: true,
+	HeatFluxWattPerSquareInch: true,
+	HeatFluxWattPerSquareFoot: true,
+	HeatFluxBtuPerSecondSquareInch: true,
+	HeatFluxBtuPerSecondSquareFoot: true,
+	HeatFluxBtuPerMinuteSquareFoot: true,
+	HeatFluxBtuPerHourSquareFoot: true,
+	HeatFluxCaloriePerSecondSquareCentimeter: true,
+	HeatFluxKilocaloriePerHourSquareMeter: true,
+	HeatFluxPoundForcePerFootSecond: true,
+	HeatFluxPoundPerSecondCubed: true,
+	HeatFluxNanowattPerSquareMeter: true,
+	HeatFluxMicrowattPerSquareMeter: true,
+	HeatFluxMilliwattPerSquareMeter: true,
+	HeatFluxCentiwattPerSquareMeter: true,
+	HeatFluxDeciwattPerSquareMeter: true,
+	HeatFluxKilowattPerSquareMeter: true,
+	HeatFluxKilocaloriePerSecondSquareCentimeter: true,
+}
+
 // HeatFluxDto represents a HeatFlux measurement with a numerical value and its corresponding unit.
 type HeatFluxDto struct {
     // Value is the numerical representation of the HeatFlux.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the HeatFlux, as defined in the HeatFluxUnits enumeration.
-	Unit  HeatFluxUnits `json:"unit"`
+	Unit  HeatFluxUnits `json:"unit" validate:"required,oneof=WattPerSquareMeter,WattPerSquareInch,WattPerSquareFoot,BtuPerSecondSquareInch,BtuPerSecondSquareFoot,BtuPerMinuteSquareFoot,BtuPerHourSquareFoot,CaloriePerSecondSquareCentimeter,KilocaloriePerHourSquareMeter,PoundForcePerFootSecond,PoundPerSecondCubed,NanowattPerSquareMeter,MicrowattPerSquareMeter,MilliwattPerSquareMeter,CentiwattPerSquareMeter,DeciwattPerSquareMeter,KilowattPerSquareMeter,KilocaloriePerSecondSquareCentimeter"`
 }
 
 // HeatFluxDtoFactory groups methods for creating and serializing HeatFluxDto objects.
@@ -237,6 +259,9 @@ func (uf HeatFluxFactory) FromKilocaloriesPerSecondSquareCentimeter(value float6
 func newHeatFlux(value float64, fromUnit HeatFluxUnits) (*HeatFlux, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalHeatFluxUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in HeatFluxUnits", fromUnit)
 	}
 	a := &HeatFlux{}
 	a.value = a.convertToBase(value, fromUnit)

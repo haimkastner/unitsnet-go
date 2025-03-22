@@ -976,3 +976,19 @@ func TestElectricCurrentGradient_String(t *testing.T) {
         })
     }
 }
+
+
+func TestElectricCurrentGradient_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.ElectricCurrentGradientFactory{}
+
+	_, err := uf.CreateElectricCurrentGradient(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

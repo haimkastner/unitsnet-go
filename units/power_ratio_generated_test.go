@@ -546,3 +546,19 @@ func TestPowerRatio_String(t *testing.T) {
         })
     }
 }
+
+
+func TestPowerRatio_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.PowerRatioFactory{}
+
+	_, err := uf.CreatePowerRatio(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

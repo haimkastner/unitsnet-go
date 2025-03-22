@@ -51,12 +51,32 @@ const (
         ElectricSusceptanceTeramho ElectricSusceptanceUnits = "Teramho"
 )
 
+var internalElectricSusceptanceUnitsMap = map[ElectricSusceptanceUnits]bool{
+	
+	ElectricSusceptanceSiemens: true,
+	ElectricSusceptanceMho: true,
+	ElectricSusceptanceNanosiemens: true,
+	ElectricSusceptanceMicrosiemens: true,
+	ElectricSusceptanceMillisiemens: true,
+	ElectricSusceptanceKilosiemens: true,
+	ElectricSusceptanceMegasiemens: true,
+	ElectricSusceptanceGigasiemens: true,
+	ElectricSusceptanceTerasiemens: true,
+	ElectricSusceptanceNanomho: true,
+	ElectricSusceptanceMicromho: true,
+	ElectricSusceptanceMillimho: true,
+	ElectricSusceptanceKilomho: true,
+	ElectricSusceptanceMegamho: true,
+	ElectricSusceptanceGigamho: true,
+	ElectricSusceptanceTeramho: true,
+}
+
 // ElectricSusceptanceDto represents a ElectricSusceptance measurement with a numerical value and its corresponding unit.
 type ElectricSusceptanceDto struct {
     // Value is the numerical representation of the ElectricSusceptance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricSusceptance, as defined in the ElectricSusceptanceUnits enumeration.
-	Unit  ElectricSusceptanceUnits `json:"unit"`
+	Unit  ElectricSusceptanceUnits `json:"unit" validate:"required,oneof=Siemens,Mho,Nanosiemens,Microsiemens,Millisiemens,Kilosiemens,Megasiemens,Gigasiemens,Terasiemens,Nanomho,Micromho,Millimho,Kilomho,Megamho,Gigamho,Teramho"`
 }
 
 // ElectricSusceptanceDtoFactory groups methods for creating and serializing ElectricSusceptanceDto objects.
@@ -221,6 +241,9 @@ func (uf ElectricSusceptanceFactory) FromTeramhos(value float64) (*ElectricSusce
 func newElectricSusceptance(value float64, fromUnit ElectricSusceptanceUnits) (*ElectricSusceptance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricSusceptanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricSusceptanceUnits", fromUnit)
 	}
 	a := &ElectricSusceptance{}
 	a.value = a.convertToBase(value, fromUnit)

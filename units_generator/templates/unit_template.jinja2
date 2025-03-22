@@ -21,12 +21,17 @@ const (
         {{ unit }}{{ method.unit }} {{ unit }}Units = "{{ method.unit }}"{% endfor %}
 )
 
+var internal{{ unit }}UnitsMap = map[{{ unit }}Units]bool{
+	{% for method in methods %}
+	{{ unit }}{{ method.unit }}: true,{% endfor %}
+}
+
 // {{ unit }}Dto represents a {{ unit }} measurement with a numerical value and its corresponding unit.
 type {{ unit }}Dto struct {
     // Value is the numerical representation of the {{ unit }}.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the {{ unit }}, as defined in the {{ unit }}Units enumeration.
-	Unit  {{ unit }}Units `json:"unit"`
+	Unit  {{ unit }}Units `json:"unit" validate:"required,oneof={% for method in methods %}{{ method.unit }}{% if not loop.last %},{% endif %}{% endfor %}"`
 }
 
 // {{ unit }}DtoFactory groups methods for creating and serializing {{ unit }}Dto objects.
@@ -101,6 +106,9 @@ func (uf {{ unit }}Factory) From{{ method.plural_name }}(value float64) (*{{ uni
 func new{{ unit }}(value float64, fromUnit {{ unit }}Units) (*{{ unit }}, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internal{{ unit }}UnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in {{ unit }}Units", fromUnit)
 	}
 	a := &{{ unit }}{}
 	a.value = a.convertToBase(value, fromUnit)

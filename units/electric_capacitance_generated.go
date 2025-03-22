@@ -33,12 +33,23 @@ const (
         ElectricCapacitanceMegafarad ElectricCapacitanceUnits = "Megafarad"
 )
 
+var internalElectricCapacitanceUnitsMap = map[ElectricCapacitanceUnits]bool{
+	
+	ElectricCapacitanceFarad: true,
+	ElectricCapacitancePicofarad: true,
+	ElectricCapacitanceNanofarad: true,
+	ElectricCapacitanceMicrofarad: true,
+	ElectricCapacitanceMillifarad: true,
+	ElectricCapacitanceKilofarad: true,
+	ElectricCapacitanceMegafarad: true,
+}
+
 // ElectricCapacitanceDto represents a ElectricCapacitance measurement with a numerical value and its corresponding unit.
 type ElectricCapacitanceDto struct {
     // Value is the numerical representation of the ElectricCapacitance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricCapacitance, as defined in the ElectricCapacitanceUnits enumeration.
-	Unit  ElectricCapacitanceUnits `json:"unit"`
+	Unit  ElectricCapacitanceUnits `json:"unit" validate:"required,oneof=Farad,Picofarad,Nanofarad,Microfarad,Millifarad,Kilofarad,Megafarad"`
 }
 
 // ElectricCapacitanceDtoFactory groups methods for creating and serializing ElectricCapacitanceDto objects.
@@ -149,6 +160,9 @@ func (uf ElectricCapacitanceFactory) FromMegafarads(value float64) (*ElectricCap
 func newElectricCapacitance(value float64, fromUnit ElectricCapacitanceUnits) (*ElectricCapacitance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricCapacitanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricCapacitanceUnits", fromUnit)
 	}
 	a := &ElectricCapacitance{}
 	a.value = a.convertToBase(value, fromUnit)

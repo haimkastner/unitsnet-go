@@ -47,12 +47,30 @@ const (
         AreaSquareNauticalMile AreaUnits = "SquareNauticalMile"
 )
 
+var internalAreaUnitsMap = map[AreaUnits]bool{
+	
+	AreaSquareKilometer: true,
+	AreaSquareMeter: true,
+	AreaSquareDecimeter: true,
+	AreaSquareCentimeter: true,
+	AreaSquareMillimeter: true,
+	AreaSquareMicrometer: true,
+	AreaSquareMile: true,
+	AreaSquareYard: true,
+	AreaSquareFoot: true,
+	AreaUsSurveySquareFoot: true,
+	AreaSquareInch: true,
+	AreaAcre: true,
+	AreaHectare: true,
+	AreaSquareNauticalMile: true,
+}
+
 // AreaDto represents a Area measurement with a numerical value and its corresponding unit.
 type AreaDto struct {
     // Value is the numerical representation of the Area.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Area, as defined in the AreaUnits enumeration.
-	Unit  AreaUnits `json:"unit"`
+	Unit  AreaUnits `json:"unit" validate:"required,oneof=SquareKilometer,SquareMeter,SquareDecimeter,SquareCentimeter,SquareMillimeter,SquareMicrometer,SquareMile,SquareYard,SquareFoot,UsSurveySquareFoot,SquareInch,Acre,Hectare,SquareNauticalMile"`
 }
 
 // AreaDtoFactory groups methods for creating and serializing AreaDto objects.
@@ -205,6 +223,9 @@ func (uf AreaFactory) FromSquareNauticalMiles(value float64) (*Area, error) {
 func newArea(value float64, fromUnit AreaUnits) (*Area, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalAreaUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in AreaUnits", fromUnit)
 	}
 	a := &Area{}
 	a.value = a.convertToBase(value, fromUnit)

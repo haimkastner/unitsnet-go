@@ -25,12 +25,19 @@ const (
         LeakRateTorrLiterPerSecond LeakRateUnits = "TorrLiterPerSecond"
 )
 
+var internalLeakRateUnitsMap = map[LeakRateUnits]bool{
+	
+	LeakRatePascalCubicMeterPerSecond: true,
+	LeakRateMillibarLiterPerSecond: true,
+	LeakRateTorrLiterPerSecond: true,
+}
+
 // LeakRateDto represents a LeakRate measurement with a numerical value and its corresponding unit.
 type LeakRateDto struct {
     // Value is the numerical representation of the LeakRate.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the LeakRate, as defined in the LeakRateUnits enumeration.
-	Unit  LeakRateUnits `json:"unit"`
+	Unit  LeakRateUnits `json:"unit" validate:"required,oneof=PascalCubicMeterPerSecond,MillibarLiterPerSecond,TorrLiterPerSecond"`
 }
 
 // LeakRateDtoFactory groups methods for creating and serializing LeakRateDto objects.
@@ -117,6 +124,9 @@ func (uf LeakRateFactory) FromTorrLitersPerSecond(value float64) (*LeakRate, err
 func newLeakRate(value float64, fromUnit LeakRateUnits) (*LeakRate, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalLeakRateUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in LeakRateUnits", fromUnit)
 	}
 	a := &LeakRate{}
 	a.value = a.convertToBase(value, fromUnit)

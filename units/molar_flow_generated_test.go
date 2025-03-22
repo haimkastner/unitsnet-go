@@ -1148,3 +1148,19 @@ func TestMolarFlow_String(t *testing.T) {
         })
     }
 }
+
+
+func TestMolarFlow_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.MolarFlowFactory{}
+
+	_, err := uf.CreateMolarFlow(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

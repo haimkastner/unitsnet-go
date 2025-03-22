@@ -39,12 +39,26 @@ const (
         ReciprocalLengthInverseMicroinch ReciprocalLengthUnits = "InverseMicroinch"
 )
 
+var internalReciprocalLengthUnitsMap = map[ReciprocalLengthUnits]bool{
+	
+	ReciprocalLengthInverseMeter: true,
+	ReciprocalLengthInverseCentimeter: true,
+	ReciprocalLengthInverseMillimeter: true,
+	ReciprocalLengthInverseMile: true,
+	ReciprocalLengthInverseYard: true,
+	ReciprocalLengthInverseFoot: true,
+	ReciprocalLengthInverseUsSurveyFoot: true,
+	ReciprocalLengthInverseInch: true,
+	ReciprocalLengthInverseMil: true,
+	ReciprocalLengthInverseMicroinch: true,
+}
+
 // ReciprocalLengthDto represents a ReciprocalLength measurement with a numerical value and its corresponding unit.
 type ReciprocalLengthDto struct {
     // Value is the numerical representation of the ReciprocalLength.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ReciprocalLength, as defined in the ReciprocalLengthUnits enumeration.
-	Unit  ReciprocalLengthUnits `json:"unit"`
+	Unit  ReciprocalLengthUnits `json:"unit" validate:"required,oneof=InverseMeter,InverseCentimeter,InverseMillimeter,InverseMile,InverseYard,InverseFoot,InverseUsSurveyFoot,InverseInch,InverseMil,InverseMicroinch"`
 }
 
 // ReciprocalLengthDtoFactory groups methods for creating and serializing ReciprocalLengthDto objects.
@@ -173,6 +187,9 @@ func (uf ReciprocalLengthFactory) FromInverseMicroinches(value float64) (*Recipr
 func newReciprocalLength(value float64, fromUnit ReciprocalLengthUnits) (*ReciprocalLength, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalReciprocalLengthUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ReciprocalLengthUnits", fromUnit)
 	}
 	a := &ReciprocalLength{}
 	a.value = a.convertToBase(value, fromUnit)

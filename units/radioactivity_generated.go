@@ -77,12 +77,45 @@ const (
         RadioactivityTerarutherford RadioactivityUnits = "Terarutherford"
 )
 
+var internalRadioactivityUnitsMap = map[RadioactivityUnits]bool{
+	
+	RadioactivityBecquerel: true,
+	RadioactivityCurie: true,
+	RadioactivityRutherford: true,
+	RadioactivityPicobecquerel: true,
+	RadioactivityNanobecquerel: true,
+	RadioactivityMicrobecquerel: true,
+	RadioactivityMillibecquerel: true,
+	RadioactivityKilobecquerel: true,
+	RadioactivityMegabecquerel: true,
+	RadioactivityGigabecquerel: true,
+	RadioactivityTerabecquerel: true,
+	RadioactivityPetabecquerel: true,
+	RadioactivityExabecquerel: true,
+	RadioactivityPicocurie: true,
+	RadioactivityNanocurie: true,
+	RadioactivityMicrocurie: true,
+	RadioactivityMillicurie: true,
+	RadioactivityKilocurie: true,
+	RadioactivityMegacurie: true,
+	RadioactivityGigacurie: true,
+	RadioactivityTeracurie: true,
+	RadioactivityPicorutherford: true,
+	RadioactivityNanorutherford: true,
+	RadioactivityMicrorutherford: true,
+	RadioactivityMillirutherford: true,
+	RadioactivityKilorutherford: true,
+	RadioactivityMegarutherford: true,
+	RadioactivityGigarutherford: true,
+	RadioactivityTerarutherford: true,
+}
+
 // RadioactivityDto represents a Radioactivity measurement with a numerical value and its corresponding unit.
 type RadioactivityDto struct {
     // Value is the numerical representation of the Radioactivity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Radioactivity, as defined in the RadioactivityUnits enumeration.
-	Unit  RadioactivityUnits `json:"unit"`
+	Unit  RadioactivityUnits `json:"unit" validate:"required,oneof=Becquerel,Curie,Rutherford,Picobecquerel,Nanobecquerel,Microbecquerel,Millibecquerel,Kilobecquerel,Megabecquerel,Gigabecquerel,Terabecquerel,Petabecquerel,Exabecquerel,Picocurie,Nanocurie,Microcurie,Millicurie,Kilocurie,Megacurie,Gigacurie,Teracurie,Picorutherford,Nanorutherford,Microrutherford,Millirutherford,Kilorutherford,Megarutherford,Gigarutherford,Terarutherford"`
 }
 
 // RadioactivityDtoFactory groups methods for creating and serializing RadioactivityDto objects.
@@ -325,6 +358,9 @@ func (uf RadioactivityFactory) FromTerarutherfords(value float64) (*Radioactivit
 func newRadioactivity(value float64, fromUnit RadioactivityUnits) (*Radioactivity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRadioactivityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RadioactivityUnits", fromUnit)
 	}
 	a := &Radioactivity{}
 	a.value = a.convertToBase(value, fromUnit)

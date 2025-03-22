@@ -57,12 +57,35 @@ const (
         FluidResistanceMegapascalSecondPerCubicMeter FluidResistanceUnits = "MegapascalSecondPerCubicMeter"
 )
 
+var internalFluidResistanceUnitsMap = map[FluidResistanceUnits]bool{
+	
+	FluidResistancePascalSecondPerLiter: true,
+	FluidResistancePascalMinutePerLiter: true,
+	FluidResistancePascalSecondPerMilliliter: true,
+	FluidResistancePascalMinutePerMilliliter: true,
+	FluidResistancePascalSecondPerCubicMeter: true,
+	FluidResistancePascalMinutePerCubicMeter: true,
+	FluidResistancePascalSecondPerCubicCentimeter: true,
+	FluidResistancePascalMinutePerCubicCentimeter: true,
+	FluidResistanceDyneSecondPerCentimeterToTheFifth: true,
+	FluidResistanceMillimeterMercurySecondPerLiter: true,
+	FluidResistanceMillimeterMercuryMinutePerLiter: true,
+	FluidResistanceMillimeterMercurySecondPerMilliliter: true,
+	FluidResistanceMillimeterMercuryMinutePerMilliliter: true,
+	FluidResistanceMillimeterMercurySecondPerCubicCentimeter: true,
+	FluidResistanceMillimeterMercuryMinutePerCubicCentimeter: true,
+	FluidResistanceMillimeterMercurySecondPerCubicMeter: true,
+	FluidResistanceMillimeterMercuryMinutePerCubicMeter: true,
+	FluidResistanceWoodUnit: true,
+	FluidResistanceMegapascalSecondPerCubicMeter: true,
+}
+
 // FluidResistanceDto represents a FluidResistance measurement with a numerical value and its corresponding unit.
 type FluidResistanceDto struct {
     // Value is the numerical representation of the FluidResistance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the FluidResistance, as defined in the FluidResistanceUnits enumeration.
-	Unit  FluidResistanceUnits `json:"unit"`
+	Unit  FluidResistanceUnits `json:"unit" validate:"required,oneof=PascalSecondPerLiter,PascalMinutePerLiter,PascalSecondPerMilliliter,PascalMinutePerMilliliter,PascalSecondPerCubicMeter,PascalMinutePerCubicMeter,PascalSecondPerCubicCentimeter,PascalMinutePerCubicCentimeter,DyneSecondPerCentimeterToTheFifth,MillimeterMercurySecondPerLiter,MillimeterMercuryMinutePerLiter,MillimeterMercurySecondPerMilliliter,MillimeterMercuryMinutePerMilliliter,MillimeterMercurySecondPerCubicCentimeter,MillimeterMercuryMinutePerCubicCentimeter,MillimeterMercurySecondPerCubicMeter,MillimeterMercuryMinutePerCubicMeter,WoodUnit,MegapascalSecondPerCubicMeter"`
 }
 
 // FluidResistanceDtoFactory groups methods for creating and serializing FluidResistanceDto objects.
@@ -245,6 +268,9 @@ func (uf FluidResistanceFactory) FromMegapascalSecondsPerCubicMeter(value float6
 func newFluidResistance(value float64, fromUnit FluidResistanceUnits) (*FluidResistance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalFluidResistanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in FluidResistanceUnits", fromUnit)
 	}
 	a := &FluidResistance{}
 	a.value = a.convertToBase(value, fromUnit)

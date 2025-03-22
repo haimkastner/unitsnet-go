@@ -117,12 +117,65 @@ const (
         MassConcentrationKilopoundPerCubicFoot MassConcentrationUnits = "KilopoundPerCubicFoot"
 )
 
+var internalMassConcentrationUnitsMap = map[MassConcentrationUnits]bool{
+	
+	MassConcentrationGramPerCubicMillimeter: true,
+	MassConcentrationGramPerCubicCentimeter: true,
+	MassConcentrationGramPerCubicMeter: true,
+	MassConcentrationGramPerMicroliter: true,
+	MassConcentrationGramPerMilliliter: true,
+	MassConcentrationGramPerDeciliter: true,
+	MassConcentrationGramPerLiter: true,
+	MassConcentrationTonnePerCubicMillimeter: true,
+	MassConcentrationTonnePerCubicCentimeter: true,
+	MassConcentrationTonnePerCubicMeter: true,
+	MassConcentrationPoundPerCubicInch: true,
+	MassConcentrationPoundPerCubicFoot: true,
+	MassConcentrationSlugPerCubicFoot: true,
+	MassConcentrationPoundPerUSGallon: true,
+	MassConcentrationOuncePerUSGallon: true,
+	MassConcentrationOuncePerImperialGallon: true,
+	MassConcentrationPoundPerImperialGallon: true,
+	MassConcentrationKilogramPerCubicMillimeter: true,
+	MassConcentrationKilogramPerCubicCentimeter: true,
+	MassConcentrationKilogramPerCubicMeter: true,
+	MassConcentrationMilligramPerCubicMeter: true,
+	MassConcentrationMicrogramPerCubicMeter: true,
+	MassConcentrationPicogramPerMicroliter: true,
+	MassConcentrationNanogramPerMicroliter: true,
+	MassConcentrationMicrogramPerMicroliter: true,
+	MassConcentrationMilligramPerMicroliter: true,
+	MassConcentrationCentigramPerMicroliter: true,
+	MassConcentrationDecigramPerMicroliter: true,
+	MassConcentrationPicogramPerMilliliter: true,
+	MassConcentrationNanogramPerMilliliter: true,
+	MassConcentrationMicrogramPerMilliliter: true,
+	MassConcentrationMilligramPerMilliliter: true,
+	MassConcentrationCentigramPerMilliliter: true,
+	MassConcentrationDecigramPerMilliliter: true,
+	MassConcentrationPicogramPerDeciliter: true,
+	MassConcentrationNanogramPerDeciliter: true,
+	MassConcentrationMicrogramPerDeciliter: true,
+	MassConcentrationMilligramPerDeciliter: true,
+	MassConcentrationCentigramPerDeciliter: true,
+	MassConcentrationDecigramPerDeciliter: true,
+	MassConcentrationPicogramPerLiter: true,
+	MassConcentrationNanogramPerLiter: true,
+	MassConcentrationMicrogramPerLiter: true,
+	MassConcentrationMilligramPerLiter: true,
+	MassConcentrationCentigramPerLiter: true,
+	MassConcentrationDecigramPerLiter: true,
+	MassConcentrationKilogramPerLiter: true,
+	MassConcentrationKilopoundPerCubicInch: true,
+	MassConcentrationKilopoundPerCubicFoot: true,
+}
+
 // MassConcentrationDto represents a MassConcentration measurement with a numerical value and its corresponding unit.
 type MassConcentrationDto struct {
     // Value is the numerical representation of the MassConcentration.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MassConcentration, as defined in the MassConcentrationUnits enumeration.
-	Unit  MassConcentrationUnits `json:"unit"`
+	Unit  MassConcentrationUnits `json:"unit" validate:"required,oneof=GramPerCubicMillimeter,GramPerCubicCentimeter,GramPerCubicMeter,GramPerMicroliter,GramPerMilliliter,GramPerDeciliter,GramPerLiter,TonnePerCubicMillimeter,TonnePerCubicCentimeter,TonnePerCubicMeter,PoundPerCubicInch,PoundPerCubicFoot,SlugPerCubicFoot,PoundPerUSGallon,OuncePerUSGallon,OuncePerImperialGallon,PoundPerImperialGallon,KilogramPerCubicMillimeter,KilogramPerCubicCentimeter,KilogramPerCubicMeter,MilligramPerCubicMeter,MicrogramPerCubicMeter,PicogramPerMicroliter,NanogramPerMicroliter,MicrogramPerMicroliter,MilligramPerMicroliter,CentigramPerMicroliter,DecigramPerMicroliter,PicogramPerMilliliter,NanogramPerMilliliter,MicrogramPerMilliliter,MilligramPerMilliliter,CentigramPerMilliliter,DecigramPerMilliliter,PicogramPerDeciliter,NanogramPerDeciliter,MicrogramPerDeciliter,MilligramPerDeciliter,CentigramPerDeciliter,DecigramPerDeciliter,PicogramPerLiter,NanogramPerLiter,MicrogramPerLiter,MilligramPerLiter,CentigramPerLiter,DecigramPerLiter,KilogramPerLiter,KilopoundPerCubicInch,KilopoundPerCubicFoot"`
 }
 
 // MassConcentrationDtoFactory groups methods for creating and serializing MassConcentrationDto objects.
@@ -485,6 +538,9 @@ func (uf MassConcentrationFactory) FromKilopoundsPerCubicFoot(value float64) (*M
 func newMassConcentration(value float64, fromUnit MassConcentrationUnits) (*MassConcentration, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMassConcentrationUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MassConcentrationUnits", fromUnit)
 	}
 	a := &MassConcentration{}
 	a.value = a.convertToBase(value, fromUnit)

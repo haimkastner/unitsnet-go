@@ -25,12 +25,19 @@ const (
         ElectricCurrentDensityAmperePerSquareFoot ElectricCurrentDensityUnits = "AmperePerSquareFoot"
 )
 
+var internalElectricCurrentDensityUnitsMap = map[ElectricCurrentDensityUnits]bool{
+	
+	ElectricCurrentDensityAmperePerSquareMeter: true,
+	ElectricCurrentDensityAmperePerSquareInch: true,
+	ElectricCurrentDensityAmperePerSquareFoot: true,
+}
+
 // ElectricCurrentDensityDto represents a ElectricCurrentDensity measurement with a numerical value and its corresponding unit.
 type ElectricCurrentDensityDto struct {
     // Value is the numerical representation of the ElectricCurrentDensity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricCurrentDensity, as defined in the ElectricCurrentDensityUnits enumeration.
-	Unit  ElectricCurrentDensityUnits `json:"unit"`
+	Unit  ElectricCurrentDensityUnits `json:"unit" validate:"required,oneof=AmperePerSquareMeter,AmperePerSquareInch,AmperePerSquareFoot"`
 }
 
 // ElectricCurrentDensityDtoFactory groups methods for creating and serializing ElectricCurrentDensityDto objects.
@@ -117,6 +124,9 @@ func (uf ElectricCurrentDensityFactory) FromAmperesPerSquareFoot(value float64) 
 func newElectricCurrentDensity(value float64, fromUnit ElectricCurrentDensityUnits) (*ElectricCurrentDensity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricCurrentDensityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricCurrentDensityUnits", fromUnit)
 	}
 	a := &ElectricCurrentDensity{}
 	a.value = a.convertToBase(value, fromUnit)

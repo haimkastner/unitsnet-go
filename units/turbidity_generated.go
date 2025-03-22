@@ -21,12 +21,17 @@ const (
         TurbidityNTU TurbidityUnits = "NTU"
 )
 
+var internalTurbidityUnitsMap = map[TurbidityUnits]bool{
+	
+	TurbidityNTU: true,
+}
+
 // TurbidityDto represents a Turbidity measurement with a numerical value and its corresponding unit.
 type TurbidityDto struct {
     // Value is the numerical representation of the Turbidity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Turbidity, as defined in the TurbidityUnits enumeration.
-	Unit  TurbidityUnits `json:"unit"`
+	Unit  TurbidityUnits `json:"unit" validate:"required,oneof=NTU"`
 }
 
 // TurbidityDtoFactory groups methods for creating and serializing TurbidityDto objects.
@@ -101,6 +106,9 @@ func (uf TurbidityFactory) FromNTU(value float64) (*Turbidity, error) {
 func newTurbidity(value float64, fromUnit TurbidityUnits) (*Turbidity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalTurbidityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in TurbidityUnits", fromUnit)
 	}
 	a := &Turbidity{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -33,12 +33,23 @@ const (
         CapacitanceMegafarad CapacitanceUnits = "Megafarad"
 )
 
+var internalCapacitanceUnitsMap = map[CapacitanceUnits]bool{
+	
+	CapacitanceFarad: true,
+	CapacitancePicofarad: true,
+	CapacitanceNanofarad: true,
+	CapacitanceMicrofarad: true,
+	CapacitanceMillifarad: true,
+	CapacitanceKilofarad: true,
+	CapacitanceMegafarad: true,
+}
+
 // CapacitanceDto represents a Capacitance measurement with a numerical value and its corresponding unit.
 type CapacitanceDto struct {
     // Value is the numerical representation of the Capacitance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Capacitance, as defined in the CapacitanceUnits enumeration.
-	Unit  CapacitanceUnits `json:"unit"`
+	Unit  CapacitanceUnits `json:"unit" validate:"required,oneof=Farad,Picofarad,Nanofarad,Microfarad,Millifarad,Kilofarad,Megafarad"`
 }
 
 // CapacitanceDtoFactory groups methods for creating and serializing CapacitanceDto objects.
@@ -149,6 +160,9 @@ func (uf CapacitanceFactory) FromMegafarads(value float64) (*Capacitance, error)
 func newCapacitance(value float64, fromUnit CapacitanceUnits) (*Capacitance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalCapacitanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in CapacitanceUnits", fromUnit)
 	}
 	a := &Capacitance{}
 	a.value = a.convertToBase(value, fromUnit)

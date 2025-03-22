@@ -23,12 +23,18 @@ const (
         RatioChangeRateDecimalFractionPerSecond RatioChangeRateUnits = "DecimalFractionPerSecond"
 )
 
+var internalRatioChangeRateUnitsMap = map[RatioChangeRateUnits]bool{
+	
+	RatioChangeRatePercentPerSecond: true,
+	RatioChangeRateDecimalFractionPerSecond: true,
+}
+
 // RatioChangeRateDto represents a RatioChangeRate measurement with a numerical value and its corresponding unit.
 type RatioChangeRateDto struct {
     // Value is the numerical representation of the RatioChangeRate.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RatioChangeRate, as defined in the RatioChangeRateUnits enumeration.
-	Unit  RatioChangeRateUnits `json:"unit"`
+	Unit  RatioChangeRateUnits `json:"unit" validate:"required,oneof=PercentPerSecond,DecimalFractionPerSecond"`
 }
 
 // RatioChangeRateDtoFactory groups methods for creating and serializing RatioChangeRateDto objects.
@@ -109,6 +115,9 @@ func (uf RatioChangeRateFactory) FromDecimalFractionsPerSecond(value float64) (*
 func newRatioChangeRate(value float64, fromUnit RatioChangeRateUnits) (*RatioChangeRate, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRatioChangeRateUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RatioChangeRateUnits", fromUnit)
 	}
 	a := &RatioChangeRate{}
 	a.value = a.convertToBase(value, fromUnit)

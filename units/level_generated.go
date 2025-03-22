@@ -23,12 +23,18 @@ const (
         LevelNeper LevelUnits = "Neper"
 )
 
+var internalLevelUnitsMap = map[LevelUnits]bool{
+	
+	LevelDecibel: true,
+	LevelNeper: true,
+}
+
 // LevelDto represents a Level measurement with a numerical value and its corresponding unit.
 type LevelDto struct {
     // Value is the numerical representation of the Level.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Level, as defined in the LevelUnits enumeration.
-	Unit  LevelUnits `json:"unit"`
+	Unit  LevelUnits `json:"unit" validate:"required,oneof=Decibel,Neper"`
 }
 
 // LevelDtoFactory groups methods for creating and serializing LevelDto objects.
@@ -109,6 +115,9 @@ func (uf LevelFactory) FromNepers(value float64) (*Level, error) {
 func newLevel(value float64, fromUnit LevelUnits) (*Level, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalLevelUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in LevelUnits", fromUnit)
 	}
 	a := &Level{}
 	a.value = a.convertToBase(value, fromUnit)

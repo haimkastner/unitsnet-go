@@ -31,12 +31,22 @@ const (
         CoefficientOfThermalExpansionPpmPerDegreeFahrenheit CoefficientOfThermalExpansionUnits = "PpmPerDegreeFahrenheit"
 )
 
+var internalCoefficientOfThermalExpansionUnitsMap = map[CoefficientOfThermalExpansionUnits]bool{
+	
+	CoefficientOfThermalExpansionPerKelvin: true,
+	CoefficientOfThermalExpansionPerDegreeCelsius: true,
+	CoefficientOfThermalExpansionPerDegreeFahrenheit: true,
+	CoefficientOfThermalExpansionPpmPerKelvin: true,
+	CoefficientOfThermalExpansionPpmPerDegreeCelsius: true,
+	CoefficientOfThermalExpansionPpmPerDegreeFahrenheit: true,
+}
+
 // CoefficientOfThermalExpansionDto represents a CoefficientOfThermalExpansion measurement with a numerical value and its corresponding unit.
 type CoefficientOfThermalExpansionDto struct {
     // Value is the numerical representation of the CoefficientOfThermalExpansion.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the CoefficientOfThermalExpansion, as defined in the CoefficientOfThermalExpansionUnits enumeration.
-	Unit  CoefficientOfThermalExpansionUnits `json:"unit"`
+	Unit  CoefficientOfThermalExpansionUnits `json:"unit" validate:"required,oneof=PerKelvin,PerDegreeCelsius,PerDegreeFahrenheit,PpmPerKelvin,PpmPerDegreeCelsius,PpmPerDegreeFahrenheit"`
 }
 
 // CoefficientOfThermalExpansionDtoFactory groups methods for creating and serializing CoefficientOfThermalExpansionDto objects.
@@ -141,6 +151,9 @@ func (uf CoefficientOfThermalExpansionFactory) FromPpmPerDegreeFahrenheit(value 
 func newCoefficientOfThermalExpansion(value float64, fromUnit CoefficientOfThermalExpansionUnits) (*CoefficientOfThermalExpansion, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalCoefficientOfThermalExpansionUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in CoefficientOfThermalExpansionUnits", fromUnit)
 	}
 	a := &CoefficientOfThermalExpansion{}
 	a.value = a.convertToBase(value, fromUnit)

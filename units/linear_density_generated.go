@@ -55,12 +55,34 @@ const (
         LinearDensityKilogramPerFoot LinearDensityUnits = "KilogramPerFoot"
 )
 
+var internalLinearDensityUnitsMap = map[LinearDensityUnits]bool{
+	
+	LinearDensityGramPerMillimeter: true,
+	LinearDensityGramPerCentimeter: true,
+	LinearDensityGramPerMeter: true,
+	LinearDensityPoundPerInch: true,
+	LinearDensityPoundPerFoot: true,
+	LinearDensityGramPerFoot: true,
+	LinearDensityMicrogramPerMillimeter: true,
+	LinearDensityMilligramPerMillimeter: true,
+	LinearDensityKilogramPerMillimeter: true,
+	LinearDensityMicrogramPerCentimeter: true,
+	LinearDensityMilligramPerCentimeter: true,
+	LinearDensityKilogramPerCentimeter: true,
+	LinearDensityMicrogramPerMeter: true,
+	LinearDensityMilligramPerMeter: true,
+	LinearDensityKilogramPerMeter: true,
+	LinearDensityMicrogramPerFoot: true,
+	LinearDensityMilligramPerFoot: true,
+	LinearDensityKilogramPerFoot: true,
+}
+
 // LinearDensityDto represents a LinearDensity measurement with a numerical value and its corresponding unit.
 type LinearDensityDto struct {
     // Value is the numerical representation of the LinearDensity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the LinearDensity, as defined in the LinearDensityUnits enumeration.
-	Unit  LinearDensityUnits `json:"unit"`
+	Unit  LinearDensityUnits `json:"unit" validate:"required,oneof=GramPerMillimeter,GramPerCentimeter,GramPerMeter,PoundPerInch,PoundPerFoot,GramPerFoot,MicrogramPerMillimeter,MilligramPerMillimeter,KilogramPerMillimeter,MicrogramPerCentimeter,MilligramPerCentimeter,KilogramPerCentimeter,MicrogramPerMeter,MilligramPerMeter,KilogramPerMeter,MicrogramPerFoot,MilligramPerFoot,KilogramPerFoot"`
 }
 
 // LinearDensityDtoFactory groups methods for creating and serializing LinearDensityDto objects.
@@ -237,6 +259,9 @@ func (uf LinearDensityFactory) FromKilogramsPerFoot(value float64) (*LinearDensi
 func newLinearDensity(value float64, fromUnit LinearDensityUnits) (*LinearDensity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalLinearDensityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in LinearDensityUnits", fromUnit)
 	}
 	a := &LinearDensity{}
 	a.value = a.convertToBase(value, fromUnit)

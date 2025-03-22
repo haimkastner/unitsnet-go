@@ -53,12 +53,33 @@ const (
         SpecificWeightKilopoundForcePerCubicFoot SpecificWeightUnits = "KilopoundForcePerCubicFoot"
 )
 
+var internalSpecificWeightUnitsMap = map[SpecificWeightUnits]bool{
+	
+	SpecificWeightNewtonPerCubicMillimeter: true,
+	SpecificWeightNewtonPerCubicCentimeter: true,
+	SpecificWeightNewtonPerCubicMeter: true,
+	SpecificWeightKilogramForcePerCubicMillimeter: true,
+	SpecificWeightKilogramForcePerCubicCentimeter: true,
+	SpecificWeightKilogramForcePerCubicMeter: true,
+	SpecificWeightPoundForcePerCubicInch: true,
+	SpecificWeightPoundForcePerCubicFoot: true,
+	SpecificWeightTonneForcePerCubicMillimeter: true,
+	SpecificWeightTonneForcePerCubicCentimeter: true,
+	SpecificWeightTonneForcePerCubicMeter: true,
+	SpecificWeightKilonewtonPerCubicMillimeter: true,
+	SpecificWeightKilonewtonPerCubicCentimeter: true,
+	SpecificWeightKilonewtonPerCubicMeter: true,
+	SpecificWeightMeganewtonPerCubicMeter: true,
+	SpecificWeightKilopoundForcePerCubicInch: true,
+	SpecificWeightKilopoundForcePerCubicFoot: true,
+}
+
 // SpecificWeightDto represents a SpecificWeight measurement with a numerical value and its corresponding unit.
 type SpecificWeightDto struct {
     // Value is the numerical representation of the SpecificWeight.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the SpecificWeight, as defined in the SpecificWeightUnits enumeration.
-	Unit  SpecificWeightUnits `json:"unit"`
+	Unit  SpecificWeightUnits `json:"unit" validate:"required,oneof=NewtonPerCubicMillimeter,NewtonPerCubicCentimeter,NewtonPerCubicMeter,KilogramForcePerCubicMillimeter,KilogramForcePerCubicCentimeter,KilogramForcePerCubicMeter,PoundForcePerCubicInch,PoundForcePerCubicFoot,TonneForcePerCubicMillimeter,TonneForcePerCubicCentimeter,TonneForcePerCubicMeter,KilonewtonPerCubicMillimeter,KilonewtonPerCubicCentimeter,KilonewtonPerCubicMeter,MeganewtonPerCubicMeter,KilopoundForcePerCubicInch,KilopoundForcePerCubicFoot"`
 }
 
 // SpecificWeightDtoFactory groups methods for creating and serializing SpecificWeightDto objects.
@@ -229,6 +250,9 @@ func (uf SpecificWeightFactory) FromKilopoundsForcePerCubicFoot(value float64) (
 func newSpecificWeight(value float64, fromUnit SpecificWeightUnits) (*SpecificWeight, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalSpecificWeightUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in SpecificWeightUnits", fromUnit)
 	}
 	a := &SpecificWeight{}
 	a.value = a.convertToBase(value, fromUnit)

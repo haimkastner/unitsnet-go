@@ -29,12 +29,21 @@ const (
         RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter RotationalStiffnessPerLengthUnits = "MeganewtonMeterPerRadianPerMeter"
 )
 
+var internalRotationalStiffnessPerLengthUnitsMap = map[RotationalStiffnessPerLengthUnits]bool{
+	
+	RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter: true,
+	RotationalStiffnessPerLengthPoundForceFootPerDegreesPerFoot: true,
+	RotationalStiffnessPerLengthKilopoundForceFootPerDegreesPerFoot: true,
+	RotationalStiffnessPerLengthKilonewtonMeterPerRadianPerMeter: true,
+	RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter: true,
+}
+
 // RotationalStiffnessPerLengthDto represents a RotationalStiffnessPerLength measurement with a numerical value and its corresponding unit.
 type RotationalStiffnessPerLengthDto struct {
     // Value is the numerical representation of the RotationalStiffnessPerLength.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RotationalStiffnessPerLength, as defined in the RotationalStiffnessPerLengthUnits enumeration.
-	Unit  RotationalStiffnessPerLengthUnits `json:"unit"`
+	Unit  RotationalStiffnessPerLengthUnits `json:"unit" validate:"required,oneof=NewtonMeterPerRadianPerMeter,PoundForceFootPerDegreesPerFoot,KilopoundForceFootPerDegreesPerFoot,KilonewtonMeterPerRadianPerMeter,MeganewtonMeterPerRadianPerMeter"`
 }
 
 // RotationalStiffnessPerLengthDtoFactory groups methods for creating and serializing RotationalStiffnessPerLengthDto objects.
@@ -133,6 +142,9 @@ func (uf RotationalStiffnessPerLengthFactory) FromMeganewtonMetersPerRadianPerMe
 func newRotationalStiffnessPerLength(value float64, fromUnit RotationalStiffnessPerLengthUnits) (*RotationalStiffnessPerLength, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRotationalStiffnessPerLengthUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RotationalStiffnessPerLengthUnits", fromUnit)
 	}
 	a := &RotationalStiffnessPerLength{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -31,12 +31,22 @@ const (
         MagneticFieldMilligauss MagneticFieldUnits = "Milligauss"
 )
 
+var internalMagneticFieldUnitsMap = map[MagneticFieldUnits]bool{
+	
+	MagneticFieldTesla: true,
+	MagneticFieldGauss: true,
+	MagneticFieldNanotesla: true,
+	MagneticFieldMicrotesla: true,
+	MagneticFieldMillitesla: true,
+	MagneticFieldMilligauss: true,
+}
+
 // MagneticFieldDto represents a MagneticField measurement with a numerical value and its corresponding unit.
 type MagneticFieldDto struct {
     // Value is the numerical representation of the MagneticField.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MagneticField, as defined in the MagneticFieldUnits enumeration.
-	Unit  MagneticFieldUnits `json:"unit"`
+	Unit  MagneticFieldUnits `json:"unit" validate:"required,oneof=Tesla,Gauss,Nanotesla,Microtesla,Millitesla,Milligauss"`
 }
 
 // MagneticFieldDtoFactory groups methods for creating and serializing MagneticFieldDto objects.
@@ -141,6 +151,9 @@ func (uf MagneticFieldFactory) FromMilligausses(value float64) (*MagneticField, 
 func newMagneticField(value float64, fromUnit MagneticFieldUnits) (*MagneticField, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMagneticFieldUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MagneticFieldUnits", fromUnit)
 	}
 	a := &MagneticField{}
 	a.value = a.convertToBase(value, fromUnit)

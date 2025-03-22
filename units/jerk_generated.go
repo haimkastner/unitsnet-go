@@ -41,12 +41,27 @@ const (
         JerkMillistandardGravitiesPerSecond JerkUnits = "MillistandardGravitiesPerSecond"
 )
 
+var internalJerkUnitsMap = map[JerkUnits]bool{
+	
+	JerkMeterPerSecondCubed: true,
+	JerkInchPerSecondCubed: true,
+	JerkFootPerSecondCubed: true,
+	JerkStandardGravitiesPerSecond: true,
+	JerkNanometerPerSecondCubed: true,
+	JerkMicrometerPerSecondCubed: true,
+	JerkMillimeterPerSecondCubed: true,
+	JerkCentimeterPerSecondCubed: true,
+	JerkDecimeterPerSecondCubed: true,
+	JerkKilometerPerSecondCubed: true,
+	JerkMillistandardGravitiesPerSecond: true,
+}
+
 // JerkDto represents a Jerk measurement with a numerical value and its corresponding unit.
 type JerkDto struct {
     // Value is the numerical representation of the Jerk.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Jerk, as defined in the JerkUnits enumeration.
-	Unit  JerkUnits `json:"unit"`
+	Unit  JerkUnits `json:"unit" validate:"required,oneof=MeterPerSecondCubed,InchPerSecondCubed,FootPerSecondCubed,StandardGravitiesPerSecond,NanometerPerSecondCubed,MicrometerPerSecondCubed,MillimeterPerSecondCubed,CentimeterPerSecondCubed,DecimeterPerSecondCubed,KilometerPerSecondCubed,MillistandardGravitiesPerSecond"`
 }
 
 // JerkDtoFactory groups methods for creating and serializing JerkDto objects.
@@ -181,6 +196,9 @@ func (uf JerkFactory) FromMillistandardGravitiesPerSecond(value float64) (*Jerk,
 func newJerk(value float64, fromUnit JerkUnits) (*Jerk, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalJerkUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in JerkUnits", fromUnit)
 	}
 	a := &Jerk{}
 	a.value = a.convertToBase(value, fromUnit)

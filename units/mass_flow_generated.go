@@ -85,12 +85,49 @@ const (
         MassFlowMegapoundPerSecond MassFlowUnits = "MegapoundPerSecond"
 )
 
+var internalMassFlowUnitsMap = map[MassFlowUnits]bool{
+	
+	MassFlowGramPerSecond: true,
+	MassFlowGramPerDay: true,
+	MassFlowGramPerHour: true,
+	MassFlowKilogramPerHour: true,
+	MassFlowKilogramPerMinute: true,
+	MassFlowTonnePerHour: true,
+	MassFlowPoundPerDay: true,
+	MassFlowPoundPerHour: true,
+	MassFlowPoundPerMinute: true,
+	MassFlowPoundPerSecond: true,
+	MassFlowTonnePerDay: true,
+	MassFlowShortTonPerHour: true,
+	MassFlowNanogramPerSecond: true,
+	MassFlowMicrogramPerSecond: true,
+	MassFlowMilligramPerSecond: true,
+	MassFlowCentigramPerSecond: true,
+	MassFlowDecigramPerSecond: true,
+	MassFlowDecagramPerSecond: true,
+	MassFlowHectogramPerSecond: true,
+	MassFlowKilogramPerSecond: true,
+	MassFlowNanogramPerDay: true,
+	MassFlowMicrogramPerDay: true,
+	MassFlowMilligramPerDay: true,
+	MassFlowCentigramPerDay: true,
+	MassFlowDecigramPerDay: true,
+	MassFlowDecagramPerDay: true,
+	MassFlowHectogramPerDay: true,
+	MassFlowKilogramPerDay: true,
+	MassFlowMegagramPerDay: true,
+	MassFlowMegapoundPerDay: true,
+	MassFlowMegapoundPerHour: true,
+	MassFlowMegapoundPerMinute: true,
+	MassFlowMegapoundPerSecond: true,
+}
+
 // MassFlowDto represents a MassFlow measurement with a numerical value and its corresponding unit.
 type MassFlowDto struct {
     // Value is the numerical representation of the MassFlow.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MassFlow, as defined in the MassFlowUnits enumeration.
-	Unit  MassFlowUnits `json:"unit"`
+	Unit  MassFlowUnits `json:"unit" validate:"required,oneof=GramPerSecond,GramPerDay,GramPerHour,KilogramPerHour,KilogramPerMinute,TonnePerHour,PoundPerDay,PoundPerHour,PoundPerMinute,PoundPerSecond,TonnePerDay,ShortTonPerHour,NanogramPerSecond,MicrogramPerSecond,MilligramPerSecond,CentigramPerSecond,DecigramPerSecond,DecagramPerSecond,HectogramPerSecond,KilogramPerSecond,NanogramPerDay,MicrogramPerDay,MilligramPerDay,CentigramPerDay,DecigramPerDay,DecagramPerDay,HectogramPerDay,KilogramPerDay,MegagramPerDay,MegapoundPerDay,MegapoundPerHour,MegapoundPerMinute,MegapoundPerSecond"`
 }
 
 // MassFlowDtoFactory groups methods for creating and serializing MassFlowDto objects.
@@ -357,6 +394,9 @@ func (uf MassFlowFactory) FromMegapoundsPerSecond(value float64) (*MassFlow, err
 func newMassFlow(value float64, fromUnit MassFlowUnits) (*MassFlow, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMassFlowUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MassFlowUnits", fromUnit)
 	}
 	a := &MassFlow{}
 	a.value = a.convertToBase(value, fromUnit)

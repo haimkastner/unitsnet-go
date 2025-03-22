@@ -107,12 +107,60 @@ const (
         PowerDensityTerawattPerLiter PowerDensityUnits = "TerawattPerLiter"
 )
 
+var internalPowerDensityUnitsMap = map[PowerDensityUnits]bool{
+	
+	PowerDensityWattPerCubicMeter: true,
+	PowerDensityWattPerCubicInch: true,
+	PowerDensityWattPerCubicFoot: true,
+	PowerDensityWattPerLiter: true,
+	PowerDensityPicowattPerCubicMeter: true,
+	PowerDensityNanowattPerCubicMeter: true,
+	PowerDensityMicrowattPerCubicMeter: true,
+	PowerDensityMilliwattPerCubicMeter: true,
+	PowerDensityDeciwattPerCubicMeter: true,
+	PowerDensityDecawattPerCubicMeter: true,
+	PowerDensityKilowattPerCubicMeter: true,
+	PowerDensityMegawattPerCubicMeter: true,
+	PowerDensityGigawattPerCubicMeter: true,
+	PowerDensityTerawattPerCubicMeter: true,
+	PowerDensityPicowattPerCubicInch: true,
+	PowerDensityNanowattPerCubicInch: true,
+	PowerDensityMicrowattPerCubicInch: true,
+	PowerDensityMilliwattPerCubicInch: true,
+	PowerDensityDeciwattPerCubicInch: true,
+	PowerDensityDecawattPerCubicInch: true,
+	PowerDensityKilowattPerCubicInch: true,
+	PowerDensityMegawattPerCubicInch: true,
+	PowerDensityGigawattPerCubicInch: true,
+	PowerDensityTerawattPerCubicInch: true,
+	PowerDensityPicowattPerCubicFoot: true,
+	PowerDensityNanowattPerCubicFoot: true,
+	PowerDensityMicrowattPerCubicFoot: true,
+	PowerDensityMilliwattPerCubicFoot: true,
+	PowerDensityDeciwattPerCubicFoot: true,
+	PowerDensityDecawattPerCubicFoot: true,
+	PowerDensityKilowattPerCubicFoot: true,
+	PowerDensityMegawattPerCubicFoot: true,
+	PowerDensityGigawattPerCubicFoot: true,
+	PowerDensityTerawattPerCubicFoot: true,
+	PowerDensityPicowattPerLiter: true,
+	PowerDensityNanowattPerLiter: true,
+	PowerDensityMicrowattPerLiter: true,
+	PowerDensityMilliwattPerLiter: true,
+	PowerDensityDeciwattPerLiter: true,
+	PowerDensityDecawattPerLiter: true,
+	PowerDensityKilowattPerLiter: true,
+	PowerDensityMegawattPerLiter: true,
+	PowerDensityGigawattPerLiter: true,
+	PowerDensityTerawattPerLiter: true,
+}
+
 // PowerDensityDto represents a PowerDensity measurement with a numerical value and its corresponding unit.
 type PowerDensityDto struct {
     // Value is the numerical representation of the PowerDensity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the PowerDensity, as defined in the PowerDensityUnits enumeration.
-	Unit  PowerDensityUnits `json:"unit"`
+	Unit  PowerDensityUnits `json:"unit" validate:"required,oneof=WattPerCubicMeter,WattPerCubicInch,WattPerCubicFoot,WattPerLiter,PicowattPerCubicMeter,NanowattPerCubicMeter,MicrowattPerCubicMeter,MilliwattPerCubicMeter,DeciwattPerCubicMeter,DecawattPerCubicMeter,KilowattPerCubicMeter,MegawattPerCubicMeter,GigawattPerCubicMeter,TerawattPerCubicMeter,PicowattPerCubicInch,NanowattPerCubicInch,MicrowattPerCubicInch,MilliwattPerCubicInch,DeciwattPerCubicInch,DecawattPerCubicInch,KilowattPerCubicInch,MegawattPerCubicInch,GigawattPerCubicInch,TerawattPerCubicInch,PicowattPerCubicFoot,NanowattPerCubicFoot,MicrowattPerCubicFoot,MilliwattPerCubicFoot,DeciwattPerCubicFoot,DecawattPerCubicFoot,KilowattPerCubicFoot,MegawattPerCubicFoot,GigawattPerCubicFoot,TerawattPerCubicFoot,PicowattPerLiter,NanowattPerLiter,MicrowattPerLiter,MilliwattPerLiter,DeciwattPerLiter,DecawattPerLiter,KilowattPerLiter,MegawattPerLiter,GigawattPerLiter,TerawattPerLiter"`
 }
 
 // PowerDensityDtoFactory groups methods for creating and serializing PowerDensityDto objects.
@@ -445,6 +493,9 @@ func (uf PowerDensityFactory) FromTerawattsPerLiter(value float64) (*PowerDensit
 func newPowerDensity(value float64, fromUnit PowerDensityUnits) (*PowerDensity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalPowerDensityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in PowerDensityUnits", fromUnit)
 	}
 	a := &PowerDensity{}
 	a.value = a.convertToBase(value, fromUnit)

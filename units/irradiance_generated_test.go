@@ -1578,3 +1578,19 @@ func TestIrradiance_String(t *testing.T) {
         })
     }
 }
+
+
+func TestIrradiance_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.IrradianceFactory{}
+
+	_, err := uf.CreateIrradiance(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

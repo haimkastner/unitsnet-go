@@ -69,12 +69,41 @@ const (
         LinearPowerDensityGigawattPerFoot LinearPowerDensityUnits = "GigawattPerFoot"
 )
 
+var internalLinearPowerDensityUnitsMap = map[LinearPowerDensityUnits]bool{
+	
+	LinearPowerDensityWattPerMeter: true,
+	LinearPowerDensityWattPerCentimeter: true,
+	LinearPowerDensityWattPerMillimeter: true,
+	LinearPowerDensityWattPerInch: true,
+	LinearPowerDensityWattPerFoot: true,
+	LinearPowerDensityMilliwattPerMeter: true,
+	LinearPowerDensityKilowattPerMeter: true,
+	LinearPowerDensityMegawattPerMeter: true,
+	LinearPowerDensityGigawattPerMeter: true,
+	LinearPowerDensityMilliwattPerCentimeter: true,
+	LinearPowerDensityKilowattPerCentimeter: true,
+	LinearPowerDensityMegawattPerCentimeter: true,
+	LinearPowerDensityGigawattPerCentimeter: true,
+	LinearPowerDensityMilliwattPerMillimeter: true,
+	LinearPowerDensityKilowattPerMillimeter: true,
+	LinearPowerDensityMegawattPerMillimeter: true,
+	LinearPowerDensityGigawattPerMillimeter: true,
+	LinearPowerDensityMilliwattPerInch: true,
+	LinearPowerDensityKilowattPerInch: true,
+	LinearPowerDensityMegawattPerInch: true,
+	LinearPowerDensityGigawattPerInch: true,
+	LinearPowerDensityMilliwattPerFoot: true,
+	LinearPowerDensityKilowattPerFoot: true,
+	LinearPowerDensityMegawattPerFoot: true,
+	LinearPowerDensityGigawattPerFoot: true,
+}
+
 // LinearPowerDensityDto represents a LinearPowerDensity measurement with a numerical value and its corresponding unit.
 type LinearPowerDensityDto struct {
     // Value is the numerical representation of the LinearPowerDensity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the LinearPowerDensity, as defined in the LinearPowerDensityUnits enumeration.
-	Unit  LinearPowerDensityUnits `json:"unit"`
+	Unit  LinearPowerDensityUnits `json:"unit" validate:"required,oneof=WattPerMeter,WattPerCentimeter,WattPerMillimeter,WattPerInch,WattPerFoot,MilliwattPerMeter,KilowattPerMeter,MegawattPerMeter,GigawattPerMeter,MilliwattPerCentimeter,KilowattPerCentimeter,MegawattPerCentimeter,GigawattPerCentimeter,MilliwattPerMillimeter,KilowattPerMillimeter,MegawattPerMillimeter,GigawattPerMillimeter,MilliwattPerInch,KilowattPerInch,MegawattPerInch,GigawattPerInch,MilliwattPerFoot,KilowattPerFoot,MegawattPerFoot,GigawattPerFoot"`
 }
 
 // LinearPowerDensityDtoFactory groups methods for creating and serializing LinearPowerDensityDto objects.
@@ -293,6 +322,9 @@ func (uf LinearPowerDensityFactory) FromGigawattsPerFoot(value float64) (*Linear
 func newLinearPowerDensity(value float64, fromUnit LinearPowerDensityUnits) (*LinearPowerDensity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalLinearPowerDensityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in LinearPowerDensityUnits", fromUnit)
 	}
 	a := &LinearPowerDensity{}
 	a.value = a.convertToBase(value, fromUnit)

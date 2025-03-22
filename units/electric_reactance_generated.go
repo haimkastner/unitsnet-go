@@ -35,12 +35,24 @@ const (
         ElectricReactanceTeraohm ElectricReactanceUnits = "Teraohm"
 )
 
+var internalElectricReactanceUnitsMap = map[ElectricReactanceUnits]bool{
+	
+	ElectricReactanceOhm: true,
+	ElectricReactanceNanoohm: true,
+	ElectricReactanceMicroohm: true,
+	ElectricReactanceMilliohm: true,
+	ElectricReactanceKiloohm: true,
+	ElectricReactanceMegaohm: true,
+	ElectricReactanceGigaohm: true,
+	ElectricReactanceTeraohm: true,
+}
+
 // ElectricReactanceDto represents a ElectricReactance measurement with a numerical value and its corresponding unit.
 type ElectricReactanceDto struct {
     // Value is the numerical representation of the ElectricReactance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricReactance, as defined in the ElectricReactanceUnits enumeration.
-	Unit  ElectricReactanceUnits `json:"unit"`
+	Unit  ElectricReactanceUnits `json:"unit" validate:"required,oneof=Ohm,Nanoohm,Microohm,Milliohm,Kiloohm,Megaohm,Gigaohm,Teraohm"`
 }
 
 // ElectricReactanceDtoFactory groups methods for creating and serializing ElectricReactanceDto objects.
@@ -157,6 +169,9 @@ func (uf ElectricReactanceFactory) FromTeraohms(value float64) (*ElectricReactan
 func newElectricReactance(value float64, fromUnit ElectricReactanceUnits) (*ElectricReactance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricReactanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricReactanceUnits", fromUnit)
 	}
 	a := &ElectricReactance{}
 	a.value = a.convertToBase(value, fromUnit)

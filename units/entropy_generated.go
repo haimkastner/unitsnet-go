@@ -33,12 +33,23 @@ const (
         EntropyKilojoulePerDegreeCelsius EntropyUnits = "KilojoulePerDegreeCelsius"
 )
 
+var internalEntropyUnitsMap = map[EntropyUnits]bool{
+	
+	EntropyJoulePerKelvin: true,
+	EntropyCaloriePerKelvin: true,
+	EntropyJoulePerDegreeCelsius: true,
+	EntropyKilojoulePerKelvin: true,
+	EntropyMegajoulePerKelvin: true,
+	EntropyKilocaloriePerKelvin: true,
+	EntropyKilojoulePerDegreeCelsius: true,
+}
+
 // EntropyDto represents a Entropy measurement with a numerical value and its corresponding unit.
 type EntropyDto struct {
     // Value is the numerical representation of the Entropy.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Entropy, as defined in the EntropyUnits enumeration.
-	Unit  EntropyUnits `json:"unit"`
+	Unit  EntropyUnits `json:"unit" validate:"required,oneof=JoulePerKelvin,CaloriePerKelvin,JoulePerDegreeCelsius,KilojoulePerKelvin,MegajoulePerKelvin,KilocaloriePerKelvin,KilojoulePerDegreeCelsius"`
 }
 
 // EntropyDtoFactory groups methods for creating and serializing EntropyDto objects.
@@ -149,6 +160,9 @@ func (uf EntropyFactory) FromKilojoulesPerDegreeCelsius(value float64) (*Entropy
 func newEntropy(value float64, fromUnit EntropyUnits) (*Entropy, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalEntropyUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in EntropyUnits", fromUnit)
 	}
 	a := &Entropy{}
 	a.value = a.convertToBase(value, fromUnit)

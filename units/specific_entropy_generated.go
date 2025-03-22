@@ -37,12 +37,25 @@ const (
         SpecificEntropyKilocaloriePerGramKelvin SpecificEntropyUnits = "KilocaloriePerGramKelvin"
 )
 
+var internalSpecificEntropyUnitsMap = map[SpecificEntropyUnits]bool{
+	
+	SpecificEntropyJoulePerKilogramKelvin: true,
+	SpecificEntropyJoulePerKilogramDegreeCelsius: true,
+	SpecificEntropyCaloriePerGramKelvin: true,
+	SpecificEntropyBtuPerPoundFahrenheit: true,
+	SpecificEntropyKilojoulePerKilogramKelvin: true,
+	SpecificEntropyMegajoulePerKilogramKelvin: true,
+	SpecificEntropyKilojoulePerKilogramDegreeCelsius: true,
+	SpecificEntropyMegajoulePerKilogramDegreeCelsius: true,
+	SpecificEntropyKilocaloriePerGramKelvin: true,
+}
+
 // SpecificEntropyDto represents a SpecificEntropy measurement with a numerical value and its corresponding unit.
 type SpecificEntropyDto struct {
     // Value is the numerical representation of the SpecificEntropy.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the SpecificEntropy, as defined in the SpecificEntropyUnits enumeration.
-	Unit  SpecificEntropyUnits `json:"unit"`
+	Unit  SpecificEntropyUnits `json:"unit" validate:"required,oneof=JoulePerKilogramKelvin,JoulePerKilogramDegreeCelsius,CaloriePerGramKelvin,BtuPerPoundFahrenheit,KilojoulePerKilogramKelvin,MegajoulePerKilogramKelvin,KilojoulePerKilogramDegreeCelsius,MegajoulePerKilogramDegreeCelsius,KilocaloriePerGramKelvin"`
 }
 
 // SpecificEntropyDtoFactory groups methods for creating and serializing SpecificEntropyDto objects.
@@ -165,6 +178,9 @@ func (uf SpecificEntropyFactory) FromKilocaloriesPerGramKelvin(value float64) (*
 func newSpecificEntropy(value float64, fromUnit SpecificEntropyUnits) (*SpecificEntropy, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalSpecificEntropyUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in SpecificEntropyUnits", fromUnit)
 	}
 	a := &SpecificEntropy{}
 	a.value = a.convertToBase(value, fromUnit)

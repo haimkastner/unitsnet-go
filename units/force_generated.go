@@ -49,12 +49,31 @@ const (
         ForceKilopoundForce ForceUnits = "KilopoundForce"
 )
 
+var internalForceUnitsMap = map[ForceUnits]bool{
+	
+	ForceDyn: true,
+	ForceKilogramForce: true,
+	ForceTonneForce: true,
+	ForceNewton: true,
+	ForceKiloPond: true,
+	ForcePoundal: true,
+	ForcePoundForce: true,
+	ForceOunceForce: true,
+	ForceShortTonForce: true,
+	ForceMicronewton: true,
+	ForceMillinewton: true,
+	ForceDecanewton: true,
+	ForceKilonewton: true,
+	ForceMeganewton: true,
+	ForceKilopoundForce: true,
+}
+
 // ForceDto represents a Force measurement with a numerical value and its corresponding unit.
 type ForceDto struct {
     // Value is the numerical representation of the Force.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Force, as defined in the ForceUnits enumeration.
-	Unit  ForceUnits `json:"unit"`
+	Unit  ForceUnits `json:"unit" validate:"required,oneof=Dyn,KilogramForce,TonneForce,Newton,KiloPond,Poundal,PoundForce,OunceForce,ShortTonForce,Micronewton,Millinewton,Decanewton,Kilonewton,Meganewton,KilopoundForce"`
 }
 
 // ForceDtoFactory groups methods for creating and serializing ForceDto objects.
@@ -213,6 +232,9 @@ func (uf ForceFactory) FromKilopoundsForce(value float64) (*Force, error) {
 func newForce(value float64, fromUnit ForceUnits) (*Force, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalForceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ForceUnits", fromUnit)
 	}
 	a := &Force{}
 	a.value = a.convertToBase(value, fromUnit)

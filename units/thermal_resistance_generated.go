@@ -31,12 +31,22 @@ const (
         ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu ThermalResistanceUnits = "HourSquareFeetDegreeFahrenheitPerBtu"
 )
 
+var internalThermalResistanceUnitsMap = map[ThermalResistanceUnits]bool{
+	
+	ThermalResistanceSquareMeterKelvinPerKilowatt: true,
+	ThermalResistanceSquareMeterKelvinPerWatt: true,
+	ThermalResistanceSquareMeterDegreeCelsiusPerWatt: true,
+	ThermalResistanceSquareCentimeterKelvinPerWatt: true,
+	ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie: true,
+	ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu: true,
+}
+
 // ThermalResistanceDto represents a ThermalResistance measurement with a numerical value and its corresponding unit.
 type ThermalResistanceDto struct {
     // Value is the numerical representation of the ThermalResistance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ThermalResistance, as defined in the ThermalResistanceUnits enumeration.
-	Unit  ThermalResistanceUnits `json:"unit"`
+	Unit  ThermalResistanceUnits `json:"unit" validate:"required,oneof=SquareMeterKelvinPerKilowatt,SquareMeterKelvinPerWatt,SquareMeterDegreeCelsiusPerWatt,SquareCentimeterKelvinPerWatt,SquareCentimeterHourDegreeCelsiusPerKilocalorie,HourSquareFeetDegreeFahrenheitPerBtu"`
 }
 
 // ThermalResistanceDtoFactory groups methods for creating and serializing ThermalResistanceDto objects.
@@ -141,6 +151,9 @@ func (uf ThermalResistanceFactory) FromHourSquareFeetDegreesFahrenheitPerBtu(val
 func newThermalResistance(value float64, fromUnit ThermalResistanceUnits) (*ThermalResistance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalThermalResistanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ThermalResistanceUnits", fromUnit)
 	}
 	a := &ThermalResistance{}
 	a.value = a.convertToBase(value, fromUnit)

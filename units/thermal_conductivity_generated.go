@@ -23,12 +23,18 @@ const (
         ThermalConductivityBtuPerHourFootFahrenheit ThermalConductivityUnits = "BtuPerHourFootFahrenheit"
 )
 
+var internalThermalConductivityUnitsMap = map[ThermalConductivityUnits]bool{
+	
+	ThermalConductivityWattPerMeterKelvin: true,
+	ThermalConductivityBtuPerHourFootFahrenheit: true,
+}
+
 // ThermalConductivityDto represents a ThermalConductivity measurement with a numerical value and its corresponding unit.
 type ThermalConductivityDto struct {
     // Value is the numerical representation of the ThermalConductivity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ThermalConductivity, as defined in the ThermalConductivityUnits enumeration.
-	Unit  ThermalConductivityUnits `json:"unit"`
+	Unit  ThermalConductivityUnits `json:"unit" validate:"required,oneof=WattPerMeterKelvin,BtuPerHourFootFahrenheit"`
 }
 
 // ThermalConductivityDtoFactory groups methods for creating and serializing ThermalConductivityDto objects.
@@ -109,6 +115,9 @@ func (uf ThermalConductivityFactory) FromBtusPerHourFootFahrenheit(value float64
 func newThermalConductivity(value float64, fromUnit ThermalConductivityUnits) (*ThermalConductivity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalThermalConductivityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ThermalConductivityUnits", fromUnit)
 	}
 	a := &ThermalConductivity{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -21,12 +21,17 @@ const (
         PermeabilityHenryPerMeter PermeabilityUnits = "HenryPerMeter"
 )
 
+var internalPermeabilityUnitsMap = map[PermeabilityUnits]bool{
+	
+	PermeabilityHenryPerMeter: true,
+}
+
 // PermeabilityDto represents a Permeability measurement with a numerical value and its corresponding unit.
 type PermeabilityDto struct {
     // Value is the numerical representation of the Permeability.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Permeability, as defined in the PermeabilityUnits enumeration.
-	Unit  PermeabilityUnits `json:"unit"`
+	Unit  PermeabilityUnits `json:"unit" validate:"required,oneof=HenryPerMeter"`
 }
 
 // PermeabilityDtoFactory groups methods for creating and serializing PermeabilityDto objects.
@@ -101,6 +106,9 @@ func (uf PermeabilityFactory) FromHenriesPerMeter(value float64) (*Permeability,
 func newPermeability(value float64, fromUnit PermeabilityUnits) (*Permeability, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalPermeabilityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in PermeabilityUnits", fromUnit)
 	}
 	a := &Permeability{}
 	a.value = a.convertToBase(value, fromUnit)

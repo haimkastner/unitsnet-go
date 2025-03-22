@@ -27,12 +27,20 @@ const (
         TemperatureGradientDegreeCelsiusPerKilometer TemperatureGradientUnits = "DegreeCelsiusPerKilometer"
 )
 
+var internalTemperatureGradientUnitsMap = map[TemperatureGradientUnits]bool{
+	
+	TemperatureGradientKelvinPerMeter: true,
+	TemperatureGradientDegreeCelsiusPerMeter: true,
+	TemperatureGradientDegreeFahrenheitPerFoot: true,
+	TemperatureGradientDegreeCelsiusPerKilometer: true,
+}
+
 // TemperatureGradientDto represents a TemperatureGradient measurement with a numerical value and its corresponding unit.
 type TemperatureGradientDto struct {
     // Value is the numerical representation of the TemperatureGradient.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the TemperatureGradient, as defined in the TemperatureGradientUnits enumeration.
-	Unit  TemperatureGradientUnits `json:"unit"`
+	Unit  TemperatureGradientUnits `json:"unit" validate:"required,oneof=KelvinPerMeter,DegreeCelsiusPerMeter,DegreeFahrenheitPerFoot,DegreeCelsiusPerKilometer"`
 }
 
 // TemperatureGradientDtoFactory groups methods for creating and serializing TemperatureGradientDto objects.
@@ -125,6 +133,9 @@ func (uf TemperatureGradientFactory) FromDegreesCelciusPerKilometer(value float6
 func newTemperatureGradient(value float64, fromUnit TemperatureGradientUnits) (*TemperatureGradient, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalTemperatureGradientUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in TemperatureGradientUnits", fromUnit)
 	}
 	a := &TemperatureGradient{}
 	a.value = a.convertToBase(value, fromUnit)

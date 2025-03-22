@@ -35,12 +35,24 @@ const (
         ElectricImpedanceTeraohm ElectricImpedanceUnits = "Teraohm"
 )
 
+var internalElectricImpedanceUnitsMap = map[ElectricImpedanceUnits]bool{
+	
+	ElectricImpedanceOhm: true,
+	ElectricImpedanceNanoohm: true,
+	ElectricImpedanceMicroohm: true,
+	ElectricImpedanceMilliohm: true,
+	ElectricImpedanceKiloohm: true,
+	ElectricImpedanceMegaohm: true,
+	ElectricImpedanceGigaohm: true,
+	ElectricImpedanceTeraohm: true,
+}
+
 // ElectricImpedanceDto represents a ElectricImpedance measurement with a numerical value and its corresponding unit.
 type ElectricImpedanceDto struct {
     // Value is the numerical representation of the ElectricImpedance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricImpedance, as defined in the ElectricImpedanceUnits enumeration.
-	Unit  ElectricImpedanceUnits `json:"unit"`
+	Unit  ElectricImpedanceUnits `json:"unit" validate:"required,oneof=Ohm,Nanoohm,Microohm,Milliohm,Kiloohm,Megaohm,Gigaohm,Teraohm"`
 }
 
 // ElectricImpedanceDtoFactory groups methods for creating and serializing ElectricImpedanceDto objects.
@@ -157,6 +169,9 @@ func (uf ElectricImpedanceFactory) FromTeraohms(value float64) (*ElectricImpedan
 func newElectricImpedance(value float64, fromUnit ElectricImpedanceUnits) (*ElectricImpedance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricImpedanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricImpedanceUnits", fromUnit)
 	}
 	a := &ElectricImpedance{}
 	a.value = a.convertToBase(value, fromUnit)

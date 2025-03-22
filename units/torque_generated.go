@@ -69,12 +69,41 @@ const (
         TorqueMegapoundForceFoot TorqueUnits = "MegapoundForceFoot"
 )
 
+var internalTorqueUnitsMap = map[TorqueUnits]bool{
+	
+	TorqueNewtonMillimeter: true,
+	TorqueNewtonCentimeter: true,
+	TorqueNewtonMeter: true,
+	TorquePoundalFoot: true,
+	TorquePoundForceInch: true,
+	TorquePoundForceFoot: true,
+	TorqueGramForceMillimeter: true,
+	TorqueGramForceCentimeter: true,
+	TorqueGramForceMeter: true,
+	TorqueKilogramForceMillimeter: true,
+	TorqueKilogramForceCentimeter: true,
+	TorqueKilogramForceMeter: true,
+	TorqueTonneForceMillimeter: true,
+	TorqueTonneForceCentimeter: true,
+	TorqueTonneForceMeter: true,
+	TorqueKilonewtonMillimeter: true,
+	TorqueMeganewtonMillimeter: true,
+	TorqueKilonewtonCentimeter: true,
+	TorqueMeganewtonCentimeter: true,
+	TorqueKilonewtonMeter: true,
+	TorqueMeganewtonMeter: true,
+	TorqueKilopoundForceInch: true,
+	TorqueMegapoundForceInch: true,
+	TorqueKilopoundForceFoot: true,
+	TorqueMegapoundForceFoot: true,
+}
+
 // TorqueDto represents a Torque measurement with a numerical value and its corresponding unit.
 type TorqueDto struct {
     // Value is the numerical representation of the Torque.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Torque, as defined in the TorqueUnits enumeration.
-	Unit  TorqueUnits `json:"unit"`
+	Unit  TorqueUnits `json:"unit" validate:"required,oneof=NewtonMillimeter,NewtonCentimeter,NewtonMeter,PoundalFoot,PoundForceInch,PoundForceFoot,GramForceMillimeter,GramForceCentimeter,GramForceMeter,KilogramForceMillimeter,KilogramForceCentimeter,KilogramForceMeter,TonneForceMillimeter,TonneForceCentimeter,TonneForceMeter,KilonewtonMillimeter,MeganewtonMillimeter,KilonewtonCentimeter,MeganewtonCentimeter,KilonewtonMeter,MeganewtonMeter,KilopoundForceInch,MegapoundForceInch,KilopoundForceFoot,MegapoundForceFoot"`
 }
 
 // TorqueDtoFactory groups methods for creating and serializing TorqueDto objects.
@@ -293,6 +322,9 @@ func (uf TorqueFactory) FromMegapoundForceFeet(value float64) (*Torque, error) {
 func newTorque(value float64, fromUnit TorqueUnits) (*Torque, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalTorqueUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in TorqueUnits", fromUnit)
 	}
 	a := &Torque{}
 	a.value = a.convertToBase(value, fromUnit)

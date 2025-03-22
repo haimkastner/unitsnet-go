@@ -29,12 +29,21 @@ const (
         ElectricInductanceMillihenry ElectricInductanceUnits = "Millihenry"
 )
 
+var internalElectricInductanceUnitsMap = map[ElectricInductanceUnits]bool{
+	
+	ElectricInductanceHenry: true,
+	ElectricInductancePicohenry: true,
+	ElectricInductanceNanohenry: true,
+	ElectricInductanceMicrohenry: true,
+	ElectricInductanceMillihenry: true,
+}
+
 // ElectricInductanceDto represents a ElectricInductance measurement with a numerical value and its corresponding unit.
 type ElectricInductanceDto struct {
     // Value is the numerical representation of the ElectricInductance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricInductance, as defined in the ElectricInductanceUnits enumeration.
-	Unit  ElectricInductanceUnits `json:"unit"`
+	Unit  ElectricInductanceUnits `json:"unit" validate:"required,oneof=Henry,Picohenry,Nanohenry,Microhenry,Millihenry"`
 }
 
 // ElectricInductanceDtoFactory groups methods for creating and serializing ElectricInductanceDto objects.
@@ -133,6 +142,9 @@ func (uf ElectricInductanceFactory) FromMillihenries(value float64) (*ElectricIn
 func newElectricInductance(value float64, fromUnit ElectricInductanceUnits) (*ElectricInductance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricInductanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricInductanceUnits", fromUnit)
 	}
 	a := &ElectricInductance{}
 	a.value = a.convertToBase(value, fromUnit)

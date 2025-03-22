@@ -51,12 +51,32 @@ const (
         ElectricConductanceTeramho ElectricConductanceUnits = "Teramho"
 )
 
+var internalElectricConductanceUnitsMap = map[ElectricConductanceUnits]bool{
+	
+	ElectricConductanceSiemens: true,
+	ElectricConductanceMho: true,
+	ElectricConductanceNanosiemens: true,
+	ElectricConductanceMicrosiemens: true,
+	ElectricConductanceMillisiemens: true,
+	ElectricConductanceKilosiemens: true,
+	ElectricConductanceMegasiemens: true,
+	ElectricConductanceGigasiemens: true,
+	ElectricConductanceTerasiemens: true,
+	ElectricConductanceNanomho: true,
+	ElectricConductanceMicromho: true,
+	ElectricConductanceMillimho: true,
+	ElectricConductanceKilomho: true,
+	ElectricConductanceMegamho: true,
+	ElectricConductanceGigamho: true,
+	ElectricConductanceTeramho: true,
+}
+
 // ElectricConductanceDto represents a ElectricConductance measurement with a numerical value and its corresponding unit.
 type ElectricConductanceDto struct {
     // Value is the numerical representation of the ElectricConductance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricConductance, as defined in the ElectricConductanceUnits enumeration.
-	Unit  ElectricConductanceUnits `json:"unit"`
+	Unit  ElectricConductanceUnits `json:"unit" validate:"required,oneof=Siemens,Mho,Nanosiemens,Microsiemens,Millisiemens,Kilosiemens,Megasiemens,Gigasiemens,Terasiemens,Nanomho,Micromho,Millimho,Kilomho,Megamho,Gigamho,Teramho"`
 }
 
 // ElectricConductanceDtoFactory groups methods for creating and serializing ElectricConductanceDto objects.
@@ -221,6 +241,9 @@ func (uf ElectricConductanceFactory) FromTeramhos(value float64) (*ElectricCondu
 func newElectricConductance(value float64, fromUnit ElectricConductanceUnits) (*ElectricConductance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricConductanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricConductanceUnits", fromUnit)
 	}
 	a := &ElectricConductance{}
 	a.value = a.convertToBase(value, fromUnit)

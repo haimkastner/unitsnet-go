@@ -71,12 +71,42 @@ const (
         BitRateExbibytePerSecond BitRateUnits = "ExbibytePerSecond"
 )
 
+var internalBitRateUnitsMap = map[BitRateUnits]bool{
+	
+	BitRateBitPerSecond: true,
+	BitRateBytePerSecond: true,
+	BitRateKilobitPerSecond: true,
+	BitRateMegabitPerSecond: true,
+	BitRateGigabitPerSecond: true,
+	BitRateTerabitPerSecond: true,
+	BitRatePetabitPerSecond: true,
+	BitRateExabitPerSecond: true,
+	BitRateKibibitPerSecond: true,
+	BitRateMebibitPerSecond: true,
+	BitRateGibibitPerSecond: true,
+	BitRateTebibitPerSecond: true,
+	BitRatePebibitPerSecond: true,
+	BitRateExbibitPerSecond: true,
+	BitRateKilobytePerSecond: true,
+	BitRateMegabytePerSecond: true,
+	BitRateGigabytePerSecond: true,
+	BitRateTerabytePerSecond: true,
+	BitRatePetabytePerSecond: true,
+	BitRateExabytePerSecond: true,
+	BitRateKibibytePerSecond: true,
+	BitRateMebibytePerSecond: true,
+	BitRateGibibytePerSecond: true,
+	BitRateTebibytePerSecond: true,
+	BitRatePebibytePerSecond: true,
+	BitRateExbibytePerSecond: true,
+}
+
 // BitRateDto represents a BitRate measurement with a numerical value and its corresponding unit.
 type BitRateDto struct {
     // Value is the numerical representation of the BitRate.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the BitRate, as defined in the BitRateUnits enumeration.
-	Unit  BitRateUnits `json:"unit"`
+	Unit  BitRateUnits `json:"unit" validate:"required,oneof=BitPerSecond,BytePerSecond,KilobitPerSecond,MegabitPerSecond,GigabitPerSecond,TerabitPerSecond,PetabitPerSecond,ExabitPerSecond,KibibitPerSecond,MebibitPerSecond,GibibitPerSecond,TebibitPerSecond,PebibitPerSecond,ExbibitPerSecond,KilobytePerSecond,MegabytePerSecond,GigabytePerSecond,TerabytePerSecond,PetabytePerSecond,ExabytePerSecond,KibibytePerSecond,MebibytePerSecond,GibibytePerSecond,TebibytePerSecond,PebibytePerSecond,ExbibytePerSecond"`
 }
 
 // BitRateDtoFactory groups methods for creating and serializing BitRateDto objects.
@@ -301,6 +331,9 @@ func (uf BitRateFactory) FromExbibytesPerSecond(value float64) (*BitRate, error)
 func newBitRate(value float64, fromUnit BitRateUnits) (*BitRate, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalBitRateUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in BitRateUnits", fromUnit)
 	}
 	a := &BitRate{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -21,12 +21,17 @@ const (
         MagnetizationAmperePerMeter MagnetizationUnits = "AmperePerMeter"
 )
 
+var internalMagnetizationUnitsMap = map[MagnetizationUnits]bool{
+	
+	MagnetizationAmperePerMeter: true,
+}
+
 // MagnetizationDto represents a Magnetization measurement with a numerical value and its corresponding unit.
 type MagnetizationDto struct {
     // Value is the numerical representation of the Magnetization.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Magnetization, as defined in the MagnetizationUnits enumeration.
-	Unit  MagnetizationUnits `json:"unit"`
+	Unit  MagnetizationUnits `json:"unit" validate:"required,oneof=AmperePerMeter"`
 }
 
 // MagnetizationDtoFactory groups methods for creating and serializing MagnetizationDto objects.
@@ -101,6 +106,9 @@ func (uf MagnetizationFactory) FromAmperesPerMeter(value float64) (*Magnetizatio
 func newMagnetization(value float64, fromUnit MagnetizationUnits) (*Magnetization, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMagnetizationUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MagnetizationUnits", fromUnit)
 	}
 	a := &Magnetization{}
 	a.value = a.convertToBase(value, fromUnit)

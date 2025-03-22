@@ -546,3 +546,19 @@ func TestVolumeFlowPerArea_String(t *testing.T) {
         })
     }
 }
+
+
+func TestVolumeFlowPerArea_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.VolumeFlowPerAreaFactory{}
+
+	_, err := uf.CreateVolumeFlowPerArea(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

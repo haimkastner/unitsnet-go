@@ -117,12 +117,65 @@ const (
         PressureCentimeterOfWaterColumn PressureUnits = "CentimeterOfWaterColumn"
 )
 
+var internalPressureUnitsMap = map[PressureUnits]bool{
+	
+	PressurePascal: true,
+	PressureAtmosphere: true,
+	PressureBar: true,
+	PressureKilogramForcePerSquareMeter: true,
+	PressureKilogramForcePerSquareCentimeter: true,
+	PressureKilogramForcePerSquareMillimeter: true,
+	PressureNewtonPerSquareMeter: true,
+	PressureNewtonPerSquareCentimeter: true,
+	PressureNewtonPerSquareMillimeter: true,
+	PressureTechnicalAtmosphere: true,
+	PressureTorr: true,
+	PressurePoundForcePerSquareInch: true,
+	PressurePoundForcePerSquareMil: true,
+	PressurePoundForcePerSquareFoot: true,
+	PressureTonneForcePerSquareMillimeter: true,
+	PressureTonneForcePerSquareMeter: true,
+	PressureMeterOfHead: true,
+	PressureTonneForcePerSquareCentimeter: true,
+	PressureFootOfHead: true,
+	PressureMillimeterOfMercury: true,
+	PressureInchOfMercury: true,
+	PressureDynePerSquareCentimeter: true,
+	PressurePoundPerInchSecondSquared: true,
+	PressureMeterOfWaterColumn: true,
+	PressureInchOfWaterColumn: true,
+	PressureMeterOfElevation: true,
+	PressureFootOfElevation: true,
+	PressureMicropascal: true,
+	PressureMillipascal: true,
+	PressureDecapascal: true,
+	PressureHectopascal: true,
+	PressureKilopascal: true,
+	PressureMegapascal: true,
+	PressureGigapascal: true,
+	PressureMicrobar: true,
+	PressureMillibar: true,
+	PressureCentibar: true,
+	PressureDecibar: true,
+	PressureKilobar: true,
+	PressureMegabar: true,
+	PressureKilonewtonPerSquareMeter: true,
+	PressureMeganewtonPerSquareMeter: true,
+	PressureKilonewtonPerSquareCentimeter: true,
+	PressureKilonewtonPerSquareMillimeter: true,
+	PressureKilopoundForcePerSquareInch: true,
+	PressureKilopoundForcePerSquareMil: true,
+	PressureKilopoundForcePerSquareFoot: true,
+	PressureMillimeterOfWaterColumn: true,
+	PressureCentimeterOfWaterColumn: true,
+}
+
 // PressureDto represents a Pressure measurement with a numerical value and its corresponding unit.
 type PressureDto struct {
     // Value is the numerical representation of the Pressure.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Pressure, as defined in the PressureUnits enumeration.
-	Unit  PressureUnits `json:"unit"`
+	Unit  PressureUnits `json:"unit" validate:"required,oneof=Pascal,Atmosphere,Bar,KilogramForcePerSquareMeter,KilogramForcePerSquareCentimeter,KilogramForcePerSquareMillimeter,NewtonPerSquareMeter,NewtonPerSquareCentimeter,NewtonPerSquareMillimeter,TechnicalAtmosphere,Torr,PoundForcePerSquareInch,PoundForcePerSquareMil,PoundForcePerSquareFoot,TonneForcePerSquareMillimeter,TonneForcePerSquareMeter,MeterOfHead,TonneForcePerSquareCentimeter,FootOfHead,MillimeterOfMercury,InchOfMercury,DynePerSquareCentimeter,PoundPerInchSecondSquared,MeterOfWaterColumn,InchOfWaterColumn,MeterOfElevation,FootOfElevation,Micropascal,Millipascal,Decapascal,Hectopascal,Kilopascal,Megapascal,Gigapascal,Microbar,Millibar,Centibar,Decibar,Kilobar,Megabar,KilonewtonPerSquareMeter,MeganewtonPerSquareMeter,KilonewtonPerSquareCentimeter,KilonewtonPerSquareMillimeter,KilopoundForcePerSquareInch,KilopoundForcePerSquareMil,KilopoundForcePerSquareFoot,MillimeterOfWaterColumn,CentimeterOfWaterColumn"`
 }
 
 // PressureDtoFactory groups methods for creating and serializing PressureDto objects.
@@ -485,6 +538,9 @@ func (uf PressureFactory) FromCentimetersOfWaterColumn(value float64) (*Pressure
 func newPressure(value float64, fromUnit PressureUnits) (*Pressure, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalPressureUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in PressureUnits", fromUnit)
 	}
 	a := &Pressure{}
 	a.value = a.convertToBase(value, fromUnit)

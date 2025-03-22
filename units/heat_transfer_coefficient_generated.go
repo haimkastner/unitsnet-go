@@ -29,12 +29,21 @@ const (
         HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius HeatTransferCoefficientUnits = "KilocaloriePerHourSquareMeterDegreeCelsius"
 )
 
+var internalHeatTransferCoefficientUnitsMap = map[HeatTransferCoefficientUnits]bool{
+	
+	HeatTransferCoefficientWattPerSquareMeterKelvin: true,
+	HeatTransferCoefficientWattPerSquareMeterCelsius: true,
+	HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit: true,
+	HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius: true,
+	HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius: true,
+}
+
 // HeatTransferCoefficientDto represents a HeatTransferCoefficient measurement with a numerical value and its corresponding unit.
 type HeatTransferCoefficientDto struct {
     // Value is the numerical representation of the HeatTransferCoefficient.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the HeatTransferCoefficient, as defined in the HeatTransferCoefficientUnits enumeration.
-	Unit  HeatTransferCoefficientUnits `json:"unit"`
+	Unit  HeatTransferCoefficientUnits `json:"unit" validate:"required,oneof=WattPerSquareMeterKelvin,WattPerSquareMeterCelsius,BtuPerHourSquareFootDegreeFahrenheit,CaloriePerHourSquareMeterDegreeCelsius,KilocaloriePerHourSquareMeterDegreeCelsius"`
 }
 
 // HeatTransferCoefficientDtoFactory groups methods for creating and serializing HeatTransferCoefficientDto objects.
@@ -133,6 +142,9 @@ func (uf HeatTransferCoefficientFactory) FromKilocaloriesPerHourSquareMeterDegre
 func newHeatTransferCoefficient(value float64, fromUnit HeatTransferCoefficientUnits) (*HeatTransferCoefficient, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalHeatTransferCoefficientUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in HeatTransferCoefficientUnits", fromUnit)
 	}
 	a := &HeatTransferCoefficient{}
 	a.value = a.convertToBase(value, fromUnit)

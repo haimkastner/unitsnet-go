@@ -71,12 +71,42 @@ const (
         InformationExbibit InformationUnits = "Exbibit"
 )
 
+var internalInformationUnitsMap = map[InformationUnits]bool{
+	
+	InformationByte: true,
+	InformationBit: true,
+	InformationKilobyte: true,
+	InformationMegabyte: true,
+	InformationGigabyte: true,
+	InformationTerabyte: true,
+	InformationPetabyte: true,
+	InformationExabyte: true,
+	InformationKibibyte: true,
+	InformationMebibyte: true,
+	InformationGibibyte: true,
+	InformationTebibyte: true,
+	InformationPebibyte: true,
+	InformationExbibyte: true,
+	InformationKilobit: true,
+	InformationMegabit: true,
+	InformationGigabit: true,
+	InformationTerabit: true,
+	InformationPetabit: true,
+	InformationExabit: true,
+	InformationKibibit: true,
+	InformationMebibit: true,
+	InformationGibibit: true,
+	InformationTebibit: true,
+	InformationPebibit: true,
+	InformationExbibit: true,
+}
+
 // InformationDto represents a Information measurement with a numerical value and its corresponding unit.
 type InformationDto struct {
     // Value is the numerical representation of the Information.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Information, as defined in the InformationUnits enumeration.
-	Unit  InformationUnits `json:"unit"`
+	Unit  InformationUnits `json:"unit" validate:"required,oneof=Byte,Bit,Kilobyte,Megabyte,Gigabyte,Terabyte,Petabyte,Exabyte,Kibibyte,Mebibyte,Gibibyte,Tebibyte,Pebibyte,Exbibyte,Kilobit,Megabit,Gigabit,Terabit,Petabit,Exabit,Kibibit,Mebibit,Gibibit,Tebibit,Pebibit,Exbibit"`
 }
 
 // InformationDtoFactory groups methods for creating and serializing InformationDto objects.
@@ -301,6 +331,9 @@ func (uf InformationFactory) FromExbibits(value float64) (*Information, error) {
 func newInformation(value float64, fromUnit InformationUnits) (*Information, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalInformationUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in InformationUnits", fromUnit)
 	}
 	a := &Information{}
 	a.value = a.convertToBase(value, fromUnit)

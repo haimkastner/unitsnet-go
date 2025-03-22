@@ -131,12 +131,72 @@ const (
         DensityDecigramPerMilliliter DensityUnits = "DecigramPerMilliliter"
 )
 
+var internalDensityUnitsMap = map[DensityUnits]bool{
+	
+	DensityGramPerCubicMillimeter: true,
+	DensityGramPerCubicCentimeter: true,
+	DensityGramPerCubicMeter: true,
+	DensityPoundPerCubicInch: true,
+	DensityPoundPerCubicFoot: true,
+	DensityPoundPerCubicYard: true,
+	DensityTonnePerCubicMillimeter: true,
+	DensityTonnePerCubicCentimeter: true,
+	DensityTonnePerCubicMeter: true,
+	DensitySlugPerCubicFoot: true,
+	DensityGramPerLiter: true,
+	DensityGramPerDeciliter: true,
+	DensityGramPerMilliliter: true,
+	DensityPoundPerUSGallon: true,
+	DensityPoundPerImperialGallon: true,
+	DensityKilogramPerLiter: true,
+	DensityTonnePerCubicFoot: true,
+	DensityTonnePerCubicInch: true,
+	DensityGramPerCubicFoot: true,
+	DensityGramPerCubicInch: true,
+	DensityPoundPerCubicMeter: true,
+	DensityPoundPerCubicCentimeter: true,
+	DensityPoundPerCubicMillimeter: true,
+	DensitySlugPerCubicMeter: true,
+	DensitySlugPerCubicCentimeter: true,
+	DensitySlugPerCubicMillimeter: true,
+	DensitySlugPerCubicInch: true,
+	DensityKilogramPerCubicMillimeter: true,
+	DensityKilogramPerCubicCentimeter: true,
+	DensityKilogramPerCubicMeter: true,
+	DensityMilligramPerCubicMeter: true,
+	DensityMicrogramPerCubicMeter: true,
+	DensityKilopoundPerCubicInch: true,
+	DensityKilopoundPerCubicFoot: true,
+	DensityKilopoundPerCubicYard: true,
+	DensityFemtogramPerLiter: true,
+	DensityPicogramPerLiter: true,
+	DensityNanogramPerLiter: true,
+	DensityMicrogramPerLiter: true,
+	DensityMilligramPerLiter: true,
+	DensityCentigramPerLiter: true,
+	DensityDecigramPerLiter: true,
+	DensityFemtogramPerDeciliter: true,
+	DensityPicogramPerDeciliter: true,
+	DensityNanogramPerDeciliter: true,
+	DensityMicrogramPerDeciliter: true,
+	DensityMilligramPerDeciliter: true,
+	DensityCentigramPerDeciliter: true,
+	DensityDecigramPerDeciliter: true,
+	DensityFemtogramPerMilliliter: true,
+	DensityPicogramPerMilliliter: true,
+	DensityNanogramPerMilliliter: true,
+	DensityMicrogramPerMilliliter: true,
+	DensityMilligramPerMilliliter: true,
+	DensityCentigramPerMilliliter: true,
+	DensityDecigramPerMilliliter: true,
+}
+
 // DensityDto represents a Density measurement with a numerical value and its corresponding unit.
 type DensityDto struct {
     // Value is the numerical representation of the Density.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Density, as defined in the DensityUnits enumeration.
-	Unit  DensityUnits `json:"unit"`
+	Unit  DensityUnits `json:"unit" validate:"required,oneof=GramPerCubicMillimeter,GramPerCubicCentimeter,GramPerCubicMeter,PoundPerCubicInch,PoundPerCubicFoot,PoundPerCubicYard,TonnePerCubicMillimeter,TonnePerCubicCentimeter,TonnePerCubicMeter,SlugPerCubicFoot,GramPerLiter,GramPerDeciliter,GramPerMilliliter,PoundPerUSGallon,PoundPerImperialGallon,KilogramPerLiter,TonnePerCubicFoot,TonnePerCubicInch,GramPerCubicFoot,GramPerCubicInch,PoundPerCubicMeter,PoundPerCubicCentimeter,PoundPerCubicMillimeter,SlugPerCubicMeter,SlugPerCubicCentimeter,SlugPerCubicMillimeter,SlugPerCubicInch,KilogramPerCubicMillimeter,KilogramPerCubicCentimeter,KilogramPerCubicMeter,MilligramPerCubicMeter,MicrogramPerCubicMeter,KilopoundPerCubicInch,KilopoundPerCubicFoot,KilopoundPerCubicYard,FemtogramPerLiter,PicogramPerLiter,NanogramPerLiter,MicrogramPerLiter,MilligramPerLiter,CentigramPerLiter,DecigramPerLiter,FemtogramPerDeciliter,PicogramPerDeciliter,NanogramPerDeciliter,MicrogramPerDeciliter,MilligramPerDeciliter,CentigramPerDeciliter,DecigramPerDeciliter,FemtogramPerMilliliter,PicogramPerMilliliter,NanogramPerMilliliter,MicrogramPerMilliliter,MilligramPerMilliliter,CentigramPerMilliliter,DecigramPerMilliliter"`
 }
 
 // DensityDtoFactory groups methods for creating and serializing DensityDto objects.
@@ -541,6 +601,9 @@ func (uf DensityFactory) FromDecigramsPerMilliliter(value float64) (*Density, er
 func newDensity(value float64, fromUnit DensityUnits) (*Density, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalDensityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in DensityUnits", fromUnit)
 	}
 	a := &Density{}
 	a.value = a.convertToBase(value, fromUnit)

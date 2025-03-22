@@ -1,7 +1,7 @@
 package unitsnet_go_test
 
 import (
-	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/haimkastner/unitsnet-go/units"
@@ -19,24 +19,17 @@ func TestUnitCreation(t *testing.T) {
 	}
 }
 
-func nextPositionFormula(position *units.Length, speed *units.Speed, timePassed *units.Duration) *units.Length {
-	lf := units.LengthFactory{}
-	next, _ := lf.FromMeters(position.Meters() + (speed.MetersPerSecond() * timePassed.Seconds()))
-	return next
-}
+func TestBrokenUnitCreation(t *testing.T) {
+	// Create a factory instance
+	af := units.AngleFactory{}
 
-func getCurrentPosition(position *units.Length, speed *units.Speed, timePassed *units.Duration) *units.Length {
-	return nextPositionFormula(position, speed, timePassed)
-}
+	_, err := af.CreateAngle(180, "unknown")
 
-func main() {
-	lf := units.LengthFactory{}
-	sf := units.SpeedFactory{}
-	df := units.DurationFactory{}
-	platformPosition, _ := lf.FromMeters(100)
-	platformSpeed, _ := sf.FromMetersPerMinutes(1)
-	timePassed, _ := df.FromMicroseconds(500)
-	newPlatform := getCurrentPosition(platformPosition, platformSpeed, timePassed)
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
 
-	fmt.Println(newPlatform.Meters())
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
 }

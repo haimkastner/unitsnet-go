@@ -27,12 +27,20 @@ const (
         SpecificFuelConsumptionKilogramPerKiloNewtonSecond SpecificFuelConsumptionUnits = "KilogramPerKiloNewtonSecond"
 )
 
+var internalSpecificFuelConsumptionUnitsMap = map[SpecificFuelConsumptionUnits]bool{
+	
+	SpecificFuelConsumptionPoundMassPerPoundForceHour: true,
+	SpecificFuelConsumptionKilogramPerKilogramForceHour: true,
+	SpecificFuelConsumptionGramPerKiloNewtonSecond: true,
+	SpecificFuelConsumptionKilogramPerKiloNewtonSecond: true,
+}
+
 // SpecificFuelConsumptionDto represents a SpecificFuelConsumption measurement with a numerical value and its corresponding unit.
 type SpecificFuelConsumptionDto struct {
     // Value is the numerical representation of the SpecificFuelConsumption.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the SpecificFuelConsumption, as defined in the SpecificFuelConsumptionUnits enumeration.
-	Unit  SpecificFuelConsumptionUnits `json:"unit"`
+	Unit  SpecificFuelConsumptionUnits `json:"unit" validate:"required,oneof=PoundMassPerPoundForceHour,KilogramPerKilogramForceHour,GramPerKiloNewtonSecond,KilogramPerKiloNewtonSecond"`
 }
 
 // SpecificFuelConsumptionDtoFactory groups methods for creating and serializing SpecificFuelConsumptionDto objects.
@@ -125,6 +133,9 @@ func (uf SpecificFuelConsumptionFactory) FromKilogramsPerKiloNewtonSecond(value 
 func newSpecificFuelConsumption(value float64, fromUnit SpecificFuelConsumptionUnits) (*SpecificFuelConsumption, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalSpecificFuelConsumptionUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in SpecificFuelConsumptionUnits", fromUnit)
 	}
 	a := &SpecificFuelConsumption{}
 	a.value = a.convertToBase(value, fromUnit)

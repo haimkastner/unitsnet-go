@@ -39,12 +39,26 @@ const (
         DynamicViscosityCentipoise DynamicViscosityUnits = "Centipoise"
 )
 
+var internalDynamicViscosityUnitsMap = map[DynamicViscosityUnits]bool{
+	
+	DynamicViscosityNewtonSecondPerMeterSquared: true,
+	DynamicViscosityPascalSecond: true,
+	DynamicViscosityPoise: true,
+	DynamicViscosityReyn: true,
+	DynamicViscosityPoundForceSecondPerSquareInch: true,
+	DynamicViscosityPoundForceSecondPerSquareFoot: true,
+	DynamicViscosityPoundPerFootSecond: true,
+	DynamicViscosityMillipascalSecond: true,
+	DynamicViscosityMicropascalSecond: true,
+	DynamicViscosityCentipoise: true,
+}
+
 // DynamicViscosityDto represents a DynamicViscosity measurement with a numerical value and its corresponding unit.
 type DynamicViscosityDto struct {
     // Value is the numerical representation of the DynamicViscosity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the DynamicViscosity, as defined in the DynamicViscosityUnits enumeration.
-	Unit  DynamicViscosityUnits `json:"unit"`
+	Unit  DynamicViscosityUnits `json:"unit" validate:"required,oneof=NewtonSecondPerMeterSquared,PascalSecond,Poise,Reyn,PoundForceSecondPerSquareInch,PoundForceSecondPerSquareFoot,PoundPerFootSecond,MillipascalSecond,MicropascalSecond,Centipoise"`
 }
 
 // DynamicViscosityDtoFactory groups methods for creating and serializing DynamicViscosityDto objects.
@@ -173,6 +187,9 @@ func (uf DynamicViscosityFactory) FromCentipoise(value float64) (*DynamicViscosi
 func newDynamicViscosity(value float64, fromUnit DynamicViscosityUnits) (*DynamicViscosity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalDynamicViscosityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in DynamicViscosityUnits", fromUnit)
 	}
 	a := &DynamicViscosity{}
 	a.value = a.convertToBase(value, fromUnit)

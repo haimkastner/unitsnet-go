@@ -47,12 +47,30 @@ const (
         ElectricResistivityMegaohmCentimeter ElectricResistivityUnits = "MegaohmCentimeter"
 )
 
+var internalElectricResistivityUnitsMap = map[ElectricResistivityUnits]bool{
+	
+	ElectricResistivityOhmMeter: true,
+	ElectricResistivityOhmCentimeter: true,
+	ElectricResistivityPicoohmMeter: true,
+	ElectricResistivityNanoohmMeter: true,
+	ElectricResistivityMicroohmMeter: true,
+	ElectricResistivityMilliohmMeter: true,
+	ElectricResistivityKiloohmMeter: true,
+	ElectricResistivityMegaohmMeter: true,
+	ElectricResistivityPicoohmCentimeter: true,
+	ElectricResistivityNanoohmCentimeter: true,
+	ElectricResistivityMicroohmCentimeter: true,
+	ElectricResistivityMilliohmCentimeter: true,
+	ElectricResistivityKiloohmCentimeter: true,
+	ElectricResistivityMegaohmCentimeter: true,
+}
+
 // ElectricResistivityDto represents a ElectricResistivity measurement with a numerical value and its corresponding unit.
 type ElectricResistivityDto struct {
     // Value is the numerical representation of the ElectricResistivity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricResistivity, as defined in the ElectricResistivityUnits enumeration.
-	Unit  ElectricResistivityUnits `json:"unit"`
+	Unit  ElectricResistivityUnits `json:"unit" validate:"required,oneof=OhmMeter,OhmCentimeter,PicoohmMeter,NanoohmMeter,MicroohmMeter,MilliohmMeter,KiloohmMeter,MegaohmMeter,PicoohmCentimeter,NanoohmCentimeter,MicroohmCentimeter,MilliohmCentimeter,KiloohmCentimeter,MegaohmCentimeter"`
 }
 
 // ElectricResistivityDtoFactory groups methods for creating and serializing ElectricResistivityDto objects.
@@ -205,6 +223,9 @@ func (uf ElectricResistivityFactory) FromMegaohmsCentimeter(value float64) (*Ele
 func newElectricResistivity(value float64, fromUnit ElectricResistivityUnits) (*ElectricResistivity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricResistivityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricResistivityUnits", fromUnit)
 	}
 	a := &ElectricResistivity{}
 	a.value = a.convertToBase(value, fromUnit)

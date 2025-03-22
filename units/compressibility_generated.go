@@ -33,12 +33,23 @@ const (
         CompressibilityInversePoundForcePerSquareInch CompressibilityUnits = "InversePoundForcePerSquareInch"
 )
 
+var internalCompressibilityUnitsMap = map[CompressibilityUnits]bool{
+	
+	CompressibilityInversePascal: true,
+	CompressibilityInverseKilopascal: true,
+	CompressibilityInverseMegapascal: true,
+	CompressibilityInverseAtmosphere: true,
+	CompressibilityInverseMillibar: true,
+	CompressibilityInverseBar: true,
+	CompressibilityInversePoundForcePerSquareInch: true,
+}
+
 // CompressibilityDto represents a Compressibility measurement with a numerical value and its corresponding unit.
 type CompressibilityDto struct {
     // Value is the numerical representation of the Compressibility.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Compressibility, as defined in the CompressibilityUnits enumeration.
-	Unit  CompressibilityUnits `json:"unit"`
+	Unit  CompressibilityUnits `json:"unit" validate:"required,oneof=InversePascal,InverseKilopascal,InverseMegapascal,InverseAtmosphere,InverseMillibar,InverseBar,InversePoundForcePerSquareInch"`
 }
 
 // CompressibilityDtoFactory groups methods for creating and serializing CompressibilityDto objects.
@@ -149,6 +160,9 @@ func (uf CompressibilityFactory) FromInversePoundsForcePerSquareInch(value float
 func newCompressibility(value float64, fromUnit CompressibilityUnits) (*Compressibility, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalCompressibilityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in CompressibilityUnits", fromUnit)
 	}
 	a := &Compressibility{}
 	a.value = a.convertToBase(value, fromUnit)

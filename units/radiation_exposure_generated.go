@@ -35,12 +35,24 @@ const (
         RadiationExposureMilliroentgen RadiationExposureUnits = "Milliroentgen"
 )
 
+var internalRadiationExposureUnitsMap = map[RadiationExposureUnits]bool{
+	
+	RadiationExposureCoulombPerKilogram: true,
+	RadiationExposureRoentgen: true,
+	RadiationExposurePicocoulombPerKilogram: true,
+	RadiationExposureNanocoulombPerKilogram: true,
+	RadiationExposureMicrocoulombPerKilogram: true,
+	RadiationExposureMillicoulombPerKilogram: true,
+	RadiationExposureMicroroentgen: true,
+	RadiationExposureMilliroentgen: true,
+}
+
 // RadiationExposureDto represents a RadiationExposure measurement with a numerical value and its corresponding unit.
 type RadiationExposureDto struct {
     // Value is the numerical representation of the RadiationExposure.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RadiationExposure, as defined in the RadiationExposureUnits enumeration.
-	Unit  RadiationExposureUnits `json:"unit"`
+	Unit  RadiationExposureUnits `json:"unit" validate:"required,oneof=CoulombPerKilogram,Roentgen,PicocoulombPerKilogram,NanocoulombPerKilogram,MicrocoulombPerKilogram,MillicoulombPerKilogram,Microroentgen,Milliroentgen"`
 }
 
 // RadiationExposureDtoFactory groups methods for creating and serializing RadiationExposureDto objects.
@@ -157,6 +169,9 @@ func (uf RadiationExposureFactory) FromMilliroentgens(value float64) (*Radiation
 func newRadiationExposure(value float64, fromUnit RadiationExposureUnits) (*RadiationExposure, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRadiationExposureUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RadiationExposureUnits", fromUnit)
 	}
 	a := &RadiationExposure{}
 	a.value = a.convertToBase(value, fromUnit)

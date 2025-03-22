@@ -25,12 +25,19 @@ const (
         MolarEnergyMegajoulePerMole MolarEnergyUnits = "MegajoulePerMole"
 )
 
+var internalMolarEnergyUnitsMap = map[MolarEnergyUnits]bool{
+	
+	MolarEnergyJoulePerMole: true,
+	MolarEnergyKilojoulePerMole: true,
+	MolarEnergyMegajoulePerMole: true,
+}
+
 // MolarEnergyDto represents a MolarEnergy measurement with a numerical value and its corresponding unit.
 type MolarEnergyDto struct {
     // Value is the numerical representation of the MolarEnergy.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MolarEnergy, as defined in the MolarEnergyUnits enumeration.
-	Unit  MolarEnergyUnits `json:"unit"`
+	Unit  MolarEnergyUnits `json:"unit" validate:"required,oneof=JoulePerMole,KilojoulePerMole,MegajoulePerMole"`
 }
 
 // MolarEnergyDtoFactory groups methods for creating and serializing MolarEnergyDto objects.
@@ -117,6 +124,9 @@ func (uf MolarEnergyFactory) FromMegajoulesPerMole(value float64) (*MolarEnergy,
 func newMolarEnergy(value float64, fromUnit MolarEnergyUnits) (*MolarEnergy, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMolarEnergyUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MolarEnergyUnits", fromUnit)
 	}
 	a := &MolarEnergy{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -1148,3 +1148,19 @@ func TestVolumetricHeatCapacity_String(t *testing.T) {
         })
     }
 }
+
+
+func TestVolumetricHeatCapacity_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.VolumetricHeatCapacityFactory{}
+
+	_, err := uf.CreateVolumetricHeatCapacity(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

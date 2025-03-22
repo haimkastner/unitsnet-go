@@ -43,12 +43,28 @@ const (
         EnergyDensityPetawattHourPerCubicMeter EnergyDensityUnits = "PetawattHourPerCubicMeter"
 )
 
+var internalEnergyDensityUnitsMap = map[EnergyDensityUnits]bool{
+	
+	EnergyDensityJoulePerCubicMeter: true,
+	EnergyDensityWattHourPerCubicMeter: true,
+	EnergyDensityKilojoulePerCubicMeter: true,
+	EnergyDensityMegajoulePerCubicMeter: true,
+	EnergyDensityGigajoulePerCubicMeter: true,
+	EnergyDensityTerajoulePerCubicMeter: true,
+	EnergyDensityPetajoulePerCubicMeter: true,
+	EnergyDensityKilowattHourPerCubicMeter: true,
+	EnergyDensityMegawattHourPerCubicMeter: true,
+	EnergyDensityGigawattHourPerCubicMeter: true,
+	EnergyDensityTerawattHourPerCubicMeter: true,
+	EnergyDensityPetawattHourPerCubicMeter: true,
+}
+
 // EnergyDensityDto represents a EnergyDensity measurement with a numerical value and its corresponding unit.
 type EnergyDensityDto struct {
     // Value is the numerical representation of the EnergyDensity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the EnergyDensity, as defined in the EnergyDensityUnits enumeration.
-	Unit  EnergyDensityUnits `json:"unit"`
+	Unit  EnergyDensityUnits `json:"unit" validate:"required,oneof=JoulePerCubicMeter,WattHourPerCubicMeter,KilojoulePerCubicMeter,MegajoulePerCubicMeter,GigajoulePerCubicMeter,TerajoulePerCubicMeter,PetajoulePerCubicMeter,KilowattHourPerCubicMeter,MegawattHourPerCubicMeter,GigawattHourPerCubicMeter,TerawattHourPerCubicMeter,PetawattHourPerCubicMeter"`
 }
 
 // EnergyDensityDtoFactory groups methods for creating and serializing EnergyDensityDto objects.
@@ -189,6 +205,9 @@ func (uf EnergyDensityFactory) FromPetawattHoursPerCubicMeter(value float64) (*E
 func newEnergyDensity(value float64, fromUnit EnergyDensityUnits) (*EnergyDensity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalEnergyDensityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in EnergyDensityUnits", fromUnit)
 	}
 	a := &EnergyDensity{}
 	a.value = a.convertToBase(value, fromUnit)

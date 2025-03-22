@@ -33,12 +33,23 @@ const (
         ElectricCurrentGradientMilliamperePerMinute ElectricCurrentGradientUnits = "MilliamperePerMinute"
 )
 
+var internalElectricCurrentGradientUnitsMap = map[ElectricCurrentGradientUnits]bool{
+	
+	ElectricCurrentGradientAmperePerSecond: true,
+	ElectricCurrentGradientAmperePerMinute: true,
+	ElectricCurrentGradientAmperePerMillisecond: true,
+	ElectricCurrentGradientAmperePerMicrosecond: true,
+	ElectricCurrentGradientAmperePerNanosecond: true,
+	ElectricCurrentGradientMilliamperePerSecond: true,
+	ElectricCurrentGradientMilliamperePerMinute: true,
+}
+
 // ElectricCurrentGradientDto represents a ElectricCurrentGradient measurement with a numerical value and its corresponding unit.
 type ElectricCurrentGradientDto struct {
     // Value is the numerical representation of the ElectricCurrentGradient.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricCurrentGradient, as defined in the ElectricCurrentGradientUnits enumeration.
-	Unit  ElectricCurrentGradientUnits `json:"unit"`
+	Unit  ElectricCurrentGradientUnits `json:"unit" validate:"required,oneof=AmperePerSecond,AmperePerMinute,AmperePerMillisecond,AmperePerMicrosecond,AmperePerNanosecond,MilliamperePerSecond,MilliamperePerMinute"`
 }
 
 // ElectricCurrentGradientDtoFactory groups methods for creating and serializing ElectricCurrentGradientDto objects.
@@ -149,6 +160,9 @@ func (uf ElectricCurrentGradientFactory) FromMilliamperesPerMinute(value float64
 func newElectricCurrentGradient(value float64, fromUnit ElectricCurrentGradientUnits) (*ElectricCurrentGradient, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricCurrentGradientUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricCurrentGradientUnits", fromUnit)
 	}
 	a := &ElectricCurrentGradient{}
 	a.value = a.convertToBase(value, fromUnit)

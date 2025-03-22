@@ -51,12 +51,32 @@ const (
         ElectricAdmittanceTeramho ElectricAdmittanceUnits = "Teramho"
 )
 
+var internalElectricAdmittanceUnitsMap = map[ElectricAdmittanceUnits]bool{
+	
+	ElectricAdmittanceSiemens: true,
+	ElectricAdmittanceMho: true,
+	ElectricAdmittanceNanosiemens: true,
+	ElectricAdmittanceMicrosiemens: true,
+	ElectricAdmittanceMillisiemens: true,
+	ElectricAdmittanceKilosiemens: true,
+	ElectricAdmittanceMegasiemens: true,
+	ElectricAdmittanceGigasiemens: true,
+	ElectricAdmittanceTerasiemens: true,
+	ElectricAdmittanceNanomho: true,
+	ElectricAdmittanceMicromho: true,
+	ElectricAdmittanceMillimho: true,
+	ElectricAdmittanceKilomho: true,
+	ElectricAdmittanceMegamho: true,
+	ElectricAdmittanceGigamho: true,
+	ElectricAdmittanceTeramho: true,
+}
+
 // ElectricAdmittanceDto represents a ElectricAdmittance measurement with a numerical value and its corresponding unit.
 type ElectricAdmittanceDto struct {
     // Value is the numerical representation of the ElectricAdmittance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricAdmittance, as defined in the ElectricAdmittanceUnits enumeration.
-	Unit  ElectricAdmittanceUnits `json:"unit"`
+	Unit  ElectricAdmittanceUnits `json:"unit" validate:"required,oneof=Siemens,Mho,Nanosiemens,Microsiemens,Millisiemens,Kilosiemens,Megasiemens,Gigasiemens,Terasiemens,Nanomho,Micromho,Millimho,Kilomho,Megamho,Gigamho,Teramho"`
 }
 
 // ElectricAdmittanceDtoFactory groups methods for creating and serializing ElectricAdmittanceDto objects.
@@ -221,6 +241,9 @@ func (uf ElectricAdmittanceFactory) FromTeramhos(value float64) (*ElectricAdmitt
 func newElectricAdmittance(value float64, fromUnit ElectricAdmittanceUnits) (*ElectricAdmittance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricAdmittanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricAdmittanceUnits", fromUnit)
 	}
 	a := &ElectricAdmittance{}
 	a.value = a.convertToBase(value, fromUnit)

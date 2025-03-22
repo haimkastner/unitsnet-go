@@ -27,12 +27,20 @@ const (
         RotationalAccelerationRevolutionPerSecondSquared RotationalAccelerationUnits = "RevolutionPerSecondSquared"
 )
 
+var internalRotationalAccelerationUnitsMap = map[RotationalAccelerationUnits]bool{
+	
+	RotationalAccelerationRadianPerSecondSquared: true,
+	RotationalAccelerationDegreePerSecondSquared: true,
+	RotationalAccelerationRevolutionPerMinutePerSecond: true,
+	RotationalAccelerationRevolutionPerSecondSquared: true,
+}
+
 // RotationalAccelerationDto represents a RotationalAcceleration measurement with a numerical value and its corresponding unit.
 type RotationalAccelerationDto struct {
     // Value is the numerical representation of the RotationalAcceleration.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RotationalAcceleration, as defined in the RotationalAccelerationUnits enumeration.
-	Unit  RotationalAccelerationUnits `json:"unit"`
+	Unit  RotationalAccelerationUnits `json:"unit" validate:"required,oneof=RadianPerSecondSquared,DegreePerSecondSquared,RevolutionPerMinutePerSecond,RevolutionPerSecondSquared"`
 }
 
 // RotationalAccelerationDtoFactory groups methods for creating and serializing RotationalAccelerationDto objects.
@@ -125,6 +133,9 @@ func (uf RotationalAccelerationFactory) FromRevolutionsPerSecondSquared(value fl
 func newRotationalAcceleration(value float64, fromUnit RotationalAccelerationUnits) (*RotationalAcceleration, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRotationalAccelerationUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RotationalAccelerationUnits", fromUnit)
 	}
 	a := &RotationalAcceleration{}
 	a.value = a.convertToBase(value, fromUnit)

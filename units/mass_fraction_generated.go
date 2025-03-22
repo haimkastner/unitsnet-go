@@ -67,12 +67,40 @@ const (
         MassFractionKilogramPerKilogram MassFractionUnits = "KilogramPerKilogram"
 )
 
+var internalMassFractionUnitsMap = map[MassFractionUnits]bool{
+	
+	MassFractionDecimalFraction: true,
+	MassFractionGramPerGram: true,
+	MassFractionGramPerKilogram: true,
+	MassFractionPercent: true,
+	MassFractionPartPerThousand: true,
+	MassFractionPartPerMillion: true,
+	MassFractionPartPerBillion: true,
+	MassFractionPartPerTrillion: true,
+	MassFractionNanogramPerGram: true,
+	MassFractionMicrogramPerGram: true,
+	MassFractionMilligramPerGram: true,
+	MassFractionCentigramPerGram: true,
+	MassFractionDecigramPerGram: true,
+	MassFractionDecagramPerGram: true,
+	MassFractionHectogramPerGram: true,
+	MassFractionKilogramPerGram: true,
+	MassFractionNanogramPerKilogram: true,
+	MassFractionMicrogramPerKilogram: true,
+	MassFractionMilligramPerKilogram: true,
+	MassFractionCentigramPerKilogram: true,
+	MassFractionDecigramPerKilogram: true,
+	MassFractionDecagramPerKilogram: true,
+	MassFractionHectogramPerKilogram: true,
+	MassFractionKilogramPerKilogram: true,
+}
+
 // MassFractionDto represents a MassFraction measurement with a numerical value and its corresponding unit.
 type MassFractionDto struct {
     // Value is the numerical representation of the MassFraction.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MassFraction, as defined in the MassFractionUnits enumeration.
-	Unit  MassFractionUnits `json:"unit"`
+	Unit  MassFractionUnits `json:"unit" validate:"required,oneof=DecimalFraction,GramPerGram,GramPerKilogram,Percent,PartPerThousand,PartPerMillion,PartPerBillion,PartPerTrillion,NanogramPerGram,MicrogramPerGram,MilligramPerGram,CentigramPerGram,DecigramPerGram,DecagramPerGram,HectogramPerGram,KilogramPerGram,NanogramPerKilogram,MicrogramPerKilogram,MilligramPerKilogram,CentigramPerKilogram,DecigramPerKilogram,DecagramPerKilogram,HectogramPerKilogram,KilogramPerKilogram"`
 }
 
 // MassFractionDtoFactory groups methods for creating and serializing MassFractionDto objects.
@@ -285,6 +313,9 @@ func (uf MassFractionFactory) FromKilogramsPerKilogram(value float64) (*MassFrac
 func newMassFraction(value float64, fromUnit MassFractionUnits) (*MassFraction, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMassFractionUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MassFractionUnits", fromUnit)
 	}
 	a := &MassFraction{}
 	a.value = a.convertToBase(value, fromUnit)

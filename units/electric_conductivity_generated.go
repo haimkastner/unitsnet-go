@@ -31,12 +31,22 @@ const (
         ElectricConductivityMillisiemensPerCentimeter ElectricConductivityUnits = "MillisiemensPerCentimeter"
 )
 
+var internalElectricConductivityUnitsMap = map[ElectricConductivityUnits]bool{
+	
+	ElectricConductivitySiemensPerMeter: true,
+	ElectricConductivitySiemensPerInch: true,
+	ElectricConductivitySiemensPerFoot: true,
+	ElectricConductivitySiemensPerCentimeter: true,
+	ElectricConductivityMicrosiemensPerCentimeter: true,
+	ElectricConductivityMillisiemensPerCentimeter: true,
+}
+
 // ElectricConductivityDto represents a ElectricConductivity measurement with a numerical value and its corresponding unit.
 type ElectricConductivityDto struct {
     // Value is the numerical representation of the ElectricConductivity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricConductivity, as defined in the ElectricConductivityUnits enumeration.
-	Unit  ElectricConductivityUnits `json:"unit"`
+	Unit  ElectricConductivityUnits `json:"unit" validate:"required,oneof=SiemensPerMeter,SiemensPerInch,SiemensPerFoot,SiemensPerCentimeter,MicrosiemensPerCentimeter,MillisiemensPerCentimeter"`
 }
 
 // ElectricConductivityDtoFactory groups methods for creating and serializing ElectricConductivityDto objects.
@@ -141,6 +151,9 @@ func (uf ElectricConductivityFactory) FromMillisiemensPerCentimeter(value float6
 func newElectricConductivity(value float64, fromUnit ElectricConductivityUnits) (*ElectricConductivity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricConductivityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricConductivityUnits", fromUnit)
 	}
 	a := &ElectricConductivity{}
 	a.value = a.convertToBase(value, fromUnit)

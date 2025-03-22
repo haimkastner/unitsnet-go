@@ -21,12 +21,17 @@ const (
         ScalarAmount ScalarUnits = "Amount"
 )
 
+var internalScalarUnitsMap = map[ScalarUnits]bool{
+	
+	ScalarAmount: true,
+}
+
 // ScalarDto represents a Scalar measurement with a numerical value and its corresponding unit.
 type ScalarDto struct {
     // Value is the numerical representation of the Scalar.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Scalar, as defined in the ScalarUnits enumeration.
-	Unit  ScalarUnits `json:"unit"`
+	Unit  ScalarUnits `json:"unit" validate:"required,oneof=Amount"`
 }
 
 // ScalarDtoFactory groups methods for creating and serializing ScalarDto objects.
@@ -101,6 +106,9 @@ func (uf ScalarFactory) FromAmount(value float64) (*Scalar, error) {
 func newScalar(value float64, fromUnit ScalarUnits) (*Scalar, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalScalarUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ScalarUnits", fromUnit)
 	}
 	a := &Scalar{}
 	a.value = a.convertToBase(value, fromUnit)

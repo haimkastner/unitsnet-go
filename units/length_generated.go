@@ -103,12 +103,58 @@ const (
         LengthMegalightYear LengthUnits = "MegalightYear"
 )
 
+var internalLengthUnitsMap = map[LengthUnits]bool{
+	
+	LengthMeter: true,
+	LengthMile: true,
+	LengthYard: true,
+	LengthFoot: true,
+	LengthUsSurveyFoot: true,
+	LengthInch: true,
+	LengthMil: true,
+	LengthNauticalMile: true,
+	LengthFathom: true,
+	LengthShackle: true,
+	LengthMicroinch: true,
+	LengthPrinterPoint: true,
+	LengthDtpPoint: true,
+	LengthPrinterPica: true,
+	LengthDtpPica: true,
+	LengthTwip: true,
+	LengthHand: true,
+	LengthAstronomicalUnit: true,
+	LengthParsec: true,
+	LengthLightYear: true,
+	LengthSolarRadius: true,
+	LengthChain: true,
+	LengthAngstrom: true,
+	LengthDataMile: true,
+	LengthFemtometer: true,
+	LengthPicometer: true,
+	LengthNanometer: true,
+	LengthMicrometer: true,
+	LengthMillimeter: true,
+	LengthCentimeter: true,
+	LengthDecimeter: true,
+	LengthDecameter: true,
+	LengthHectometer: true,
+	LengthKilometer: true,
+	LengthMegameter: true,
+	LengthGigameter: true,
+	LengthKiloyard: true,
+	LengthKilofoot: true,
+	LengthKiloparsec: true,
+	LengthMegaparsec: true,
+	LengthKilolightYear: true,
+	LengthMegalightYear: true,
+}
+
 // LengthDto represents a Length measurement with a numerical value and its corresponding unit.
 type LengthDto struct {
     // Value is the numerical representation of the Length.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Length, as defined in the LengthUnits enumeration.
-	Unit  LengthUnits `json:"unit"`
+	Unit  LengthUnits `json:"unit" validate:"required,oneof=Meter,Mile,Yard,Foot,UsSurveyFoot,Inch,Mil,NauticalMile,Fathom,Shackle,Microinch,PrinterPoint,DtpPoint,PrinterPica,DtpPica,Twip,Hand,AstronomicalUnit,Parsec,LightYear,SolarRadius,Chain,Angstrom,DataMile,Femtometer,Picometer,Nanometer,Micrometer,Millimeter,Centimeter,Decimeter,Decameter,Hectometer,Kilometer,Megameter,Gigameter,Kiloyard,Kilofoot,Kiloparsec,Megaparsec,KilolightYear,MegalightYear"`
 }
 
 // LengthDtoFactory groups methods for creating and serializing LengthDto objects.
@@ -429,6 +475,9 @@ func (uf LengthFactory) FromMegalightYears(value float64) (*Length, error) {
 func newLength(value float64, fromUnit LengthUnits) (*Length, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalLengthUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in LengthUnits", fromUnit)
 	}
 	a := &Length{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -99,12 +99,56 @@ const (
         EnergyDecathermImperial EnergyUnits = "DecathermImperial"
 )
 
+var internalEnergyUnitsMap = map[EnergyUnits]bool{
+	
+	EnergyJoule: true,
+	EnergyCalorie: true,
+	EnergyBritishThermalUnit: true,
+	EnergyElectronVolt: true,
+	EnergyFootPound: true,
+	EnergyErg: true,
+	EnergyWattHour: true,
+	EnergyWattDay: true,
+	EnergyThermEc: true,
+	EnergyThermUs: true,
+	EnergyThermImperial: true,
+	EnergyHorsepowerHour: true,
+	EnergyNanojoule: true,
+	EnergyMicrojoule: true,
+	EnergyMillijoule: true,
+	EnergyKilojoule: true,
+	EnergyMegajoule: true,
+	EnergyGigajoule: true,
+	EnergyTerajoule: true,
+	EnergyPetajoule: true,
+	EnergyKilocalorie: true,
+	EnergyMegacalorie: true,
+	EnergyKilobritishThermalUnit: true,
+	EnergyMegabritishThermalUnit: true,
+	EnergyGigabritishThermalUnit: true,
+	EnergyKiloelectronVolt: true,
+	EnergyMegaelectronVolt: true,
+	EnergyGigaelectronVolt: true,
+	EnergyTeraelectronVolt: true,
+	EnergyKilowattHour: true,
+	EnergyMegawattHour: true,
+	EnergyGigawattHour: true,
+	EnergyTerawattHour: true,
+	EnergyKilowattDay: true,
+	EnergyMegawattDay: true,
+	EnergyGigawattDay: true,
+	EnergyTerawattDay: true,
+	EnergyDecathermEc: true,
+	EnergyDecathermUs: true,
+	EnergyDecathermImperial: true,
+}
+
 // EnergyDto represents a Energy measurement with a numerical value and its corresponding unit.
 type EnergyDto struct {
     // Value is the numerical representation of the Energy.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Energy, as defined in the EnergyUnits enumeration.
-	Unit  EnergyUnits `json:"unit"`
+	Unit  EnergyUnits `json:"unit" validate:"required,oneof=Joule,Calorie,BritishThermalUnit,ElectronVolt,FootPound,Erg,WattHour,WattDay,ThermEc,ThermUs,ThermImperial,HorsepowerHour,Nanojoule,Microjoule,Millijoule,Kilojoule,Megajoule,Gigajoule,Terajoule,Petajoule,Kilocalorie,Megacalorie,KilobritishThermalUnit,MegabritishThermalUnit,GigabritishThermalUnit,KiloelectronVolt,MegaelectronVolt,GigaelectronVolt,TeraelectronVolt,KilowattHour,MegawattHour,GigawattHour,TerawattHour,KilowattDay,MegawattDay,GigawattDay,TerawattDay,DecathermEc,DecathermUs,DecathermImperial"`
 }
 
 // EnergyDtoFactory groups methods for creating and serializing EnergyDto objects.
@@ -413,6 +457,9 @@ func (uf EnergyFactory) FromDecathermsImperial(value float64) (*Energy, error) {
 func newEnergy(value float64, fromUnit EnergyUnits) (*Energy, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalEnergyUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in EnergyUnits", fromUnit)
 	}
 	a := &Energy{}
 	a.value = a.convertToBase(value, fromUnit)

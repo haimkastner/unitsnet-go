@@ -29,12 +29,21 @@ const (
         PorousMediumPermeabilityMillidarcy PorousMediumPermeabilityUnits = "Millidarcy"
 )
 
+var internalPorousMediumPermeabilityUnitsMap = map[PorousMediumPermeabilityUnits]bool{
+	
+	PorousMediumPermeabilityDarcy: true,
+	PorousMediumPermeabilitySquareMeter: true,
+	PorousMediumPermeabilitySquareCentimeter: true,
+	PorousMediumPermeabilityMicrodarcy: true,
+	PorousMediumPermeabilityMillidarcy: true,
+}
+
 // PorousMediumPermeabilityDto represents a PorousMediumPermeability measurement with a numerical value and its corresponding unit.
 type PorousMediumPermeabilityDto struct {
     // Value is the numerical representation of the PorousMediumPermeability.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the PorousMediumPermeability, as defined in the PorousMediumPermeabilityUnits enumeration.
-	Unit  PorousMediumPermeabilityUnits `json:"unit"`
+	Unit  PorousMediumPermeabilityUnits `json:"unit" validate:"required,oneof=Darcy,SquareMeter,SquareCentimeter,Microdarcy,Millidarcy"`
 }
 
 // PorousMediumPermeabilityDtoFactory groups methods for creating and serializing PorousMediumPermeabilityDto objects.
@@ -133,6 +142,9 @@ func (uf PorousMediumPermeabilityFactory) FromMillidarcys(value float64) (*Porou
 func newPorousMediumPermeability(value float64, fromUnit PorousMediumPermeabilityUnits) (*PorousMediumPermeability, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalPorousMediumPermeabilityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in PorousMediumPermeabilityUnits", fromUnit)
 	}
 	a := &PorousMediumPermeability{}
 	a.value = a.convertToBase(value, fromUnit)

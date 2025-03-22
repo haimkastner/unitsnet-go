@@ -37,12 +37,25 @@ const (
         ElectricCurrentMegaampere ElectricCurrentUnits = "Megaampere"
 )
 
+var internalElectricCurrentUnitsMap = map[ElectricCurrentUnits]bool{
+	
+	ElectricCurrentAmpere: true,
+	ElectricCurrentFemtoampere: true,
+	ElectricCurrentPicoampere: true,
+	ElectricCurrentNanoampere: true,
+	ElectricCurrentMicroampere: true,
+	ElectricCurrentMilliampere: true,
+	ElectricCurrentCentiampere: true,
+	ElectricCurrentKiloampere: true,
+	ElectricCurrentMegaampere: true,
+}
+
 // ElectricCurrentDto represents a ElectricCurrent measurement with a numerical value and its corresponding unit.
 type ElectricCurrentDto struct {
     // Value is the numerical representation of the ElectricCurrent.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricCurrent, as defined in the ElectricCurrentUnits enumeration.
-	Unit  ElectricCurrentUnits `json:"unit"`
+	Unit  ElectricCurrentUnits `json:"unit" validate:"required,oneof=Ampere,Femtoampere,Picoampere,Nanoampere,Microampere,Milliampere,Centiampere,Kiloampere,Megaampere"`
 }
 
 // ElectricCurrentDtoFactory groups methods for creating and serializing ElectricCurrentDto objects.
@@ -165,6 +178,9 @@ func (uf ElectricCurrentFactory) FromMegaamperes(value float64) (*ElectricCurren
 func newElectricCurrent(value float64, fromUnit ElectricCurrentUnits) (*ElectricCurrent, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricCurrentUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricCurrentUnits", fromUnit)
 	}
 	a := &ElectricCurrent{}
 	a.value = a.convertToBase(value, fromUnit)

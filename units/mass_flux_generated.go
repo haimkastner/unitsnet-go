@@ -43,12 +43,28 @@ const (
         MassFluxKilogramPerHourPerSquareMillimeter MassFluxUnits = "KilogramPerHourPerSquareMillimeter"
 )
 
+var internalMassFluxUnitsMap = map[MassFluxUnits]bool{
+	
+	MassFluxGramPerSecondPerSquareMeter: true,
+	MassFluxGramPerSecondPerSquareCentimeter: true,
+	MassFluxGramPerSecondPerSquareMillimeter: true,
+	MassFluxGramPerHourPerSquareMeter: true,
+	MassFluxGramPerHourPerSquareCentimeter: true,
+	MassFluxGramPerHourPerSquareMillimeter: true,
+	MassFluxKilogramPerSecondPerSquareMeter: true,
+	MassFluxKilogramPerSecondPerSquareCentimeter: true,
+	MassFluxKilogramPerSecondPerSquareMillimeter: true,
+	MassFluxKilogramPerHourPerSquareMeter: true,
+	MassFluxKilogramPerHourPerSquareCentimeter: true,
+	MassFluxKilogramPerHourPerSquareMillimeter: true,
+}
+
 // MassFluxDto represents a MassFlux measurement with a numerical value and its corresponding unit.
 type MassFluxDto struct {
     // Value is the numerical representation of the MassFlux.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MassFlux, as defined in the MassFluxUnits enumeration.
-	Unit  MassFluxUnits `json:"unit"`
+	Unit  MassFluxUnits `json:"unit" validate:"required,oneof=GramPerSecondPerSquareMeter,GramPerSecondPerSquareCentimeter,GramPerSecondPerSquareMillimeter,GramPerHourPerSquareMeter,GramPerHourPerSquareCentimeter,GramPerHourPerSquareMillimeter,KilogramPerSecondPerSquareMeter,KilogramPerSecondPerSquareCentimeter,KilogramPerSecondPerSquareMillimeter,KilogramPerHourPerSquareMeter,KilogramPerHourPerSquareCentimeter,KilogramPerHourPerSquareMillimeter"`
 }
 
 // MassFluxDtoFactory groups methods for creating and serializing MassFluxDto objects.
@@ -189,6 +205,9 @@ func (uf MassFluxFactory) FromKilogramsPerHourPerSquareMillimeter(value float64)
 func newMassFlux(value float64, fromUnit MassFluxUnits) (*MassFlux, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMassFluxUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MassFluxUnits", fromUnit)
 	}
 	a := &MassFlux{}
 	a.value = a.convertToBase(value, fromUnit)

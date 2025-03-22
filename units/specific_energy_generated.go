@@ -79,12 +79,46 @@ const (
         SpecificEnergyGigawattHourPerPound SpecificEnergyUnits = "GigawattHourPerPound"
 )
 
+var internalSpecificEnergyUnitsMap = map[SpecificEnergyUnits]bool{
+	
+	SpecificEnergyJoulePerKilogram: true,
+	SpecificEnergyMegaJoulePerTonne: true,
+	SpecificEnergyCaloriePerGram: true,
+	SpecificEnergyWattHourPerKilogram: true,
+	SpecificEnergyWattDayPerKilogram: true,
+	SpecificEnergyWattDayPerTonne: true,
+	SpecificEnergyWattDayPerShortTon: true,
+	SpecificEnergyWattHourPerPound: true,
+	SpecificEnergyBtuPerPound: true,
+	SpecificEnergyKilojoulePerKilogram: true,
+	SpecificEnergyMegajoulePerKilogram: true,
+	SpecificEnergyKilocaloriePerGram: true,
+	SpecificEnergyKilowattHourPerKilogram: true,
+	SpecificEnergyMegawattHourPerKilogram: true,
+	SpecificEnergyGigawattHourPerKilogram: true,
+	SpecificEnergyKilowattDayPerKilogram: true,
+	SpecificEnergyMegawattDayPerKilogram: true,
+	SpecificEnergyGigawattDayPerKilogram: true,
+	SpecificEnergyTerawattDayPerKilogram: true,
+	SpecificEnergyKilowattDayPerTonne: true,
+	SpecificEnergyMegawattDayPerTonne: true,
+	SpecificEnergyGigawattDayPerTonne: true,
+	SpecificEnergyTerawattDayPerTonne: true,
+	SpecificEnergyKilowattDayPerShortTon: true,
+	SpecificEnergyMegawattDayPerShortTon: true,
+	SpecificEnergyGigawattDayPerShortTon: true,
+	SpecificEnergyTerawattDayPerShortTon: true,
+	SpecificEnergyKilowattHourPerPound: true,
+	SpecificEnergyMegawattHourPerPound: true,
+	SpecificEnergyGigawattHourPerPound: true,
+}
+
 // SpecificEnergyDto represents a SpecificEnergy measurement with a numerical value and its corresponding unit.
 type SpecificEnergyDto struct {
     // Value is the numerical representation of the SpecificEnergy.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the SpecificEnergy, as defined in the SpecificEnergyUnits enumeration.
-	Unit  SpecificEnergyUnits `json:"unit"`
+	Unit  SpecificEnergyUnits `json:"unit" validate:"required,oneof=JoulePerKilogram,MegaJoulePerTonne,CaloriePerGram,WattHourPerKilogram,WattDayPerKilogram,WattDayPerTonne,WattDayPerShortTon,WattHourPerPound,BtuPerPound,KilojoulePerKilogram,MegajoulePerKilogram,KilocaloriePerGram,KilowattHourPerKilogram,MegawattHourPerKilogram,GigawattHourPerKilogram,KilowattDayPerKilogram,MegawattDayPerKilogram,GigawattDayPerKilogram,TerawattDayPerKilogram,KilowattDayPerTonne,MegawattDayPerTonne,GigawattDayPerTonne,TerawattDayPerTonne,KilowattDayPerShortTon,MegawattDayPerShortTon,GigawattDayPerShortTon,TerawattDayPerShortTon,KilowattHourPerPound,MegawattHourPerPound,GigawattHourPerPound"`
 }
 
 // SpecificEnergyDtoFactory groups methods for creating and serializing SpecificEnergyDto objects.
@@ -333,6 +367,9 @@ func (uf SpecificEnergyFactory) FromGigawattHoursPerPound(value float64) (*Speci
 func newSpecificEnergy(value float64, fromUnit SpecificEnergyUnits) (*SpecificEnergy, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalSpecificEnergyUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in SpecificEnergyUnits", fromUnit)
 	}
 	a := &SpecificEnergy{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -25,12 +25,19 @@ const (
         SpecificVolumeMillicubicMeterPerKilogram SpecificVolumeUnits = "MillicubicMeterPerKilogram"
 )
 
+var internalSpecificVolumeUnitsMap = map[SpecificVolumeUnits]bool{
+	
+	SpecificVolumeCubicMeterPerKilogram: true,
+	SpecificVolumeCubicFootPerPound: true,
+	SpecificVolumeMillicubicMeterPerKilogram: true,
+}
+
 // SpecificVolumeDto represents a SpecificVolume measurement with a numerical value and its corresponding unit.
 type SpecificVolumeDto struct {
     // Value is the numerical representation of the SpecificVolume.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the SpecificVolume, as defined in the SpecificVolumeUnits enumeration.
-	Unit  SpecificVolumeUnits `json:"unit"`
+	Unit  SpecificVolumeUnits `json:"unit" validate:"required,oneof=CubicMeterPerKilogram,CubicFootPerPound,MillicubicMeterPerKilogram"`
 }
 
 // SpecificVolumeDtoFactory groups methods for creating and serializing SpecificVolumeDto objects.
@@ -117,6 +124,9 @@ func (uf SpecificVolumeFactory) FromMillicubicMetersPerKilogram(value float64) (
 func newSpecificVolume(value float64, fromUnit SpecificVolumeUnits) (*SpecificVolume, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalSpecificVolumeUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in SpecificVolumeUnits", fromUnit)
 	}
 	a := &SpecificVolume{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -73,12 +73,43 @@ const (
         PowerGigajoulePerHour PowerUnits = "GigajoulePerHour"
 )
 
+var internalPowerUnitsMap = map[PowerUnits]bool{
+	
+	PowerWatt: true,
+	PowerMechanicalHorsepower: true,
+	PowerMetricHorsepower: true,
+	PowerElectricalHorsepower: true,
+	PowerBoilerHorsepower: true,
+	PowerHydraulicHorsepower: true,
+	PowerBritishThermalUnitPerHour: true,
+	PowerJoulePerHour: true,
+	PowerTonOfRefrigeration: true,
+	PowerFemtowatt: true,
+	PowerPicowatt: true,
+	PowerNanowatt: true,
+	PowerMicrowatt: true,
+	PowerMilliwatt: true,
+	PowerDeciwatt: true,
+	PowerDecawatt: true,
+	PowerKilowatt: true,
+	PowerMegawatt: true,
+	PowerGigawatt: true,
+	PowerTerawatt: true,
+	PowerPetawatt: true,
+	PowerKilobritishThermalUnitPerHour: true,
+	PowerMegabritishThermalUnitPerHour: true,
+	PowerMillijoulePerHour: true,
+	PowerKilojoulePerHour: true,
+	PowerMegajoulePerHour: true,
+	PowerGigajoulePerHour: true,
+}
+
 // PowerDto represents a Power measurement with a numerical value and its corresponding unit.
 type PowerDto struct {
     // Value is the numerical representation of the Power.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Power, as defined in the PowerUnits enumeration.
-	Unit  PowerUnits `json:"unit"`
+	Unit  PowerUnits `json:"unit" validate:"required,oneof=Watt,MechanicalHorsepower,MetricHorsepower,ElectricalHorsepower,BoilerHorsepower,HydraulicHorsepower,BritishThermalUnitPerHour,JoulePerHour,TonOfRefrigeration,Femtowatt,Picowatt,Nanowatt,Microwatt,Milliwatt,Deciwatt,Decawatt,Kilowatt,Megawatt,Gigawatt,Terawatt,Petawatt,KilobritishThermalUnitPerHour,MegabritishThermalUnitPerHour,MillijoulePerHour,KilojoulePerHour,MegajoulePerHour,GigajoulePerHour"`
 }
 
 // PowerDtoFactory groups methods for creating and serializing PowerDto objects.
@@ -309,6 +340,9 @@ func (uf PowerFactory) FromGigajoulesPerHour(value float64) (*Power, error) {
 func newPower(value float64, fromUnit PowerUnits) (*Power, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalPowerUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in PowerUnits", fromUnit)
 	}
 	a := &Power{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -45,12 +45,29 @@ const (
         MolarMassMegapoundPerMole MolarMassUnits = "MegapoundPerMole"
 )
 
+var internalMolarMassUnitsMap = map[MolarMassUnits]bool{
+	
+	MolarMassGramPerMole: true,
+	MolarMassKilogramPerKilomole: true,
+	MolarMassPoundPerMole: true,
+	MolarMassNanogramPerMole: true,
+	MolarMassMicrogramPerMole: true,
+	MolarMassMilligramPerMole: true,
+	MolarMassCentigramPerMole: true,
+	MolarMassDecigramPerMole: true,
+	MolarMassDecagramPerMole: true,
+	MolarMassHectogramPerMole: true,
+	MolarMassKilogramPerMole: true,
+	MolarMassKilopoundPerMole: true,
+	MolarMassMegapoundPerMole: true,
+}
+
 // MolarMassDto represents a MolarMass measurement with a numerical value and its corresponding unit.
 type MolarMassDto struct {
     // Value is the numerical representation of the MolarMass.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MolarMass, as defined in the MolarMassUnits enumeration.
-	Unit  MolarMassUnits `json:"unit"`
+	Unit  MolarMassUnits `json:"unit" validate:"required,oneof=GramPerMole,KilogramPerKilomole,PoundPerMole,NanogramPerMole,MicrogramPerMole,MilligramPerMole,CentigramPerMole,DecigramPerMole,DecagramPerMole,HectogramPerMole,KilogramPerMole,KilopoundPerMole,MegapoundPerMole"`
 }
 
 // MolarMassDtoFactory groups methods for creating and serializing MolarMassDto objects.
@@ -197,6 +214,9 @@ func (uf MolarMassFactory) FromMegapoundsPerMole(value float64) (*MolarMass, err
 func newMolarMass(value float64, fromUnit MolarMassUnits) (*MolarMass, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMolarMassUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MolarMassUnits", fromUnit)
 	}
 	a := &MolarMass{}
 	a.value = a.convertToBase(value, fromUnit)

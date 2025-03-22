@@ -1406,3 +1406,19 @@ func TestDuration_String(t *testing.T) {
         })
     }
 }
+
+
+func TestDuration_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.DurationFactory{}
+
+	_, err := uf.CreateDuration(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

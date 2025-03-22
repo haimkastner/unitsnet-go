@@ -21,12 +21,17 @@ const (
         ElectricChargeDensityCoulombPerCubicMeter ElectricChargeDensityUnits = "CoulombPerCubicMeter"
 )
 
+var internalElectricChargeDensityUnitsMap = map[ElectricChargeDensityUnits]bool{
+	
+	ElectricChargeDensityCoulombPerCubicMeter: true,
+}
+
 // ElectricChargeDensityDto represents a ElectricChargeDensity measurement with a numerical value and its corresponding unit.
 type ElectricChargeDensityDto struct {
     // Value is the numerical representation of the ElectricChargeDensity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricChargeDensity, as defined in the ElectricChargeDensityUnits enumeration.
-	Unit  ElectricChargeDensityUnits `json:"unit"`
+	Unit  ElectricChargeDensityUnits `json:"unit" validate:"required,oneof=CoulombPerCubicMeter"`
 }
 
 // ElectricChargeDensityDtoFactory groups methods for creating and serializing ElectricChargeDensityDto objects.
@@ -101,6 +106,9 @@ func (uf ElectricChargeDensityFactory) FromCoulombsPerCubicMeter(value float64) 
 func newElectricChargeDensity(value float64, fromUnit ElectricChargeDensityUnits) (*ElectricChargeDensity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricChargeDensityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricChargeDensityUnits", fromUnit)
 	}
 	a := &ElectricChargeDensity{}
 	a.value = a.convertToBase(value, fromUnit)

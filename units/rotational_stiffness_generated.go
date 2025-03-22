@@ -85,12 +85,49 @@ const (
         RotationalStiffnessMeganewtonMillimeterPerRadian RotationalStiffnessUnits = "MeganewtonMillimeterPerRadian"
 )
 
+var internalRotationalStiffnessUnitsMap = map[RotationalStiffnessUnits]bool{
+	
+	RotationalStiffnessNewtonMeterPerRadian: true,
+	RotationalStiffnessPoundForceFootPerDegrees: true,
+	RotationalStiffnessKilopoundForceFootPerDegrees: true,
+	RotationalStiffnessNewtonMillimeterPerDegree: true,
+	RotationalStiffnessNewtonMeterPerDegree: true,
+	RotationalStiffnessNewtonMillimeterPerRadian: true,
+	RotationalStiffnessPoundForceFeetPerRadian: true,
+	RotationalStiffnessKilonewtonMeterPerRadian: true,
+	RotationalStiffnessMeganewtonMeterPerRadian: true,
+	RotationalStiffnessNanonewtonMillimeterPerDegree: true,
+	RotationalStiffnessMicronewtonMillimeterPerDegree: true,
+	RotationalStiffnessMillinewtonMillimeterPerDegree: true,
+	RotationalStiffnessCentinewtonMillimeterPerDegree: true,
+	RotationalStiffnessDecinewtonMillimeterPerDegree: true,
+	RotationalStiffnessDecanewtonMillimeterPerDegree: true,
+	RotationalStiffnessKilonewtonMillimeterPerDegree: true,
+	RotationalStiffnessMeganewtonMillimeterPerDegree: true,
+	RotationalStiffnessNanonewtonMeterPerDegree: true,
+	RotationalStiffnessMicronewtonMeterPerDegree: true,
+	RotationalStiffnessMillinewtonMeterPerDegree: true,
+	RotationalStiffnessCentinewtonMeterPerDegree: true,
+	RotationalStiffnessDecinewtonMeterPerDegree: true,
+	RotationalStiffnessDecanewtonMeterPerDegree: true,
+	RotationalStiffnessKilonewtonMeterPerDegree: true,
+	RotationalStiffnessMeganewtonMeterPerDegree: true,
+	RotationalStiffnessNanonewtonMillimeterPerRadian: true,
+	RotationalStiffnessMicronewtonMillimeterPerRadian: true,
+	RotationalStiffnessMillinewtonMillimeterPerRadian: true,
+	RotationalStiffnessCentinewtonMillimeterPerRadian: true,
+	RotationalStiffnessDecinewtonMillimeterPerRadian: true,
+	RotationalStiffnessDecanewtonMillimeterPerRadian: true,
+	RotationalStiffnessKilonewtonMillimeterPerRadian: true,
+	RotationalStiffnessMeganewtonMillimeterPerRadian: true,
+}
+
 // RotationalStiffnessDto represents a RotationalStiffness measurement with a numerical value and its corresponding unit.
 type RotationalStiffnessDto struct {
     // Value is the numerical representation of the RotationalStiffness.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RotationalStiffness, as defined in the RotationalStiffnessUnits enumeration.
-	Unit  RotationalStiffnessUnits `json:"unit"`
+	Unit  RotationalStiffnessUnits `json:"unit" validate:"required,oneof=NewtonMeterPerRadian,PoundForceFootPerDegrees,KilopoundForceFootPerDegrees,NewtonMillimeterPerDegree,NewtonMeterPerDegree,NewtonMillimeterPerRadian,PoundForceFeetPerRadian,KilonewtonMeterPerRadian,MeganewtonMeterPerRadian,NanonewtonMillimeterPerDegree,MicronewtonMillimeterPerDegree,MillinewtonMillimeterPerDegree,CentinewtonMillimeterPerDegree,DecinewtonMillimeterPerDegree,DecanewtonMillimeterPerDegree,KilonewtonMillimeterPerDegree,MeganewtonMillimeterPerDegree,NanonewtonMeterPerDegree,MicronewtonMeterPerDegree,MillinewtonMeterPerDegree,CentinewtonMeterPerDegree,DecinewtonMeterPerDegree,DecanewtonMeterPerDegree,KilonewtonMeterPerDegree,MeganewtonMeterPerDegree,NanonewtonMillimeterPerRadian,MicronewtonMillimeterPerRadian,MillinewtonMillimeterPerRadian,CentinewtonMillimeterPerRadian,DecinewtonMillimeterPerRadian,DecanewtonMillimeterPerRadian,KilonewtonMillimeterPerRadian,MeganewtonMillimeterPerRadian"`
 }
 
 // RotationalStiffnessDtoFactory groups methods for creating and serializing RotationalStiffnessDto objects.
@@ -357,6 +394,9 @@ func (uf RotationalStiffnessFactory) FromMeganewtonMillimetersPerRadian(value fl
 func newRotationalStiffness(value float64, fromUnit RotationalStiffnessUnits) (*RotationalStiffness, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRotationalStiffnessUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RotationalStiffnessUnits", fromUnit)
 	}
 	a := &RotationalStiffness{}
 	a.value = a.convertToBase(value, fromUnit)
