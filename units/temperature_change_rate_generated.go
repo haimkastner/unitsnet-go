@@ -53,12 +53,33 @@ const (
         TemperatureChangeRateKilodegreeCelsiusPerSecond TemperatureChangeRateUnits = "KilodegreeCelsiusPerSecond"
 )
 
+var internalTemperatureChangeRateUnitsMap = map[TemperatureChangeRateUnits]bool{
+	
+	TemperatureChangeRateDegreeCelsiusPerSecond: true,
+	TemperatureChangeRateDegreeCelsiusPerMinute: true,
+	TemperatureChangeRateDegreeKelvinPerMinute: true,
+	TemperatureChangeRateDegreeFahrenheitPerMinute: true,
+	TemperatureChangeRateDegreeFahrenheitPerSecond: true,
+	TemperatureChangeRateDegreeKelvinPerSecond: true,
+	TemperatureChangeRateDegreeCelsiusPerHour: true,
+	TemperatureChangeRateDegreeKelvinPerHour: true,
+	TemperatureChangeRateDegreeFahrenheitPerHour: true,
+	TemperatureChangeRateNanodegreeCelsiusPerSecond: true,
+	TemperatureChangeRateMicrodegreeCelsiusPerSecond: true,
+	TemperatureChangeRateMillidegreeCelsiusPerSecond: true,
+	TemperatureChangeRateCentidegreeCelsiusPerSecond: true,
+	TemperatureChangeRateDecidegreeCelsiusPerSecond: true,
+	TemperatureChangeRateDecadegreeCelsiusPerSecond: true,
+	TemperatureChangeRateHectodegreeCelsiusPerSecond: true,
+	TemperatureChangeRateKilodegreeCelsiusPerSecond: true,
+}
+
 // TemperatureChangeRateDto represents a TemperatureChangeRate measurement with a numerical value and its corresponding unit.
 type TemperatureChangeRateDto struct {
     // Value is the numerical representation of the TemperatureChangeRate.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the TemperatureChangeRate, as defined in the TemperatureChangeRateUnits enumeration.
-	Unit  TemperatureChangeRateUnits `json:"unit"`
+	Unit  TemperatureChangeRateUnits `json:"unit" validate:"required,oneof=DegreeCelsiusPerSecond,DegreeCelsiusPerMinute,DegreeKelvinPerMinute,DegreeFahrenheitPerMinute,DegreeFahrenheitPerSecond,DegreeKelvinPerSecond,DegreeCelsiusPerHour,DegreeKelvinPerHour,DegreeFahrenheitPerHour,NanodegreeCelsiusPerSecond,MicrodegreeCelsiusPerSecond,MillidegreeCelsiusPerSecond,CentidegreeCelsiusPerSecond,DecidegreeCelsiusPerSecond,DecadegreeCelsiusPerSecond,HectodegreeCelsiusPerSecond,KilodegreeCelsiusPerSecond"`
 }
 
 // TemperatureChangeRateDtoFactory groups methods for creating and serializing TemperatureChangeRateDto objects.
@@ -229,6 +250,9 @@ func (uf TemperatureChangeRateFactory) FromKilodegreesCelsiusPerSecond(value flo
 func newTemperatureChangeRate(value float64, fromUnit TemperatureChangeRateUnits) (*TemperatureChangeRate, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalTemperatureChangeRateUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in TemperatureChangeRateUnits", fromUnit)
 	}
 	a := &TemperatureChangeRate{}
 	a.value = a.convertToBase(value, fromUnit)

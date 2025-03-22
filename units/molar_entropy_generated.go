@@ -25,12 +25,19 @@ const (
         MolarEntropyMegajoulePerMoleKelvin MolarEntropyUnits = "MegajoulePerMoleKelvin"
 )
 
+var internalMolarEntropyUnitsMap = map[MolarEntropyUnits]bool{
+	
+	MolarEntropyJoulePerMoleKelvin: true,
+	MolarEntropyKilojoulePerMoleKelvin: true,
+	MolarEntropyMegajoulePerMoleKelvin: true,
+}
+
 // MolarEntropyDto represents a MolarEntropy measurement with a numerical value and its corresponding unit.
 type MolarEntropyDto struct {
     // Value is the numerical representation of the MolarEntropy.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MolarEntropy, as defined in the MolarEntropyUnits enumeration.
-	Unit  MolarEntropyUnits `json:"unit"`
+	Unit  MolarEntropyUnits `json:"unit" validate:"required,oneof=JoulePerMoleKelvin,KilojoulePerMoleKelvin,MegajoulePerMoleKelvin"`
 }
 
 // MolarEntropyDtoFactory groups methods for creating and serializing MolarEntropyDto objects.
@@ -117,6 +124,9 @@ func (uf MolarEntropyFactory) FromMegajoulesPerMoleKelvin(value float64) (*Molar
 func newMolarEntropy(value float64, fromUnit MolarEntropyUnits) (*MolarEntropy, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMolarEntropyUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MolarEntropyUnits", fromUnit)
 	}
 	a := &MolarEntropy{}
 	a.value = a.convertToBase(value, fromUnit)

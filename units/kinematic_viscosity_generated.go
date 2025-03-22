@@ -37,12 +37,25 @@ const (
         KinematicViscosityKilostokes KinematicViscosityUnits = "Kilostokes"
 )
 
+var internalKinematicViscosityUnitsMap = map[KinematicViscosityUnits]bool{
+	
+	KinematicViscositySquareMeterPerSecond: true,
+	KinematicViscosityStokes: true,
+	KinematicViscositySquareFootPerSecond: true,
+	KinematicViscosityNanostokes: true,
+	KinematicViscosityMicrostokes: true,
+	KinematicViscosityMillistokes: true,
+	KinematicViscosityCentistokes: true,
+	KinematicViscosityDecistokes: true,
+	KinematicViscosityKilostokes: true,
+}
+
 // KinematicViscosityDto represents a KinematicViscosity measurement with a numerical value and its corresponding unit.
 type KinematicViscosityDto struct {
     // Value is the numerical representation of the KinematicViscosity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the KinematicViscosity, as defined in the KinematicViscosityUnits enumeration.
-	Unit  KinematicViscosityUnits `json:"unit"`
+	Unit  KinematicViscosityUnits `json:"unit" validate:"required,oneof=SquareMeterPerSecond,Stokes,SquareFootPerSecond,Nanostokes,Microstokes,Millistokes,Centistokes,Decistokes,Kilostokes"`
 }
 
 // KinematicViscosityDtoFactory groups methods for creating and serializing KinematicViscosityDto objects.
@@ -165,6 +178,9 @@ func (uf KinematicViscosityFactory) FromKilostokes(value float64) (*KinematicVis
 func newKinematicViscosity(value float64, fromUnit KinematicViscosityUnits) (*KinematicViscosity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalKinematicViscosityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in KinematicViscosityUnits", fromUnit)
 	}
 	a := &KinematicViscosity{}
 	a.value = a.convertToBase(value, fromUnit)

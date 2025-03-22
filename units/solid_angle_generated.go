@@ -21,12 +21,17 @@ const (
         SolidAngleSteradian SolidAngleUnits = "Steradian"
 )
 
+var internalSolidAngleUnitsMap = map[SolidAngleUnits]bool{
+	
+	SolidAngleSteradian: true,
+}
+
 // SolidAngleDto represents a SolidAngle measurement with a numerical value and its corresponding unit.
 type SolidAngleDto struct {
     // Value is the numerical representation of the SolidAngle.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the SolidAngle, as defined in the SolidAngleUnits enumeration.
-	Unit  SolidAngleUnits `json:"unit"`
+	Unit  SolidAngleUnits `json:"unit" validate:"required,oneof=Steradian"`
 }
 
 // SolidAngleDtoFactory groups methods for creating and serializing SolidAngleDto objects.
@@ -101,6 +106,9 @@ func (uf SolidAngleFactory) FromSteradians(value float64) (*SolidAngle, error) {
 func newSolidAngle(value float64, fromUnit SolidAngleUnits) (*SolidAngle, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalSolidAngleUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in SolidAngleUnits", fromUnit)
 	}
 	a := &SolidAngle{}
 	a.value = a.convertToBase(value, fromUnit)

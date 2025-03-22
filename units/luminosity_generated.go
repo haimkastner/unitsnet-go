@@ -47,12 +47,30 @@ const (
         LuminosityPetawatt LuminosityUnits = "Petawatt"
 )
 
+var internalLuminosityUnitsMap = map[LuminosityUnits]bool{
+	
+	LuminosityWatt: true,
+	LuminositySolarLuminosity: true,
+	LuminosityFemtowatt: true,
+	LuminosityPicowatt: true,
+	LuminosityNanowatt: true,
+	LuminosityMicrowatt: true,
+	LuminosityMilliwatt: true,
+	LuminosityDeciwatt: true,
+	LuminosityDecawatt: true,
+	LuminosityKilowatt: true,
+	LuminosityMegawatt: true,
+	LuminosityGigawatt: true,
+	LuminosityTerawatt: true,
+	LuminosityPetawatt: true,
+}
+
 // LuminosityDto represents a Luminosity measurement with a numerical value and its corresponding unit.
 type LuminosityDto struct {
     // Value is the numerical representation of the Luminosity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Luminosity, as defined in the LuminosityUnits enumeration.
-	Unit  LuminosityUnits `json:"unit"`
+	Unit  LuminosityUnits `json:"unit" validate:"required,oneof=Watt,SolarLuminosity,Femtowatt,Picowatt,Nanowatt,Microwatt,Milliwatt,Deciwatt,Decawatt,Kilowatt,Megawatt,Gigawatt,Terawatt,Petawatt"`
 }
 
 // LuminosityDtoFactory groups methods for creating and serializing LuminosityDto objects.
@@ -205,6 +223,9 @@ func (uf LuminosityFactory) FromPetawatts(value float64) (*Luminosity, error) {
 func newLuminosity(value float64, fromUnit LuminosityUnits) (*Luminosity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalLuminosityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in LuminosityUnits", fromUnit)
 	}
 	a := &Luminosity{}
 	a.value = a.convertToBase(value, fromUnit)

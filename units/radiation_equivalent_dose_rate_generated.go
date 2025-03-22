@@ -39,12 +39,26 @@ const (
         RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour RadiationEquivalentDoseRateUnits = "MilliroentgenEquivalentManPerHour"
 )
 
+var internalRadiationEquivalentDoseRateUnitsMap = map[RadiationEquivalentDoseRateUnits]bool{
+	
+	RadiationEquivalentDoseRateSievertPerHour: true,
+	RadiationEquivalentDoseRateSievertPerSecond: true,
+	RadiationEquivalentDoseRateRoentgenEquivalentManPerHour: true,
+	RadiationEquivalentDoseRateNanosievertPerHour: true,
+	RadiationEquivalentDoseRateMicrosievertPerHour: true,
+	RadiationEquivalentDoseRateMillisievertPerHour: true,
+	RadiationEquivalentDoseRateNanosievertPerSecond: true,
+	RadiationEquivalentDoseRateMicrosievertPerSecond: true,
+	RadiationEquivalentDoseRateMillisievertPerSecond: true,
+	RadiationEquivalentDoseRateMilliroentgenEquivalentManPerHour: true,
+}
+
 // RadiationEquivalentDoseRateDto represents a RadiationEquivalentDoseRate measurement with a numerical value and its corresponding unit.
 type RadiationEquivalentDoseRateDto struct {
     // Value is the numerical representation of the RadiationEquivalentDoseRate.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RadiationEquivalentDoseRate, as defined in the RadiationEquivalentDoseRateUnits enumeration.
-	Unit  RadiationEquivalentDoseRateUnits `json:"unit"`
+	Unit  RadiationEquivalentDoseRateUnits `json:"unit" validate:"required,oneof=SievertPerHour,SievertPerSecond,RoentgenEquivalentManPerHour,NanosievertPerHour,MicrosievertPerHour,MillisievertPerHour,NanosievertPerSecond,MicrosievertPerSecond,MillisievertPerSecond,MilliroentgenEquivalentManPerHour"`
 }
 
 // RadiationEquivalentDoseRateDtoFactory groups methods for creating and serializing RadiationEquivalentDoseRateDto objects.
@@ -173,6 +187,9 @@ func (uf RadiationEquivalentDoseRateFactory) FromMilliroentgensEquivalentManPerH
 func newRadiationEquivalentDoseRate(value float64, fromUnit RadiationEquivalentDoseRateUnits) (*RadiationEquivalentDoseRate, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRadiationEquivalentDoseRateUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RadiationEquivalentDoseRateUnits", fromUnit)
 	}
 	a := &RadiationEquivalentDoseRate{}
 	a.value = a.convertToBase(value, fromUnit)

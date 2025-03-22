@@ -37,12 +37,25 @@ const (
         VolumetricHeatCapacityKilocaloriePerCubicCentimeterDegreeCelsius VolumetricHeatCapacityUnits = "KilocaloriePerCubicCentimeterDegreeCelsius"
 )
 
+var internalVolumetricHeatCapacityUnitsMap = map[VolumetricHeatCapacityUnits]bool{
+	
+	VolumetricHeatCapacityJoulePerCubicMeterKelvin: true,
+	VolumetricHeatCapacityJoulePerCubicMeterDegreeCelsius: true,
+	VolumetricHeatCapacityCaloriePerCubicCentimeterDegreeCelsius: true,
+	VolumetricHeatCapacityBtuPerCubicFootDegreeFahrenheit: true,
+	VolumetricHeatCapacityKilojoulePerCubicMeterKelvin: true,
+	VolumetricHeatCapacityMegajoulePerCubicMeterKelvin: true,
+	VolumetricHeatCapacityKilojoulePerCubicMeterDegreeCelsius: true,
+	VolumetricHeatCapacityMegajoulePerCubicMeterDegreeCelsius: true,
+	VolumetricHeatCapacityKilocaloriePerCubicCentimeterDegreeCelsius: true,
+}
+
 // VolumetricHeatCapacityDto represents a VolumetricHeatCapacity measurement with a numerical value and its corresponding unit.
 type VolumetricHeatCapacityDto struct {
     // Value is the numerical representation of the VolumetricHeatCapacity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the VolumetricHeatCapacity, as defined in the VolumetricHeatCapacityUnits enumeration.
-	Unit  VolumetricHeatCapacityUnits `json:"unit"`
+	Unit  VolumetricHeatCapacityUnits `json:"unit" validate:"required,oneof=JoulePerCubicMeterKelvin,JoulePerCubicMeterDegreeCelsius,CaloriePerCubicCentimeterDegreeCelsius,BtuPerCubicFootDegreeFahrenheit,KilojoulePerCubicMeterKelvin,MegajoulePerCubicMeterKelvin,KilojoulePerCubicMeterDegreeCelsius,MegajoulePerCubicMeterDegreeCelsius,KilocaloriePerCubicCentimeterDegreeCelsius"`
 }
 
 // VolumetricHeatCapacityDtoFactory groups methods for creating and serializing VolumetricHeatCapacityDto objects.
@@ -165,6 +178,9 @@ func (uf VolumetricHeatCapacityFactory) FromKilocaloriesPerCubicCentimeterDegree
 func newVolumetricHeatCapacity(value float64, fromUnit VolumetricHeatCapacityUnits) (*VolumetricHeatCapacity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalVolumetricHeatCapacityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in VolumetricHeatCapacityUnits", fromUnit)
 	}
 	a := &VolumetricHeatCapacity{}
 	a.value = a.convertToBase(value, fromUnit)

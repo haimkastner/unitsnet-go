@@ -39,12 +39,26 @@ const (
         LuminanceKilocandelaPerSquareMeter LuminanceUnits = "KilocandelaPerSquareMeter"
 )
 
+var internalLuminanceUnitsMap = map[LuminanceUnits]bool{
+	
+	LuminanceCandelaPerSquareMeter: true,
+	LuminanceCandelaPerSquareFoot: true,
+	LuminanceCandelaPerSquareInch: true,
+	LuminanceNit: true,
+	LuminanceNanocandelaPerSquareMeter: true,
+	LuminanceMicrocandelaPerSquareMeter: true,
+	LuminanceMillicandelaPerSquareMeter: true,
+	LuminanceCenticandelaPerSquareMeter: true,
+	LuminanceDecicandelaPerSquareMeter: true,
+	LuminanceKilocandelaPerSquareMeter: true,
+}
+
 // LuminanceDto represents a Luminance measurement with a numerical value and its corresponding unit.
 type LuminanceDto struct {
     // Value is the numerical representation of the Luminance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Luminance, as defined in the LuminanceUnits enumeration.
-	Unit  LuminanceUnits `json:"unit"`
+	Unit  LuminanceUnits `json:"unit" validate:"required,oneof=CandelaPerSquareMeter,CandelaPerSquareFoot,CandelaPerSquareInch,Nit,NanocandelaPerSquareMeter,MicrocandelaPerSquareMeter,MillicandelaPerSquareMeter,CenticandelaPerSquareMeter,DecicandelaPerSquareMeter,KilocandelaPerSquareMeter"`
 }
 
 // LuminanceDtoFactory groups methods for creating and serializing LuminanceDto objects.
@@ -173,6 +187,9 @@ func (uf LuminanceFactory) FromKilocandelasPerSquareMeter(value float64) (*Lumin
 func newLuminance(value float64, fromUnit LuminanceUnits) (*Luminance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalLuminanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in LuminanceUnits", fromUnit)
 	}
 	a := &Luminance{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -37,12 +37,25 @@ const (
         StandardVolumeFlowStandardCubicFootPerHour StandardVolumeFlowUnits = "StandardCubicFootPerHour"
 )
 
+var internalStandardVolumeFlowUnitsMap = map[StandardVolumeFlowUnits]bool{
+	
+	StandardVolumeFlowStandardCubicMeterPerSecond: true,
+	StandardVolumeFlowStandardCubicMeterPerMinute: true,
+	StandardVolumeFlowStandardCubicMeterPerHour: true,
+	StandardVolumeFlowStandardCubicMeterPerDay: true,
+	StandardVolumeFlowStandardCubicCentimeterPerMinute: true,
+	StandardVolumeFlowStandardLiterPerMinute: true,
+	StandardVolumeFlowStandardCubicFootPerSecond: true,
+	StandardVolumeFlowStandardCubicFootPerMinute: true,
+	StandardVolumeFlowStandardCubicFootPerHour: true,
+}
+
 // StandardVolumeFlowDto represents a StandardVolumeFlow measurement with a numerical value and its corresponding unit.
 type StandardVolumeFlowDto struct {
     // Value is the numerical representation of the StandardVolumeFlow.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the StandardVolumeFlow, as defined in the StandardVolumeFlowUnits enumeration.
-	Unit  StandardVolumeFlowUnits `json:"unit"`
+	Unit  StandardVolumeFlowUnits `json:"unit" validate:"required,oneof=StandardCubicMeterPerSecond,StandardCubicMeterPerMinute,StandardCubicMeterPerHour,StandardCubicMeterPerDay,StandardCubicCentimeterPerMinute,StandardLiterPerMinute,StandardCubicFootPerSecond,StandardCubicFootPerMinute,StandardCubicFootPerHour"`
 }
 
 // StandardVolumeFlowDtoFactory groups methods for creating and serializing StandardVolumeFlowDto objects.
@@ -165,6 +178,9 @@ func (uf StandardVolumeFlowFactory) FromStandardCubicFeetPerHour(value float64) 
 func newStandardVolumeFlow(value float64, fromUnit StandardVolumeFlowUnits) (*StandardVolumeFlow, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalStandardVolumeFlowUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in StandardVolumeFlowUnits", fromUnit)
 	}
 	a := &StandardVolumeFlow{}
 	a.value = a.convertToBase(value, fromUnit)

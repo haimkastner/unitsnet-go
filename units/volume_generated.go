@@ -127,12 +127,70 @@ const (
         VolumeMegausGallon VolumeUnits = "MegausGallon"
 )
 
+var internalVolumeUnitsMap = map[VolumeUnits]bool{
+	
+	VolumeLiter: true,
+	VolumeCubicMeter: true,
+	VolumeCubicKilometer: true,
+	VolumeCubicHectometer: true,
+	VolumeCubicDecimeter: true,
+	VolumeCubicCentimeter: true,
+	VolumeCubicMillimeter: true,
+	VolumeCubicMicrometer: true,
+	VolumeCubicMile: true,
+	VolumeCubicYard: true,
+	VolumeCubicFoot: true,
+	VolumeCubicInch: true,
+	VolumeImperialGallon: true,
+	VolumeImperialOunce: true,
+	VolumeUsGallon: true,
+	VolumeUsOunce: true,
+	VolumeUsTablespoon: true,
+	VolumeAuTablespoon: true,
+	VolumeUkTablespoon: true,
+	VolumeMetricTeaspoon: true,
+	VolumeUsTeaspoon: true,
+	VolumeMetricCup: true,
+	VolumeUsCustomaryCup: true,
+	VolumeUsLegalCup: true,
+	VolumeOilBarrel: true,
+	VolumeUsBeerBarrel: true,
+	VolumeImperialBeerBarrel: true,
+	VolumeUsQuart: true,
+	VolumeImperialQuart: true,
+	VolumeUsPint: true,
+	VolumeAcreFoot: true,
+	VolumeImperialPint: true,
+	VolumeBoardFoot: true,
+	VolumeNanoliter: true,
+	VolumeMicroliter: true,
+	VolumeMilliliter: true,
+	VolumeCentiliter: true,
+	VolumeDeciliter: true,
+	VolumeDecaliter: true,
+	VolumeHectoliter: true,
+	VolumeKiloliter: true,
+	VolumeMegaliter: true,
+	VolumeHectocubicMeter: true,
+	VolumeKilocubicMeter: true,
+	VolumeHectocubicFoot: true,
+	VolumeKilocubicFoot: true,
+	VolumeMegacubicFoot: true,
+	VolumeKiloimperialGallon: true,
+	VolumeMegaimperialGallon: true,
+	VolumeDecausGallon: true,
+	VolumeDeciusGallon: true,
+	VolumeHectousGallon: true,
+	VolumeKilousGallon: true,
+	VolumeMegausGallon: true,
+}
+
 // VolumeDto represents a Volume measurement with a numerical value and its corresponding unit.
 type VolumeDto struct {
     // Value is the numerical representation of the Volume.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Volume, as defined in the VolumeUnits enumeration.
-	Unit  VolumeUnits `json:"unit"`
+	Unit  VolumeUnits `json:"unit" validate:"required,oneof=Liter,CubicMeter,CubicKilometer,CubicHectometer,CubicDecimeter,CubicCentimeter,CubicMillimeter,CubicMicrometer,CubicMile,CubicYard,CubicFoot,CubicInch,ImperialGallon,ImperialOunce,UsGallon,UsOunce,UsTablespoon,AuTablespoon,UkTablespoon,MetricTeaspoon,UsTeaspoon,MetricCup,UsCustomaryCup,UsLegalCup,OilBarrel,UsBeerBarrel,ImperialBeerBarrel,UsQuart,ImperialQuart,UsPint,AcreFoot,ImperialPint,BoardFoot,Nanoliter,Microliter,Milliliter,Centiliter,Deciliter,Decaliter,Hectoliter,Kiloliter,Megaliter,HectocubicMeter,KilocubicMeter,HectocubicFoot,KilocubicFoot,MegacubicFoot,KiloimperialGallon,MegaimperialGallon,DecausGallon,DeciusGallon,HectousGallon,KilousGallon,MegausGallon"`
 }
 
 // VolumeDtoFactory groups methods for creating and serializing VolumeDto objects.
@@ -525,6 +583,9 @@ func (uf VolumeFactory) FromMegausGallons(value float64) (*Volume, error) {
 func newVolume(value float64, fromUnit VolumeUnits) (*Volume, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalVolumeUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in VolumeUnits", fromUnit)
 	}
 	a := &Volume{}
 	a.value = a.convertToBase(value, fromUnit)

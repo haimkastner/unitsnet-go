@@ -25,12 +25,19 @@ const (
         AreaDensityMilligramPerSquareMeter AreaDensityUnits = "MilligramPerSquareMeter"
 )
 
+var internalAreaDensityUnitsMap = map[AreaDensityUnits]bool{
+	
+	AreaDensityKilogramPerSquareMeter: true,
+	AreaDensityGramPerSquareMeter: true,
+	AreaDensityMilligramPerSquareMeter: true,
+}
+
 // AreaDensityDto represents a AreaDensity measurement with a numerical value and its corresponding unit.
 type AreaDensityDto struct {
     // Value is the numerical representation of the AreaDensity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the AreaDensity, as defined in the AreaDensityUnits enumeration.
-	Unit  AreaDensityUnits `json:"unit"`
+	Unit  AreaDensityUnits `json:"unit" validate:"required,oneof=KilogramPerSquareMeter,GramPerSquareMeter,MilligramPerSquareMeter"`
 }
 
 // AreaDensityDtoFactory groups methods for creating and serializing AreaDensityDto objects.
@@ -117,6 +124,9 @@ func (uf AreaDensityFactory) FromMilligramsPerSquareMeter(value float64) (*AreaD
 func newAreaDensity(value float64, fromUnit AreaDensityUnits) (*AreaDensity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalAreaDensityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in AreaDensityUnits", fromUnit)
 	}
 	a := &AreaDensity{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -37,12 +37,25 @@ const (
         MolarFlowKilomolePerHour MolarFlowUnits = "KilomolePerHour"
 )
 
+var internalMolarFlowUnitsMap = map[MolarFlowUnits]bool{
+	
+	MolarFlowMolePerSecond: true,
+	MolarFlowMolePerMinute: true,
+	MolarFlowMolePerHour: true,
+	MolarFlowPoundMolePerSecond: true,
+	MolarFlowPoundMolePerMinute: true,
+	MolarFlowPoundMolePerHour: true,
+	MolarFlowKilomolePerSecond: true,
+	MolarFlowKilomolePerMinute: true,
+	MolarFlowKilomolePerHour: true,
+}
+
 // MolarFlowDto represents a MolarFlow measurement with a numerical value and its corresponding unit.
 type MolarFlowDto struct {
     // Value is the numerical representation of the MolarFlow.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MolarFlow, as defined in the MolarFlowUnits enumeration.
-	Unit  MolarFlowUnits `json:"unit"`
+	Unit  MolarFlowUnits `json:"unit" validate:"required,oneof=MolePerSecond,MolePerMinute,MolePerHour,PoundMolePerSecond,PoundMolePerMinute,PoundMolePerHour,KilomolePerSecond,KilomolePerMinute,KilomolePerHour"`
 }
 
 // MolarFlowDtoFactory groups methods for creating and serializing MolarFlowDto objects.
@@ -165,6 +178,9 @@ func (uf MolarFlowFactory) FromKilomolesPerHour(value float64) (*MolarFlow, erro
 func newMolarFlow(value float64, fromUnit MolarFlowUnits) (*MolarFlow, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMolarFlowUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MolarFlowUnits", fromUnit)
 	}
 	a := &MolarFlow{}
 	a.value = a.convertToBase(value, fromUnit)

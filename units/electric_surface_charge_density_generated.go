@@ -25,12 +25,19 @@ const (
         ElectricSurfaceChargeDensityCoulombPerSquareInch ElectricSurfaceChargeDensityUnits = "CoulombPerSquareInch"
 )
 
+var internalElectricSurfaceChargeDensityUnitsMap = map[ElectricSurfaceChargeDensityUnits]bool{
+	
+	ElectricSurfaceChargeDensityCoulombPerSquareMeter: true,
+	ElectricSurfaceChargeDensityCoulombPerSquareCentimeter: true,
+	ElectricSurfaceChargeDensityCoulombPerSquareInch: true,
+}
+
 // ElectricSurfaceChargeDensityDto represents a ElectricSurfaceChargeDensity measurement with a numerical value and its corresponding unit.
 type ElectricSurfaceChargeDensityDto struct {
     // Value is the numerical representation of the ElectricSurfaceChargeDensity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricSurfaceChargeDensity, as defined in the ElectricSurfaceChargeDensityUnits enumeration.
-	Unit  ElectricSurfaceChargeDensityUnits `json:"unit"`
+	Unit  ElectricSurfaceChargeDensityUnits `json:"unit" validate:"required,oneof=CoulombPerSquareMeter,CoulombPerSquareCentimeter,CoulombPerSquareInch"`
 }
 
 // ElectricSurfaceChargeDensityDtoFactory groups methods for creating and serializing ElectricSurfaceChargeDensityDto objects.
@@ -117,6 +124,9 @@ func (uf ElectricSurfaceChargeDensityFactory) FromCoulombsPerSquareInch(value fl
 func newElectricSurfaceChargeDensity(value float64, fromUnit ElectricSurfaceChargeDensityUnits) (*ElectricSurfaceChargeDensity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricSurfaceChargeDensityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricSurfaceChargeDensityUnits", fromUnit)
 	}
 	a := &ElectricSurfaceChargeDensity{}
 	a.value = a.convertToBase(value, fromUnit)

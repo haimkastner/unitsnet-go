@@ -976,3 +976,19 @@ func TestCompressibility_String(t *testing.T) {
         })
     }
 }
+
+
+func TestCompressibility_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.CompressibilityFactory{}
+
+	_, err := uf.CreateCompressibility(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

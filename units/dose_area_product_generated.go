@@ -59,12 +59,36 @@ const (
         DoseAreaProductDecigraySquareMillimeter DoseAreaProductUnits = "DecigraySquareMillimeter"
 )
 
+var internalDoseAreaProductUnitsMap = map[DoseAreaProductUnits]bool{
+	
+	DoseAreaProductGraySquareMeter: true,
+	DoseAreaProductGraySquareDecimeter: true,
+	DoseAreaProductGraySquareCentimeter: true,
+	DoseAreaProductGraySquareMillimeter: true,
+	DoseAreaProductMicrograySquareMeter: true,
+	DoseAreaProductMilligraySquareMeter: true,
+	DoseAreaProductCentigraySquareMeter: true,
+	DoseAreaProductDecigraySquareMeter: true,
+	DoseAreaProductMicrograySquareDecimeter: true,
+	DoseAreaProductMilligraySquareDecimeter: true,
+	DoseAreaProductCentigraySquareDecimeter: true,
+	DoseAreaProductDecigraySquareDecimeter: true,
+	DoseAreaProductMicrograySquareCentimeter: true,
+	DoseAreaProductMilligraySquareCentimeter: true,
+	DoseAreaProductCentigraySquareCentimeter: true,
+	DoseAreaProductDecigraySquareCentimeter: true,
+	DoseAreaProductMicrograySquareMillimeter: true,
+	DoseAreaProductMilligraySquareMillimeter: true,
+	DoseAreaProductCentigraySquareMillimeter: true,
+	DoseAreaProductDecigraySquareMillimeter: true,
+}
+
 // DoseAreaProductDto represents a DoseAreaProduct measurement with a numerical value and its corresponding unit.
 type DoseAreaProductDto struct {
     // Value is the numerical representation of the DoseAreaProduct.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the DoseAreaProduct, as defined in the DoseAreaProductUnits enumeration.
-	Unit  DoseAreaProductUnits `json:"unit"`
+	Unit  DoseAreaProductUnits `json:"unit" validate:"required,oneof=GraySquareMeter,GraySquareDecimeter,GraySquareCentimeter,GraySquareMillimeter,MicrograySquareMeter,MilligraySquareMeter,CentigraySquareMeter,DecigraySquareMeter,MicrograySquareDecimeter,MilligraySquareDecimeter,CentigraySquareDecimeter,DecigraySquareDecimeter,MicrograySquareCentimeter,MilligraySquareCentimeter,CentigraySquareCentimeter,DecigraySquareCentimeter,MicrograySquareMillimeter,MilligraySquareMillimeter,CentigraySquareMillimeter,DecigraySquareMillimeter"`
 }
 
 // DoseAreaProductDtoFactory groups methods for creating and serializing DoseAreaProductDto objects.
@@ -253,6 +277,9 @@ func (uf DoseAreaProductFactory) FromDecigraySquareMillimeters(value float64) (*
 func newDoseAreaProduct(value float64, fromUnit DoseAreaProductUnits) (*DoseAreaProduct, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalDoseAreaProductUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in DoseAreaProductUnits", fromUnit)
 	}
 	a := &DoseAreaProduct{}
 	a.value = a.convertToBase(value, fromUnit)

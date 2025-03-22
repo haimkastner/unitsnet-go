@@ -41,12 +41,27 @@ const (
         ElectricChargeMegaampereHour ElectricChargeUnits = "MegaampereHour"
 )
 
+var internalElectricChargeUnitsMap = map[ElectricChargeUnits]bool{
+	
+	ElectricChargeCoulomb: true,
+	ElectricChargeAmpereHour: true,
+	ElectricChargePicocoulomb: true,
+	ElectricChargeNanocoulomb: true,
+	ElectricChargeMicrocoulomb: true,
+	ElectricChargeMillicoulomb: true,
+	ElectricChargeKilocoulomb: true,
+	ElectricChargeMegacoulomb: true,
+	ElectricChargeMilliampereHour: true,
+	ElectricChargeKiloampereHour: true,
+	ElectricChargeMegaampereHour: true,
+}
+
 // ElectricChargeDto represents a ElectricCharge measurement with a numerical value and its corresponding unit.
 type ElectricChargeDto struct {
     // Value is the numerical representation of the ElectricCharge.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricCharge, as defined in the ElectricChargeUnits enumeration.
-	Unit  ElectricChargeUnits `json:"unit"`
+	Unit  ElectricChargeUnits `json:"unit" validate:"required,oneof=Coulomb,AmpereHour,Picocoulomb,Nanocoulomb,Microcoulomb,Millicoulomb,Kilocoulomb,Megacoulomb,MilliampereHour,KiloampereHour,MegaampereHour"`
 }
 
 // ElectricChargeDtoFactory groups methods for creating and serializing ElectricChargeDto objects.
@@ -181,6 +196,9 @@ func (uf ElectricChargeFactory) FromMegaampereHours(value float64) (*ElectricCha
 func newElectricCharge(value float64, fromUnit ElectricChargeUnits) (*ElectricCharge, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricChargeUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricChargeUnits", fromUnit)
 	}
 	a := &ElectricCharge{}
 	a.value = a.convertToBase(value, fromUnit)

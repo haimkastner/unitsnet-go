@@ -23,12 +23,18 @@ const (
         PowerRatioDecibelMilliwatt PowerRatioUnits = "DecibelMilliwatt"
 )
 
+var internalPowerRatioUnitsMap = map[PowerRatioUnits]bool{
+	
+	PowerRatioDecibelWatt: true,
+	PowerRatioDecibelMilliwatt: true,
+}
+
 // PowerRatioDto represents a PowerRatio measurement with a numerical value and its corresponding unit.
 type PowerRatioDto struct {
     // Value is the numerical representation of the PowerRatio.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the PowerRatio, as defined in the PowerRatioUnits enumeration.
-	Unit  PowerRatioUnits `json:"unit"`
+	Unit  PowerRatioUnits `json:"unit" validate:"required,oneof=DecibelWatt,DecibelMilliwatt"`
 }
 
 // PowerRatioDtoFactory groups methods for creating and serializing PowerRatioDto objects.
@@ -109,6 +115,9 @@ func (uf PowerRatioFactory) FromDecibelMilliwatts(value float64) (*PowerRatio, e
 func newPowerRatio(value float64, fromUnit PowerRatioUnits) (*PowerRatio, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalPowerRatioUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in PowerRatioUnits", fromUnit)
 	}
 	a := &PowerRatio{}
 	a.value = a.convertToBase(value, fromUnit)

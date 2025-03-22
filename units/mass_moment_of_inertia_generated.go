@@ -75,12 +75,44 @@ const (
         MassMomentOfInertiaMegatonneSquareMilimeter MassMomentOfInertiaUnits = "MegatonneSquareMilimeter"
 )
 
+var internalMassMomentOfInertiaUnitsMap = map[MassMomentOfInertiaUnits]bool{
+	
+	MassMomentOfInertiaGramSquareMeter: true,
+	MassMomentOfInertiaGramSquareDecimeter: true,
+	MassMomentOfInertiaGramSquareCentimeter: true,
+	MassMomentOfInertiaGramSquareMillimeter: true,
+	MassMomentOfInertiaTonneSquareMeter: true,
+	MassMomentOfInertiaTonneSquareDecimeter: true,
+	MassMomentOfInertiaTonneSquareCentimeter: true,
+	MassMomentOfInertiaTonneSquareMilimeter: true,
+	MassMomentOfInertiaPoundSquareFoot: true,
+	MassMomentOfInertiaPoundSquareInch: true,
+	MassMomentOfInertiaSlugSquareFoot: true,
+	MassMomentOfInertiaSlugSquareInch: true,
+	MassMomentOfInertiaMilligramSquareMeter: true,
+	MassMomentOfInertiaKilogramSquareMeter: true,
+	MassMomentOfInertiaMilligramSquareDecimeter: true,
+	MassMomentOfInertiaKilogramSquareDecimeter: true,
+	MassMomentOfInertiaMilligramSquareCentimeter: true,
+	MassMomentOfInertiaKilogramSquareCentimeter: true,
+	MassMomentOfInertiaMilligramSquareMillimeter: true,
+	MassMomentOfInertiaKilogramSquareMillimeter: true,
+	MassMomentOfInertiaKilotonneSquareMeter: true,
+	MassMomentOfInertiaMegatonneSquareMeter: true,
+	MassMomentOfInertiaKilotonneSquareDecimeter: true,
+	MassMomentOfInertiaMegatonneSquareDecimeter: true,
+	MassMomentOfInertiaKilotonneSquareCentimeter: true,
+	MassMomentOfInertiaMegatonneSquareCentimeter: true,
+	MassMomentOfInertiaKilotonneSquareMilimeter: true,
+	MassMomentOfInertiaMegatonneSquareMilimeter: true,
+}
+
 // MassMomentOfInertiaDto represents a MassMomentOfInertia measurement with a numerical value and its corresponding unit.
 type MassMomentOfInertiaDto struct {
     // Value is the numerical representation of the MassMomentOfInertia.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MassMomentOfInertia, as defined in the MassMomentOfInertiaUnits enumeration.
-	Unit  MassMomentOfInertiaUnits `json:"unit"`
+	Unit  MassMomentOfInertiaUnits `json:"unit" validate:"required,oneof=GramSquareMeter,GramSquareDecimeter,GramSquareCentimeter,GramSquareMillimeter,TonneSquareMeter,TonneSquareDecimeter,TonneSquareCentimeter,TonneSquareMilimeter,PoundSquareFoot,PoundSquareInch,SlugSquareFoot,SlugSquareInch,MilligramSquareMeter,KilogramSquareMeter,MilligramSquareDecimeter,KilogramSquareDecimeter,MilligramSquareCentimeter,KilogramSquareCentimeter,MilligramSquareMillimeter,KilogramSquareMillimeter,KilotonneSquareMeter,MegatonneSquareMeter,KilotonneSquareDecimeter,MegatonneSquareDecimeter,KilotonneSquareCentimeter,MegatonneSquareCentimeter,KilotonneSquareMilimeter,MegatonneSquareMilimeter"`
 }
 
 // MassMomentOfInertiaDtoFactory groups methods for creating and serializing MassMomentOfInertiaDto objects.
@@ -317,6 +349,9 @@ func (uf MassMomentOfInertiaFactory) FromMegatonneSquareMilimeters(value float64
 func newMassMomentOfInertia(value float64, fromUnit MassMomentOfInertiaUnits) (*MassMomentOfInertia, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMassMomentOfInertiaUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MassMomentOfInertiaUnits", fromUnit)
 	}
 	a := &MassMomentOfInertia{}
 	a.value = a.convertToBase(value, fromUnit)

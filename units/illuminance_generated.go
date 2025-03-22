@@ -27,12 +27,20 @@ const (
         IlluminanceMegalux IlluminanceUnits = "Megalux"
 )
 
+var internalIlluminanceUnitsMap = map[IlluminanceUnits]bool{
+	
+	IlluminanceLux: true,
+	IlluminanceMillilux: true,
+	IlluminanceKilolux: true,
+	IlluminanceMegalux: true,
+}
+
 // IlluminanceDto represents a Illuminance measurement with a numerical value and its corresponding unit.
 type IlluminanceDto struct {
     // Value is the numerical representation of the Illuminance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Illuminance, as defined in the IlluminanceUnits enumeration.
-	Unit  IlluminanceUnits `json:"unit"`
+	Unit  IlluminanceUnits `json:"unit" validate:"required,oneof=Lux,Millilux,Kilolux,Megalux"`
 }
 
 // IlluminanceDtoFactory groups methods for creating and serializing IlluminanceDto objects.
@@ -125,6 +133,9 @@ func (uf IlluminanceFactory) FromMegalux(value float64) (*Illuminance, error) {
 func newIlluminance(value float64, fromUnit IlluminanceUnits) (*Illuminance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalIlluminanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in IlluminanceUnits", fromUnit)
 	}
 	a := &Illuminance{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -45,12 +45,29 @@ const (
         ImpulseMeganewtonSecond ImpulseUnits = "MeganewtonSecond"
 )
 
+var internalImpulseUnitsMap = map[ImpulseUnits]bool{
+	
+	ImpulseKilogramMeterPerSecond: true,
+	ImpulseNewtonSecond: true,
+	ImpulsePoundFootPerSecond: true,
+	ImpulsePoundForceSecond: true,
+	ImpulseSlugFootPerSecond: true,
+	ImpulseNanonewtonSecond: true,
+	ImpulseMicronewtonSecond: true,
+	ImpulseMillinewtonSecond: true,
+	ImpulseCentinewtonSecond: true,
+	ImpulseDecinewtonSecond: true,
+	ImpulseDecanewtonSecond: true,
+	ImpulseKilonewtonSecond: true,
+	ImpulseMeganewtonSecond: true,
+}
+
 // ImpulseDto represents a Impulse measurement with a numerical value and its corresponding unit.
 type ImpulseDto struct {
     // Value is the numerical representation of the Impulse.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Impulse, as defined in the ImpulseUnits enumeration.
-	Unit  ImpulseUnits `json:"unit"`
+	Unit  ImpulseUnits `json:"unit" validate:"required,oneof=KilogramMeterPerSecond,NewtonSecond,PoundFootPerSecond,PoundForceSecond,SlugFootPerSecond,NanonewtonSecond,MicronewtonSecond,MillinewtonSecond,CentinewtonSecond,DecinewtonSecond,DecanewtonSecond,KilonewtonSecond,MeganewtonSecond"`
 }
 
 // ImpulseDtoFactory groups methods for creating and serializing ImpulseDto objects.
@@ -197,6 +214,9 @@ func (uf ImpulseFactory) FromMeganewtonSeconds(value float64) (*Impulse, error) 
 func newImpulse(value float64, fromUnit ImpulseUnits) (*Impulse, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalImpulseUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ImpulseUnits", fromUnit)
 	}
 	a := &Impulse{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -37,12 +37,25 @@ const (
         IrradiationKilobtuPerSquareFoot IrradiationUnits = "KilobtuPerSquareFoot"
 )
 
+var internalIrradiationUnitsMap = map[IrradiationUnits]bool{
+	
+	IrradiationJoulePerSquareMeter: true,
+	IrradiationJoulePerSquareCentimeter: true,
+	IrradiationJoulePerSquareMillimeter: true,
+	IrradiationWattHourPerSquareMeter: true,
+	IrradiationBtuPerSquareFoot: true,
+	IrradiationKilojoulePerSquareMeter: true,
+	IrradiationMillijoulePerSquareCentimeter: true,
+	IrradiationKilowattHourPerSquareMeter: true,
+	IrradiationKilobtuPerSquareFoot: true,
+}
+
 // IrradiationDto represents a Irradiation measurement with a numerical value and its corresponding unit.
 type IrradiationDto struct {
     // Value is the numerical representation of the Irradiation.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Irradiation, as defined in the IrradiationUnits enumeration.
-	Unit  IrradiationUnits `json:"unit"`
+	Unit  IrradiationUnits `json:"unit" validate:"required,oneof=JoulePerSquareMeter,JoulePerSquareCentimeter,JoulePerSquareMillimeter,WattHourPerSquareMeter,BtuPerSquareFoot,KilojoulePerSquareMeter,MillijoulePerSquareCentimeter,KilowattHourPerSquareMeter,KilobtuPerSquareFoot"`
 }
 
 // IrradiationDtoFactory groups methods for creating and serializing IrradiationDto objects.
@@ -165,6 +178,9 @@ func (uf IrradiationFactory) FromKilobtusPerSquareFoot(value float64) (*Irradiat
 func newIrradiation(value float64, fromUnit IrradiationUnits) (*Irradiation, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalIrradiationUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in IrradiationUnits", fromUnit)
 	}
 	a := &Irradiation{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -31,12 +31,22 @@ const (
         AreaMomentOfInertiaInchToTheFourth AreaMomentOfInertiaUnits = "InchToTheFourth"
 )
 
+var internalAreaMomentOfInertiaUnitsMap = map[AreaMomentOfInertiaUnits]bool{
+	
+	AreaMomentOfInertiaMeterToTheFourth: true,
+	AreaMomentOfInertiaDecimeterToTheFourth: true,
+	AreaMomentOfInertiaCentimeterToTheFourth: true,
+	AreaMomentOfInertiaMillimeterToTheFourth: true,
+	AreaMomentOfInertiaFootToTheFourth: true,
+	AreaMomentOfInertiaInchToTheFourth: true,
+}
+
 // AreaMomentOfInertiaDto represents a AreaMomentOfInertia measurement with a numerical value and its corresponding unit.
 type AreaMomentOfInertiaDto struct {
     // Value is the numerical representation of the AreaMomentOfInertia.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the AreaMomentOfInertia, as defined in the AreaMomentOfInertiaUnits enumeration.
-	Unit  AreaMomentOfInertiaUnits `json:"unit"`
+	Unit  AreaMomentOfInertiaUnits `json:"unit" validate:"required,oneof=MeterToTheFourth,DecimeterToTheFourth,CentimeterToTheFourth,MillimeterToTheFourth,FootToTheFourth,InchToTheFourth"`
 }
 
 // AreaMomentOfInertiaDtoFactory groups methods for creating and serializing AreaMomentOfInertiaDto objects.
@@ -141,6 +151,9 @@ func (uf AreaMomentOfInertiaFactory) FromInchesToTheFourth(value float64) (*Area
 func newAreaMomentOfInertia(value float64, fromUnit AreaMomentOfInertiaUnits) (*AreaMomentOfInertia, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalAreaMomentOfInertiaUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in AreaMomentOfInertiaUnits", fromUnit)
 	}
 	a := &AreaMomentOfInertia{}
 	a.value = a.convertToBase(value, fromUnit)

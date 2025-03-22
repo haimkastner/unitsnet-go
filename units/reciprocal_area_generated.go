@@ -41,12 +41,27 @@ const (
         ReciprocalAreaInverseSquareInch ReciprocalAreaUnits = "InverseSquareInch"
 )
 
+var internalReciprocalAreaUnitsMap = map[ReciprocalAreaUnits]bool{
+	
+	ReciprocalAreaInverseSquareMeter: true,
+	ReciprocalAreaInverseSquareKilometer: true,
+	ReciprocalAreaInverseSquareDecimeter: true,
+	ReciprocalAreaInverseSquareCentimeter: true,
+	ReciprocalAreaInverseSquareMillimeter: true,
+	ReciprocalAreaInverseSquareMicrometer: true,
+	ReciprocalAreaInverseSquareMile: true,
+	ReciprocalAreaInverseSquareYard: true,
+	ReciprocalAreaInverseSquareFoot: true,
+	ReciprocalAreaInverseUsSurveySquareFoot: true,
+	ReciprocalAreaInverseSquareInch: true,
+}
+
 // ReciprocalAreaDto represents a ReciprocalArea measurement with a numerical value and its corresponding unit.
 type ReciprocalAreaDto struct {
     // Value is the numerical representation of the ReciprocalArea.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ReciprocalArea, as defined in the ReciprocalAreaUnits enumeration.
-	Unit  ReciprocalAreaUnits `json:"unit"`
+	Unit  ReciprocalAreaUnits `json:"unit" validate:"required,oneof=InverseSquareMeter,InverseSquareKilometer,InverseSquareDecimeter,InverseSquareCentimeter,InverseSquareMillimeter,InverseSquareMicrometer,InverseSquareMile,InverseSquareYard,InverseSquareFoot,InverseUsSurveySquareFoot,InverseSquareInch"`
 }
 
 // ReciprocalAreaDtoFactory groups methods for creating and serializing ReciprocalAreaDto objects.
@@ -181,6 +196,9 @@ func (uf ReciprocalAreaFactory) FromInverseSquareInches(value float64) (*Recipro
 func newReciprocalArea(value float64, fromUnit ReciprocalAreaUnits) (*ReciprocalArea, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalReciprocalAreaUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ReciprocalAreaUnits", fromUnit)
 	}
 	a := &ReciprocalArea{}
 	a.value = a.convertToBase(value, fromUnit)

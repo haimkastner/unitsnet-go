@@ -27,12 +27,20 @@ const (
         FuelEfficiencyKilometerPerLiter FuelEfficiencyUnits = "KilometerPerLiter"
 )
 
+var internalFuelEfficiencyUnitsMap = map[FuelEfficiencyUnits]bool{
+	
+	FuelEfficiencyLiterPer100Kilometers: true,
+	FuelEfficiencyMilePerUsGallon: true,
+	FuelEfficiencyMilePerUkGallon: true,
+	FuelEfficiencyKilometerPerLiter: true,
+}
+
 // FuelEfficiencyDto represents a FuelEfficiency measurement with a numerical value and its corresponding unit.
 type FuelEfficiencyDto struct {
     // Value is the numerical representation of the FuelEfficiency.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the FuelEfficiency, as defined in the FuelEfficiencyUnits enumeration.
-	Unit  FuelEfficiencyUnits `json:"unit"`
+	Unit  FuelEfficiencyUnits `json:"unit" validate:"required,oneof=LiterPer100Kilometers,MilePerUsGallon,MilePerUkGallon,KilometerPerLiter"`
 }
 
 // FuelEfficiencyDtoFactory groups methods for creating and serializing FuelEfficiencyDto objects.
@@ -125,6 +133,9 @@ func (uf FuelEfficiencyFactory) FromKilometersPerLiters(value float64) (*FuelEff
 func newFuelEfficiency(value float64, fromUnit FuelEfficiencyUnits) (*FuelEfficiency, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalFuelEfficiencyUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in FuelEfficiencyUnits", fromUnit)
 	}
 	a := &FuelEfficiency{}
 	a.value = a.convertToBase(value, fromUnit)

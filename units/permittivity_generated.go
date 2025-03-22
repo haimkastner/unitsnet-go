@@ -21,12 +21,17 @@ const (
         PermittivityFaradPerMeter PermittivityUnits = "FaradPerMeter"
 )
 
+var internalPermittivityUnitsMap = map[PermittivityUnits]bool{
+	
+	PermittivityFaradPerMeter: true,
+}
+
 // PermittivityDto represents a Permittivity measurement with a numerical value and its corresponding unit.
 type PermittivityDto struct {
     // Value is the numerical representation of the Permittivity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Permittivity, as defined in the PermittivityUnits enumeration.
-	Unit  PermittivityUnits `json:"unit"`
+	Unit  PermittivityUnits `json:"unit" validate:"required,oneof=FaradPerMeter"`
 }
 
 // PermittivityDtoFactory groups methods for creating and serializing PermittivityDto objects.
@@ -101,6 +106,9 @@ func (uf PermittivityFactory) FromFaradsPerMeter(value float64) (*Permittivity, 
 func newPermittivity(value float64, fromUnit PermittivityUnits) (*Permittivity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalPermittivityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in PermittivityUnits", fromUnit)
 	}
 	a := &Permittivity{}
 	a.value = a.convertToBase(value, fromUnit)

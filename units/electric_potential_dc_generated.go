@@ -29,12 +29,21 @@ const (
         ElectricPotentialDcMegavoltDc ElectricPotentialDcUnits = "MegavoltDc"
 )
 
+var internalElectricPotentialDcUnitsMap = map[ElectricPotentialDcUnits]bool{
+	
+	ElectricPotentialDcVoltDc: true,
+	ElectricPotentialDcMicrovoltDc: true,
+	ElectricPotentialDcMillivoltDc: true,
+	ElectricPotentialDcKilovoltDc: true,
+	ElectricPotentialDcMegavoltDc: true,
+}
+
 // ElectricPotentialDcDto represents a ElectricPotentialDc measurement with a numerical value and its corresponding unit.
 type ElectricPotentialDcDto struct {
     // Value is the numerical representation of the ElectricPotentialDc.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricPotentialDc, as defined in the ElectricPotentialDcUnits enumeration.
-	Unit  ElectricPotentialDcUnits `json:"unit"`
+	Unit  ElectricPotentialDcUnits `json:"unit" validate:"required,oneof=VoltDc,MicrovoltDc,MillivoltDc,KilovoltDc,MegavoltDc"`
 }
 
 // ElectricPotentialDcDtoFactory groups methods for creating and serializing ElectricPotentialDcDto objects.
@@ -133,6 +142,9 @@ func (uf ElectricPotentialDcFactory) FromMegavoltsDc(value float64) (*ElectricPo
 func newElectricPotentialDc(value float64, fromUnit ElectricPotentialDcUnits) (*ElectricPotentialDc, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricPotentialDcUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricPotentialDcUnits", fromUnit)
 	}
 	a := &ElectricPotentialDc{}
 	a.value = a.convertToBase(value, fromUnit)

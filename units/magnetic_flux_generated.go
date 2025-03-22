@@ -21,12 +21,17 @@ const (
         MagneticFluxWeber MagneticFluxUnits = "Weber"
 )
 
+var internalMagneticFluxUnitsMap = map[MagneticFluxUnits]bool{
+	
+	MagneticFluxWeber: true,
+}
+
 // MagneticFluxDto represents a MagneticFlux measurement with a numerical value and its corresponding unit.
 type MagneticFluxDto struct {
     // Value is the numerical representation of the MagneticFlux.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MagneticFlux, as defined in the MagneticFluxUnits enumeration.
-	Unit  MagneticFluxUnits `json:"unit"`
+	Unit  MagneticFluxUnits `json:"unit" validate:"required,oneof=Weber"`
 }
 
 // MagneticFluxDtoFactory groups methods for creating and serializing MagneticFluxDto objects.
@@ -101,6 +106,9 @@ func (uf MagneticFluxFactory) FromWebers(value float64) (*MagneticFlux, error) {
 func newMagneticFlux(value float64, fromUnit MagneticFluxUnits) (*MagneticFlux, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMagneticFluxUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MagneticFluxUnits", fromUnit)
 	}
 	a := &MagneticFlux{}
 	a.value = a.convertToBase(value, fromUnit)

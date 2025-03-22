@@ -31,12 +31,22 @@ const (
         RatioPartPerTrillion RatioUnits = "PartPerTrillion"
 )
 
+var internalRatioUnitsMap = map[RatioUnits]bool{
+	
+	RatioDecimalFraction: true,
+	RatioPercent: true,
+	RatioPartPerThousand: true,
+	RatioPartPerMillion: true,
+	RatioPartPerBillion: true,
+	RatioPartPerTrillion: true,
+}
+
 // RatioDto represents a Ratio measurement with a numerical value and its corresponding unit.
 type RatioDto struct {
     // Value is the numerical representation of the Ratio.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Ratio, as defined in the RatioUnits enumeration.
-	Unit  RatioUnits `json:"unit"`
+	Unit  RatioUnits `json:"unit" validate:"required,oneof=DecimalFraction,Percent,PartPerThousand,PartPerMillion,PartPerBillion,PartPerTrillion"`
 }
 
 // RatioDtoFactory groups methods for creating and serializing RatioDto objects.
@@ -141,6 +151,9 @@ func (uf RatioFactory) FromPartsPerTrillion(value float64) (*Ratio, error) {
 func newRatio(value float64, fromUnit RatioUnits) (*Ratio, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRatioUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RatioUnits", fromUnit)
 	}
 	a := &Ratio{}
 	a.value = a.convertToBase(value, fromUnit)

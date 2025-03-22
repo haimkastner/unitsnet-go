@@ -37,12 +37,25 @@ const (
         TemperatureDeltaMillidegreeCelsius TemperatureDeltaUnits = "MillidegreeCelsius"
 )
 
+var internalTemperatureDeltaUnitsMap = map[TemperatureDeltaUnits]bool{
+	
+	TemperatureDeltaKelvin: true,
+	TemperatureDeltaDegreeCelsius: true,
+	TemperatureDeltaDegreeDelisle: true,
+	TemperatureDeltaDegreeFahrenheit: true,
+	TemperatureDeltaDegreeNewton: true,
+	TemperatureDeltaDegreeRankine: true,
+	TemperatureDeltaDegreeReaumur: true,
+	TemperatureDeltaDegreeRoemer: true,
+	TemperatureDeltaMillidegreeCelsius: true,
+}
+
 // TemperatureDeltaDto represents a TemperatureDelta measurement with a numerical value and its corresponding unit.
 type TemperatureDeltaDto struct {
     // Value is the numerical representation of the TemperatureDelta.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the TemperatureDelta, as defined in the TemperatureDeltaUnits enumeration.
-	Unit  TemperatureDeltaUnits `json:"unit"`
+	Unit  TemperatureDeltaUnits `json:"unit" validate:"required,oneof=Kelvin,DegreeCelsius,DegreeDelisle,DegreeFahrenheit,DegreeNewton,DegreeRankine,DegreeReaumur,DegreeRoemer,MillidegreeCelsius"`
 }
 
 // TemperatureDeltaDtoFactory groups methods for creating and serializing TemperatureDeltaDto objects.
@@ -165,6 +178,9 @@ func (uf TemperatureDeltaFactory) FromMillidegreesCelsius(value float64) (*Tempe
 func newTemperatureDelta(value float64, fromUnit TemperatureDeltaUnits) (*TemperatureDelta, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalTemperatureDeltaUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in TemperatureDeltaUnits", fromUnit)
 	}
 	a := &TemperatureDelta{}
 	a.value = a.convertToBase(value, fromUnit)

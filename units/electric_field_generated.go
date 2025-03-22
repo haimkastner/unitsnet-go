@@ -21,12 +21,17 @@ const (
         ElectricFieldVoltPerMeter ElectricFieldUnits = "VoltPerMeter"
 )
 
+var internalElectricFieldUnitsMap = map[ElectricFieldUnits]bool{
+	
+	ElectricFieldVoltPerMeter: true,
+}
+
 // ElectricFieldDto represents a ElectricField measurement with a numerical value and its corresponding unit.
 type ElectricFieldDto struct {
     // Value is the numerical representation of the ElectricField.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricField, as defined in the ElectricFieldUnits enumeration.
-	Unit  ElectricFieldUnits `json:"unit"`
+	Unit  ElectricFieldUnits `json:"unit" validate:"required,oneof=VoltPerMeter"`
 }
 
 // ElectricFieldDtoFactory groups methods for creating and serializing ElectricFieldDto objects.
@@ -101,6 +106,9 @@ func (uf ElectricFieldFactory) FromVoltsPerMeter(value float64) (*ElectricField,
 func newElectricField(value float64, fromUnit ElectricFieldUnits) (*ElectricField, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricFieldUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricFieldUnits", fromUnit)
 	}
 	a := &ElectricField{}
 	a.value = a.convertToBase(value, fromUnit)

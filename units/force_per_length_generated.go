@@ -95,12 +95,54 @@ const (
         ForcePerLengthMeganewtonPerMillimeter ForcePerLengthUnits = "MeganewtonPerMillimeter"
 )
 
+var internalForcePerLengthUnitsMap = map[ForcePerLengthUnits]bool{
+	
+	ForcePerLengthNewtonPerMeter: true,
+	ForcePerLengthNewtonPerCentimeter: true,
+	ForcePerLengthNewtonPerMillimeter: true,
+	ForcePerLengthKilogramForcePerMeter: true,
+	ForcePerLengthKilogramForcePerCentimeter: true,
+	ForcePerLengthKilogramForcePerMillimeter: true,
+	ForcePerLengthTonneForcePerMeter: true,
+	ForcePerLengthTonneForcePerCentimeter: true,
+	ForcePerLengthTonneForcePerMillimeter: true,
+	ForcePerLengthPoundForcePerFoot: true,
+	ForcePerLengthPoundForcePerInch: true,
+	ForcePerLengthPoundForcePerYard: true,
+	ForcePerLengthKilopoundForcePerFoot: true,
+	ForcePerLengthKilopoundForcePerInch: true,
+	ForcePerLengthNanonewtonPerMeter: true,
+	ForcePerLengthMicronewtonPerMeter: true,
+	ForcePerLengthMillinewtonPerMeter: true,
+	ForcePerLengthCentinewtonPerMeter: true,
+	ForcePerLengthDecinewtonPerMeter: true,
+	ForcePerLengthDecanewtonPerMeter: true,
+	ForcePerLengthKilonewtonPerMeter: true,
+	ForcePerLengthMeganewtonPerMeter: true,
+	ForcePerLengthNanonewtonPerCentimeter: true,
+	ForcePerLengthMicronewtonPerCentimeter: true,
+	ForcePerLengthMillinewtonPerCentimeter: true,
+	ForcePerLengthCentinewtonPerCentimeter: true,
+	ForcePerLengthDecinewtonPerCentimeter: true,
+	ForcePerLengthDecanewtonPerCentimeter: true,
+	ForcePerLengthKilonewtonPerCentimeter: true,
+	ForcePerLengthMeganewtonPerCentimeter: true,
+	ForcePerLengthNanonewtonPerMillimeter: true,
+	ForcePerLengthMicronewtonPerMillimeter: true,
+	ForcePerLengthMillinewtonPerMillimeter: true,
+	ForcePerLengthCentinewtonPerMillimeter: true,
+	ForcePerLengthDecinewtonPerMillimeter: true,
+	ForcePerLengthDecanewtonPerMillimeter: true,
+	ForcePerLengthKilonewtonPerMillimeter: true,
+	ForcePerLengthMeganewtonPerMillimeter: true,
+}
+
 // ForcePerLengthDto represents a ForcePerLength measurement with a numerical value and its corresponding unit.
 type ForcePerLengthDto struct {
     // Value is the numerical representation of the ForcePerLength.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ForcePerLength, as defined in the ForcePerLengthUnits enumeration.
-	Unit  ForcePerLengthUnits `json:"unit"`
+	Unit  ForcePerLengthUnits `json:"unit" validate:"required,oneof=NewtonPerMeter,NewtonPerCentimeter,NewtonPerMillimeter,KilogramForcePerMeter,KilogramForcePerCentimeter,KilogramForcePerMillimeter,TonneForcePerMeter,TonneForcePerCentimeter,TonneForcePerMillimeter,PoundForcePerFoot,PoundForcePerInch,PoundForcePerYard,KilopoundForcePerFoot,KilopoundForcePerInch,NanonewtonPerMeter,MicronewtonPerMeter,MillinewtonPerMeter,CentinewtonPerMeter,DecinewtonPerMeter,DecanewtonPerMeter,KilonewtonPerMeter,MeganewtonPerMeter,NanonewtonPerCentimeter,MicronewtonPerCentimeter,MillinewtonPerCentimeter,CentinewtonPerCentimeter,DecinewtonPerCentimeter,DecanewtonPerCentimeter,KilonewtonPerCentimeter,MeganewtonPerCentimeter,NanonewtonPerMillimeter,MicronewtonPerMillimeter,MillinewtonPerMillimeter,CentinewtonPerMillimeter,DecinewtonPerMillimeter,DecanewtonPerMillimeter,KilonewtonPerMillimeter,MeganewtonPerMillimeter"`
 }
 
 // ForcePerLengthDtoFactory groups methods for creating and serializing ForcePerLengthDto objects.
@@ -397,6 +439,9 @@ func (uf ForcePerLengthFactory) FromMeganewtonsPerMillimeter(value float64) (*Fo
 func newForcePerLength(value float64, fromUnit ForcePerLengthUnits) (*ForcePerLength, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalForcePerLengthUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ForcePerLengthUnits", fromUnit)
 	}
 	a := &ForcePerLength{}
 	a.value = a.convertToBase(value, fromUnit)

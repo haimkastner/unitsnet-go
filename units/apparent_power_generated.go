@@ -31,12 +31,22 @@ const (
         ApparentPowerGigavoltampere ApparentPowerUnits = "Gigavoltampere"
 )
 
+var internalApparentPowerUnitsMap = map[ApparentPowerUnits]bool{
+	
+	ApparentPowerVoltampere: true,
+	ApparentPowerMicrovoltampere: true,
+	ApparentPowerMillivoltampere: true,
+	ApparentPowerKilovoltampere: true,
+	ApparentPowerMegavoltampere: true,
+	ApparentPowerGigavoltampere: true,
+}
+
 // ApparentPowerDto represents a ApparentPower measurement with a numerical value and its corresponding unit.
 type ApparentPowerDto struct {
     // Value is the numerical representation of the ApparentPower.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ApparentPower, as defined in the ApparentPowerUnits enumeration.
-	Unit  ApparentPowerUnits `json:"unit"`
+	Unit  ApparentPowerUnits `json:"unit" validate:"required,oneof=Voltampere,Microvoltampere,Millivoltampere,Kilovoltampere,Megavoltampere,Gigavoltampere"`
 }
 
 // ApparentPowerDtoFactory groups methods for creating and serializing ApparentPowerDto objects.
@@ -141,6 +151,9 @@ func (uf ApparentPowerFactory) FromGigavoltamperes(value float64) (*ApparentPowe
 func newApparentPower(value float64, fromUnit ApparentPowerUnits) (*ApparentPower, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalApparentPowerUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ApparentPowerUnits", fromUnit)
 	}
 	a := &ApparentPower{}
 	a.value = a.convertToBase(value, fromUnit)

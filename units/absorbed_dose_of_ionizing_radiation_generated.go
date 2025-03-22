@@ -51,12 +51,32 @@ const (
         AbsorbedDoseOfIonizingRadiationMegarad AbsorbedDoseOfIonizingRadiationUnits = "Megarad"
 )
 
+var internalAbsorbedDoseOfIonizingRadiationUnitsMap = map[AbsorbedDoseOfIonizingRadiationUnits]bool{
+	
+	AbsorbedDoseOfIonizingRadiationGray: true,
+	AbsorbedDoseOfIonizingRadiationRad: true,
+	AbsorbedDoseOfIonizingRadiationFemtogray: true,
+	AbsorbedDoseOfIonizingRadiationPicogray: true,
+	AbsorbedDoseOfIonizingRadiationNanogray: true,
+	AbsorbedDoseOfIonizingRadiationMicrogray: true,
+	AbsorbedDoseOfIonizingRadiationMilligray: true,
+	AbsorbedDoseOfIonizingRadiationCentigray: true,
+	AbsorbedDoseOfIonizingRadiationKilogray: true,
+	AbsorbedDoseOfIonizingRadiationMegagray: true,
+	AbsorbedDoseOfIonizingRadiationGigagray: true,
+	AbsorbedDoseOfIonizingRadiationTeragray: true,
+	AbsorbedDoseOfIonizingRadiationPetagray: true,
+	AbsorbedDoseOfIonizingRadiationMillirad: true,
+	AbsorbedDoseOfIonizingRadiationKilorad: true,
+	AbsorbedDoseOfIonizingRadiationMegarad: true,
+}
+
 // AbsorbedDoseOfIonizingRadiationDto represents a AbsorbedDoseOfIonizingRadiation measurement with a numerical value and its corresponding unit.
 type AbsorbedDoseOfIonizingRadiationDto struct {
     // Value is the numerical representation of the AbsorbedDoseOfIonizingRadiation.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the AbsorbedDoseOfIonizingRadiation, as defined in the AbsorbedDoseOfIonizingRadiationUnits enumeration.
-	Unit  AbsorbedDoseOfIonizingRadiationUnits `json:"unit"`
+	Unit  AbsorbedDoseOfIonizingRadiationUnits `json:"unit" validate:"required,oneof=Gray,Rad,Femtogray,Picogray,Nanogray,Microgray,Milligray,Centigray,Kilogray,Megagray,Gigagray,Teragray,Petagray,Millirad,Kilorad,Megarad"`
 }
 
 // AbsorbedDoseOfIonizingRadiationDtoFactory groups methods for creating and serializing AbsorbedDoseOfIonizingRadiationDto objects.
@@ -221,6 +241,9 @@ func (uf AbsorbedDoseOfIonizingRadiationFactory) FromMegarads(value float64) (*A
 func newAbsorbedDoseOfIonizingRadiation(value float64, fromUnit AbsorbedDoseOfIonizingRadiationUnits) (*AbsorbedDoseOfIonizingRadiation, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalAbsorbedDoseOfIonizingRadiationUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in AbsorbedDoseOfIonizingRadiationUnits", fromUnit)
 	}
 	a := &AbsorbedDoseOfIonizingRadiation{}
 	a.value = a.convertToBase(value, fromUnit)

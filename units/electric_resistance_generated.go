@@ -35,12 +35,24 @@ const (
         ElectricResistanceTeraohm ElectricResistanceUnits = "Teraohm"
 )
 
+var internalElectricResistanceUnitsMap = map[ElectricResistanceUnits]bool{
+	
+	ElectricResistanceOhm: true,
+	ElectricResistanceNanoohm: true,
+	ElectricResistanceMicroohm: true,
+	ElectricResistanceMilliohm: true,
+	ElectricResistanceKiloohm: true,
+	ElectricResistanceMegaohm: true,
+	ElectricResistanceGigaohm: true,
+	ElectricResistanceTeraohm: true,
+}
+
 // ElectricResistanceDto represents a ElectricResistance measurement with a numerical value and its corresponding unit.
 type ElectricResistanceDto struct {
     // Value is the numerical representation of the ElectricResistance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricResistance, as defined in the ElectricResistanceUnits enumeration.
-	Unit  ElectricResistanceUnits `json:"unit"`
+	Unit  ElectricResistanceUnits `json:"unit" validate:"required,oneof=Ohm,Nanoohm,Microohm,Milliohm,Kiloohm,Megaohm,Gigaohm,Teraohm"`
 }
 
 // ElectricResistanceDtoFactory groups methods for creating and serializing ElectricResistanceDto objects.
@@ -157,6 +169,9 @@ func (uf ElectricResistanceFactory) FromTeraohms(value float64) (*ElectricResist
 func newElectricResistance(value float64, fromUnit ElectricResistanceUnits) (*ElectricResistance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricResistanceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricResistanceUnits", fromUnit)
 	}
 	a := &ElectricResistance{}
 	a.value = a.convertToBase(value, fromUnit)

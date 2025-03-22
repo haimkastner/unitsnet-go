@@ -25,12 +25,19 @@ const (
         MolalityMillimolePerKilogram MolalityUnits = "MillimolePerKilogram"
 )
 
+var internalMolalityUnitsMap = map[MolalityUnits]bool{
+	
+	MolalityMolePerKilogram: true,
+	MolalityMolePerGram: true,
+	MolalityMillimolePerKilogram: true,
+}
+
 // MolalityDto represents a Molality measurement with a numerical value and its corresponding unit.
 type MolalityDto struct {
     // Value is the numerical representation of the Molality.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Molality, as defined in the MolalityUnits enumeration.
-	Unit  MolalityUnits `json:"unit"`
+	Unit  MolalityUnits `json:"unit" validate:"required,oneof=MolePerKilogram,MolePerGram,MillimolePerKilogram"`
 }
 
 // MolalityDtoFactory groups methods for creating and serializing MolalityDto objects.
@@ -117,6 +124,9 @@ func (uf MolalityFactory) FromMillimolesPerKilogram(value float64) (*Molality, e
 func newMolality(value float64, fromUnit MolalityUnits) (*Molality, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMolalityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MolalityUnits", fromUnit)
 	}
 	a := &Molality{}
 	a.value = a.convertToBase(value, fromUnit)

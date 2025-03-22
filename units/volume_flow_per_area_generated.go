@@ -23,12 +23,18 @@ const (
         VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot VolumeFlowPerAreaUnits = "CubicFootPerMinutePerSquareFoot"
 )
 
+var internalVolumeFlowPerAreaUnitsMap = map[VolumeFlowPerAreaUnits]bool{
+	
+	VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter: true,
+	VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot: true,
+}
+
 // VolumeFlowPerAreaDto represents a VolumeFlowPerArea measurement with a numerical value and its corresponding unit.
 type VolumeFlowPerAreaDto struct {
     // Value is the numerical representation of the VolumeFlowPerArea.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the VolumeFlowPerArea, as defined in the VolumeFlowPerAreaUnits enumeration.
-	Unit  VolumeFlowPerAreaUnits `json:"unit"`
+	Unit  VolumeFlowPerAreaUnits `json:"unit" validate:"required,oneof=CubicMeterPerSecondPerSquareMeter,CubicFootPerMinutePerSquareFoot"`
 }
 
 // VolumeFlowPerAreaDtoFactory groups methods for creating and serializing VolumeFlowPerAreaDto objects.
@@ -109,6 +115,9 @@ func (uf VolumeFlowPerAreaFactory) FromCubicFeetPerMinutePerSquareFoot(value flo
 func newVolumeFlowPerArea(value float64, fromUnit VolumeFlowPerAreaUnits) (*VolumeFlowPerArea, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalVolumeFlowPerAreaUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in VolumeFlowPerAreaUnits", fromUnit)
 	}
 	a := &VolumeFlowPerArea{}
 	a.value = a.convertToBase(value, fromUnit)

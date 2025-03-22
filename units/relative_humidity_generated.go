@@ -21,12 +21,17 @@ const (
         RelativeHumidityPercent RelativeHumidityUnits = "Percent"
 )
 
+var internalRelativeHumidityUnitsMap = map[RelativeHumidityUnits]bool{
+	
+	RelativeHumidityPercent: true,
+}
+
 // RelativeHumidityDto represents a RelativeHumidity measurement with a numerical value and its corresponding unit.
 type RelativeHumidityDto struct {
     // Value is the numerical representation of the RelativeHumidity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RelativeHumidity, as defined in the RelativeHumidityUnits enumeration.
-	Unit  RelativeHumidityUnits `json:"unit"`
+	Unit  RelativeHumidityUnits `json:"unit" validate:"required,oneof=Percent"`
 }
 
 // RelativeHumidityDtoFactory groups methods for creating and serializing RelativeHumidityDto objects.
@@ -101,6 +106,9 @@ func (uf RelativeHumidityFactory) FromPercent(value float64) (*RelativeHumidity,
 func newRelativeHumidity(value float64, fromUnit RelativeHumidityUnits) (*RelativeHumidity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRelativeHumidityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RelativeHumidityUnits", fromUnit)
 	}
 	a := &RelativeHumidity{}
 	a.value = a.convertToBase(value, fromUnit)

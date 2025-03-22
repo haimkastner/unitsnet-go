@@ -169,12 +169,91 @@ const (
         VolumeFlowMegaukGallonPerSecond VolumeFlowUnits = "MegaukGallonPerSecond"
 )
 
+var internalVolumeFlowUnitsMap = map[VolumeFlowUnits]bool{
+	
+	VolumeFlowCubicMeterPerSecond: true,
+	VolumeFlowCubicMeterPerMinute: true,
+	VolumeFlowCubicMeterPerHour: true,
+	VolumeFlowCubicMeterPerDay: true,
+	VolumeFlowCubicFootPerSecond: true,
+	VolumeFlowCubicFootPerMinute: true,
+	VolumeFlowCubicFootPerHour: true,
+	VolumeFlowCubicYardPerSecond: true,
+	VolumeFlowCubicYardPerMinute: true,
+	VolumeFlowCubicYardPerHour: true,
+	VolumeFlowCubicYardPerDay: true,
+	VolumeFlowMillionUsGallonPerDay: true,
+	VolumeFlowUsGallonPerDay: true,
+	VolumeFlowLiterPerSecond: true,
+	VolumeFlowLiterPerMinute: true,
+	VolumeFlowLiterPerHour: true,
+	VolumeFlowLiterPerDay: true,
+	VolumeFlowUsGallonPerSecond: true,
+	VolumeFlowUsGallonPerMinute: true,
+	VolumeFlowUkGallonPerDay: true,
+	VolumeFlowUkGallonPerHour: true,
+	VolumeFlowUkGallonPerMinute: true,
+	VolumeFlowUkGallonPerSecond: true,
+	VolumeFlowKilousGallonPerMinute: true,
+	VolumeFlowUsGallonPerHour: true,
+	VolumeFlowCubicDecimeterPerMinute: true,
+	VolumeFlowOilBarrelPerDay: true,
+	VolumeFlowOilBarrelPerMinute: true,
+	VolumeFlowOilBarrelPerHour: true,
+	VolumeFlowOilBarrelPerSecond: true,
+	VolumeFlowCubicMillimeterPerSecond: true,
+	VolumeFlowAcreFootPerSecond: true,
+	VolumeFlowAcreFootPerMinute: true,
+	VolumeFlowAcreFootPerHour: true,
+	VolumeFlowAcreFootPerDay: true,
+	VolumeFlowCubicCentimeterPerMinute: true,
+	VolumeFlowMegausGallonPerDay: true,
+	VolumeFlowNanoliterPerSecond: true,
+	VolumeFlowMicroliterPerSecond: true,
+	VolumeFlowMilliliterPerSecond: true,
+	VolumeFlowCentiliterPerSecond: true,
+	VolumeFlowDeciliterPerSecond: true,
+	VolumeFlowDecaliterPerSecond: true,
+	VolumeFlowHectoliterPerSecond: true,
+	VolumeFlowKiloliterPerSecond: true,
+	VolumeFlowMegaliterPerSecond: true,
+	VolumeFlowNanoliterPerMinute: true,
+	VolumeFlowMicroliterPerMinute: true,
+	VolumeFlowMilliliterPerMinute: true,
+	VolumeFlowCentiliterPerMinute: true,
+	VolumeFlowDeciliterPerMinute: true,
+	VolumeFlowDecaliterPerMinute: true,
+	VolumeFlowHectoliterPerMinute: true,
+	VolumeFlowKiloliterPerMinute: true,
+	VolumeFlowMegaliterPerMinute: true,
+	VolumeFlowNanoliterPerHour: true,
+	VolumeFlowMicroliterPerHour: true,
+	VolumeFlowMilliliterPerHour: true,
+	VolumeFlowCentiliterPerHour: true,
+	VolumeFlowDeciliterPerHour: true,
+	VolumeFlowDecaliterPerHour: true,
+	VolumeFlowHectoliterPerHour: true,
+	VolumeFlowKiloliterPerHour: true,
+	VolumeFlowMegaliterPerHour: true,
+	VolumeFlowNanoliterPerDay: true,
+	VolumeFlowMicroliterPerDay: true,
+	VolumeFlowMilliliterPerDay: true,
+	VolumeFlowCentiliterPerDay: true,
+	VolumeFlowDeciliterPerDay: true,
+	VolumeFlowDecaliterPerDay: true,
+	VolumeFlowHectoliterPerDay: true,
+	VolumeFlowKiloliterPerDay: true,
+	VolumeFlowMegaliterPerDay: true,
+	VolumeFlowMegaukGallonPerDay: true,
+	VolumeFlowMegaukGallonPerSecond: true,
+}
+
 // VolumeFlowDto represents a VolumeFlow measurement with a numerical value and its corresponding unit.
 type VolumeFlowDto struct {
     // Value is the numerical representation of the VolumeFlow.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the VolumeFlow, as defined in the VolumeFlowUnits enumeration.
-	Unit  VolumeFlowUnits `json:"unit"`
+	Unit  VolumeFlowUnits `json:"unit" validate:"required,oneof=CubicMeterPerSecond,CubicMeterPerMinute,CubicMeterPerHour,CubicMeterPerDay,CubicFootPerSecond,CubicFootPerMinute,CubicFootPerHour,CubicYardPerSecond,CubicYardPerMinute,CubicYardPerHour,CubicYardPerDay,MillionUsGallonPerDay,UsGallonPerDay,LiterPerSecond,LiterPerMinute,LiterPerHour,LiterPerDay,UsGallonPerSecond,UsGallonPerMinute,UkGallonPerDay,UkGallonPerHour,UkGallonPerMinute,UkGallonPerSecond,KilousGallonPerMinute,UsGallonPerHour,CubicDecimeterPerMinute,OilBarrelPerDay,OilBarrelPerMinute,OilBarrelPerHour,OilBarrelPerSecond,CubicMillimeterPerSecond,AcreFootPerSecond,AcreFootPerMinute,AcreFootPerHour,AcreFootPerDay,CubicCentimeterPerMinute,MegausGallonPerDay,NanoliterPerSecond,MicroliterPerSecond,MilliliterPerSecond,CentiliterPerSecond,DeciliterPerSecond,DecaliterPerSecond,HectoliterPerSecond,KiloliterPerSecond,MegaliterPerSecond,NanoliterPerMinute,MicroliterPerMinute,MilliliterPerMinute,CentiliterPerMinute,DeciliterPerMinute,DecaliterPerMinute,HectoliterPerMinute,KiloliterPerMinute,MegaliterPerMinute,NanoliterPerHour,MicroliterPerHour,MilliliterPerHour,CentiliterPerHour,DeciliterPerHour,DecaliterPerHour,HectoliterPerHour,KiloliterPerHour,MegaliterPerHour,NanoliterPerDay,MicroliterPerDay,MilliliterPerDay,CentiliterPerDay,DeciliterPerDay,DecaliterPerDay,HectoliterPerDay,KiloliterPerDay,MegaliterPerDay,MegaukGallonPerDay,MegaukGallonPerSecond"`
 }
 
 // VolumeFlowDtoFactory groups methods for creating and serializing VolumeFlowDto objects.
@@ -693,6 +772,9 @@ func (uf VolumeFlowFactory) FromMegaukGallonsPerSecond(value float64) (*VolumeFl
 func newVolumeFlow(value float64, fromUnit VolumeFlowUnits) (*VolumeFlow, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalVolumeFlowUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in VolumeFlowUnits", fromUnit)
 	}
 	a := &VolumeFlow{}
 	a.value = a.convertToBase(value, fromUnit)

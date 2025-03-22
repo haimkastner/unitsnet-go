@@ -460,3 +460,19 @@ func TestMagneticFlux_String(t *testing.T) {
         })
     }
 }
+
+
+func TestMagneticFlux_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.MagneticFluxFactory{}
+
+	_, err := uf.CreateMagneticFlux(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

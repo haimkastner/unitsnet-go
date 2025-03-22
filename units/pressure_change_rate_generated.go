@@ -55,12 +55,34 @@ const (
         PressureChangeRateMillibarPerMinute PressureChangeRateUnits = "MillibarPerMinute"
 )
 
+var internalPressureChangeRateUnitsMap = map[PressureChangeRateUnits]bool{
+	
+	PressureChangeRatePascalPerSecond: true,
+	PressureChangeRatePascalPerMinute: true,
+	PressureChangeRateMillimeterOfMercuryPerSecond: true,
+	PressureChangeRateAtmospherePerSecond: true,
+	PressureChangeRatePoundForcePerSquareInchPerSecond: true,
+	PressureChangeRatePoundForcePerSquareInchPerMinute: true,
+	PressureChangeRateBarPerSecond: true,
+	PressureChangeRateBarPerMinute: true,
+	PressureChangeRateKilopascalPerSecond: true,
+	PressureChangeRateMegapascalPerSecond: true,
+	PressureChangeRateKilopascalPerMinute: true,
+	PressureChangeRateMegapascalPerMinute: true,
+	PressureChangeRateKilopoundForcePerSquareInchPerSecond: true,
+	PressureChangeRateMegapoundForcePerSquareInchPerSecond: true,
+	PressureChangeRateKilopoundForcePerSquareInchPerMinute: true,
+	PressureChangeRateMegapoundForcePerSquareInchPerMinute: true,
+	PressureChangeRateMillibarPerSecond: true,
+	PressureChangeRateMillibarPerMinute: true,
+}
+
 // PressureChangeRateDto represents a PressureChangeRate measurement with a numerical value and its corresponding unit.
 type PressureChangeRateDto struct {
     // Value is the numerical representation of the PressureChangeRate.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the PressureChangeRate, as defined in the PressureChangeRateUnits enumeration.
-	Unit  PressureChangeRateUnits `json:"unit"`
+	Unit  PressureChangeRateUnits `json:"unit" validate:"required,oneof=PascalPerSecond,PascalPerMinute,MillimeterOfMercuryPerSecond,AtmospherePerSecond,PoundForcePerSquareInchPerSecond,PoundForcePerSquareInchPerMinute,BarPerSecond,BarPerMinute,KilopascalPerSecond,MegapascalPerSecond,KilopascalPerMinute,MegapascalPerMinute,KilopoundForcePerSquareInchPerSecond,MegapoundForcePerSquareInchPerSecond,KilopoundForcePerSquareInchPerMinute,MegapoundForcePerSquareInchPerMinute,MillibarPerSecond,MillibarPerMinute"`
 }
 
 // PressureChangeRateDtoFactory groups methods for creating and serializing PressureChangeRateDto objects.
@@ -237,6 +259,9 @@ func (uf PressureChangeRateFactory) FromMillibarsPerMinute(value float64) (*Pres
 func newPressureChangeRate(value float64, fromUnit PressureChangeRateUnits) (*PressureChangeRate, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalPressureChangeRateUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in PressureChangeRateUnits", fromUnit)
 	}
 	a := &PressureChangeRate{}
 	a.value = a.convertToBase(value, fromUnit)

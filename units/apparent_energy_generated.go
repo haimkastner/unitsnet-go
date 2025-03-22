@@ -25,12 +25,19 @@ const (
         ApparentEnergyMegavoltampereHour ApparentEnergyUnits = "MegavoltampereHour"
 )
 
+var internalApparentEnergyUnitsMap = map[ApparentEnergyUnits]bool{
+	
+	ApparentEnergyVoltampereHour: true,
+	ApparentEnergyKilovoltampereHour: true,
+	ApparentEnergyMegavoltampereHour: true,
+}
+
 // ApparentEnergyDto represents a ApparentEnergy measurement with a numerical value and its corresponding unit.
 type ApparentEnergyDto struct {
     // Value is the numerical representation of the ApparentEnergy.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ApparentEnergy, as defined in the ApparentEnergyUnits enumeration.
-	Unit  ApparentEnergyUnits `json:"unit"`
+	Unit  ApparentEnergyUnits `json:"unit" validate:"required,oneof=VoltampereHour,KilovoltampereHour,MegavoltampereHour"`
 }
 
 // ApparentEnergyDtoFactory groups methods for creating and serializing ApparentEnergyDto objects.
@@ -117,6 +124,9 @@ func (uf ApparentEnergyFactory) FromMegavoltampereHours(value float64) (*Apparen
 func newApparentEnergy(value float64, fromUnit ApparentEnergyUnits) (*ApparentEnergy, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalApparentEnergyUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ApparentEnergyUnits", fromUnit)
 	}
 	a := &ApparentEnergy{}
 	a.value = a.convertToBase(value, fromUnit)

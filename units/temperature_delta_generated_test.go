@@ -1148,3 +1148,19 @@ func TestTemperatureDelta_String(t *testing.T) {
         })
     }
 }
+
+
+func TestTemperatureDelta_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.TemperatureDeltaFactory{}
+
+	_, err := uf.CreateTemperatureDelta(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

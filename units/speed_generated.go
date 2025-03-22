@@ -85,12 +85,49 @@ const (
         SpeedKilometerPerHour SpeedUnits = "KilometerPerHour"
 )
 
+var internalSpeedUnitsMap = map[SpeedUnits]bool{
+	
+	SpeedMeterPerSecond: true,
+	SpeedMeterPerMinute: true,
+	SpeedMeterPerHour: true,
+	SpeedFootPerSecond: true,
+	SpeedFootPerMinute: true,
+	SpeedFootPerHour: true,
+	SpeedUsSurveyFootPerSecond: true,
+	SpeedUsSurveyFootPerMinute: true,
+	SpeedUsSurveyFootPerHour: true,
+	SpeedInchPerSecond: true,
+	SpeedInchPerMinute: true,
+	SpeedInchPerHour: true,
+	SpeedYardPerSecond: true,
+	SpeedYardPerMinute: true,
+	SpeedYardPerHour: true,
+	SpeedKnot: true,
+	SpeedMilePerHour: true,
+	SpeedMach: true,
+	SpeedNanometerPerSecond: true,
+	SpeedMicrometerPerSecond: true,
+	SpeedMillimeterPerSecond: true,
+	SpeedCentimeterPerSecond: true,
+	SpeedDecimeterPerSecond: true,
+	SpeedKilometerPerSecond: true,
+	SpeedNanometerPerMinute: true,
+	SpeedMicrometerPerMinute: true,
+	SpeedMillimeterPerMinute: true,
+	SpeedCentimeterPerMinute: true,
+	SpeedDecimeterPerMinute: true,
+	SpeedKilometerPerMinute: true,
+	SpeedMillimeterPerHour: true,
+	SpeedCentimeterPerHour: true,
+	SpeedKilometerPerHour: true,
+}
+
 // SpeedDto represents a Speed measurement with a numerical value and its corresponding unit.
 type SpeedDto struct {
     // Value is the numerical representation of the Speed.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Speed, as defined in the SpeedUnits enumeration.
-	Unit  SpeedUnits `json:"unit"`
+	Unit  SpeedUnits `json:"unit" validate:"required,oneof=MeterPerSecond,MeterPerMinute,MeterPerHour,FootPerSecond,FootPerMinute,FootPerHour,UsSurveyFootPerSecond,UsSurveyFootPerMinute,UsSurveyFootPerHour,InchPerSecond,InchPerMinute,InchPerHour,YardPerSecond,YardPerMinute,YardPerHour,Knot,MilePerHour,Mach,NanometerPerSecond,MicrometerPerSecond,MillimeterPerSecond,CentimeterPerSecond,DecimeterPerSecond,KilometerPerSecond,NanometerPerMinute,MicrometerPerMinute,MillimeterPerMinute,CentimeterPerMinute,DecimeterPerMinute,KilometerPerMinute,MillimeterPerHour,CentimeterPerHour,KilometerPerHour"`
 }
 
 // SpeedDtoFactory groups methods for creating and serializing SpeedDto objects.
@@ -357,6 +394,9 @@ func (uf SpeedFactory) FromKilometersPerHour(value float64) (*Speed, error) {
 func newSpeed(value float64, fromUnit SpeedUnits) (*Speed, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalSpeedUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in SpeedUnits", fromUnit)
 	}
 	a := &Speed{}
 	a.value = a.convertToBase(value, fromUnit)

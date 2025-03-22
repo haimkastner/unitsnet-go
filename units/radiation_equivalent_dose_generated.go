@@ -31,12 +31,22 @@ const (
         RadiationEquivalentDoseMilliroentgenEquivalentMan RadiationEquivalentDoseUnits = "MilliroentgenEquivalentMan"
 )
 
+var internalRadiationEquivalentDoseUnitsMap = map[RadiationEquivalentDoseUnits]bool{
+	
+	RadiationEquivalentDoseSievert: true,
+	RadiationEquivalentDoseRoentgenEquivalentMan: true,
+	RadiationEquivalentDoseNanosievert: true,
+	RadiationEquivalentDoseMicrosievert: true,
+	RadiationEquivalentDoseMillisievert: true,
+	RadiationEquivalentDoseMilliroentgenEquivalentMan: true,
+}
+
 // RadiationEquivalentDoseDto represents a RadiationEquivalentDose measurement with a numerical value and its corresponding unit.
 type RadiationEquivalentDoseDto struct {
     // Value is the numerical representation of the RadiationEquivalentDose.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RadiationEquivalentDose, as defined in the RadiationEquivalentDoseUnits enumeration.
-	Unit  RadiationEquivalentDoseUnits `json:"unit"`
+	Unit  RadiationEquivalentDoseUnits `json:"unit" validate:"required,oneof=Sievert,RoentgenEquivalentMan,Nanosievert,Microsievert,Millisievert,MilliroentgenEquivalentMan"`
 }
 
 // RadiationEquivalentDoseDtoFactory groups methods for creating and serializing RadiationEquivalentDoseDto objects.
@@ -141,6 +151,9 @@ func (uf RadiationEquivalentDoseFactory) FromMilliroentgensEquivalentMan(value f
 func newRadiationEquivalentDose(value float64, fromUnit RadiationEquivalentDoseUnits) (*RadiationEquivalentDose, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRadiationEquivalentDoseUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RadiationEquivalentDoseUnits", fromUnit)
 	}
 	a := &RadiationEquivalentDose{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -39,12 +39,26 @@ const (
         TemperatureSolarTemperature TemperatureUnits = "SolarTemperature"
 )
 
+var internalTemperatureUnitsMap = map[TemperatureUnits]bool{
+	
+	TemperatureKelvin: true,
+	TemperatureDegreeCelsius: true,
+	TemperatureMillidegreeCelsius: true,
+	TemperatureDegreeDelisle: true,
+	TemperatureDegreeFahrenheit: true,
+	TemperatureDegreeNewton: true,
+	TemperatureDegreeRankine: true,
+	TemperatureDegreeReaumur: true,
+	TemperatureDegreeRoemer: true,
+	TemperatureSolarTemperature: true,
+}
+
 // TemperatureDto represents a Temperature measurement with a numerical value and its corresponding unit.
 type TemperatureDto struct {
     // Value is the numerical representation of the Temperature.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Temperature, as defined in the TemperatureUnits enumeration.
-	Unit  TemperatureUnits `json:"unit"`
+	Unit  TemperatureUnits `json:"unit" validate:"required,oneof=Kelvin,DegreeCelsius,MillidegreeCelsius,DegreeDelisle,DegreeFahrenheit,DegreeNewton,DegreeRankine,DegreeReaumur,DegreeRoemer,SolarTemperature"`
 }
 
 // TemperatureDtoFactory groups methods for creating and serializing TemperatureDto objects.
@@ -173,6 +187,9 @@ func (uf TemperatureFactory) FromSolarTemperatures(value float64) (*Temperature,
 func newTemperature(value float64, fromUnit TemperatureUnits) (*Temperature, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalTemperatureUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in TemperatureUnits", fromUnit)
 	}
 	a := &Temperature{}
 	a.value = a.convertToBase(value, fromUnit)

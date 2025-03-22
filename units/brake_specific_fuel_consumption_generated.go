@@ -25,12 +25,19 @@ const (
         BrakeSpecificFuelConsumptionPoundPerMechanicalHorsepowerHour BrakeSpecificFuelConsumptionUnits = "PoundPerMechanicalHorsepowerHour"
 )
 
+var internalBrakeSpecificFuelConsumptionUnitsMap = map[BrakeSpecificFuelConsumptionUnits]bool{
+	
+	BrakeSpecificFuelConsumptionGramPerKiloWattHour: true,
+	BrakeSpecificFuelConsumptionKilogramPerJoule: true,
+	BrakeSpecificFuelConsumptionPoundPerMechanicalHorsepowerHour: true,
+}
+
 // BrakeSpecificFuelConsumptionDto represents a BrakeSpecificFuelConsumption measurement with a numerical value and its corresponding unit.
 type BrakeSpecificFuelConsumptionDto struct {
     // Value is the numerical representation of the BrakeSpecificFuelConsumption.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the BrakeSpecificFuelConsumption, as defined in the BrakeSpecificFuelConsumptionUnits enumeration.
-	Unit  BrakeSpecificFuelConsumptionUnits `json:"unit"`
+	Unit  BrakeSpecificFuelConsumptionUnits `json:"unit" validate:"required,oneof=GramPerKiloWattHour,KilogramPerJoule,PoundPerMechanicalHorsepowerHour"`
 }
 
 // BrakeSpecificFuelConsumptionDtoFactory groups methods for creating and serializing BrakeSpecificFuelConsumptionDto objects.
@@ -117,6 +124,9 @@ func (uf BrakeSpecificFuelConsumptionFactory) FromPoundsPerMechanicalHorsepowerH
 func newBrakeSpecificFuelConsumption(value float64, fromUnit BrakeSpecificFuelConsumptionUnits) (*BrakeSpecificFuelConsumption, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalBrakeSpecificFuelConsumptionUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in BrakeSpecificFuelConsumptionUnits", fromUnit)
 	}
 	a := &BrakeSpecificFuelConsumption{}
 	a.value = a.convertToBase(value, fromUnit)

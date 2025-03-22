@@ -41,12 +41,27 @@ const (
         MolarityDecimolePerLiter MolarityUnits = "DecimolePerLiter"
 )
 
+var internalMolarityUnitsMap = map[MolarityUnits]bool{
+	
+	MolarityMolePerCubicMeter: true,
+	MolarityMolePerLiter: true,
+	MolarityPoundMolePerCubicFoot: true,
+	MolarityKilomolePerCubicMeter: true,
+	MolarityFemtomolePerLiter: true,
+	MolarityPicomolePerLiter: true,
+	MolarityNanomolePerLiter: true,
+	MolarityMicromolePerLiter: true,
+	MolarityMillimolePerLiter: true,
+	MolarityCentimolePerLiter: true,
+	MolarityDecimolePerLiter: true,
+}
+
 // MolarityDto represents a Molarity measurement with a numerical value and its corresponding unit.
 type MolarityDto struct {
     // Value is the numerical representation of the Molarity.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Molarity, as defined in the MolarityUnits enumeration.
-	Unit  MolarityUnits `json:"unit"`
+	Unit  MolarityUnits `json:"unit" validate:"required,oneof=MolePerCubicMeter,MolePerLiter,PoundMolePerCubicFoot,KilomolePerCubicMeter,FemtomolePerLiter,PicomolePerLiter,NanomolePerLiter,MicromolePerLiter,MillimolePerLiter,CentimolePerLiter,DecimolePerLiter"`
 }
 
 // MolarityDtoFactory groups methods for creating and serializing MolarityDto objects.
@@ -181,6 +196,9 @@ func (uf MolarityFactory) FromDecimolesPerLiter(value float64) (*Molarity, error
 func newMolarity(value float64, fromUnit MolarityUnits) (*Molarity, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMolarityUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MolarityUnits", fromUnit)
 	}
 	a := &Molarity{}
 	a.value = a.convertToBase(value, fromUnit)

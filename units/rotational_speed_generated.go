@@ -45,12 +45,29 @@ const (
         RotationalSpeedMillidegreePerSecond RotationalSpeedUnits = "MillidegreePerSecond"
 )
 
+var internalRotationalSpeedUnitsMap = map[RotationalSpeedUnits]bool{
+	
+	RotationalSpeedRadianPerSecond: true,
+	RotationalSpeedDegreePerSecond: true,
+	RotationalSpeedDegreePerMinute: true,
+	RotationalSpeedRevolutionPerSecond: true,
+	RotationalSpeedRevolutionPerMinute: true,
+	RotationalSpeedNanoradianPerSecond: true,
+	RotationalSpeedMicroradianPerSecond: true,
+	RotationalSpeedMilliradianPerSecond: true,
+	RotationalSpeedCentiradianPerSecond: true,
+	RotationalSpeedDeciradianPerSecond: true,
+	RotationalSpeedNanodegreePerSecond: true,
+	RotationalSpeedMicrodegreePerSecond: true,
+	RotationalSpeedMillidegreePerSecond: true,
+}
+
 // RotationalSpeedDto represents a RotationalSpeed measurement with a numerical value and its corresponding unit.
 type RotationalSpeedDto struct {
     // Value is the numerical representation of the RotationalSpeed.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RotationalSpeed, as defined in the RotationalSpeedUnits enumeration.
-	Unit  RotationalSpeedUnits `json:"unit"`
+	Unit  RotationalSpeedUnits `json:"unit" validate:"required,oneof=RadianPerSecond,DegreePerSecond,DegreePerMinute,RevolutionPerSecond,RevolutionPerMinute,NanoradianPerSecond,MicroradianPerSecond,MilliradianPerSecond,CentiradianPerSecond,DeciradianPerSecond,NanodegreePerSecond,MicrodegreePerSecond,MillidegreePerSecond"`
 }
 
 // RotationalSpeedDtoFactory groups methods for creating and serializing RotationalSpeedDto objects.
@@ -197,6 +214,9 @@ func (uf RotationalSpeedFactory) FromMillidegreesPerSecond(value float64) (*Rota
 func newRotationalSpeed(value float64, fromUnit RotationalSpeedUnits) (*RotationalSpeed, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalRotationalSpeedUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in RotationalSpeedUnits", fromUnit)
 	}
 	a := &RotationalSpeed{}
 	a.value = a.convertToBase(value, fromUnit)

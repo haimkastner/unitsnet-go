@@ -51,12 +51,32 @@ const (
         AngleMillidegree AngleUnits = "Millidegree"
 )
 
+var internalAngleUnitsMap = map[AngleUnits]bool{
+	
+	AngleRadian: true,
+	AngleDegree: true,
+	AngleArcminute: true,
+	AngleArcsecond: true,
+	AngleGradian: true,
+	AngleNatoMil: true,
+	AngleRevolution: true,
+	AngleTilt: true,
+	AngleNanoradian: true,
+	AngleMicroradian: true,
+	AngleMilliradian: true,
+	AngleCentiradian: true,
+	AngleDeciradian: true,
+	AngleNanodegree: true,
+	AngleMicrodegree: true,
+	AngleMillidegree: true,
+}
+
 // AngleDto represents a Angle measurement with a numerical value and its corresponding unit.
 type AngleDto struct {
     // Value is the numerical representation of the Angle.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Angle, as defined in the AngleUnits enumeration.
-	Unit  AngleUnits `json:"unit"`
+	Unit  AngleUnits `json:"unit" validate:"required,oneof=Radian,Degree,Arcminute,Arcsecond,Gradian,NatoMil,Revolution,Tilt,Nanoradian,Microradian,Milliradian,Centiradian,Deciradian,Nanodegree,Microdegree,Millidegree"`
 }
 
 // AngleDtoFactory groups methods for creating and serializing AngleDto objects.
@@ -221,6 +241,9 @@ func (uf AngleFactory) FromMillidegrees(value float64) (*Angle, error) {
 func newAngle(value float64, fromUnit AngleUnits) (*Angle, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalAngleUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in AngleUnits", fromUnit)
 	}
 	a := &Angle{}
 	a.value = a.convertToBase(value, fromUnit)

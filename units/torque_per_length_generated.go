@@ -61,12 +61,37 @@ const (
         TorquePerLengthMegapoundForceFootPerFoot TorquePerLengthUnits = "MegapoundForceFootPerFoot"
 )
 
+var internalTorquePerLengthUnitsMap = map[TorquePerLengthUnits]bool{
+	
+	TorquePerLengthNewtonMillimeterPerMeter: true,
+	TorquePerLengthNewtonCentimeterPerMeter: true,
+	TorquePerLengthNewtonMeterPerMeter: true,
+	TorquePerLengthPoundForceInchPerFoot: true,
+	TorquePerLengthPoundForceFootPerFoot: true,
+	TorquePerLengthKilogramForceMillimeterPerMeter: true,
+	TorquePerLengthKilogramForceCentimeterPerMeter: true,
+	TorquePerLengthKilogramForceMeterPerMeter: true,
+	TorquePerLengthTonneForceMillimeterPerMeter: true,
+	TorquePerLengthTonneForceCentimeterPerMeter: true,
+	TorquePerLengthTonneForceMeterPerMeter: true,
+	TorquePerLengthKilonewtonMillimeterPerMeter: true,
+	TorquePerLengthMeganewtonMillimeterPerMeter: true,
+	TorquePerLengthKilonewtonCentimeterPerMeter: true,
+	TorquePerLengthMeganewtonCentimeterPerMeter: true,
+	TorquePerLengthKilonewtonMeterPerMeter: true,
+	TorquePerLengthMeganewtonMeterPerMeter: true,
+	TorquePerLengthKilopoundForceInchPerFoot: true,
+	TorquePerLengthMegapoundForceInchPerFoot: true,
+	TorquePerLengthKilopoundForceFootPerFoot: true,
+	TorquePerLengthMegapoundForceFootPerFoot: true,
+}
+
 // TorquePerLengthDto represents a TorquePerLength measurement with a numerical value and its corresponding unit.
 type TorquePerLengthDto struct {
     // Value is the numerical representation of the TorquePerLength.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the TorquePerLength, as defined in the TorquePerLengthUnits enumeration.
-	Unit  TorquePerLengthUnits `json:"unit"`
+	Unit  TorquePerLengthUnits `json:"unit" validate:"required,oneof=NewtonMillimeterPerMeter,NewtonCentimeterPerMeter,NewtonMeterPerMeter,PoundForceInchPerFoot,PoundForceFootPerFoot,KilogramForceMillimeterPerMeter,KilogramForceCentimeterPerMeter,KilogramForceMeterPerMeter,TonneForceMillimeterPerMeter,TonneForceCentimeterPerMeter,TonneForceMeterPerMeter,KilonewtonMillimeterPerMeter,MeganewtonMillimeterPerMeter,KilonewtonCentimeterPerMeter,MeganewtonCentimeterPerMeter,KilonewtonMeterPerMeter,MeganewtonMeterPerMeter,KilopoundForceInchPerFoot,MegapoundForceInchPerFoot,KilopoundForceFootPerFoot,MegapoundForceFootPerFoot"`
 }
 
 // TorquePerLengthDtoFactory groups methods for creating and serializing TorquePerLengthDto objects.
@@ -261,6 +286,9 @@ func (uf TorquePerLengthFactory) FromMegapoundForceFeetPerFoot(value float64) (*
 func newTorquePerLength(value float64, fromUnit TorquePerLengthUnits) (*TorquePerLength, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalTorquePerLengthUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in TorquePerLengthUnits", fromUnit)
 	}
 	a := &TorquePerLength{}
 	a.value = a.convertToBase(value, fromUnit)

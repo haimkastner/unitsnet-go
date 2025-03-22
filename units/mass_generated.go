@@ -73,12 +73,43 @@ const (
         MassMegapound MassUnits = "Megapound"
 )
 
+var internalMassUnitsMap = map[MassUnits]bool{
+	
+	MassGram: true,
+	MassTonne: true,
+	MassShortTon: true,
+	MassLongTon: true,
+	MassPound: true,
+	MassOunce: true,
+	MassSlug: true,
+	MassStone: true,
+	MassShortHundredweight: true,
+	MassLongHundredweight: true,
+	MassGrain: true,
+	MassSolarMass: true,
+	MassEarthMass: true,
+	MassFemtogram: true,
+	MassPicogram: true,
+	MassNanogram: true,
+	MassMicrogram: true,
+	MassMilligram: true,
+	MassCentigram: true,
+	MassDecigram: true,
+	MassDecagram: true,
+	MassHectogram: true,
+	MassKilogram: true,
+	MassKilotonne: true,
+	MassMegatonne: true,
+	MassKilopound: true,
+	MassMegapound: true,
+}
+
 // MassDto represents a Mass measurement with a numerical value and its corresponding unit.
 type MassDto struct {
     // Value is the numerical representation of the Mass.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Mass, as defined in the MassUnits enumeration.
-	Unit  MassUnits `json:"unit"`
+	Unit  MassUnits `json:"unit" validate:"required,oneof=Gram,Tonne,ShortTon,LongTon,Pound,Ounce,Slug,Stone,ShortHundredweight,LongHundredweight,Grain,SolarMass,EarthMass,Femtogram,Picogram,Nanogram,Microgram,Milligram,Centigram,Decigram,Decagram,Hectogram,Kilogram,Kilotonne,Megatonne,Kilopound,Megapound"`
 }
 
 // MassDtoFactory groups methods for creating and serializing MassDto objects.
@@ -309,6 +340,9 @@ func (uf MassFactory) FromMegapounds(value float64) (*Mass, error) {
 func newMass(value float64, fromUnit MassUnits) (*Mass, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalMassUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in MassUnits", fromUnit)
 	}
 	a := &Mass{}
 	a.value = a.convertToBase(value, fromUnit)

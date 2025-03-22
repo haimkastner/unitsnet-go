@@ -37,12 +37,25 @@ const (
         VolumePerLengthImperialGallonPerMile VolumePerLengthUnits = "ImperialGallonPerMile"
 )
 
+var internalVolumePerLengthUnitsMap = map[VolumePerLengthUnits]bool{
+	
+	VolumePerLengthCubicMeterPerMeter: true,
+	VolumePerLengthLiterPerMeter: true,
+	VolumePerLengthLiterPerKilometer: true,
+	VolumePerLengthLiterPerMillimeter: true,
+	VolumePerLengthOilBarrelPerFoot: true,
+	VolumePerLengthCubicYardPerFoot: true,
+	VolumePerLengthCubicYardPerUsSurveyFoot: true,
+	VolumePerLengthUsGallonPerMile: true,
+	VolumePerLengthImperialGallonPerMile: true,
+}
+
 // VolumePerLengthDto represents a VolumePerLength measurement with a numerical value and its corresponding unit.
 type VolumePerLengthDto struct {
     // Value is the numerical representation of the VolumePerLength.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the VolumePerLength, as defined in the VolumePerLengthUnits enumeration.
-	Unit  VolumePerLengthUnits `json:"unit"`
+	Unit  VolumePerLengthUnits `json:"unit" validate:"required,oneof=CubicMeterPerMeter,LiterPerMeter,LiterPerKilometer,LiterPerMillimeter,OilBarrelPerFoot,CubicYardPerFoot,CubicYardPerUsSurveyFoot,UsGallonPerMile,ImperialGallonPerMile"`
 }
 
 // VolumePerLengthDtoFactory groups methods for creating and serializing VolumePerLengthDto objects.
@@ -165,6 +178,9 @@ func (uf VolumePerLengthFactory) FromImperialGallonsPerMile(value float64) (*Vol
 func newVolumePerLength(value float64, fromUnit VolumePerLengthUnits) (*VolumePerLength, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalVolumePerLengthUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in VolumePerLengthUnits", fromUnit)
 	}
 	a := &VolumePerLength{}
 	a.value = a.convertToBase(value, fromUnit)

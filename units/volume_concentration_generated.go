@@ -59,12 +59,36 @@ const (
         VolumeConcentrationDecilitersPerMililiter VolumeConcentrationUnits = "DecilitersPerMililiter"
 )
 
+var internalVolumeConcentrationUnitsMap = map[VolumeConcentrationUnits]bool{
+	
+	VolumeConcentrationDecimalFraction: true,
+	VolumeConcentrationLitersPerLiter: true,
+	VolumeConcentrationLitersPerMililiter: true,
+	VolumeConcentrationPercent: true,
+	VolumeConcentrationPartPerThousand: true,
+	VolumeConcentrationPartPerMillion: true,
+	VolumeConcentrationPartPerBillion: true,
+	VolumeConcentrationPartPerTrillion: true,
+	VolumeConcentrationPicolitersPerLiter: true,
+	VolumeConcentrationNanolitersPerLiter: true,
+	VolumeConcentrationMicrolitersPerLiter: true,
+	VolumeConcentrationMillilitersPerLiter: true,
+	VolumeConcentrationCentilitersPerLiter: true,
+	VolumeConcentrationDecilitersPerLiter: true,
+	VolumeConcentrationPicolitersPerMililiter: true,
+	VolumeConcentrationNanolitersPerMililiter: true,
+	VolumeConcentrationMicrolitersPerMililiter: true,
+	VolumeConcentrationMillilitersPerMililiter: true,
+	VolumeConcentrationCentilitersPerMililiter: true,
+	VolumeConcentrationDecilitersPerMililiter: true,
+}
+
 // VolumeConcentrationDto represents a VolumeConcentration measurement with a numerical value and its corresponding unit.
 type VolumeConcentrationDto struct {
     // Value is the numerical representation of the VolumeConcentration.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the VolumeConcentration, as defined in the VolumeConcentrationUnits enumeration.
-	Unit  VolumeConcentrationUnits `json:"unit"`
+	Unit  VolumeConcentrationUnits `json:"unit" validate:"required,oneof=DecimalFraction,LitersPerLiter,LitersPerMililiter,Percent,PartPerThousand,PartPerMillion,PartPerBillion,PartPerTrillion,PicolitersPerLiter,NanolitersPerLiter,MicrolitersPerLiter,MillilitersPerLiter,CentilitersPerLiter,DecilitersPerLiter,PicolitersPerMililiter,NanolitersPerMililiter,MicrolitersPerMililiter,MillilitersPerMililiter,CentilitersPerMililiter,DecilitersPerMililiter"`
 }
 
 // VolumeConcentrationDtoFactory groups methods for creating and serializing VolumeConcentrationDto objects.
@@ -253,6 +277,9 @@ func (uf VolumeConcentrationFactory) FromDecilitersPerMililiter(value float64) (
 func newVolumeConcentration(value float64, fromUnit VolumeConcentrationUnits) (*VolumeConcentration, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalVolumeConcentrationUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in VolumeConcentrationUnits", fromUnit)
 	}
 	a := &VolumeConcentration{}
 	a.value = a.convertToBase(value, fromUnit)

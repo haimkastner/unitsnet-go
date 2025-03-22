@@ -27,12 +27,20 @@ const (
         ElectricReactivePowerGigavoltampereReactive ElectricReactivePowerUnits = "GigavoltampereReactive"
 )
 
+var internalElectricReactivePowerUnitsMap = map[ElectricReactivePowerUnits]bool{
+	
+	ElectricReactivePowerVoltampereReactive: true,
+	ElectricReactivePowerKilovoltampereReactive: true,
+	ElectricReactivePowerMegavoltampereReactive: true,
+	ElectricReactivePowerGigavoltampereReactive: true,
+}
+
 // ElectricReactivePowerDto represents a ElectricReactivePower measurement with a numerical value and its corresponding unit.
 type ElectricReactivePowerDto struct {
     // Value is the numerical representation of the ElectricReactivePower.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricReactivePower, as defined in the ElectricReactivePowerUnits enumeration.
-	Unit  ElectricReactivePowerUnits `json:"unit"`
+	Unit  ElectricReactivePowerUnits `json:"unit" validate:"required,oneof=VoltampereReactive,KilovoltampereReactive,MegavoltampereReactive,GigavoltampereReactive"`
 }
 
 // ElectricReactivePowerDtoFactory groups methods for creating and serializing ElectricReactivePowerDto objects.
@@ -125,6 +133,9 @@ func (uf ElectricReactivePowerFactory) FromGigavoltamperesReactive(value float64
 func newElectricReactivePower(value float64, fromUnit ElectricReactivePowerUnits) (*ElectricReactivePower, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricReactivePowerUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricReactivePowerUnits", fromUnit)
 	}
 	a := &ElectricReactivePower{}
 	a.value = a.convertToBase(value, fromUnit)

@@ -43,12 +43,28 @@ const (
         DurationMillisecond DurationUnits = "Millisecond"
 )
 
+var internalDurationUnitsMap = map[DurationUnits]bool{
+	
+	DurationYear365: true,
+	DurationMonth30: true,
+	DurationWeek: true,
+	DurationDay: true,
+	DurationHour: true,
+	DurationMinute: true,
+	DurationSecond: true,
+	DurationJulianYear: true,
+	DurationSol: true,
+	DurationNanosecond: true,
+	DurationMicrosecond: true,
+	DurationMillisecond: true,
+}
+
 // DurationDto represents a Duration measurement with a numerical value and its corresponding unit.
 type DurationDto struct {
     // Value is the numerical representation of the Duration.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Duration, as defined in the DurationUnits enumeration.
-	Unit  DurationUnits `json:"unit"`
+	Unit  DurationUnits `json:"unit" validate:"required,oneof=Year365,Month30,Week,Day,Hour,Minute,Second,JulianYear,Sol,Nanosecond,Microsecond,Millisecond"`
 }
 
 // DurationDtoFactory groups methods for creating and serializing DurationDto objects.
@@ -189,6 +205,9 @@ func (uf DurationFactory) FromMilliseconds(value float64) (*Duration, error) {
 func newDuration(value float64, fromUnit DurationUnits) (*Duration, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalDurationUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in DurationUnits", fromUnit)
 	}
 	a := &Duration{}
 	a.value = a.convertToBase(value, fromUnit)

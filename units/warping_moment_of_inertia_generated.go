@@ -31,12 +31,22 @@ const (
         WarpingMomentOfInertiaInchToTheSixth WarpingMomentOfInertiaUnits = "InchToTheSixth"
 )
 
+var internalWarpingMomentOfInertiaUnitsMap = map[WarpingMomentOfInertiaUnits]bool{
+	
+	WarpingMomentOfInertiaMeterToTheSixth: true,
+	WarpingMomentOfInertiaDecimeterToTheSixth: true,
+	WarpingMomentOfInertiaCentimeterToTheSixth: true,
+	WarpingMomentOfInertiaMillimeterToTheSixth: true,
+	WarpingMomentOfInertiaFootToTheSixth: true,
+	WarpingMomentOfInertiaInchToTheSixth: true,
+}
+
 // WarpingMomentOfInertiaDto represents a WarpingMomentOfInertia measurement with a numerical value and its corresponding unit.
 type WarpingMomentOfInertiaDto struct {
     // Value is the numerical representation of the WarpingMomentOfInertia.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the WarpingMomentOfInertia, as defined in the WarpingMomentOfInertiaUnits enumeration.
-	Unit  WarpingMomentOfInertiaUnits `json:"unit"`
+	Unit  WarpingMomentOfInertiaUnits `json:"unit" validate:"required,oneof=MeterToTheSixth,DecimeterToTheSixth,CentimeterToTheSixth,MillimeterToTheSixth,FootToTheSixth,InchToTheSixth"`
 }
 
 // WarpingMomentOfInertiaDtoFactory groups methods for creating and serializing WarpingMomentOfInertiaDto objects.
@@ -141,6 +151,9 @@ func (uf WarpingMomentOfInertiaFactory) FromInchesToTheSixth(value float64) (*Wa
 func newWarpingMomentOfInertia(value float64, fromUnit WarpingMomentOfInertiaUnits) (*WarpingMomentOfInertia, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalWarpingMomentOfInertiaUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in WarpingMomentOfInertiaUnits", fromUnit)
 	}
 	a := &WarpingMomentOfInertia{}
 	a.value = a.convertToBase(value, fromUnit)

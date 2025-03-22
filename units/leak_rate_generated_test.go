@@ -632,3 +632,19 @@ func TestLeakRate_String(t *testing.T) {
         })
     }
 }
+
+
+func TestLeakRate_BrokenCreation(t *testing.T) {
+	// Create a factory instance
+	uf := units.LeakRateFactory{}
+
+	_, err := uf.CreateLeakRate(100, "unknown")
+
+	if err == nil {
+		t.Errorf("Expected error, but got nil")
+	}
+
+	if strings.Contains(err.Error(), "unknown unit") == false {
+		t.Errorf("Expected error message to contain 'Unknown unit'")
+	}
+}

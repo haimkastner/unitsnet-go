@@ -25,12 +25,19 @@ const (
         ReactiveEnergyMegavoltampereReactiveHour ReactiveEnergyUnits = "MegavoltampereReactiveHour"
 )
 
+var internalReactiveEnergyUnitsMap = map[ReactiveEnergyUnits]bool{
+	
+	ReactiveEnergyVoltampereReactiveHour: true,
+	ReactiveEnergyKilovoltampereReactiveHour: true,
+	ReactiveEnergyMegavoltampereReactiveHour: true,
+}
+
 // ReactiveEnergyDto represents a ReactiveEnergy measurement with a numerical value and its corresponding unit.
 type ReactiveEnergyDto struct {
     // Value is the numerical representation of the ReactiveEnergy.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ReactiveEnergy, as defined in the ReactiveEnergyUnits enumeration.
-	Unit  ReactiveEnergyUnits `json:"unit"`
+	Unit  ReactiveEnergyUnits `json:"unit" validate:"required,oneof=VoltampereReactiveHour,KilovoltampereReactiveHour,MegavoltampereReactiveHour"`
 }
 
 // ReactiveEnergyDtoFactory groups methods for creating and serializing ReactiveEnergyDto objects.
@@ -117,6 +124,9 @@ func (uf ReactiveEnergyFactory) FromMegavoltampereReactiveHours(value float64) (
 func newReactiveEnergy(value float64, fromUnit ReactiveEnergyUnits) (*ReactiveEnergy, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalReactiveEnergyUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ReactiveEnergyUnits", fromUnit)
 	}
 	a := &ReactiveEnergy{}
 	a.value = a.convertToBase(value, fromUnit)

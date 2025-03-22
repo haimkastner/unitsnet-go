@@ -49,12 +49,31 @@ const (
         ForceChangeRateKilopoundForcePerSecond ForceChangeRateUnits = "KilopoundForcePerSecond"
 )
 
+var internalForceChangeRateUnitsMap = map[ForceChangeRateUnits]bool{
+	
+	ForceChangeRateNewtonPerMinute: true,
+	ForceChangeRateNewtonPerSecond: true,
+	ForceChangeRatePoundForcePerMinute: true,
+	ForceChangeRatePoundForcePerSecond: true,
+	ForceChangeRateDecanewtonPerMinute: true,
+	ForceChangeRateKilonewtonPerMinute: true,
+	ForceChangeRateNanonewtonPerSecond: true,
+	ForceChangeRateMicronewtonPerSecond: true,
+	ForceChangeRateMillinewtonPerSecond: true,
+	ForceChangeRateCentinewtonPerSecond: true,
+	ForceChangeRateDecinewtonPerSecond: true,
+	ForceChangeRateDecanewtonPerSecond: true,
+	ForceChangeRateKilonewtonPerSecond: true,
+	ForceChangeRateKilopoundForcePerMinute: true,
+	ForceChangeRateKilopoundForcePerSecond: true,
+}
+
 // ForceChangeRateDto represents a ForceChangeRate measurement with a numerical value and its corresponding unit.
 type ForceChangeRateDto struct {
     // Value is the numerical representation of the ForceChangeRate.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ForceChangeRate, as defined in the ForceChangeRateUnits enumeration.
-	Unit  ForceChangeRateUnits `json:"unit"`
+	Unit  ForceChangeRateUnits `json:"unit" validate:"required,oneof=NewtonPerMinute,NewtonPerSecond,PoundForcePerMinute,PoundForcePerSecond,DecanewtonPerMinute,KilonewtonPerMinute,NanonewtonPerSecond,MicronewtonPerSecond,MillinewtonPerSecond,CentinewtonPerSecond,DecinewtonPerSecond,DecanewtonPerSecond,KilonewtonPerSecond,KilopoundForcePerMinute,KilopoundForcePerSecond"`
 }
 
 // ForceChangeRateDtoFactory groups methods for creating and serializing ForceChangeRateDto objects.
@@ -213,6 +232,9 @@ func (uf ForceChangeRateFactory) FromKilopoundsForcePerSecond(value float64) (*F
 func newForceChangeRate(value float64, fromUnit ForceChangeRateUnits) (*ForceChangeRate, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalForceChangeRateUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ForceChangeRateUnits", fromUnit)
 	}
 	a := &ForceChangeRate{}
 	a.value = a.convertToBase(value, fromUnit)

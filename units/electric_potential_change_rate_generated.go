@@ -59,12 +59,36 @@ const (
         ElectricPotentialChangeRateMegavoltPerHour ElectricPotentialChangeRateUnits = "MegavoltPerHour"
 )
 
+var internalElectricPotentialChangeRateUnitsMap = map[ElectricPotentialChangeRateUnits]bool{
+	
+	ElectricPotentialChangeRateVoltPerSecond: true,
+	ElectricPotentialChangeRateVoltPerMicrosecond: true,
+	ElectricPotentialChangeRateVoltPerMinute: true,
+	ElectricPotentialChangeRateVoltPerHour: true,
+	ElectricPotentialChangeRateMicrovoltPerSecond: true,
+	ElectricPotentialChangeRateMillivoltPerSecond: true,
+	ElectricPotentialChangeRateKilovoltPerSecond: true,
+	ElectricPotentialChangeRateMegavoltPerSecond: true,
+	ElectricPotentialChangeRateMicrovoltPerMicrosecond: true,
+	ElectricPotentialChangeRateMillivoltPerMicrosecond: true,
+	ElectricPotentialChangeRateKilovoltPerMicrosecond: true,
+	ElectricPotentialChangeRateMegavoltPerMicrosecond: true,
+	ElectricPotentialChangeRateMicrovoltPerMinute: true,
+	ElectricPotentialChangeRateMillivoltPerMinute: true,
+	ElectricPotentialChangeRateKilovoltPerMinute: true,
+	ElectricPotentialChangeRateMegavoltPerMinute: true,
+	ElectricPotentialChangeRateMicrovoltPerHour: true,
+	ElectricPotentialChangeRateMillivoltPerHour: true,
+	ElectricPotentialChangeRateKilovoltPerHour: true,
+	ElectricPotentialChangeRateMegavoltPerHour: true,
+}
+
 // ElectricPotentialChangeRateDto represents a ElectricPotentialChangeRate measurement with a numerical value and its corresponding unit.
 type ElectricPotentialChangeRateDto struct {
     // Value is the numerical representation of the ElectricPotentialChangeRate.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricPotentialChangeRate, as defined in the ElectricPotentialChangeRateUnits enumeration.
-	Unit  ElectricPotentialChangeRateUnits `json:"unit"`
+	Unit  ElectricPotentialChangeRateUnits `json:"unit" validate:"required,oneof=VoltPerSecond,VoltPerMicrosecond,VoltPerMinute,VoltPerHour,MicrovoltPerSecond,MillivoltPerSecond,KilovoltPerSecond,MegavoltPerSecond,MicrovoltPerMicrosecond,MillivoltPerMicrosecond,KilovoltPerMicrosecond,MegavoltPerMicrosecond,MicrovoltPerMinute,MillivoltPerMinute,KilovoltPerMinute,MegavoltPerMinute,MicrovoltPerHour,MillivoltPerHour,KilovoltPerHour,MegavoltPerHour"`
 }
 
 // ElectricPotentialChangeRateDtoFactory groups methods for creating and serializing ElectricPotentialChangeRateDto objects.
@@ -253,6 +277,9 @@ func (uf ElectricPotentialChangeRateFactory) FromMegavoltsPerHours(value float64
 func newElectricPotentialChangeRate(value float64, fromUnit ElectricPotentialChangeRateUnits) (*ElectricPotentialChangeRate, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalElectricPotentialChangeRateUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in ElectricPotentialChangeRateUnits", fromUnit)
 	}
 	a := &ElectricPotentialChangeRate{}
 	a.value = a.convertToBase(value, fromUnit)

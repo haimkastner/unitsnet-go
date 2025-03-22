@@ -47,12 +47,30 @@ const (
         IrradianceMegawattPerSquareCentimeter IrradianceUnits = "MegawattPerSquareCentimeter"
 )
 
+var internalIrradianceUnitsMap = map[IrradianceUnits]bool{
+	
+	IrradianceWattPerSquareMeter: true,
+	IrradianceWattPerSquareCentimeter: true,
+	IrradiancePicowattPerSquareMeter: true,
+	IrradianceNanowattPerSquareMeter: true,
+	IrradianceMicrowattPerSquareMeter: true,
+	IrradianceMilliwattPerSquareMeter: true,
+	IrradianceKilowattPerSquareMeter: true,
+	IrradianceMegawattPerSquareMeter: true,
+	IrradiancePicowattPerSquareCentimeter: true,
+	IrradianceNanowattPerSquareCentimeter: true,
+	IrradianceMicrowattPerSquareCentimeter: true,
+	IrradianceMilliwattPerSquareCentimeter: true,
+	IrradianceKilowattPerSquareCentimeter: true,
+	IrradianceMegawattPerSquareCentimeter: true,
+}
+
 // IrradianceDto represents a Irradiance measurement with a numerical value and its corresponding unit.
 type IrradianceDto struct {
     // Value is the numerical representation of the Irradiance.
-	Value float64 `json:"value"`
+	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Irradiance, as defined in the IrradianceUnits enumeration.
-	Unit  IrradianceUnits `json:"unit"`
+	Unit  IrradianceUnits `json:"unit" validate:"required,oneof=WattPerSquareMeter,WattPerSquareCentimeter,PicowattPerSquareMeter,NanowattPerSquareMeter,MicrowattPerSquareMeter,MilliwattPerSquareMeter,KilowattPerSquareMeter,MegawattPerSquareMeter,PicowattPerSquareCentimeter,NanowattPerSquareCentimeter,MicrowattPerSquareCentimeter,MilliwattPerSquareCentimeter,KilowattPerSquareCentimeter,MegawattPerSquareCentimeter"`
 }
 
 // IrradianceDtoFactory groups methods for creating and serializing IrradianceDto objects.
@@ -205,6 +223,9 @@ func (uf IrradianceFactory) FromMegawattsPerSquareCentimeter(value float64) (*Ir
 func newIrradiance(value float64, fromUnit IrradianceUnits) (*Irradiance, error) {
 	if math.IsNaN(value) || math.IsInf(value, 0) {
 		return nil, errors.New("invalid unit value number")
+	}
+	if _, ok := internalIrradianceUnitsMap[fromUnit]; !ok {
+		return nil, fmt.Errorf("unknown unit %s in IrradianceUnits", fromUnit)
 	}
 	a := &Irradiance{}
 	a.value = a.convertToBase(value, fromUnit)
