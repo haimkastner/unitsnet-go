@@ -37,7 +37,7 @@ type MolalityDto struct {
     // Value is the numerical representation of the Molality.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Molality, as defined in the MolalityUnits enumeration.
-	Unit  MolalityUnits `json:"unit" validate:"required,oneof=MolePerKilogram,MolePerGram,MillimolePerKilogram"`
+	Unit  MolalityUnits `json:"unit" validate:"required,oneof=MolePerKilogram MolePerGram MillimolePerKilogram"`
 }
 
 // MolalityDtoFactory groups methods for creating and serializing MolalityDto objects.

@@ -109,7 +109,7 @@ type PowerDto struct {
     // Value is the numerical representation of the Power.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Power, as defined in the PowerUnits enumeration.
-	Unit  PowerUnits `json:"unit" validate:"required,oneof=Watt,MechanicalHorsepower,MetricHorsepower,ElectricalHorsepower,BoilerHorsepower,HydraulicHorsepower,BritishThermalUnitPerHour,JoulePerHour,TonOfRefrigeration,Femtowatt,Picowatt,Nanowatt,Microwatt,Milliwatt,Deciwatt,Decawatt,Kilowatt,Megawatt,Gigawatt,Terawatt,Petawatt,KilobritishThermalUnitPerHour,MegabritishThermalUnitPerHour,MillijoulePerHour,KilojoulePerHour,MegajoulePerHour,GigajoulePerHour"`
+	Unit  PowerUnits `json:"unit" validate:"required,oneof=Watt MechanicalHorsepower MetricHorsepower ElectricalHorsepower BoilerHorsepower HydraulicHorsepower BritishThermalUnitPerHour JoulePerHour TonOfRefrigeration Femtowatt Picowatt Nanowatt Microwatt Milliwatt Deciwatt Decawatt Kilowatt Megawatt Gigawatt Terawatt Petawatt KilobritishThermalUnitPerHour MegabritishThermalUnitPerHour MillijoulePerHour KilojoulePerHour MegajoulePerHour GigajoulePerHour"`
 }
 
 // PowerDtoFactory groups methods for creating and serializing PowerDto objects.

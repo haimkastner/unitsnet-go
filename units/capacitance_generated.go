@@ -49,7 +49,7 @@ type CapacitanceDto struct {
     // Value is the numerical representation of the Capacitance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Capacitance, as defined in the CapacitanceUnits enumeration.
-	Unit  CapacitanceUnits `json:"unit" validate:"required,oneof=Farad,Picofarad,Nanofarad,Microfarad,Millifarad,Kilofarad,Megafarad"`
+	Unit  CapacitanceUnits `json:"unit" validate:"required,oneof=Farad Picofarad Nanofarad Microfarad Millifarad Kilofarad Megafarad"`
 }
 
 // CapacitanceDtoFactory groups methods for creating and serializing CapacitanceDto objects.

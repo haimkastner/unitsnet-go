@@ -46,7 +46,7 @@ type RatioDto struct {
     // Value is the numerical representation of the Ratio.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Ratio, as defined in the RatioUnits enumeration.
-	Unit  RatioUnits `json:"unit" validate:"required,oneof=DecimalFraction,Percent,PartPerThousand,PartPerMillion,PartPerBillion,PartPerTrillion"`
+	Unit  RatioUnits `json:"unit" validate:"required,oneof=DecimalFraction Percent PartPerThousand PartPerMillion PartPerBillion PartPerTrillion"`
 }
 
 // RatioDtoFactory groups methods for creating and serializing RatioDto objects.

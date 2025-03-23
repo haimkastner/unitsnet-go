@@ -37,7 +37,7 @@ type ElectricReactiveEnergyDto struct {
     // Value is the numerical representation of the ElectricReactiveEnergy.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricReactiveEnergy, as defined in the ElectricReactiveEnergyUnits enumeration.
-	Unit  ElectricReactiveEnergyUnits `json:"unit" validate:"required,oneof=VoltampereReactiveHour,KilovoltampereReactiveHour,MegavoltampereReactiveHour"`
+	Unit  ElectricReactiveEnergyUnits `json:"unit" validate:"required,oneof=VoltampereReactiveHour KilovoltampereReactiveHour MegavoltampereReactiveHour"`
 }
 
 // ElectricReactiveEnergyDtoFactory groups methods for creating and serializing ElectricReactiveEnergyDto objects.

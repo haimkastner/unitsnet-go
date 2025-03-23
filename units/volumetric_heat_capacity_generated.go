@@ -55,7 +55,7 @@ type VolumetricHeatCapacityDto struct {
     // Value is the numerical representation of the VolumetricHeatCapacity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the VolumetricHeatCapacity, as defined in the VolumetricHeatCapacityUnits enumeration.
-	Unit  VolumetricHeatCapacityUnits `json:"unit" validate:"required,oneof=JoulePerCubicMeterKelvin,JoulePerCubicMeterDegreeCelsius,CaloriePerCubicCentimeterDegreeCelsius,BtuPerCubicFootDegreeFahrenheit,KilojoulePerCubicMeterKelvin,MegajoulePerCubicMeterKelvin,KilojoulePerCubicMeterDegreeCelsius,MegajoulePerCubicMeterDegreeCelsius,KilocaloriePerCubicCentimeterDegreeCelsius"`
+	Unit  VolumetricHeatCapacityUnits `json:"unit" validate:"required,oneof=JoulePerCubicMeterKelvin JoulePerCubicMeterDegreeCelsius CaloriePerCubicCentimeterDegreeCelsius BtuPerCubicFootDegreeFahrenheit KilojoulePerCubicMeterKelvin MegajoulePerCubicMeterKelvin KilojoulePerCubicMeterDegreeCelsius MegajoulePerCubicMeterDegreeCelsius KilocaloriePerCubicCentimeterDegreeCelsius"`
 }
 
 // VolumetricHeatCapacityDtoFactory groups methods for creating and serializing VolumetricHeatCapacityDto objects.

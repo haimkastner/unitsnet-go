@@ -67,7 +67,7 @@ type RotationalSpeedDto struct {
     // Value is the numerical representation of the RotationalSpeed.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RotationalSpeed, as defined in the RotationalSpeedUnits enumeration.
-	Unit  RotationalSpeedUnits `json:"unit" validate:"required,oneof=RadianPerSecond,DegreePerSecond,DegreePerMinute,RevolutionPerSecond,RevolutionPerMinute,NanoradianPerSecond,MicroradianPerSecond,MilliradianPerSecond,CentiradianPerSecond,DeciradianPerSecond,NanodegreePerSecond,MicrodegreePerSecond,MillidegreePerSecond"`
+	Unit  RotationalSpeedUnits `json:"unit" validate:"required,oneof=RadianPerSecond DegreePerSecond DegreePerMinute RevolutionPerSecond RevolutionPerMinute NanoradianPerSecond MicroradianPerSecond MilliradianPerSecond CentiradianPerSecond DeciradianPerSecond NanodegreePerSecond MicrodegreePerSecond MillidegreePerSecond"`
 }
 
 // RotationalSpeedDtoFactory groups methods for creating and serializing RotationalSpeedDto objects.

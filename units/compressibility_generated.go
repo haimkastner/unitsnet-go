@@ -49,7 +49,7 @@ type CompressibilityDto struct {
     // Value is the numerical representation of the Compressibility.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Compressibility, as defined in the CompressibilityUnits enumeration.
-	Unit  CompressibilityUnits `json:"unit" validate:"required,oneof=InversePascal,InverseKilopascal,InverseMegapascal,InverseAtmosphere,InverseMillibar,InverseBar,InversePoundForcePerSquareInch"`
+	Unit  CompressibilityUnits `json:"unit" validate:"required,oneof=InversePascal InverseKilopascal InverseMegapascal InverseAtmosphere InverseMillibar InverseBar InversePoundForcePerSquareInch"`
 }
 
 // CompressibilityDtoFactory groups methods for creating and serializing CompressibilityDto objects.

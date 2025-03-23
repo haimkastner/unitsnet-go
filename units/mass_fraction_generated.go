@@ -100,7 +100,7 @@ type MassFractionDto struct {
     // Value is the numerical representation of the MassFraction.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MassFraction, as defined in the MassFractionUnits enumeration.
-	Unit  MassFractionUnits `json:"unit" validate:"required,oneof=DecimalFraction,GramPerGram,GramPerKilogram,Percent,PartPerThousand,PartPerMillion,PartPerBillion,PartPerTrillion,NanogramPerGram,MicrogramPerGram,MilligramPerGram,CentigramPerGram,DecigramPerGram,DecagramPerGram,HectogramPerGram,KilogramPerGram,NanogramPerKilogram,MicrogramPerKilogram,MilligramPerKilogram,CentigramPerKilogram,DecigramPerKilogram,DecagramPerKilogram,HectogramPerKilogram,KilogramPerKilogram"`
+	Unit  MassFractionUnits `json:"unit" validate:"required,oneof=DecimalFraction GramPerGram GramPerKilogram Percent PartPerThousand PartPerMillion PartPerBillion PartPerTrillion NanogramPerGram MicrogramPerGram MilligramPerGram CentigramPerGram DecigramPerGram DecagramPerGram HectogramPerGram KilogramPerGram NanogramPerKilogram MicrogramPerKilogram MilligramPerKilogram CentigramPerKilogram DecigramPerKilogram DecagramPerKilogram HectogramPerKilogram KilogramPerKilogram"`
 }
 
 // MassFractionDtoFactory groups methods for creating and serializing MassFractionDto objects.

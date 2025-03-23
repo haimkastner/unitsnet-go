@@ -34,7 +34,7 @@ type VolumeFlowPerAreaDto struct {
     // Value is the numerical representation of the VolumeFlowPerArea.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the VolumeFlowPerArea, as defined in the VolumeFlowPerAreaUnits enumeration.
-	Unit  VolumeFlowPerAreaUnits `json:"unit" validate:"required,oneof=CubicMeterPerSecondPerSquareMeter,CubicFootPerMinutePerSquareFoot"`
+	Unit  VolumeFlowPerAreaUnits `json:"unit" validate:"required,oneof=CubicMeterPerSecondPerSquareMeter CubicFootPerMinutePerSquareFoot"`
 }
 
 // VolumeFlowPerAreaDtoFactory groups methods for creating and serializing VolumeFlowPerAreaDto objects.

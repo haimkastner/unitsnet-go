@@ -52,7 +52,7 @@ type ElectricImpedanceDto struct {
     // Value is the numerical representation of the ElectricImpedance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricImpedance, as defined in the ElectricImpedanceUnits enumeration.
-	Unit  ElectricImpedanceUnits `json:"unit" validate:"required,oneof=Ohm,Nanoohm,Microohm,Milliohm,Kiloohm,Megaohm,Gigaohm,Teraohm"`
+	Unit  ElectricImpedanceUnits `json:"unit" validate:"required,oneof=Ohm Nanoohm Microohm Milliohm Kiloohm Megaohm Gigaohm Teraohm"`
 }
 
 // ElectricImpedanceDtoFactory groups methods for creating and serializing ElectricImpedanceDto objects.

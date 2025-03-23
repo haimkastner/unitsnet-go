@@ -127,7 +127,7 @@ type MassFlowDto struct {
     // Value is the numerical representation of the MassFlow.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MassFlow, as defined in the MassFlowUnits enumeration.
-	Unit  MassFlowUnits `json:"unit" validate:"required,oneof=GramPerSecond,GramPerDay,GramPerHour,KilogramPerHour,KilogramPerMinute,TonnePerHour,PoundPerDay,PoundPerHour,PoundPerMinute,PoundPerSecond,TonnePerDay,ShortTonPerHour,NanogramPerSecond,MicrogramPerSecond,MilligramPerSecond,CentigramPerSecond,DecigramPerSecond,DecagramPerSecond,HectogramPerSecond,KilogramPerSecond,NanogramPerDay,MicrogramPerDay,MilligramPerDay,CentigramPerDay,DecigramPerDay,DecagramPerDay,HectogramPerDay,KilogramPerDay,MegagramPerDay,MegapoundPerDay,MegapoundPerHour,MegapoundPerMinute,MegapoundPerSecond"`
+	Unit  MassFlowUnits `json:"unit" validate:"required,oneof=GramPerSecond GramPerDay GramPerHour KilogramPerHour KilogramPerMinute TonnePerHour PoundPerDay PoundPerHour PoundPerMinute PoundPerSecond TonnePerDay ShortTonPerHour NanogramPerSecond MicrogramPerSecond MilligramPerSecond CentigramPerSecond DecigramPerSecond DecagramPerSecond HectogramPerSecond KilogramPerSecond NanogramPerDay MicrogramPerDay MilligramPerDay CentigramPerDay DecigramPerDay DecagramPerDay HectogramPerDay KilogramPerDay MegagramPerDay MegapoundPerDay MegapoundPerHour MegapoundPerMinute MegapoundPerSecond"`
 }
 
 // MassFlowDtoFactory groups methods for creating and serializing MassFlowDto objects.

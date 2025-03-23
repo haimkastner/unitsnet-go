@@ -46,7 +46,7 @@ type ElectricPotentialDto struct {
     // Value is the numerical representation of the ElectricPotential.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricPotential, as defined in the ElectricPotentialUnits enumeration.
-	Unit  ElectricPotentialUnits `json:"unit" validate:"required,oneof=Volt,Nanovolt,Microvolt,Millivolt,Kilovolt,Megavolt"`
+	Unit  ElectricPotentialUnits `json:"unit" validate:"required,oneof=Volt Nanovolt Microvolt Millivolt Kilovolt Megavolt"`
 }
 
 // ElectricPotentialDtoFactory groups methods for creating and serializing ElectricPotentialDto objects.

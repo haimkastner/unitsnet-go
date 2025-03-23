@@ -70,7 +70,7 @@ type IrradianceDto struct {
     // Value is the numerical representation of the Irradiance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Irradiance, as defined in the IrradianceUnits enumeration.
-	Unit  IrradianceUnits `json:"unit" validate:"required,oneof=WattPerSquareMeter,WattPerSquareCentimeter,PicowattPerSquareMeter,NanowattPerSquareMeter,MicrowattPerSquareMeter,MilliwattPerSquareMeter,KilowattPerSquareMeter,MegawattPerSquareMeter,PicowattPerSquareCentimeter,NanowattPerSquareCentimeter,MicrowattPerSquareCentimeter,MilliwattPerSquareCentimeter,KilowattPerSquareCentimeter,MegawattPerSquareCentimeter"`
+	Unit  IrradianceUnits `json:"unit" validate:"required,oneof=WattPerSquareMeter WattPerSquareCentimeter PicowattPerSquareMeter NanowattPerSquareMeter MicrowattPerSquareMeter MilliwattPerSquareMeter KilowattPerSquareMeter MegawattPerSquareMeter PicowattPerSquareCentimeter NanowattPerSquareCentimeter MicrowattPerSquareCentimeter MilliwattPerSquareCentimeter KilowattPerSquareCentimeter MegawattPerSquareCentimeter"`
 }
 
 // IrradianceDtoFactory groups methods for creating and serializing IrradianceDto objects.

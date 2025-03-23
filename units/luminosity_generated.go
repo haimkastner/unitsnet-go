@@ -70,7 +70,7 @@ type LuminosityDto struct {
     // Value is the numerical representation of the Luminosity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Luminosity, as defined in the LuminosityUnits enumeration.
-	Unit  LuminosityUnits `json:"unit" validate:"required,oneof=Watt,SolarLuminosity,Femtowatt,Picowatt,Nanowatt,Microwatt,Milliwatt,Deciwatt,Decawatt,Kilowatt,Megawatt,Gigawatt,Terawatt,Petawatt"`
+	Unit  LuminosityUnits `json:"unit" validate:"required,oneof=Watt SolarLuminosity Femtowatt Picowatt Nanowatt Microwatt Milliwatt Deciwatt Decawatt Kilowatt Megawatt Gigawatt Terawatt Petawatt"`
 }
 
 // LuminosityDtoFactory groups methods for creating and serializing LuminosityDto objects.

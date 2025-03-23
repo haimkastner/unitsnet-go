@@ -64,7 +64,7 @@ type EnergyDensityDto struct {
     // Value is the numerical representation of the EnergyDensity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the EnergyDensity, as defined in the EnergyDensityUnits enumeration.
-	Unit  EnergyDensityUnits `json:"unit" validate:"required,oneof=JoulePerCubicMeter,WattHourPerCubicMeter,KilojoulePerCubicMeter,MegajoulePerCubicMeter,GigajoulePerCubicMeter,TerajoulePerCubicMeter,PetajoulePerCubicMeter,KilowattHourPerCubicMeter,MegawattHourPerCubicMeter,GigawattHourPerCubicMeter,TerawattHourPerCubicMeter,PetawattHourPerCubicMeter"`
+	Unit  EnergyDensityUnits `json:"unit" validate:"required,oneof=JoulePerCubicMeter WattHourPerCubicMeter KilojoulePerCubicMeter MegajoulePerCubicMeter GigajoulePerCubicMeter TerajoulePerCubicMeter PetajoulePerCubicMeter KilowattHourPerCubicMeter MegawattHourPerCubicMeter GigawattHourPerCubicMeter TerawattHourPerCubicMeter PetawattHourPerCubicMeter"`
 }
 
 // EnergyDensityDtoFactory groups methods for creating and serializing EnergyDensityDto objects.

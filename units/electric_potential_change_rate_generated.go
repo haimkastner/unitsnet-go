@@ -88,7 +88,7 @@ type ElectricPotentialChangeRateDto struct {
     // Value is the numerical representation of the ElectricPotentialChangeRate.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricPotentialChangeRate, as defined in the ElectricPotentialChangeRateUnits enumeration.
-	Unit  ElectricPotentialChangeRateUnits `json:"unit" validate:"required,oneof=VoltPerSecond,VoltPerMicrosecond,VoltPerMinute,VoltPerHour,MicrovoltPerSecond,MillivoltPerSecond,KilovoltPerSecond,MegavoltPerSecond,MicrovoltPerMicrosecond,MillivoltPerMicrosecond,KilovoltPerMicrosecond,MegavoltPerMicrosecond,MicrovoltPerMinute,MillivoltPerMinute,KilovoltPerMinute,MegavoltPerMinute,MicrovoltPerHour,MillivoltPerHour,KilovoltPerHour,MegavoltPerHour"`
+	Unit  ElectricPotentialChangeRateUnits `json:"unit" validate:"required,oneof=VoltPerSecond VoltPerMicrosecond VoltPerMinute VoltPerHour MicrovoltPerSecond MillivoltPerSecond KilovoltPerSecond MegavoltPerSecond MicrovoltPerMicrosecond MillivoltPerMicrosecond KilovoltPerMicrosecond MegavoltPerMicrosecond MicrovoltPerMinute MillivoltPerMinute KilovoltPerMinute MegavoltPerMinute MicrovoltPerHour MillivoltPerHour KilovoltPerHour MegavoltPerHour"`
 }
 
 // ElectricPotentialChangeRateDtoFactory groups methods for creating and serializing ElectricPotentialChangeRateDto objects.

@@ -88,7 +88,7 @@ type DoseAreaProductDto struct {
     // Value is the numerical representation of the DoseAreaProduct.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the DoseAreaProduct, as defined in the DoseAreaProductUnits enumeration.
-	Unit  DoseAreaProductUnits `json:"unit" validate:"required,oneof=GraySquareMeter,GraySquareDecimeter,GraySquareCentimeter,GraySquareMillimeter,MicrograySquareMeter,MilligraySquareMeter,CentigraySquareMeter,DecigraySquareMeter,MicrograySquareDecimeter,MilligraySquareDecimeter,CentigraySquareDecimeter,DecigraySquareDecimeter,MicrograySquareCentimeter,MilligraySquareCentimeter,CentigraySquareCentimeter,DecigraySquareCentimeter,MicrograySquareMillimeter,MilligraySquareMillimeter,CentigraySquareMillimeter,DecigraySquareMillimeter"`
+	Unit  DoseAreaProductUnits `json:"unit" validate:"required,oneof=GraySquareMeter GraySquareDecimeter GraySquareCentimeter GraySquareMillimeter MicrograySquareMeter MilligraySquareMeter CentigraySquareMeter DecigraySquareMeter MicrograySquareDecimeter MilligraySquareDecimeter CentigraySquareDecimeter DecigraySquareDecimeter MicrograySquareCentimeter MilligraySquareCentimeter CentigraySquareCentimeter DecigraySquareCentimeter MicrograySquareMillimeter MilligraySquareMillimeter CentigraySquareMillimeter DecigraySquareMillimeter"`
 }
 
 // DoseAreaProductDtoFactory groups methods for creating and serializing DoseAreaProductDto objects.

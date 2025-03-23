@@ -37,7 +37,7 @@ type ElectricSurfaceChargeDensityDto struct {
     // Value is the numerical representation of the ElectricSurfaceChargeDensity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricSurfaceChargeDensity, as defined in the ElectricSurfaceChargeDensityUnits enumeration.
-	Unit  ElectricSurfaceChargeDensityUnits `json:"unit" validate:"required,oneof=CoulombPerSquareMeter,CoulombPerSquareCentimeter,CoulombPerSquareInch"`
+	Unit  ElectricSurfaceChargeDensityUnits `json:"unit" validate:"required,oneof=CoulombPerSquareMeter CoulombPerSquareCentimeter CoulombPerSquareInch"`
 }
 
 // ElectricSurfaceChargeDensityDtoFactory groups methods for creating and serializing ElectricSurfaceChargeDensityDto objects.

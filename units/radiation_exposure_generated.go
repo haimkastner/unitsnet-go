@@ -52,7 +52,7 @@ type RadiationExposureDto struct {
     // Value is the numerical representation of the RadiationExposure.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RadiationExposure, as defined in the RadiationExposureUnits enumeration.
-	Unit  RadiationExposureUnits `json:"unit" validate:"required,oneof=CoulombPerKilogram,Roentgen,PicocoulombPerKilogram,NanocoulombPerKilogram,MicrocoulombPerKilogram,MillicoulombPerKilogram,Microroentgen,Milliroentgen"`
+	Unit  RadiationExposureUnits `json:"unit" validate:"required,oneof=CoulombPerKilogram Roentgen PicocoulombPerKilogram NanocoulombPerKilogram MicrocoulombPerKilogram MillicoulombPerKilogram Microroentgen Milliroentgen"`
 }
 
 // RadiationExposureDtoFactory groups methods for creating and serializing RadiationExposureDto objects.

@@ -49,7 +49,7 @@ type ElectricCapacitanceDto struct {
     // Value is the numerical representation of the ElectricCapacitance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricCapacitance, as defined in the ElectricCapacitanceUnits enumeration.
-	Unit  ElectricCapacitanceUnits `json:"unit" validate:"required,oneof=Farad,Picofarad,Nanofarad,Microfarad,Millifarad,Kilofarad,Megafarad"`
+	Unit  ElectricCapacitanceUnits `json:"unit" validate:"required,oneof=Farad Picofarad Nanofarad Microfarad Millifarad Kilofarad Megafarad"`
 }
 
 // ElectricCapacitanceDtoFactory groups methods for creating and serializing ElectricCapacitanceDto objects.

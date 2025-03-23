@@ -76,7 +76,7 @@ type ElectricAdmittanceDto struct {
     // Value is the numerical representation of the ElectricAdmittance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricAdmittance, as defined in the ElectricAdmittanceUnits enumeration.
-	Unit  ElectricAdmittanceUnits `json:"unit" validate:"required,oneof=Siemens,Mho,Nanosiemens,Microsiemens,Millisiemens,Kilosiemens,Megasiemens,Gigasiemens,Terasiemens,Nanomho,Micromho,Millimho,Kilomho,Megamho,Gigamho,Teramho"`
+	Unit  ElectricAdmittanceUnits `json:"unit" validate:"required,oneof=Siemens Mho Nanosiemens Microsiemens Millisiemens Kilosiemens Megasiemens Gigasiemens Terasiemens Nanomho Micromho Millimho Kilomho Megamho Gigamho Teramho"`
 }
 
 // ElectricAdmittanceDtoFactory groups methods for creating and serializing ElectricAdmittanceDto objects.

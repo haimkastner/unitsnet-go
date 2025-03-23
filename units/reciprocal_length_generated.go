@@ -58,7 +58,7 @@ type ReciprocalLengthDto struct {
     // Value is the numerical representation of the ReciprocalLength.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ReciprocalLength, as defined in the ReciprocalLengthUnits enumeration.
-	Unit  ReciprocalLengthUnits `json:"unit" validate:"required,oneof=InverseMeter,InverseCentimeter,InverseMillimeter,InverseMile,InverseYard,InverseFoot,InverseUsSurveyFoot,InverseInch,InverseMil,InverseMicroinch"`
+	Unit  ReciprocalLengthUnits `json:"unit" validate:"required,oneof=InverseMeter InverseCentimeter InverseMillimeter InverseMile InverseYard InverseFoot InverseUsSurveyFoot InverseInch InverseMil InverseMicroinch"`
 }
 
 // ReciprocalLengthDtoFactory groups methods for creating and serializing ReciprocalLengthDto objects.

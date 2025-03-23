@@ -67,7 +67,7 @@ type MolarMassDto struct {
     // Value is the numerical representation of the MolarMass.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MolarMass, as defined in the MolarMassUnits enumeration.
-	Unit  MolarMassUnits `json:"unit" validate:"required,oneof=GramPerMole,KilogramPerKilomole,PoundPerMole,NanogramPerMole,MicrogramPerMole,MilligramPerMole,CentigramPerMole,DecigramPerMole,DecagramPerMole,HectogramPerMole,KilogramPerMole,KilopoundPerMole,MegapoundPerMole"`
+	Unit  MolarMassUnits `json:"unit" validate:"required,oneof=GramPerMole KilogramPerKilomole PoundPerMole NanogramPerMole MicrogramPerMole MilligramPerMole CentigramPerMole DecigramPerMole DecagramPerMole HectogramPerMole KilogramPerMole KilopoundPerMole MegapoundPerMole"`
 }
 
 // MolarMassDtoFactory groups methods for creating and serializing MolarMassDto objects.

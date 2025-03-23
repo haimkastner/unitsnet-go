@@ -46,7 +46,7 @@ type ThermalResistanceDto struct {
     // Value is the numerical representation of the ThermalResistance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ThermalResistance, as defined in the ThermalResistanceUnits enumeration.
-	Unit  ThermalResistanceUnits `json:"unit" validate:"required,oneof=SquareMeterKelvinPerKilowatt,SquareMeterKelvinPerWatt,SquareMeterDegreeCelsiusPerWatt,SquareCentimeterKelvinPerWatt,SquareCentimeterHourDegreeCelsiusPerKilocalorie,HourSquareFeetDegreeFahrenheitPerBtu"`
+	Unit  ThermalResistanceUnits `json:"unit" validate:"required,oneof=SquareMeterKelvinPerKilowatt SquareMeterKelvinPerWatt SquareMeterDegreeCelsiusPerWatt SquareCentimeterKelvinPerWatt SquareCentimeterHourDegreeCelsiusPerKilocalorie HourSquareFeetDegreeFahrenheitPerBtu"`
 }
 
 // ThermalResistanceDtoFactory groups methods for creating and serializing ThermalResistanceDto objects.

@@ -73,7 +73,7 @@ type ForceChangeRateDto struct {
     // Value is the numerical representation of the ForceChangeRate.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ForceChangeRate, as defined in the ForceChangeRateUnits enumeration.
-	Unit  ForceChangeRateUnits `json:"unit" validate:"required,oneof=NewtonPerMinute,NewtonPerSecond,PoundForcePerMinute,PoundForcePerSecond,DecanewtonPerMinute,KilonewtonPerMinute,NanonewtonPerSecond,MicronewtonPerSecond,MillinewtonPerSecond,CentinewtonPerSecond,DecinewtonPerSecond,DecanewtonPerSecond,KilonewtonPerSecond,KilopoundForcePerMinute,KilopoundForcePerSecond"`
+	Unit  ForceChangeRateUnits `json:"unit" validate:"required,oneof=NewtonPerMinute NewtonPerSecond PoundForcePerMinute PoundForcePerSecond DecanewtonPerMinute KilonewtonPerMinute NanonewtonPerSecond MicronewtonPerSecond MillinewtonPerSecond CentinewtonPerSecond DecinewtonPerSecond DecanewtonPerSecond KilonewtonPerSecond KilopoundForcePerMinute KilopoundForcePerSecond"`
 }
 
 // ForceChangeRateDtoFactory groups methods for creating and serializing ForceChangeRateDto objects.

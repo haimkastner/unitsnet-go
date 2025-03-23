@@ -118,7 +118,7 @@ type SpecificEnergyDto struct {
     // Value is the numerical representation of the SpecificEnergy.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the SpecificEnergy, as defined in the SpecificEnergyUnits enumeration.
-	Unit  SpecificEnergyUnits `json:"unit" validate:"required,oneof=JoulePerKilogram,MegaJoulePerTonne,CaloriePerGram,WattHourPerKilogram,WattDayPerKilogram,WattDayPerTonne,WattDayPerShortTon,WattHourPerPound,BtuPerPound,KilojoulePerKilogram,MegajoulePerKilogram,KilocaloriePerGram,KilowattHourPerKilogram,MegawattHourPerKilogram,GigawattHourPerKilogram,KilowattDayPerKilogram,MegawattDayPerKilogram,GigawattDayPerKilogram,TerawattDayPerKilogram,KilowattDayPerTonne,MegawattDayPerTonne,GigawattDayPerTonne,TerawattDayPerTonne,KilowattDayPerShortTon,MegawattDayPerShortTon,GigawattDayPerShortTon,TerawattDayPerShortTon,KilowattHourPerPound,MegawattHourPerPound,GigawattHourPerPound"`
+	Unit  SpecificEnergyUnits `json:"unit" validate:"required,oneof=JoulePerKilogram MegaJoulePerTonne CaloriePerGram WattHourPerKilogram WattDayPerKilogram WattDayPerTonne WattDayPerShortTon WattHourPerPound BtuPerPound KilojoulePerKilogram MegajoulePerKilogram KilocaloriePerGram KilowattHourPerKilogram MegawattHourPerKilogram GigawattHourPerKilogram KilowattDayPerKilogram MegawattDayPerKilogram GigawattDayPerKilogram TerawattDayPerKilogram KilowattDayPerTonne MegawattDayPerTonne GigawattDayPerTonne TerawattDayPerTonne KilowattDayPerShortTon MegawattDayPerShortTon GigawattDayPerShortTon TerawattDayPerShortTon KilowattHourPerPound MegawattHourPerPound GigawattHourPerPound"`
 }
 
 // SpecificEnergyDtoFactory groups methods for creating and serializing SpecificEnergyDto objects.

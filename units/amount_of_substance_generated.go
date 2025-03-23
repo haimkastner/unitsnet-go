@@ -79,7 +79,7 @@ type AmountOfSubstanceDto struct {
     // Value is the numerical representation of the AmountOfSubstance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the AmountOfSubstance, as defined in the AmountOfSubstanceUnits enumeration.
-	Unit  AmountOfSubstanceUnits `json:"unit" validate:"required,oneof=Mole,PoundMole,Femtomole,Picomole,Nanomole,Micromole,Millimole,Centimole,Decimole,Kilomole,Megamole,NanopoundMole,MicropoundMole,MillipoundMole,CentipoundMole,DecipoundMole,KilopoundMole"`
+	Unit  AmountOfSubstanceUnits `json:"unit" validate:"required,oneof=Mole PoundMole Femtomole Picomole Nanomole Micromole Millimole Centimole Decimole Kilomole Megamole NanopoundMole MicropoundMole MillipoundMole CentipoundMole DecipoundMole KilopoundMole"`
 }
 
 // AmountOfSubstanceDtoFactory groups methods for creating and serializing AmountOfSubstanceDto objects.

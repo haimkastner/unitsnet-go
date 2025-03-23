@@ -46,7 +46,7 @@ type CoefficientOfThermalExpansionDto struct {
     // Value is the numerical representation of the CoefficientOfThermalExpansion.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the CoefficientOfThermalExpansion, as defined in the CoefficientOfThermalExpansionUnits enumeration.
-	Unit  CoefficientOfThermalExpansionUnits `json:"unit" validate:"required,oneof=PerKelvin,PerDegreeCelsius,PerDegreeFahrenheit,PpmPerKelvin,PpmPerDegreeCelsius,PpmPerDegreeFahrenheit"`
+	Unit  CoefficientOfThermalExpansionUnits `json:"unit" validate:"required,oneof=PerKelvin PerDegreeCelsius PerDegreeFahrenheit PpmPerKelvin PpmPerDegreeCelsius PpmPerDegreeFahrenheit"`
 }
 
 // CoefficientOfThermalExpansionDtoFactory groups methods for creating and serializing CoefficientOfThermalExpansionDto objects.

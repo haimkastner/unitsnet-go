@@ -46,7 +46,7 @@ type ElectricApparentPowerDto struct {
     // Value is the numerical representation of the ElectricApparentPower.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricApparentPower, as defined in the ElectricApparentPowerUnits enumeration.
-	Unit  ElectricApparentPowerUnits `json:"unit" validate:"required,oneof=Voltampere,Microvoltampere,Millivoltampere,Kilovoltampere,Megavoltampere,Gigavoltampere"`
+	Unit  ElectricApparentPowerUnits `json:"unit" validate:"required,oneof=Voltampere Microvoltampere Millivoltampere Kilovoltampere Megavoltampere Gigavoltampere"`
 }
 
 // ElectricApparentPowerDtoFactory groups methods for creating and serializing ElectricApparentPowerDto objects.

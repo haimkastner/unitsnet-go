@@ -70,7 +70,7 @@ type AreaDto struct {
     // Value is the numerical representation of the Area.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Area, as defined in the AreaUnits enumeration.
-	Unit  AreaUnits `json:"unit" validate:"required,oneof=SquareKilometer,SquareMeter,SquareDecimeter,SquareCentimeter,SquareMillimeter,SquareMicrometer,SquareMile,SquareYard,SquareFoot,UsSurveySquareFoot,SquareInch,Acre,Hectare,SquareNauticalMile"`
+	Unit  AreaUnits `json:"unit" validate:"required,oneof=SquareKilometer SquareMeter SquareDecimeter SquareCentimeter SquareMillimeter SquareMicrometer SquareMile SquareYard SquareFoot UsSurveySquareFoot SquareInch Acre Hectare SquareNauticalMile"`
 }
 
 // AreaDtoFactory groups methods for creating and serializing AreaDto objects.

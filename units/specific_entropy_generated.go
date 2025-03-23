@@ -55,7 +55,7 @@ type SpecificEntropyDto struct {
     // Value is the numerical representation of the SpecificEntropy.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the SpecificEntropy, as defined in the SpecificEntropyUnits enumeration.
-	Unit  SpecificEntropyUnits `json:"unit" validate:"required,oneof=JoulePerKilogramKelvin,JoulePerKilogramDegreeCelsius,CaloriePerGramKelvin,BtuPerPoundFahrenheit,KilojoulePerKilogramKelvin,MegajoulePerKilogramKelvin,KilojoulePerKilogramDegreeCelsius,MegajoulePerKilogramDegreeCelsius,KilocaloriePerGramKelvin"`
+	Unit  SpecificEntropyUnits `json:"unit" validate:"required,oneof=JoulePerKilogramKelvin JoulePerKilogramDegreeCelsius CaloriePerGramKelvin BtuPerPoundFahrenheit KilojoulePerKilogramKelvin MegajoulePerKilogramKelvin KilojoulePerKilogramDegreeCelsius MegajoulePerKilogramDegreeCelsius KilocaloriePerGramKelvin"`
 }
 
 // SpecificEntropyDtoFactory groups methods for creating and serializing SpecificEntropyDto objects.

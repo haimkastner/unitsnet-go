@@ -37,7 +37,7 @@ type ApparentEnergyDto struct {
     // Value is the numerical representation of the ApparentEnergy.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ApparentEnergy, as defined in the ApparentEnergyUnits enumeration.
-	Unit  ApparentEnergyUnits `json:"unit" validate:"required,oneof=VoltampereHour,KilovoltampereHour,MegavoltampereHour"`
+	Unit  ApparentEnergyUnits `json:"unit" validate:"required,oneof=VoltampereHour KilovoltampereHour MegavoltampereHour"`
 }
 
 // ApparentEnergyDtoFactory groups methods for creating and serializing ApparentEnergyDto objects.

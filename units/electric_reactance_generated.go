@@ -52,7 +52,7 @@ type ElectricReactanceDto struct {
     // Value is the numerical representation of the ElectricReactance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricReactance, as defined in the ElectricReactanceUnits enumeration.
-	Unit  ElectricReactanceUnits `json:"unit" validate:"required,oneof=Ohm,Nanoohm,Microohm,Milliohm,Kiloohm,Megaohm,Gigaohm,Teraohm"`
+	Unit  ElectricReactanceUnits `json:"unit" validate:"required,oneof=Ohm Nanoohm Microohm Milliohm Kiloohm Megaohm Gigaohm Teraohm"`
 }
 
 // ElectricReactanceDtoFactory groups methods for creating and serializing ElectricReactanceDto objects.

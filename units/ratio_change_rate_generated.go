@@ -34,7 +34,7 @@ type RatioChangeRateDto struct {
     // Value is the numerical representation of the RatioChangeRate.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RatioChangeRate, as defined in the RatioChangeRateUnits enumeration.
-	Unit  RatioChangeRateUnits `json:"unit" validate:"required,oneof=PercentPerSecond,DecimalFractionPerSecond"`
+	Unit  RatioChangeRateUnits `json:"unit" validate:"required,oneof=PercentPerSecond DecimalFractionPerSecond"`
 }
 
 // RatioChangeRateDtoFactory groups methods for creating and serializing RatioChangeRateDto objects.

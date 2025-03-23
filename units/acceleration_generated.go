@@ -70,7 +70,7 @@ type AccelerationDto struct {
     // Value is the numerical representation of the Acceleration.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Acceleration, as defined in the AccelerationUnits enumeration.
-	Unit  AccelerationUnits `json:"unit" validate:"required,oneof=MeterPerSecondSquared,InchPerSecondSquared,FootPerSecondSquared,KnotPerSecond,KnotPerMinute,KnotPerHour,StandardGravity,NanometerPerSecondSquared,MicrometerPerSecondSquared,MillimeterPerSecondSquared,CentimeterPerSecondSquared,DecimeterPerSecondSquared,KilometerPerSecondSquared,MillistandardGravity"`
+	Unit  AccelerationUnits `json:"unit" validate:"required,oneof=MeterPerSecondSquared InchPerSecondSquared FootPerSecondSquared KnotPerSecond KnotPerMinute KnotPerHour StandardGravity NanometerPerSecondSquared MicrometerPerSecondSquared MillimeterPerSecondSquared CentimeterPerSecondSquared DecimeterPerSecondSquared KilometerPerSecondSquared MillistandardGravity"`
 }
 
 // AccelerationDtoFactory groups methods for creating and serializing AccelerationDto objects.

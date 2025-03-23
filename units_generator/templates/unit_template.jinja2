@@ -31,7 +31,7 @@ type {{ unit }}Dto struct {
     // Value is the numerical representation of the {{ unit }}.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the {{ unit }}, as defined in the {{ unit }}Units enumeration.
-	Unit  {{ unit }}Units `json:"unit" validate:"required,oneof={% for method in methods %}{{ method.unit }}{% if not loop.last %},{% endif %}{% endfor %}"`
+	Unit  {{ unit }}Units `json:"unit" validate:"required,oneof={% for method in methods %}{{ method.unit }}{% if not loop.last %} {% endif %}{% endfor %}"`
 }
 
 // {{ unit }}DtoFactory groups methods for creating and serializing {{ unit }}Dto objects.

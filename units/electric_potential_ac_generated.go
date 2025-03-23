@@ -43,7 +43,7 @@ type ElectricPotentialAcDto struct {
     // Value is the numerical representation of the ElectricPotentialAc.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricPotentialAc, as defined in the ElectricPotentialAcUnits enumeration.
-	Unit  ElectricPotentialAcUnits `json:"unit" validate:"required,oneof=VoltAc,MicrovoltAc,MillivoltAc,KilovoltAc,MegavoltAc"`
+	Unit  ElectricPotentialAcUnits `json:"unit" validate:"required,oneof=VoltAc MicrovoltAc MillivoltAc KilovoltAc MegavoltAc"`
 }
 
 // ElectricPotentialAcDtoFactory groups methods for creating and serializing ElectricPotentialAcDto objects.

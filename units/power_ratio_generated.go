@@ -34,7 +34,7 @@ type PowerRatioDto struct {
     // Value is the numerical representation of the PowerRatio.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the PowerRatio, as defined in the PowerRatioUnits enumeration.
-	Unit  PowerRatioUnits `json:"unit" validate:"required,oneof=DecibelWatt,DecibelMilliwatt"`
+	Unit  PowerRatioUnits `json:"unit" validate:"required,oneof=DecibelWatt DecibelMilliwatt"`
 }
 
 // PowerRatioDtoFactory groups methods for creating and serializing PowerRatioDto objects.

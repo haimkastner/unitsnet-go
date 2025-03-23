@@ -70,7 +70,7 @@ type ElectricResistivityDto struct {
     // Value is the numerical representation of the ElectricResistivity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricResistivity, as defined in the ElectricResistivityUnits enumeration.
-	Unit  ElectricResistivityUnits `json:"unit" validate:"required,oneof=OhmMeter,OhmCentimeter,PicoohmMeter,NanoohmMeter,MicroohmMeter,MilliohmMeter,KiloohmMeter,MegaohmMeter,PicoohmCentimeter,NanoohmCentimeter,MicroohmCentimeter,MilliohmCentimeter,KiloohmCentimeter,MegaohmCentimeter"`
+	Unit  ElectricResistivityUnits `json:"unit" validate:"required,oneof=OhmMeter OhmCentimeter PicoohmMeter NanoohmMeter MicroohmMeter MilliohmMeter KiloohmMeter MegaohmMeter PicoohmCentimeter NanoohmCentimeter MicroohmCentimeter MilliohmCentimeter KiloohmCentimeter MegaohmCentimeter"`
 }
 
 // ElectricResistivityDtoFactory groups methods for creating and serializing ElectricResistivityDto objects.

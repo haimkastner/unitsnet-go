@@ -43,7 +43,7 @@ type HeatTransferCoefficientDto struct {
     // Value is the numerical representation of the HeatTransferCoefficient.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the HeatTransferCoefficient, as defined in the HeatTransferCoefficientUnits enumeration.
-	Unit  HeatTransferCoefficientUnits `json:"unit" validate:"required,oneof=WattPerSquareMeterKelvin,WattPerSquareMeterCelsius,BtuPerHourSquareFootDegreeFahrenheit,CaloriePerHourSquareMeterDegreeCelsius,KilocaloriePerHourSquareMeterDegreeCelsius"`
+	Unit  HeatTransferCoefficientUnits `json:"unit" validate:"required,oneof=WattPerSquareMeterKelvin WattPerSquareMeterCelsius BtuPerHourSquareFootDegreeFahrenheit CaloriePerHourSquareMeterDegreeCelsius KilocaloriePerHourSquareMeterDegreeCelsius"`
 }
 
 // HeatTransferCoefficientDtoFactory groups methods for creating and serializing HeatTransferCoefficientDto objects.

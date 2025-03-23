@@ -46,7 +46,7 @@ type ElectricConductivityDto struct {
     // Value is the numerical representation of the ElectricConductivity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricConductivity, as defined in the ElectricConductivityUnits enumeration.
-	Unit  ElectricConductivityUnits `json:"unit" validate:"required,oneof=SiemensPerMeter,SiemensPerInch,SiemensPerFoot,SiemensPerCentimeter,MicrosiemensPerCentimeter,MillisiemensPerCentimeter"`
+	Unit  ElectricConductivityUnits `json:"unit" validate:"required,oneof=SiemensPerMeter SiemensPerInch SiemensPerFoot SiemensPerCentimeter MicrosiemensPerCentimeter MillisiemensPerCentimeter"`
 }
 
 // ElectricConductivityDtoFactory groups methods for creating and serializing ElectricConductivityDto objects.

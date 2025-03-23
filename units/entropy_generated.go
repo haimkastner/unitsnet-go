@@ -49,7 +49,7 @@ type EntropyDto struct {
     // Value is the numerical representation of the Entropy.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Entropy, as defined in the EntropyUnits enumeration.
-	Unit  EntropyUnits `json:"unit" validate:"required,oneof=JoulePerKelvin,CaloriePerKelvin,JoulePerDegreeCelsius,KilojoulePerKelvin,MegajoulePerKelvin,KilocaloriePerKelvin,KilojoulePerDegreeCelsius"`
+	Unit  EntropyUnits `json:"unit" validate:"required,oneof=JoulePerKelvin CaloriePerKelvin JoulePerDegreeCelsius KilojoulePerKelvin MegajoulePerKelvin KilocaloriePerKelvin KilojoulePerDegreeCelsius"`
 }
 
 // EntropyDtoFactory groups methods for creating and serializing EntropyDto objects.

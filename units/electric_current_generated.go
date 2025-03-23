@@ -55,7 +55,7 @@ type ElectricCurrentDto struct {
     // Value is the numerical representation of the ElectricCurrent.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricCurrent, as defined in the ElectricCurrentUnits enumeration.
-	Unit  ElectricCurrentUnits `json:"unit" validate:"required,oneof=Ampere,Femtoampere,Picoampere,Nanoampere,Microampere,Milliampere,Centiampere,Kiloampere,Megaampere"`
+	Unit  ElectricCurrentUnits `json:"unit" validate:"required,oneof=Ampere Femtoampere Picoampere Nanoampere Microampere Milliampere Centiampere Kiloampere Megaampere"`
 }
 
 // ElectricCurrentDtoFactory groups methods for creating and serializing ElectricCurrentDto objects.

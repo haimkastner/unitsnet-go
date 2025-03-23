@@ -112,7 +112,7 @@ type MassMomentOfInertiaDto struct {
     // Value is the numerical representation of the MassMomentOfInertia.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MassMomentOfInertia, as defined in the MassMomentOfInertiaUnits enumeration.
-	Unit  MassMomentOfInertiaUnits `json:"unit" validate:"required,oneof=GramSquareMeter,GramSquareDecimeter,GramSquareCentimeter,GramSquareMillimeter,TonneSquareMeter,TonneSquareDecimeter,TonneSquareCentimeter,TonneSquareMilimeter,PoundSquareFoot,PoundSquareInch,SlugSquareFoot,SlugSquareInch,MilligramSquareMeter,KilogramSquareMeter,MilligramSquareDecimeter,KilogramSquareDecimeter,MilligramSquareCentimeter,KilogramSquareCentimeter,MilligramSquareMillimeter,KilogramSquareMillimeter,KilotonneSquareMeter,MegatonneSquareMeter,KilotonneSquareDecimeter,MegatonneSquareDecimeter,KilotonneSquareCentimeter,MegatonneSquareCentimeter,KilotonneSquareMilimeter,MegatonneSquareMilimeter"`
+	Unit  MassMomentOfInertiaUnits `json:"unit" validate:"required,oneof=GramSquareMeter GramSquareDecimeter GramSquareCentimeter GramSquareMillimeter TonneSquareMeter TonneSquareDecimeter TonneSquareCentimeter TonneSquareMilimeter PoundSquareFoot PoundSquareInch SlugSquareFoot SlugSquareInch MilligramSquareMeter KilogramSquareMeter MilligramSquareDecimeter KilogramSquareDecimeter MilligramSquareCentimeter KilogramSquareCentimeter MilligramSquareMillimeter KilogramSquareMillimeter KilotonneSquareMeter MegatonneSquareMeter KilotonneSquareDecimeter MegatonneSquareDecimeter KilotonneSquareCentimeter MegatonneSquareCentimeter KilotonneSquareMilimeter MegatonneSquareMilimeter"`
 }
 
 // MassMomentOfInertiaDtoFactory groups methods for creating and serializing MassMomentOfInertiaDto objects.

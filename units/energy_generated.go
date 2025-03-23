@@ -148,7 +148,7 @@ type EnergyDto struct {
     // Value is the numerical representation of the Energy.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Energy, as defined in the EnergyUnits enumeration.
-	Unit  EnergyUnits `json:"unit" validate:"required,oneof=Joule,Calorie,BritishThermalUnit,ElectronVolt,FootPound,Erg,WattHour,WattDay,ThermEc,ThermUs,ThermImperial,HorsepowerHour,Nanojoule,Microjoule,Millijoule,Kilojoule,Megajoule,Gigajoule,Terajoule,Petajoule,Kilocalorie,Megacalorie,KilobritishThermalUnit,MegabritishThermalUnit,GigabritishThermalUnit,KiloelectronVolt,MegaelectronVolt,GigaelectronVolt,TeraelectronVolt,KilowattHour,MegawattHour,GigawattHour,TerawattHour,KilowattDay,MegawattDay,GigawattDay,TerawattDay,DecathermEc,DecathermUs,DecathermImperial"`
+	Unit  EnergyUnits `json:"unit" validate:"required,oneof=Joule Calorie BritishThermalUnit ElectronVolt FootPound Erg WattHour WattDay ThermEc ThermUs ThermImperial HorsepowerHour Nanojoule Microjoule Millijoule Kilojoule Megajoule Gigajoule Terajoule Petajoule Kilocalorie Megacalorie KilobritishThermalUnit MegabritishThermalUnit GigabritishThermalUnit KiloelectronVolt MegaelectronVolt GigaelectronVolt TeraelectronVolt KilowattHour MegawattHour GigawattHour TerawattHour KilowattDay MegawattDay GigawattDay TerawattDay DecathermEc DecathermUs DecathermImperial"`
 }
 
 // EnergyDtoFactory groups methods for creating and serializing EnergyDto objects.

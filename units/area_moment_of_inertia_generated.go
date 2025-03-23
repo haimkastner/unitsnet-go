@@ -46,7 +46,7 @@ type AreaMomentOfInertiaDto struct {
     // Value is the numerical representation of the AreaMomentOfInertia.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the AreaMomentOfInertia, as defined in the AreaMomentOfInertiaUnits enumeration.
-	Unit  AreaMomentOfInertiaUnits `json:"unit" validate:"required,oneof=MeterToTheFourth,DecimeterToTheFourth,CentimeterToTheFourth,MillimeterToTheFourth,FootToTheFourth,InchToTheFourth"`
+	Unit  AreaMomentOfInertiaUnits `json:"unit" validate:"required,oneof=MeterToTheFourth DecimeterToTheFourth CentimeterToTheFourth MillimeterToTheFourth FootToTheFourth InchToTheFourth"`
 }
 
 // AreaMomentOfInertiaDtoFactory groups methods for creating and serializing AreaMomentOfInertiaDto objects.
