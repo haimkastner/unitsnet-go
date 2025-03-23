@@ -47,7 +47,7 @@ var internalElectricCurrentGradientUnitsMap = map[ElectricCurrentGradientUnits]b
 // ElectricCurrentGradientDto represents a ElectricCurrentGradient measurement with a numerical value and its corresponding unit.
 type ElectricCurrentGradientDto struct {
     // Value is the numerical representation of the ElectricCurrentGradient.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricCurrentGradient, as defined in the ElectricCurrentGradientUnits enumeration.
 	Unit  ElectricCurrentGradientUnits `json:"unit" validate:"required,oneof=AmperePerSecond AmperePerMinute AmperePerMillisecond AmperePerMicrosecond AmperePerNanosecond MilliamperePerSecond MilliamperePerMinute"`
 }

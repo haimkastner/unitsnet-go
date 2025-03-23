@@ -146,7 +146,7 @@ var internalEnergyUnitsMap = map[EnergyUnits]bool{
 // EnergyDto represents a Energy measurement with a numerical value and its corresponding unit.
 type EnergyDto struct {
     // Value is the numerical representation of the Energy.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Energy, as defined in the EnergyUnits enumeration.
 	Unit  EnergyUnits `json:"unit" validate:"required,oneof=Joule Calorie BritishThermalUnit ElectronVolt FootPound Erg WattHour WattDay ThermEc ThermUs ThermImperial HorsepowerHour Nanojoule Microjoule Millijoule Kilojoule Megajoule Gigajoule Terajoule Petajoule Kilocalorie Megacalorie KilobritishThermalUnit MegabritishThermalUnit GigabritishThermalUnit KiloelectronVolt MegaelectronVolt GigaelectronVolt TeraelectronVolt KilowattHour MegawattHour GigawattHour TerawattHour KilowattDay MegawattDay GigawattDay TerawattDay DecathermEc DecathermUs DecathermImperial"`
 }

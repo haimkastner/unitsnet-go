@@ -83,7 +83,7 @@ var internalFluidResistanceUnitsMap = map[FluidResistanceUnits]bool{
 // FluidResistanceDto represents a FluidResistance measurement with a numerical value and its corresponding unit.
 type FluidResistanceDto struct {
     // Value is the numerical representation of the FluidResistance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the FluidResistance, as defined in the FluidResistanceUnits enumeration.
 	Unit  FluidResistanceUnits `json:"unit" validate:"required,oneof=PascalSecondPerLiter PascalMinutePerLiter PascalSecondPerMilliliter PascalMinutePerMilliliter PascalSecondPerCubicMeter PascalMinutePerCubicMeter PascalSecondPerCubicCentimeter PascalMinutePerCubicCentimeter DyneSecondPerCentimeterToTheFifth MillimeterMercurySecondPerLiter MillimeterMercuryMinutePerLiter MillimeterMercurySecondPerMilliliter MillimeterMercuryMinutePerMilliliter MillimeterMercurySecondPerCubicCentimeter MillimeterMercuryMinutePerCubicCentimeter MillimeterMercurySecondPerCubicMeter MillimeterMercuryMinutePerCubicMeter WoodUnit MegapascalSecondPerCubicMeter"`
 }

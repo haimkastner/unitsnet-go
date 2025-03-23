@@ -110,7 +110,7 @@ var internalMassMomentOfInertiaUnitsMap = map[MassMomentOfInertiaUnits]bool{
 // MassMomentOfInertiaDto represents a MassMomentOfInertia measurement with a numerical value and its corresponding unit.
 type MassMomentOfInertiaDto struct {
     // Value is the numerical representation of the MassMomentOfInertia.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MassMomentOfInertia, as defined in the MassMomentOfInertiaUnits enumeration.
 	Unit  MassMomentOfInertiaUnits `json:"unit" validate:"required,oneof=GramSquareMeter GramSquareDecimeter GramSquareCentimeter GramSquareMillimeter TonneSquareMeter TonneSquareDecimeter TonneSquareCentimeter TonneSquareMilimeter PoundSquareFoot PoundSquareInch SlugSquareFoot SlugSquareInch MilligramSquareMeter KilogramSquareMeter MilligramSquareDecimeter KilogramSquareDecimeter MilligramSquareCentimeter KilogramSquareCentimeter MilligramSquareMillimeter KilogramSquareMillimeter KilotonneSquareMeter MegatonneSquareMeter KilotonneSquareDecimeter MegatonneSquareDecimeter KilotonneSquareCentimeter MegatonneSquareCentimeter KilotonneSquareMilimeter MegatonneSquareMilimeter"`
 }

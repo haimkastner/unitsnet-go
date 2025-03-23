@@ -140,7 +140,7 @@ var internalForcePerLengthUnitsMap = map[ForcePerLengthUnits]bool{
 // ForcePerLengthDto represents a ForcePerLength measurement with a numerical value and its corresponding unit.
 type ForcePerLengthDto struct {
     // Value is the numerical representation of the ForcePerLength.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ForcePerLength, as defined in the ForcePerLengthUnits enumeration.
 	Unit  ForcePerLengthUnits `json:"unit" validate:"required,oneof=NewtonPerMeter NewtonPerCentimeter NewtonPerMillimeter KilogramForcePerMeter KilogramForcePerCentimeter KilogramForcePerMillimeter TonneForcePerMeter TonneForcePerCentimeter TonneForcePerMillimeter PoundForcePerFoot PoundForcePerInch PoundForcePerYard KilopoundForcePerFoot KilopoundForcePerInch NanonewtonPerMeter MicronewtonPerMeter MillinewtonPerMeter CentinewtonPerMeter DecinewtonPerMeter DecanewtonPerMeter KilonewtonPerMeter MeganewtonPerMeter NanonewtonPerCentimeter MicronewtonPerCentimeter MillinewtonPerCentimeter CentinewtonPerCentimeter DecinewtonPerCentimeter DecanewtonPerCentimeter KilonewtonPerCentimeter MeganewtonPerCentimeter NanonewtonPerMillimeter MicronewtonPerMillimeter MillinewtonPerMillimeter CentinewtonPerMillimeter DecinewtonPerMillimeter DecanewtonPerMillimeter KilonewtonPerMillimeter MeganewtonPerMillimeter"`
 }

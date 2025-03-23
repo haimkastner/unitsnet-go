@@ -53,7 +53,7 @@ var internalIrradiationUnitsMap = map[IrradiationUnits]bool{
 // IrradiationDto represents a Irradiation measurement with a numerical value and its corresponding unit.
 type IrradiationDto struct {
     // Value is the numerical representation of the Irradiation.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Irradiation, as defined in the IrradiationUnits enumeration.
 	Unit  IrradiationUnits `json:"unit" validate:"required,oneof=JoulePerSquareMeter JoulePerSquareCentimeter JoulePerSquareMillimeter WattHourPerSquareMeter BtuPerSquareFoot KilojoulePerSquareMeter MillijoulePerSquareCentimeter KilowattHourPerSquareMeter KilobtuPerSquareFoot"`
 }

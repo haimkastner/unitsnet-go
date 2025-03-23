@@ -29,7 +29,7 @@ var internalElectricChargeDensityUnitsMap = map[ElectricChargeDensityUnits]bool{
 // ElectricChargeDensityDto represents a ElectricChargeDensity measurement with a numerical value and its corresponding unit.
 type ElectricChargeDensityDto struct {
     // Value is the numerical representation of the ElectricChargeDensity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricChargeDensity, as defined in the ElectricChargeDensityUnits enumeration.
 	Unit  ElectricChargeDensityUnits `json:"unit" validate:"required,oneof=CoulombPerCubicMeter"`
 }

@@ -62,7 +62,7 @@ var internalDurationUnitsMap = map[DurationUnits]bool{
 // DurationDto represents a Duration measurement with a numerical value and its corresponding unit.
 type DurationDto struct {
     // Value is the numerical representation of the Duration.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Duration, as defined in the DurationUnits enumeration.
 	Unit  DurationUnits `json:"unit" validate:"required,oneof=Year365 Month30 Week Day Hour Minute Second JulianYear Sol Nanosecond Microsecond Millisecond"`
 }

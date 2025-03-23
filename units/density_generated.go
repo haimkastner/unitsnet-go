@@ -194,7 +194,7 @@ var internalDensityUnitsMap = map[DensityUnits]bool{
 // DensityDto represents a Density measurement with a numerical value and its corresponding unit.
 type DensityDto struct {
     // Value is the numerical representation of the Density.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Density, as defined in the DensityUnits enumeration.
 	Unit  DensityUnits `json:"unit" validate:"required,oneof=GramPerCubicMillimeter GramPerCubicCentimeter GramPerCubicMeter PoundPerCubicInch PoundPerCubicFoot PoundPerCubicYard TonnePerCubicMillimeter TonnePerCubicCentimeter TonnePerCubicMeter SlugPerCubicFoot GramPerLiter GramPerDeciliter GramPerMilliliter PoundPerUSGallon PoundPerImperialGallon KilogramPerLiter TonnePerCubicFoot TonnePerCubicInch GramPerCubicFoot GramPerCubicInch PoundPerCubicMeter PoundPerCubicCentimeter PoundPerCubicMillimeter SlugPerCubicMeter SlugPerCubicCentimeter SlugPerCubicMillimeter SlugPerCubicInch KilogramPerCubicMillimeter KilogramPerCubicCentimeter KilogramPerCubicMeter MilligramPerCubicMeter MicrogramPerCubicMeter KilopoundPerCubicInch KilopoundPerCubicFoot KilopoundPerCubicYard FemtogramPerLiter PicogramPerLiter NanogramPerLiter MicrogramPerLiter MilligramPerLiter CentigramPerLiter DecigramPerLiter FemtogramPerDeciliter PicogramPerDeciliter NanogramPerDeciliter MicrogramPerDeciliter MilligramPerDeciliter CentigramPerDeciliter DecigramPerDeciliter FemtogramPerMilliliter PicogramPerMilliliter NanogramPerMilliliter MicrogramPerMilliliter MilligramPerMilliliter CentigramPerMilliliter DecigramPerMilliliter"`
 }

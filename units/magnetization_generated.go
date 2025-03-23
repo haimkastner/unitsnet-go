@@ -29,7 +29,7 @@ var internalMagnetizationUnitsMap = map[MagnetizationUnits]bool{
 // MagnetizationDto represents a Magnetization measurement with a numerical value and its corresponding unit.
 type MagnetizationDto struct {
     // Value is the numerical representation of the Magnetization.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Magnetization, as defined in the MagnetizationUnits enumeration.
 	Unit  MagnetizationUnits `json:"unit" validate:"required,oneof=AmperePerMeter"`
 }

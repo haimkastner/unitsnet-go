@@ -29,7 +29,7 @@ var internalPermittivityUnitsMap = map[PermittivityUnits]bool{
 // PermittivityDto represents a Permittivity measurement with a numerical value and its corresponding unit.
 type PermittivityDto struct {
     // Value is the numerical representation of the Permittivity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Permittivity, as defined in the PermittivityUnits enumeration.
 	Unit  PermittivityUnits `json:"unit" validate:"required,oneof=FaradPerMeter"`
 }

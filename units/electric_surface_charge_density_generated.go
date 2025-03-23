@@ -35,7 +35,7 @@ var internalElectricSurfaceChargeDensityUnitsMap = map[ElectricSurfaceChargeDens
 // ElectricSurfaceChargeDensityDto represents a ElectricSurfaceChargeDensity measurement with a numerical value and its corresponding unit.
 type ElectricSurfaceChargeDensityDto struct {
     // Value is the numerical representation of the ElectricSurfaceChargeDensity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricSurfaceChargeDensity, as defined in the ElectricSurfaceChargeDensityUnits enumeration.
 	Unit  ElectricSurfaceChargeDensityUnits `json:"unit" validate:"required,oneof=CoulombPerSquareMeter CoulombPerSquareCentimeter CoulombPerSquareInch"`
 }

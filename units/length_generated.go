@@ -152,7 +152,7 @@ var internalLengthUnitsMap = map[LengthUnits]bool{
 // LengthDto represents a Length measurement with a numerical value and its corresponding unit.
 type LengthDto struct {
     // Value is the numerical representation of the Length.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Length, as defined in the LengthUnits enumeration.
 	Unit  LengthUnits `json:"unit" validate:"required,oneof=Meter Mile Yard Foot UsSurveyFoot Inch Mil NauticalMile Fathom Shackle Microinch PrinterPoint DtpPoint PrinterPica DtpPica Twip Hand AstronomicalUnit Parsec LightYear SolarRadius Chain Angstrom DataMile Femtometer Picometer Nanometer Micrometer Millimeter Centimeter Decimeter Decameter Hectometer Kilometer Megameter Gigameter Kiloyard Kilofoot Kiloparsec Megaparsec KilolightYear MegalightYear"`
 }

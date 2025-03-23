@@ -44,7 +44,7 @@ var internalThermalResistanceUnitsMap = map[ThermalResistanceUnits]bool{
 // ThermalResistanceDto represents a ThermalResistance measurement with a numerical value and its corresponding unit.
 type ThermalResistanceDto struct {
     // Value is the numerical representation of the ThermalResistance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ThermalResistance, as defined in the ThermalResistanceUnits enumeration.
 	Unit  ThermalResistanceUnits `json:"unit" validate:"required,oneof=SquareMeterKelvinPerKilowatt SquareMeterKelvinPerWatt SquareMeterDegreeCelsiusPerWatt SquareCentimeterKelvinPerWatt SquareCentimeterHourDegreeCelsiusPerKilocalorie HourSquareFeetDegreeFahrenheitPerBtu"`
 }

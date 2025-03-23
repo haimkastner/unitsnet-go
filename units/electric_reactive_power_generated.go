@@ -38,7 +38,7 @@ var internalElectricReactivePowerUnitsMap = map[ElectricReactivePowerUnits]bool{
 // ElectricReactivePowerDto represents a ElectricReactivePower measurement with a numerical value and its corresponding unit.
 type ElectricReactivePowerDto struct {
     // Value is the numerical representation of the ElectricReactivePower.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricReactivePower, as defined in the ElectricReactivePowerUnits enumeration.
 	Unit  ElectricReactivePowerUnits `json:"unit" validate:"required,oneof=VoltampereReactive KilovoltampereReactive MegavoltampereReactive GigavoltampereReactive"`
 }

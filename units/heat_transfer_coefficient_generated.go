@@ -41,7 +41,7 @@ var internalHeatTransferCoefficientUnitsMap = map[HeatTransferCoefficientUnits]b
 // HeatTransferCoefficientDto represents a HeatTransferCoefficient measurement with a numerical value and its corresponding unit.
 type HeatTransferCoefficientDto struct {
     // Value is the numerical representation of the HeatTransferCoefficient.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the HeatTransferCoefficient, as defined in the HeatTransferCoefficientUnits enumeration.
 	Unit  HeatTransferCoefficientUnits `json:"unit" validate:"required,oneof=WattPerSquareMeterKelvin WattPerSquareMeterCelsius BtuPerHourSquareFootDegreeFahrenheit CaloriePerHourSquareMeterDegreeCelsius KilocaloriePerHourSquareMeterDegreeCelsius"`
 }

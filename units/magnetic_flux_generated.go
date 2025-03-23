@@ -29,7 +29,7 @@ var internalMagneticFluxUnitsMap = map[MagneticFluxUnits]bool{
 // MagneticFluxDto represents a MagneticFlux measurement with a numerical value and its corresponding unit.
 type MagneticFluxDto struct {
     // Value is the numerical representation of the MagneticFlux.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MagneticFlux, as defined in the MagneticFluxUnits enumeration.
 	Unit  MagneticFluxUnits `json:"unit" validate:"required,oneof=Weber"`
 }

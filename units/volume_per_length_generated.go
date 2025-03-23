@@ -53,7 +53,7 @@ var internalVolumePerLengthUnitsMap = map[VolumePerLengthUnits]bool{
 // VolumePerLengthDto represents a VolumePerLength measurement with a numerical value and its corresponding unit.
 type VolumePerLengthDto struct {
     // Value is the numerical representation of the VolumePerLength.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VolumePerLength, as defined in the VolumePerLengthUnits enumeration.
 	Unit  VolumePerLengthUnits `json:"unit" validate:"required,oneof=CubicMeterPerMeter LiterPerMeter LiterPerKilometer LiterPerMillimeter OilBarrelPerFoot CubicYardPerFoot CubicYardPerUsSurveyFoot UsGallonPerMile ImperialGallonPerMile"`
 }

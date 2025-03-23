@@ -47,7 +47,7 @@ var internalCapacitanceUnitsMap = map[CapacitanceUnits]bool{
 // CapacitanceDto represents a Capacitance measurement with a numerical value and its corresponding unit.
 type CapacitanceDto struct {
     // Value is the numerical representation of the Capacitance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Capacitance, as defined in the CapacitanceUnits enumeration.
 	Unit  CapacitanceUnits `json:"unit" validate:"required,oneof=Farad Picofarad Nanofarad Microfarad Millifarad Kilofarad Megafarad"`
 }

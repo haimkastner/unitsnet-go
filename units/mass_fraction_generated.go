@@ -98,7 +98,7 @@ var internalMassFractionUnitsMap = map[MassFractionUnits]bool{
 // MassFractionDto represents a MassFraction measurement with a numerical value and its corresponding unit.
 type MassFractionDto struct {
     // Value is the numerical representation of the MassFraction.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MassFraction, as defined in the MassFractionUnits enumeration.
 	Unit  MassFractionUnits `json:"unit" validate:"required,oneof=DecimalFraction GramPerGram GramPerKilogram Percent PartPerThousand PartPerMillion PartPerBillion PartPerTrillion NanogramPerGram MicrogramPerGram MilligramPerGram CentigramPerGram DecigramPerGram DecagramPerGram HectogramPerGram KilogramPerGram NanogramPerKilogram MicrogramPerKilogram MilligramPerKilogram CentigramPerKilogram DecigramPerKilogram DecagramPerKilogram HectogramPerKilogram KilogramPerKilogram"`
 }

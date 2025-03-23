@@ -125,7 +125,7 @@ var internalSpeedUnitsMap = map[SpeedUnits]bool{
 // SpeedDto represents a Speed measurement with a numerical value and its corresponding unit.
 type SpeedDto struct {
     // Value is the numerical representation of the Speed.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Speed, as defined in the SpeedUnits enumeration.
 	Unit  SpeedUnits `json:"unit" validate:"required,oneof=MeterPerSecond MeterPerMinute MeterPerHour FootPerSecond FootPerMinute FootPerHour UsSurveyFootPerSecond UsSurveyFootPerMinute UsSurveyFootPerHour InchPerSecond InchPerMinute InchPerHour YardPerSecond YardPerMinute YardPerHour Knot MilePerHour Mach NanometerPerSecond MicrometerPerSecond MillimeterPerSecond CentimeterPerSecond DecimeterPerSecond KilometerPerSecond NanometerPerMinute MicrometerPerMinute MillimeterPerMinute CentimeterPerMinute DecimeterPerMinute KilometerPerMinute MillimeterPerHour CentimeterPerHour KilometerPerHour"`
 }

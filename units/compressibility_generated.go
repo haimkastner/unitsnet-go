@@ -47,7 +47,7 @@ var internalCompressibilityUnitsMap = map[CompressibilityUnits]bool{
 // CompressibilityDto represents a Compressibility measurement with a numerical value and its corresponding unit.
 type CompressibilityDto struct {
     // Value is the numerical representation of the Compressibility.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Compressibility, as defined in the CompressibilityUnits enumeration.
 	Unit  CompressibilityUnits `json:"unit" validate:"required,oneof=InversePascal InverseKilopascal InverseMegapascal InverseAtmosphere InverseMillibar InverseBar InversePoundForcePerSquareInch"`
 }

@@ -53,7 +53,7 @@ var internalKinematicViscosityUnitsMap = map[KinematicViscosityUnits]bool{
 // KinematicViscosityDto represents a KinematicViscosity measurement with a numerical value and its corresponding unit.
 type KinematicViscosityDto struct {
     // Value is the numerical representation of the KinematicViscosity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the KinematicViscosity, as defined in the KinematicViscosityUnits enumeration.
 	Unit  KinematicViscosityUnits `json:"unit" validate:"required,oneof=SquareMeterPerSecond Stokes SquareFootPerSecond Nanostokes Microstokes Millistokes Centistokes Decistokes Kilostokes"`
 }

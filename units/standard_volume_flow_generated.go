@@ -53,7 +53,7 @@ var internalStandardVolumeFlowUnitsMap = map[StandardVolumeFlowUnits]bool{
 // StandardVolumeFlowDto represents a StandardVolumeFlow measurement with a numerical value and its corresponding unit.
 type StandardVolumeFlowDto struct {
     // Value is the numerical representation of the StandardVolumeFlow.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the StandardVolumeFlow, as defined in the StandardVolumeFlowUnits enumeration.
 	Unit  StandardVolumeFlowUnits `json:"unit" validate:"required,oneof=StandardCubicMeterPerSecond StandardCubicMeterPerMinute StandardCubicMeterPerHour StandardCubicMeterPerDay StandardCubicCentimeterPerMinute StandardLiterPerMinute StandardCubicFootPerSecond StandardCubicFootPerMinute StandardCubicFootPerHour"`
 }

@@ -68,7 +68,7 @@ var internalAreaUnitsMap = map[AreaUnits]bool{
 // AreaDto represents a Area measurement with a numerical value and its corresponding unit.
 type AreaDto struct {
     // Value is the numerical representation of the Area.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Area, as defined in the AreaUnits enumeration.
 	Unit  AreaUnits `json:"unit" validate:"required,oneof=SquareKilometer SquareMeter SquareDecimeter SquareCentimeter SquareMillimeter SquareMicrometer SquareMile SquareYard SquareFoot UsSurveySquareFoot SquareInch Acre Hectare SquareNauticalMile"`
 }

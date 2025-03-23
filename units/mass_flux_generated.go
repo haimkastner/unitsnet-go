@@ -62,7 +62,7 @@ var internalMassFluxUnitsMap = map[MassFluxUnits]bool{
 // MassFluxDto represents a MassFlux measurement with a numerical value and its corresponding unit.
 type MassFluxDto struct {
     // Value is the numerical representation of the MassFlux.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MassFlux, as defined in the MassFluxUnits enumeration.
 	Unit  MassFluxUnits `json:"unit" validate:"required,oneof=GramPerSecondPerSquareMeter GramPerSecondPerSquareCentimeter GramPerSecondPerSquareMillimeter GramPerHourPerSquareMeter GramPerHourPerSquareCentimeter GramPerHourPerSquareMillimeter KilogramPerSecondPerSquareMeter KilogramPerSecondPerSquareCentimeter KilogramPerSecondPerSquareMillimeter KilogramPerHourPerSquareMeter KilogramPerHourPerSquareCentimeter KilogramPerHourPerSquareMillimeter"`
 }

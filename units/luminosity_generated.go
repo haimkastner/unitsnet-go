@@ -68,7 +68,7 @@ var internalLuminosityUnitsMap = map[LuminosityUnits]bool{
 // LuminosityDto represents a Luminosity measurement with a numerical value and its corresponding unit.
 type LuminosityDto struct {
     // Value is the numerical representation of the Luminosity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Luminosity, as defined in the LuminosityUnits enumeration.
 	Unit  LuminosityUnits `json:"unit" validate:"required,oneof=Watt SolarLuminosity Femtowatt Picowatt Nanowatt Microwatt Milliwatt Deciwatt Decawatt Kilowatt Megawatt Gigawatt Terawatt Petawatt"`
 }

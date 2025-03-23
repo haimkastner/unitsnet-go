@@ -29,7 +29,7 @@ var internalRelativeHumidityUnitsMap = map[RelativeHumidityUnits]bool{
 // RelativeHumidityDto represents a RelativeHumidity measurement with a numerical value and its corresponding unit.
 type RelativeHumidityDto struct {
     // Value is the numerical representation of the RelativeHumidity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RelativeHumidity, as defined in the RelativeHumidityUnits enumeration.
 	Unit  RelativeHumidityUnits `json:"unit" validate:"required,oneof=Percent"`
 }

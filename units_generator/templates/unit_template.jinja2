@@ -29,7 +29,7 @@ var internal{{ unit }}UnitsMap = map[{{ unit }}Units]bool{
 // {{ unit }}Dto represents a {{ unit }} measurement with a numerical value and its corresponding unit.
 type {{ unit }}Dto struct {
     // Value is the numerical representation of the {{ unit }}.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the {{ unit }}, as defined in the {{ unit }}Units enumeration.
 	Unit  {{ unit }}Units `json:"unit" validate:"required,oneof={% for method in methods %}{{ method.unit }}{% if not loop.last %} {% endif %}{% endfor %}"`
 }

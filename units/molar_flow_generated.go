@@ -53,7 +53,7 @@ var internalMolarFlowUnitsMap = map[MolarFlowUnits]bool{
 // MolarFlowDto represents a MolarFlow measurement with a numerical value and its corresponding unit.
 type MolarFlowDto struct {
     // Value is the numerical representation of the MolarFlow.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MolarFlow, as defined in the MolarFlowUnits enumeration.
 	Unit  MolarFlowUnits `json:"unit" validate:"required,oneof=MolePerSecond MolePerMinute MolePerHour PoundMolePerSecond PoundMolePerMinute PoundMolePerHour KilomolePerSecond KilomolePerMinute KilomolePerHour"`
 }

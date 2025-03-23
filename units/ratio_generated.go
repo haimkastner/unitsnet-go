@@ -44,7 +44,7 @@ var internalRatioUnitsMap = map[RatioUnits]bool{
 // RatioDto represents a Ratio measurement with a numerical value and its corresponding unit.
 type RatioDto struct {
     // Value is the numerical representation of the Ratio.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Ratio, as defined in the RatioUnits enumeration.
 	Unit  RatioUnits `json:"unit" validate:"required,oneof=DecimalFraction Percent PartPerThousand PartPerMillion PartPerBillion PartPerTrillion"`
 }

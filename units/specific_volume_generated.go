@@ -35,7 +35,7 @@ var internalSpecificVolumeUnitsMap = map[SpecificVolumeUnits]bool{
 // SpecificVolumeDto represents a SpecificVolume measurement with a numerical value and its corresponding unit.
 type SpecificVolumeDto struct {
     // Value is the numerical representation of the SpecificVolume.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificVolume, as defined in the SpecificVolumeUnits enumeration.
 	Unit  SpecificVolumeUnits `json:"unit" validate:"required,oneof=CubicMeterPerKilogram CubicFootPerPound MillicubicMeterPerKilogram"`
 }

@@ -50,7 +50,7 @@ var internalElectricReactanceUnitsMap = map[ElectricReactanceUnits]bool{
 // ElectricReactanceDto represents a ElectricReactance measurement with a numerical value and its corresponding unit.
 type ElectricReactanceDto struct {
     // Value is the numerical representation of the ElectricReactance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricReactance, as defined in the ElectricReactanceUnits enumeration.
 	Unit  ElectricReactanceUnits `json:"unit" validate:"required,oneof=Ohm Nanoohm Microohm Milliohm Kiloohm Megaohm Gigaohm Teraohm"`
 }

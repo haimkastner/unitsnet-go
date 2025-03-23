@@ -38,7 +38,7 @@ var internalRotationalAccelerationUnitsMap = map[RotationalAccelerationUnits]boo
 // RotationalAccelerationDto represents a RotationalAcceleration measurement with a numerical value and its corresponding unit.
 type RotationalAccelerationDto struct {
     // Value is the numerical representation of the RotationalAcceleration.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RotationalAcceleration, as defined in the RotationalAccelerationUnits enumeration.
 	Unit  RotationalAccelerationUnits `json:"unit" validate:"required,oneof=RadianPerSecondSquared DegreePerSecondSquared RevolutionPerMinutePerSecond RevolutionPerSecondSquared"`
 }

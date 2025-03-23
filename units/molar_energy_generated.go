@@ -35,7 +35,7 @@ var internalMolarEnergyUnitsMap = map[MolarEnergyUnits]bool{
 // MolarEnergyDto represents a MolarEnergy measurement with a numerical value and its corresponding unit.
 type MolarEnergyDto struct {
     // Value is the numerical representation of the MolarEnergy.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MolarEnergy, as defined in the MolarEnergyUnits enumeration.
 	Unit  MolarEnergyUnits `json:"unit" validate:"required,oneof=JoulePerMole KilojoulePerMole MegajoulePerMole"`
 }

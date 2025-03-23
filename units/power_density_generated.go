@@ -158,7 +158,7 @@ var internalPowerDensityUnitsMap = map[PowerDensityUnits]bool{
 // PowerDensityDto represents a PowerDensity measurement with a numerical value and its corresponding unit.
 type PowerDensityDto struct {
     // Value is the numerical representation of the PowerDensity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the PowerDensity, as defined in the PowerDensityUnits enumeration.
 	Unit  PowerDensityUnits `json:"unit" validate:"required,oneof=WattPerCubicMeter WattPerCubicInch WattPerCubicFoot WattPerLiter PicowattPerCubicMeter NanowattPerCubicMeter MicrowattPerCubicMeter MilliwattPerCubicMeter DeciwattPerCubicMeter DecawattPerCubicMeter KilowattPerCubicMeter MegawattPerCubicMeter GigawattPerCubicMeter TerawattPerCubicMeter PicowattPerCubicInch NanowattPerCubicInch MicrowattPerCubicInch MilliwattPerCubicInch DeciwattPerCubicInch DecawattPerCubicInch KilowattPerCubicInch MegawattPerCubicInch GigawattPerCubicInch TerawattPerCubicInch PicowattPerCubicFoot NanowattPerCubicFoot MicrowattPerCubicFoot MilliwattPerCubicFoot DeciwattPerCubicFoot DecawattPerCubicFoot KilowattPerCubicFoot MegawattPerCubicFoot GigawattPerCubicFoot TerawattPerCubicFoot PicowattPerLiter NanowattPerLiter MicrowattPerLiter MilliwattPerLiter DeciwattPerLiter DecawattPerLiter KilowattPerLiter MegawattPerLiter GigawattPerLiter TerawattPerLiter"`
 }

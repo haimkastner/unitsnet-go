@@ -59,7 +59,7 @@ var internalMolarityUnitsMap = map[MolarityUnits]bool{
 // MolarityDto represents a Molarity measurement with a numerical value and its corresponding unit.
 type MolarityDto struct {
     // Value is the numerical representation of the Molarity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Molarity, as defined in the MolarityUnits enumeration.
 	Unit  MolarityUnits `json:"unit" validate:"required,oneof=MolePerCubicMeter MolePerLiter PoundMolePerCubicFoot KilomolePerCubicMeter FemtomolePerLiter PicomolePerLiter NanomolePerLiter MicromolePerLiter MillimolePerLiter CentimolePerLiter DecimolePerLiter"`
 }

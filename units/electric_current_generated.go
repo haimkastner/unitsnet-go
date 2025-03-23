@@ -53,7 +53,7 @@ var internalElectricCurrentUnitsMap = map[ElectricCurrentUnits]bool{
 // ElectricCurrentDto represents a ElectricCurrent measurement with a numerical value and its corresponding unit.
 type ElectricCurrentDto struct {
     // Value is the numerical representation of the ElectricCurrent.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricCurrent, as defined in the ElectricCurrentUnits enumeration.
 	Unit  ElectricCurrentUnits `json:"unit" validate:"required,oneof=Ampere Femtoampere Picoampere Nanoampere Microampere Milliampere Centiampere Kiloampere Megaampere"`
 }

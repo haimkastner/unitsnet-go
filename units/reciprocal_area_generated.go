@@ -59,7 +59,7 @@ var internalReciprocalAreaUnitsMap = map[ReciprocalAreaUnits]bool{
 // ReciprocalAreaDto represents a ReciprocalArea measurement with a numerical value and its corresponding unit.
 type ReciprocalAreaDto struct {
     // Value is the numerical representation of the ReciprocalArea.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ReciprocalArea, as defined in the ReciprocalAreaUnits enumeration.
 	Unit  ReciprocalAreaUnits `json:"unit" validate:"required,oneof=InverseSquareMeter InverseSquareKilometer InverseSquareDecimeter InverseSquareCentimeter InverseSquareMillimeter InverseSquareMicrometer InverseSquareMile InverseSquareYard InverseSquareFoot InverseUsSurveySquareFoot InverseSquareInch"`
 }

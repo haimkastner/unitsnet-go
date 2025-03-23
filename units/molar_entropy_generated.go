@@ -35,7 +35,7 @@ var internalMolarEntropyUnitsMap = map[MolarEntropyUnits]bool{
 // MolarEntropyDto represents a MolarEntropy measurement with a numerical value and its corresponding unit.
 type MolarEntropyDto struct {
     // Value is the numerical representation of the MolarEntropy.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MolarEntropy, as defined in the MolarEntropyUnits enumeration.
 	Unit  MolarEntropyUnits `json:"unit" validate:"required,oneof=JoulePerMoleKelvin KilojoulePerMoleKelvin MegajoulePerMoleKelvin"`
 }

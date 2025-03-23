@@ -68,7 +68,7 @@ var internalElectricResistivityUnitsMap = map[ElectricResistivityUnits]bool{
 // ElectricResistivityDto represents a ElectricResistivity measurement with a numerical value and its corresponding unit.
 type ElectricResistivityDto struct {
     // Value is the numerical representation of the ElectricResistivity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricResistivity, as defined in the ElectricResistivityUnits enumeration.
 	Unit  ElectricResistivityUnits `json:"unit" validate:"required,oneof=OhmMeter OhmCentimeter PicoohmMeter NanoohmMeter MicroohmMeter MilliohmMeter KiloohmMeter MegaohmMeter PicoohmCentimeter NanoohmCentimeter MicroohmCentimeter MilliohmCentimeter KiloohmCentimeter MegaohmCentimeter"`
 }

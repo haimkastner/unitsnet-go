@@ -89,7 +89,7 @@ var internalTorquePerLengthUnitsMap = map[TorquePerLengthUnits]bool{
 // TorquePerLengthDto represents a TorquePerLength measurement with a numerical value and its corresponding unit.
 type TorquePerLengthDto struct {
     // Value is the numerical representation of the TorquePerLength.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the TorquePerLength, as defined in the TorquePerLengthUnits enumeration.
 	Unit  TorquePerLengthUnits `json:"unit" validate:"required,oneof=NewtonMillimeterPerMeter NewtonCentimeterPerMeter NewtonMeterPerMeter PoundForceInchPerFoot PoundForceFootPerFoot KilogramForceMillimeterPerMeter KilogramForceCentimeterPerMeter KilogramForceMeterPerMeter TonneForceMillimeterPerMeter TonneForceCentimeterPerMeter TonneForceMeterPerMeter KilonewtonMillimeterPerMeter MeganewtonMillimeterPerMeter KilonewtonCentimeterPerMeter MeganewtonCentimeterPerMeter KilonewtonMeterPerMeter MeganewtonMeterPerMeter KilopoundForceInchPerFoot MegapoundForceInchPerFoot KilopoundForceFootPerFoot MegapoundForceFootPerFoot"`
 }

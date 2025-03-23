@@ -104,7 +104,7 @@ var internalBitRateUnitsMap = map[BitRateUnits]bool{
 // BitRateDto represents a BitRate measurement with a numerical value and its corresponding unit.
 type BitRateDto struct {
     // Value is the numerical representation of the BitRate.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the BitRate, as defined in the BitRateUnits enumeration.
 	Unit  BitRateUnits `json:"unit" validate:"required,oneof=BitPerSecond BytePerSecond KilobitPerSecond MegabitPerSecond GigabitPerSecond TerabitPerSecond PetabitPerSecond ExabitPerSecond KibibitPerSecond MebibitPerSecond GibibitPerSecond TebibitPerSecond PebibitPerSecond ExbibitPerSecond KilobytePerSecond MegabytePerSecond GigabytePerSecond TerabytePerSecond PetabytePerSecond ExabytePerSecond KibibytePerSecond MebibytePerSecond GibibytePerSecond TebibytePerSecond PebibytePerSecond ExbibytePerSecond"`
 }

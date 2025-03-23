@@ -56,7 +56,7 @@ var internalRadiationEquivalentDoseRateUnitsMap = map[RadiationEquivalentDoseRat
 // RadiationEquivalentDoseRateDto represents a RadiationEquivalentDoseRate measurement with a numerical value and its corresponding unit.
 type RadiationEquivalentDoseRateDto struct {
     // Value is the numerical representation of the RadiationEquivalentDoseRate.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RadiationEquivalentDoseRate, as defined in the RadiationEquivalentDoseRateUnits enumeration.
 	Unit  RadiationEquivalentDoseRateUnits `json:"unit" validate:"required,oneof=SievertPerHour SievertPerSecond RoentgenEquivalentManPerHour NanosievertPerHour MicrosievertPerHour MillisievertPerHour NanosievertPerSecond MicrosievertPerSecond MillisievertPerSecond MilliroentgenEquivalentManPerHour"`
 }

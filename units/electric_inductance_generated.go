@@ -41,7 +41,7 @@ var internalElectricInductanceUnitsMap = map[ElectricInductanceUnits]bool{
 // ElectricInductanceDto represents a ElectricInductance measurement with a numerical value and its corresponding unit.
 type ElectricInductanceDto struct {
     // Value is the numerical representation of the ElectricInductance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricInductance, as defined in the ElectricInductanceUnits enumeration.
 	Unit  ElectricInductanceUnits `json:"unit" validate:"required,oneof=Henry Picohenry Nanohenry Microhenry Millihenry"`
 }

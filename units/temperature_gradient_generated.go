@@ -38,7 +38,7 @@ var internalTemperatureGradientUnitsMap = map[TemperatureGradientUnits]bool{
 // TemperatureGradientDto represents a TemperatureGradient measurement with a numerical value and its corresponding unit.
 type TemperatureGradientDto struct {
     // Value is the numerical representation of the TemperatureGradient.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the TemperatureGradient, as defined in the TemperatureGradientUnits enumeration.
 	Unit  TemperatureGradientUnits `json:"unit" validate:"required,oneof=KelvinPerMeter DegreeCelsiusPerMeter DegreeFahrenheitPerFoot DegreeCelsiusPerKilometer"`
 }

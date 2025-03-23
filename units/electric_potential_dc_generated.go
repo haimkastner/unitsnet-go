@@ -41,7 +41,7 @@ var internalElectricPotentialDcUnitsMap = map[ElectricPotentialDcUnits]bool{
 // ElectricPotentialDcDto represents a ElectricPotentialDc measurement with a numerical value and its corresponding unit.
 type ElectricPotentialDcDto struct {
     // Value is the numerical representation of the ElectricPotentialDc.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricPotentialDc, as defined in the ElectricPotentialDcUnits enumeration.
 	Unit  ElectricPotentialDcUnits `json:"unit" validate:"required,oneof=VoltDc MicrovoltDc MillivoltDc KilovoltDc MegavoltDc"`
 }

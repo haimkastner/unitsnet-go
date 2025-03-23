@@ -41,7 +41,7 @@ var internalRotationalStiffnessPerLengthUnitsMap = map[RotationalStiffnessPerLen
 // RotationalStiffnessPerLengthDto represents a RotationalStiffnessPerLength measurement with a numerical value and its corresponding unit.
 type RotationalStiffnessPerLengthDto struct {
     // Value is the numerical representation of the RotationalStiffnessPerLength.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RotationalStiffnessPerLength, as defined in the RotationalStiffnessPerLengthUnits enumeration.
 	Unit  RotationalStiffnessPerLengthUnits `json:"unit" validate:"required,oneof=NewtonMeterPerRadianPerMeter PoundForceFootPerDegreesPerFoot KilopoundForceFootPerDegreesPerFoot KilonewtonMeterPerRadianPerMeter MeganewtonMeterPerRadianPerMeter"`
 }

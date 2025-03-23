@@ -56,7 +56,7 @@ var internalLuminanceUnitsMap = map[LuminanceUnits]bool{
 // LuminanceDto represents a Luminance measurement with a numerical value and its corresponding unit.
 type LuminanceDto struct {
     // Value is the numerical representation of the Luminance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Luminance, as defined in the LuminanceUnits enumeration.
 	Unit  LuminanceUnits `json:"unit" validate:"required,oneof=CandelaPerSquareMeter CandelaPerSquareFoot CandelaPerSquareInch Nit NanocandelaPerSquareMeter MicrocandelaPerSquareMeter MillicandelaPerSquareMeter CenticandelaPerSquareMeter DecicandelaPerSquareMeter KilocandelaPerSquareMeter"`
 }

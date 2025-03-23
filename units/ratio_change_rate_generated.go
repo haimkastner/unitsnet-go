@@ -32,7 +32,7 @@ var internalRatioChangeRateUnitsMap = map[RatioChangeRateUnits]bool{
 // RatioChangeRateDto represents a RatioChangeRate measurement with a numerical value and its corresponding unit.
 type RatioChangeRateDto struct {
     // Value is the numerical representation of the RatioChangeRate.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RatioChangeRate, as defined in the RatioChangeRateUnits enumeration.
 	Unit  RatioChangeRateUnits `json:"unit" validate:"required,oneof=PercentPerSecond DecimalFractionPerSecond"`
 }

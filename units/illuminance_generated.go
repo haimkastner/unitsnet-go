@@ -38,7 +38,7 @@ var internalIlluminanceUnitsMap = map[IlluminanceUnits]bool{
 // IlluminanceDto represents a Illuminance measurement with a numerical value and its corresponding unit.
 type IlluminanceDto struct {
     // Value is the numerical representation of the Illuminance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Illuminance, as defined in the IlluminanceUnits enumeration.
 	Unit  IlluminanceUnits `json:"unit" validate:"required,oneof=Lux Millilux Kilolux Megalux"`
 }

@@ -59,7 +59,7 @@ var internalJerkUnitsMap = map[JerkUnits]bool{
 // JerkDto represents a Jerk measurement with a numerical value and its corresponding unit.
 type JerkDto struct {
     // Value is the numerical representation of the Jerk.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Jerk, as defined in the JerkUnits enumeration.
 	Unit  JerkUnits `json:"unit" validate:"required,oneof=MeterPerSecondCubed InchPerSecondCubed FootPerSecondCubed StandardGravitiesPerSecond NanometerPerSecondCubed MicrometerPerSecondCubed MillimeterPerSecondCubed CentimeterPerSecondCubed DecimeterPerSecondCubed KilometerPerSecondCubed MillistandardGravitiesPerSecond"`
 }

@@ -65,7 +65,7 @@ var internalRotationalSpeedUnitsMap = map[RotationalSpeedUnits]bool{
 // RotationalSpeedDto represents a RotationalSpeed measurement with a numerical value and its corresponding unit.
 type RotationalSpeedDto struct {
     // Value is the numerical representation of the RotationalSpeed.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RotationalSpeed, as defined in the RotationalSpeedUnits enumeration.
 	Unit  RotationalSpeedUnits `json:"unit" validate:"required,oneof=RadianPerSecond DegreePerSecond DegreePerMinute RevolutionPerSecond RevolutionPerMinute NanoradianPerSecond MicroradianPerSecond MilliradianPerSecond CentiradianPerSecond DeciradianPerSecond NanodegreePerSecond MicrodegreePerSecond MillidegreePerSecond"`
 }

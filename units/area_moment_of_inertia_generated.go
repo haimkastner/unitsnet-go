@@ -44,7 +44,7 @@ var internalAreaMomentOfInertiaUnitsMap = map[AreaMomentOfInertiaUnits]bool{
 // AreaMomentOfInertiaDto represents a AreaMomentOfInertia measurement with a numerical value and its corresponding unit.
 type AreaMomentOfInertiaDto struct {
     // Value is the numerical representation of the AreaMomentOfInertia.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AreaMomentOfInertia, as defined in the AreaMomentOfInertiaUnits enumeration.
 	Unit  AreaMomentOfInertiaUnits `json:"unit" validate:"required,oneof=MeterToTheFourth DecimeterToTheFourth CentimeterToTheFourth MillimeterToTheFourth FootToTheFourth InchToTheFourth"`
 }

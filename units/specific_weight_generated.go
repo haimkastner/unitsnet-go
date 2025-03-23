@@ -77,7 +77,7 @@ var internalSpecificWeightUnitsMap = map[SpecificWeightUnits]bool{
 // SpecificWeightDto represents a SpecificWeight measurement with a numerical value and its corresponding unit.
 type SpecificWeightDto struct {
     // Value is the numerical representation of the SpecificWeight.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificWeight, as defined in the SpecificWeightUnits enumeration.
 	Unit  SpecificWeightUnits `json:"unit" validate:"required,oneof=NewtonPerCubicMillimeter NewtonPerCubicCentimeter NewtonPerCubicMeter KilogramForcePerCubicMillimeter KilogramForcePerCubicCentimeter KilogramForcePerCubicMeter PoundForcePerCubicInch PoundForcePerCubicFoot TonneForcePerCubicMillimeter TonneForcePerCubicCentimeter TonneForcePerCubicMeter KilonewtonPerCubicMillimeter KilonewtonPerCubicCentimeter KilonewtonPerCubicMeter MeganewtonPerCubicMeter KilopoundForcePerCubicInch KilopoundForcePerCubicFoot"`
 }

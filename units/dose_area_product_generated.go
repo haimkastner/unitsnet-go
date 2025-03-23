@@ -86,7 +86,7 @@ var internalDoseAreaProductUnitsMap = map[DoseAreaProductUnits]bool{
 // DoseAreaProductDto represents a DoseAreaProduct measurement with a numerical value and its corresponding unit.
 type DoseAreaProductDto struct {
     // Value is the numerical representation of the DoseAreaProduct.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the DoseAreaProduct, as defined in the DoseAreaProductUnits enumeration.
 	Unit  DoseAreaProductUnits `json:"unit" validate:"required,oneof=GraySquareMeter GraySquareDecimeter GraySquareCentimeter GraySquareMillimeter MicrograySquareMeter MilligraySquareMeter CentigraySquareMeter DecigraySquareMeter MicrograySquareDecimeter MilligraySquareDecimeter CentigraySquareDecimeter DecigraySquareDecimeter MicrograySquareCentimeter MilligraySquareCentimeter CentigraySquareCentimeter DecigraySquareCentimeter MicrograySquareMillimeter MilligraySquareMillimeter CentigraySquareMillimeter DecigraySquareMillimeter"`
 }

@@ -29,7 +29,7 @@ var internalTurbidityUnitsMap = map[TurbidityUnits]bool{
 // TurbidityDto represents a Turbidity measurement with a numerical value and its corresponding unit.
 type TurbidityDto struct {
     // Value is the numerical representation of the Turbidity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Turbidity, as defined in the TurbidityUnits enumeration.
 	Unit  TurbidityUnits `json:"unit" validate:"required,oneof=NTU"`
 }

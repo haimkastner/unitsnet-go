@@ -56,7 +56,7 @@ var internalTemperatureUnitsMap = map[TemperatureUnits]bool{
 // TemperatureDto represents a Temperature measurement with a numerical value and its corresponding unit.
 type TemperatureDto struct {
     // Value is the numerical representation of the Temperature.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Temperature, as defined in the TemperatureUnits enumeration.
 	Unit  TemperatureUnits `json:"unit" validate:"required,oneof=Kelvin DegreeCelsius MillidegreeCelsius DegreeDelisle DegreeFahrenheit DegreeNewton DegreeRankine DegreeReaumur DegreeRoemer SolarTemperature"`
 }

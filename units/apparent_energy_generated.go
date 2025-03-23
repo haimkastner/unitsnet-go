@@ -35,7 +35,7 @@ var internalApparentEnergyUnitsMap = map[ApparentEnergyUnits]bool{
 // ApparentEnergyDto represents a ApparentEnergy measurement with a numerical value and its corresponding unit.
 type ApparentEnergyDto struct {
     // Value is the numerical representation of the ApparentEnergy.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ApparentEnergy, as defined in the ApparentEnergyUnits enumeration.
 	Unit  ApparentEnergyUnits `json:"unit" validate:"required,oneof=VoltampereHour KilovoltampereHour MegavoltampereHour"`
 }

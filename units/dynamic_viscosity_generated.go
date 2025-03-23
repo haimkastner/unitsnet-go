@@ -56,7 +56,7 @@ var internalDynamicViscosityUnitsMap = map[DynamicViscosityUnits]bool{
 // DynamicViscosityDto represents a DynamicViscosity measurement with a numerical value and its corresponding unit.
 type DynamicViscosityDto struct {
     // Value is the numerical representation of the DynamicViscosity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the DynamicViscosity, as defined in the DynamicViscosityUnits enumeration.
 	Unit  DynamicViscosityUnits `json:"unit" validate:"required,oneof=NewtonSecondPerMeterSquared PascalSecond Poise Reyn PoundForceSecondPerSquareInch PoundForceSecondPerSquareFoot PoundPerFootSecond MillipascalSecond MicropascalSecond Centipoise"`
 }

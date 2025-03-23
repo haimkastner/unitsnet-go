@@ -29,7 +29,7 @@ var internalVitaminAUnitsMap = map[VitaminAUnits]bool{
 // VitaminADto represents a VitaminA measurement with a numerical value and its corresponding unit.
 type VitaminADto struct {
     // Value is the numerical representation of the VitaminA.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VitaminA, as defined in the VitaminAUnits enumeration.
 	Unit  VitaminAUnits `json:"unit" validate:"required,oneof=InternationalUnit"`
 }

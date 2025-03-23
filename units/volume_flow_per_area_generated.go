@@ -32,7 +32,7 @@ var internalVolumeFlowPerAreaUnitsMap = map[VolumeFlowPerAreaUnits]bool{
 // VolumeFlowPerAreaDto represents a VolumeFlowPerArea measurement with a numerical value and its corresponding unit.
 type VolumeFlowPerAreaDto struct {
     // Value is the numerical representation of the VolumeFlowPerArea.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VolumeFlowPerArea, as defined in the VolumeFlowPerAreaUnits enumeration.
 	Unit  VolumeFlowPerAreaUnits `json:"unit" validate:"required,oneof=CubicMeterPerSecondPerSquareMeter CubicFootPerMinutePerSquareFoot"`
 }

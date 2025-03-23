@@ -35,7 +35,7 @@ var internalLeakRateUnitsMap = map[LeakRateUnits]bool{
 // LeakRateDto represents a LeakRate measurement with a numerical value and its corresponding unit.
 type LeakRateDto struct {
     // Value is the numerical representation of the LeakRate.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the LeakRate, as defined in the LeakRateUnits enumeration.
 	Unit  LeakRateUnits `json:"unit" validate:"required,oneof=PascalCubicMeterPerSecond MillibarLiterPerSecond TorrLiterPerSecond"`
 }

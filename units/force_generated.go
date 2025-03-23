@@ -71,7 +71,7 @@ var internalForceUnitsMap = map[ForceUnits]bool{
 // ForceDto represents a Force measurement with a numerical value and its corresponding unit.
 type ForceDto struct {
     // Value is the numerical representation of the Force.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Force, as defined in the ForceUnits enumeration.
 	Unit  ForceUnits `json:"unit" validate:"required,oneof=Dyn KilogramForce TonneForce Newton KiloPond Poundal PoundForce OunceForce ShortTonForce Micronewton Millinewton Decanewton Kilonewton Meganewton KilopoundForce"`
 }

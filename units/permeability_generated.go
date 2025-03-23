@@ -29,7 +29,7 @@ var internalPermeabilityUnitsMap = map[PermeabilityUnits]bool{
 // PermeabilityDto represents a Permeability measurement with a numerical value and its corresponding unit.
 type PermeabilityDto struct {
     // Value is the numerical representation of the Permeability.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Permeability, as defined in the PermeabilityUnits enumeration.
 	Unit  PermeabilityUnits `json:"unit" validate:"required,oneof=HenryPerMeter"`
 }

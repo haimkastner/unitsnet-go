@@ -74,7 +74,7 @@ var internalElectricConductanceUnitsMap = map[ElectricConductanceUnits]bool{
 // ElectricConductanceDto represents a ElectricConductance measurement with a numerical value and its corresponding unit.
 type ElectricConductanceDto struct {
     // Value is the numerical representation of the ElectricConductance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricConductance, as defined in the ElectricConductanceUnits enumeration.
 	Unit  ElectricConductanceUnits `json:"unit" validate:"required,oneof=Siemens Mho Nanosiemens Microsiemens Millisiemens Kilosiemens Megasiemens Gigasiemens Terasiemens Nanomho Micromho Millimho Kilomho Megamho Gigamho Teramho"`
 }

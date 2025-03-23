@@ -38,7 +38,7 @@ var internalFuelEfficiencyUnitsMap = map[FuelEfficiencyUnits]bool{
 // FuelEfficiencyDto represents a FuelEfficiency measurement with a numerical value and its corresponding unit.
 type FuelEfficiencyDto struct {
     // Value is the numerical representation of the FuelEfficiency.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the FuelEfficiency, as defined in the FuelEfficiencyUnits enumeration.
 	Unit  FuelEfficiencyUnits `json:"unit" validate:"required,oneof=LiterPer100Kilometers MilePerUsGallon MilePerUkGallon KilometerPerLiter"`
 }

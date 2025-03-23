@@ -74,7 +74,7 @@ var internalElectricSusceptanceUnitsMap = map[ElectricSusceptanceUnits]bool{
 // ElectricSusceptanceDto represents a ElectricSusceptance measurement with a numerical value and its corresponding unit.
 type ElectricSusceptanceDto struct {
     // Value is the numerical representation of the ElectricSusceptance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricSusceptance, as defined in the ElectricSusceptanceUnits enumeration.
 	Unit  ElectricSusceptanceUnits `json:"unit" validate:"required,oneof=Siemens Mho Nanosiemens Microsiemens Millisiemens Kilosiemens Megasiemens Gigasiemens Terasiemens Nanomho Micromho Millimho Kilomho Megamho Gigamho Teramho"`
 }

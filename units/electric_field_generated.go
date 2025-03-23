@@ -29,7 +29,7 @@ var internalElectricFieldUnitsMap = map[ElectricFieldUnits]bool{
 // ElectricFieldDto represents a ElectricField measurement with a numerical value and its corresponding unit.
 type ElectricFieldDto struct {
     // Value is the numerical representation of the ElectricField.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricField, as defined in the ElectricFieldUnits enumeration.
 	Unit  ElectricFieldUnits `json:"unit" validate:"required,oneof=VoltPerMeter"`
 }

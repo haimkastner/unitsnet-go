@@ -173,7 +173,7 @@ var internalPressureUnitsMap = map[PressureUnits]bool{
 // PressureDto represents a Pressure measurement with a numerical value and its corresponding unit.
 type PressureDto struct {
     // Value is the numerical representation of the Pressure.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Pressure, as defined in the PressureUnits enumeration.
 	Unit  PressureUnits `json:"unit" validate:"required,oneof=Pascal Atmosphere Bar KilogramForcePerSquareMeter KilogramForcePerSquareCentimeter KilogramForcePerSquareMillimeter NewtonPerSquareMeter NewtonPerSquareCentimeter NewtonPerSquareMillimeter TechnicalAtmosphere Torr PoundForcePerSquareInch PoundForcePerSquareMil PoundForcePerSquareFoot TonneForcePerSquareMillimeter TonneForcePerSquareMeter MeterOfHead TonneForcePerSquareCentimeter FootOfHead MillimeterOfMercury InchOfMercury DynePerSquareCentimeter PoundPerInchSecondSquared MeterOfWaterColumn InchOfWaterColumn MeterOfElevation FootOfElevation Micropascal Millipascal Decapascal Hectopascal Kilopascal Megapascal Gigapascal Microbar Millibar Centibar Decibar Kilobar Megabar KilonewtonPerSquareMeter MeganewtonPerSquareMeter KilonewtonPerSquareCentimeter KilonewtonPerSquareMillimeter KilopoundForcePerSquareInch KilopoundForcePerSquareMil KilopoundForcePerSquareFoot MillimeterOfWaterColumn CentimeterOfWaterColumn"`
 }

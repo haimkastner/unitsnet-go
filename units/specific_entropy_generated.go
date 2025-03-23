@@ -53,7 +53,7 @@ var internalSpecificEntropyUnitsMap = map[SpecificEntropyUnits]bool{
 // SpecificEntropyDto represents a SpecificEntropy measurement with a numerical value and its corresponding unit.
 type SpecificEntropyDto struct {
     // Value is the numerical representation of the SpecificEntropy.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificEntropy, as defined in the SpecificEntropyUnits enumeration.
 	Unit  SpecificEntropyUnits `json:"unit" validate:"required,oneof=JoulePerKilogramKelvin JoulePerKilogramDegreeCelsius CaloriePerGramKelvin BtuPerPoundFahrenheit KilojoulePerKilogramKelvin MegajoulePerKilogramKelvin KilojoulePerKilogramDegreeCelsius MegajoulePerKilogramDegreeCelsius KilocaloriePerGramKelvin"`
 }

@@ -74,7 +74,7 @@ var internalAbsorbedDoseOfIonizingRadiationUnitsMap = map[AbsorbedDoseOfIonizing
 // AbsorbedDoseOfIonizingRadiationDto represents a AbsorbedDoseOfIonizingRadiation measurement with a numerical value and its corresponding unit.
 type AbsorbedDoseOfIonizingRadiationDto struct {
     // Value is the numerical representation of the AbsorbedDoseOfIonizingRadiation.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AbsorbedDoseOfIonizingRadiation, as defined in the AbsorbedDoseOfIonizingRadiationUnits enumeration.
 	Unit  AbsorbedDoseOfIonizingRadiationUnits `json:"unit" validate:"required,oneof=Gray Rad Femtogray Picogray Nanogray Microgray Milligray Centigray Kilogray Megagray Gigagray Teragray Petagray Millirad Kilorad Megarad"`
 }

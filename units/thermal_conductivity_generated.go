@@ -32,7 +32,7 @@ var internalThermalConductivityUnitsMap = map[ThermalConductivityUnits]bool{
 // ThermalConductivityDto represents a ThermalConductivity measurement with a numerical value and its corresponding unit.
 type ThermalConductivityDto struct {
     // Value is the numerical representation of the ThermalConductivity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ThermalConductivity, as defined in the ThermalConductivityUnits enumeration.
 	Unit  ThermalConductivityUnits `json:"unit" validate:"required,oneof=WattPerMeterKelvin BtuPerHourFootFahrenheit"`
 }

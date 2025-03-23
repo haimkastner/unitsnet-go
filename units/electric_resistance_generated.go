@@ -50,7 +50,7 @@ var internalElectricResistanceUnitsMap = map[ElectricResistanceUnits]bool{
 // ElectricResistanceDto represents a ElectricResistance measurement with a numerical value and its corresponding unit.
 type ElectricResistanceDto struct {
     // Value is the numerical representation of the ElectricResistance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricResistance, as defined in the ElectricResistanceUnits enumeration.
 	Unit  ElectricResistanceUnits `json:"unit" validate:"required,oneof=Ohm Nanoohm Microohm Milliohm Kiloohm Megaohm Gigaohm Teraohm"`
 }

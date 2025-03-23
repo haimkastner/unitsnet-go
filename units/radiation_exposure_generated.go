@@ -50,7 +50,7 @@ var internalRadiationExposureUnitsMap = map[RadiationExposureUnits]bool{
 // RadiationExposureDto represents a RadiationExposure measurement with a numerical value and its corresponding unit.
 type RadiationExposureDto struct {
     // Value is the numerical representation of the RadiationExposure.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RadiationExposure, as defined in the RadiationExposureUnits enumeration.
 	Unit  RadiationExposureUnits `json:"unit" validate:"required,oneof=CoulombPerKilogram Roentgen PicocoulombPerKilogram NanocoulombPerKilogram MicrocoulombPerKilogram MillicoulombPerKilogram Microroentgen Milliroentgen"`
 }

@@ -29,7 +29,7 @@ var internalLuminousFluxUnitsMap = map[LuminousFluxUnits]bool{
 // LuminousFluxDto represents a LuminousFlux measurement with a numerical value and its corresponding unit.
 type LuminousFluxDto struct {
     // Value is the numerical representation of the LuminousFlux.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the LuminousFlux, as defined in the LuminousFluxUnits enumeration.
 	Unit  LuminousFluxUnits `json:"unit" validate:"required,oneof=Lumen"`
 }

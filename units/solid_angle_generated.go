@@ -29,7 +29,7 @@ var internalSolidAngleUnitsMap = map[SolidAngleUnits]bool{
 // SolidAngleDto represents a SolidAngle measurement with a numerical value and its corresponding unit.
 type SolidAngleDto struct {
     // Value is the numerical representation of the SolidAngle.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SolidAngle, as defined in the SolidAngleUnits enumeration.
 	Unit  SolidAngleUnits `json:"unit" validate:"required,oneof=Steradian"`
 }

@@ -71,7 +71,7 @@ var internalForceChangeRateUnitsMap = map[ForceChangeRateUnits]bool{
 // ForceChangeRateDto represents a ForceChangeRate measurement with a numerical value and its corresponding unit.
 type ForceChangeRateDto struct {
     // Value is the numerical representation of the ForceChangeRate.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ForceChangeRate, as defined in the ForceChangeRateUnits enumeration.
 	Unit  ForceChangeRateUnits `json:"unit" validate:"required,oneof=NewtonPerMinute NewtonPerSecond PoundForcePerMinute PoundForcePerSecond DecanewtonPerMinute KilonewtonPerMinute NanonewtonPerSecond MicronewtonPerSecond MillinewtonPerSecond CentinewtonPerSecond DecinewtonPerSecond DecanewtonPerSecond KilonewtonPerSecond KilopoundForcePerMinute KilopoundForcePerSecond"`
 }

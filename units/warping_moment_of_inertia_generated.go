@@ -44,7 +44,7 @@ var internalWarpingMomentOfInertiaUnitsMap = map[WarpingMomentOfInertiaUnits]boo
 // WarpingMomentOfInertiaDto represents a WarpingMomentOfInertia measurement with a numerical value and its corresponding unit.
 type WarpingMomentOfInertiaDto struct {
     // Value is the numerical representation of the WarpingMomentOfInertia.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the WarpingMomentOfInertia, as defined in the WarpingMomentOfInertiaUnits enumeration.
 	Unit  WarpingMomentOfInertiaUnits `json:"unit" validate:"required,oneof=MeterToTheSixth DecimeterToTheSixth CentimeterToTheSixth MillimeterToTheSixth FootToTheSixth InchToTheSixth"`
 }

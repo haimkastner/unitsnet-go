@@ -38,7 +38,7 @@ var internalSpecificFuelConsumptionUnitsMap = map[SpecificFuelConsumptionUnits]b
 // SpecificFuelConsumptionDto represents a SpecificFuelConsumption measurement with a numerical value and its corresponding unit.
 type SpecificFuelConsumptionDto struct {
     // Value is the numerical representation of the SpecificFuelConsumption.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificFuelConsumption, as defined in the SpecificFuelConsumptionUnits enumeration.
 	Unit  SpecificFuelConsumptionUnits `json:"unit" validate:"required,oneof=PoundMassPerPoundForceHour KilogramPerKilogramForceHour GramPerKiloNewtonSecond KilogramPerKiloNewtonSecond"`
 }

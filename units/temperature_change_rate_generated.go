@@ -77,7 +77,7 @@ var internalTemperatureChangeRateUnitsMap = map[TemperatureChangeRateUnits]bool{
 // TemperatureChangeRateDto represents a TemperatureChangeRate measurement with a numerical value and its corresponding unit.
 type TemperatureChangeRateDto struct {
     // Value is the numerical representation of the TemperatureChangeRate.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the TemperatureChangeRate, as defined in the TemperatureChangeRateUnits enumeration.
 	Unit  TemperatureChangeRateUnits `json:"unit" validate:"required,oneof=DegreeCelsiusPerSecond DegreeCelsiusPerMinute DegreeKelvinPerMinute DegreeFahrenheitPerMinute DegreeFahrenheitPerSecond DegreeKelvinPerSecond DegreeCelsiusPerHour DegreeKelvinPerHour DegreeFahrenheitPerHour NanodegreeCelsiusPerSecond MicrodegreeCelsiusPerSecond MillidegreeCelsiusPerSecond CentidegreeCelsiusPerSecond DecidegreeCelsiusPerSecond DecadegreeCelsiusPerSecond HectodegreeCelsiusPerSecond KilodegreeCelsiusPerSecond"`
 }

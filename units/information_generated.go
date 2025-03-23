@@ -104,7 +104,7 @@ var internalInformationUnitsMap = map[InformationUnits]bool{
 // InformationDto represents a Information measurement with a numerical value and its corresponding unit.
 type InformationDto struct {
     // Value is the numerical representation of the Information.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Information, as defined in the InformationUnits enumeration.
 	Unit  InformationUnits `json:"unit" validate:"required,oneof=Byte Bit Kilobyte Megabyte Gigabyte Terabyte Petabyte Exabyte Kibibyte Mebibyte Gibibyte Tebibyte Pebibyte Exbibyte Kilobit Megabit Gigabit Terabit Petabit Exabit Kibibit Mebibit Gibibit Tebibit Pebibit Exbibit"`
 }

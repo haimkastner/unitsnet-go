@@ -74,7 +74,7 @@ var internalAngleUnitsMap = map[AngleUnits]bool{
 // AngleDto represents a Angle measurement with a numerical value and its corresponding unit.
 type AngleDto struct {
     // Value is the numerical representation of the Angle.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Angle, as defined in the AngleUnits enumeration.
 	Unit  AngleUnits `json:"unit" validate:"required,oneof=Radian Degree Arcminute Arcsecond Gradian NatoMil Revolution Tilt Nanoradian Microradian Milliradian Centiradian Deciradian Nanodegree Microdegree Millidegree"`
 }

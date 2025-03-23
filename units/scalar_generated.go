@@ -29,7 +29,7 @@ var internalScalarUnitsMap = map[ScalarUnits]bool{
 // ScalarDto represents a Scalar measurement with a numerical value and its corresponding unit.
 type ScalarDto struct {
     // Value is the numerical representation of the Scalar.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Scalar, as defined in the ScalarUnits enumeration.
 	Unit  ScalarUnits `json:"unit" validate:"required,oneof=Amount"`
 }

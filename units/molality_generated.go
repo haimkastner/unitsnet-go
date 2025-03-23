@@ -35,7 +35,7 @@ var internalMolalityUnitsMap = map[MolalityUnits]bool{
 // MolalityDto represents a Molality measurement with a numerical value and its corresponding unit.
 type MolalityDto struct {
     // Value is the numerical representation of the Molality.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Molality, as defined in the MolalityUnits enumeration.
 	Unit  MolalityUnits `json:"unit" validate:"required,oneof=MolePerKilogram MolePerGram MillimolePerKilogram"`
 }

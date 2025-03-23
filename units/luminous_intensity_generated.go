@@ -29,7 +29,7 @@ var internalLuminousIntensityUnitsMap = map[LuminousIntensityUnits]bool{
 // LuminousIntensityDto represents a LuminousIntensity measurement with a numerical value and its corresponding unit.
 type LuminousIntensityDto struct {
     // Value is the numerical representation of the LuminousIntensity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the LuminousIntensity, as defined in the LuminousIntensityUnits enumeration.
 	Unit  LuminousIntensityUnits `json:"unit" validate:"required,oneof=Candela"`
 }

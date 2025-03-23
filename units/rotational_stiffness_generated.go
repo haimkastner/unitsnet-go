@@ -125,7 +125,7 @@ var internalRotationalStiffnessUnitsMap = map[RotationalStiffnessUnits]bool{
 // RotationalStiffnessDto represents a RotationalStiffness measurement with a numerical value and its corresponding unit.
 type RotationalStiffnessDto struct {
     // Value is the numerical representation of the RotationalStiffness.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RotationalStiffness, as defined in the RotationalStiffnessUnits enumeration.
 	Unit  RotationalStiffnessUnits `json:"unit" validate:"required,oneof=NewtonMeterPerRadian PoundForceFootPerDegrees KilopoundForceFootPerDegrees NewtonMillimeterPerDegree NewtonMeterPerDegree NewtonMillimeterPerRadian PoundForceFeetPerRadian KilonewtonMeterPerRadian MeganewtonMeterPerRadian NanonewtonMillimeterPerDegree MicronewtonMillimeterPerDegree MillinewtonMillimeterPerDegree CentinewtonMillimeterPerDegree DecinewtonMillimeterPerDegree DecanewtonMillimeterPerDegree KilonewtonMillimeterPerDegree MeganewtonMillimeterPerDegree NanonewtonMeterPerDegree MicronewtonMeterPerDegree MillinewtonMeterPerDegree CentinewtonMeterPerDegree DecinewtonMeterPerDegree DecanewtonMeterPerDegree KilonewtonMeterPerDegree MeganewtonMeterPerDegree NanonewtonMillimeterPerRadian MicronewtonMillimeterPerRadian MillinewtonMillimeterPerRadian CentinewtonMillimeterPerRadian DecinewtonMillimeterPerRadian DecanewtonMillimeterPerRadian KilonewtonMillimeterPerRadian MeganewtonMillimeterPerRadian"`
 }

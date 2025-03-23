@@ -56,7 +56,7 @@ var internalReciprocalLengthUnitsMap = map[ReciprocalLengthUnits]bool{
 // ReciprocalLengthDto represents a ReciprocalLength measurement with a numerical value and its corresponding unit.
 type ReciprocalLengthDto struct {
     // Value is the numerical representation of the ReciprocalLength.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ReciprocalLength, as defined in the ReciprocalLengthUnits enumeration.
 	Unit  ReciprocalLengthUnits `json:"unit" validate:"required,oneof=InverseMeter InverseCentimeter InverseMillimeter InverseMile InverseYard InverseFoot InverseUsSurveyFoot InverseInch InverseMil InverseMicroinch"`
 }

@@ -101,7 +101,7 @@ var internalTorqueUnitsMap = map[TorqueUnits]bool{
 // TorqueDto represents a Torque measurement with a numerical value and its corresponding unit.
 type TorqueDto struct {
     // Value is the numerical representation of the Torque.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Torque, as defined in the TorqueUnits enumeration.
 	Unit  TorqueUnits `json:"unit" validate:"required,oneof=NewtonMillimeter NewtonCentimeter NewtonMeter PoundalFoot PoundForceInch PoundForceFoot GramForceMillimeter GramForceCentimeter GramForceMeter KilogramForceMillimeter KilogramForceCentimeter KilogramForceMeter TonneForceMillimeter TonneForceCentimeter TonneForceMeter KilonewtonMillimeter MeganewtonMillimeter KilonewtonCentimeter MeganewtonCentimeter KilonewtonMeter MeganewtonMeter KilopoundForceInch MegapoundForceInch KilopoundForceFoot MegapoundForceFoot"`
 }

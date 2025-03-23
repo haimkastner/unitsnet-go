@@ -32,7 +32,7 @@ var internalPowerRatioUnitsMap = map[PowerRatioUnits]bool{
 // PowerRatioDto represents a PowerRatio measurement with a numerical value and its corresponding unit.
 type PowerRatioDto struct {
     // Value is the numerical representation of the PowerRatio.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the PowerRatio, as defined in the PowerRatioUnits enumeration.
 	Unit  PowerRatioUnits `json:"unit" validate:"required,oneof=DecibelWatt DecibelMilliwatt"`
 }

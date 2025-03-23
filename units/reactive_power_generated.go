@@ -38,7 +38,7 @@ var internalReactivePowerUnitsMap = map[ReactivePowerUnits]bool{
 // ReactivePowerDto represents a ReactivePower measurement with a numerical value and its corresponding unit.
 type ReactivePowerDto struct {
     // Value is the numerical representation of the ReactivePower.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ReactivePower, as defined in the ReactivePowerUnits enumeration.
 	Unit  ReactivePowerUnits `json:"unit" validate:"required,oneof=VoltampereReactive KilovoltampereReactive MegavoltampereReactive GigavoltampereReactive"`
 }

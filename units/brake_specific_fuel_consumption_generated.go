@@ -35,7 +35,7 @@ var internalBrakeSpecificFuelConsumptionUnitsMap = map[BrakeSpecificFuelConsumpt
 // BrakeSpecificFuelConsumptionDto represents a BrakeSpecificFuelConsumption measurement with a numerical value and its corresponding unit.
 type BrakeSpecificFuelConsumptionDto struct {
     // Value is the numerical representation of the BrakeSpecificFuelConsumption.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the BrakeSpecificFuelConsumption, as defined in the BrakeSpecificFuelConsumptionUnits enumeration.
 	Unit  BrakeSpecificFuelConsumptionUnits `json:"unit" validate:"required,oneof=GramPerKiloWattHour KilogramPerJoule PoundPerMechanicalHorsepowerHour"`
 }

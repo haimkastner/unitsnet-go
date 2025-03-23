@@ -86,7 +86,7 @@ var internalVolumeConcentrationUnitsMap = map[VolumeConcentrationUnits]bool{
 // VolumeConcentrationDto represents a VolumeConcentration measurement with a numerical value and its corresponding unit.
 type VolumeConcentrationDto struct {
     // Value is the numerical representation of the VolumeConcentration.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VolumeConcentration, as defined in the VolumeConcentrationUnits enumeration.
 	Unit  VolumeConcentrationUnits `json:"unit" validate:"required,oneof=DecimalFraction LitersPerLiter LitersPerMililiter Percent PartPerThousand PartPerMillion PartPerBillion PartPerTrillion PicolitersPerLiter NanolitersPerLiter MicrolitersPerLiter MillilitersPerLiter CentilitersPerLiter DecilitersPerLiter PicolitersPerMililiter NanolitersPerMililiter MicrolitersPerMililiter MillilitersPerMililiter CentilitersPerMililiter DecilitersPerMililiter"`
 }

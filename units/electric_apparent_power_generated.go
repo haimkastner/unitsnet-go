@@ -44,7 +44,7 @@ var internalElectricApparentPowerUnitsMap = map[ElectricApparentPowerUnits]bool{
 // ElectricApparentPowerDto represents a ElectricApparentPower measurement with a numerical value and its corresponding unit.
 type ElectricApparentPowerDto struct {
     // Value is the numerical representation of the ElectricApparentPower.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricApparentPower, as defined in the ElectricApparentPowerUnits enumeration.
 	Unit  ElectricApparentPowerUnits `json:"unit" validate:"required,oneof=Voltampere Microvoltampere Millivoltampere Kilovoltampere Megavoltampere Gigavoltampere"`
 }

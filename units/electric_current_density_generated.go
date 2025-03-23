@@ -35,7 +35,7 @@ var internalElectricCurrentDensityUnitsMap = map[ElectricCurrentDensityUnits]boo
 // ElectricCurrentDensityDto represents a ElectricCurrentDensity measurement with a numerical value and its corresponding unit.
 type ElectricCurrentDensityDto struct {
     // Value is the numerical representation of the ElectricCurrentDensity.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricCurrentDensity, as defined in the ElectricCurrentDensityUnits enumeration.
 	Unit  ElectricCurrentDensityUnits `json:"unit" validate:"required,oneof=AmperePerSquareMeter AmperePerSquareInch AmperePerSquareFoot"`
 }

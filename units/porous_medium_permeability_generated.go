@@ -41,7 +41,7 @@ var internalPorousMediumPermeabilityUnitsMap = map[PorousMediumPermeabilityUnits
 // PorousMediumPermeabilityDto represents a PorousMediumPermeability measurement with a numerical value and its corresponding unit.
 type PorousMediumPermeabilityDto struct {
     // Value is the numerical representation of the PorousMediumPermeability.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the PorousMediumPermeability, as defined in the PorousMediumPermeabilityUnits enumeration.
 	Unit  PorousMediumPermeabilityUnits `json:"unit" validate:"required,oneof=Darcy SquareMeter SquareCentimeter Microdarcy Millidarcy"`
 }

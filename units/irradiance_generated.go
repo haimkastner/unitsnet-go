@@ -68,7 +68,7 @@ var internalIrradianceUnitsMap = map[IrradianceUnits]bool{
 // IrradianceDto represents a Irradiance measurement with a numerical value and its corresponding unit.
 type IrradianceDto struct {
     // Value is the numerical representation of the Irradiance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Irradiance, as defined in the IrradianceUnits enumeration.
 	Unit  IrradianceUnits `json:"unit" validate:"required,oneof=WattPerSquareMeter WattPerSquareCentimeter PicowattPerSquareMeter NanowattPerSquareMeter MicrowattPerSquareMeter MilliwattPerSquareMeter KilowattPerSquareMeter MegawattPerSquareMeter PicowattPerSquareCentimeter NanowattPerSquareCentimeter MicrowattPerSquareCentimeter MilliwattPerSquareCentimeter KilowattPerSquareCentimeter MegawattPerSquareCentimeter"`
 }

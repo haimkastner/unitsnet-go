@@ -35,7 +35,7 @@ var internalReactiveEnergyUnitsMap = map[ReactiveEnergyUnits]bool{
 // ReactiveEnergyDto represents a ReactiveEnergy measurement with a numerical value and its corresponding unit.
 type ReactiveEnergyDto struct {
     // Value is the numerical representation of the ReactiveEnergy.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ReactiveEnergy, as defined in the ReactiveEnergyUnits enumeration.
 	Unit  ReactiveEnergyUnits `json:"unit" validate:"required,oneof=VoltampereReactiveHour KilovoltampereReactiveHour MegavoltampereReactiveHour"`
 }

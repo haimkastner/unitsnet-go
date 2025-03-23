@@ -44,7 +44,7 @@ var internalCoefficientOfThermalExpansionUnitsMap = map[CoefficientOfThermalExpa
 // CoefficientOfThermalExpansionDto represents a CoefficientOfThermalExpansion measurement with a numerical value and its corresponding unit.
 type CoefficientOfThermalExpansionDto struct {
     // Value is the numerical representation of the CoefficientOfThermalExpansion.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the CoefficientOfThermalExpansion, as defined in the CoefficientOfThermalExpansionUnits enumeration.
 	Unit  CoefficientOfThermalExpansionUnits `json:"unit" validate:"required,oneof=PerKelvin PerDegreeCelsius PerDegreeFahrenheit PpmPerKelvin PpmPerDegreeCelsius PpmPerDegreeFahrenheit"`
 }

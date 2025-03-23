@@ -107,7 +107,7 @@ var internalMassUnitsMap = map[MassUnits]bool{
 // MassDto represents a Mass measurement with a numerical value and its corresponding unit.
 type MassDto struct {
     // Value is the numerical representation of the Mass.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Mass, as defined in the MassUnits enumeration.
 	Unit  MassUnits `json:"unit" validate:"required,oneof=Gram Tonne ShortTon LongTon Pound Ounce Slug Stone ShortHundredweight LongHundredweight Grain SolarMass EarthMass Femtogram Picogram Nanogram Microgram Milligram Centigram Decigram Decagram Hectogram Kilogram Kilotonne Megatonne Kilopound Megapound"`
 }

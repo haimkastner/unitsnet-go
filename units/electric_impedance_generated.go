@@ -50,7 +50,7 @@ var internalElectricImpedanceUnitsMap = map[ElectricImpedanceUnits]bool{
 // ElectricImpedanceDto represents a ElectricImpedance measurement with a numerical value and its corresponding unit.
 type ElectricImpedanceDto struct {
     // Value is the numerical representation of the ElectricImpedance.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ElectricImpedance, as defined in the ElectricImpedanceUnits enumeration.
 	Unit  ElectricImpedanceUnits `json:"unit" validate:"required,oneof=Ohm Nanoohm Microohm Milliohm Kiloohm Megaohm Gigaohm Teraohm"`
 }

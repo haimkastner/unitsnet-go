@@ -38,7 +38,7 @@ var internalAmplitudeRatioUnitsMap = map[AmplitudeRatioUnits]bool{
 // AmplitudeRatioDto represents a AmplitudeRatio measurement with a numerical value and its corresponding unit.
 type AmplitudeRatioDto struct {
     // Value is the numerical representation of the AmplitudeRatio.
-	Value float64 `json:"value" validate:"required"`
+	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AmplitudeRatio, as defined in the AmplitudeRatioUnits enumeration.
 	Unit  AmplitudeRatioUnits `json:"unit" validate:"required,oneof=DecibelVolt DecibelMicrovolt DecibelMillivolt DecibelUnloaded"`
 }
