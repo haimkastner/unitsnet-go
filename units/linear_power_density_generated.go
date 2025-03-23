@@ -103,7 +103,7 @@ type LinearPowerDensityDto struct {
     // Value is the numerical representation of the LinearPowerDensity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the LinearPowerDensity, as defined in the LinearPowerDensityUnits enumeration.
-	Unit  LinearPowerDensityUnits `json:"unit" validate:"required,oneof=WattPerMeter,WattPerCentimeter,WattPerMillimeter,WattPerInch,WattPerFoot,MilliwattPerMeter,KilowattPerMeter,MegawattPerMeter,GigawattPerMeter,MilliwattPerCentimeter,KilowattPerCentimeter,MegawattPerCentimeter,GigawattPerCentimeter,MilliwattPerMillimeter,KilowattPerMillimeter,MegawattPerMillimeter,GigawattPerMillimeter,MilliwattPerInch,KilowattPerInch,MegawattPerInch,GigawattPerInch,MilliwattPerFoot,KilowattPerFoot,MegawattPerFoot,GigawattPerFoot"`
+	Unit  LinearPowerDensityUnits `json:"unit" validate:"required,oneof=WattPerMeter WattPerCentimeter WattPerMillimeter WattPerInch WattPerFoot MilliwattPerMeter KilowattPerMeter MegawattPerMeter GigawattPerMeter MilliwattPerCentimeter KilowattPerCentimeter MegawattPerCentimeter GigawattPerCentimeter MilliwattPerMillimeter KilowattPerMillimeter MegawattPerMillimeter GigawattPerMillimeter MilliwattPerInch KilowattPerInch MegawattPerInch GigawattPerInch MilliwattPerFoot KilowattPerFoot MegawattPerFoot GigawattPerFoot"`
 }
 
 // LinearPowerDensityDtoFactory groups methods for creating and serializing LinearPowerDensityDto objects.

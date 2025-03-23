@@ -37,7 +37,7 @@ type LeakRateDto struct {
     // Value is the numerical representation of the LeakRate.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the LeakRate, as defined in the LeakRateUnits enumeration.
-	Unit  LeakRateUnits `json:"unit" validate:"required,oneof=PascalCubicMeterPerSecond,MillibarLiterPerSecond,TorrLiterPerSecond"`
+	Unit  LeakRateUnits `json:"unit" validate:"required,oneof=PascalCubicMeterPerSecond MillibarLiterPerSecond TorrLiterPerSecond"`
 }
 
 // LeakRateDtoFactory groups methods for creating and serializing LeakRateDto objects.

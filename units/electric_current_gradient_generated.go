@@ -49,7 +49,7 @@ type ElectricCurrentGradientDto struct {
     // Value is the numerical representation of the ElectricCurrentGradient.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricCurrentGradient, as defined in the ElectricCurrentGradientUnits enumeration.
-	Unit  ElectricCurrentGradientUnits `json:"unit" validate:"required,oneof=AmperePerSecond,AmperePerMinute,AmperePerMillisecond,AmperePerMicrosecond,AmperePerNanosecond,MilliamperePerSecond,MilliamperePerMinute"`
+	Unit  ElectricCurrentGradientUnits `json:"unit" validate:"required,oneof=AmperePerSecond AmperePerMinute AmperePerMillisecond AmperePerMicrosecond AmperePerNanosecond MilliamperePerSecond MilliamperePerMinute"`
 }
 
 // ElectricCurrentGradientDtoFactory groups methods for creating and serializing ElectricCurrentGradientDto objects.

@@ -79,7 +79,7 @@ type TemperatureChangeRateDto struct {
     // Value is the numerical representation of the TemperatureChangeRate.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the TemperatureChangeRate, as defined in the TemperatureChangeRateUnits enumeration.
-	Unit  TemperatureChangeRateUnits `json:"unit" validate:"required,oneof=DegreeCelsiusPerSecond,DegreeCelsiusPerMinute,DegreeKelvinPerMinute,DegreeFahrenheitPerMinute,DegreeFahrenheitPerSecond,DegreeKelvinPerSecond,DegreeCelsiusPerHour,DegreeKelvinPerHour,DegreeFahrenheitPerHour,NanodegreeCelsiusPerSecond,MicrodegreeCelsiusPerSecond,MillidegreeCelsiusPerSecond,CentidegreeCelsiusPerSecond,DecidegreeCelsiusPerSecond,DecadegreeCelsiusPerSecond,HectodegreeCelsiusPerSecond,KilodegreeCelsiusPerSecond"`
+	Unit  TemperatureChangeRateUnits `json:"unit" validate:"required,oneof=DegreeCelsiusPerSecond DegreeCelsiusPerMinute DegreeKelvinPerMinute DegreeFahrenheitPerMinute DegreeFahrenheitPerSecond DegreeKelvinPerSecond DegreeCelsiusPerHour DegreeKelvinPerHour DegreeFahrenheitPerHour NanodegreeCelsiusPerSecond MicrodegreeCelsiusPerSecond MillidegreeCelsiusPerSecond CentidegreeCelsiusPerSecond DecidegreeCelsiusPerSecond DecadegreeCelsiusPerSecond HectodegreeCelsiusPerSecond KilodegreeCelsiusPerSecond"`
 }
 
 // TemperatureChangeRateDtoFactory groups methods for creating and serializing TemperatureChangeRateDto objects.

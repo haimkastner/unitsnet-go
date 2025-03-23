@@ -43,7 +43,7 @@ type ElectricPotentialDcDto struct {
     // Value is the numerical representation of the ElectricPotentialDc.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricPotentialDc, as defined in the ElectricPotentialDcUnits enumeration.
-	Unit  ElectricPotentialDcUnits `json:"unit" validate:"required,oneof=VoltDc,MicrovoltDc,MillivoltDc,KilovoltDc,MegavoltDc"`
+	Unit  ElectricPotentialDcUnits `json:"unit" validate:"required,oneof=VoltDc MicrovoltDc MillivoltDc KilovoltDc MegavoltDc"`
 }
 
 // ElectricPotentialDcDtoFactory groups methods for creating and serializing ElectricPotentialDcDto objects.

@@ -37,7 +37,7 @@ type BrakeSpecificFuelConsumptionDto struct {
     // Value is the numerical representation of the BrakeSpecificFuelConsumption.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the BrakeSpecificFuelConsumption, as defined in the BrakeSpecificFuelConsumptionUnits enumeration.
-	Unit  BrakeSpecificFuelConsumptionUnits `json:"unit" validate:"required,oneof=GramPerKiloWattHour,KilogramPerJoule,PoundPerMechanicalHorsepowerHour"`
+	Unit  BrakeSpecificFuelConsumptionUnits `json:"unit" validate:"required,oneof=GramPerKiloWattHour KilogramPerJoule PoundPerMechanicalHorsepowerHour"`
 }
 
 // BrakeSpecificFuelConsumptionDtoFactory groups methods for creating and serializing BrakeSpecificFuelConsumptionDto objects.

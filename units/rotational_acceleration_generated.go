@@ -40,7 +40,7 @@ type RotationalAccelerationDto struct {
     // Value is the numerical representation of the RotationalAcceleration.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RotationalAcceleration, as defined in the RotationalAccelerationUnits enumeration.
-	Unit  RotationalAccelerationUnits `json:"unit" validate:"required,oneof=RadianPerSecondSquared,DegreePerSecondSquared,RevolutionPerMinutePerSecond,RevolutionPerSecondSquared"`
+	Unit  RotationalAccelerationUnits `json:"unit" validate:"required,oneof=RadianPerSecondSquared DegreePerSecondSquared RevolutionPerMinutePerSecond RevolutionPerSecondSquared"`
 }
 
 // RotationalAccelerationDtoFactory groups methods for creating and serializing RotationalAccelerationDto objects.

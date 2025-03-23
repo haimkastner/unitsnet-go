@@ -43,7 +43,7 @@ type RotationalStiffnessPerLengthDto struct {
     // Value is the numerical representation of the RotationalStiffnessPerLength.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RotationalStiffnessPerLength, as defined in the RotationalStiffnessPerLengthUnits enumeration.
-	Unit  RotationalStiffnessPerLengthUnits `json:"unit" validate:"required,oneof=NewtonMeterPerRadianPerMeter,PoundForceFootPerDegreesPerFoot,KilopoundForceFootPerDegreesPerFoot,KilonewtonMeterPerRadianPerMeter,MeganewtonMeterPerRadianPerMeter"`
+	Unit  RotationalStiffnessPerLengthUnits `json:"unit" validate:"required,oneof=NewtonMeterPerRadianPerMeter PoundForceFootPerDegreesPerFoot KilopoundForceFootPerDegreesPerFoot KilonewtonMeterPerRadianPerMeter MeganewtonMeterPerRadianPerMeter"`
 }
 
 // RotationalStiffnessPerLengthDtoFactory groups methods for creating and serializing RotationalStiffnessPerLengthDto objects.

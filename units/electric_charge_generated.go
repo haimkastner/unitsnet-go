@@ -61,7 +61,7 @@ type ElectricChargeDto struct {
     // Value is the numerical representation of the ElectricCharge.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricCharge, as defined in the ElectricChargeUnits enumeration.
-	Unit  ElectricChargeUnits `json:"unit" validate:"required,oneof=Coulomb,AmpereHour,Picocoulomb,Nanocoulomb,Microcoulomb,Millicoulomb,Kilocoulomb,Megacoulomb,MilliampereHour,KiloampereHour,MegaampereHour"`
+	Unit  ElectricChargeUnits `json:"unit" validate:"required,oneof=Coulomb AmpereHour Picocoulomb Nanocoulomb Microcoulomb Millicoulomb Kilocoulomb Megacoulomb MilliampereHour KiloampereHour MegaampereHour"`
 }
 
 // ElectricChargeDtoFactory groups methods for creating and serializing ElectricChargeDto objects.

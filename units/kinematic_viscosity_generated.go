@@ -55,7 +55,7 @@ type KinematicViscosityDto struct {
     // Value is the numerical representation of the KinematicViscosity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the KinematicViscosity, as defined in the KinematicViscosityUnits enumeration.
-	Unit  KinematicViscosityUnits `json:"unit" validate:"required,oneof=SquareMeterPerSecond,Stokes,SquareFootPerSecond,Nanostokes,Microstokes,Millistokes,Centistokes,Decistokes,Kilostokes"`
+	Unit  KinematicViscosityUnits `json:"unit" validate:"required,oneof=SquareMeterPerSecond Stokes SquareFootPerSecond Nanostokes Microstokes Millistokes Centistokes Decistokes Kilostokes"`
 }
 
 // KinematicViscosityDtoFactory groups methods for creating and serializing KinematicViscosityDto objects.

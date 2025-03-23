@@ -82,7 +82,7 @@ type PressureChangeRateDto struct {
     // Value is the numerical representation of the PressureChangeRate.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the PressureChangeRate, as defined in the PressureChangeRateUnits enumeration.
-	Unit  PressureChangeRateUnits `json:"unit" validate:"required,oneof=PascalPerSecond,PascalPerMinute,MillimeterOfMercuryPerSecond,AtmospherePerSecond,PoundForcePerSquareInchPerSecond,PoundForcePerSquareInchPerMinute,BarPerSecond,BarPerMinute,KilopascalPerSecond,MegapascalPerSecond,KilopascalPerMinute,MegapascalPerMinute,KilopoundForcePerSquareInchPerSecond,MegapoundForcePerSquareInchPerSecond,KilopoundForcePerSquareInchPerMinute,MegapoundForcePerSquareInchPerMinute,MillibarPerSecond,MillibarPerMinute"`
+	Unit  PressureChangeRateUnits `json:"unit" validate:"required,oneof=PascalPerSecond PascalPerMinute MillimeterOfMercuryPerSecond AtmospherePerSecond PoundForcePerSquareInchPerSecond PoundForcePerSquareInchPerMinute BarPerSecond BarPerMinute KilopascalPerSecond MegapascalPerSecond KilopascalPerMinute MegapascalPerMinute KilopoundForcePerSquareInchPerSecond MegapoundForcePerSquareInchPerSecond KilopoundForcePerSquareInchPerMinute MegapoundForcePerSquareInchPerMinute MillibarPerSecond MillibarPerMinute"`
 }
 
 // PressureChangeRateDtoFactory groups methods for creating and serializing PressureChangeRateDto objects.

@@ -46,7 +46,7 @@ type ApparentPowerDto struct {
     // Value is the numerical representation of the ApparentPower.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ApparentPower, as defined in the ApparentPowerUnits enumeration.
-	Unit  ApparentPowerUnits `json:"unit" validate:"required,oneof=Voltampere,Microvoltampere,Millivoltampere,Kilovoltampere,Megavoltampere,Gigavoltampere"`
+	Unit  ApparentPowerUnits `json:"unit" validate:"required,oneof=Voltampere Microvoltampere Millivoltampere Kilovoltampere Megavoltampere Gigavoltampere"`
 }
 
 // ApparentPowerDtoFactory groups methods for creating and serializing ApparentPowerDto objects.

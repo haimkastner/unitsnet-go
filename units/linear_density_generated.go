@@ -82,7 +82,7 @@ type LinearDensityDto struct {
     // Value is the numerical representation of the LinearDensity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the LinearDensity, as defined in the LinearDensityUnits enumeration.
-	Unit  LinearDensityUnits `json:"unit" validate:"required,oneof=GramPerMillimeter,GramPerCentimeter,GramPerMeter,PoundPerInch,PoundPerFoot,GramPerFoot,MicrogramPerMillimeter,MilligramPerMillimeter,KilogramPerMillimeter,MicrogramPerCentimeter,MilligramPerCentimeter,KilogramPerCentimeter,MicrogramPerMeter,MilligramPerMeter,KilogramPerMeter,MicrogramPerFoot,MilligramPerFoot,KilogramPerFoot"`
+	Unit  LinearDensityUnits `json:"unit" validate:"required,oneof=GramPerMillimeter GramPerCentimeter GramPerMeter PoundPerInch PoundPerFoot GramPerFoot MicrogramPerMillimeter MilligramPerMillimeter KilogramPerMillimeter MicrogramPerCentimeter MilligramPerCentimeter KilogramPerCentimeter MicrogramPerMeter MilligramPerMeter KilogramPerMeter MicrogramPerFoot MilligramPerFoot KilogramPerFoot"`
 }
 
 // LinearDensityDtoFactory groups methods for creating and serializing LinearDensityDto objects.

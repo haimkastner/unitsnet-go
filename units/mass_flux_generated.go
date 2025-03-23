@@ -64,7 +64,7 @@ type MassFluxDto struct {
     // Value is the numerical representation of the MassFlux.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MassFlux, as defined in the MassFluxUnits enumeration.
-	Unit  MassFluxUnits `json:"unit" validate:"required,oneof=GramPerSecondPerSquareMeter,GramPerSecondPerSquareCentimeter,GramPerSecondPerSquareMillimeter,GramPerHourPerSquareMeter,GramPerHourPerSquareCentimeter,GramPerHourPerSquareMillimeter,KilogramPerSecondPerSquareMeter,KilogramPerSecondPerSquareCentimeter,KilogramPerSecondPerSquareMillimeter,KilogramPerHourPerSquareMeter,KilogramPerHourPerSquareCentimeter,KilogramPerHourPerSquareMillimeter"`
+	Unit  MassFluxUnits `json:"unit" validate:"required,oneof=GramPerSecondPerSquareMeter GramPerSecondPerSquareCentimeter GramPerSecondPerSquareMillimeter GramPerHourPerSquareMeter GramPerHourPerSquareCentimeter GramPerHourPerSquareMillimeter KilogramPerSecondPerSquareMeter KilogramPerSecondPerSquareCentimeter KilogramPerSecondPerSquareMillimeter KilogramPerHourPerSquareMeter KilogramPerHourPerSquareCentimeter KilogramPerHourPerSquareMillimeter"`
 }
 
 // MassFluxDtoFactory groups methods for creating and serializing MassFluxDto objects.

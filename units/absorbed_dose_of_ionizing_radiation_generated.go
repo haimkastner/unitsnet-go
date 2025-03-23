@@ -76,7 +76,7 @@ type AbsorbedDoseOfIonizingRadiationDto struct {
     // Value is the numerical representation of the AbsorbedDoseOfIonizingRadiation.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the AbsorbedDoseOfIonizingRadiation, as defined in the AbsorbedDoseOfIonizingRadiationUnits enumeration.
-	Unit  AbsorbedDoseOfIonizingRadiationUnits `json:"unit" validate:"required,oneof=Gray,Rad,Femtogray,Picogray,Nanogray,Microgray,Milligray,Centigray,Kilogray,Megagray,Gigagray,Teragray,Petagray,Millirad,Kilorad,Megarad"`
+	Unit  AbsorbedDoseOfIonizingRadiationUnits `json:"unit" validate:"required,oneof=Gray Rad Femtogray Picogray Nanogray Microgray Milligray Centigray Kilogray Megagray Gigagray Teragray Petagray Millirad Kilorad Megarad"`
 }
 
 // AbsorbedDoseOfIonizingRadiationDtoFactory groups methods for creating and serializing AbsorbedDoseOfIonizingRadiationDto objects.

@@ -37,7 +37,7 @@ type MolarEntropyDto struct {
     // Value is the numerical representation of the MolarEntropy.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MolarEntropy, as defined in the MolarEntropyUnits enumeration.
-	Unit  MolarEntropyUnits `json:"unit" validate:"required,oneof=JoulePerMoleKelvin,KilojoulePerMoleKelvin,MegajoulePerMoleKelvin"`
+	Unit  MolarEntropyUnits `json:"unit" validate:"required,oneof=JoulePerMoleKelvin KilojoulePerMoleKelvin MegajoulePerMoleKelvin"`
 }
 
 // MolarEntropyDtoFactory groups methods for creating and serializing MolarEntropyDto objects.

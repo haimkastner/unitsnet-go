@@ -115,7 +115,7 @@ type RadioactivityDto struct {
     // Value is the numerical representation of the Radioactivity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Radioactivity, as defined in the RadioactivityUnits enumeration.
-	Unit  RadioactivityUnits `json:"unit" validate:"required,oneof=Becquerel,Curie,Rutherford,Picobecquerel,Nanobecquerel,Microbecquerel,Millibecquerel,Kilobecquerel,Megabecquerel,Gigabecquerel,Terabecquerel,Petabecquerel,Exabecquerel,Picocurie,Nanocurie,Microcurie,Millicurie,Kilocurie,Megacurie,Gigacurie,Teracurie,Picorutherford,Nanorutherford,Microrutherford,Millirutherford,Kilorutherford,Megarutherford,Gigarutherford,Terarutherford"`
+	Unit  RadioactivityUnits `json:"unit" validate:"required,oneof=Becquerel Curie Rutherford Picobecquerel Nanobecquerel Microbecquerel Millibecquerel Kilobecquerel Megabecquerel Gigabecquerel Terabecquerel Petabecquerel Exabecquerel Picocurie Nanocurie Microcurie Millicurie Kilocurie Megacurie Gigacurie Teracurie Picorutherford Nanorutherford Microrutherford Millirutherford Kilorutherford Megarutherford Gigarutherford Terarutherford"`
 }
 
 // RadioactivityDtoFactory groups methods for creating and serializing RadioactivityDto objects.

@@ -58,7 +58,7 @@ type LuminanceDto struct {
     // Value is the numerical representation of the Luminance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Luminance, as defined in the LuminanceUnits enumeration.
-	Unit  LuminanceUnits `json:"unit" validate:"required,oneof=CandelaPerSquareMeter,CandelaPerSquareFoot,CandelaPerSquareInch,Nit,NanocandelaPerSquareMeter,MicrocandelaPerSquareMeter,MillicandelaPerSquareMeter,CenticandelaPerSquareMeter,DecicandelaPerSquareMeter,KilocandelaPerSquareMeter"`
+	Unit  LuminanceUnits `json:"unit" validate:"required,oneof=CandelaPerSquareMeter CandelaPerSquareFoot CandelaPerSquareInch Nit NanocandelaPerSquareMeter MicrocandelaPerSquareMeter MillicandelaPerSquareMeter CenticandelaPerSquareMeter DecicandelaPerSquareMeter KilocandelaPerSquareMeter"`
 }
 
 // LuminanceDtoFactory groups methods for creating and serializing LuminanceDto objects.

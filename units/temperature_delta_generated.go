@@ -55,7 +55,7 @@ type TemperatureDeltaDto struct {
     // Value is the numerical representation of the TemperatureDelta.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the TemperatureDelta, as defined in the TemperatureDeltaUnits enumeration.
-	Unit  TemperatureDeltaUnits `json:"unit" validate:"required,oneof=Kelvin,DegreeCelsius,DegreeDelisle,DegreeFahrenheit,DegreeNewton,DegreeRankine,DegreeReaumur,DegreeRoemer,MillidegreeCelsius"`
+	Unit  TemperatureDeltaUnits `json:"unit" validate:"required,oneof=Kelvin DegreeCelsius DegreeDelisle DegreeFahrenheit DegreeNewton DegreeRankine DegreeReaumur DegreeRoemer MillidegreeCelsius"`
 }
 
 // TemperatureDeltaDtoFactory groups methods for creating and serializing TemperatureDeltaDto objects.

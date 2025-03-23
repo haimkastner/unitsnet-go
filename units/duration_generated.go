@@ -64,7 +64,7 @@ type DurationDto struct {
     // Value is the numerical representation of the Duration.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Duration, as defined in the DurationUnits enumeration.
-	Unit  DurationUnits `json:"unit" validate:"required,oneof=Year365,Month30,Week,Day,Hour,Minute,Second,JulianYear,Sol,Nanosecond,Microsecond,Millisecond"`
+	Unit  DurationUnits `json:"unit" validate:"required,oneof=Year365 Month30 Week Day Hour Minute Second JulianYear Sol Nanosecond Microsecond Millisecond"`
 }
 
 // DurationDtoFactory groups methods for creating and serializing DurationDto objects.

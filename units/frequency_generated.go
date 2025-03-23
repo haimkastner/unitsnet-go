@@ -67,7 +67,7 @@ type FrequencyDto struct {
     // Value is the numerical representation of the Frequency.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Frequency, as defined in the FrequencyUnits enumeration.
-	Unit  FrequencyUnits `json:"unit" validate:"required,oneof=Hertz,RadianPerSecond,CyclePerMinute,CyclePerHour,BeatPerMinute,PerSecond,BUnit,Microhertz,Millihertz,Kilohertz,Megahertz,Gigahertz,Terahertz"`
+	Unit  FrequencyUnits `json:"unit" validate:"required,oneof=Hertz RadianPerSecond CyclePerMinute CyclePerHour BeatPerMinute PerSecond BUnit Microhertz Millihertz Kilohertz Megahertz Gigahertz Terahertz"`
 }
 
 // FrequencyDtoFactory groups methods for creating and serializing FrequencyDto objects.

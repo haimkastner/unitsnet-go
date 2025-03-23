@@ -58,7 +58,7 @@ type DynamicViscosityDto struct {
     // Value is the numerical representation of the DynamicViscosity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the DynamicViscosity, as defined in the DynamicViscosityUnits enumeration.
-	Unit  DynamicViscosityUnits `json:"unit" validate:"required,oneof=NewtonSecondPerMeterSquared,PascalSecond,Poise,Reyn,PoundForceSecondPerSquareInch,PoundForceSecondPerSquareFoot,PoundPerFootSecond,MillipascalSecond,MicropascalSecond,Centipoise"`
+	Unit  DynamicViscosityUnits `json:"unit" validate:"required,oneof=NewtonSecondPerMeterSquared PascalSecond Poise Reyn PoundForceSecondPerSquareInch PoundForceSecondPerSquareFoot PoundPerFootSecond MillipascalSecond MicropascalSecond Centipoise"`
 }
 
 // DynamicViscosityDtoFactory groups methods for creating and serializing DynamicViscosityDto objects.

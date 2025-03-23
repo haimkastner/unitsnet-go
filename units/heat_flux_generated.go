@@ -82,7 +82,7 @@ type HeatFluxDto struct {
     // Value is the numerical representation of the HeatFlux.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the HeatFlux, as defined in the HeatFluxUnits enumeration.
-	Unit  HeatFluxUnits `json:"unit" validate:"required,oneof=WattPerSquareMeter,WattPerSquareInch,WattPerSquareFoot,BtuPerSecondSquareInch,BtuPerSecondSquareFoot,BtuPerMinuteSquareFoot,BtuPerHourSquareFoot,CaloriePerSecondSquareCentimeter,KilocaloriePerHourSquareMeter,PoundForcePerFootSecond,PoundPerSecondCubed,NanowattPerSquareMeter,MicrowattPerSquareMeter,MilliwattPerSquareMeter,CentiwattPerSquareMeter,DeciwattPerSquareMeter,KilowattPerSquareMeter,KilocaloriePerSecondSquareCentimeter"`
+	Unit  HeatFluxUnits `json:"unit" validate:"required,oneof=WattPerSquareMeter WattPerSquareInch WattPerSquareFoot BtuPerSecondSquareInch BtuPerSecondSquareFoot BtuPerMinuteSquareFoot BtuPerHourSquareFoot CaloriePerSecondSquareCentimeter KilocaloriePerHourSquareMeter PoundForcePerFootSecond PoundPerSecondCubed NanowattPerSquareMeter MicrowattPerSquareMeter MilliwattPerSquareMeter CentiwattPerSquareMeter DeciwattPerSquareMeter KilowattPerSquareMeter KilocaloriePerSecondSquareCentimeter"`
 }
 
 // HeatFluxDtoFactory groups methods for creating and serializing HeatFluxDto objects.

@@ -40,7 +40,7 @@ type TemperatureGradientDto struct {
     // Value is the numerical representation of the TemperatureGradient.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the TemperatureGradient, as defined in the TemperatureGradientUnits enumeration.
-	Unit  TemperatureGradientUnits `json:"unit" validate:"required,oneof=KelvinPerMeter,DegreeCelsiusPerMeter,DegreeFahrenheitPerFoot,DegreeCelsiusPerKilometer"`
+	Unit  TemperatureGradientUnits `json:"unit" validate:"required,oneof=KelvinPerMeter DegreeCelsiusPerMeter DegreeFahrenheitPerFoot DegreeCelsiusPerKilometer"`
 }
 
 // TemperatureGradientDtoFactory groups methods for creating and serializing TemperatureGradientDto objects.

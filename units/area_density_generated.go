@@ -37,7 +37,7 @@ type AreaDensityDto struct {
     // Value is the numerical representation of the AreaDensity.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the AreaDensity, as defined in the AreaDensityUnits enumeration.
-	Unit  AreaDensityUnits `json:"unit" validate:"required,oneof=KilogramPerSquareMeter,GramPerSquareMeter,MilligramPerSquareMeter"`
+	Unit  AreaDensityUnits `json:"unit" validate:"required,oneof=KilogramPerSquareMeter GramPerSquareMeter MilligramPerSquareMeter"`
 }
 
 // AreaDensityDtoFactory groups methods for creating and serializing AreaDensityDto objects.

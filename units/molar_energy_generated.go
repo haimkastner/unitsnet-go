@@ -37,7 +37,7 @@ type MolarEnergyDto struct {
     // Value is the numerical representation of the MolarEnergy.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MolarEnergy, as defined in the MolarEnergyUnits enumeration.
-	Unit  MolarEnergyUnits `json:"unit" validate:"required,oneof=JoulePerMole,KilojoulePerMole,MegajoulePerMole"`
+	Unit  MolarEnergyUnits `json:"unit" validate:"required,oneof=JoulePerMole KilojoulePerMole MegajoulePerMole"`
 }
 
 // MolarEnergyDtoFactory groups methods for creating and serializing MolarEnergyDto objects.

@@ -106,7 +106,7 @@ type BitRateDto struct {
     // Value is the numerical representation of the BitRate.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the BitRate, as defined in the BitRateUnits enumeration.
-	Unit  BitRateUnits `json:"unit" validate:"required,oneof=BitPerSecond,BytePerSecond,KilobitPerSecond,MegabitPerSecond,GigabitPerSecond,TerabitPerSecond,PetabitPerSecond,ExabitPerSecond,KibibitPerSecond,MebibitPerSecond,GibibitPerSecond,TebibitPerSecond,PebibitPerSecond,ExbibitPerSecond,KilobytePerSecond,MegabytePerSecond,GigabytePerSecond,TerabytePerSecond,PetabytePerSecond,ExabytePerSecond,KibibytePerSecond,MebibytePerSecond,GibibytePerSecond,TebibytePerSecond,PebibytePerSecond,ExbibytePerSecond"`
+	Unit  BitRateUnits `json:"unit" validate:"required,oneof=BitPerSecond BytePerSecond KilobitPerSecond MegabitPerSecond GigabitPerSecond TerabitPerSecond PetabitPerSecond ExabitPerSecond KibibitPerSecond MebibitPerSecond GibibitPerSecond TebibitPerSecond PebibitPerSecond ExbibitPerSecond KilobytePerSecond MegabytePerSecond GigabytePerSecond TerabytePerSecond PetabytePerSecond ExabytePerSecond KibibytePerSecond MebibytePerSecond GibibytePerSecond TebibytePerSecond PebibytePerSecond ExbibytePerSecond"`
 }
 
 // BitRateDtoFactory groups methods for creating and serializing BitRateDto objects.

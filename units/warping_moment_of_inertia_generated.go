@@ -46,7 +46,7 @@ type WarpingMomentOfInertiaDto struct {
     // Value is the numerical representation of the WarpingMomentOfInertia.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the WarpingMomentOfInertia, as defined in the WarpingMomentOfInertiaUnits enumeration.
-	Unit  WarpingMomentOfInertiaUnits `json:"unit" validate:"required,oneof=MeterToTheSixth,DecimeterToTheSixth,CentimeterToTheSixth,MillimeterToTheSixth,FootToTheSixth,InchToTheSixth"`
+	Unit  WarpingMomentOfInertiaUnits `json:"unit" validate:"required,oneof=MeterToTheSixth DecimeterToTheSixth CentimeterToTheSixth MillimeterToTheSixth FootToTheSixth InchToTheSixth"`
 }
 
 // WarpingMomentOfInertiaDtoFactory groups methods for creating and serializing WarpingMomentOfInertiaDto objects.

@@ -67,7 +67,7 @@ type ImpulseDto struct {
     // Value is the numerical representation of the Impulse.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Impulse, as defined in the ImpulseUnits enumeration.
-	Unit  ImpulseUnits `json:"unit" validate:"required,oneof=KilogramMeterPerSecond,NewtonSecond,PoundFootPerSecond,PoundForceSecond,SlugFootPerSecond,NanonewtonSecond,MicronewtonSecond,MillinewtonSecond,CentinewtonSecond,DecinewtonSecond,DecanewtonSecond,KilonewtonSecond,MeganewtonSecond"`
+	Unit  ImpulseUnits `json:"unit" validate:"required,oneof=KilogramMeterPerSecond NewtonSecond PoundFootPerSecond PoundForceSecond SlugFootPerSecond NanonewtonSecond MicronewtonSecond MillinewtonSecond CentinewtonSecond DecinewtonSecond DecanewtonSecond KilonewtonSecond MeganewtonSecond"`
 }
 
 // ImpulseDtoFactory groups methods for creating and serializing ImpulseDto objects.

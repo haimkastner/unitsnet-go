@@ -34,7 +34,7 @@ type LevelDto struct {
     // Value is the numerical representation of the Level.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Level, as defined in the LevelUnits enumeration.
-	Unit  LevelUnits `json:"unit" validate:"required,oneof=Decibel,Neper"`
+	Unit  LevelUnits `json:"unit" validate:"required,oneof=Decibel Neper"`
 }
 
 // LevelDtoFactory groups methods for creating and serializing LevelDto objects.

@@ -106,7 +106,7 @@ type InformationDto struct {
     // Value is the numerical representation of the Information.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Information, as defined in the InformationUnits enumeration.
-	Unit  InformationUnits `json:"unit" validate:"required,oneof=Byte,Bit,Kilobyte,Megabyte,Gigabyte,Terabyte,Petabyte,Exabyte,Kibibyte,Mebibyte,Gibibyte,Tebibyte,Pebibyte,Exbibyte,Kilobit,Megabit,Gigabit,Terabit,Petabit,Exabit,Kibibit,Mebibit,Gibibit,Tebibit,Pebibit,Exbibit"`
+	Unit  InformationUnits `json:"unit" validate:"required,oneof=Byte Bit Kilobyte Megabyte Gigabyte Terabyte Petabyte Exabyte Kibibyte Mebibyte Gibibyte Tebibyte Pebibyte Exbibyte Kilobit Megabit Gigabit Terabit Petabit Exabit Kibibit Mebibit Gibibit Tebibit Pebibit Exbibit"`
 }
 
 // InformationDtoFactory groups methods for creating and serializing InformationDto objects.

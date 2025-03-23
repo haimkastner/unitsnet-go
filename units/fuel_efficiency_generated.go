@@ -40,7 +40,7 @@ type FuelEfficiencyDto struct {
     // Value is the numerical representation of the FuelEfficiency.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the FuelEfficiency, as defined in the FuelEfficiencyUnits enumeration.
-	Unit  FuelEfficiencyUnits `json:"unit" validate:"required,oneof=LiterPer100Kilometers,MilePerUsGallon,MilePerUkGallon,KilometerPerLiter"`
+	Unit  FuelEfficiencyUnits `json:"unit" validate:"required,oneof=LiterPer100Kilometers MilePerUsGallon MilePerUkGallon KilometerPerLiter"`
 }
 
 // FuelEfficiencyDtoFactory groups methods for creating and serializing FuelEfficiencyDto objects.

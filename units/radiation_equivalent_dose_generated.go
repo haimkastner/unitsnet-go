@@ -46,7 +46,7 @@ type RadiationEquivalentDoseDto struct {
     // Value is the numerical representation of the RadiationEquivalentDose.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the RadiationEquivalentDose, as defined in the RadiationEquivalentDoseUnits enumeration.
-	Unit  RadiationEquivalentDoseUnits `json:"unit" validate:"required,oneof=Sievert,RoentgenEquivalentMan,Nanosievert,Microsievert,Millisievert,MilliroentgenEquivalentMan"`
+	Unit  RadiationEquivalentDoseUnits `json:"unit" validate:"required,oneof=Sievert RoentgenEquivalentMan Nanosievert Microsievert Millisievert MilliroentgenEquivalentMan"`
 }
 
 // RadiationEquivalentDoseDtoFactory groups methods for creating and serializing RadiationEquivalentDoseDto objects.

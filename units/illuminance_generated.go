@@ -40,7 +40,7 @@ type IlluminanceDto struct {
     // Value is the numerical representation of the Illuminance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Illuminance, as defined in the IlluminanceUnits enumeration.
-	Unit  IlluminanceUnits `json:"unit" validate:"required,oneof=Lux,Millilux,Kilolux,Megalux"`
+	Unit  IlluminanceUnits `json:"unit" validate:"required,oneof=Lux Millilux Kilolux Megalux"`
 }
 
 // IlluminanceDtoFactory groups methods for creating and serializing IlluminanceDto objects.

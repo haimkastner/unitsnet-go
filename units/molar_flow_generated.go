@@ -55,7 +55,7 @@ type MolarFlowDto struct {
     // Value is the numerical representation of the MolarFlow.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the MolarFlow, as defined in the MolarFlowUnits enumeration.
-	Unit  MolarFlowUnits `json:"unit" validate:"required,oneof=MolePerSecond,MolePerMinute,MolePerHour,PoundMolePerSecond,PoundMolePerMinute,PoundMolePerHour,KilomolePerSecond,KilomolePerMinute,KilomolePerHour"`
+	Unit  MolarFlowUnits `json:"unit" validate:"required,oneof=MolePerSecond MolePerMinute MolePerHour PoundMolePerSecond PoundMolePerMinute PoundMolePerHour KilomolePerSecond KilomolePerMinute KilomolePerHour"`
 }
 
 // MolarFlowDtoFactory groups methods for creating and serializing MolarFlowDto objects.

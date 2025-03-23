@@ -55,7 +55,7 @@ type StandardVolumeFlowDto struct {
     // Value is the numerical representation of the StandardVolumeFlow.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the StandardVolumeFlow, as defined in the StandardVolumeFlowUnits enumeration.
-	Unit  StandardVolumeFlowUnits `json:"unit" validate:"required,oneof=StandardCubicMeterPerSecond,StandardCubicMeterPerMinute,StandardCubicMeterPerHour,StandardCubicMeterPerDay,StandardCubicCentimeterPerMinute,StandardLiterPerMinute,StandardCubicFootPerSecond,StandardCubicFootPerMinute,StandardCubicFootPerHour"`
+	Unit  StandardVolumeFlowUnits `json:"unit" validate:"required,oneof=StandardCubicMeterPerSecond StandardCubicMeterPerMinute StandardCubicMeterPerHour StandardCubicMeterPerDay StandardCubicCentimeterPerMinute StandardLiterPerMinute StandardCubicFootPerSecond StandardCubicFootPerMinute StandardCubicFootPerHour"`
 }
 
 // StandardVolumeFlowDtoFactory groups methods for creating and serializing StandardVolumeFlowDto objects.

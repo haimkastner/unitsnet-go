@@ -43,7 +43,7 @@ type ElectricInductanceDto struct {
     // Value is the numerical representation of the ElectricInductance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricInductance, as defined in the ElectricInductanceUnits enumeration.
-	Unit  ElectricInductanceUnits `json:"unit" validate:"required,oneof=Henry,Picohenry,Nanohenry,Microhenry,Millihenry"`
+	Unit  ElectricInductanceUnits `json:"unit" validate:"required,oneof=Henry Picohenry Nanohenry Microhenry Millihenry"`
 }
 
 // ElectricInductanceDtoFactory groups methods for creating and serializing ElectricInductanceDto objects.

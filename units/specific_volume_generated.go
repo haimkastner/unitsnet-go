@@ -37,7 +37,7 @@ type SpecificVolumeDto struct {
     // Value is the numerical representation of the SpecificVolume.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the SpecificVolume, as defined in the SpecificVolumeUnits enumeration.
-	Unit  SpecificVolumeUnits `json:"unit" validate:"required,oneof=CubicMeterPerKilogram,CubicFootPerPound,MillicubicMeterPerKilogram"`
+	Unit  SpecificVolumeUnits `json:"unit" validate:"required,oneof=CubicMeterPerKilogram CubicFootPerPound MillicubicMeterPerKilogram"`
 }
 
 // SpecificVolumeDtoFactory groups methods for creating and serializing SpecificVolumeDto objects.

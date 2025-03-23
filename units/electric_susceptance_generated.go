@@ -76,7 +76,7 @@ type ElectricSusceptanceDto struct {
     // Value is the numerical representation of the ElectricSusceptance.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricSusceptance, as defined in the ElectricSusceptanceUnits enumeration.
-	Unit  ElectricSusceptanceUnits `json:"unit" validate:"required,oneof=Siemens,Mho,Nanosiemens,Microsiemens,Millisiemens,Kilosiemens,Megasiemens,Gigasiemens,Terasiemens,Nanomho,Micromho,Millimho,Kilomho,Megamho,Gigamho,Teramho"`
+	Unit  ElectricSusceptanceUnits `json:"unit" validate:"required,oneof=Siemens Mho Nanosiemens Microsiemens Millisiemens Kilosiemens Megasiemens Gigasiemens Terasiemens Nanomho Micromho Millimho Kilomho Megamho Gigamho Teramho"`
 }
 
 // ElectricSusceptanceDtoFactory groups methods for creating and serializing ElectricSusceptanceDto objects.

@@ -37,7 +37,7 @@ type ElectricApparentEnergyDto struct {
     // Value is the numerical representation of the ElectricApparentEnergy.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the ElectricApparentEnergy, as defined in the ElectricApparentEnergyUnits enumeration.
-	Unit  ElectricApparentEnergyUnits `json:"unit" validate:"required,oneof=VoltampereHour,KilovoltampereHour,MegavoltampereHour"`
+	Unit  ElectricApparentEnergyUnits `json:"unit" validate:"required,oneof=VoltampereHour KilovoltampereHour MegavoltampereHour"`
 }
 
 // ElectricApparentEnergyDtoFactory groups methods for creating and serializing ElectricApparentEnergyDto objects.

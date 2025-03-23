@@ -55,7 +55,7 @@ type IrradiationDto struct {
     // Value is the numerical representation of the Irradiation.
 	Value float64 `json:"value" validate:"required"`
     // Unit specifies the unit of measurement for the Irradiation, as defined in the IrradiationUnits enumeration.
-	Unit  IrradiationUnits `json:"unit" validate:"required,oneof=JoulePerSquareMeter,JoulePerSquareCentimeter,JoulePerSquareMillimeter,WattHourPerSquareMeter,BtuPerSquareFoot,KilojoulePerSquareMeter,MillijoulePerSquareCentimeter,KilowattHourPerSquareMeter,KilobtuPerSquareFoot"`
+	Unit  IrradiationUnits `json:"unit" validate:"required,oneof=JoulePerSquareMeter JoulePerSquareCentimeter JoulePerSquareMillimeter WattHourPerSquareMeter BtuPerSquareFoot KilojoulePerSquareMeter MillijoulePerSquareCentimeter KilowattHourPerSquareMeter KilobtuPerSquareFoot"`
 }
 
 // IrradiationDtoFactory groups methods for creating and serializing IrradiationDto objects.
