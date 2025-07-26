@@ -1885,71 +1885,71 @@ func (a *VolumeFlow) convertFromBase(toUnit VolumeFlowUnits) float64 {
 	case VolumeFlowCubicMeterPerDay:
 		return (value * 86400) 
 	case VolumeFlowCubicFootPerSecond:
-		return (value * 35.314666721) 
+		return (value / 0.028316846592) 
 	case VolumeFlowCubicFootPerMinute:
-		return (value * 2118.88000326) 
+		return (value / (0.028316846592 / 60)) 
 	case VolumeFlowCubicFootPerHour:
-		return (value / 7.8657907199999087346816086183876e-6) 
+		return (value / (0.028316846592 / 3600)) 
 	case VolumeFlowCubicYardPerSecond:
 		return (value / 0.764554857984) 
 	case VolumeFlowCubicYardPerMinute:
-		return (value / 0.0127425809664) 
+		return (value / (0.764554857984 / 60)) 
 	case VolumeFlowCubicYardPerHour:
-		return (value / 2.1237634944e-4) 
+		return (value / (0.764554857984 / 3600)) 
 	case VolumeFlowCubicYardPerDay:
-		return (value * 113007) 
+		return (value / (0.764554857984 / 86400)) 
 	case VolumeFlowMillionUsGallonPerDay:
-		return (value * 22.824465227) 
+		return (value / (1e6 * 0.003785411784 / 86400)) 
 	case VolumeFlowUsGallonPerDay:
-		return (value * 22824465.227) 
+		return (value / (0.003785411784 / 86400)) 
 	case VolumeFlowLiterPerSecond:
 		return (value * 1000) 
 	case VolumeFlowLiterPerMinute:
-		return (value * 60000.00000) 
+		return (value * (1000 * 60)) 
 	case VolumeFlowLiterPerHour:
-		return (value * 3600000.000) 
+		return (value * (1000 * 3600)) 
 	case VolumeFlowLiterPerDay:
-		return (value * 86400000) 
+		return (value * (1000 * 86400)) 
 	case VolumeFlowUsGallonPerSecond:
-		return (value * 264.1720523581484) 
+		return (value / 0.003785411784) 
 	case VolumeFlowUsGallonPerMinute:
-		return (value * 15850.323141489) 
+		return (value / (0.003785411784 / 60)) 
 	case VolumeFlowUkGallonPerDay:
-		return (value * 19005304) 
+		return (value / (0.00454609 / 86400)) 
 	case VolumeFlowUkGallonPerHour:
-		return (value * 791887.667) 
+		return (value / (0.00454609 / 3600)) 
 	case VolumeFlowUkGallonPerMinute:
-		return (value * 13198.2) 
+		return (value / (0.00454609 / 60)) 
 	case VolumeFlowUkGallonPerSecond:
-		return (value * 219.969) 
+		return (value / 0.00454609) 
 	case VolumeFlowKilousGallonPerMinute:
-		return (value * 15.850323141489) 
+		return (value / (1000 * 0.003785411784 / 60)) 
 	case VolumeFlowUsGallonPerHour:
-		return (value * 951019.38848933424) 
+		return (value / (0.003785411784 / 3600)) 
 	case VolumeFlowCubicDecimeterPerMinute:
 		return (value * 60000.00000) 
 	case VolumeFlowOilBarrelPerDay:
-		return (value / 1.8401307283333333333333333333333e-6) 
+		return (value / (0.158987294928 / 86400)) 
 	case VolumeFlowOilBarrelPerMinute:
-		return (value / 2.64978825e-3) 
+		return (value / (0.158987294928 / 60)) 
 	case VolumeFlowOilBarrelPerHour:
-		return (value / 4.41631375e-5) 
+		return (value / (0.158987294928 / 3600)) 
 	case VolumeFlowOilBarrelPerSecond:
-		return (value * 6.28981) 
+		return (value / 0.158987294928) 
 	case VolumeFlowCubicMillimeterPerSecond:
 		return (value / 1e-9) 
 	case VolumeFlowAcreFootPerSecond:
-		return (value * 0.000810713194) 
+		return (value / 1233.48183754752) 
 	case VolumeFlowAcreFootPerMinute:
-		return (value * 0.0486427916) 
+		return (value / (1233.48183754752 / 60)) 
 	case VolumeFlowAcreFootPerHour:
-		return (value * 2.91857) 
+		return (value / (1233.48183754752 / 3600)) 
 	case VolumeFlowAcreFootPerDay:
-		return (value * 70.0457) 
+		return (value / (1233.48183754752 / 86400)) 
 	case VolumeFlowCubicCentimeterPerMinute:
-		return (value / 1.6666666666667e-8) 
+		return (value / (1e-6 / 60)) 
 	case VolumeFlowMegausGallonPerDay:
-		return ((value * 22824465.227) / 1000000.0) 
+		return ((value / (0.003785411784 / 86400)) / 1000000.0) 
 	case VolumeFlowNanoliterPerSecond:
 		return ((value * 1000) / 1e-09) 
 	case VolumeFlowMicroliterPerSecond:
@@ -1969,63 +1969,63 @@ func (a *VolumeFlow) convertFromBase(toUnit VolumeFlowUnits) float64 {
 	case VolumeFlowMegaliterPerSecond:
 		return ((value * 1000) / 1000000.0) 
 	case VolumeFlowNanoliterPerMinute:
-		return ((value * 60000.00000) / 1e-09) 
+		return ((value * (1000 * 60)) / 1e-09) 
 	case VolumeFlowMicroliterPerMinute:
-		return ((value * 60000.00000) / 1e-06) 
+		return ((value * (1000 * 60)) / 1e-06) 
 	case VolumeFlowMilliliterPerMinute:
-		return ((value * 60000.00000) / 0.001) 
+		return ((value * (1000 * 60)) / 0.001) 
 	case VolumeFlowCentiliterPerMinute:
-		return ((value * 60000.00000) / 0.01) 
+		return ((value * (1000 * 60)) / 0.01) 
 	case VolumeFlowDeciliterPerMinute:
-		return ((value * 60000.00000) / 0.1) 
+		return ((value * (1000 * 60)) / 0.1) 
 	case VolumeFlowDecaliterPerMinute:
-		return ((value * 60000.00000) / 10.0) 
+		return ((value * (1000 * 60)) / 10.0) 
 	case VolumeFlowHectoliterPerMinute:
-		return ((value * 60000.00000) / 100.0) 
+		return ((value * (1000 * 60)) / 100.0) 
 	case VolumeFlowKiloliterPerMinute:
-		return ((value * 60000.00000) / 1000.0) 
+		return ((value * (1000 * 60)) / 1000.0) 
 	case VolumeFlowMegaliterPerMinute:
-		return ((value * 60000.00000) / 1000000.0) 
+		return ((value * (1000 * 60)) / 1000000.0) 
 	case VolumeFlowNanoliterPerHour:
-		return ((value * 3600000.000) / 1e-09) 
+		return ((value * (1000 * 3600)) / 1e-09) 
 	case VolumeFlowMicroliterPerHour:
-		return ((value * 3600000.000) / 1e-06) 
+		return ((value * (1000 * 3600)) / 1e-06) 
 	case VolumeFlowMilliliterPerHour:
-		return ((value * 3600000.000) / 0.001) 
+		return ((value * (1000 * 3600)) / 0.001) 
 	case VolumeFlowCentiliterPerHour:
-		return ((value * 3600000.000) / 0.01) 
+		return ((value * (1000 * 3600)) / 0.01) 
 	case VolumeFlowDeciliterPerHour:
-		return ((value * 3600000.000) / 0.1) 
+		return ((value * (1000 * 3600)) / 0.1) 
 	case VolumeFlowDecaliterPerHour:
-		return ((value * 3600000.000) / 10.0) 
+		return ((value * (1000 * 3600)) / 10.0) 
 	case VolumeFlowHectoliterPerHour:
-		return ((value * 3600000.000) / 100.0) 
+		return ((value * (1000 * 3600)) / 100.0) 
 	case VolumeFlowKiloliterPerHour:
-		return ((value * 3600000.000) / 1000.0) 
+		return ((value * (1000 * 3600)) / 1000.0) 
 	case VolumeFlowMegaliterPerHour:
-		return ((value * 3600000.000) / 1000000.0) 
+		return ((value * (1000 * 3600)) / 1000000.0) 
 	case VolumeFlowNanoliterPerDay:
-		return ((value * 86400000) / 1e-09) 
+		return ((value * (1000 * 86400)) / 1e-09) 
 	case VolumeFlowMicroliterPerDay:
-		return ((value * 86400000) / 1e-06) 
+		return ((value * (1000 * 86400)) / 1e-06) 
 	case VolumeFlowMilliliterPerDay:
-		return ((value * 86400000) / 0.001) 
+		return ((value * (1000 * 86400)) / 0.001) 
 	case VolumeFlowCentiliterPerDay:
-		return ((value * 86400000) / 0.01) 
+		return ((value * (1000 * 86400)) / 0.01) 
 	case VolumeFlowDeciliterPerDay:
-		return ((value * 86400000) / 0.1) 
+		return ((value * (1000 * 86400)) / 0.1) 
 	case VolumeFlowDecaliterPerDay:
-		return ((value * 86400000) / 10.0) 
+		return ((value * (1000 * 86400)) / 10.0) 
 	case VolumeFlowHectoliterPerDay:
-		return ((value * 86400000) / 100.0) 
+		return ((value * (1000 * 86400)) / 100.0) 
 	case VolumeFlowKiloliterPerDay:
-		return ((value * 86400000) / 1000.0) 
+		return ((value * (1000 * 86400)) / 1000.0) 
 	case VolumeFlowMegaliterPerDay:
-		return ((value * 86400000) / 1000000.0) 
+		return ((value * (1000 * 86400)) / 1000000.0) 
 	case VolumeFlowMegaukGallonPerDay:
-		return ((value * 19005304) / 1000000.0) 
+		return ((value / (0.00454609 / 86400)) / 1000000.0) 
 	case VolumeFlowMegaukGallonPerSecond:
-		return ((value * 219.969) / 1000000.0) 
+		return ((value / 0.00454609) / 1000000.0) 
 	default:
 		return math.NaN()
 	}
@@ -2042,71 +2042,71 @@ func (a *VolumeFlow) convertToBase(value float64, fromUnit VolumeFlowUnits) floa
 	case VolumeFlowCubicMeterPerDay:
 		return (value / 86400) 
 	case VolumeFlowCubicFootPerSecond:
-		return (value / 35.314666721) 
+		return (value * 0.028316846592) 
 	case VolumeFlowCubicFootPerMinute:
-		return (value / 2118.88000326) 
+		return (value * 0.028316846592 / 60) 
 	case VolumeFlowCubicFootPerHour:
-		return (value * 7.8657907199999087346816086183876e-6) 
+		return (value * 0.028316846592 / 3600) 
 	case VolumeFlowCubicYardPerSecond:
 		return (value * 0.764554857984) 
 	case VolumeFlowCubicYardPerMinute:
-		return (value * 0.0127425809664) 
+		return (value * 0.764554857984 / 60) 
 	case VolumeFlowCubicYardPerHour:
-		return (value * 2.1237634944e-4) 
+		return (value * 0.764554857984 / 3600) 
 	case VolumeFlowCubicYardPerDay:
-		return (value / 113007) 
+		return (value * 0.764554857984 / 86400) 
 	case VolumeFlowMillionUsGallonPerDay:
-		return (value / 22.824465227) 
+		return (value * 1e6 * 0.003785411784 / 86400) 
 	case VolumeFlowUsGallonPerDay:
-		return (value / 22824465.227) 
+		return (value * 0.003785411784 / 86400) 
 	case VolumeFlowLiterPerSecond:
 		return (value / 1000) 
 	case VolumeFlowLiterPerMinute:
-		return (value / 60000.00000) 
+		return (value / (1000 * 60)) 
 	case VolumeFlowLiterPerHour:
-		return (value / 3600000.000) 
+		return (value / (1000 * 3600)) 
 	case VolumeFlowLiterPerDay:
-		return (value / 86400000) 
+		return (value / (1000 * 86400)) 
 	case VolumeFlowUsGallonPerSecond:
-		return (value / 264.1720523581484) 
+		return (value * 0.003785411784) 
 	case VolumeFlowUsGallonPerMinute:
-		return (value / 15850.323141489) 
+		return (value * 0.003785411784 / 60) 
 	case VolumeFlowUkGallonPerDay:
-		return (value / 19005304) 
+		return (value * 0.00454609 / 86400) 
 	case VolumeFlowUkGallonPerHour:
-		return (value / 791887.667) 
+		return (value * 0.00454609 / 3600) 
 	case VolumeFlowUkGallonPerMinute:
-		return (value / 13198.2) 
+		return (value * 0.00454609 / 60) 
 	case VolumeFlowUkGallonPerSecond:
-		return (value / 219.969) 
+		return (value * 0.00454609) 
 	case VolumeFlowKilousGallonPerMinute:
-		return (value / 15.850323141489) 
+		return (value * 1000 * 0.003785411784 / 60) 
 	case VolumeFlowUsGallonPerHour:
-		return (value / 951019.38848933424) 
+		return (value * 0.003785411784 / 3600) 
 	case VolumeFlowCubicDecimeterPerMinute:
 		return (value / 60000.00000) 
 	case VolumeFlowOilBarrelPerDay:
-		return (value * 1.8401307283333333333333333333333e-6) 
+		return (value * 0.158987294928 / 86400) 
 	case VolumeFlowOilBarrelPerMinute:
-		return (value * 2.64978825e-3) 
+		return (value * 0.158987294928 / 60) 
 	case VolumeFlowOilBarrelPerHour:
-		return (value * 4.41631375e-5) 
+		return (value * 0.158987294928 / 3600) 
 	case VolumeFlowOilBarrelPerSecond:
-		return (value / 6.28981) 
+		return (value * 0.158987294928) 
 	case VolumeFlowCubicMillimeterPerSecond:
 		return (value * 1e-9) 
 	case VolumeFlowAcreFootPerSecond:
-		return (value / 0.000810713194) 
+		return (value * 1233.48183754752) 
 	case VolumeFlowAcreFootPerMinute:
-		return (value / 0.0486427916) 
+		return (value * 1233.48183754752 / 60) 
 	case VolumeFlowAcreFootPerHour:
-		return (value / 2.91857) 
+		return (value * 1233.48183754752 / 3600) 
 	case VolumeFlowAcreFootPerDay:
-		return (value / 70.0457) 
+		return (value * 1233.48183754752 / 86400) 
 	case VolumeFlowCubicCentimeterPerMinute:
-		return (value * 1.6666666666667e-8) 
+		return (value * 1e-6 / 60) 
 	case VolumeFlowMegausGallonPerDay:
-		return ((value / 22824465.227) * 1000000.0) 
+		return ((value * 0.003785411784 / 86400) * 1000000.0) 
 	case VolumeFlowNanoliterPerSecond:
 		return ((value / 1000) * 1e-09) 
 	case VolumeFlowMicroliterPerSecond:
@@ -2126,63 +2126,63 @@ func (a *VolumeFlow) convertToBase(value float64, fromUnit VolumeFlowUnits) floa
 	case VolumeFlowMegaliterPerSecond:
 		return ((value / 1000) * 1000000.0) 
 	case VolumeFlowNanoliterPerMinute:
-		return ((value / 60000.00000) * 1e-09) 
+		return ((value / (1000 * 60)) * 1e-09) 
 	case VolumeFlowMicroliterPerMinute:
-		return ((value / 60000.00000) * 1e-06) 
+		return ((value / (1000 * 60)) * 1e-06) 
 	case VolumeFlowMilliliterPerMinute:
-		return ((value / 60000.00000) * 0.001) 
+		return ((value / (1000 * 60)) * 0.001) 
 	case VolumeFlowCentiliterPerMinute:
-		return ((value / 60000.00000) * 0.01) 
+		return ((value / (1000 * 60)) * 0.01) 
 	case VolumeFlowDeciliterPerMinute:
-		return ((value / 60000.00000) * 0.1) 
+		return ((value / (1000 * 60)) * 0.1) 
 	case VolumeFlowDecaliterPerMinute:
-		return ((value / 60000.00000) * 10.0) 
+		return ((value / (1000 * 60)) * 10.0) 
 	case VolumeFlowHectoliterPerMinute:
-		return ((value / 60000.00000) * 100.0) 
+		return ((value / (1000 * 60)) * 100.0) 
 	case VolumeFlowKiloliterPerMinute:
-		return ((value / 60000.00000) * 1000.0) 
+		return ((value / (1000 * 60)) * 1000.0) 
 	case VolumeFlowMegaliterPerMinute:
-		return ((value / 60000.00000) * 1000000.0) 
+		return ((value / (1000 * 60)) * 1000000.0) 
 	case VolumeFlowNanoliterPerHour:
-		return ((value / 3600000.000) * 1e-09) 
+		return ((value / (1000 * 3600)) * 1e-09) 
 	case VolumeFlowMicroliterPerHour:
-		return ((value / 3600000.000) * 1e-06) 
+		return ((value / (1000 * 3600)) * 1e-06) 
 	case VolumeFlowMilliliterPerHour:
-		return ((value / 3600000.000) * 0.001) 
+		return ((value / (1000 * 3600)) * 0.001) 
 	case VolumeFlowCentiliterPerHour:
-		return ((value / 3600000.000) * 0.01) 
+		return ((value / (1000 * 3600)) * 0.01) 
 	case VolumeFlowDeciliterPerHour:
-		return ((value / 3600000.000) * 0.1) 
+		return ((value / (1000 * 3600)) * 0.1) 
 	case VolumeFlowDecaliterPerHour:
-		return ((value / 3600000.000) * 10.0) 
+		return ((value / (1000 * 3600)) * 10.0) 
 	case VolumeFlowHectoliterPerHour:
-		return ((value / 3600000.000) * 100.0) 
+		return ((value / (1000 * 3600)) * 100.0) 
 	case VolumeFlowKiloliterPerHour:
-		return ((value / 3600000.000) * 1000.0) 
+		return ((value / (1000 * 3600)) * 1000.0) 
 	case VolumeFlowMegaliterPerHour:
-		return ((value / 3600000.000) * 1000000.0) 
+		return ((value / (1000 * 3600)) * 1000000.0) 
 	case VolumeFlowNanoliterPerDay:
-		return ((value / 86400000) * 1e-09) 
+		return ((value / (1000 * 86400)) * 1e-09) 
 	case VolumeFlowMicroliterPerDay:
-		return ((value / 86400000) * 1e-06) 
+		return ((value / (1000 * 86400)) * 1e-06) 
 	case VolumeFlowMilliliterPerDay:
-		return ((value / 86400000) * 0.001) 
+		return ((value / (1000 * 86400)) * 0.001) 
 	case VolumeFlowCentiliterPerDay:
-		return ((value / 86400000) * 0.01) 
+		return ((value / (1000 * 86400)) * 0.01) 
 	case VolumeFlowDeciliterPerDay:
-		return ((value / 86400000) * 0.1) 
+		return ((value / (1000 * 86400)) * 0.1) 
 	case VolumeFlowDecaliterPerDay:
-		return ((value / 86400000) * 10.0) 
+		return ((value / (1000 * 86400)) * 10.0) 
 	case VolumeFlowHectoliterPerDay:
-		return ((value / 86400000) * 100.0) 
+		return ((value / (1000 * 86400)) * 100.0) 
 	case VolumeFlowKiloliterPerDay:
-		return ((value / 86400000) * 1000.0) 
+		return ((value / (1000 * 86400)) * 1000.0) 
 	case VolumeFlowMegaliterPerDay:
-		return ((value / 86400000) * 1000000.0) 
+		return ((value / (1000 * 86400)) * 1000000.0) 
 	case VolumeFlowMegaukGallonPerDay:
-		return ((value / 19005304) * 1000000.0) 
+		return ((value * 0.00454609 / 86400) * 1000000.0) 
 	case VolumeFlowMegaukGallonPerSecond:
-		return ((value / 219.969) * 1000000.0) 
+		return ((value * 0.00454609) * 1000000.0) 
 	default:
 		return math.NaN()
 	}
@@ -2323,11 +2323,11 @@ func GetVolumeFlowAbbreviation(unit VolumeFlowUnits) string {
 	case VolumeFlowUsGallonPerDay:
 		return "gpd" 
 	case VolumeFlowLiterPerSecond:
-		return "L/s" 
+		return "l/s" 
 	case VolumeFlowLiterPerMinute:
-		return "L/min" 
+		return "l/min" 
 	case VolumeFlowLiterPerHour:
-		return "L/h" 
+		return "l/h" 
 	case VolumeFlowLiterPerDay:
 		return "l/day" 
 	case VolumeFlowUsGallonPerSecond:
@@ -2371,59 +2371,59 @@ func GetVolumeFlowAbbreviation(unit VolumeFlowUnits) string {
 	case VolumeFlowMegausGallonPerDay:
 		return "Mgpd" 
 	case VolumeFlowNanoliterPerSecond:
-		return "nL/s" 
+		return "nl/s" 
 	case VolumeFlowMicroliterPerSecond:
-		return "μL/s" 
+		return "μl/s" 
 	case VolumeFlowMilliliterPerSecond:
-		return "mL/s" 
+		return "ml/s" 
 	case VolumeFlowCentiliterPerSecond:
-		return "cL/s" 
+		return "cl/s" 
 	case VolumeFlowDeciliterPerSecond:
-		return "dL/s" 
+		return "dl/s" 
 	case VolumeFlowDecaliterPerSecond:
-		return "daL/s" 
+		return "dal/s" 
 	case VolumeFlowHectoliterPerSecond:
-		return "hL/s" 
+		return "hl/s" 
 	case VolumeFlowKiloliterPerSecond:
-		return "kL/s" 
+		return "kl/s" 
 	case VolumeFlowMegaliterPerSecond:
-		return "ML/s" 
+		return "Ml/s" 
 	case VolumeFlowNanoliterPerMinute:
-		return "nL/min" 
+		return "nl/min" 
 	case VolumeFlowMicroliterPerMinute:
-		return "μL/min" 
+		return "μl/min" 
 	case VolumeFlowMilliliterPerMinute:
-		return "mL/min" 
+		return "ml/min" 
 	case VolumeFlowCentiliterPerMinute:
-		return "cL/min" 
+		return "cl/min" 
 	case VolumeFlowDeciliterPerMinute:
-		return "dL/min" 
+		return "dl/min" 
 	case VolumeFlowDecaliterPerMinute:
-		return "daL/min" 
+		return "dal/min" 
 	case VolumeFlowHectoliterPerMinute:
-		return "hL/min" 
+		return "hl/min" 
 	case VolumeFlowKiloliterPerMinute:
-		return "kL/min" 
+		return "kl/min" 
 	case VolumeFlowMegaliterPerMinute:
-		return "ML/min" 
+		return "Ml/min" 
 	case VolumeFlowNanoliterPerHour:
-		return "nL/h" 
+		return "nl/h" 
 	case VolumeFlowMicroliterPerHour:
-		return "μL/h" 
+		return "μl/h" 
 	case VolumeFlowMilliliterPerHour:
-		return "mL/h" 
+		return "ml/h" 
 	case VolumeFlowCentiliterPerHour:
-		return "cL/h" 
+		return "cl/h" 
 	case VolumeFlowDeciliterPerHour:
-		return "dL/h" 
+		return "dl/h" 
 	case VolumeFlowDecaliterPerHour:
-		return "daL/h" 
+		return "dal/h" 
 	case VolumeFlowHectoliterPerHour:
-		return "hL/h" 
+		return "hl/h" 
 	case VolumeFlowKiloliterPerHour:
-		return "kL/h" 
+		return "kl/h" 
 	case VolumeFlowMegaliterPerHour:
-		return "ML/h" 
+		return "Ml/h" 
 	case VolumeFlowNanoliterPerDay:
 		return "nl/day" 
 	case VolumeFlowMicroliterPerDay:

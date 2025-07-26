@@ -923,17 +923,17 @@ func (a *MassFlow) convertFromBase(toUnit MassFlowUnits) float64 {
 	case MassFlowTonnePerHour:
 		return (value * 3.6 / 1000) 
 	case MassFlowPoundPerDay:
-		return (value * 190.47936) 
+		return (value * 86400 / 453.59237) 
 	case MassFlowPoundPerHour:
-		return (value * 7.93664) 
+		return (value * 3600 / 453.59237) 
 	case MassFlowPoundPerMinute:
-		return (value * 0.132277) 
+		return (value * 60 / 453.59237) 
 	case MassFlowPoundPerSecond:
 		return (value / 453.59237) 
 	case MassFlowTonnePerDay:
 		return (value * 0.0864000) 
 	case MassFlowShortTonPerHour:
-		return (value / 251.9957611) 
+		return (value * 3.6 / 907.18474) 
 	case MassFlowNanogramPerSecond:
 		return ((value) / 1e-09) 
 	case MassFlowMicrogramPerSecond:
@@ -969,11 +969,11 @@ func (a *MassFlow) convertFromBase(toUnit MassFlowUnits) float64 {
 	case MassFlowMegagramPerDay:
 		return ((value * 86400) / 1000000.0) 
 	case MassFlowMegapoundPerDay:
-		return ((value * 190.47936) / 1000000.0) 
+		return ((value * 86400 / 453.59237) / 1000000.0) 
 	case MassFlowMegapoundPerHour:
-		return ((value * 7.93664) / 1000000.0) 
+		return ((value * 3600 / 453.59237) / 1000000.0) 
 	case MassFlowMegapoundPerMinute:
-		return ((value * 0.132277) / 1000000.0) 
+		return ((value * 60 / 453.59237) / 1000000.0) 
 	case MassFlowMegapoundPerSecond:
 		return ((value / 453.59237) / 1000000.0) 
 	default:
@@ -994,19 +994,19 @@ func (a *MassFlow) convertToBase(value float64, fromUnit MassFlowUnits) float64 
 	case MassFlowKilogramPerMinute:
 		return (value / 0.06) 
 	case MassFlowTonnePerHour:
-		return (1000 * value / 3.6) 
+		return (value * 1000 / 3.6) 
 	case MassFlowPoundPerDay:
-		return (value / 190.47936) 
+		return (value * 453.59237 / 86400) 
 	case MassFlowPoundPerHour:
-		return (value / 7.93664) 
+		return (value * 453.59237 / 3600) 
 	case MassFlowPoundPerMinute:
-		return (value / 0.132277) 
+		return (value * 453.59237 / 60) 
 	case MassFlowPoundPerSecond:
 		return (value * 453.59237) 
 	case MassFlowTonnePerDay:
 		return (value / 0.0864000) 
 	case MassFlowShortTonPerHour:
-		return (value * 251.9957611) 
+		return (value * 907.18474 / 3.6) 
 	case MassFlowNanogramPerSecond:
 		return ((value) * 1e-09) 
 	case MassFlowMicrogramPerSecond:
@@ -1042,11 +1042,11 @@ func (a *MassFlow) convertToBase(value float64, fromUnit MassFlowUnits) float64 
 	case MassFlowMegagramPerDay:
 		return ((value / 86400) * 1000000.0) 
 	case MassFlowMegapoundPerDay:
-		return ((value / 190.47936) * 1000000.0) 
+		return ((value * 453.59237 / 86400) * 1000000.0) 
 	case MassFlowMegapoundPerHour:
-		return ((value / 7.93664) * 1000000.0) 
+		return ((value * 453.59237 / 3600) * 1000000.0) 
 	case MassFlowMegapoundPerMinute:
-		return ((value / 0.132277) * 1000000.0) 
+		return ((value * 453.59237 / 60) * 1000000.0) 
 	case MassFlowMegapoundPerSecond:
 		return ((value * 453.59237) * 1000000.0) 
 	default:

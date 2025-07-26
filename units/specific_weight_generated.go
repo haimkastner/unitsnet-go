@@ -555,9 +555,9 @@ func (a *SpecificWeight) convertFromBase(toUnit SpecificWeightUnits) float64 {
 	case SpecificWeightKilogramForcePerCubicMeter:
 		return (value / 9.80665) 
 	case SpecificWeightPoundForcePerCubicInch:
-		return (value / 2.714471375263134e5) 
+		return (value * 1.6387064e-5 / 4.4482216152605) 
 	case SpecificWeightPoundForcePerCubicFoot:
-		return (value / 1.570874638462462e2) 
+		return (value * 0.028316846592 / 4.4482216152605) 
 	case SpecificWeightTonneForcePerCubicMillimeter:
 		return (value / 9.80665e12) 
 	case SpecificWeightTonneForcePerCubicCentimeter:
@@ -573,9 +573,9 @@ func (a *SpecificWeight) convertFromBase(toUnit SpecificWeightUnits) float64 {
 	case SpecificWeightMeganewtonPerCubicMeter:
 		return ((value) / 1000000.0) 
 	case SpecificWeightKilopoundForcePerCubicInch:
-		return ((value / 2.714471375263134e5) / 1000.0) 
+		return ((value * 1.6387064e-5 / 4.4482216152605) / 1000.0) 
 	case SpecificWeightKilopoundForcePerCubicFoot:
-		return ((value / 1.570874638462462e2) / 1000.0) 
+		return ((value * 0.028316846592 / 4.4482216152605) / 1000.0) 
 	default:
 		return math.NaN()
 	}
@@ -596,9 +596,9 @@ func (a *SpecificWeight) convertToBase(value float64, fromUnit SpecificWeightUni
 	case SpecificWeightKilogramForcePerCubicMeter:
 		return (value * 9.80665) 
 	case SpecificWeightPoundForcePerCubicInch:
-		return (value * 2.714471375263134e5) 
+		return (value * 4.4482216152605 / 1.6387064e-5) 
 	case SpecificWeightPoundForcePerCubicFoot:
-		return (value * 1.570874638462462e2) 
+		return (value * 4.4482216152605 / 0.028316846592) 
 	case SpecificWeightTonneForcePerCubicMillimeter:
 		return (value * 9.80665e12) 
 	case SpecificWeightTonneForcePerCubicCentimeter:
@@ -614,9 +614,9 @@ func (a *SpecificWeight) convertToBase(value float64, fromUnit SpecificWeightUni
 	case SpecificWeightMeganewtonPerCubicMeter:
 		return ((value) * 1000000.0) 
 	case SpecificWeightKilopoundForcePerCubicInch:
-		return ((value * 2.714471375263134e5) * 1000.0) 
+		return ((value * 4.4482216152605 / 1.6387064e-5) * 1000.0) 
 	case SpecificWeightKilopoundForcePerCubicFoot:
-		return ((value * 1.570874638462462e2) * 1000.0) 
+		return ((value * 4.4482216152605 / 0.028316846592) * 1000.0) 
 	default:
 		return math.NaN()
 	}

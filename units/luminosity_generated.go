@@ -19,7 +19,7 @@ const (
     
         // 
         LuminosityWatt LuminosityUnits = "Watt"
-        // 
+        // The IAU has defined a nominal solar luminosity of 3.828×10^26 W to promote publication of consistent and comparable values in units of the solar luminosity.
         LuminositySolarLuminosity LuminosityUnits = "SolarLuminosity"
         // 
         LuminosityFemtowatt LuminosityUnits = "Femtowatt"
@@ -252,7 +252,7 @@ func (a *Luminosity) Watts() float64 {
 
 // SolarLuminosities returns the Luminosity value in SolarLuminosities.
 //
-// 
+// The IAU has defined a nominal solar luminosity of 3.828×10^26 W to promote publication of consistent and comparable values in units of the solar luminosity.
 func (a *Luminosity) SolarLuminosities() float64 {
 	if a.solar_luminositiesLazy != nil {
 		return *a.solar_luminositiesLazy
@@ -476,7 +476,7 @@ func (a *Luminosity) convertFromBase(toUnit LuminosityUnits) float64 {
 	case LuminosityWatt:
 		return (value) 
 	case LuminositySolarLuminosity:
-		return (value / 3.846e26) 
+		return (value / 3.828e26) 
 	case LuminosityFemtowatt:
 		return ((value) / 1e-15) 
 	case LuminosityPicowatt:
@@ -511,7 +511,7 @@ func (a *Luminosity) convertToBase(value float64, fromUnit LuminosityUnits) floa
 	case LuminosityWatt:
 		return (value) 
 	case LuminositySolarLuminosity:
-		return (value * 3.846e26) 
+		return (value * 3.828e26) 
 	case LuminosityFemtowatt:
 		return ((value) * 1e-15) 
 	case LuminosityPicowatt:

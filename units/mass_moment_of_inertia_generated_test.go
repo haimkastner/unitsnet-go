@@ -141,12 +141,12 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to TonneSquareMilimeters.
-		// No expected conversion value provided for TonneSquareMilimeters, verifying result is not NaN.
-		result := a.TonneSquareMilimeters()
-		cacheResult := a.TonneSquareMilimeters()
+		// Test conversion to TonneSquareMillimeters.
+		// No expected conversion value provided for TonneSquareMillimeters, verifying result is not NaN.
+		result := a.TonneSquareMillimeters()
+		cacheResult := a.TonneSquareMillimeters()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to TonneSquareMilimeters returned NaN")
+			t.Errorf("conversion to TonneSquareMillimeters returned NaN")
 		}
 	}
 	{
@@ -312,21 +312,21 @@ func TestMassMomentOfInertiaConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to KilotonneSquareMilimeters.
-		// No expected conversion value provided for KilotonneSquareMilimeters, verifying result is not NaN.
-		result := a.KilotonneSquareMilimeters()
-		cacheResult := a.KilotonneSquareMilimeters()
+		// Test conversion to KilotonneSquareMillimeters.
+		// No expected conversion value provided for KilotonneSquareMillimeters, verifying result is not NaN.
+		result := a.KilotonneSquareMillimeters()
+		cacheResult := a.KilotonneSquareMillimeters()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to KilotonneSquareMilimeters returned NaN")
+			t.Errorf("conversion to KilotonneSquareMillimeters returned NaN")
 		}
 	}
 	{
-		// Test conversion to MegatonneSquareMilimeters.
-		// No expected conversion value provided for MegatonneSquareMilimeters, verifying result is not NaN.
-		result := a.MegatonneSquareMilimeters()
-		cacheResult := a.MegatonneSquareMilimeters()
+		// Test conversion to MegatonneSquareMillimeters.
+		// No expected conversion value provided for MegatonneSquareMillimeters, verifying result is not NaN.
+		result := a.MegatonneSquareMillimeters()
+		cacheResult := a.MegatonneSquareMillimeters()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MegatonneSquareMilimeters returned NaN")
+			t.Errorf("conversion to MegatonneSquareMillimeters returned NaN")
 		}
 	}
 }
@@ -517,22 +517,22 @@ func TestMassMomentOfInertiaFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for TonneSquareCentimeter = %v, want %v", converted, 100)
     }
-    // Test TonneSquareMilimeter conversion
-    tonne_square_milimetersDto := units.MassMomentOfInertiaDto{
+    // Test TonneSquareMillimeter conversion
+    tonne_square_millimetersDto := units.MassMomentOfInertiaDto{
         Value: 100,
-        Unit:  units.MassMomentOfInertiaTonneSquareMilimeter,
+        Unit:  units.MassMomentOfInertiaTonneSquareMillimeter,
     }
     
-    var tonne_square_milimetersResult *units.MassMomentOfInertia
-    tonne_square_milimetersResult, err = factory.FromDto(tonne_square_milimetersDto)
+    var tonne_square_millimetersResult *units.MassMomentOfInertia
+    tonne_square_millimetersResult, err = factory.FromDto(tonne_square_millimetersDto)
     if err != nil {
-        t.Errorf("FromDto() with TonneSquareMilimeter returned error: %v", err)
+        t.Errorf("FromDto() with TonneSquareMillimeter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = tonne_square_milimetersResult.Convert(units.MassMomentOfInertiaTonneSquareMilimeter)
+    converted = tonne_square_millimetersResult.Convert(units.MassMomentOfInertiaTonneSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for TonneSquareMilimeter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for TonneSquareMillimeter = %v, want %v", converted, 100)
     }
     // Test PoundSquareFoot conversion
     pound_square_feetDto := units.MassMomentOfInertiaDto{
@@ -840,39 +840,39 @@ func TestMassMomentOfInertiaFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegatonneSquareCentimeter = %v, want %v", converted, 100)
     }
-    // Test KilotonneSquareMilimeter conversion
-    kilotonne_square_milimetersDto := units.MassMomentOfInertiaDto{
+    // Test KilotonneSquareMillimeter conversion
+    kilotonne_square_millimetersDto := units.MassMomentOfInertiaDto{
         Value: 100,
-        Unit:  units.MassMomentOfInertiaKilotonneSquareMilimeter,
+        Unit:  units.MassMomentOfInertiaKilotonneSquareMillimeter,
     }
     
-    var kilotonne_square_milimetersResult *units.MassMomentOfInertia
-    kilotonne_square_milimetersResult, err = factory.FromDto(kilotonne_square_milimetersDto)
+    var kilotonne_square_millimetersResult *units.MassMomentOfInertia
+    kilotonne_square_millimetersResult, err = factory.FromDto(kilotonne_square_millimetersDto)
     if err != nil {
-        t.Errorf("FromDto() with KilotonneSquareMilimeter returned error: %v", err)
+        t.Errorf("FromDto() with KilotonneSquareMillimeter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilotonne_square_milimetersResult.Convert(units.MassMomentOfInertiaKilotonneSquareMilimeter)
+    converted = kilotonne_square_millimetersResult.Convert(units.MassMomentOfInertiaKilotonneSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for KilotonneSquareMilimeter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for KilotonneSquareMillimeter = %v, want %v", converted, 100)
     }
-    // Test MegatonneSquareMilimeter conversion
-    megatonne_square_milimetersDto := units.MassMomentOfInertiaDto{
+    // Test MegatonneSquareMillimeter conversion
+    megatonne_square_millimetersDto := units.MassMomentOfInertiaDto{
         Value: 100,
-        Unit:  units.MassMomentOfInertiaMegatonneSquareMilimeter,
+        Unit:  units.MassMomentOfInertiaMegatonneSquareMillimeter,
     }
     
-    var megatonne_square_milimetersResult *units.MassMomentOfInertia
-    megatonne_square_milimetersResult, err = factory.FromDto(megatonne_square_milimetersDto)
+    var megatonne_square_millimetersResult *units.MassMomentOfInertia
+    megatonne_square_millimetersResult, err = factory.FromDto(megatonne_square_millimetersDto)
     if err != nil {
-        t.Errorf("FromDto() with MegatonneSquareMilimeter returned error: %v", err)
+        t.Errorf("FromDto() with MegatonneSquareMillimeter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megatonne_square_milimetersResult.Convert(units.MassMomentOfInertiaMegatonneSquareMilimeter)
+    converted = megatonne_square_millimetersResult.Convert(units.MassMomentOfInertiaMegatonneSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MegatonneSquareMilimeter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MegatonneSquareMillimeter = %v, want %v", converted, 100)
     }
 
     // Test zero value
@@ -1022,17 +1022,17 @@ func TestMassMomentOfInertiaFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for TonneSquareCentimeter = %v, want %v", converted, 100)
     }
-    // Test JSON with TonneSquareMilimeter unit
-    tonne_square_milimetersJSON := []byte(`{"value": 100, "unit": "TonneSquareMilimeter"}`)
-    tonne_square_milimetersResult, err := factory.FromDtoJSON(tonne_square_milimetersJSON)
+    // Test JSON with TonneSquareMillimeter unit
+    tonne_square_millimetersJSON := []byte(`{"value": 100, "unit": "TonneSquareMillimeter"}`)
+    tonne_square_millimetersResult, err := factory.FromDtoJSON(tonne_square_millimetersJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with TonneSquareMilimeter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with TonneSquareMillimeter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = tonne_square_milimetersResult.Convert(units.MassMomentOfInertiaTonneSquareMilimeter)
+    converted = tonne_square_millimetersResult.Convert(units.MassMomentOfInertiaTonneSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for TonneSquareMilimeter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for TonneSquareMillimeter = %v, want %v", converted, 100)
     }
     // Test JSON with PoundSquareFoot unit
     pound_square_feetJSON := []byte(`{"value": 100, "unit": "PoundSquareFoot"}`)
@@ -1250,29 +1250,29 @@ func TestMassMomentOfInertiaFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegatonneSquareCentimeter = %v, want %v", converted, 100)
     }
-    // Test JSON with KilotonneSquareMilimeter unit
-    kilotonne_square_milimetersJSON := []byte(`{"value": 100, "unit": "KilotonneSquareMilimeter"}`)
-    kilotonne_square_milimetersResult, err := factory.FromDtoJSON(kilotonne_square_milimetersJSON)
+    // Test JSON with KilotonneSquareMillimeter unit
+    kilotonne_square_millimetersJSON := []byte(`{"value": 100, "unit": "KilotonneSquareMillimeter"}`)
+    kilotonne_square_millimetersResult, err := factory.FromDtoJSON(kilotonne_square_millimetersJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with KilotonneSquareMilimeter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with KilotonneSquareMillimeter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilotonne_square_milimetersResult.Convert(units.MassMomentOfInertiaKilotonneSquareMilimeter)
+    converted = kilotonne_square_millimetersResult.Convert(units.MassMomentOfInertiaKilotonneSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for KilotonneSquareMilimeter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for KilotonneSquareMillimeter = %v, want %v", converted, 100)
     }
-    // Test JSON with MegatonneSquareMilimeter unit
-    megatonne_square_milimetersJSON := []byte(`{"value": 100, "unit": "MegatonneSquareMilimeter"}`)
-    megatonne_square_milimetersResult, err := factory.FromDtoJSON(megatonne_square_milimetersJSON)
+    // Test JSON with MegatonneSquareMillimeter unit
+    megatonne_square_millimetersJSON := []byte(`{"value": 100, "unit": "MegatonneSquareMillimeter"}`)
+    megatonne_square_millimetersResult, err := factory.FromDtoJSON(megatonne_square_millimetersJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with MegatonneSquareMilimeter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with MegatonneSquareMillimeter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megatonne_square_milimetersResult.Convert(units.MassMomentOfInertiaMegatonneSquareMilimeter)
+    converted = megatonne_square_millimetersResult.Convert(units.MassMomentOfInertiaMegatonneSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MegatonneSquareMilimeter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MegatonneSquareMillimeter = %v, want %v", converted, 100)
     }
 
     // Test zero value JSON
@@ -1586,47 +1586,47 @@ func TestMassMomentOfInertiaFactory_FromTonneSquareCentimeters(t *testing.T) {
         t.Errorf("FromTonneSquareCentimeters() with zero value = %v, want 0", converted)
     }
 }
-// Test FromTonneSquareMilimeters function
-func TestMassMomentOfInertiaFactory_FromTonneSquareMilimeters(t *testing.T) {
+// Test FromTonneSquareMillimeters function
+func TestMassMomentOfInertiaFactory_FromTonneSquareMillimeters(t *testing.T) {
     factory := units.MassMomentOfInertiaFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromTonneSquareMilimeters(100)
+    result, err := factory.FromTonneSquareMillimeters(100)
     if err != nil {
-        t.Errorf("FromTonneSquareMilimeters() returned error: %v", err)
+        t.Errorf("FromTonneSquareMillimeters() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.MassMomentOfInertiaTonneSquareMilimeter)
+    converted := result.Convert(units.MassMomentOfInertiaTonneSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromTonneSquareMilimeters() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromTonneSquareMillimeters() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromTonneSquareMilimeters(math.NaN())
+    _, err = factory.FromTonneSquareMillimeters(math.NaN())
     if err == nil {
-        t.Error("FromTonneSquareMilimeters() with NaN value should return error")
+        t.Error("FromTonneSquareMillimeters() with NaN value should return error")
     }
 
-    _, err = factory.FromTonneSquareMilimeters(math.Inf(1))
+    _, err = factory.FromTonneSquareMillimeters(math.Inf(1))
     if err == nil {
-        t.Error("FromTonneSquareMilimeters() with +Inf value should return error")
+        t.Error("FromTonneSquareMillimeters() with +Inf value should return error")
     }
 
-    _, err = factory.FromTonneSquareMilimeters(math.Inf(-1))
+    _, err = factory.FromTonneSquareMillimeters(math.Inf(-1))
     if err == nil {
-        t.Error("FromTonneSquareMilimeters() with -Inf value should return error")
+        t.Error("FromTonneSquareMillimeters() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromTonneSquareMilimeters(0)
+    zeroResult, err := factory.FromTonneSquareMillimeters(0)
     if err != nil {
-        t.Errorf("FromTonneSquareMilimeters() with zero value returned error: %v", err)
+        t.Errorf("FromTonneSquareMillimeters() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.MassMomentOfInertiaTonneSquareMilimeter)
+    converted = zeroResult.Convert(units.MassMomentOfInertiaTonneSquareMillimeter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromTonneSquareMilimeters() with zero value = %v, want 0", converted)
+        t.Errorf("FromTonneSquareMillimeters() with zero value = %v, want 0", converted)
     }
 }
 // Test FromPoundSquareFeet function
@@ -2403,90 +2403,90 @@ func TestMassMomentOfInertiaFactory_FromMegatonneSquareCentimeters(t *testing.T)
         t.Errorf("FromMegatonneSquareCentimeters() with zero value = %v, want 0", converted)
     }
 }
-// Test FromKilotonneSquareMilimeters function
-func TestMassMomentOfInertiaFactory_FromKilotonneSquareMilimeters(t *testing.T) {
+// Test FromKilotonneSquareMillimeters function
+func TestMassMomentOfInertiaFactory_FromKilotonneSquareMillimeters(t *testing.T) {
     factory := units.MassMomentOfInertiaFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromKilotonneSquareMilimeters(100)
+    result, err := factory.FromKilotonneSquareMillimeters(100)
     if err != nil {
-        t.Errorf("FromKilotonneSquareMilimeters() returned error: %v", err)
+        t.Errorf("FromKilotonneSquareMillimeters() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.MassMomentOfInertiaKilotonneSquareMilimeter)
+    converted := result.Convert(units.MassMomentOfInertiaKilotonneSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromKilotonneSquareMilimeters() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromKilotonneSquareMillimeters() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromKilotonneSquareMilimeters(math.NaN())
+    _, err = factory.FromKilotonneSquareMillimeters(math.NaN())
     if err == nil {
-        t.Error("FromKilotonneSquareMilimeters() with NaN value should return error")
+        t.Error("FromKilotonneSquareMillimeters() with NaN value should return error")
     }
 
-    _, err = factory.FromKilotonneSquareMilimeters(math.Inf(1))
+    _, err = factory.FromKilotonneSquareMillimeters(math.Inf(1))
     if err == nil {
-        t.Error("FromKilotonneSquareMilimeters() with +Inf value should return error")
+        t.Error("FromKilotonneSquareMillimeters() with +Inf value should return error")
     }
 
-    _, err = factory.FromKilotonneSquareMilimeters(math.Inf(-1))
+    _, err = factory.FromKilotonneSquareMillimeters(math.Inf(-1))
     if err == nil {
-        t.Error("FromKilotonneSquareMilimeters() with -Inf value should return error")
+        t.Error("FromKilotonneSquareMillimeters() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromKilotonneSquareMilimeters(0)
+    zeroResult, err := factory.FromKilotonneSquareMillimeters(0)
     if err != nil {
-        t.Errorf("FromKilotonneSquareMilimeters() with zero value returned error: %v", err)
+        t.Errorf("FromKilotonneSquareMillimeters() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.MassMomentOfInertiaKilotonneSquareMilimeter)
+    converted = zeroResult.Convert(units.MassMomentOfInertiaKilotonneSquareMillimeter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromKilotonneSquareMilimeters() with zero value = %v, want 0", converted)
+        t.Errorf("FromKilotonneSquareMillimeters() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMegatonneSquareMilimeters function
-func TestMassMomentOfInertiaFactory_FromMegatonneSquareMilimeters(t *testing.T) {
+// Test FromMegatonneSquareMillimeters function
+func TestMassMomentOfInertiaFactory_FromMegatonneSquareMillimeters(t *testing.T) {
     factory := units.MassMomentOfInertiaFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMegatonneSquareMilimeters(100)
+    result, err := factory.FromMegatonneSquareMillimeters(100)
     if err != nil {
-        t.Errorf("FromMegatonneSquareMilimeters() returned error: %v", err)
+        t.Errorf("FromMegatonneSquareMillimeters() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.MassMomentOfInertiaMegatonneSquareMilimeter)
+    converted := result.Convert(units.MassMomentOfInertiaMegatonneSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMegatonneSquareMilimeters() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMegatonneSquareMillimeters() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMegatonneSquareMilimeters(math.NaN())
+    _, err = factory.FromMegatonneSquareMillimeters(math.NaN())
     if err == nil {
-        t.Error("FromMegatonneSquareMilimeters() with NaN value should return error")
+        t.Error("FromMegatonneSquareMillimeters() with NaN value should return error")
     }
 
-    _, err = factory.FromMegatonneSquareMilimeters(math.Inf(1))
+    _, err = factory.FromMegatonneSquareMillimeters(math.Inf(1))
     if err == nil {
-        t.Error("FromMegatonneSquareMilimeters() with +Inf value should return error")
+        t.Error("FromMegatonneSquareMillimeters() with +Inf value should return error")
     }
 
-    _, err = factory.FromMegatonneSquareMilimeters(math.Inf(-1))
+    _, err = factory.FromMegatonneSquareMillimeters(math.Inf(-1))
     if err == nil {
-        t.Error("FromMegatonneSquareMilimeters() with -Inf value should return error")
+        t.Error("FromMegatonneSquareMillimeters() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMegatonneSquareMilimeters(0)
+    zeroResult, err := factory.FromMegatonneSquareMillimeters(0)
     if err != nil {
-        t.Errorf("FromMegatonneSquareMilimeters() with zero value returned error: %v", err)
+        t.Errorf("FromMegatonneSquareMillimeters() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.MassMomentOfInertiaMegatonneSquareMilimeter)
+    converted = zeroResult.Convert(units.MassMomentOfInertiaMegatonneSquareMillimeter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMegatonneSquareMilimeters() with zero value = %v, want 0", converted)
+        t.Errorf("FromMegatonneSquareMillimeters() with zero value = %v, want 0", converted)
     }
 }
 
@@ -2600,8 +2600,8 @@ func TestGetMassMomentOfInertiaAbbreviation(t *testing.T) {
             want: "t·cm²",
         },
         {
-            name: "TonneSquareMilimeter abbreviation",
-            unit: units.MassMomentOfInertiaTonneSquareMilimeter,
+            name: "TonneSquareMillimeter abbreviation",
+            unit: units.MassMomentOfInertiaTonneSquareMillimeter,
             want: "t·mm²",
         },
         {
@@ -2695,13 +2695,13 @@ func TestGetMassMomentOfInertiaAbbreviation(t *testing.T) {
             want: "Mt·cm²",
         },
         {
-            name: "KilotonneSquareMilimeter abbreviation",
-            unit: units.MassMomentOfInertiaKilotonneSquareMilimeter,
+            name: "KilotonneSquareMillimeter abbreviation",
+            unit: units.MassMomentOfInertiaKilotonneSquareMillimeter,
             want: "kt·mm²",
         },
         {
-            name: "MegatonneSquareMilimeter abbreviation",
-            unit: units.MassMomentOfInertiaMegatonneSquareMilimeter,
+            name: "MegatonneSquareMillimeter abbreviation",
+            unit: units.MassMomentOfInertiaMegatonneSquareMillimeter,
             want: "Mt·mm²",
         },
         {

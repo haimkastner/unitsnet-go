@@ -521,7 +521,7 @@ func GetSpecificEntropyAbbreviation(unit SpecificEntropyUnits) string {
 	case SpecificEntropyCaloriePerGramKelvin:
 		return "cal/g·K" 
 	case SpecificEntropyBtuPerPoundFahrenheit:
-		return "BTU/lb·°F" 
+		return "BTU/(lb·°F)" 
 	case SpecificEntropyKilojoulePerKilogramKelvin:
 		return "kJ/kg·K" 
 	case SpecificEntropyMegajoulePerKilogramKelvin:

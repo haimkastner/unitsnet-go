@@ -19,7 +19,7 @@ const (
     
         // 
         MassGram MassUnits = "Gram"
-        // 
+        // The tonne is a unit of mass equal to 1,000 kilograms. It is a non-SI unit accepted for use with SI. It is also referred to as a metric ton in the United States to distinguish it from the non-metric units of the short ton (United States customary units) and the long ton (British imperial units). It is equivalent to approximately 2,204.6 pounds, 1.102 short tons, and 0.984 long tons.
         MassTonne MassUnits = "Tonne"
         // The short ton is a unit of mass equal to 2,000 pounds (907.18474 kg), that is most commonly used in the United States – known there simply as the ton.
         MassShortTon MassUnits = "ShortTon"
@@ -369,7 +369,7 @@ func (a *Mass) Grams() float64 {
 
 // Tonnes returns the Mass value in Tonnes.
 //
-// 
+// The tonne is a unit of mass equal to 1,000 kilograms. It is a non-SI unit accepted for use with SI. It is also referred to as a metric ton in the United States to distinguish it from the non-metric units of the short ton (United States customary units) and the long ton (British imperial units). It is equivalent to approximately 2,204.6 pounds, 1.102 short tons, and 0.984 long tons.
 func (a *Mass) Tonnes() float64 {
 	if a.tonnesLazy != nil {
 		return *a.tonnesLazy
@@ -777,23 +777,23 @@ func (a *Mass) convertFromBase(toUnit MassUnits) float64 {
 	case MassTonne:
 		return (value / 1e3) 
 	case MassShortTon:
-		return (value / 9.0718474e2) 
+		return (value / 907.18474) 
 	case MassLongTon:
-		return (value / 1.0160469088e3) 
+		return (value / 1016.0469088) 
 	case MassPound:
 		return (value / 0.45359237) 
 	case MassOunce:
 		return (value / 0.028349523125) 
 	case MassSlug:
-		return (value * 6.852176556196105e-2) 
+		return (value * 0.3048 / (0.45359237 * 9.80665)) 
 	case MassStone:
-		return (value * 0.1574731728702698) 
+		return (value / 6.35029318) 
 	case MassShortHundredweight:
-		return (value * 0.022046226218487758) 
+		return (value / 45.359237) 
 	case MassLongHundredweight:
-		return (value * 0.01968413055222121) 
+		return (value / 50.80234544) 
 	case MassGrain:
-		return (value * 15432.358352941431) 
+		return (value / 64.79891e-6) 
 	case MassSolarMass:
 		return (value / 1.98947e30) 
 	case MassEarthMass:
@@ -838,23 +838,23 @@ func (a *Mass) convertToBase(value float64, fromUnit MassUnits) float64 {
 	case MassTonne:
 		return (value * 1e3) 
 	case MassShortTon:
-		return (value * 9.0718474e2) 
+		return (value * 907.18474) 
 	case MassLongTon:
-		return (value * 1.0160469088e3) 
+		return (value * 1016.0469088) 
 	case MassPound:
 		return (value * 0.45359237) 
 	case MassOunce:
 		return (value * 0.028349523125) 
 	case MassSlug:
-		return (value / 6.852176556196105e-2) 
+		return (value * 0.45359237 * 9.80665 / 0.3048) 
 	case MassStone:
-		return (value / 0.1574731728702698) 
+		return (value * 6.35029318) 
 	case MassShortHundredweight:
-		return (value / 0.022046226218487758) 
+		return (value * 45.359237) 
 	case MassLongHundredweight:
-		return (value / 0.01968413055222121) 
+		return (value * 50.80234544) 
 	case MassGrain:
-		return (value / 15432.358352941431) 
+		return (value * 64.79891e-6) 
 	case MassSolarMass:
 		return (value * 1.98947e30) 
 	case MassEarthMass:

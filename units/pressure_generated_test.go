@@ -303,24 +303,6 @@ func TestPressureConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to MetersOfElevation.
-		// No expected conversion value provided for MetersOfElevation, verifying result is not NaN.
-		result := a.MetersOfElevation()
-		cacheResult := a.MetersOfElevation()
-		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MetersOfElevation returned NaN")
-		}
-	}
-	{
-		// Test conversion to FeetOfElevation.
-		// No expected conversion value provided for FeetOfElevation, verifying result is not NaN.
-		result := a.FeetOfElevation()
-		cacheResult := a.FeetOfElevation()
-		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to FeetOfElevation returned NaN")
-		}
-	}
-	{
 		// Test conversion to Micropascals.
 		// No expected conversion value provided for Micropascals, verifying result is not NaN.
 		result := a.Micropascals()
@@ -1011,40 +993,6 @@ func TestPressureFactory_FromDto(t *testing.T) {
     converted = inches_of_water_columnResult.Convert(units.PressureInchOfWaterColumn)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for InchOfWaterColumn = %v, want %v", converted, 100)
-    }
-    // Test MeterOfElevation conversion
-    meters_of_elevationDto := units.PressureDto{
-        Value: 100,
-        Unit:  units.PressureMeterOfElevation,
-    }
-    
-    var meters_of_elevationResult *units.Pressure
-    meters_of_elevationResult, err = factory.FromDto(meters_of_elevationDto)
-    if err != nil {
-        t.Errorf("FromDto() with MeterOfElevation returned error: %v", err)
-    }
-    
-    // Convert back to original unit and compare
-    converted = meters_of_elevationResult.Convert(units.PressureMeterOfElevation)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MeterOfElevation = %v, want %v", converted, 100)
-    }
-    // Test FootOfElevation conversion
-    feet_of_elevationDto := units.PressureDto{
-        Value: 100,
-        Unit:  units.PressureFootOfElevation,
-    }
-    
-    var feet_of_elevationResult *units.Pressure
-    feet_of_elevationResult, err = factory.FromDto(feet_of_elevationDto)
-    if err != nil {
-        t.Errorf("FromDto() with FootOfElevation returned error: %v", err)
-    }
-    
-    // Convert back to original unit and compare
-    converted = feet_of_elevationResult.Convert(units.PressureFootOfElevation)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for FootOfElevation = %v, want %v", converted, 100)
     }
     // Test Micropascal conversion
     micropascalsDto := units.PressureDto{
@@ -1783,30 +1731,6 @@ func TestPressureFactory_FromDtoJSON(t *testing.T) {
     converted = inches_of_water_columnResult.Convert(units.PressureInchOfWaterColumn)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for InchOfWaterColumn = %v, want %v", converted, 100)
-    }
-    // Test JSON with MeterOfElevation unit
-    meters_of_elevationJSON := []byte(`{"value": 100, "unit": "MeterOfElevation"}`)
-    meters_of_elevationResult, err := factory.FromDtoJSON(meters_of_elevationJSON)
-    if err != nil {
-        t.Errorf("FromDtoJSON() with MeterOfElevation unit returned error: %v", err)
-    }
-    
-    // Convert back to original unit and compare
-    converted = meters_of_elevationResult.Convert(units.PressureMeterOfElevation)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MeterOfElevation = %v, want %v", converted, 100)
-    }
-    // Test JSON with FootOfElevation unit
-    feet_of_elevationJSON := []byte(`{"value": 100, "unit": "FootOfElevation"}`)
-    feet_of_elevationResult, err := factory.FromDtoJSON(feet_of_elevationJSON)
-    if err != nil {
-        t.Errorf("FromDtoJSON() with FootOfElevation unit returned error: %v", err)
-    }
-    
-    // Convert back to original unit and compare
-    converted = feet_of_elevationResult.Convert(units.PressureFootOfElevation)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for FootOfElevation = %v, want %v", converted, 100)
     }
     // Test JSON with Micropascal unit
     micropascalsJSON := []byte(`{"value": 100, "unit": "Micropascal"}`)
@@ -3158,92 +3082,6 @@ func TestPressureFactory_FromInchesOfWaterColumn(t *testing.T) {
         t.Errorf("FromInchesOfWaterColumn() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMetersOfElevation function
-func TestPressureFactory_FromMetersOfElevation(t *testing.T) {
-    factory := units.PressureFactory{}
-    var err error
-
-    // Test valid value
-    result, err := factory.FromMetersOfElevation(100)
-    if err != nil {
-        t.Errorf("FromMetersOfElevation() returned error: %v", err)
-    }
-    
-    // Convert back and verify
-    converted := result.Convert(units.PressureMeterOfElevation)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMetersOfElevation() round-trip = %v, want %v", converted, 100)
-    }
-
-    // Test invalid values
-    _, err = factory.FromMetersOfElevation(math.NaN())
-    if err == nil {
-        t.Error("FromMetersOfElevation() with NaN value should return error")
-    }
-
-    _, err = factory.FromMetersOfElevation(math.Inf(1))
-    if err == nil {
-        t.Error("FromMetersOfElevation() with +Inf value should return error")
-    }
-
-    _, err = factory.FromMetersOfElevation(math.Inf(-1))
-    if err == nil {
-        t.Error("FromMetersOfElevation() with -Inf value should return error")
-    }
-
-    // Test zero value
-    zeroResult, err := factory.FromMetersOfElevation(0)
-    if err != nil {
-        t.Errorf("FromMetersOfElevation() with zero value returned error: %v", err)
-    }
-    converted = zeroResult.Convert(units.PressureMeterOfElevation)
-    if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMetersOfElevation() with zero value = %v, want 0", converted)
-    }
-}
-// Test FromFeetOfElevation function
-func TestPressureFactory_FromFeetOfElevation(t *testing.T) {
-    factory := units.PressureFactory{}
-    var err error
-
-    // Test valid value
-    result, err := factory.FromFeetOfElevation(100)
-    if err != nil {
-        t.Errorf("FromFeetOfElevation() returned error: %v", err)
-    }
-    
-    // Convert back and verify
-    converted := result.Convert(units.PressureFootOfElevation)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromFeetOfElevation() round-trip = %v, want %v", converted, 100)
-    }
-
-    // Test invalid values
-    _, err = factory.FromFeetOfElevation(math.NaN())
-    if err == nil {
-        t.Error("FromFeetOfElevation() with NaN value should return error")
-    }
-
-    _, err = factory.FromFeetOfElevation(math.Inf(1))
-    if err == nil {
-        t.Error("FromFeetOfElevation() with +Inf value should return error")
-    }
-
-    _, err = factory.FromFeetOfElevation(math.Inf(-1))
-    if err == nil {
-        t.Error("FromFeetOfElevation() with -Inf value should return error")
-    }
-
-    // Test zero value
-    zeroResult, err := factory.FromFeetOfElevation(0)
-    if err != nil {
-        t.Errorf("FromFeetOfElevation() with zero value returned error: %v", err)
-    }
-    converted = zeroResult.Convert(units.PressureFootOfElevation)
-    if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromFeetOfElevation() with zero value = %v, want 0", converted)
-    }
-}
 // Test FromMicropascals function
 func TestPressureFactory_FromMicropascals(t *testing.T) {
     factory := units.PressureFactory{}
@@ -4389,16 +4227,6 @@ func TestGetPressureAbbreviation(t *testing.T) {
             name: "InchOfWaterColumn abbreviation",
             unit: units.PressureInchOfWaterColumn,
             want: "inH2O",
-        },
-        {
-            name: "MeterOfElevation abbreviation",
-            unit: units.PressureMeterOfElevation,
-            want: "m of elevation",
-        },
-        {
-            name: "FootOfElevation abbreviation",
-            unit: units.PressureFootOfElevation,
-            want: "ft of elevation",
         },
         {
             name: "Micropascal abbreviation",

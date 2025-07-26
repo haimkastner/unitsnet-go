@@ -25,9 +25,9 @@ const (
         AccelerationFootPerSecondSquared AccelerationUnits = "FootPerSecondSquared"
         // 
         AccelerationKnotPerSecond AccelerationUnits = "KnotPerSecond"
-        // 
+        // The knot (/nɒt/) is a unit of speed equal to one nautical mile per hour, exactly 1.852 km/h (approximately 1.151 mph or 0.514 m/s).
         AccelerationKnotPerMinute AccelerationUnits = "KnotPerMinute"
-        // 
+        // The knot (/nɒt/) is a unit of speed equal to one nautical mile per hour, exactly 1.852 km/h (approximately 1.151 mph or 0.514 m/s).
         AccelerationKnotPerHour AccelerationUnits = "KnotPerHour"
         // 
         AccelerationStandardGravity AccelerationUnits = "StandardGravity"
@@ -288,7 +288,7 @@ func (a *Acceleration) KnotsPerSecond() float64 {
 
 // KnotsPerMinute returns the Acceleration value in KnotsPerMinute.
 //
-// 
+// The knot (/nɒt/) is a unit of speed equal to one nautical mile per hour, exactly 1.852 km/h (approximately 1.151 mph or 0.514 m/s).
 func (a *Acceleration) KnotsPerMinute() float64 {
 	if a.knots_per_minuteLazy != nil {
 		return *a.knots_per_minuteLazy
@@ -300,7 +300,7 @@ func (a *Acceleration) KnotsPerMinute() float64 {
 
 // KnotsPerHour returns the Acceleration value in KnotsPerHour.
 //
-// 
+// The knot (/nɒt/) is a unit of speed equal to one nautical mile per hour, exactly 1.852 km/h (approximately 1.151 mph or 0.514 m/s).
 func (a *Acceleration) KnotsPerHour() float64 {
 	if a.knots_per_hourLazy != nil {
 		return *a.knots_per_hourLazy
@@ -480,11 +480,11 @@ func (a *Acceleration) convertFromBase(toUnit AccelerationUnits) float64 {
 	case AccelerationFootPerSecondSquared:
 		return (value / 0.304800) 
 	case AccelerationKnotPerSecond:
-		return (value / 0.5144444444444) 
+		return (value / (1852.0 / 3600.0)) 
 	case AccelerationKnotPerMinute:
-		return (value / 0.5144444444444 * 60) 
+		return (value * 60 / (1852.0 / 3600.0)) 
 	case AccelerationKnotPerHour:
-		return (value / 0.5144444444444 * 3600) 
+		return (value * 3600 / (1852.0 / 3600.0)) 
 	case AccelerationStandardGravity:
 		return (value / 9.80665) 
 	case AccelerationNanometerPerSecondSquared:
@@ -515,11 +515,11 @@ func (a *Acceleration) convertToBase(value float64, fromUnit AccelerationUnits) 
 	case AccelerationFootPerSecondSquared:
 		return (value * 0.304800) 
 	case AccelerationKnotPerSecond:
-		return (value * 0.5144444444444) 
+		return (value * (1852.0 / 3600.0)) 
 	case AccelerationKnotPerMinute:
-		return (value * 0.5144444444444 / 60) 
+		return (value * (1852.0 / 3600.0) / 60) 
 	case AccelerationKnotPerHour:
-		return (value * 0.5144444444444 / 3600) 
+		return (value * (1852.0 / 3600.0) / 3600) 
 	case AccelerationStandardGravity:
 		return (value * 9.80665) 
 	case AccelerationNanometerPerSecondSquared:

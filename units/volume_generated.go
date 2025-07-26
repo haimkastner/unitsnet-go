@@ -33,55 +33,55 @@ const (
         VolumeCubicMillimeter VolumeUnits = "CubicMillimeter"
         // 
         VolumeCubicMicrometer VolumeUnits = "CubicMicrometer"
-        // 
+        // A cubic mile (abbreviation: cu mi or mi3) is an imperial and US customary (non-SI non-metric) unit of volume, used in the United States, Canada and the United Kingdom. It is defined as the volume of a cube with sides of 1 mile (63360 inches, 5280 feet, 1760 yards or ~1.609 kilometres) in length.
         VolumeCubicMile VolumeUnits = "CubicMile"
-        // 
+        // A cubic yard is an Imperial / U.S. customary (non-SI non-metric) unit of volume, used in Canada and the United States. It is defined as the volume of a cube with sides of 1 yard (3 feet, 36 inches, 0.9144 meters) in length.
         VolumeCubicYard VolumeUnits = "CubicYard"
-        // 
+        // The cubic foot (symbol ft3 or cu ft) is an imperial and US customary (non-metric) unit of volume, used in the United States and the United Kingdom. It is defined as the volume of a cube with sides of one foot (0.3048 m) in length.
         VolumeCubicFoot VolumeUnits = "CubicFoot"
-        // 
+        // The cubic inch (symbol in3) is a unit of volume in the Imperial units and United States customary units systems. It is the volume of a cube with each of its three dimensions (length, width, and height) being one inch long which is equivalent to 1/231 of a US gallon.
         VolumeCubicInch VolumeUnits = "CubicInch"
         // The British imperial gallon (frequently called simply "gallon") is defined as exactly 4.54609 litres.
         VolumeImperialGallon VolumeUnits = "ImperialGallon"
-        // 
+        // An imperial fluid ounce is 1⁄20 of an imperial pint, 1⁄160 of an imperial gallon or exactly 28.4130625 mL.
         VolumeImperialOunce VolumeUnits = "ImperialOunce"
         // The US liquid gallon (frequently called simply "gallon") is legally defined as 231 cubic inches, which is exactly 3.785411784 litres.
         VolumeUsGallon VolumeUnits = "UsGallon"
-        // 
+        // A US customary fluid ounce is 1⁄16 of a US liquid pint and 1⁄128 of a US liquid gallon or exactly 29.5735295625 mL, making it about 4.08% larger than the imperial fluid ounce.
         VolumeUsOunce VolumeUnits = "UsOunce"
-        // 
+        // The traditional U.S. interpretation of the tablespoon as a unit of volume is: 1 US tablespoon = 4 fluid drams, or 3 teaspoons or 1/2 US fluid ounce (≈ 14.8 ml)
         VolumeUsTablespoon VolumeUnits = "UsTablespoon"
-        // 
+        // In Australia, the definition of the tablespoon is 20 ml (0.70 imp fl oz).
         VolumeAuTablespoon VolumeUnits = "AuTablespoon"
-        // 
+        // In nutrition labeling in the U.S. and the U.K., a tablespoon is defined as 15 ml (0.51 US fl oz). In Australia, the definition of the tablespoon is 20 ml (0.70 imp fl oz).
         VolumeUkTablespoon VolumeUnits = "UkTablespoon"
-        // 
+        // The metric teaspoon as a unit of culinary measure is 5 ml (0.18 imp fl oz; 0.17 US fl oz),[17] equal to 5 cm3, 1⁄3 UK/Canadian metric tablespoon, or 1⁄4 Australian metric tablespoon.
         VolumeMetricTeaspoon VolumeUnits = "MetricTeaspoon"
-        // 
+        // As a unit of culinary measure, one teaspoon in the United States is 1⁄3 tablespoon, exactly 4.92892159375 ml, 1 1⁄3 US fluid drams, 1⁄6 US fl oz, 1⁄48 US cup, 1⁄768 US liquid gallon, or 77⁄256 (0.30078125) cubic inches.
         VolumeUsTeaspoon VolumeUnits = "UsTeaspoon"
-        // 
+        // Australia, Canada, New Zealand, and some other members of the Commonwealth of Nations, being former British colonies that have since metricated, employ a metric cup of 250 millilitres. Although derived from the metric system, it is not an SI unit.
         VolumeMetricCup VolumeUnits = "MetricCup"
-        // 
+        // In the United States, the customary cup is half of a liquid pint or 1⁄16 US customary gallon which is 236.5882365 milliliters exactly.
         VolumeUsCustomaryCup VolumeUnits = "UsCustomaryCup"
-        // 
+        // The cup currently used in the United States for nutrition labelling is defined in United States law as 240 ml.
         VolumeUsLegalCup VolumeUnits = "UsLegalCup"
-        // 
+        // In the oil industry, one barrel (unit symbol bbl) is a unit of volume used for measuring oil defined as exactly 42 US gallons, approximately 159 liters, or 35 imperial gallons.
         VolumeOilBarrel VolumeUnits = "OilBarrel"
-        // 
+        // Fluid barrels vary depending on what is being measured and where. In the US most fluid barrels (apart from oil) are 31.5 US gallons (26 imp gal; 119 L) (half a hogshead), but a beer barrel is 31 US gallons (26 imp gal; 117 L).
         VolumeUsBeerBarrel VolumeUnits = "UsBeerBarrel"
-        // 
+        // Fluid barrels vary depending on what is being measured and where. In the UK a beer barrel is 36 imperial gallons (43 US gal; ~164 L).
         VolumeImperialBeerBarrel VolumeUnits = "ImperialBeerBarrel"
-        // 
+        // The US liquid quart equals 57.75 cubic inches, which is exactly equal to 0.946352946 L.
         VolumeUsQuart VolumeUnits = "UsQuart"
-        // 
+        // The imperial quart, which is used for both liquid and dry capacity, is equal to one quarter of an imperial gallon, or exactly 1.1365225 liters.
         VolumeImperialQuart VolumeUnits = "ImperialQuart"
-        // 
+        // The pint is a unit of volume or capacity in both the imperial and United States customary measurement systems. In both of those systems it is traditionally one eighth of a gallon. The British imperial pint is about 20% larger than the American pint because the two systems are defined differently.
         VolumeUsPint VolumeUnits = "UsPint"
-        // 
+        // An acre-foot is 43,560 cubic feet (~1,233.5 m3).
         VolumeAcreFoot VolumeUnits = "AcreFoot"
-        // 
+        // The pint is a unit of volume or capacity in both the imperial and United States customary measurement systems. In both of those systems it is traditionally one eighth of a gallon. The British imperial pint is about 20% larger than the American pint because the two systems are defined differently.
         VolumeImperialPint VolumeUnits = "ImperialPint"
-        // 
+        // The board foot or board-foot is a unit of measurement for the volume of lumber in the United States and Canada. It equals the volume of a board that is one-foot (305 mm) in length, one-foot (305 mm) in width, and one-inch (25.4 mm) in thickness.
         VolumeBoardFoot VolumeUnits = "BoardFoot"
         // 
         VolumeNanoliter VolumeUnits = "Nanoliter"
@@ -696,7 +696,7 @@ func (a *Volume) CubicMicrometers() float64 {
 
 // CubicMiles returns the Volume value in CubicMiles.
 //
-// 
+// A cubic mile (abbreviation: cu mi or mi3) is an imperial and US customary (non-SI non-metric) unit of volume, used in the United States, Canada and the United Kingdom. It is defined as the volume of a cube with sides of 1 mile (63360 inches, 5280 feet, 1760 yards or ~1.609 kilometres) in length.
 func (a *Volume) CubicMiles() float64 {
 	if a.cubic_milesLazy != nil {
 		return *a.cubic_milesLazy
@@ -708,7 +708,7 @@ func (a *Volume) CubicMiles() float64 {
 
 // CubicYards returns the Volume value in CubicYards.
 //
-// 
+// A cubic yard is an Imperial / U.S. customary (non-SI non-metric) unit of volume, used in Canada and the United States. It is defined as the volume of a cube with sides of 1 yard (3 feet, 36 inches, 0.9144 meters) in length.
 func (a *Volume) CubicYards() float64 {
 	if a.cubic_yardsLazy != nil {
 		return *a.cubic_yardsLazy
@@ -720,7 +720,7 @@ func (a *Volume) CubicYards() float64 {
 
 // CubicFeet returns the Volume value in CubicFeet.
 //
-// 
+// The cubic foot (symbol ft3 or cu ft) is an imperial and US customary (non-metric) unit of volume, used in the United States and the United Kingdom. It is defined as the volume of a cube with sides of one foot (0.3048 m) in length.
 func (a *Volume) CubicFeet() float64 {
 	if a.cubic_feetLazy != nil {
 		return *a.cubic_feetLazy
@@ -732,7 +732,7 @@ func (a *Volume) CubicFeet() float64 {
 
 // CubicInches returns the Volume value in CubicInches.
 //
-// 
+// The cubic inch (symbol in3) is a unit of volume in the Imperial units and United States customary units systems. It is the volume of a cube with each of its three dimensions (length, width, and height) being one inch long which is equivalent to 1/231 of a US gallon.
 func (a *Volume) CubicInches() float64 {
 	if a.cubic_inchesLazy != nil {
 		return *a.cubic_inchesLazy
@@ -756,7 +756,7 @@ func (a *Volume) ImperialGallons() float64 {
 
 // ImperialOunces returns the Volume value in ImperialOunces.
 //
-// 
+// An imperial fluid ounce is 1⁄20 of an imperial pint, 1⁄160 of an imperial gallon or exactly 28.4130625 mL.
 func (a *Volume) ImperialOunces() float64 {
 	if a.imperial_ouncesLazy != nil {
 		return *a.imperial_ouncesLazy
@@ -780,7 +780,7 @@ func (a *Volume) UsGallons() float64 {
 
 // UsOunces returns the Volume value in UsOunces.
 //
-// 
+// A US customary fluid ounce is 1⁄16 of a US liquid pint and 1⁄128 of a US liquid gallon or exactly 29.5735295625 mL, making it about 4.08% larger than the imperial fluid ounce.
 func (a *Volume) UsOunces() float64 {
 	if a.us_ouncesLazy != nil {
 		return *a.us_ouncesLazy
@@ -792,7 +792,7 @@ func (a *Volume) UsOunces() float64 {
 
 // UsTablespoons returns the Volume value in UsTablespoons.
 //
-// 
+// The traditional U.S. interpretation of the tablespoon as a unit of volume is: 1 US tablespoon = 4 fluid drams, or 3 teaspoons or 1/2 US fluid ounce (≈ 14.8 ml)
 func (a *Volume) UsTablespoons() float64 {
 	if a.us_tablespoonsLazy != nil {
 		return *a.us_tablespoonsLazy
@@ -804,7 +804,7 @@ func (a *Volume) UsTablespoons() float64 {
 
 // AuTablespoons returns the Volume value in AuTablespoons.
 //
-// 
+// In Australia, the definition of the tablespoon is 20 ml (0.70 imp fl oz).
 func (a *Volume) AuTablespoons() float64 {
 	if a.au_tablespoonsLazy != nil {
 		return *a.au_tablespoonsLazy
@@ -816,7 +816,7 @@ func (a *Volume) AuTablespoons() float64 {
 
 // UkTablespoons returns the Volume value in UkTablespoons.
 //
-// 
+// In nutrition labeling in the U.S. and the U.K., a tablespoon is defined as 15 ml (0.51 US fl oz). In Australia, the definition of the tablespoon is 20 ml (0.70 imp fl oz).
 func (a *Volume) UkTablespoons() float64 {
 	if a.uk_tablespoonsLazy != nil {
 		return *a.uk_tablespoonsLazy
@@ -828,7 +828,7 @@ func (a *Volume) UkTablespoons() float64 {
 
 // MetricTeaspoons returns the Volume value in MetricTeaspoons.
 //
-// 
+// The metric teaspoon as a unit of culinary measure is 5 ml (0.18 imp fl oz; 0.17 US fl oz),[17] equal to 5 cm3, 1⁄3 UK/Canadian metric tablespoon, or 1⁄4 Australian metric tablespoon.
 func (a *Volume) MetricTeaspoons() float64 {
 	if a.metric_teaspoonsLazy != nil {
 		return *a.metric_teaspoonsLazy
@@ -840,7 +840,7 @@ func (a *Volume) MetricTeaspoons() float64 {
 
 // UsTeaspoons returns the Volume value in UsTeaspoons.
 //
-// 
+// As a unit of culinary measure, one teaspoon in the United States is 1⁄3 tablespoon, exactly 4.92892159375 ml, 1 1⁄3 US fluid drams, 1⁄6 US fl oz, 1⁄48 US cup, 1⁄768 US liquid gallon, or 77⁄256 (0.30078125) cubic inches.
 func (a *Volume) UsTeaspoons() float64 {
 	if a.us_teaspoonsLazy != nil {
 		return *a.us_teaspoonsLazy
@@ -852,7 +852,7 @@ func (a *Volume) UsTeaspoons() float64 {
 
 // MetricCups returns the Volume value in MetricCups.
 //
-// 
+// Australia, Canada, New Zealand, and some other members of the Commonwealth of Nations, being former British colonies that have since metricated, employ a metric cup of 250 millilitres. Although derived from the metric system, it is not an SI unit.
 func (a *Volume) MetricCups() float64 {
 	if a.metric_cupsLazy != nil {
 		return *a.metric_cupsLazy
@@ -864,7 +864,7 @@ func (a *Volume) MetricCups() float64 {
 
 // UsCustomaryCups returns the Volume value in UsCustomaryCups.
 //
-// 
+// In the United States, the customary cup is half of a liquid pint or 1⁄16 US customary gallon which is 236.5882365 milliliters exactly.
 func (a *Volume) UsCustomaryCups() float64 {
 	if a.us_customary_cupsLazy != nil {
 		return *a.us_customary_cupsLazy
@@ -876,7 +876,7 @@ func (a *Volume) UsCustomaryCups() float64 {
 
 // UsLegalCups returns the Volume value in UsLegalCups.
 //
-// 
+// The cup currently used in the United States for nutrition labelling is defined in United States law as 240 ml.
 func (a *Volume) UsLegalCups() float64 {
 	if a.us_legal_cupsLazy != nil {
 		return *a.us_legal_cupsLazy
@@ -888,7 +888,7 @@ func (a *Volume) UsLegalCups() float64 {
 
 // OilBarrels returns the Volume value in OilBarrels.
 //
-// 
+// In the oil industry, one barrel (unit symbol bbl) is a unit of volume used for measuring oil defined as exactly 42 US gallons, approximately 159 liters, or 35 imperial gallons.
 func (a *Volume) OilBarrels() float64 {
 	if a.oil_barrelsLazy != nil {
 		return *a.oil_barrelsLazy
@@ -900,7 +900,7 @@ func (a *Volume) OilBarrels() float64 {
 
 // UsBeerBarrels returns the Volume value in UsBeerBarrels.
 //
-// 
+// Fluid barrels vary depending on what is being measured and where. In the US most fluid barrels (apart from oil) are 31.5 US gallons (26 imp gal; 119 L) (half a hogshead), but a beer barrel is 31 US gallons (26 imp gal; 117 L).
 func (a *Volume) UsBeerBarrels() float64 {
 	if a.us_beer_barrelsLazy != nil {
 		return *a.us_beer_barrelsLazy
@@ -912,7 +912,7 @@ func (a *Volume) UsBeerBarrels() float64 {
 
 // ImperialBeerBarrels returns the Volume value in ImperialBeerBarrels.
 //
-// 
+// Fluid barrels vary depending on what is being measured and where. In the UK a beer barrel is 36 imperial gallons (43 US gal; ~164 L).
 func (a *Volume) ImperialBeerBarrels() float64 {
 	if a.imperial_beer_barrelsLazy != nil {
 		return *a.imperial_beer_barrelsLazy
@@ -924,7 +924,7 @@ func (a *Volume) ImperialBeerBarrels() float64 {
 
 // UsQuarts returns the Volume value in UsQuarts.
 //
-// 
+// The US liquid quart equals 57.75 cubic inches, which is exactly equal to 0.946352946 L.
 func (a *Volume) UsQuarts() float64 {
 	if a.us_quartsLazy != nil {
 		return *a.us_quartsLazy
@@ -936,7 +936,7 @@ func (a *Volume) UsQuarts() float64 {
 
 // ImperialQuarts returns the Volume value in ImperialQuarts.
 //
-// 
+// The imperial quart, which is used for both liquid and dry capacity, is equal to one quarter of an imperial gallon, or exactly 1.1365225 liters.
 func (a *Volume) ImperialQuarts() float64 {
 	if a.imperial_quartsLazy != nil {
 		return *a.imperial_quartsLazy
@@ -948,7 +948,7 @@ func (a *Volume) ImperialQuarts() float64 {
 
 // UsPints returns the Volume value in UsPints.
 //
-// 
+// The pint is a unit of volume or capacity in both the imperial and United States customary measurement systems. In both of those systems it is traditionally one eighth of a gallon. The British imperial pint is about 20% larger than the American pint because the two systems are defined differently.
 func (a *Volume) UsPints() float64 {
 	if a.us_pintsLazy != nil {
 		return *a.us_pintsLazy
@@ -960,7 +960,7 @@ func (a *Volume) UsPints() float64 {
 
 // AcreFeet returns the Volume value in AcreFeet.
 //
-// 
+// An acre-foot is 43,560 cubic feet (~1,233.5 m3).
 func (a *Volume) AcreFeet() float64 {
 	if a.acre_feetLazy != nil {
 		return *a.acre_feetLazy
@@ -972,7 +972,7 @@ func (a *Volume) AcreFeet() float64 {
 
 // ImperialPints returns the Volume value in ImperialPints.
 //
-// 
+// The pint is a unit of volume or capacity in both the imperial and United States customary measurement systems. In both of those systems it is traditionally one eighth of a gallon. The British imperial pint is about 20% larger than the American pint because the two systems are defined differently.
 func (a *Volume) ImperialPints() float64 {
 	if a.imperial_pintsLazy != nil {
 		return *a.imperial_pintsLazy
@@ -984,7 +984,7 @@ func (a *Volume) ImperialPints() float64 {
 
 // BoardFeet returns the Volume value in BoardFeet.
 //
-// 
+// The board foot or board-foot is a unit of measurement for the volume of lumber in the United States and Canada. It equals the volume of a board that is one-foot (305 mm) in length, one-foot (305 mm) in width, and one-inch (25.4 mm) in thickness.
 func (a *Volume) BoardFeet() float64 {
 	if a.board_feetLazy != nil {
 		return *a.board_feetLazy
@@ -1410,21 +1410,21 @@ func (a *Volume) convertFromBase(toUnit VolumeUnits) float64 {
 	case VolumeCubicMicrometer:
 		return (value * 1e18) 
 	case VolumeCubicMile:
-		return (value / 4.16818182544058e9) 
+		return (value / 4.168181825440579584e9) 
 	case VolumeCubicYard:
-		return (value / 0.764554858) 
+		return (value / 0.764554857984) 
 	case VolumeCubicFoot:
-		return (value / 2.8316846592e-2) 
+		return (value / 0.028316846592) 
 	case VolumeCubicInch:
 		return (value / 1.6387064e-5) 
 	case VolumeImperialGallon:
 		return (value / 0.00454609) 
 	case VolumeImperialOunce:
-		return (value / 2.8413062499962901241875439064617e-5) 
+		return (value / 2.84130625e-5) 
 	case VolumeUsGallon:
 		return (value / 0.003785411784) 
 	case VolumeUsOunce:
-		return (value / 2.957352956253760505068307980135e-5) 
+		return (value / 2.95735295625e-5) 
 	case VolumeUsTablespoon:
 		return (value / 1.478676478125e-5) 
 	case VolumeAuTablespoon:
@@ -1444,7 +1444,7 @@ func (a *Volume) convertFromBase(toUnit VolumeUnits) float64 {
 	case VolumeOilBarrel:
 		return (value / 0.158987294928) 
 	case VolumeUsBeerBarrel:
-		return (value / 0.1173477658) 
+		return (value / 0.117347765304) 
 	case VolumeImperialBeerBarrel:
 		return (value / 0.16365924) 
 	case VolumeUsQuart:
@@ -1454,11 +1454,11 @@ func (a *Volume) convertFromBase(toUnit VolumeUnits) float64 {
 	case VolumeUsPint:
 		return (value / 4.73176473e-4) 
 	case VolumeAcreFoot:
-		return (value * 0.000810714) 
+		return (value / 1233.48183754752) 
 	case VolumeImperialPint:
 		return (value / 5.6826125e-4) 
 	case VolumeBoardFoot:
-		return (value / 2.3597372158e-3) 
+		return (value / (0.028316846592 / 12)) 
 	case VolumeNanoliter:
 		return ((value * 1e3) / 1e-09) 
 	case VolumeMicroliter:
@@ -1482,11 +1482,11 @@ func (a *Volume) convertFromBase(toUnit VolumeUnits) float64 {
 	case VolumeKilocubicMeter:
 		return ((value) / 1000.0) 
 	case VolumeHectocubicFoot:
-		return ((value / 2.8316846592e-2) / 100.0) 
+		return ((value / 0.028316846592) / 100.0) 
 	case VolumeKilocubicFoot:
-		return ((value / 2.8316846592e-2) / 1000.0) 
+		return ((value / 0.028316846592) / 1000.0) 
 	case VolumeMegacubicFoot:
-		return ((value / 2.8316846592e-2) / 1000000.0) 
+		return ((value / 0.028316846592) / 1000000.0) 
 	case VolumeKiloimperialGallon:
 		return ((value / 0.00454609) / 1000.0) 
 	case VolumeMegaimperialGallon:
@@ -1525,21 +1525,21 @@ func (a *Volume) convertToBase(value float64, fromUnit VolumeUnits) float64 {
 	case VolumeCubicMicrometer:
 		return (value / 1e18) 
 	case VolumeCubicMile:
-		return (value * 4.16818182544058e9) 
+		return (value * 4.168181825440579584e9) 
 	case VolumeCubicYard:
-		return (value * 0.764554858) 
+		return (value * 0.764554857984) 
 	case VolumeCubicFoot:
-		return (value * 2.8316846592e-2) 
+		return (value * 0.028316846592) 
 	case VolumeCubicInch:
 		return (value * 1.6387064e-5) 
 	case VolumeImperialGallon:
 		return (value * 0.00454609) 
 	case VolumeImperialOunce:
-		return (value * 2.8413062499962901241875439064617e-5) 
+		return (value * 2.84130625e-5) 
 	case VolumeUsGallon:
 		return (value * 0.003785411784) 
 	case VolumeUsOunce:
-		return (value * 2.957352956253760505068307980135e-5) 
+		return (value * 2.95735295625e-5) 
 	case VolumeUsTablespoon:
 		return (value * 1.478676478125e-5) 
 	case VolumeAuTablespoon:
@@ -1559,7 +1559,7 @@ func (a *Volume) convertToBase(value float64, fromUnit VolumeUnits) float64 {
 	case VolumeOilBarrel:
 		return (value * 0.158987294928) 
 	case VolumeUsBeerBarrel:
-		return (value * 0.1173477658) 
+		return (value * 0.117347765304) 
 	case VolumeImperialBeerBarrel:
 		return (value * 0.16365924) 
 	case VolumeUsQuart:
@@ -1569,11 +1569,11 @@ func (a *Volume) convertToBase(value float64, fromUnit VolumeUnits) float64 {
 	case VolumeUsPint:
 		return (value * 4.73176473e-4) 
 	case VolumeAcreFoot:
-		return (value / 0.000810714) 
+		return (value * 1233.48183754752) 
 	case VolumeImperialPint:
 		return (value * 5.6826125e-4) 
 	case VolumeBoardFoot:
-		return (value * 2.3597372158e-3) 
+		return (value * (0.028316846592 / 12)) 
 	case VolumeNanoliter:
 		return ((value / 1e3) * 1e-09) 
 	case VolumeMicroliter:
@@ -1597,11 +1597,11 @@ func (a *Volume) convertToBase(value float64, fromUnit VolumeUnits) float64 {
 	case VolumeKilocubicMeter:
 		return ((value) * 1000.0) 
 	case VolumeHectocubicFoot:
-		return ((value * 2.8316846592e-2) * 100.0) 
+		return ((value * 0.028316846592) * 100.0) 
 	case VolumeKilocubicFoot:
-		return ((value * 2.8316846592e-2) * 1000.0) 
+		return ((value * 0.028316846592) * 1000.0) 
 	case VolumeMegacubicFoot:
-		return ((value * 2.8316846592e-2) * 1000000.0) 
+		return ((value * 0.028316846592) * 1000000.0) 
 	case VolumeKiloimperialGallon:
 		return ((value * 0.00454609) * 1000.0) 
 	case VolumeMegaimperialGallon:
@@ -1762,21 +1762,21 @@ func GetVolumeAbbreviation(unit VolumeUnits) string {
 	case VolumeUsOunce:
 		return "oz (U.S.)" 
 	case VolumeUsTablespoon:
-		return "" 
+		return "tablespoon (U.S.)" 
 	case VolumeAuTablespoon:
-		return "" 
+		return "tablespoon (A.U.)" 
 	case VolumeUkTablespoon:
-		return "" 
+		return "tablespoon (U.K.)" 
 	case VolumeMetricTeaspoon:
 		return "tsp" 
 	case VolumeUsTeaspoon:
-		return "" 
+		return "teaspoon (U.S.)" 
 	case VolumeMetricCup:
-		return "" 
+		return "metric cup" 
 	case VolumeUsCustomaryCup:
-		return "" 
+		return "cup (U.S. customary)" 
 	case VolumeUsLegalCup:
-		return "" 
+		return "cup (U.S.)" 
 	case VolumeOilBarrel:
 		return "bbl" 
 	case VolumeUsBeerBarrel:

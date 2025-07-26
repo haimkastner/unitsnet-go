@@ -298,9 +298,9 @@ func (a *WarpingMomentOfInertia) convertFromBase(toUnit WarpingMomentOfInertiaUn
 	case WarpingMomentOfInertiaMillimeterToTheSixth:
 		return (value * 1e18) 
 	case WarpingMomentOfInertiaFootToTheSixth:
-		return (value / math.Pow(0.3048, 6)) 
+		return (value / 0.000801843800914862014464) 
 	case WarpingMomentOfInertiaInchToTheSixth:
-		return (value / math.Pow(2.54e-2, 6)) 
+		return (value / 0.000000000268535866540096) 
 	default:
 		return math.NaN()
 	}
@@ -317,9 +317,9 @@ func (a *WarpingMomentOfInertia) convertToBase(value float64, fromUnit WarpingMo
 	case WarpingMomentOfInertiaMillimeterToTheSixth:
 		return (value / 1e18) 
 	case WarpingMomentOfInertiaFootToTheSixth:
-		return (value * math.Pow(0.3048, 6)) 
+		return (value * 0.000801843800914862014464) 
 	case WarpingMomentOfInertiaInchToTheSixth:
-		return (value * math.Pow(2.54e-2, 6)) 
+		return (value * 0.000000000268535866540096) 
 	default:
 		return math.NaN()
 	}

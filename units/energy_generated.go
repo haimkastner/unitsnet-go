@@ -23,23 +23,23 @@ const (
         EnergyCalorie EnergyUnits = "Calorie"
         // 
         EnergyBritishThermalUnit EnergyUnits = "BritishThermalUnit"
-        // 
+        // In physics, an electronvolt (symbol eV, also written electron-volt and electron volt) is the measure of an amount of kinetic energy gained by a single electron accelerating from rest through an electric potential difference of one volt in vacuum. When used as a unit of energy, the numerical value of 1 eV in joules (symbol J) is equivalent to the numerical value of the charge of an electron in coulombs (symbol C). Under the 2019 redefinition of the SI base units, this sets 1 eV equal to the exact value 1.602176634×10−19 J.
         EnergyElectronVolt EnergyUnits = "ElectronVolt"
-        // 
+        // A pound-foot (lb⋅ft), abbreviated from pound-force foot (lbf · ft), is a unit of torque representing one pound of force acting at a perpendicular distance of one foot from a pivot point. Conversely one foot pound-force (ft · lbf) is the moment about an axis that applies one pound-force at a radius of one foot.
         EnergyFootPound EnergyUnits = "FootPound"
-        // 
+        // The erg is a unit of energy equal to 10−7 joules (100 nJ). It originated in the Centimetre–gram–second system of units (CGS). It has the symbol erg. The erg is not an SI unit. Its name is derived from ergon (ἔργον), a Greek word meaning 'work' or 'task'.
         EnergyErg EnergyUnits = "Erg"
         // 
         EnergyWattHour EnergyUnits = "WattHour"
         // 
         EnergyWattDay EnergyUnits = "WattDay"
-        // 
+        // The therm (symbol, thm) is a non-SI unit of heat energy equal to 100,000 British thermal units (BTU), and approximately 105 megajoules, 29.3 kilowatt-hours, 25,200 kilocalories and 25.2 thermies. One therm is the energy content of approximately 100 cubic feet (2.83 cubic metres) of natural gas at standard temperature and pressure. However, the BTU is not standardised worldwide, with slightly different values in the EU, UK, and United States, meaning that the energy content of the therm also varies by territory.
         EnergyThermEc EnergyUnits = "ThermEc"
-        // 
+        // The therm (symbol, thm) is a non-SI unit of heat energy equal to 100,000 British thermal units (BTU), and approximately 105 megajoules, 29.3 kilowatt-hours, 25,200 kilocalories and 25.2 thermies. One therm is the energy content of approximately 100 cubic feet (2.83 cubic metres) of natural gas at standard temperature and pressure. However, the BTU is not standardised worldwide, with slightly different values in the EU, UK, and United States, meaning that the energy content of the therm also varies by territory.
         EnergyThermUs EnergyUnits = "ThermUs"
-        // 
+        // The therm (symbol, thm) is a non-SI unit of heat energy equal to 100,000 British thermal units (BTU), and approximately 105 megajoules, 29.3 kilowatt-hours, 25,200 kilocalories and 25.2 thermies. One therm is the energy content of approximately 100 cubic feet (2.83 cubic metres) of natural gas at standard temperature and pressure. However, the BTU is not standardised worldwide, with slightly different values in the EU, UK, and United States, meaning that the energy content of the therm also varies by territory.
         EnergyThermImperial EnergyUnits = "ThermImperial"
-        // 
+        // A horsepower-hour (symbol: hp⋅h) is an outdated unit of energy, not used in the International System of Units. The unit represents an amount of work a horse is supposed capable of delivering during an hour (1 horsepower integrated over a time interval of an hour).
         EnergyHorsepowerHour EnergyUnits = "HorsepowerHour"
         // 
         EnergyNanojoule EnergyUnits = "Nanojoule"
@@ -510,7 +510,7 @@ func (a *Energy) BritishThermalUnits() float64 {
 
 // ElectronVolts returns the Energy value in ElectronVolts.
 //
-// 
+// In physics, an electronvolt (symbol eV, also written electron-volt and electron volt) is the measure of an amount of kinetic energy gained by a single electron accelerating from rest through an electric potential difference of one volt in vacuum. When used as a unit of energy, the numerical value of 1 eV in joules (symbol J) is equivalent to the numerical value of the charge of an electron in coulombs (symbol C). Under the 2019 redefinition of the SI base units, this sets 1 eV equal to the exact value 1.602176634×10−19 J.
 func (a *Energy) ElectronVolts() float64 {
 	if a.electron_voltsLazy != nil {
 		return *a.electron_voltsLazy
@@ -522,7 +522,7 @@ func (a *Energy) ElectronVolts() float64 {
 
 // FootPounds returns the Energy value in FootPounds.
 //
-// 
+// A pound-foot (lb⋅ft), abbreviated from pound-force foot (lbf · ft), is a unit of torque representing one pound of force acting at a perpendicular distance of one foot from a pivot point. Conversely one foot pound-force (ft · lbf) is the moment about an axis that applies one pound-force at a radius of one foot.
 func (a *Energy) FootPounds() float64 {
 	if a.foot_poundsLazy != nil {
 		return *a.foot_poundsLazy
@@ -534,7 +534,7 @@ func (a *Energy) FootPounds() float64 {
 
 // Ergs returns the Energy value in Ergs.
 //
-// 
+// The erg is a unit of energy equal to 10−7 joules (100 nJ). It originated in the Centimetre–gram–second system of units (CGS). It has the symbol erg. The erg is not an SI unit. Its name is derived from ergon (ἔργον), a Greek word meaning 'work' or 'task'.
 func (a *Energy) Ergs() float64 {
 	if a.ergsLazy != nil {
 		return *a.ergsLazy
@@ -570,7 +570,7 @@ func (a *Energy) WattDays() float64 {
 
 // ThermsEc returns the Energy value in ThermsEc.
 //
-// 
+// The therm (symbol, thm) is a non-SI unit of heat energy equal to 100,000 British thermal units (BTU), and approximately 105 megajoules, 29.3 kilowatt-hours, 25,200 kilocalories and 25.2 thermies. One therm is the energy content of approximately 100 cubic feet (2.83 cubic metres) of natural gas at standard temperature and pressure. However, the BTU is not standardised worldwide, with slightly different values in the EU, UK, and United States, meaning that the energy content of the therm also varies by territory.
 func (a *Energy) ThermsEc() float64 {
 	if a.therms_ecLazy != nil {
 		return *a.therms_ecLazy
@@ -582,7 +582,7 @@ func (a *Energy) ThermsEc() float64 {
 
 // ThermsUs returns the Energy value in ThermsUs.
 //
-// 
+// The therm (symbol, thm) is a non-SI unit of heat energy equal to 100,000 British thermal units (BTU), and approximately 105 megajoules, 29.3 kilowatt-hours, 25,200 kilocalories and 25.2 thermies. One therm is the energy content of approximately 100 cubic feet (2.83 cubic metres) of natural gas at standard temperature and pressure. However, the BTU is not standardised worldwide, with slightly different values in the EU, UK, and United States, meaning that the energy content of the therm also varies by territory.
 func (a *Energy) ThermsUs() float64 {
 	if a.therms_usLazy != nil {
 		return *a.therms_usLazy
@@ -594,7 +594,7 @@ func (a *Energy) ThermsUs() float64 {
 
 // ThermsImperial returns the Energy value in ThermsImperial.
 //
-// 
+// The therm (symbol, thm) is a non-SI unit of heat energy equal to 100,000 British thermal units (BTU), and approximately 105 megajoules, 29.3 kilowatt-hours, 25,200 kilocalories and 25.2 thermies. One therm is the energy content of approximately 100 cubic feet (2.83 cubic metres) of natural gas at standard temperature and pressure. However, the BTU is not standardised worldwide, with slightly different values in the EU, UK, and United States, meaning that the energy content of the therm also varies by territory.
 func (a *Energy) ThermsImperial() float64 {
 	if a.therms_imperialLazy != nil {
 		return *a.therms_imperialLazy
@@ -606,7 +606,7 @@ func (a *Energy) ThermsImperial() float64 {
 
 // HorsepowerHours returns the Energy value in HorsepowerHours.
 //
-// 
+// A horsepower-hour (symbol: hp⋅h) is an outdated unit of energy, not used in the International System of Units. The unit represents an amount of work a horse is supposed capable of delivering during an hour (1 horsepower integrated over a time interval of an hour).
 func (a *Energy) HorsepowerHours() float64 {
 	if a.horsepower_hoursLazy != nil {
 		return *a.horsepower_hoursLazy
@@ -1078,9 +1078,9 @@ func (a *Energy) convertFromBase(toUnit EnergyUnits) float64 {
 	case EnergyBritishThermalUnit:
 		return (value / 1055.05585262) 
 	case EnergyElectronVolt:
-		return (value / 1.602176565e-19) 
+		return (value / 1.602176634e-19) 
 	case EnergyFootPound:
-		return (value / 1.355817948) 
+		return (value / 1.3558179483314004) 
 	case EnergyErg:
 		return (value / 1e-7) 
 	case EnergyWattHour:
@@ -1094,7 +1094,7 @@ func (a *Energy) convertFromBase(toUnit EnergyUnits) float64 {
 	case EnergyThermImperial:
 		return (value / 1.05505585257348e8) 
 	case EnergyHorsepowerHour:
-		return (value / 2.6845195377e6) 
+		return (value / (76.0402249 * 9.80665 * 3600)) 
 	case EnergyNanojoule:
 		return ((value) / 1e-09) 
 	case EnergyMicrojoule:
@@ -1122,13 +1122,13 @@ func (a *Energy) convertFromBase(toUnit EnergyUnits) float64 {
 	case EnergyGigabritishThermalUnit:
 		return ((value / 1055.05585262) / 1000000000.0) 
 	case EnergyKiloelectronVolt:
-		return ((value / 1.602176565e-19) / 1000.0) 
+		return ((value / 1.602176634e-19) / 1000.0) 
 	case EnergyMegaelectronVolt:
-		return ((value / 1.602176565e-19) / 1000000.0) 
+		return ((value / 1.602176634e-19) / 1000000.0) 
 	case EnergyGigaelectronVolt:
-		return ((value / 1.602176565e-19) / 1000000000.0) 
+		return ((value / 1.602176634e-19) / 1000000000.0) 
 	case EnergyTeraelectronVolt:
-		return ((value / 1.602176565e-19) / 1000000000000.0) 
+		return ((value / 1.602176634e-19) / 1000000000000.0) 
 	case EnergyKilowattHour:
 		return ((value / 3600) / 1000.0) 
 	case EnergyMegawattHour:
@@ -1165,9 +1165,9 @@ func (a *Energy) convertToBase(value float64, fromUnit EnergyUnits) float64 {
 	case EnergyBritishThermalUnit:
 		return (value * 1055.05585262) 
 	case EnergyElectronVolt:
-		return (value * 1.602176565e-19) 
+		return (value * 1.602176634e-19) 
 	case EnergyFootPound:
-		return (value * 1.355817948) 
+		return (value * 1.3558179483314004) 
 	case EnergyErg:
 		return (value * 1e-7) 
 	case EnergyWattHour:
@@ -1181,7 +1181,7 @@ func (a *Energy) convertToBase(value float64, fromUnit EnergyUnits) float64 {
 	case EnergyThermImperial:
 		return (value * 1.05505585257348e8) 
 	case EnergyHorsepowerHour:
-		return (value * 2.6845195377e6) 
+		return (value * 76.0402249 * 9.80665 * 3600) 
 	case EnergyNanojoule:
 		return ((value) * 1e-09) 
 	case EnergyMicrojoule:
@@ -1209,13 +1209,13 @@ func (a *Energy) convertToBase(value float64, fromUnit EnergyUnits) float64 {
 	case EnergyGigabritishThermalUnit:
 		return ((value * 1055.05585262) * 1000000000.0) 
 	case EnergyKiloelectronVolt:
-		return ((value * 1.602176565e-19) * 1000.0) 
+		return ((value * 1.602176634e-19) * 1000.0) 
 	case EnergyMegaelectronVolt:
-		return ((value * 1.602176565e-19) * 1000000.0) 
+		return ((value * 1.602176634e-19) * 1000000.0) 
 	case EnergyGigaelectronVolt:
-		return ((value * 1.602176565e-19) * 1000000000.0) 
+		return ((value * 1.602176634e-19) * 1000000000.0) 
 	case EnergyTeraelectronVolt:
-		return ((value * 1.602176565e-19) * 1000000000000.0) 
+		return ((value * 1.602176634e-19) * 1000000000000.0) 
 	case EnergyKilowattHour:
 		return ((value * 3600) * 1000.0) 
 	case EnergyMegawattHour:

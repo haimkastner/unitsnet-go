@@ -96,6 +96,15 @@ func TestBitRateConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to OctetsPerSecond.
+		// No expected conversion value provided for OctetsPerSecond, verifying result is not NaN.
+		result := a.OctetsPerSecond()
+		cacheResult := a.OctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to OctetsPerSecond returned NaN")
+		}
+	}
+	{
 		// Test conversion to KilobitsPerSecond.
 		// No expected conversion value provided for KilobitsPerSecond, verifying result is not NaN.
 		result := a.KilobitsPerSecond()
@@ -311,6 +320,114 @@ func TestBitRateConversions(t *testing.T) {
 			t.Errorf("conversion to ExbibytesPerSecond returned NaN")
 		}
 	}
+	{
+		// Test conversion to KilooctetsPerSecond.
+		// No expected conversion value provided for KilooctetsPerSecond, verifying result is not NaN.
+		result := a.KilooctetsPerSecond()
+		cacheResult := a.KilooctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to KilooctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to MegaoctetsPerSecond.
+		// No expected conversion value provided for MegaoctetsPerSecond, verifying result is not NaN.
+		result := a.MegaoctetsPerSecond()
+		cacheResult := a.MegaoctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to MegaoctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to GigaoctetsPerSecond.
+		// No expected conversion value provided for GigaoctetsPerSecond, verifying result is not NaN.
+		result := a.GigaoctetsPerSecond()
+		cacheResult := a.GigaoctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to GigaoctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to TeraoctetsPerSecond.
+		// No expected conversion value provided for TeraoctetsPerSecond, verifying result is not NaN.
+		result := a.TeraoctetsPerSecond()
+		cacheResult := a.TeraoctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to TeraoctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to PetaoctetsPerSecond.
+		// No expected conversion value provided for PetaoctetsPerSecond, verifying result is not NaN.
+		result := a.PetaoctetsPerSecond()
+		cacheResult := a.PetaoctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to PetaoctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to ExaoctetsPerSecond.
+		// No expected conversion value provided for ExaoctetsPerSecond, verifying result is not NaN.
+		result := a.ExaoctetsPerSecond()
+		cacheResult := a.ExaoctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to ExaoctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to KibioctetsPerSecond.
+		// No expected conversion value provided for KibioctetsPerSecond, verifying result is not NaN.
+		result := a.KibioctetsPerSecond()
+		cacheResult := a.KibioctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to KibioctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to MebioctetsPerSecond.
+		// No expected conversion value provided for MebioctetsPerSecond, verifying result is not NaN.
+		result := a.MebioctetsPerSecond()
+		cacheResult := a.MebioctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to MebioctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to GibioctetsPerSecond.
+		// No expected conversion value provided for GibioctetsPerSecond, verifying result is not NaN.
+		result := a.GibioctetsPerSecond()
+		cacheResult := a.GibioctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to GibioctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to TebioctetsPerSecond.
+		// No expected conversion value provided for TebioctetsPerSecond, verifying result is not NaN.
+		result := a.TebioctetsPerSecond()
+		cacheResult := a.TebioctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to TebioctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to PebioctetsPerSecond.
+		// No expected conversion value provided for PebioctetsPerSecond, verifying result is not NaN.
+		result := a.PebioctetsPerSecond()
+		cacheResult := a.PebioctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to PebioctetsPerSecond returned NaN")
+		}
+	}
+	{
+		// Test conversion to ExbioctetsPerSecond.
+		// No expected conversion value provided for ExbioctetsPerSecond, verifying result is not NaN.
+		result := a.ExbioctetsPerSecond()
+		cacheResult := a.ExbioctetsPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to ExbioctetsPerSecond returned NaN")
+		}
+	}
 }
 
 func TestBitRate_ToDtoAndToDtoJSON(t *testing.T) {
@@ -413,6 +530,23 @@ func TestBitRateFactory_FromDto(t *testing.T) {
     converted = bytes_per_secondResult.Convert(units.BitRateBytePerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for BytePerSecond = %v, want %v", converted, 100)
+    }
+    // Test OctetPerSecond conversion
+    octets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateOctetPerSecond,
+    }
+    
+    var octets_per_secondResult *units.BitRate
+    octets_per_secondResult, err = factory.FromDto(octets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with OctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = octets_per_secondResult.Convert(units.BitRateOctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OctetPerSecond = %v, want %v", converted, 100)
     }
     // Test KilobitPerSecond conversion
     kilobits_per_secondDto := units.BitRateDto{
@@ -822,6 +956,210 @@ func TestBitRateFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for ExbibytePerSecond = %v, want %v", converted, 100)
     }
+    // Test KilooctetPerSecond conversion
+    kilooctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateKilooctetPerSecond,
+    }
+    
+    var kilooctets_per_secondResult *units.BitRate
+    kilooctets_per_secondResult, err = factory.FromDto(kilooctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilooctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilooctets_per_secondResult.Convert(units.BitRateKilooctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilooctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test MegaoctetPerSecond conversion
+    megaoctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateMegaoctetPerSecond,
+    }
+    
+    var megaoctets_per_secondResult *units.BitRate
+    megaoctets_per_secondResult, err = factory.FromDto(megaoctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with MegaoctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaoctets_per_secondResult.Convert(units.BitRateMegaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegaoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test GigaoctetPerSecond conversion
+    gigaoctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateGigaoctetPerSecond,
+    }
+    
+    var gigaoctets_per_secondResult *units.BitRate
+    gigaoctets_per_secondResult, err = factory.FromDto(gigaoctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with GigaoctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigaoctets_per_secondResult.Convert(units.BitRateGigaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GigaoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test TeraoctetPerSecond conversion
+    teraoctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateTeraoctetPerSecond,
+    }
+    
+    var teraoctets_per_secondResult *units.BitRate
+    teraoctets_per_secondResult, err = factory.FromDto(teraoctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with TeraoctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = teraoctets_per_secondResult.Convert(units.BitRateTeraoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for TeraoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test PetaoctetPerSecond conversion
+    petaoctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRatePetaoctetPerSecond,
+    }
+    
+    var petaoctets_per_secondResult *units.BitRate
+    petaoctets_per_secondResult, err = factory.FromDto(petaoctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with PetaoctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = petaoctets_per_secondResult.Convert(units.BitRatePetaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PetaoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test ExaoctetPerSecond conversion
+    exaoctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateExaoctetPerSecond,
+    }
+    
+    var exaoctets_per_secondResult *units.BitRate
+    exaoctets_per_secondResult, err = factory.FromDto(exaoctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with ExaoctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = exaoctets_per_secondResult.Convert(units.BitRateExaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for ExaoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test KibioctetPerSecond conversion
+    kibioctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateKibioctetPerSecond,
+    }
+    
+    var kibioctets_per_secondResult *units.BitRate
+    kibioctets_per_secondResult, err = factory.FromDto(kibioctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with KibioctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kibioctets_per_secondResult.Convert(units.BitRateKibioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KibioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test MebioctetPerSecond conversion
+    mebioctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateMebioctetPerSecond,
+    }
+    
+    var mebioctets_per_secondResult *units.BitRate
+    mebioctets_per_secondResult, err = factory.FromDto(mebioctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with MebioctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = mebioctets_per_secondResult.Convert(units.BitRateMebioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MebioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test GibioctetPerSecond conversion
+    gibioctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateGibioctetPerSecond,
+    }
+    
+    var gibioctets_per_secondResult *units.BitRate
+    gibioctets_per_secondResult, err = factory.FromDto(gibioctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with GibioctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gibioctets_per_secondResult.Convert(units.BitRateGibioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GibioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test TebioctetPerSecond conversion
+    tebioctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateTebioctetPerSecond,
+    }
+    
+    var tebioctets_per_secondResult *units.BitRate
+    tebioctets_per_secondResult, err = factory.FromDto(tebioctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with TebioctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = tebioctets_per_secondResult.Convert(units.BitRateTebioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for TebioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test PebioctetPerSecond conversion
+    pebioctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRatePebioctetPerSecond,
+    }
+    
+    var pebioctets_per_secondResult *units.BitRate
+    pebioctets_per_secondResult, err = factory.FromDto(pebioctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with PebioctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pebioctets_per_secondResult.Convert(units.BitRatePebioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PebioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test ExbioctetPerSecond conversion
+    exbioctets_per_secondDto := units.BitRateDto{
+        Value: 100,
+        Unit:  units.BitRateExbioctetPerSecond,
+    }
+    
+    var exbioctets_per_secondResult *units.BitRate
+    exbioctets_per_secondResult, err = factory.FromDto(exbioctets_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with ExbioctetPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = exbioctets_per_secondResult.Convert(units.BitRateExbioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for ExbioctetPerSecond = %v, want %v", converted, 100)
+    }
 
     // Test zero value
     zeroDto := units.BitRateDto{
@@ -909,6 +1247,18 @@ func TestBitRateFactory_FromDtoJSON(t *testing.T) {
     converted = bytes_per_secondResult.Convert(units.BitRateBytePerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for BytePerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with OctetPerSecond unit
+    octets_per_secondJSON := []byte(`{"value": 100, "unit": "OctetPerSecond"}`)
+    octets_per_secondResult, err := factory.FromDtoJSON(octets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with OctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = octets_per_secondResult.Convert(units.BitRateOctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OctetPerSecond = %v, want %v", converted, 100)
     }
     // Test JSON with KilobitPerSecond unit
     kilobits_per_secondJSON := []byte(`{"value": 100, "unit": "KilobitPerSecond"}`)
@@ -1198,6 +1548,150 @@ func TestBitRateFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for ExbibytePerSecond = %v, want %v", converted, 100)
     }
+    // Test JSON with KilooctetPerSecond unit
+    kilooctets_per_secondJSON := []byte(`{"value": 100, "unit": "KilooctetPerSecond"}`)
+    kilooctets_per_secondResult, err := factory.FromDtoJSON(kilooctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilooctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilooctets_per_secondResult.Convert(units.BitRateKilooctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilooctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with MegaoctetPerSecond unit
+    megaoctets_per_secondJSON := []byte(`{"value": 100, "unit": "MegaoctetPerSecond"}`)
+    megaoctets_per_secondResult, err := factory.FromDtoJSON(megaoctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MegaoctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaoctets_per_secondResult.Convert(units.BitRateMegaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MegaoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with GigaoctetPerSecond unit
+    gigaoctets_per_secondJSON := []byte(`{"value": 100, "unit": "GigaoctetPerSecond"}`)
+    gigaoctets_per_secondResult, err := factory.FromDtoJSON(gigaoctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GigaoctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigaoctets_per_secondResult.Convert(units.BitRateGigaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GigaoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with TeraoctetPerSecond unit
+    teraoctets_per_secondJSON := []byte(`{"value": 100, "unit": "TeraoctetPerSecond"}`)
+    teraoctets_per_secondResult, err := factory.FromDtoJSON(teraoctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with TeraoctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = teraoctets_per_secondResult.Convert(units.BitRateTeraoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for TeraoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with PetaoctetPerSecond unit
+    petaoctets_per_secondJSON := []byte(`{"value": 100, "unit": "PetaoctetPerSecond"}`)
+    petaoctets_per_secondResult, err := factory.FromDtoJSON(petaoctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PetaoctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = petaoctets_per_secondResult.Convert(units.BitRatePetaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PetaoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with ExaoctetPerSecond unit
+    exaoctets_per_secondJSON := []byte(`{"value": 100, "unit": "ExaoctetPerSecond"}`)
+    exaoctets_per_secondResult, err := factory.FromDtoJSON(exaoctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with ExaoctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = exaoctets_per_secondResult.Convert(units.BitRateExaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for ExaoctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with KibioctetPerSecond unit
+    kibioctets_per_secondJSON := []byte(`{"value": 100, "unit": "KibioctetPerSecond"}`)
+    kibioctets_per_secondResult, err := factory.FromDtoJSON(kibioctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KibioctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kibioctets_per_secondResult.Convert(units.BitRateKibioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KibioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with MebioctetPerSecond unit
+    mebioctets_per_secondJSON := []byte(`{"value": 100, "unit": "MebioctetPerSecond"}`)
+    mebioctets_per_secondResult, err := factory.FromDtoJSON(mebioctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MebioctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = mebioctets_per_secondResult.Convert(units.BitRateMebioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MebioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with GibioctetPerSecond unit
+    gibioctets_per_secondJSON := []byte(`{"value": 100, "unit": "GibioctetPerSecond"}`)
+    gibioctets_per_secondResult, err := factory.FromDtoJSON(gibioctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GibioctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gibioctets_per_secondResult.Convert(units.BitRateGibioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GibioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with TebioctetPerSecond unit
+    tebioctets_per_secondJSON := []byte(`{"value": 100, "unit": "TebioctetPerSecond"}`)
+    tebioctets_per_secondResult, err := factory.FromDtoJSON(tebioctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with TebioctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = tebioctets_per_secondResult.Convert(units.BitRateTebioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for TebioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with PebioctetPerSecond unit
+    pebioctets_per_secondJSON := []byte(`{"value": 100, "unit": "PebioctetPerSecond"}`)
+    pebioctets_per_secondResult, err := factory.FromDtoJSON(pebioctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PebioctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pebioctets_per_secondResult.Convert(units.BitRatePebioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PebioctetPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with ExbioctetPerSecond unit
+    exbioctets_per_secondJSON := []byte(`{"value": 100, "unit": "ExbioctetPerSecond"}`)
+    exbioctets_per_secondResult, err := factory.FromDtoJSON(exbioctets_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with ExbioctetPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = exbioctets_per_secondResult.Convert(units.BitRateExbioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for ExbioctetPerSecond = %v, want %v", converted, 100)
+    }
 
     // Test zero value JSON
     zeroJSON := []byte(`{"value": 0, "unit": "BitPerSecond"}`)
@@ -1293,6 +1787,49 @@ func TestBitRateFactory_FromBytesPerSecond(t *testing.T) {
     converted = zeroResult.Convert(units.BitRateBytePerSecond)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromBytesPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromOctetsPerSecond function
+func TestBitRateFactory_FromOctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromOctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromOctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateOctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromOctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromOctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromOctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromOctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromOctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromOctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromOctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromOctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromOctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateOctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromOctetsPerSecond() with zero value = %v, want 0", converted)
     }
 }
 // Test FromKilobitsPerSecond function
@@ -2327,6 +2864,522 @@ func TestBitRateFactory_FromExbibytesPerSecond(t *testing.T) {
         t.Errorf("FromExbibytesPerSecond() with zero value = %v, want 0", converted)
     }
 }
+// Test FromKilooctetsPerSecond function
+func TestBitRateFactory_FromKilooctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilooctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromKilooctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateKilooctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilooctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilooctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromKilooctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilooctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilooctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilooctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilooctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilooctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromKilooctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateKilooctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilooctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegaoctetsPerSecond function
+func TestBitRateFactory_FromMegaoctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegaoctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromMegaoctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateMegaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegaoctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegaoctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromMegaoctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegaoctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegaoctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegaoctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegaoctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegaoctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromMegaoctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateMegaoctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegaoctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGigaoctetsPerSecond function
+func TestBitRateFactory_FromGigaoctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGigaoctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromGigaoctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateGigaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGigaoctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGigaoctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromGigaoctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromGigaoctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromGigaoctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGigaoctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGigaoctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGigaoctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromGigaoctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateGigaoctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGigaoctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromTeraoctetsPerSecond function
+func TestBitRateFactory_FromTeraoctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromTeraoctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromTeraoctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateTeraoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromTeraoctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromTeraoctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromTeraoctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromTeraoctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromTeraoctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromTeraoctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromTeraoctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromTeraoctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromTeraoctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateTeraoctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromTeraoctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPetaoctetsPerSecond function
+func TestBitRateFactory_FromPetaoctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPetaoctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromPetaoctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRatePetaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPetaoctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPetaoctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromPetaoctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromPetaoctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromPetaoctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPetaoctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPetaoctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPetaoctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromPetaoctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRatePetaoctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPetaoctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromExaoctetsPerSecond function
+func TestBitRateFactory_FromExaoctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromExaoctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromExaoctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateExaoctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromExaoctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromExaoctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromExaoctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromExaoctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromExaoctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromExaoctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromExaoctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromExaoctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromExaoctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateExaoctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromExaoctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKibioctetsPerSecond function
+func TestBitRateFactory_FromKibioctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKibioctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromKibioctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateKibioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKibioctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKibioctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromKibioctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromKibioctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromKibioctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKibioctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKibioctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKibioctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromKibioctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateKibioctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKibioctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMebioctetsPerSecond function
+func TestBitRateFactory_FromMebioctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMebioctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromMebioctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateMebioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMebioctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMebioctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromMebioctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromMebioctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromMebioctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMebioctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMebioctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMebioctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromMebioctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateMebioctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMebioctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGibioctetsPerSecond function
+func TestBitRateFactory_FromGibioctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGibioctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromGibioctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateGibioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGibioctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGibioctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromGibioctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromGibioctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromGibioctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGibioctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGibioctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGibioctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromGibioctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateGibioctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGibioctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromTebioctetsPerSecond function
+func TestBitRateFactory_FromTebioctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromTebioctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromTebioctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateTebioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromTebioctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromTebioctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromTebioctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromTebioctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromTebioctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromTebioctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromTebioctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromTebioctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromTebioctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateTebioctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromTebioctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPebioctetsPerSecond function
+func TestBitRateFactory_FromPebioctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPebioctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromPebioctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRatePebioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPebioctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPebioctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromPebioctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromPebioctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromPebioctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPebioctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPebioctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPebioctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromPebioctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRatePebioctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPebioctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromExbioctetsPerSecond function
+func TestBitRateFactory_FromExbioctetsPerSecond(t *testing.T) {
+    factory := units.BitRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromExbioctetsPerSecond(100)
+    if err != nil {
+        t.Errorf("FromExbioctetsPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.BitRateExbioctetPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromExbioctetsPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromExbioctetsPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromExbioctetsPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromExbioctetsPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromExbioctetsPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromExbioctetsPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromExbioctetsPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromExbioctetsPerSecond(0)
+    if err != nil {
+        t.Errorf("FromExbioctetsPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.BitRateExbioctetPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromExbioctetsPerSecond() with zero value = %v, want 0", converted)
+    }
+}
 
 func TestBitRateToString(t *testing.T) {
 	factory := units.BitRateFactory{}
@@ -2411,6 +3464,11 @@ func TestGetBitRateAbbreviation(t *testing.T) {
             name: "BytePerSecond abbreviation",
             unit: units.BitRateBytePerSecond,
             want: "B/s",
+        },
+        {
+            name: "OctetPerSecond abbreviation",
+            unit: units.BitRateOctetPerSecond,
+            want: "o/s",
         },
         {
             name: "KilobitPerSecond abbreviation",
@@ -2531,6 +3589,66 @@ func TestGetBitRateAbbreviation(t *testing.T) {
             name: "ExbibytePerSecond abbreviation",
             unit: units.BitRateExbibytePerSecond,
             want: "EiBB/s",
+        },
+        {
+            name: "KilooctetPerSecond abbreviation",
+            unit: units.BitRateKilooctetPerSecond,
+            want: "ko/s",
+        },
+        {
+            name: "MegaoctetPerSecond abbreviation",
+            unit: units.BitRateMegaoctetPerSecond,
+            want: "Mo/s",
+        },
+        {
+            name: "GigaoctetPerSecond abbreviation",
+            unit: units.BitRateGigaoctetPerSecond,
+            want: "Go/s",
+        },
+        {
+            name: "TeraoctetPerSecond abbreviation",
+            unit: units.BitRateTeraoctetPerSecond,
+            want: "To/s",
+        },
+        {
+            name: "PetaoctetPerSecond abbreviation",
+            unit: units.BitRatePetaoctetPerSecond,
+            want: "Po/s",
+        },
+        {
+            name: "ExaoctetPerSecond abbreviation",
+            unit: units.BitRateExaoctetPerSecond,
+            want: "Eo/s",
+        },
+        {
+            name: "KibioctetPerSecond abbreviation",
+            unit: units.BitRateKibioctetPerSecond,
+            want: "KiBo/s",
+        },
+        {
+            name: "MebioctetPerSecond abbreviation",
+            unit: units.BitRateMebioctetPerSecond,
+            want: "MiBo/s",
+        },
+        {
+            name: "GibioctetPerSecond abbreviation",
+            unit: units.BitRateGibioctetPerSecond,
+            want: "GiBo/s",
+        },
+        {
+            name: "TebioctetPerSecond abbreviation",
+            unit: units.BitRateTebioctetPerSecond,
+            want: "TiBo/s",
+        },
+        {
+            name: "PebioctetPerSecond abbreviation",
+            unit: units.BitRatePebioctetPerSecond,
+            want: "PiBo/s",
+        },
+        {
+            name: "ExbioctetPerSecond abbreviation",
+            unit: units.BitRateExbioctetPerSecond,
+            want: "EiBo/s",
         },
         {
             name: "invalid unit",

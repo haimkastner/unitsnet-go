@@ -17,7 +17,7 @@ type PorousMediumPermeabilityUnits string
 
 const (
     
-        // 
+        // The darcy (or darcy unit) and millidarcy (md or mD) are units of permeability, named after Henry Darcy. They are not SI units, but they are widely used in petroleum engineering and geology.
         PorousMediumPermeabilityDarcy PorousMediumPermeabilityUnits = "Darcy"
         // 
         PorousMediumPermeabilitySquareMeter PorousMediumPermeabilityUnits = "SquareMeter"
@@ -159,7 +159,7 @@ func (a *PorousMediumPermeability) BaseValue() float64 {
 
 // Darcys returns the PorousMediumPermeability value in Darcys.
 //
-// 
+// The darcy (or darcy unit) and millidarcy (md or mD) are units of permeability, named after Henry Darcy. They are not SI units, but they are widely used in petroleum engineering and geology.
 func (a *PorousMediumPermeability) Darcys() float64 {
 	if a.darcysLazy != nil {
 		return *a.darcysLazy

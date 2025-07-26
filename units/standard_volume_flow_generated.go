@@ -371,11 +371,11 @@ func (a *StandardVolumeFlow) convertFromBase(toUnit StandardVolumeFlowUnits) flo
 	case StandardVolumeFlowStandardLiterPerMinute:
 		return (value * 60000) 
 	case StandardVolumeFlowStandardCubicFootPerSecond:
-		return (value * 35.314666721) 
+		return (value / 0.028316846592) 
 	case StandardVolumeFlowStandardCubicFootPerMinute:
-		return (value * 2118.88000326) 
+		return (value / (0.028316846592 / 60)) 
 	case StandardVolumeFlowStandardCubicFootPerHour:
-		return (value / 7.8657907199999087346816086183876e-6) 
+		return (value / (0.028316846592 / 3600)) 
 	default:
 		return math.NaN()
 	}
@@ -396,11 +396,11 @@ func (a *StandardVolumeFlow) convertToBase(value float64, fromUnit StandardVolum
 	case StandardVolumeFlowStandardLiterPerMinute:
 		return (value / 60000) 
 	case StandardVolumeFlowStandardCubicFootPerSecond:
-		return (value / 35.314666721) 
+		return (value * 0.028316846592) 
 	case StandardVolumeFlowStandardCubicFootPerMinute:
-		return (value / 2118.88000326) 
+		return (value * 0.028316846592 / 60) 
 	case StandardVolumeFlowStandardCubicFootPerHour:
-		return (value * 7.8657907199999087346816086183876e-6) 
+		return (value * 0.028316846592 / 3600) 
 	default:
 		return math.NaN()
 	}

@@ -20,6 +20,8 @@ const (
         // 
         InformationByte InformationUnits = "Byte"
         // 
+        InformationOctet InformationUnits = "Octet"
+        // 
         InformationBit InformationUnits = "Bit"
         // 
         InformationKilobyte InformationUnits = "Kilobyte"
@@ -45,6 +47,30 @@ const (
         InformationPebibyte InformationUnits = "Pebibyte"
         // 
         InformationExbibyte InformationUnits = "Exbibyte"
+        // 
+        InformationKilooctet InformationUnits = "Kilooctet"
+        // 
+        InformationMegaoctet InformationUnits = "Megaoctet"
+        // 
+        InformationGigaoctet InformationUnits = "Gigaoctet"
+        // 
+        InformationTeraoctet InformationUnits = "Teraoctet"
+        // 
+        InformationPetaoctet InformationUnits = "Petaoctet"
+        // 
+        InformationExaoctet InformationUnits = "Exaoctet"
+        // 
+        InformationKibioctet InformationUnits = "Kibioctet"
+        // 
+        InformationMebioctet InformationUnits = "Mebioctet"
+        // 
+        InformationGibioctet InformationUnits = "Gibioctet"
+        // 
+        InformationTebioctet InformationUnits = "Tebioctet"
+        // 
+        InformationPebioctet InformationUnits = "Pebioctet"
+        // 
+        InformationExbioctet InformationUnits = "Exbioctet"
         // 
         InformationKilobit InformationUnits = "Kilobit"
         // 
@@ -74,6 +100,7 @@ const (
 var internalInformationUnitsMap = map[InformationUnits]bool{
 	
 	InformationByte: true,
+	InformationOctet: true,
 	InformationBit: true,
 	InformationKilobyte: true,
 	InformationMegabyte: true,
@@ -87,6 +114,18 @@ var internalInformationUnitsMap = map[InformationUnits]bool{
 	InformationTebibyte: true,
 	InformationPebibyte: true,
 	InformationExbibyte: true,
+	InformationKilooctet: true,
+	InformationMegaoctet: true,
+	InformationGigaoctet: true,
+	InformationTeraoctet: true,
+	InformationPetaoctet: true,
+	InformationExaoctet: true,
+	InformationKibioctet: true,
+	InformationMebioctet: true,
+	InformationGibioctet: true,
+	InformationTebioctet: true,
+	InformationPebioctet: true,
+	InformationExbioctet: true,
 	InformationKilobit: true,
 	InformationMegabit: true,
 	InformationGigabit: true,
@@ -106,7 +145,7 @@ type InformationDto struct {
     // Value is the numerical representation of the Information.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Information, as defined in the InformationUnits enumeration.
-	Unit  InformationUnits `json:"unit" validate:"required,oneof=Byte Bit Kilobyte Megabyte Gigabyte Terabyte Petabyte Exabyte Kibibyte Mebibyte Gibibyte Tebibyte Pebibyte Exbibyte Kilobit Megabit Gigabit Terabit Petabit Exabit Kibibit Mebibit Gibibit Tebibit Pebibit Exbibit"`
+	Unit  InformationUnits `json:"unit" validate:"required,oneof=Byte Octet Bit Kilobyte Megabyte Gigabyte Terabyte Petabyte Exabyte Kibibyte Mebibyte Gibibyte Tebibyte Pebibyte Exbibyte Kilooctet Megaoctet Gigaoctet Teraoctet Petaoctet Exaoctet Kibioctet Mebioctet Gibioctet Tebioctet Pebioctet Exbioctet Kilobit Megabit Gigabit Terabit Petabit Exabit Kibibit Mebibit Gibibit Tebibit Pebibit Exbibit"`
 }
 
 // InformationDtoFactory groups methods for creating and serializing InformationDto objects.
@@ -146,6 +185,7 @@ type Information struct {
 	value       float64
     
     bytesLazy *float64 
+    octetsLazy *float64 
     bitsLazy *float64 
     kilobytesLazy *float64 
     megabytesLazy *float64 
@@ -159,6 +199,18 @@ type Information struct {
     tebibytesLazy *float64 
     pebibytesLazy *float64 
     exbibytesLazy *float64 
+    kilooctetsLazy *float64 
+    megaoctetsLazy *float64 
+    gigaoctetsLazy *float64 
+    teraoctetsLazy *float64 
+    petaoctetsLazy *float64 
+    exaoctetsLazy *float64 
+    kibioctetsLazy *float64 
+    mebioctetsLazy *float64 
+    gibioctetsLazy *float64 
+    tebioctetsLazy *float64 
+    pebioctetsLazy *float64 
+    exbioctetsLazy *float64 
     kilobitsLazy *float64 
     megabitsLazy *float64 
     gigabitsLazy *float64 
@@ -199,6 +251,11 @@ func (uf InformationFactory) FromDtoJSON(data []byte) (*Information, error) {
 // FromBytes creates a new Information instance from a value in Bytes.
 func (uf InformationFactory) FromBytes(value float64) (*Information, error) {
 	return newInformation(value, InformationByte)
+}
+
+// FromOctets creates a new Information instance from a value in Octets.
+func (uf InformationFactory) FromOctets(value float64) (*Information, error) {
+	return newInformation(value, InformationOctet)
 }
 
 // FromBits creates a new Information instance from a value in Bits.
@@ -264,6 +321,66 @@ func (uf InformationFactory) FromPebibytes(value float64) (*Information, error) 
 // FromExbibytes creates a new Information instance from a value in Exbibytes.
 func (uf InformationFactory) FromExbibytes(value float64) (*Information, error) {
 	return newInformation(value, InformationExbibyte)
+}
+
+// FromKilooctets creates a new Information instance from a value in Kilooctets.
+func (uf InformationFactory) FromKilooctets(value float64) (*Information, error) {
+	return newInformation(value, InformationKilooctet)
+}
+
+// FromMegaoctets creates a new Information instance from a value in Megaoctets.
+func (uf InformationFactory) FromMegaoctets(value float64) (*Information, error) {
+	return newInformation(value, InformationMegaoctet)
+}
+
+// FromGigaoctets creates a new Information instance from a value in Gigaoctets.
+func (uf InformationFactory) FromGigaoctets(value float64) (*Information, error) {
+	return newInformation(value, InformationGigaoctet)
+}
+
+// FromTeraoctets creates a new Information instance from a value in Teraoctets.
+func (uf InformationFactory) FromTeraoctets(value float64) (*Information, error) {
+	return newInformation(value, InformationTeraoctet)
+}
+
+// FromPetaoctets creates a new Information instance from a value in Petaoctets.
+func (uf InformationFactory) FromPetaoctets(value float64) (*Information, error) {
+	return newInformation(value, InformationPetaoctet)
+}
+
+// FromExaoctets creates a new Information instance from a value in Exaoctets.
+func (uf InformationFactory) FromExaoctets(value float64) (*Information, error) {
+	return newInformation(value, InformationExaoctet)
+}
+
+// FromKibioctets creates a new Information instance from a value in Kibioctets.
+func (uf InformationFactory) FromKibioctets(value float64) (*Information, error) {
+	return newInformation(value, InformationKibioctet)
+}
+
+// FromMebioctets creates a new Information instance from a value in Mebioctets.
+func (uf InformationFactory) FromMebioctets(value float64) (*Information, error) {
+	return newInformation(value, InformationMebioctet)
+}
+
+// FromGibioctets creates a new Information instance from a value in Gibioctets.
+func (uf InformationFactory) FromGibioctets(value float64) (*Information, error) {
+	return newInformation(value, InformationGibioctet)
+}
+
+// FromTebioctets creates a new Information instance from a value in Tebioctets.
+func (uf InformationFactory) FromTebioctets(value float64) (*Information, error) {
+	return newInformation(value, InformationTebioctet)
+}
+
+// FromPebioctets creates a new Information instance from a value in Pebioctets.
+func (uf InformationFactory) FromPebioctets(value float64) (*Information, error) {
+	return newInformation(value, InformationPebioctet)
+}
+
+// FromExbioctets creates a new Information instance from a value in Exbioctets.
+func (uf InformationFactory) FromExbioctets(value float64) (*Information, error) {
+	return newInformation(value, InformationExbioctet)
 }
 
 // FromKilobits creates a new Information instance from a value in Kilobits.
@@ -356,6 +473,18 @@ func (a *Information) Bytes() float64 {
 	bytes := a.convertFromBase(InformationByte)
 	a.bytesLazy = &bytes
 	return bytes
+}
+
+// Octets returns the Information value in Octets.
+//
+// 
+func (a *Information) Octets() float64 {
+	if a.octetsLazy != nil {
+		return *a.octetsLazy
+	}
+	octets := a.convertFromBase(InformationOctet)
+	a.octetsLazy = &octets
+	return octets
 }
 
 // Bits returns the Information value in Bits.
@@ -512,6 +641,150 @@ func (a *Information) Exbibytes() float64 {
 	exbibytes := a.convertFromBase(InformationExbibyte)
 	a.exbibytesLazy = &exbibytes
 	return exbibytes
+}
+
+// Kilooctets returns the Information value in Kilooctets.
+//
+// 
+func (a *Information) Kilooctets() float64 {
+	if a.kilooctetsLazy != nil {
+		return *a.kilooctetsLazy
+	}
+	kilooctets := a.convertFromBase(InformationKilooctet)
+	a.kilooctetsLazy = &kilooctets
+	return kilooctets
+}
+
+// Megaoctets returns the Information value in Megaoctets.
+//
+// 
+func (a *Information) Megaoctets() float64 {
+	if a.megaoctetsLazy != nil {
+		return *a.megaoctetsLazy
+	}
+	megaoctets := a.convertFromBase(InformationMegaoctet)
+	a.megaoctetsLazy = &megaoctets
+	return megaoctets
+}
+
+// Gigaoctets returns the Information value in Gigaoctets.
+//
+// 
+func (a *Information) Gigaoctets() float64 {
+	if a.gigaoctetsLazy != nil {
+		return *a.gigaoctetsLazy
+	}
+	gigaoctets := a.convertFromBase(InformationGigaoctet)
+	a.gigaoctetsLazy = &gigaoctets
+	return gigaoctets
+}
+
+// Teraoctets returns the Information value in Teraoctets.
+//
+// 
+func (a *Information) Teraoctets() float64 {
+	if a.teraoctetsLazy != nil {
+		return *a.teraoctetsLazy
+	}
+	teraoctets := a.convertFromBase(InformationTeraoctet)
+	a.teraoctetsLazy = &teraoctets
+	return teraoctets
+}
+
+// Petaoctets returns the Information value in Petaoctets.
+//
+// 
+func (a *Information) Petaoctets() float64 {
+	if a.petaoctetsLazy != nil {
+		return *a.petaoctetsLazy
+	}
+	petaoctets := a.convertFromBase(InformationPetaoctet)
+	a.petaoctetsLazy = &petaoctets
+	return petaoctets
+}
+
+// Exaoctets returns the Information value in Exaoctets.
+//
+// 
+func (a *Information) Exaoctets() float64 {
+	if a.exaoctetsLazy != nil {
+		return *a.exaoctetsLazy
+	}
+	exaoctets := a.convertFromBase(InformationExaoctet)
+	a.exaoctetsLazy = &exaoctets
+	return exaoctets
+}
+
+// Kibioctets returns the Information value in Kibioctets.
+//
+// 
+func (a *Information) Kibioctets() float64 {
+	if a.kibioctetsLazy != nil {
+		return *a.kibioctetsLazy
+	}
+	kibioctets := a.convertFromBase(InformationKibioctet)
+	a.kibioctetsLazy = &kibioctets
+	return kibioctets
+}
+
+// Mebioctets returns the Information value in Mebioctets.
+//
+// 
+func (a *Information) Mebioctets() float64 {
+	if a.mebioctetsLazy != nil {
+		return *a.mebioctetsLazy
+	}
+	mebioctets := a.convertFromBase(InformationMebioctet)
+	a.mebioctetsLazy = &mebioctets
+	return mebioctets
+}
+
+// Gibioctets returns the Information value in Gibioctets.
+//
+// 
+func (a *Information) Gibioctets() float64 {
+	if a.gibioctetsLazy != nil {
+		return *a.gibioctetsLazy
+	}
+	gibioctets := a.convertFromBase(InformationGibioctet)
+	a.gibioctetsLazy = &gibioctets
+	return gibioctets
+}
+
+// Tebioctets returns the Information value in Tebioctets.
+//
+// 
+func (a *Information) Tebioctets() float64 {
+	if a.tebioctetsLazy != nil {
+		return *a.tebioctetsLazy
+	}
+	tebioctets := a.convertFromBase(InformationTebioctet)
+	a.tebioctetsLazy = &tebioctets
+	return tebioctets
+}
+
+// Pebioctets returns the Information value in Pebioctets.
+//
+// 
+func (a *Information) Pebioctets() float64 {
+	if a.pebioctetsLazy != nil {
+		return *a.pebioctetsLazy
+	}
+	pebioctets := a.convertFromBase(InformationPebioctet)
+	a.pebioctetsLazy = &pebioctets
+	return pebioctets
+}
+
+// Exbioctets returns the Information value in Exbioctets.
+//
+// 
+func (a *Information) Exbioctets() float64 {
+	if a.exbioctetsLazy != nil {
+		return *a.exbioctetsLazy
+	}
+	exbioctets := a.convertFromBase(InformationExbioctet)
+	a.exbioctetsLazy = &exbioctets
+	return exbioctets
 }
 
 // Kilobits returns the Information value in Kilobits.
@@ -691,6 +964,8 @@ func (a *Information) Convert(toUnit InformationUnits) float64 {
 	switch toUnit { 
     case InformationByte:
 		return a.Bytes()
+    case InformationOctet:
+		return a.Octets()
     case InformationBit:
 		return a.Bits()
     case InformationKilobyte:
@@ -717,6 +992,30 @@ func (a *Information) Convert(toUnit InformationUnits) float64 {
 		return a.Pebibytes()
     case InformationExbibyte:
 		return a.Exbibytes()
+    case InformationKilooctet:
+		return a.Kilooctets()
+    case InformationMegaoctet:
+		return a.Megaoctets()
+    case InformationGigaoctet:
+		return a.Gigaoctets()
+    case InformationTeraoctet:
+		return a.Teraoctets()
+    case InformationPetaoctet:
+		return a.Petaoctets()
+    case InformationExaoctet:
+		return a.Exaoctets()
+    case InformationKibioctet:
+		return a.Kibioctets()
+    case InformationMebioctet:
+		return a.Mebioctets()
+    case InformationGibioctet:
+		return a.Gibioctets()
+    case InformationTebioctet:
+		return a.Tebioctets()
+    case InformationPebioctet:
+		return a.Pebioctets()
+    case InformationExbioctet:
+		return a.Exbioctets()
     case InformationKilobit:
 		return a.Kilobits()
     case InformationMegabit:
@@ -751,6 +1050,8 @@ func (a *Information) convertFromBase(toUnit InformationUnits) float64 {
 	switch toUnit { 
 	case InformationByte:
 		return (value / 8) 
+	case InformationOctet:
+		return (value / 8) 
 	case InformationBit:
 		return (value) 
 	case InformationKilobyte:
@@ -776,6 +1077,30 @@ func (a *Information) convertFromBase(toUnit InformationUnits) float64 {
 	case InformationPebibyte:
 		return ((value / 8) / 1125899906842624) 
 	case InformationExbibyte:
+		return ((value / 8) / 1152921504606846976) 
+	case InformationKilooctet:
+		return ((value / 8) / 1000.0) 
+	case InformationMegaoctet:
+		return ((value / 8) / 1000000.0) 
+	case InformationGigaoctet:
+		return ((value / 8) / 1000000000.0) 
+	case InformationTeraoctet:
+		return ((value / 8) / 1000000000000.0) 
+	case InformationPetaoctet:
+		return ((value / 8) / 1000000000000000.0) 
+	case InformationExaoctet:
+		return ((value / 8) / 1e+18) 
+	case InformationKibioctet:
+		return ((value / 8) / 1024) 
+	case InformationMebioctet:
+		return ((value / 8) / 1048576) 
+	case InformationGibioctet:
+		return ((value / 8) / 1073741824) 
+	case InformationTebioctet:
+		return ((value / 8) / 1099511627776) 
+	case InformationPebioctet:
+		return ((value / 8) / 1125899906842624) 
+	case InformationExbioctet:
 		return ((value / 8) / 1152921504606846976) 
 	case InformationKilobit:
 		return ((value) / 1000.0) 
@@ -810,6 +1135,8 @@ func (a *Information) convertToBase(value float64, fromUnit InformationUnits) fl
 	switch fromUnit { 
 	case InformationByte:
 		return (value * 8) 
+	case InformationOctet:
+		return (value * 8) 
 	case InformationBit:
 		return (value) 
 	case InformationKilobyte:
@@ -835,6 +1162,30 @@ func (a *Information) convertToBase(value float64, fromUnit InformationUnits) fl
 	case InformationPebibyte:
 		return ((value * 8) * 1125899906842624) 
 	case InformationExbibyte:
+		return ((value * 8) * 1152921504606846976) 
+	case InformationKilooctet:
+		return ((value * 8) * 1000.0) 
+	case InformationMegaoctet:
+		return ((value * 8) * 1000000.0) 
+	case InformationGigaoctet:
+		return ((value * 8) * 1000000000.0) 
+	case InformationTeraoctet:
+		return ((value * 8) * 1000000000000.0) 
+	case InformationPetaoctet:
+		return ((value * 8) * 1000000000000000.0) 
+	case InformationExaoctet:
+		return ((value * 8) * 1e+18) 
+	case InformationKibioctet:
+		return ((value * 8) * 1024) 
+	case InformationMebioctet:
+		return ((value * 8) * 1048576) 
+	case InformationGibioctet:
+		return ((value * 8) * 1073741824) 
+	case InformationTebioctet:
+		return ((value * 8) * 1099511627776) 
+	case InformationPebioctet:
+		return ((value * 8) * 1125899906842624) 
+	case InformationExbioctet:
 		return ((value * 8) * 1152921504606846976) 
 	case InformationKilobit:
 		return ((value) * 1000.0) 
@@ -975,6 +1326,8 @@ func GetInformationAbbreviation(unit InformationUnits) string {
 	switch unit { 
 	case InformationByte:
 		return "B" 
+	case InformationOctet:
+		return "o" 
 	case InformationBit:
 		return "b" 
 	case InformationKilobyte:
@@ -1001,6 +1354,30 @@ func GetInformationAbbreviation(unit InformationUnits) string {
 		return "PiBB" 
 	case InformationExbibyte:
 		return "EiBB" 
+	case InformationKilooctet:
+		return "ko" 
+	case InformationMegaoctet:
+		return "Mo" 
+	case InformationGigaoctet:
+		return "Go" 
+	case InformationTeraoctet:
+		return "To" 
+	case InformationPetaoctet:
+		return "Po" 
+	case InformationExaoctet:
+		return "Eo" 
+	case InformationKibioctet:
+		return "KiBo" 
+	case InformationMebioctet:
+		return "MiBo" 
+	case InformationGibioctet:
+		return "GiBo" 
+	case InformationTebioctet:
+		return "TiBo" 
+	case InformationPebioctet:
+		return "PiBo" 
+	case InformationExbioctet:
+		return "EiBo" 
 	case InformationKilobit:
 		return "kb" 
 	case InformationMegabit:

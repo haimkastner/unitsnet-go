@@ -409,7 +409,7 @@ func (a *Molarity) convertFromBase(toUnit MolarityUnits) float64 {
 	case MolarityMolePerLiter:
 		return (value * 1e-3) 
 	case MolarityPoundMolePerCubicFoot:
-		return (value * 6.2427960576144611956325455827221e-5) 
+		return (value / (1000 * 0.45359237 / 0.028316846592)) 
 	case MolarityKilomolePerCubicMeter:
 		return ((value) / 1000.0) 
 	case MolarityFemtomolePerLiter:
@@ -438,7 +438,7 @@ func (a *Molarity) convertToBase(value float64, fromUnit MolarityUnits) float64 
 	case MolarityMolePerLiter:
 		return (value / 1e-3) 
 	case MolarityPoundMolePerCubicFoot:
-		return (value / 6.2427960576144611956325455827221e-5) 
+		return (value * 1000 * 0.45359237 / 0.028316846592) 
 	case MolarityKilomolePerCubicMeter:
 		return ((value) * 1000.0) 
 	case MolarityFemtomolePerLiter:
@@ -571,25 +571,25 @@ func GetMolarityAbbreviation(unit MolarityUnits) string {
 	case MolarityMolePerCubicMeter:
 		return "mol/m³" 
 	case MolarityMolePerLiter:
-		return "mol/L" 
+		return "mol/l" 
 	case MolarityPoundMolePerCubicFoot:
 		return "lbmol/ft³" 
 	case MolarityKilomolePerCubicMeter:
 		return "kmol/m³" 
 	case MolarityFemtomolePerLiter:
-		return "fmol/L" 
+		return "fmol/l" 
 	case MolarityPicomolePerLiter:
-		return "pmol/L" 
+		return "pmol/l" 
 	case MolarityNanomolePerLiter:
-		return "nmol/L" 
+		return "nmol/l" 
 	case MolarityMicromolePerLiter:
-		return "μmol/L" 
+		return "μmol/l" 
 	case MolarityMillimolePerLiter:
-		return "mmol/L" 
+		return "mmol/l" 
 	case MolarityCentimolePerLiter:
-		return "cmol/L" 
+		return "cmol/l" 
 	case MolarityDecimolePerLiter:
-		return "dmol/L" 
+		return "dmol/l" 
 	default:
 		return ""
 	}

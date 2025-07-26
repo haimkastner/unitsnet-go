@@ -22,6 +22,8 @@ const (
         // 
         BitRateBytePerSecond BitRateUnits = "BytePerSecond"
         // 
+        BitRateOctetPerSecond BitRateUnits = "OctetPerSecond"
+        // 
         BitRateKilobitPerSecond BitRateUnits = "KilobitPerSecond"
         // 
         BitRateMegabitPerSecond BitRateUnits = "MegabitPerSecond"
@@ -69,12 +71,37 @@ const (
         BitRatePebibytePerSecond BitRateUnits = "PebibytePerSecond"
         // 
         BitRateExbibytePerSecond BitRateUnits = "ExbibytePerSecond"
+        // 
+        BitRateKilooctetPerSecond BitRateUnits = "KilooctetPerSecond"
+        // 
+        BitRateMegaoctetPerSecond BitRateUnits = "MegaoctetPerSecond"
+        // 
+        BitRateGigaoctetPerSecond BitRateUnits = "GigaoctetPerSecond"
+        // 
+        BitRateTeraoctetPerSecond BitRateUnits = "TeraoctetPerSecond"
+        // 
+        BitRatePetaoctetPerSecond BitRateUnits = "PetaoctetPerSecond"
+        // 
+        BitRateExaoctetPerSecond BitRateUnits = "ExaoctetPerSecond"
+        // 
+        BitRateKibioctetPerSecond BitRateUnits = "KibioctetPerSecond"
+        // 
+        BitRateMebioctetPerSecond BitRateUnits = "MebioctetPerSecond"
+        // 
+        BitRateGibioctetPerSecond BitRateUnits = "GibioctetPerSecond"
+        // 
+        BitRateTebioctetPerSecond BitRateUnits = "TebioctetPerSecond"
+        // 
+        BitRatePebioctetPerSecond BitRateUnits = "PebioctetPerSecond"
+        // 
+        BitRateExbioctetPerSecond BitRateUnits = "ExbioctetPerSecond"
 )
 
 var internalBitRateUnitsMap = map[BitRateUnits]bool{
 	
 	BitRateBitPerSecond: true,
 	BitRateBytePerSecond: true,
+	BitRateOctetPerSecond: true,
 	BitRateKilobitPerSecond: true,
 	BitRateMegabitPerSecond: true,
 	BitRateGigabitPerSecond: true,
@@ -99,6 +126,18 @@ var internalBitRateUnitsMap = map[BitRateUnits]bool{
 	BitRateTebibytePerSecond: true,
 	BitRatePebibytePerSecond: true,
 	BitRateExbibytePerSecond: true,
+	BitRateKilooctetPerSecond: true,
+	BitRateMegaoctetPerSecond: true,
+	BitRateGigaoctetPerSecond: true,
+	BitRateTeraoctetPerSecond: true,
+	BitRatePetaoctetPerSecond: true,
+	BitRateExaoctetPerSecond: true,
+	BitRateKibioctetPerSecond: true,
+	BitRateMebioctetPerSecond: true,
+	BitRateGibioctetPerSecond: true,
+	BitRateTebioctetPerSecond: true,
+	BitRatePebioctetPerSecond: true,
+	BitRateExbioctetPerSecond: true,
 }
 
 // BitRateDto represents a BitRate measurement with a numerical value and its corresponding unit.
@@ -106,7 +145,7 @@ type BitRateDto struct {
     // Value is the numerical representation of the BitRate.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the BitRate, as defined in the BitRateUnits enumeration.
-	Unit  BitRateUnits `json:"unit" validate:"required,oneof=BitPerSecond BytePerSecond KilobitPerSecond MegabitPerSecond GigabitPerSecond TerabitPerSecond PetabitPerSecond ExabitPerSecond KibibitPerSecond MebibitPerSecond GibibitPerSecond TebibitPerSecond PebibitPerSecond ExbibitPerSecond KilobytePerSecond MegabytePerSecond GigabytePerSecond TerabytePerSecond PetabytePerSecond ExabytePerSecond KibibytePerSecond MebibytePerSecond GibibytePerSecond TebibytePerSecond PebibytePerSecond ExbibytePerSecond"`
+	Unit  BitRateUnits `json:"unit" validate:"required,oneof=BitPerSecond BytePerSecond OctetPerSecond KilobitPerSecond MegabitPerSecond GigabitPerSecond TerabitPerSecond PetabitPerSecond ExabitPerSecond KibibitPerSecond MebibitPerSecond GibibitPerSecond TebibitPerSecond PebibitPerSecond ExbibitPerSecond KilobytePerSecond MegabytePerSecond GigabytePerSecond TerabytePerSecond PetabytePerSecond ExabytePerSecond KibibytePerSecond MebibytePerSecond GibibytePerSecond TebibytePerSecond PebibytePerSecond ExbibytePerSecond KilooctetPerSecond MegaoctetPerSecond GigaoctetPerSecond TeraoctetPerSecond PetaoctetPerSecond ExaoctetPerSecond KibioctetPerSecond MebioctetPerSecond GibioctetPerSecond TebioctetPerSecond PebioctetPerSecond ExbioctetPerSecond"`
 }
 
 // BitRateDtoFactory groups methods for creating and serializing BitRateDto objects.
@@ -147,6 +186,7 @@ type BitRate struct {
     
     bits_per_secondLazy *float64 
     bytes_per_secondLazy *float64 
+    octets_per_secondLazy *float64 
     kilobits_per_secondLazy *float64 
     megabits_per_secondLazy *float64 
     gigabits_per_secondLazy *float64 
@@ -171,6 +211,18 @@ type BitRate struct {
     tebibytes_per_secondLazy *float64 
     pebibytes_per_secondLazy *float64 
     exbibytes_per_secondLazy *float64 
+    kilooctets_per_secondLazy *float64 
+    megaoctets_per_secondLazy *float64 
+    gigaoctets_per_secondLazy *float64 
+    teraoctets_per_secondLazy *float64 
+    petaoctets_per_secondLazy *float64 
+    exaoctets_per_secondLazy *float64 
+    kibioctets_per_secondLazy *float64 
+    mebioctets_per_secondLazy *float64 
+    gibioctets_per_secondLazy *float64 
+    tebioctets_per_secondLazy *float64 
+    pebioctets_per_secondLazy *float64 
+    exbioctets_per_secondLazy *float64 
 }
 
 // BitRateFactory groups methods for creating BitRate instances.
@@ -204,6 +256,11 @@ func (uf BitRateFactory) FromBitsPerSecond(value float64) (*BitRate, error) {
 // FromBytesPerSecond creates a new BitRate instance from a value in BytesPerSecond.
 func (uf BitRateFactory) FromBytesPerSecond(value float64) (*BitRate, error) {
 	return newBitRate(value, BitRateBytePerSecond)
+}
+
+// FromOctetsPerSecond creates a new BitRate instance from a value in OctetsPerSecond.
+func (uf BitRateFactory) FromOctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateOctetPerSecond)
 }
 
 // FromKilobitsPerSecond creates a new BitRate instance from a value in KilobitsPerSecond.
@@ -326,6 +383,66 @@ func (uf BitRateFactory) FromExbibytesPerSecond(value float64) (*BitRate, error)
 	return newBitRate(value, BitRateExbibytePerSecond)
 }
 
+// FromKilooctetsPerSecond creates a new BitRate instance from a value in KilooctetsPerSecond.
+func (uf BitRateFactory) FromKilooctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateKilooctetPerSecond)
+}
+
+// FromMegaoctetsPerSecond creates a new BitRate instance from a value in MegaoctetsPerSecond.
+func (uf BitRateFactory) FromMegaoctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateMegaoctetPerSecond)
+}
+
+// FromGigaoctetsPerSecond creates a new BitRate instance from a value in GigaoctetsPerSecond.
+func (uf BitRateFactory) FromGigaoctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateGigaoctetPerSecond)
+}
+
+// FromTeraoctetsPerSecond creates a new BitRate instance from a value in TeraoctetsPerSecond.
+func (uf BitRateFactory) FromTeraoctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateTeraoctetPerSecond)
+}
+
+// FromPetaoctetsPerSecond creates a new BitRate instance from a value in PetaoctetsPerSecond.
+func (uf BitRateFactory) FromPetaoctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRatePetaoctetPerSecond)
+}
+
+// FromExaoctetsPerSecond creates a new BitRate instance from a value in ExaoctetsPerSecond.
+func (uf BitRateFactory) FromExaoctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateExaoctetPerSecond)
+}
+
+// FromKibioctetsPerSecond creates a new BitRate instance from a value in KibioctetsPerSecond.
+func (uf BitRateFactory) FromKibioctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateKibioctetPerSecond)
+}
+
+// FromMebioctetsPerSecond creates a new BitRate instance from a value in MebioctetsPerSecond.
+func (uf BitRateFactory) FromMebioctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateMebioctetPerSecond)
+}
+
+// FromGibioctetsPerSecond creates a new BitRate instance from a value in GibioctetsPerSecond.
+func (uf BitRateFactory) FromGibioctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateGibioctetPerSecond)
+}
+
+// FromTebioctetsPerSecond creates a new BitRate instance from a value in TebioctetsPerSecond.
+func (uf BitRateFactory) FromTebioctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateTebioctetPerSecond)
+}
+
+// FromPebioctetsPerSecond creates a new BitRate instance from a value in PebioctetsPerSecond.
+func (uf BitRateFactory) FromPebioctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRatePebioctetPerSecond)
+}
+
+// FromExbioctetsPerSecond creates a new BitRate instance from a value in ExbioctetsPerSecond.
+func (uf BitRateFactory) FromExbioctetsPerSecond(value float64) (*BitRate, error) {
+	return newBitRate(value, BitRateExbioctetPerSecond)
+}
+
 
 // newBitRate creates a new BitRate.
 func newBitRate(value float64, fromUnit BitRateUnits) (*BitRate, error) {
@@ -368,6 +485,18 @@ func (a *BitRate) BytesPerSecond() float64 {
 	bytes_per_second := a.convertFromBase(BitRateBytePerSecond)
 	a.bytes_per_secondLazy = &bytes_per_second
 	return bytes_per_second
+}
+
+// OctetsPerSecond returns the BitRate value in OctetsPerSecond.
+//
+// 
+func (a *BitRate) OctetsPerSecond() float64 {
+	if a.octets_per_secondLazy != nil {
+		return *a.octets_per_secondLazy
+	}
+	octets_per_second := a.convertFromBase(BitRateOctetPerSecond)
+	a.octets_per_secondLazy = &octets_per_second
+	return octets_per_second
 }
 
 // KilobitsPerSecond returns the BitRate value in KilobitsPerSecond.
@@ -658,6 +787,150 @@ func (a *BitRate) ExbibytesPerSecond() float64 {
 	return exbibytes_per_second
 }
 
+// KilooctetsPerSecond returns the BitRate value in KilooctetsPerSecond.
+//
+// 
+func (a *BitRate) KilooctetsPerSecond() float64 {
+	if a.kilooctets_per_secondLazy != nil {
+		return *a.kilooctets_per_secondLazy
+	}
+	kilooctets_per_second := a.convertFromBase(BitRateKilooctetPerSecond)
+	a.kilooctets_per_secondLazy = &kilooctets_per_second
+	return kilooctets_per_second
+}
+
+// MegaoctetsPerSecond returns the BitRate value in MegaoctetsPerSecond.
+//
+// 
+func (a *BitRate) MegaoctetsPerSecond() float64 {
+	if a.megaoctets_per_secondLazy != nil {
+		return *a.megaoctets_per_secondLazy
+	}
+	megaoctets_per_second := a.convertFromBase(BitRateMegaoctetPerSecond)
+	a.megaoctets_per_secondLazy = &megaoctets_per_second
+	return megaoctets_per_second
+}
+
+// GigaoctetsPerSecond returns the BitRate value in GigaoctetsPerSecond.
+//
+// 
+func (a *BitRate) GigaoctetsPerSecond() float64 {
+	if a.gigaoctets_per_secondLazy != nil {
+		return *a.gigaoctets_per_secondLazy
+	}
+	gigaoctets_per_second := a.convertFromBase(BitRateGigaoctetPerSecond)
+	a.gigaoctets_per_secondLazy = &gigaoctets_per_second
+	return gigaoctets_per_second
+}
+
+// TeraoctetsPerSecond returns the BitRate value in TeraoctetsPerSecond.
+//
+// 
+func (a *BitRate) TeraoctetsPerSecond() float64 {
+	if a.teraoctets_per_secondLazy != nil {
+		return *a.teraoctets_per_secondLazy
+	}
+	teraoctets_per_second := a.convertFromBase(BitRateTeraoctetPerSecond)
+	a.teraoctets_per_secondLazy = &teraoctets_per_second
+	return teraoctets_per_second
+}
+
+// PetaoctetsPerSecond returns the BitRate value in PetaoctetsPerSecond.
+//
+// 
+func (a *BitRate) PetaoctetsPerSecond() float64 {
+	if a.petaoctets_per_secondLazy != nil {
+		return *a.petaoctets_per_secondLazy
+	}
+	petaoctets_per_second := a.convertFromBase(BitRatePetaoctetPerSecond)
+	a.petaoctets_per_secondLazy = &petaoctets_per_second
+	return petaoctets_per_second
+}
+
+// ExaoctetsPerSecond returns the BitRate value in ExaoctetsPerSecond.
+//
+// 
+func (a *BitRate) ExaoctetsPerSecond() float64 {
+	if a.exaoctets_per_secondLazy != nil {
+		return *a.exaoctets_per_secondLazy
+	}
+	exaoctets_per_second := a.convertFromBase(BitRateExaoctetPerSecond)
+	a.exaoctets_per_secondLazy = &exaoctets_per_second
+	return exaoctets_per_second
+}
+
+// KibioctetsPerSecond returns the BitRate value in KibioctetsPerSecond.
+//
+// 
+func (a *BitRate) KibioctetsPerSecond() float64 {
+	if a.kibioctets_per_secondLazy != nil {
+		return *a.kibioctets_per_secondLazy
+	}
+	kibioctets_per_second := a.convertFromBase(BitRateKibioctetPerSecond)
+	a.kibioctets_per_secondLazy = &kibioctets_per_second
+	return kibioctets_per_second
+}
+
+// MebioctetsPerSecond returns the BitRate value in MebioctetsPerSecond.
+//
+// 
+func (a *BitRate) MebioctetsPerSecond() float64 {
+	if a.mebioctets_per_secondLazy != nil {
+		return *a.mebioctets_per_secondLazy
+	}
+	mebioctets_per_second := a.convertFromBase(BitRateMebioctetPerSecond)
+	a.mebioctets_per_secondLazy = &mebioctets_per_second
+	return mebioctets_per_second
+}
+
+// GibioctetsPerSecond returns the BitRate value in GibioctetsPerSecond.
+//
+// 
+func (a *BitRate) GibioctetsPerSecond() float64 {
+	if a.gibioctets_per_secondLazy != nil {
+		return *a.gibioctets_per_secondLazy
+	}
+	gibioctets_per_second := a.convertFromBase(BitRateGibioctetPerSecond)
+	a.gibioctets_per_secondLazy = &gibioctets_per_second
+	return gibioctets_per_second
+}
+
+// TebioctetsPerSecond returns the BitRate value in TebioctetsPerSecond.
+//
+// 
+func (a *BitRate) TebioctetsPerSecond() float64 {
+	if a.tebioctets_per_secondLazy != nil {
+		return *a.tebioctets_per_secondLazy
+	}
+	tebioctets_per_second := a.convertFromBase(BitRateTebioctetPerSecond)
+	a.tebioctets_per_secondLazy = &tebioctets_per_second
+	return tebioctets_per_second
+}
+
+// PebioctetsPerSecond returns the BitRate value in PebioctetsPerSecond.
+//
+// 
+func (a *BitRate) PebioctetsPerSecond() float64 {
+	if a.pebioctets_per_secondLazy != nil {
+		return *a.pebioctets_per_secondLazy
+	}
+	pebioctets_per_second := a.convertFromBase(BitRatePebioctetPerSecond)
+	a.pebioctets_per_secondLazy = &pebioctets_per_second
+	return pebioctets_per_second
+}
+
+// ExbioctetsPerSecond returns the BitRate value in ExbioctetsPerSecond.
+//
+// 
+func (a *BitRate) ExbioctetsPerSecond() float64 {
+	if a.exbioctets_per_secondLazy != nil {
+		return *a.exbioctets_per_secondLazy
+	}
+	exbioctets_per_second := a.convertFromBase(BitRateExbioctetPerSecond)
+	a.exbioctets_per_secondLazy = &exbioctets_per_second
+	return exbioctets_per_second
+}
+
 
 // ToDto creates a BitRateDto representation from the BitRate instance.
 //
@@ -693,6 +966,8 @@ func (a *BitRate) Convert(toUnit BitRateUnits) float64 {
 		return a.BitsPerSecond()
     case BitRateBytePerSecond:
 		return a.BytesPerSecond()
+    case BitRateOctetPerSecond:
+		return a.OctetsPerSecond()
     case BitRateKilobitPerSecond:
 		return a.KilobitsPerSecond()
     case BitRateMegabitPerSecond:
@@ -741,6 +1016,30 @@ func (a *BitRate) Convert(toUnit BitRateUnits) float64 {
 		return a.PebibytesPerSecond()
     case BitRateExbibytePerSecond:
 		return a.ExbibytesPerSecond()
+    case BitRateKilooctetPerSecond:
+		return a.KilooctetsPerSecond()
+    case BitRateMegaoctetPerSecond:
+		return a.MegaoctetsPerSecond()
+    case BitRateGigaoctetPerSecond:
+		return a.GigaoctetsPerSecond()
+    case BitRateTeraoctetPerSecond:
+		return a.TeraoctetsPerSecond()
+    case BitRatePetaoctetPerSecond:
+		return a.PetaoctetsPerSecond()
+    case BitRateExaoctetPerSecond:
+		return a.ExaoctetsPerSecond()
+    case BitRateKibioctetPerSecond:
+		return a.KibioctetsPerSecond()
+    case BitRateMebioctetPerSecond:
+		return a.MebioctetsPerSecond()
+    case BitRateGibioctetPerSecond:
+		return a.GibioctetsPerSecond()
+    case BitRateTebioctetPerSecond:
+		return a.TebioctetsPerSecond()
+    case BitRatePebioctetPerSecond:
+		return a.PebioctetsPerSecond()
+    case BitRateExbioctetPerSecond:
+		return a.ExbioctetsPerSecond()
 	default:
 		return math.NaN()
 	}
@@ -752,6 +1051,8 @@ func (a *BitRate) convertFromBase(toUnit BitRateUnits) float64 {
 	case BitRateBitPerSecond:
 		return (value) 
 	case BitRateBytePerSecond:
+		return (value / 8) 
+	case BitRateOctetPerSecond:
 		return (value / 8) 
 	case BitRateKilobitPerSecond:
 		return ((value) / 1000.0) 
@@ -801,6 +1102,30 @@ func (a *BitRate) convertFromBase(toUnit BitRateUnits) float64 {
 		return ((value / 8) / 1125899906842624) 
 	case BitRateExbibytePerSecond:
 		return ((value / 8) / 1152921504606846976) 
+	case BitRateKilooctetPerSecond:
+		return ((value / 8) / 1000.0) 
+	case BitRateMegaoctetPerSecond:
+		return ((value / 8) / 1000000.0) 
+	case BitRateGigaoctetPerSecond:
+		return ((value / 8) / 1000000000.0) 
+	case BitRateTeraoctetPerSecond:
+		return ((value / 8) / 1000000000000.0) 
+	case BitRatePetaoctetPerSecond:
+		return ((value / 8) / 1000000000000000.0) 
+	case BitRateExaoctetPerSecond:
+		return ((value / 8) / 1e+18) 
+	case BitRateKibioctetPerSecond:
+		return ((value / 8) / 1024) 
+	case BitRateMebioctetPerSecond:
+		return ((value / 8) / 1048576) 
+	case BitRateGibioctetPerSecond:
+		return ((value / 8) / 1073741824) 
+	case BitRateTebioctetPerSecond:
+		return ((value / 8) / 1099511627776) 
+	case BitRatePebioctetPerSecond:
+		return ((value / 8) / 1125899906842624) 
+	case BitRateExbioctetPerSecond:
+		return ((value / 8) / 1152921504606846976) 
 	default:
 		return math.NaN()
 	}
@@ -811,6 +1136,8 @@ func (a *BitRate) convertToBase(value float64, fromUnit BitRateUnits) float64 {
 	case BitRateBitPerSecond:
 		return (value) 
 	case BitRateBytePerSecond:
+		return (value * 8) 
+	case BitRateOctetPerSecond:
 		return (value * 8) 
 	case BitRateKilobitPerSecond:
 		return ((value) * 1000.0) 
@@ -859,6 +1186,30 @@ func (a *BitRate) convertToBase(value float64, fromUnit BitRateUnits) float64 {
 	case BitRatePebibytePerSecond:
 		return ((value * 8) * 1125899906842624) 
 	case BitRateExbibytePerSecond:
+		return ((value * 8) * 1152921504606846976) 
+	case BitRateKilooctetPerSecond:
+		return ((value * 8) * 1000.0) 
+	case BitRateMegaoctetPerSecond:
+		return ((value * 8) * 1000000.0) 
+	case BitRateGigaoctetPerSecond:
+		return ((value * 8) * 1000000000.0) 
+	case BitRateTeraoctetPerSecond:
+		return ((value * 8) * 1000000000000.0) 
+	case BitRatePetaoctetPerSecond:
+		return ((value * 8) * 1000000000000000.0) 
+	case BitRateExaoctetPerSecond:
+		return ((value * 8) * 1e+18) 
+	case BitRateKibioctetPerSecond:
+		return ((value * 8) * 1024) 
+	case BitRateMebioctetPerSecond:
+		return ((value * 8) * 1048576) 
+	case BitRateGibioctetPerSecond:
+		return ((value * 8) * 1073741824) 
+	case BitRateTebioctetPerSecond:
+		return ((value * 8) * 1099511627776) 
+	case BitRatePebioctetPerSecond:
+		return ((value * 8) * 1125899906842624) 
+	case BitRateExbioctetPerSecond:
 		return ((value * 8) * 1152921504606846976) 
 	default:
 		return math.NaN()
@@ -977,6 +1328,8 @@ func GetBitRateAbbreviation(unit BitRateUnits) string {
 		return "bit/s" 
 	case BitRateBytePerSecond:
 		return "B/s" 
+	case BitRateOctetPerSecond:
+		return "o/s" 
 	case BitRateKilobitPerSecond:
 		return "kbit/s" 
 	case BitRateMegabitPerSecond:
@@ -1025,6 +1378,30 @@ func GetBitRateAbbreviation(unit BitRateUnits) string {
 		return "PiBB/s" 
 	case BitRateExbibytePerSecond:
 		return "EiBB/s" 
+	case BitRateKilooctetPerSecond:
+		return "ko/s" 
+	case BitRateMegaoctetPerSecond:
+		return "Mo/s" 
+	case BitRateGigaoctetPerSecond:
+		return "Go/s" 
+	case BitRateTeraoctetPerSecond:
+		return "To/s" 
+	case BitRatePetaoctetPerSecond:
+		return "Po/s" 
+	case BitRateExaoctetPerSecond:
+		return "Eo/s" 
+	case BitRateKibioctetPerSecond:
+		return "KiBo/s" 
+	case BitRateMebioctetPerSecond:
+		return "MiBo/s" 
+	case BitRateGibioctetPerSecond:
+		return "GiBo/s" 
+	case BitRateTebioctetPerSecond:
+		return "TiBo/s" 
+	case BitRatePebioctetPerSecond:
+		return "PiBo/s" 
+	case BitRateExbioctetPerSecond:
+		return "EiBo/s" 
 	default:
 		return ""
 	}

@@ -417,13 +417,13 @@ func (a *ReciprocalArea) convertFromBase(toUnit ReciprocalAreaUnits) float64 {
 	case ReciprocalAreaInverseSquareMicrometer:
 		return (value * 1e-12) 
 	case ReciprocalAreaInverseSquareMile:
-		return (value * 2.59e6) 
+		return (value * (1609.344 * 1609.344)) 
 	case ReciprocalAreaInverseSquareYard:
-		return (value * 0.836127) 
+		return (value * (0.9144 * 0.9144)) 
 	case ReciprocalAreaInverseSquareFoot:
-		return (value * 0.092903) 
+		return (value * 9.290304e-2) 
 	case ReciprocalAreaInverseUsSurveySquareFoot:
-		return (value * 0.09290341161) 
+		return (value * (1200.0 / 3937.0) * (1200.0 / 3937.0)) 
 	case ReciprocalAreaInverseSquareInch:
 		return (value * 0.00064516) 
 	default:
@@ -446,13 +446,13 @@ func (a *ReciprocalArea) convertToBase(value float64, fromUnit ReciprocalAreaUni
 	case ReciprocalAreaInverseSquareMicrometer:
 		return (value / 1e-12) 
 	case ReciprocalAreaInverseSquareMile:
-		return (value / 2.59e6) 
+		return (value / (1609.344 * 1609.344)) 
 	case ReciprocalAreaInverseSquareYard:
-		return (value / 0.836127) 
+		return (value / (0.9144 * 0.9144)) 
 	case ReciprocalAreaInverseSquareFoot:
-		return (value / 0.092903) 
+		return (value / 9.290304e-2) 
 	case ReciprocalAreaInverseUsSurveySquareFoot:
-		return (value / 0.09290341161) 
+		return (value / (1200.0 / 3937.0) / (1200.0 / 3937.0)) 
 	case ReciprocalAreaInverseSquareInch:
 		return (value / 0.00064516) 
 	default:

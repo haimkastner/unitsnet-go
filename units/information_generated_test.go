@@ -87,6 +87,15 @@ func TestInformationConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to Octets.
+		// No expected conversion value provided for Octets, verifying result is not NaN.
+		result := a.Octets()
+		cacheResult := a.Octets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Octets returned NaN")
+		}
+	}
+	{
 		// Test conversion to Bits.
 		// No expected conversion value provided for Bits, verifying result is not NaN.
 		result := a.Bits()
@@ -201,6 +210,114 @@ func TestInformationConversions(t *testing.T) {
 		cacheResult := a.Exbibytes()
 		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Exbibytes returned NaN")
+		}
+	}
+	{
+		// Test conversion to Kilooctets.
+		// No expected conversion value provided for Kilooctets, verifying result is not NaN.
+		result := a.Kilooctets()
+		cacheResult := a.Kilooctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Kilooctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Megaoctets.
+		// No expected conversion value provided for Megaoctets, verifying result is not NaN.
+		result := a.Megaoctets()
+		cacheResult := a.Megaoctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Megaoctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Gigaoctets.
+		// No expected conversion value provided for Gigaoctets, verifying result is not NaN.
+		result := a.Gigaoctets()
+		cacheResult := a.Gigaoctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Gigaoctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Teraoctets.
+		// No expected conversion value provided for Teraoctets, verifying result is not NaN.
+		result := a.Teraoctets()
+		cacheResult := a.Teraoctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Teraoctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Petaoctets.
+		// No expected conversion value provided for Petaoctets, verifying result is not NaN.
+		result := a.Petaoctets()
+		cacheResult := a.Petaoctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Petaoctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Exaoctets.
+		// No expected conversion value provided for Exaoctets, verifying result is not NaN.
+		result := a.Exaoctets()
+		cacheResult := a.Exaoctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Exaoctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Kibioctets.
+		// No expected conversion value provided for Kibioctets, verifying result is not NaN.
+		result := a.Kibioctets()
+		cacheResult := a.Kibioctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Kibioctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Mebioctets.
+		// No expected conversion value provided for Mebioctets, verifying result is not NaN.
+		result := a.Mebioctets()
+		cacheResult := a.Mebioctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Mebioctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Gibioctets.
+		// No expected conversion value provided for Gibioctets, verifying result is not NaN.
+		result := a.Gibioctets()
+		cacheResult := a.Gibioctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Gibioctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Tebioctets.
+		// No expected conversion value provided for Tebioctets, verifying result is not NaN.
+		result := a.Tebioctets()
+		cacheResult := a.Tebioctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Tebioctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Pebioctets.
+		// No expected conversion value provided for Pebioctets, verifying result is not NaN.
+		result := a.Pebioctets()
+		cacheResult := a.Pebioctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Pebioctets returned NaN")
+		}
+	}
+	{
+		// Test conversion to Exbioctets.
+		// No expected conversion value provided for Exbioctets, verifying result is not NaN.
+		result := a.Exbioctets()
+		cacheResult := a.Exbioctets()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Exbioctets returned NaN")
 		}
 	}
 	{
@@ -396,6 +513,23 @@ func TestInformationFactory_FromDto(t *testing.T) {
     converted = bytesResult.Convert(units.InformationByte)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Byte = %v, want %v", converted, 100)
+    }
+    // Test Octet conversion
+    octetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationOctet,
+    }
+    
+    var octetsResult *units.Information
+    octetsResult, err = factory.FromDto(octetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Octet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = octetsResult.Convert(units.InformationOctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Octet = %v, want %v", converted, 100)
     }
     // Test Bit conversion
     bitsDto := units.InformationDto{
@@ -617,6 +751,210 @@ func TestInformationFactory_FromDto(t *testing.T) {
     converted = exbibytesResult.Convert(units.InformationExbibyte)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Exbibyte = %v, want %v", converted, 100)
+    }
+    // Test Kilooctet conversion
+    kilooctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationKilooctet,
+    }
+    
+    var kilooctetsResult *units.Information
+    kilooctetsResult, err = factory.FromDto(kilooctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Kilooctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilooctetsResult.Convert(units.InformationKilooctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilooctet = %v, want %v", converted, 100)
+    }
+    // Test Megaoctet conversion
+    megaoctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationMegaoctet,
+    }
+    
+    var megaoctetsResult *units.Information
+    megaoctetsResult, err = factory.FromDto(megaoctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Megaoctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaoctetsResult.Convert(units.InformationMegaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megaoctet = %v, want %v", converted, 100)
+    }
+    // Test Gigaoctet conversion
+    gigaoctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationGigaoctet,
+    }
+    
+    var gigaoctetsResult *units.Information
+    gigaoctetsResult, err = factory.FromDto(gigaoctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Gigaoctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigaoctetsResult.Convert(units.InformationGigaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gigaoctet = %v, want %v", converted, 100)
+    }
+    // Test Teraoctet conversion
+    teraoctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationTeraoctet,
+    }
+    
+    var teraoctetsResult *units.Information
+    teraoctetsResult, err = factory.FromDto(teraoctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Teraoctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = teraoctetsResult.Convert(units.InformationTeraoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Teraoctet = %v, want %v", converted, 100)
+    }
+    // Test Petaoctet conversion
+    petaoctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationPetaoctet,
+    }
+    
+    var petaoctetsResult *units.Information
+    petaoctetsResult, err = factory.FromDto(petaoctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Petaoctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = petaoctetsResult.Convert(units.InformationPetaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Petaoctet = %v, want %v", converted, 100)
+    }
+    // Test Exaoctet conversion
+    exaoctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationExaoctet,
+    }
+    
+    var exaoctetsResult *units.Information
+    exaoctetsResult, err = factory.FromDto(exaoctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Exaoctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = exaoctetsResult.Convert(units.InformationExaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Exaoctet = %v, want %v", converted, 100)
+    }
+    // Test Kibioctet conversion
+    kibioctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationKibioctet,
+    }
+    
+    var kibioctetsResult *units.Information
+    kibioctetsResult, err = factory.FromDto(kibioctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Kibioctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kibioctetsResult.Convert(units.InformationKibioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kibioctet = %v, want %v", converted, 100)
+    }
+    // Test Mebioctet conversion
+    mebioctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationMebioctet,
+    }
+    
+    var mebioctetsResult *units.Information
+    mebioctetsResult, err = factory.FromDto(mebioctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Mebioctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = mebioctetsResult.Convert(units.InformationMebioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Mebioctet = %v, want %v", converted, 100)
+    }
+    // Test Gibioctet conversion
+    gibioctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationGibioctet,
+    }
+    
+    var gibioctetsResult *units.Information
+    gibioctetsResult, err = factory.FromDto(gibioctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Gibioctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gibioctetsResult.Convert(units.InformationGibioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gibioctet = %v, want %v", converted, 100)
+    }
+    // Test Tebioctet conversion
+    tebioctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationTebioctet,
+    }
+    
+    var tebioctetsResult *units.Information
+    tebioctetsResult, err = factory.FromDto(tebioctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Tebioctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = tebioctetsResult.Convert(units.InformationTebioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Tebioctet = %v, want %v", converted, 100)
+    }
+    // Test Pebioctet conversion
+    pebioctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationPebioctet,
+    }
+    
+    var pebioctetsResult *units.Information
+    pebioctetsResult, err = factory.FromDto(pebioctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Pebioctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pebioctetsResult.Convert(units.InformationPebioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Pebioctet = %v, want %v", converted, 100)
+    }
+    // Test Exbioctet conversion
+    exbioctetsDto := units.InformationDto{
+        Value: 100,
+        Unit:  units.InformationExbioctet,
+    }
+    
+    var exbioctetsResult *units.Information
+    exbioctetsResult, err = factory.FromDto(exbioctetsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Exbioctet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = exbioctetsResult.Convert(units.InformationExbioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Exbioctet = %v, want %v", converted, 100)
     }
     // Test Kilobit conversion
     kilobitsDto := units.InformationDto{
@@ -898,6 +1236,18 @@ func TestInformationFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Byte = %v, want %v", converted, 100)
     }
+    // Test JSON with Octet unit
+    octetsJSON := []byte(`{"value": 100, "unit": "Octet"}`)
+    octetsResult, err := factory.FromDtoJSON(octetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Octet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = octetsResult.Convert(units.InformationOctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Octet = %v, want %v", converted, 100)
+    }
     // Test JSON with Bit unit
     bitsJSON := []byte(`{"value": 100, "unit": "Bit"}`)
     bitsResult, err := factory.FromDtoJSON(bitsJSON)
@@ -1053,6 +1403,150 @@ func TestInformationFactory_FromDtoJSON(t *testing.T) {
     converted = exbibytesResult.Convert(units.InformationExbibyte)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Exbibyte = %v, want %v", converted, 100)
+    }
+    // Test JSON with Kilooctet unit
+    kilooctetsJSON := []byte(`{"value": 100, "unit": "Kilooctet"}`)
+    kilooctetsResult, err := factory.FromDtoJSON(kilooctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Kilooctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilooctetsResult.Convert(units.InformationKilooctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilooctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Megaoctet unit
+    megaoctetsJSON := []byte(`{"value": 100, "unit": "Megaoctet"}`)
+    megaoctetsResult, err := factory.FromDtoJSON(megaoctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Megaoctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megaoctetsResult.Convert(units.InformationMegaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megaoctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Gigaoctet unit
+    gigaoctetsJSON := []byte(`{"value": 100, "unit": "Gigaoctet"}`)
+    gigaoctetsResult, err := factory.FromDtoJSON(gigaoctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Gigaoctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigaoctetsResult.Convert(units.InformationGigaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gigaoctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Teraoctet unit
+    teraoctetsJSON := []byte(`{"value": 100, "unit": "Teraoctet"}`)
+    teraoctetsResult, err := factory.FromDtoJSON(teraoctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Teraoctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = teraoctetsResult.Convert(units.InformationTeraoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Teraoctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Petaoctet unit
+    petaoctetsJSON := []byte(`{"value": 100, "unit": "Petaoctet"}`)
+    petaoctetsResult, err := factory.FromDtoJSON(petaoctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Petaoctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = petaoctetsResult.Convert(units.InformationPetaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Petaoctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Exaoctet unit
+    exaoctetsJSON := []byte(`{"value": 100, "unit": "Exaoctet"}`)
+    exaoctetsResult, err := factory.FromDtoJSON(exaoctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Exaoctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = exaoctetsResult.Convert(units.InformationExaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Exaoctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Kibioctet unit
+    kibioctetsJSON := []byte(`{"value": 100, "unit": "Kibioctet"}`)
+    kibioctetsResult, err := factory.FromDtoJSON(kibioctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Kibioctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kibioctetsResult.Convert(units.InformationKibioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kibioctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Mebioctet unit
+    mebioctetsJSON := []byte(`{"value": 100, "unit": "Mebioctet"}`)
+    mebioctetsResult, err := factory.FromDtoJSON(mebioctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Mebioctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = mebioctetsResult.Convert(units.InformationMebioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Mebioctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Gibioctet unit
+    gibioctetsJSON := []byte(`{"value": 100, "unit": "Gibioctet"}`)
+    gibioctetsResult, err := factory.FromDtoJSON(gibioctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Gibioctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gibioctetsResult.Convert(units.InformationGibioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gibioctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Tebioctet unit
+    tebioctetsJSON := []byte(`{"value": 100, "unit": "Tebioctet"}`)
+    tebioctetsResult, err := factory.FromDtoJSON(tebioctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Tebioctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = tebioctetsResult.Convert(units.InformationTebioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Tebioctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Pebioctet unit
+    pebioctetsJSON := []byte(`{"value": 100, "unit": "Pebioctet"}`)
+    pebioctetsResult, err := factory.FromDtoJSON(pebioctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Pebioctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pebioctetsResult.Convert(units.InformationPebioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Pebioctet = %v, want %v", converted, 100)
+    }
+    // Test JSON with Exbioctet unit
+    exbioctetsJSON := []byte(`{"value": 100, "unit": "Exbioctet"}`)
+    exbioctetsResult, err := factory.FromDtoJSON(exbioctetsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Exbioctet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = exbioctetsResult.Convert(units.InformationExbioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Exbioctet = %v, want %v", converted, 100)
     }
     // Test JSON with Kilobit unit
     kilobitsJSON := []byte(`{"value": 100, "unit": "Kilobit"}`)
@@ -1250,6 +1744,49 @@ func TestInformationFactory_FromBytes(t *testing.T) {
     converted = zeroResult.Convert(units.InformationByte)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromBytes() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromOctets function
+func TestInformationFactory_FromOctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromOctets(100)
+    if err != nil {
+        t.Errorf("FromOctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationOctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromOctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromOctets(math.NaN())
+    if err == nil {
+        t.Error("FromOctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromOctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromOctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromOctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromOctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromOctets(0)
+    if err != nil {
+        t.Errorf("FromOctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationOctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromOctets() with zero value = %v, want 0", converted)
     }
 }
 // Test FromBits function
@@ -1809,6 +2346,522 @@ func TestInformationFactory_FromExbibytes(t *testing.T) {
     converted = zeroResult.Convert(units.InformationExbibyte)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromExbibytes() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilooctets function
+func TestInformationFactory_FromKilooctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilooctets(100)
+    if err != nil {
+        t.Errorf("FromKilooctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationKilooctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilooctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilooctets(math.NaN())
+    if err == nil {
+        t.Error("FromKilooctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilooctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilooctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilooctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilooctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilooctets(0)
+    if err != nil {
+        t.Errorf("FromKilooctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationKilooctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilooctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegaoctets function
+func TestInformationFactory_FromMegaoctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegaoctets(100)
+    if err != nil {
+        t.Errorf("FromMegaoctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationMegaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegaoctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegaoctets(math.NaN())
+    if err == nil {
+        t.Error("FromMegaoctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegaoctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegaoctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegaoctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegaoctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegaoctets(0)
+    if err != nil {
+        t.Errorf("FromMegaoctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationMegaoctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegaoctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGigaoctets function
+func TestInformationFactory_FromGigaoctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGigaoctets(100)
+    if err != nil {
+        t.Errorf("FromGigaoctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationGigaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGigaoctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGigaoctets(math.NaN())
+    if err == nil {
+        t.Error("FromGigaoctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromGigaoctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromGigaoctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGigaoctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGigaoctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGigaoctets(0)
+    if err != nil {
+        t.Errorf("FromGigaoctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationGigaoctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGigaoctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromTeraoctets function
+func TestInformationFactory_FromTeraoctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromTeraoctets(100)
+    if err != nil {
+        t.Errorf("FromTeraoctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationTeraoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromTeraoctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromTeraoctets(math.NaN())
+    if err == nil {
+        t.Error("FromTeraoctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromTeraoctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromTeraoctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromTeraoctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromTeraoctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromTeraoctets(0)
+    if err != nil {
+        t.Errorf("FromTeraoctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationTeraoctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromTeraoctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPetaoctets function
+func TestInformationFactory_FromPetaoctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPetaoctets(100)
+    if err != nil {
+        t.Errorf("FromPetaoctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationPetaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPetaoctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPetaoctets(math.NaN())
+    if err == nil {
+        t.Error("FromPetaoctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromPetaoctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromPetaoctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPetaoctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPetaoctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPetaoctets(0)
+    if err != nil {
+        t.Errorf("FromPetaoctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationPetaoctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPetaoctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromExaoctets function
+func TestInformationFactory_FromExaoctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromExaoctets(100)
+    if err != nil {
+        t.Errorf("FromExaoctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationExaoctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromExaoctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromExaoctets(math.NaN())
+    if err == nil {
+        t.Error("FromExaoctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromExaoctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromExaoctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromExaoctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromExaoctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromExaoctets(0)
+    if err != nil {
+        t.Errorf("FromExaoctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationExaoctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromExaoctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKibioctets function
+func TestInformationFactory_FromKibioctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKibioctets(100)
+    if err != nil {
+        t.Errorf("FromKibioctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationKibioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKibioctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKibioctets(math.NaN())
+    if err == nil {
+        t.Error("FromKibioctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromKibioctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromKibioctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKibioctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKibioctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKibioctets(0)
+    if err != nil {
+        t.Errorf("FromKibioctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationKibioctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKibioctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMebioctets function
+func TestInformationFactory_FromMebioctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMebioctets(100)
+    if err != nil {
+        t.Errorf("FromMebioctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationMebioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMebioctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMebioctets(math.NaN())
+    if err == nil {
+        t.Error("FromMebioctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromMebioctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromMebioctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMebioctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMebioctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMebioctets(0)
+    if err != nil {
+        t.Errorf("FromMebioctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationMebioctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMebioctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGibioctets function
+func TestInformationFactory_FromGibioctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGibioctets(100)
+    if err != nil {
+        t.Errorf("FromGibioctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationGibioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGibioctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGibioctets(math.NaN())
+    if err == nil {
+        t.Error("FromGibioctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromGibioctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromGibioctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGibioctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGibioctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGibioctets(0)
+    if err != nil {
+        t.Errorf("FromGibioctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationGibioctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGibioctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromTebioctets function
+func TestInformationFactory_FromTebioctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromTebioctets(100)
+    if err != nil {
+        t.Errorf("FromTebioctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationTebioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromTebioctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromTebioctets(math.NaN())
+    if err == nil {
+        t.Error("FromTebioctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromTebioctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromTebioctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromTebioctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromTebioctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromTebioctets(0)
+    if err != nil {
+        t.Errorf("FromTebioctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationTebioctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromTebioctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPebioctets function
+func TestInformationFactory_FromPebioctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPebioctets(100)
+    if err != nil {
+        t.Errorf("FromPebioctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationPebioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPebioctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPebioctets(math.NaN())
+    if err == nil {
+        t.Error("FromPebioctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromPebioctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromPebioctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPebioctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPebioctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPebioctets(0)
+    if err != nil {
+        t.Errorf("FromPebioctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationPebioctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPebioctets() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromExbioctets function
+func TestInformationFactory_FromExbioctets(t *testing.T) {
+    factory := units.InformationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromExbioctets(100)
+    if err != nil {
+        t.Errorf("FromExbioctets() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.InformationExbioctet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromExbioctets() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromExbioctets(math.NaN())
+    if err == nil {
+        t.Error("FromExbioctets() with NaN value should return error")
+    }
+
+    _, err = factory.FromExbioctets(math.Inf(1))
+    if err == nil {
+        t.Error("FromExbioctets() with +Inf value should return error")
+    }
+
+    _, err = factory.FromExbioctets(math.Inf(-1))
+    if err == nil {
+        t.Error("FromExbioctets() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromExbioctets(0)
+    if err != nil {
+        t.Errorf("FromExbioctets() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.InformationExbioctet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromExbioctets() with zero value = %v, want 0", converted)
     }
 }
 // Test FromKilobits function
@@ -2408,6 +3461,11 @@ func TestGetInformationAbbreviation(t *testing.T) {
             want: "B",
         },
         {
+            name: "Octet abbreviation",
+            unit: units.InformationOctet,
+            want: "o",
+        },
+        {
             name: "Bit abbreviation",
             unit: units.InformationBit,
             want: "b",
@@ -2471,6 +3529,66 @@ func TestGetInformationAbbreviation(t *testing.T) {
             name: "Exbibyte abbreviation",
             unit: units.InformationExbibyte,
             want: "EiBB",
+        },
+        {
+            name: "Kilooctet abbreviation",
+            unit: units.InformationKilooctet,
+            want: "ko",
+        },
+        {
+            name: "Megaoctet abbreviation",
+            unit: units.InformationMegaoctet,
+            want: "Mo",
+        },
+        {
+            name: "Gigaoctet abbreviation",
+            unit: units.InformationGigaoctet,
+            want: "Go",
+        },
+        {
+            name: "Teraoctet abbreviation",
+            unit: units.InformationTeraoctet,
+            want: "To",
+        },
+        {
+            name: "Petaoctet abbreviation",
+            unit: units.InformationPetaoctet,
+            want: "Po",
+        },
+        {
+            name: "Exaoctet abbreviation",
+            unit: units.InformationExaoctet,
+            want: "Eo",
+        },
+        {
+            name: "Kibioctet abbreviation",
+            unit: units.InformationKibioctet,
+            want: "KiBo",
+        },
+        {
+            name: "Mebioctet abbreviation",
+            unit: units.InformationMebioctet,
+            want: "MiBo",
+        },
+        {
+            name: "Gibioctet abbreviation",
+            unit: units.InformationGibioctet,
+            want: "GiBo",
+        },
+        {
+            name: "Tebioctet abbreviation",
+            unit: units.InformationTebioctet,
+            want: "TiBo",
+        },
+        {
+            name: "Pebioctet abbreviation",
+            unit: units.InformationPebioctet,
+            want: "PiBo",
+        },
+        {
+            name: "Exbioctet abbreviation",
+            unit: units.InformationExbioctet,
+            want: "EiBo",
         },
         {
             name: "Kilobit abbreviation",

@@ -1032,27 +1032,27 @@ func (a *ForcePerLength) convertFromBase(toUnit ForcePerLengthUnits) float64 {
 	case ForcePerLengthNewtonPerMillimeter:
 		return (value / 1e3) 
 	case ForcePerLengthKilogramForcePerMeter:
-		return (value / 9.80665002864) 
+		return (value / 9.80665) 
 	case ForcePerLengthKilogramForcePerCentimeter:
-		return (value / 980.665002864) 
+		return (value / 980.665) 
 	case ForcePerLengthKilogramForcePerMillimeter:
-		return (value / 9.80665002864e3) 
+		return (value / 9.80665e3) 
 	case ForcePerLengthTonneForcePerMeter:
-		return (value / 9.80665002864e3) 
+		return (value / 9.80665e3) 
 	case ForcePerLengthTonneForcePerCentimeter:
-		return (value / 9.80665002864e5) 
+		return (value / 9.80665e5) 
 	case ForcePerLengthTonneForcePerMillimeter:
-		return (value / 9.80665002864e6) 
+		return (value / 9.80665e6) 
 	case ForcePerLengthPoundForcePerFoot:
-		return (value / 14.59390292) 
+		return (value * 0.3048 / 4.4482216152605) 
 	case ForcePerLengthPoundForcePerInch:
-		return (value / 1.75126835e2) 
+		return (value * 2.54e-2 / 4.4482216152605) 
 	case ForcePerLengthPoundForcePerYard:
-		return (value / 4.864634307) 
+		return (value * 0.9144 / 4.4482216152605) 
 	case ForcePerLengthKilopoundForcePerFoot:
-		return (value / 14593.90292) 
+		return (value * 0.3048e-3 / 4.4482216152605) 
 	case ForcePerLengthKilopoundForcePerInch:
-		return (value / 1.75126835e5) 
+		return (value * 2.54e-5 / 4.4482216152605) 
 	case ForcePerLengthNanonewtonPerMeter:
 		return ((value) / 1e-09) 
 	case ForcePerLengthMicronewtonPerMeter:
@@ -1115,27 +1115,27 @@ func (a *ForcePerLength) convertToBase(value float64, fromUnit ForcePerLengthUni
 	case ForcePerLengthNewtonPerMillimeter:
 		return (value * 1e3) 
 	case ForcePerLengthKilogramForcePerMeter:
-		return (value * 9.80665002864) 
+		return (value * 9.80665) 
 	case ForcePerLengthKilogramForcePerCentimeter:
-		return (value * 980.665002864) 
+		return (value * 980.665) 
 	case ForcePerLengthKilogramForcePerMillimeter:
-		return (value * 9.80665002864e3) 
+		return (value * 9.80665e3) 
 	case ForcePerLengthTonneForcePerMeter:
-		return (value * 9.80665002864e3) 
+		return (value * 9.80665e3) 
 	case ForcePerLengthTonneForcePerCentimeter:
-		return (value * 9.80665002864e5) 
+		return (value * 9.80665e5) 
 	case ForcePerLengthTonneForcePerMillimeter:
-		return (value * 9.80665002864e6) 
+		return (value * 9.80665e6) 
 	case ForcePerLengthPoundForcePerFoot:
-		return (value * 14.59390292) 
+		return (value * 4.4482216152605 / 0.3048) 
 	case ForcePerLengthPoundForcePerInch:
-		return (value * 1.75126835e2) 
+		return (value * 4.4482216152605 / 2.54e-2) 
 	case ForcePerLengthPoundForcePerYard:
-		return (value * 4.864634307) 
+		return (value * 4.4482216152605 / 0.9144) 
 	case ForcePerLengthKilopoundForcePerFoot:
-		return (value * 14593.90292) 
+		return (value * 4.4482216152605 / 0.3048e-3) 
 	case ForcePerLengthKilopoundForcePerInch:
-		return (value * 1.75126835e5) 
+		return (value * 4.4482216152605 / 2.54e-5) 
 	case ForcePerLengthNanonewtonPerMeter:
 		return ((value) * 1e-09) 
 	case ForcePerLengthMicronewtonPerMeter:

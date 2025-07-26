@@ -457,9 +457,9 @@ func (a *RotationalSpeed) convertFromBase(toUnit RotationalSpeedUnits) float64 {
 	case RotationalSpeedDegreePerMinute:
 		return ((180 * 60 / math.Pi) * value) 
 	case RotationalSpeedRevolutionPerSecond:
-		return (value / 6.2831853072) 
+		return (value / (2 * math.Pi)) 
 	case RotationalSpeedRevolutionPerMinute:
-		return ((value / 6.2831853072) * 60) 
+		return ((value / (2 * math.Pi)) * 60) 
 	case RotationalSpeedNanoradianPerSecond:
 		return ((value) / 1e-09) 
 	case RotationalSpeedMicroradianPerSecond:
@@ -490,9 +490,9 @@ func (a *RotationalSpeed) convertToBase(value float64, fromUnit RotationalSpeedU
 	case RotationalSpeedDegreePerMinute:
 		return ((math.Pi / (180 * 60)) * value) 
 	case RotationalSpeedRevolutionPerSecond:
-		return (value * 6.2831853072) 
+		return (value * 2 * math.Pi) 
 	case RotationalSpeedRevolutionPerMinute:
-		return ((value * 6.2831853072) / 60) 
+		return ((value * 2 * math.Pi) / 60) 
 	case RotationalSpeedNanoradianPerSecond:
 		return ((value) * 1e-09) 
 	case RotationalSpeedMicroradianPerSecond:

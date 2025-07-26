@@ -1028,47 +1028,47 @@ func TestGetVolumetricHeatCapacityAbbreviation(t *testing.T) {
         {
             name: "JoulePerCubicMeterKelvin abbreviation",
             unit: units.VolumetricHeatCapacityJoulePerCubicMeterKelvin,
-            want: "J/m³·K",
+            want: "J/(m³·K)",
         },
         {
             name: "JoulePerCubicMeterDegreeCelsius abbreviation",
             unit: units.VolumetricHeatCapacityJoulePerCubicMeterDegreeCelsius,
-            want: "J/m³·°C",
+            want: "J/(m³·°C)",
         },
         {
             name: "CaloriePerCubicCentimeterDegreeCelsius abbreviation",
             unit: units.VolumetricHeatCapacityCaloriePerCubicCentimeterDegreeCelsius,
-            want: "cal/cm³·°C",
+            want: "cal/(cm³·°C)",
         },
         {
             name: "BtuPerCubicFootDegreeFahrenheit abbreviation",
             unit: units.VolumetricHeatCapacityBtuPerCubicFootDegreeFahrenheit,
-            want: "BTU/ft³·°F",
+            want: "BTU/(ft³·°F)",
         },
         {
             name: "KilojoulePerCubicMeterKelvin abbreviation",
             unit: units.VolumetricHeatCapacityKilojoulePerCubicMeterKelvin,
-            want: "kJ/m³·K",
+            want: "kJ/(m³·K)",
         },
         {
             name: "MegajoulePerCubicMeterKelvin abbreviation",
             unit: units.VolumetricHeatCapacityMegajoulePerCubicMeterKelvin,
-            want: "MJ/m³·K",
+            want: "MJ/(m³·K)",
         },
         {
             name: "KilojoulePerCubicMeterDegreeCelsius abbreviation",
             unit: units.VolumetricHeatCapacityKilojoulePerCubicMeterDegreeCelsius,
-            want: "kJ/m³·°C",
+            want: "kJ/(m³·°C)",
         },
         {
             name: "MegajoulePerCubicMeterDegreeCelsius abbreviation",
             unit: units.VolumetricHeatCapacityMegajoulePerCubicMeterDegreeCelsius,
-            want: "MJ/m³·°C",
+            want: "MJ/(m³·°C)",
         },
         {
             name: "KilocaloriePerCubicCentimeterDegreeCelsius abbreviation",
             unit: units.VolumetricHeatCapacityKilocaloriePerCubicCentimeterDegreeCelsius,
-            want: "kcal/cm³·°C",
+            want: "kcal/(cm³·°C)",
         },
         {
             name: "invalid unit",

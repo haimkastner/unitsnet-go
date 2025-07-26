@@ -225,7 +225,7 @@ func (a *ElectricSurfaceChargeDensity) convertFromBase(toUnit ElectricSurfaceCha
 	case ElectricSurfaceChargeDensityCoulombPerSquareCentimeter:
 		return (value / 1.0e4) 
 	case ElectricSurfaceChargeDensityCoulombPerSquareInch:
-		return (value / 1.5500031000062000e3) 
+		return (value * 0.00064516) 
 	default:
 		return math.NaN()
 	}
@@ -238,7 +238,7 @@ func (a *ElectricSurfaceChargeDensity) convertToBase(value float64, fromUnit Ele
 	case ElectricSurfaceChargeDensityCoulombPerSquareCentimeter:
 		return (value * 1.0e4) 
 	case ElectricSurfaceChargeDensityCoulombPerSquareInch:
-		return (value * 1.5500031000062000e3) 
+		return (value / 0.00064516) 
 	default:
 		return math.NaN()
 	}

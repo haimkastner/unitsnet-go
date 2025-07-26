@@ -298,9 +298,9 @@ func (a *AreaMomentOfInertia) convertFromBase(toUnit AreaMomentOfInertiaUnits) f
 	case AreaMomentOfInertiaMillimeterToTheFourth:
 		return (value * 1e12) 
 	case AreaMomentOfInertiaFootToTheFourth:
-		return (value / math.Pow(0.3048, 4)) 
+		return (value / 0.0086309748412416) 
 	case AreaMomentOfInertiaInchToTheFourth:
-		return (value / math.Pow(2.54e-2, 4)) 
+		return (value / 0.0000004162314256) 
 	default:
 		return math.NaN()
 	}
@@ -317,9 +317,9 @@ func (a *AreaMomentOfInertia) convertToBase(value float64, fromUnit AreaMomentOf
 	case AreaMomentOfInertiaMillimeterToTheFourth:
 		return (value / 1e12) 
 	case AreaMomentOfInertiaFootToTheFourth:
-		return (value * math.Pow(0.3048, 4)) 
+		return (value * 0.0086309748412416) 
 	case AreaMomentOfInertiaInchToTheFourth:
-		return (value * math.Pow(2.54e-2, 4)) 
+		return (value * 0.0000004162314256) 
 	default:
 		return math.NaN()
 	}

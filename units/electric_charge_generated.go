@@ -407,7 +407,7 @@ func (a *ElectricCharge) convertFromBase(toUnit ElectricChargeUnits) float64 {
 	case ElectricChargeCoulomb:
 		return (value) 
 	case ElectricChargeAmpereHour:
-		return (value * 2.77777777777e-4) 
+		return (value / 3600) 
 	case ElectricChargePicocoulomb:
 		return ((value) / 1e-12) 
 	case ElectricChargeNanocoulomb:
@@ -421,11 +421,11 @@ func (a *ElectricCharge) convertFromBase(toUnit ElectricChargeUnits) float64 {
 	case ElectricChargeMegacoulomb:
 		return ((value) / 1000000.0) 
 	case ElectricChargeMilliampereHour:
-		return ((value * 2.77777777777e-4) / 0.001) 
+		return ((value / 3600) / 0.001) 
 	case ElectricChargeKiloampereHour:
-		return ((value * 2.77777777777e-4) / 1000.0) 
+		return ((value / 3600) / 1000.0) 
 	case ElectricChargeMegaampereHour:
-		return ((value * 2.77777777777e-4) / 1000000.0) 
+		return ((value / 3600) / 1000000.0) 
 	default:
 		return math.NaN()
 	}
@@ -436,7 +436,7 @@ func (a *ElectricCharge) convertToBase(value float64, fromUnit ElectricChargeUni
 	case ElectricChargeCoulomb:
 		return (value) 
 	case ElectricChargeAmpereHour:
-		return (value / 2.77777777777e-4) 
+		return (value * 3600) 
 	case ElectricChargePicocoulomb:
 		return ((value) * 1e-12) 
 	case ElectricChargeNanocoulomb:
@@ -450,11 +450,11 @@ func (a *ElectricCharge) convertToBase(value float64, fromUnit ElectricChargeUni
 	case ElectricChargeMegacoulomb:
 		return ((value) * 1000000.0) 
 	case ElectricChargeMilliampereHour:
-		return ((value / 2.77777777777e-4) * 0.001) 
+		return ((value * 3600) * 0.001) 
 	case ElectricChargeKiloampereHour:
-		return ((value / 2.77777777777e-4) * 1000.0) 
+		return ((value * 3600) * 1000.0) 
 	case ElectricChargeMegaampereHour:
-		return ((value / 2.77777777777e-4) * 1000000.0) 
+		return ((value * 3600) * 1000000.0) 
 	default:
 		return math.NaN()
 	}

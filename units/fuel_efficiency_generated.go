@@ -74,7 +74,7 @@ func (a FuelEfficiencyDto) ToJSON() ([]byte, error) {
 
 // FuelEfficiency represents a measurement in a of FuelEfficiency.
 //
-// Fuel efficiency is a form of thermal efficiency, meaning the ratio from effort to result of a process that converts chemical potential energy contained in a carrier (fuel) into kinetic energy or work. Fuel economy is stated as "fuel consumption" in liters per 100 kilometers (L/100 km). In countries using non-metric system, fuel economy is expressed in miles per gallon (mpg) (imperial galon or US galon).
+// In the context of transport, fuel economy is the energy efficiency of a particular vehicle, given as a ratio of distance traveled per unit of fuel consumed. In most countries, using the metric system, fuel economy is stated as "fuel consumption" in liters per 100 kilometers (L/100 km) or kilometers per liter (km/L or kmpl). In countries using non-metric system, fuel economy is expressed in miles per gallon (mpg) (imperial galon or US galon).
 type FuelEfficiency struct {
 	// value is the base measurement stored internally.
 	value       float64
@@ -82,7 +82,7 @@ type FuelEfficiency struct {
     liters_per100_kilometersLazy *float64 
     miles_per_us_gallonLazy *float64 
     miles_per_uk_gallonLazy *float64 
-    kilometers_per_litersLazy *float64 
+    kilometers_per_literLazy *float64 
 }
 
 // FuelEfficiencyFactory groups methods for creating FuelEfficiency instances.
@@ -123,8 +123,8 @@ func (uf FuelEfficiencyFactory) FromMilesPerUkGallon(value float64) (*FuelEffici
 	return newFuelEfficiency(value, FuelEfficiencyMilePerUkGallon)
 }
 
-// FromKilometersPerLiters creates a new FuelEfficiency instance from a value in KilometersPerLiters.
-func (uf FuelEfficiencyFactory) FromKilometersPerLiters(value float64) (*FuelEfficiency, error) {
+// FromKilometersPerLiter creates a new FuelEfficiency instance from a value in KilometersPerLiter.
+func (uf FuelEfficiencyFactory) FromKilometersPerLiter(value float64) (*FuelEfficiency, error) {
 	return newFuelEfficiency(value, FuelEfficiencyKilometerPerLiter)
 }
 
@@ -142,7 +142,7 @@ func newFuelEfficiency(value float64, fromUnit FuelEfficiencyUnits) (*FuelEffici
 	return a, nil
 }
 
-// BaseValue returns the base value of FuelEfficiency in LiterPer100Kilometers unit (the base/default quantity).
+// BaseValue returns the base value of FuelEfficiency in KilometerPerLiter unit (the base/default quantity).
 func (a *FuelEfficiency) BaseValue() float64 {
 	return a.value
 }
@@ -184,25 +184,25 @@ func (a *FuelEfficiency) MilesPerUkGallon() float64 {
 	return miles_per_uk_gallon
 }
 
-// KilometersPerLiters returns the FuelEfficiency value in KilometersPerLiters.
+// KilometersPerLiter returns the FuelEfficiency value in KilometersPerLiter.
 //
 // 
-func (a *FuelEfficiency) KilometersPerLiters() float64 {
-	if a.kilometers_per_litersLazy != nil {
-		return *a.kilometers_per_litersLazy
+func (a *FuelEfficiency) KilometersPerLiter() float64 {
+	if a.kilometers_per_literLazy != nil {
+		return *a.kilometers_per_literLazy
 	}
-	kilometers_per_liters := a.convertFromBase(FuelEfficiencyKilometerPerLiter)
-	a.kilometers_per_litersLazy = &kilometers_per_liters
-	return kilometers_per_liters
+	kilometers_per_liter := a.convertFromBase(FuelEfficiencyKilometerPerLiter)
+	a.kilometers_per_literLazy = &kilometers_per_liter
+	return kilometers_per_liter
 }
 
 
 // ToDto creates a FuelEfficiencyDto representation from the FuelEfficiency instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by LiterPer100Kilometers by default.
+// If the provided holdInUnit is nil, the value will be repesented by KilometerPerLiter by default.
 func (a *FuelEfficiency) ToDto(holdInUnit *FuelEfficiencyUnits) FuelEfficiencyDto {
 	if holdInUnit == nil {
-		defaultUnit := FuelEfficiencyLiterPer100Kilometers // Default value
+		defaultUnit := FuelEfficiencyKilometerPerLiter // Default value
 		holdInUnit = &defaultUnit
 	}
 
@@ -214,7 +214,7 @@ func (a *FuelEfficiency) ToDto(holdInUnit *FuelEfficiencyUnits) FuelEfficiencyDt
 
 // ToDtoJSON creates a JSON representation of the FuelEfficiency instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by LiterPer100Kilometers by default.
+// If the provided holdInUnit is nil, the value will be repesented by KilometerPerLiter by default.
 func (a *FuelEfficiency) ToDtoJSON(holdInUnit *FuelEfficiencyUnits) ([]byte, error) {
 	// Convert to FuelEfficiencyDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
@@ -234,7 +234,7 @@ func (a *FuelEfficiency) Convert(toUnit FuelEfficiencyUnits) float64 {
     case FuelEfficiencyMilePerUkGallon:
 		return a.MilesPerUkGallon()
     case FuelEfficiencyKilometerPerLiter:
-		return a.KilometersPerLiters()
+		return a.KilometersPerLiter()
 	default:
 		return math.NaN()
 	}
@@ -244,13 +244,13 @@ func (a *FuelEfficiency) convertFromBase(toUnit FuelEfficiencyUnits) float64 {
     value := a.value
 	switch toUnit { 
 	case FuelEfficiencyLiterPer100Kilometers:
-		return (value) 
-	case FuelEfficiencyMilePerUsGallon:
-		return ((100 * 3.785411784) / (1.609344 * value)) 
-	case FuelEfficiencyMilePerUkGallon:
-		return ((100 * 4.54609188) / (1.609344 * value)) 
-	case FuelEfficiencyKilometerPerLiter:
 		return (100 / value) 
+	case FuelEfficiencyMilePerUsGallon:
+		return (value * 3.785411784 / 1.609344) 
+	case FuelEfficiencyMilePerUkGallon:
+		return (value * 4.54609 / 1.609344) 
+	case FuelEfficiencyKilometerPerLiter:
+		return (value) 
 	default:
 		return math.NaN()
 	}
@@ -259,29 +259,29 @@ func (a *FuelEfficiency) convertFromBase(toUnit FuelEfficiencyUnits) float64 {
 func (a *FuelEfficiency) convertToBase(value float64, fromUnit FuelEfficiencyUnits) float64 {
 	switch fromUnit { 
 	case FuelEfficiencyLiterPer100Kilometers:
-		return (value) 
-	case FuelEfficiencyMilePerUsGallon:
-		return ((100 * 3.785411784) / (1.609344 * value)) 
-	case FuelEfficiencyMilePerUkGallon:
-		return ((100 * 4.54609188) / (1.609344 * value)) 
-	case FuelEfficiencyKilometerPerLiter:
 		return (100 / value) 
+	case FuelEfficiencyMilePerUsGallon:
+		return (value * 1.609344 / 3.785411784) 
+	case FuelEfficiencyMilePerUkGallon:
+		return (value * 1.609344 / 4.54609) 
+	case FuelEfficiencyKilometerPerLiter:
+		return (value) 
 	default:
 		return math.NaN()
 	}
 }
 
-// String returns a string representation of the FuelEfficiency in the default unit (LiterPer100Kilometers),
+// String returns a string representation of the FuelEfficiency in the default unit (KilometerPerLiter),
 // formatted to two decimal places.
 func (a FuelEfficiency) String() string {
-	return a.ToString(FuelEfficiencyLiterPer100Kilometers, 2)
+	return a.ToString(FuelEfficiencyKilometerPerLiter, 2)
 }
 
 // ToString formats the FuelEfficiency value as a string with the specified unit and fractional digits.
 // It converts the FuelEfficiency to the specified unit and returns the formatted value with the appropriate unit abbreviation.
 // 
 // Parameters:
-//    unit: The unit to which the FuelEfficiency value will be converted (e.g., LiterPer100Kilometers))
+//    unit: The unit to which the FuelEfficiency value will be converted (e.g., KilometerPerLiter))
 //    fractionalDigits: The number of digits to show after the decimal point. 
 //                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
 // 
@@ -380,13 +380,13 @@ func (a *FuelEfficiency) Divide(other *FuelEfficiency) *FuelEfficiency {
 func GetFuelEfficiencyAbbreviation(unit FuelEfficiencyUnits) string {
 	switch unit { 
 	case FuelEfficiencyLiterPer100Kilometers:
-		return "L/100km" 
+		return "l/100km" 
 	case FuelEfficiencyMilePerUsGallon:
 		return "mpg (U.S.)" 
 	case FuelEfficiencyMilePerUkGallon:
 		return "mpg (imp.)" 
 	case FuelEfficiencyKilometerPerLiter:
-		return "km/L" 
+		return "km/l" 
 	default:
 		return ""
 	}

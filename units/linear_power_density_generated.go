@@ -733,9 +733,9 @@ func (a *LinearPowerDensity) convertFromBase(toUnit LinearPowerDensityUnits) flo
 	case LinearPowerDensityWattPerMillimeter:
 		return (value / 1e3) 
 	case LinearPowerDensityWattPerInch:
-		return (value / 39.37007874) 
+		return (value * 2.54e-2) 
 	case LinearPowerDensityWattPerFoot:
-		return (value / 3.280839895) 
+		return (value * 0.3048) 
 	case LinearPowerDensityMilliwattPerMeter:
 		return ((value) / 0.001) 
 	case LinearPowerDensityKilowattPerMeter:
@@ -761,21 +761,21 @@ func (a *LinearPowerDensity) convertFromBase(toUnit LinearPowerDensityUnits) flo
 	case LinearPowerDensityGigawattPerMillimeter:
 		return ((value / 1e3) / 1000000000.0) 
 	case LinearPowerDensityMilliwattPerInch:
-		return ((value / 39.37007874) / 0.001) 
+		return ((value * 2.54e-2) / 0.001) 
 	case LinearPowerDensityKilowattPerInch:
-		return ((value / 39.37007874) / 1000.0) 
+		return ((value * 2.54e-2) / 1000.0) 
 	case LinearPowerDensityMegawattPerInch:
-		return ((value / 39.37007874) / 1000000.0) 
+		return ((value * 2.54e-2) / 1000000.0) 
 	case LinearPowerDensityGigawattPerInch:
-		return ((value / 39.37007874) / 1000000000.0) 
+		return ((value * 2.54e-2) / 1000000000.0) 
 	case LinearPowerDensityMilliwattPerFoot:
-		return ((value / 3.280839895) / 0.001) 
+		return ((value * 0.3048) / 0.001) 
 	case LinearPowerDensityKilowattPerFoot:
-		return ((value / 3.280839895) / 1000.0) 
+		return ((value * 0.3048) / 1000.0) 
 	case LinearPowerDensityMegawattPerFoot:
-		return ((value / 3.280839895) / 1000000.0) 
+		return ((value * 0.3048) / 1000000.0) 
 	case LinearPowerDensityGigawattPerFoot:
-		return ((value / 3.280839895) / 1000000000.0) 
+		return ((value * 0.3048) / 1000000000.0) 
 	default:
 		return math.NaN()
 	}
@@ -790,9 +790,9 @@ func (a *LinearPowerDensity) convertToBase(value float64, fromUnit LinearPowerDe
 	case LinearPowerDensityWattPerMillimeter:
 		return (value * 1e3) 
 	case LinearPowerDensityWattPerInch:
-		return (value * 39.37007874) 
+		return (value / 2.54e-2) 
 	case LinearPowerDensityWattPerFoot:
-		return (value * 3.280839895) 
+		return (value / 0.3048) 
 	case LinearPowerDensityMilliwattPerMeter:
 		return ((value) * 0.001) 
 	case LinearPowerDensityKilowattPerMeter:
@@ -818,21 +818,21 @@ func (a *LinearPowerDensity) convertToBase(value float64, fromUnit LinearPowerDe
 	case LinearPowerDensityGigawattPerMillimeter:
 		return ((value * 1e3) * 1000000000.0) 
 	case LinearPowerDensityMilliwattPerInch:
-		return ((value * 39.37007874) * 0.001) 
+		return ((value / 2.54e-2) * 0.001) 
 	case LinearPowerDensityKilowattPerInch:
-		return ((value * 39.37007874) * 1000.0) 
+		return ((value / 2.54e-2) * 1000.0) 
 	case LinearPowerDensityMegawattPerInch:
-		return ((value * 39.37007874) * 1000000.0) 
+		return ((value / 2.54e-2) * 1000000.0) 
 	case LinearPowerDensityGigawattPerInch:
-		return ((value * 39.37007874) * 1000000000.0) 
+		return ((value / 2.54e-2) * 1000000000.0) 
 	case LinearPowerDensityMilliwattPerFoot:
-		return ((value * 3.280839895) * 0.001) 
+		return ((value / 0.3048) * 0.001) 
 	case LinearPowerDensityKilowattPerFoot:
-		return ((value * 3.280839895) * 1000.0) 
+		return ((value / 0.3048) * 1000.0) 
 	case LinearPowerDensityMegawattPerFoot:
-		return ((value * 3.280839895) * 1000000.0) 
+		return ((value / 0.3048) * 1000000.0) 
 	case LinearPowerDensityGigawattPerFoot:
-		return ((value * 3.280839895) * 1000000000.0) 
+		return ((value / 0.3048) * 1000000000.0) 
 	default:
 		return math.NaN()
 	}

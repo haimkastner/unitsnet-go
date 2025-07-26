@@ -78,183 +78,183 @@ func TestElectricPotentialChangeRateConversions(t *testing.T) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	{
-		// Test conversion to VoltsPerSeconds.
-		// No expected conversion value provided for VoltsPerSeconds, verifying result is not NaN.
-		result := a.VoltsPerSeconds()
-		cacheResult := a.VoltsPerSeconds()
+		// Test conversion to VoltsPerSecond.
+		// No expected conversion value provided for VoltsPerSecond, verifying result is not NaN.
+		result := a.VoltsPerSecond()
+		cacheResult := a.VoltsPerSecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to VoltsPerSeconds returned NaN")
+			t.Errorf("conversion to VoltsPerSecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to VoltsPerMicroseconds.
-		// No expected conversion value provided for VoltsPerMicroseconds, verifying result is not NaN.
-		result := a.VoltsPerMicroseconds()
-		cacheResult := a.VoltsPerMicroseconds()
+		// Test conversion to VoltsPerMicrosecond.
+		// No expected conversion value provided for VoltsPerMicrosecond, verifying result is not NaN.
+		result := a.VoltsPerMicrosecond()
+		cacheResult := a.VoltsPerMicrosecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to VoltsPerMicroseconds returned NaN")
+			t.Errorf("conversion to VoltsPerMicrosecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to VoltsPerMinutes.
-		// No expected conversion value provided for VoltsPerMinutes, verifying result is not NaN.
-		result := a.VoltsPerMinutes()
-		cacheResult := a.VoltsPerMinutes()
+		// Test conversion to VoltsPerMinute.
+		// No expected conversion value provided for VoltsPerMinute, verifying result is not NaN.
+		result := a.VoltsPerMinute()
+		cacheResult := a.VoltsPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to VoltsPerMinutes returned NaN")
+			t.Errorf("conversion to VoltsPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to VoltsPerHours.
-		// No expected conversion value provided for VoltsPerHours, verifying result is not NaN.
-		result := a.VoltsPerHours()
-		cacheResult := a.VoltsPerHours()
+		// Test conversion to VoltsPerHour.
+		// No expected conversion value provided for VoltsPerHour, verifying result is not NaN.
+		result := a.VoltsPerHour()
+		cacheResult := a.VoltsPerHour()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to VoltsPerHours returned NaN")
+			t.Errorf("conversion to VoltsPerHour returned NaN")
 		}
 	}
 	{
-		// Test conversion to MicrovoltsPerSeconds.
-		// No expected conversion value provided for MicrovoltsPerSeconds, verifying result is not NaN.
-		result := a.MicrovoltsPerSeconds()
-		cacheResult := a.MicrovoltsPerSeconds()
+		// Test conversion to MicrovoltsPerSecond.
+		// No expected conversion value provided for MicrovoltsPerSecond, verifying result is not NaN.
+		result := a.MicrovoltsPerSecond()
+		cacheResult := a.MicrovoltsPerSecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MicrovoltsPerSeconds returned NaN")
+			t.Errorf("conversion to MicrovoltsPerSecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to MillivoltsPerSeconds.
-		// No expected conversion value provided for MillivoltsPerSeconds, verifying result is not NaN.
-		result := a.MillivoltsPerSeconds()
-		cacheResult := a.MillivoltsPerSeconds()
+		// Test conversion to MillivoltsPerSecond.
+		// No expected conversion value provided for MillivoltsPerSecond, verifying result is not NaN.
+		result := a.MillivoltsPerSecond()
+		cacheResult := a.MillivoltsPerSecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MillivoltsPerSeconds returned NaN")
+			t.Errorf("conversion to MillivoltsPerSecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to KilovoltsPerSeconds.
-		// No expected conversion value provided for KilovoltsPerSeconds, verifying result is not NaN.
-		result := a.KilovoltsPerSeconds()
-		cacheResult := a.KilovoltsPerSeconds()
+		// Test conversion to KilovoltsPerSecond.
+		// No expected conversion value provided for KilovoltsPerSecond, verifying result is not NaN.
+		result := a.KilovoltsPerSecond()
+		cacheResult := a.KilovoltsPerSecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to KilovoltsPerSeconds returned NaN")
+			t.Errorf("conversion to KilovoltsPerSecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to MegavoltsPerSeconds.
-		// No expected conversion value provided for MegavoltsPerSeconds, verifying result is not NaN.
-		result := a.MegavoltsPerSeconds()
-		cacheResult := a.MegavoltsPerSeconds()
+		// Test conversion to MegavoltsPerSecond.
+		// No expected conversion value provided for MegavoltsPerSecond, verifying result is not NaN.
+		result := a.MegavoltsPerSecond()
+		cacheResult := a.MegavoltsPerSecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MegavoltsPerSeconds returned NaN")
+			t.Errorf("conversion to MegavoltsPerSecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to MicrovoltsPerMicroseconds.
-		// No expected conversion value provided for MicrovoltsPerMicroseconds, verifying result is not NaN.
-		result := a.MicrovoltsPerMicroseconds()
-		cacheResult := a.MicrovoltsPerMicroseconds()
+		// Test conversion to MicrovoltsPerMicrosecond.
+		// No expected conversion value provided for MicrovoltsPerMicrosecond, verifying result is not NaN.
+		result := a.MicrovoltsPerMicrosecond()
+		cacheResult := a.MicrovoltsPerMicrosecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MicrovoltsPerMicroseconds returned NaN")
+			t.Errorf("conversion to MicrovoltsPerMicrosecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to MillivoltsPerMicroseconds.
-		// No expected conversion value provided for MillivoltsPerMicroseconds, verifying result is not NaN.
-		result := a.MillivoltsPerMicroseconds()
-		cacheResult := a.MillivoltsPerMicroseconds()
+		// Test conversion to MillivoltsPerMicrosecond.
+		// No expected conversion value provided for MillivoltsPerMicrosecond, verifying result is not NaN.
+		result := a.MillivoltsPerMicrosecond()
+		cacheResult := a.MillivoltsPerMicrosecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MillivoltsPerMicroseconds returned NaN")
+			t.Errorf("conversion to MillivoltsPerMicrosecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to KilovoltsPerMicroseconds.
-		// No expected conversion value provided for KilovoltsPerMicroseconds, verifying result is not NaN.
-		result := a.KilovoltsPerMicroseconds()
-		cacheResult := a.KilovoltsPerMicroseconds()
+		// Test conversion to KilovoltsPerMicrosecond.
+		// No expected conversion value provided for KilovoltsPerMicrosecond, verifying result is not NaN.
+		result := a.KilovoltsPerMicrosecond()
+		cacheResult := a.KilovoltsPerMicrosecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to KilovoltsPerMicroseconds returned NaN")
+			t.Errorf("conversion to KilovoltsPerMicrosecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to MegavoltsPerMicroseconds.
-		// No expected conversion value provided for MegavoltsPerMicroseconds, verifying result is not NaN.
-		result := a.MegavoltsPerMicroseconds()
-		cacheResult := a.MegavoltsPerMicroseconds()
+		// Test conversion to MegavoltsPerMicrosecond.
+		// No expected conversion value provided for MegavoltsPerMicrosecond, verifying result is not NaN.
+		result := a.MegavoltsPerMicrosecond()
+		cacheResult := a.MegavoltsPerMicrosecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MegavoltsPerMicroseconds returned NaN")
+			t.Errorf("conversion to MegavoltsPerMicrosecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to MicrovoltsPerMinutes.
-		// No expected conversion value provided for MicrovoltsPerMinutes, verifying result is not NaN.
-		result := a.MicrovoltsPerMinutes()
-		cacheResult := a.MicrovoltsPerMinutes()
+		// Test conversion to MicrovoltsPerMinute.
+		// No expected conversion value provided for MicrovoltsPerMinute, verifying result is not NaN.
+		result := a.MicrovoltsPerMinute()
+		cacheResult := a.MicrovoltsPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MicrovoltsPerMinutes returned NaN")
+			t.Errorf("conversion to MicrovoltsPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to MillivoltsPerMinutes.
-		// No expected conversion value provided for MillivoltsPerMinutes, verifying result is not NaN.
-		result := a.MillivoltsPerMinutes()
-		cacheResult := a.MillivoltsPerMinutes()
+		// Test conversion to MillivoltsPerMinute.
+		// No expected conversion value provided for MillivoltsPerMinute, verifying result is not NaN.
+		result := a.MillivoltsPerMinute()
+		cacheResult := a.MillivoltsPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MillivoltsPerMinutes returned NaN")
+			t.Errorf("conversion to MillivoltsPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to KilovoltsPerMinutes.
-		// No expected conversion value provided for KilovoltsPerMinutes, verifying result is not NaN.
-		result := a.KilovoltsPerMinutes()
-		cacheResult := a.KilovoltsPerMinutes()
+		// Test conversion to KilovoltsPerMinute.
+		// No expected conversion value provided for KilovoltsPerMinute, verifying result is not NaN.
+		result := a.KilovoltsPerMinute()
+		cacheResult := a.KilovoltsPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to KilovoltsPerMinutes returned NaN")
+			t.Errorf("conversion to KilovoltsPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to MegavoltsPerMinutes.
-		// No expected conversion value provided for MegavoltsPerMinutes, verifying result is not NaN.
-		result := a.MegavoltsPerMinutes()
-		cacheResult := a.MegavoltsPerMinutes()
+		// Test conversion to MegavoltsPerMinute.
+		// No expected conversion value provided for MegavoltsPerMinute, verifying result is not NaN.
+		result := a.MegavoltsPerMinute()
+		cacheResult := a.MegavoltsPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MegavoltsPerMinutes returned NaN")
+			t.Errorf("conversion to MegavoltsPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to MicrovoltsPerHours.
-		// No expected conversion value provided for MicrovoltsPerHours, verifying result is not NaN.
-		result := a.MicrovoltsPerHours()
-		cacheResult := a.MicrovoltsPerHours()
+		// Test conversion to MicrovoltsPerHour.
+		// No expected conversion value provided for MicrovoltsPerHour, verifying result is not NaN.
+		result := a.MicrovoltsPerHour()
+		cacheResult := a.MicrovoltsPerHour()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MicrovoltsPerHours returned NaN")
+			t.Errorf("conversion to MicrovoltsPerHour returned NaN")
 		}
 	}
 	{
-		// Test conversion to MillivoltsPerHours.
-		// No expected conversion value provided for MillivoltsPerHours, verifying result is not NaN.
-		result := a.MillivoltsPerHours()
-		cacheResult := a.MillivoltsPerHours()
+		// Test conversion to MillivoltsPerHour.
+		// No expected conversion value provided for MillivoltsPerHour, verifying result is not NaN.
+		result := a.MillivoltsPerHour()
+		cacheResult := a.MillivoltsPerHour()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MillivoltsPerHours returned NaN")
+			t.Errorf("conversion to MillivoltsPerHour returned NaN")
 		}
 	}
 	{
-		// Test conversion to KilovoltsPerHours.
-		// No expected conversion value provided for KilovoltsPerHours, verifying result is not NaN.
-		result := a.KilovoltsPerHours()
-		cacheResult := a.KilovoltsPerHours()
+		// Test conversion to KilovoltsPerHour.
+		// No expected conversion value provided for KilovoltsPerHour, verifying result is not NaN.
+		result := a.KilovoltsPerHour()
+		cacheResult := a.KilovoltsPerHour()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to KilovoltsPerHours returned NaN")
+			t.Errorf("conversion to KilovoltsPerHour returned NaN")
 		}
 	}
 	{
-		// Test conversion to MegavoltsPerHours.
-		// No expected conversion value provided for MegavoltsPerHours, verifying result is not NaN.
-		result := a.MegavoltsPerHours()
-		cacheResult := a.MegavoltsPerHours()
+		// Test conversion to MegavoltsPerHour.
+		// No expected conversion value provided for MegavoltsPerHour, verifying result is not NaN.
+		result := a.MegavoltsPerHour()
+		cacheResult := a.MegavoltsPerHour()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MegavoltsPerHours returned NaN")
+			t.Errorf("conversion to MegavoltsPerHour returned NaN")
 		}
 	}
 }
@@ -327,342 +327,342 @@ func TestElectricPotentialChangeRateFactory_FromDto(t *testing.T) {
 
 	var converted float64
     // Test VoltPerSecond conversion
-    volts_per_secondsDto := units.ElectricPotentialChangeRateDto{
+    volts_per_secondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateVoltPerSecond,
     }
     
-    var volts_per_secondsResult *units.ElectricPotentialChangeRate
-    volts_per_secondsResult, err = factory.FromDto(volts_per_secondsDto)
+    var volts_per_secondResult *units.ElectricPotentialChangeRate
+    volts_per_secondResult, err = factory.FromDto(volts_per_secondDto)
     if err != nil {
         t.Errorf("FromDto() with VoltPerSecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = volts_per_secondsResult.Convert(units.ElectricPotentialChangeRateVoltPerSecond)
+    converted = volts_per_secondResult.Convert(units.ElectricPotentialChangeRateVoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for VoltPerSecond = %v, want %v", converted, 100)
     }
     // Test VoltPerMicrosecond conversion
-    volts_per_microsecondsDto := units.ElectricPotentialChangeRateDto{
+    volts_per_microsecondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateVoltPerMicrosecond,
     }
     
-    var volts_per_microsecondsResult *units.ElectricPotentialChangeRate
-    volts_per_microsecondsResult, err = factory.FromDto(volts_per_microsecondsDto)
+    var volts_per_microsecondResult *units.ElectricPotentialChangeRate
+    volts_per_microsecondResult, err = factory.FromDto(volts_per_microsecondDto)
     if err != nil {
         t.Errorf("FromDto() with VoltPerMicrosecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = volts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateVoltPerMicrosecond)
+    converted = volts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateVoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for VoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test VoltPerMinute conversion
-    volts_per_minutesDto := units.ElectricPotentialChangeRateDto{
+    volts_per_minuteDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateVoltPerMinute,
     }
     
-    var volts_per_minutesResult *units.ElectricPotentialChangeRate
-    volts_per_minutesResult, err = factory.FromDto(volts_per_minutesDto)
+    var volts_per_minuteResult *units.ElectricPotentialChangeRate
+    volts_per_minuteResult, err = factory.FromDto(volts_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with VoltPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = volts_per_minutesResult.Convert(units.ElectricPotentialChangeRateVoltPerMinute)
+    converted = volts_per_minuteResult.Convert(units.ElectricPotentialChangeRateVoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for VoltPerMinute = %v, want %v", converted, 100)
     }
     // Test VoltPerHour conversion
-    volts_per_hoursDto := units.ElectricPotentialChangeRateDto{
+    volts_per_hourDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateVoltPerHour,
     }
     
-    var volts_per_hoursResult *units.ElectricPotentialChangeRate
-    volts_per_hoursResult, err = factory.FromDto(volts_per_hoursDto)
+    var volts_per_hourResult *units.ElectricPotentialChangeRate
+    volts_per_hourResult, err = factory.FromDto(volts_per_hourDto)
     if err != nil {
         t.Errorf("FromDto() with VoltPerHour returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = volts_per_hoursResult.Convert(units.ElectricPotentialChangeRateVoltPerHour)
+    converted = volts_per_hourResult.Convert(units.ElectricPotentialChangeRateVoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for VoltPerHour = %v, want %v", converted, 100)
     }
     // Test MicrovoltPerSecond conversion
-    microvolts_per_secondsDto := units.ElectricPotentialChangeRateDto{
+    microvolts_per_secondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMicrovoltPerSecond,
     }
     
-    var microvolts_per_secondsResult *units.ElectricPotentialChangeRate
-    microvolts_per_secondsResult, err = factory.FromDto(microvolts_per_secondsDto)
+    var microvolts_per_secondResult *units.ElectricPotentialChangeRate
+    microvolts_per_secondResult, err = factory.FromDto(microvolts_per_secondDto)
     if err != nil {
         t.Errorf("FromDto() with MicrovoltPerSecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microvolts_per_secondsResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerSecond)
+    converted = microvolts_per_secondResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrovoltPerSecond = %v, want %v", converted, 100)
     }
     // Test MillivoltPerSecond conversion
-    millivolts_per_secondsDto := units.ElectricPotentialChangeRateDto{
+    millivolts_per_secondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMillivoltPerSecond,
     }
     
-    var millivolts_per_secondsResult *units.ElectricPotentialChangeRate
-    millivolts_per_secondsResult, err = factory.FromDto(millivolts_per_secondsDto)
+    var millivolts_per_secondResult *units.ElectricPotentialChangeRate
+    millivolts_per_secondResult, err = factory.FromDto(millivolts_per_secondDto)
     if err != nil {
         t.Errorf("FromDto() with MillivoltPerSecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millivolts_per_secondsResult.Convert(units.ElectricPotentialChangeRateMillivoltPerSecond)
+    converted = millivolts_per_secondResult.Convert(units.ElectricPotentialChangeRateMillivoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillivoltPerSecond = %v, want %v", converted, 100)
     }
     // Test KilovoltPerSecond conversion
-    kilovolts_per_secondsDto := units.ElectricPotentialChangeRateDto{
+    kilovolts_per_secondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateKilovoltPerSecond,
     }
     
-    var kilovolts_per_secondsResult *units.ElectricPotentialChangeRate
-    kilovolts_per_secondsResult, err = factory.FromDto(kilovolts_per_secondsDto)
+    var kilovolts_per_secondResult *units.ElectricPotentialChangeRate
+    kilovolts_per_secondResult, err = factory.FromDto(kilovolts_per_secondDto)
     if err != nil {
         t.Errorf("FromDto() with KilovoltPerSecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilovolts_per_secondsResult.Convert(units.ElectricPotentialChangeRateKilovoltPerSecond)
+    converted = kilovolts_per_secondResult.Convert(units.ElectricPotentialChangeRateKilovoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilovoltPerSecond = %v, want %v", converted, 100)
     }
     // Test MegavoltPerSecond conversion
-    megavolts_per_secondsDto := units.ElectricPotentialChangeRateDto{
+    megavolts_per_secondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMegavoltPerSecond,
     }
     
-    var megavolts_per_secondsResult *units.ElectricPotentialChangeRate
-    megavolts_per_secondsResult, err = factory.FromDto(megavolts_per_secondsDto)
+    var megavolts_per_secondResult *units.ElectricPotentialChangeRate
+    megavolts_per_secondResult, err = factory.FromDto(megavolts_per_secondDto)
     if err != nil {
         t.Errorf("FromDto() with MegavoltPerSecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megavolts_per_secondsResult.Convert(units.ElectricPotentialChangeRateMegavoltPerSecond)
+    converted = megavolts_per_secondResult.Convert(units.ElectricPotentialChangeRateMegavoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegavoltPerSecond = %v, want %v", converted, 100)
     }
     // Test MicrovoltPerMicrosecond conversion
-    microvolts_per_microsecondsDto := units.ElectricPotentialChangeRateDto{
+    microvolts_per_microsecondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMicrovoltPerMicrosecond,
     }
     
-    var microvolts_per_microsecondsResult *units.ElectricPotentialChangeRate
-    microvolts_per_microsecondsResult, err = factory.FromDto(microvolts_per_microsecondsDto)
+    var microvolts_per_microsecondResult *units.ElectricPotentialChangeRate
+    microvolts_per_microsecondResult, err = factory.FromDto(microvolts_per_microsecondDto)
     if err != nil {
         t.Errorf("FromDto() with MicrovoltPerMicrosecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microvolts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMicrosecond)
+    converted = microvolts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrovoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test MillivoltPerMicrosecond conversion
-    millivolts_per_microsecondsDto := units.ElectricPotentialChangeRateDto{
+    millivolts_per_microsecondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMillivoltPerMicrosecond,
     }
     
-    var millivolts_per_microsecondsResult *units.ElectricPotentialChangeRate
-    millivolts_per_microsecondsResult, err = factory.FromDto(millivolts_per_microsecondsDto)
+    var millivolts_per_microsecondResult *units.ElectricPotentialChangeRate
+    millivolts_per_microsecondResult, err = factory.FromDto(millivolts_per_microsecondDto)
     if err != nil {
         t.Errorf("FromDto() with MillivoltPerMicrosecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millivolts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMicrosecond)
+    converted = millivolts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillivoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test KilovoltPerMicrosecond conversion
-    kilovolts_per_microsecondsDto := units.ElectricPotentialChangeRateDto{
+    kilovolts_per_microsecondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateKilovoltPerMicrosecond,
     }
     
-    var kilovolts_per_microsecondsResult *units.ElectricPotentialChangeRate
-    kilovolts_per_microsecondsResult, err = factory.FromDto(kilovolts_per_microsecondsDto)
+    var kilovolts_per_microsecondResult *units.ElectricPotentialChangeRate
+    kilovolts_per_microsecondResult, err = factory.FromDto(kilovolts_per_microsecondDto)
     if err != nil {
         t.Errorf("FromDto() with KilovoltPerMicrosecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilovolts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMicrosecond)
+    converted = kilovolts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilovoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test MegavoltPerMicrosecond conversion
-    megavolts_per_microsecondsDto := units.ElectricPotentialChangeRateDto{
+    megavolts_per_microsecondDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMegavoltPerMicrosecond,
     }
     
-    var megavolts_per_microsecondsResult *units.ElectricPotentialChangeRate
-    megavolts_per_microsecondsResult, err = factory.FromDto(megavolts_per_microsecondsDto)
+    var megavolts_per_microsecondResult *units.ElectricPotentialChangeRate
+    megavolts_per_microsecondResult, err = factory.FromDto(megavolts_per_microsecondDto)
     if err != nil {
         t.Errorf("FromDto() with MegavoltPerMicrosecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megavolts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMicrosecond)
+    converted = megavolts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegavoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test MicrovoltPerMinute conversion
-    microvolts_per_minutesDto := units.ElectricPotentialChangeRateDto{
+    microvolts_per_minuteDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMicrovoltPerMinute,
     }
     
-    var microvolts_per_minutesResult *units.ElectricPotentialChangeRate
-    microvolts_per_minutesResult, err = factory.FromDto(microvolts_per_minutesDto)
+    var microvolts_per_minuteResult *units.ElectricPotentialChangeRate
+    microvolts_per_minuteResult, err = factory.FromDto(microvolts_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with MicrovoltPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microvolts_per_minutesResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMinute)
+    converted = microvolts_per_minuteResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrovoltPerMinute = %v, want %v", converted, 100)
     }
     // Test MillivoltPerMinute conversion
-    millivolts_per_minutesDto := units.ElectricPotentialChangeRateDto{
+    millivolts_per_minuteDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMillivoltPerMinute,
     }
     
-    var millivolts_per_minutesResult *units.ElectricPotentialChangeRate
-    millivolts_per_minutesResult, err = factory.FromDto(millivolts_per_minutesDto)
+    var millivolts_per_minuteResult *units.ElectricPotentialChangeRate
+    millivolts_per_minuteResult, err = factory.FromDto(millivolts_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with MillivoltPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millivolts_per_minutesResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMinute)
+    converted = millivolts_per_minuteResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillivoltPerMinute = %v, want %v", converted, 100)
     }
     // Test KilovoltPerMinute conversion
-    kilovolts_per_minutesDto := units.ElectricPotentialChangeRateDto{
+    kilovolts_per_minuteDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateKilovoltPerMinute,
     }
     
-    var kilovolts_per_minutesResult *units.ElectricPotentialChangeRate
-    kilovolts_per_minutesResult, err = factory.FromDto(kilovolts_per_minutesDto)
+    var kilovolts_per_minuteResult *units.ElectricPotentialChangeRate
+    kilovolts_per_minuteResult, err = factory.FromDto(kilovolts_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with KilovoltPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilovolts_per_minutesResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMinute)
+    converted = kilovolts_per_minuteResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilovoltPerMinute = %v, want %v", converted, 100)
     }
     // Test MegavoltPerMinute conversion
-    megavolts_per_minutesDto := units.ElectricPotentialChangeRateDto{
+    megavolts_per_minuteDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMegavoltPerMinute,
     }
     
-    var megavolts_per_minutesResult *units.ElectricPotentialChangeRate
-    megavolts_per_minutesResult, err = factory.FromDto(megavolts_per_minutesDto)
+    var megavolts_per_minuteResult *units.ElectricPotentialChangeRate
+    megavolts_per_minuteResult, err = factory.FromDto(megavolts_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with MegavoltPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megavolts_per_minutesResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMinute)
+    converted = megavolts_per_minuteResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegavoltPerMinute = %v, want %v", converted, 100)
     }
     // Test MicrovoltPerHour conversion
-    microvolts_per_hoursDto := units.ElectricPotentialChangeRateDto{
+    microvolts_per_hourDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMicrovoltPerHour,
     }
     
-    var microvolts_per_hoursResult *units.ElectricPotentialChangeRate
-    microvolts_per_hoursResult, err = factory.FromDto(microvolts_per_hoursDto)
+    var microvolts_per_hourResult *units.ElectricPotentialChangeRate
+    microvolts_per_hourResult, err = factory.FromDto(microvolts_per_hourDto)
     if err != nil {
         t.Errorf("FromDto() with MicrovoltPerHour returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microvolts_per_hoursResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerHour)
+    converted = microvolts_per_hourResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrovoltPerHour = %v, want %v", converted, 100)
     }
     // Test MillivoltPerHour conversion
-    millivolts_per_hoursDto := units.ElectricPotentialChangeRateDto{
+    millivolts_per_hourDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMillivoltPerHour,
     }
     
-    var millivolts_per_hoursResult *units.ElectricPotentialChangeRate
-    millivolts_per_hoursResult, err = factory.FromDto(millivolts_per_hoursDto)
+    var millivolts_per_hourResult *units.ElectricPotentialChangeRate
+    millivolts_per_hourResult, err = factory.FromDto(millivolts_per_hourDto)
     if err != nil {
         t.Errorf("FromDto() with MillivoltPerHour returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millivolts_per_hoursResult.Convert(units.ElectricPotentialChangeRateMillivoltPerHour)
+    converted = millivolts_per_hourResult.Convert(units.ElectricPotentialChangeRateMillivoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillivoltPerHour = %v, want %v", converted, 100)
     }
     // Test KilovoltPerHour conversion
-    kilovolts_per_hoursDto := units.ElectricPotentialChangeRateDto{
+    kilovolts_per_hourDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateKilovoltPerHour,
     }
     
-    var kilovolts_per_hoursResult *units.ElectricPotentialChangeRate
-    kilovolts_per_hoursResult, err = factory.FromDto(kilovolts_per_hoursDto)
+    var kilovolts_per_hourResult *units.ElectricPotentialChangeRate
+    kilovolts_per_hourResult, err = factory.FromDto(kilovolts_per_hourDto)
     if err != nil {
         t.Errorf("FromDto() with KilovoltPerHour returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilovolts_per_hoursResult.Convert(units.ElectricPotentialChangeRateKilovoltPerHour)
+    converted = kilovolts_per_hourResult.Convert(units.ElectricPotentialChangeRateKilovoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilovoltPerHour = %v, want %v", converted, 100)
     }
     // Test MegavoltPerHour conversion
-    megavolts_per_hoursDto := units.ElectricPotentialChangeRateDto{
+    megavolts_per_hourDto := units.ElectricPotentialChangeRateDto{
         Value: 100,
         Unit:  units.ElectricPotentialChangeRateMegavoltPerHour,
     }
     
-    var megavolts_per_hoursResult *units.ElectricPotentialChangeRate
-    megavolts_per_hoursResult, err = factory.FromDto(megavolts_per_hoursDto)
+    var megavolts_per_hourResult *units.ElectricPotentialChangeRate
+    megavolts_per_hourResult, err = factory.FromDto(megavolts_per_hourDto)
     if err != nil {
         t.Errorf("FromDto() with MegavoltPerHour returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megavolts_per_hoursResult.Convert(units.ElectricPotentialChangeRateMegavoltPerHour)
+    converted = megavolts_per_hourResult.Convert(units.ElectricPotentialChangeRateMegavoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegavoltPerHour = %v, want %v", converted, 100)
     }
@@ -731,242 +731,242 @@ func TestElectricPotentialChangeRateFactory_FromDtoJSON(t *testing.T) {
         t.Error("FromDtoJSON() with NaN value should return error")
     }
     // Test JSON with VoltPerSecond unit
-    volts_per_secondsJSON := []byte(`{"value": 100, "unit": "VoltPerSecond"}`)
-    volts_per_secondsResult, err := factory.FromDtoJSON(volts_per_secondsJSON)
+    volts_per_secondJSON := []byte(`{"value": 100, "unit": "VoltPerSecond"}`)
+    volts_per_secondResult, err := factory.FromDtoJSON(volts_per_secondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with VoltPerSecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = volts_per_secondsResult.Convert(units.ElectricPotentialChangeRateVoltPerSecond)
+    converted = volts_per_secondResult.Convert(units.ElectricPotentialChangeRateVoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for VoltPerSecond = %v, want %v", converted, 100)
     }
     // Test JSON with VoltPerMicrosecond unit
-    volts_per_microsecondsJSON := []byte(`{"value": 100, "unit": "VoltPerMicrosecond"}`)
-    volts_per_microsecondsResult, err := factory.FromDtoJSON(volts_per_microsecondsJSON)
+    volts_per_microsecondJSON := []byte(`{"value": 100, "unit": "VoltPerMicrosecond"}`)
+    volts_per_microsecondResult, err := factory.FromDtoJSON(volts_per_microsecondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with VoltPerMicrosecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = volts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateVoltPerMicrosecond)
+    converted = volts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateVoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for VoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test JSON with VoltPerMinute unit
-    volts_per_minutesJSON := []byte(`{"value": 100, "unit": "VoltPerMinute"}`)
-    volts_per_minutesResult, err := factory.FromDtoJSON(volts_per_minutesJSON)
+    volts_per_minuteJSON := []byte(`{"value": 100, "unit": "VoltPerMinute"}`)
+    volts_per_minuteResult, err := factory.FromDtoJSON(volts_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with VoltPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = volts_per_minutesResult.Convert(units.ElectricPotentialChangeRateVoltPerMinute)
+    converted = volts_per_minuteResult.Convert(units.ElectricPotentialChangeRateVoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for VoltPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with VoltPerHour unit
-    volts_per_hoursJSON := []byte(`{"value": 100, "unit": "VoltPerHour"}`)
-    volts_per_hoursResult, err := factory.FromDtoJSON(volts_per_hoursJSON)
+    volts_per_hourJSON := []byte(`{"value": 100, "unit": "VoltPerHour"}`)
+    volts_per_hourResult, err := factory.FromDtoJSON(volts_per_hourJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with VoltPerHour unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = volts_per_hoursResult.Convert(units.ElectricPotentialChangeRateVoltPerHour)
+    converted = volts_per_hourResult.Convert(units.ElectricPotentialChangeRateVoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for VoltPerHour = %v, want %v", converted, 100)
     }
     // Test JSON with MicrovoltPerSecond unit
-    microvolts_per_secondsJSON := []byte(`{"value": 100, "unit": "MicrovoltPerSecond"}`)
-    microvolts_per_secondsResult, err := factory.FromDtoJSON(microvolts_per_secondsJSON)
+    microvolts_per_secondJSON := []byte(`{"value": 100, "unit": "MicrovoltPerSecond"}`)
+    microvolts_per_secondResult, err := factory.FromDtoJSON(microvolts_per_secondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MicrovoltPerSecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microvolts_per_secondsResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerSecond)
+    converted = microvolts_per_secondResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrovoltPerSecond = %v, want %v", converted, 100)
     }
     // Test JSON with MillivoltPerSecond unit
-    millivolts_per_secondsJSON := []byte(`{"value": 100, "unit": "MillivoltPerSecond"}`)
-    millivolts_per_secondsResult, err := factory.FromDtoJSON(millivolts_per_secondsJSON)
+    millivolts_per_secondJSON := []byte(`{"value": 100, "unit": "MillivoltPerSecond"}`)
+    millivolts_per_secondResult, err := factory.FromDtoJSON(millivolts_per_secondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MillivoltPerSecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millivolts_per_secondsResult.Convert(units.ElectricPotentialChangeRateMillivoltPerSecond)
+    converted = millivolts_per_secondResult.Convert(units.ElectricPotentialChangeRateMillivoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillivoltPerSecond = %v, want %v", converted, 100)
     }
     // Test JSON with KilovoltPerSecond unit
-    kilovolts_per_secondsJSON := []byte(`{"value": 100, "unit": "KilovoltPerSecond"}`)
-    kilovolts_per_secondsResult, err := factory.FromDtoJSON(kilovolts_per_secondsJSON)
+    kilovolts_per_secondJSON := []byte(`{"value": 100, "unit": "KilovoltPerSecond"}`)
+    kilovolts_per_secondResult, err := factory.FromDtoJSON(kilovolts_per_secondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with KilovoltPerSecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilovolts_per_secondsResult.Convert(units.ElectricPotentialChangeRateKilovoltPerSecond)
+    converted = kilovolts_per_secondResult.Convert(units.ElectricPotentialChangeRateKilovoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilovoltPerSecond = %v, want %v", converted, 100)
     }
     // Test JSON with MegavoltPerSecond unit
-    megavolts_per_secondsJSON := []byte(`{"value": 100, "unit": "MegavoltPerSecond"}`)
-    megavolts_per_secondsResult, err := factory.FromDtoJSON(megavolts_per_secondsJSON)
+    megavolts_per_secondJSON := []byte(`{"value": 100, "unit": "MegavoltPerSecond"}`)
+    megavolts_per_secondResult, err := factory.FromDtoJSON(megavolts_per_secondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MegavoltPerSecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megavolts_per_secondsResult.Convert(units.ElectricPotentialChangeRateMegavoltPerSecond)
+    converted = megavolts_per_secondResult.Convert(units.ElectricPotentialChangeRateMegavoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegavoltPerSecond = %v, want %v", converted, 100)
     }
     // Test JSON with MicrovoltPerMicrosecond unit
-    microvolts_per_microsecondsJSON := []byte(`{"value": 100, "unit": "MicrovoltPerMicrosecond"}`)
-    microvolts_per_microsecondsResult, err := factory.FromDtoJSON(microvolts_per_microsecondsJSON)
+    microvolts_per_microsecondJSON := []byte(`{"value": 100, "unit": "MicrovoltPerMicrosecond"}`)
+    microvolts_per_microsecondResult, err := factory.FromDtoJSON(microvolts_per_microsecondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MicrovoltPerMicrosecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microvolts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMicrosecond)
+    converted = microvolts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrovoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test JSON with MillivoltPerMicrosecond unit
-    millivolts_per_microsecondsJSON := []byte(`{"value": 100, "unit": "MillivoltPerMicrosecond"}`)
-    millivolts_per_microsecondsResult, err := factory.FromDtoJSON(millivolts_per_microsecondsJSON)
+    millivolts_per_microsecondJSON := []byte(`{"value": 100, "unit": "MillivoltPerMicrosecond"}`)
+    millivolts_per_microsecondResult, err := factory.FromDtoJSON(millivolts_per_microsecondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MillivoltPerMicrosecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millivolts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMicrosecond)
+    converted = millivolts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillivoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test JSON with KilovoltPerMicrosecond unit
-    kilovolts_per_microsecondsJSON := []byte(`{"value": 100, "unit": "KilovoltPerMicrosecond"}`)
-    kilovolts_per_microsecondsResult, err := factory.FromDtoJSON(kilovolts_per_microsecondsJSON)
+    kilovolts_per_microsecondJSON := []byte(`{"value": 100, "unit": "KilovoltPerMicrosecond"}`)
+    kilovolts_per_microsecondResult, err := factory.FromDtoJSON(kilovolts_per_microsecondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with KilovoltPerMicrosecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilovolts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMicrosecond)
+    converted = kilovolts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilovoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test JSON with MegavoltPerMicrosecond unit
-    megavolts_per_microsecondsJSON := []byte(`{"value": 100, "unit": "MegavoltPerMicrosecond"}`)
-    megavolts_per_microsecondsResult, err := factory.FromDtoJSON(megavolts_per_microsecondsJSON)
+    megavolts_per_microsecondJSON := []byte(`{"value": 100, "unit": "MegavoltPerMicrosecond"}`)
+    megavolts_per_microsecondResult, err := factory.FromDtoJSON(megavolts_per_microsecondJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MegavoltPerMicrosecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megavolts_per_microsecondsResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMicrosecond)
+    converted = megavolts_per_microsecondResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegavoltPerMicrosecond = %v, want %v", converted, 100)
     }
     // Test JSON with MicrovoltPerMinute unit
-    microvolts_per_minutesJSON := []byte(`{"value": 100, "unit": "MicrovoltPerMinute"}`)
-    microvolts_per_minutesResult, err := factory.FromDtoJSON(microvolts_per_minutesJSON)
+    microvolts_per_minuteJSON := []byte(`{"value": 100, "unit": "MicrovoltPerMinute"}`)
+    microvolts_per_minuteResult, err := factory.FromDtoJSON(microvolts_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MicrovoltPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microvolts_per_minutesResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMinute)
+    converted = microvolts_per_minuteResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrovoltPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with MillivoltPerMinute unit
-    millivolts_per_minutesJSON := []byte(`{"value": 100, "unit": "MillivoltPerMinute"}`)
-    millivolts_per_minutesResult, err := factory.FromDtoJSON(millivolts_per_minutesJSON)
+    millivolts_per_minuteJSON := []byte(`{"value": 100, "unit": "MillivoltPerMinute"}`)
+    millivolts_per_minuteResult, err := factory.FromDtoJSON(millivolts_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MillivoltPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millivolts_per_minutesResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMinute)
+    converted = millivolts_per_minuteResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillivoltPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with KilovoltPerMinute unit
-    kilovolts_per_minutesJSON := []byte(`{"value": 100, "unit": "KilovoltPerMinute"}`)
-    kilovolts_per_minutesResult, err := factory.FromDtoJSON(kilovolts_per_minutesJSON)
+    kilovolts_per_minuteJSON := []byte(`{"value": 100, "unit": "KilovoltPerMinute"}`)
+    kilovolts_per_minuteResult, err := factory.FromDtoJSON(kilovolts_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with KilovoltPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilovolts_per_minutesResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMinute)
+    converted = kilovolts_per_minuteResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilovoltPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with MegavoltPerMinute unit
-    megavolts_per_minutesJSON := []byte(`{"value": 100, "unit": "MegavoltPerMinute"}`)
-    megavolts_per_minutesResult, err := factory.FromDtoJSON(megavolts_per_minutesJSON)
+    megavolts_per_minuteJSON := []byte(`{"value": 100, "unit": "MegavoltPerMinute"}`)
+    megavolts_per_minuteResult, err := factory.FromDtoJSON(megavolts_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MegavoltPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megavolts_per_minutesResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMinute)
+    converted = megavolts_per_minuteResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegavoltPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with MicrovoltPerHour unit
-    microvolts_per_hoursJSON := []byte(`{"value": 100, "unit": "MicrovoltPerHour"}`)
-    microvolts_per_hoursResult, err := factory.FromDtoJSON(microvolts_per_hoursJSON)
+    microvolts_per_hourJSON := []byte(`{"value": 100, "unit": "MicrovoltPerHour"}`)
+    microvolts_per_hourResult, err := factory.FromDtoJSON(microvolts_per_hourJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MicrovoltPerHour unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microvolts_per_hoursResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerHour)
+    converted = microvolts_per_hourResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrovoltPerHour = %v, want %v", converted, 100)
     }
     // Test JSON with MillivoltPerHour unit
-    millivolts_per_hoursJSON := []byte(`{"value": 100, "unit": "MillivoltPerHour"}`)
-    millivolts_per_hoursResult, err := factory.FromDtoJSON(millivolts_per_hoursJSON)
+    millivolts_per_hourJSON := []byte(`{"value": 100, "unit": "MillivoltPerHour"}`)
+    millivolts_per_hourResult, err := factory.FromDtoJSON(millivolts_per_hourJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MillivoltPerHour unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millivolts_per_hoursResult.Convert(units.ElectricPotentialChangeRateMillivoltPerHour)
+    converted = millivolts_per_hourResult.Convert(units.ElectricPotentialChangeRateMillivoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillivoltPerHour = %v, want %v", converted, 100)
     }
     // Test JSON with KilovoltPerHour unit
-    kilovolts_per_hoursJSON := []byte(`{"value": 100, "unit": "KilovoltPerHour"}`)
-    kilovolts_per_hoursResult, err := factory.FromDtoJSON(kilovolts_per_hoursJSON)
+    kilovolts_per_hourJSON := []byte(`{"value": 100, "unit": "KilovoltPerHour"}`)
+    kilovolts_per_hourResult, err := factory.FromDtoJSON(kilovolts_per_hourJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with KilovoltPerHour unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilovolts_per_hoursResult.Convert(units.ElectricPotentialChangeRateKilovoltPerHour)
+    converted = kilovolts_per_hourResult.Convert(units.ElectricPotentialChangeRateKilovoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilovoltPerHour = %v, want %v", converted, 100)
     }
     // Test JSON with MegavoltPerHour unit
-    megavolts_per_hoursJSON := []byte(`{"value": 100, "unit": "MegavoltPerHour"}`)
-    megavolts_per_hoursResult, err := factory.FromDtoJSON(megavolts_per_hoursJSON)
+    megavolts_per_hourJSON := []byte(`{"value": 100, "unit": "MegavoltPerHour"}`)
+    megavolts_per_hourResult, err := factory.FromDtoJSON(megavolts_per_hourJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MegavoltPerHour unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = megavolts_per_hoursResult.Convert(units.ElectricPotentialChangeRateMegavoltPerHour)
+    converted = megavolts_per_hourResult.Convert(units.ElectricPotentialChangeRateMegavoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MegavoltPerHour = %v, want %v", converted, 100)
     }
@@ -981,864 +981,864 @@ func TestElectricPotentialChangeRateFactory_FromDtoJSON(t *testing.T) {
         t.Errorf("FromDtoJSON() with zero value = %v, want 0", zeroResult.BaseValue())
     }
 }
-// Test FromVoltsPerSeconds function
-func TestElectricPotentialChangeRateFactory_FromVoltsPerSeconds(t *testing.T) {
+// Test FromVoltsPerSecond function
+func TestElectricPotentialChangeRateFactory_FromVoltsPerSecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromVoltsPerSeconds(100)
+    result, err := factory.FromVoltsPerSecond(100)
     if err != nil {
-        t.Errorf("FromVoltsPerSeconds() returned error: %v", err)
+        t.Errorf("FromVoltsPerSecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateVoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromVoltsPerSeconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromVoltsPerSecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromVoltsPerSeconds(math.NaN())
+    _, err = factory.FromVoltsPerSecond(math.NaN())
     if err == nil {
-        t.Error("FromVoltsPerSeconds() with NaN value should return error")
+        t.Error("FromVoltsPerSecond() with NaN value should return error")
     }
 
-    _, err = factory.FromVoltsPerSeconds(math.Inf(1))
+    _, err = factory.FromVoltsPerSecond(math.Inf(1))
     if err == nil {
-        t.Error("FromVoltsPerSeconds() with +Inf value should return error")
+        t.Error("FromVoltsPerSecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromVoltsPerSeconds(math.Inf(-1))
+    _, err = factory.FromVoltsPerSecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromVoltsPerSeconds() with -Inf value should return error")
+        t.Error("FromVoltsPerSecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromVoltsPerSeconds(0)
+    zeroResult, err := factory.FromVoltsPerSecond(0)
     if err != nil {
-        t.Errorf("FromVoltsPerSeconds() with zero value returned error: %v", err)
+        t.Errorf("FromVoltsPerSecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateVoltPerSecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromVoltsPerSeconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromVoltsPerSecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromVoltsPerMicroseconds function
-func TestElectricPotentialChangeRateFactory_FromVoltsPerMicroseconds(t *testing.T) {
+// Test FromVoltsPerMicrosecond function
+func TestElectricPotentialChangeRateFactory_FromVoltsPerMicrosecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromVoltsPerMicroseconds(100)
+    result, err := factory.FromVoltsPerMicrosecond(100)
     if err != nil {
-        t.Errorf("FromVoltsPerMicroseconds() returned error: %v", err)
+        t.Errorf("FromVoltsPerMicrosecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateVoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromVoltsPerMicroseconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromVoltsPerMicrosecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromVoltsPerMicroseconds(math.NaN())
+    _, err = factory.FromVoltsPerMicrosecond(math.NaN())
     if err == nil {
-        t.Error("FromVoltsPerMicroseconds() with NaN value should return error")
+        t.Error("FromVoltsPerMicrosecond() with NaN value should return error")
     }
 
-    _, err = factory.FromVoltsPerMicroseconds(math.Inf(1))
+    _, err = factory.FromVoltsPerMicrosecond(math.Inf(1))
     if err == nil {
-        t.Error("FromVoltsPerMicroseconds() with +Inf value should return error")
+        t.Error("FromVoltsPerMicrosecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromVoltsPerMicroseconds(math.Inf(-1))
+    _, err = factory.FromVoltsPerMicrosecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromVoltsPerMicroseconds() with -Inf value should return error")
+        t.Error("FromVoltsPerMicrosecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromVoltsPerMicroseconds(0)
+    zeroResult, err := factory.FromVoltsPerMicrosecond(0)
     if err != nil {
-        t.Errorf("FromVoltsPerMicroseconds() with zero value returned error: %v", err)
+        t.Errorf("FromVoltsPerMicrosecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateVoltPerMicrosecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromVoltsPerMicroseconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromVoltsPerMicrosecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromVoltsPerMinutes function
-func TestElectricPotentialChangeRateFactory_FromVoltsPerMinutes(t *testing.T) {
+// Test FromVoltsPerMinute function
+func TestElectricPotentialChangeRateFactory_FromVoltsPerMinute(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromVoltsPerMinutes(100)
+    result, err := factory.FromVoltsPerMinute(100)
     if err != nil {
-        t.Errorf("FromVoltsPerMinutes() returned error: %v", err)
+        t.Errorf("FromVoltsPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateVoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromVoltsPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromVoltsPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromVoltsPerMinutes(math.NaN())
+    _, err = factory.FromVoltsPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromVoltsPerMinutes() with NaN value should return error")
+        t.Error("FromVoltsPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromVoltsPerMinutes(math.Inf(1))
+    _, err = factory.FromVoltsPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromVoltsPerMinutes() with +Inf value should return error")
+        t.Error("FromVoltsPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromVoltsPerMinutes(math.Inf(-1))
+    _, err = factory.FromVoltsPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromVoltsPerMinutes() with -Inf value should return error")
+        t.Error("FromVoltsPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromVoltsPerMinutes(0)
+    zeroResult, err := factory.FromVoltsPerMinute(0)
     if err != nil {
-        t.Errorf("FromVoltsPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromVoltsPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateVoltPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromVoltsPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromVoltsPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromVoltsPerHours function
-func TestElectricPotentialChangeRateFactory_FromVoltsPerHours(t *testing.T) {
+// Test FromVoltsPerHour function
+func TestElectricPotentialChangeRateFactory_FromVoltsPerHour(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromVoltsPerHours(100)
+    result, err := factory.FromVoltsPerHour(100)
     if err != nil {
-        t.Errorf("FromVoltsPerHours() returned error: %v", err)
+        t.Errorf("FromVoltsPerHour() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateVoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromVoltsPerHours() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromVoltsPerHour() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromVoltsPerHours(math.NaN())
+    _, err = factory.FromVoltsPerHour(math.NaN())
     if err == nil {
-        t.Error("FromVoltsPerHours() with NaN value should return error")
+        t.Error("FromVoltsPerHour() with NaN value should return error")
     }
 
-    _, err = factory.FromVoltsPerHours(math.Inf(1))
+    _, err = factory.FromVoltsPerHour(math.Inf(1))
     if err == nil {
-        t.Error("FromVoltsPerHours() with +Inf value should return error")
+        t.Error("FromVoltsPerHour() with +Inf value should return error")
     }
 
-    _, err = factory.FromVoltsPerHours(math.Inf(-1))
+    _, err = factory.FromVoltsPerHour(math.Inf(-1))
     if err == nil {
-        t.Error("FromVoltsPerHours() with -Inf value should return error")
+        t.Error("FromVoltsPerHour() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromVoltsPerHours(0)
+    zeroResult, err := factory.FromVoltsPerHour(0)
     if err != nil {
-        t.Errorf("FromVoltsPerHours() with zero value returned error: %v", err)
+        t.Errorf("FromVoltsPerHour() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateVoltPerHour)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromVoltsPerHours() with zero value = %v, want 0", converted)
+        t.Errorf("FromVoltsPerHour() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMicrovoltsPerSeconds function
-func TestElectricPotentialChangeRateFactory_FromMicrovoltsPerSeconds(t *testing.T) {
+// Test FromMicrovoltsPerSecond function
+func TestElectricPotentialChangeRateFactory_FromMicrovoltsPerSecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMicrovoltsPerSeconds(100)
+    result, err := factory.FromMicrovoltsPerSecond(100)
     if err != nil {
-        t.Errorf("FromMicrovoltsPerSeconds() returned error: %v", err)
+        t.Errorf("FromMicrovoltsPerSecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMicrovoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMicrovoltsPerSeconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMicrovoltsPerSecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMicrovoltsPerSeconds(math.NaN())
+    _, err = factory.FromMicrovoltsPerSecond(math.NaN())
     if err == nil {
-        t.Error("FromMicrovoltsPerSeconds() with NaN value should return error")
+        t.Error("FromMicrovoltsPerSecond() with NaN value should return error")
     }
 
-    _, err = factory.FromMicrovoltsPerSeconds(math.Inf(1))
+    _, err = factory.FromMicrovoltsPerSecond(math.Inf(1))
     if err == nil {
-        t.Error("FromMicrovoltsPerSeconds() with +Inf value should return error")
+        t.Error("FromMicrovoltsPerSecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromMicrovoltsPerSeconds(math.Inf(-1))
+    _, err = factory.FromMicrovoltsPerSecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromMicrovoltsPerSeconds() with -Inf value should return error")
+        t.Error("FromMicrovoltsPerSecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMicrovoltsPerSeconds(0)
+    zeroResult, err := factory.FromMicrovoltsPerSecond(0)
     if err != nil {
-        t.Errorf("FromMicrovoltsPerSeconds() with zero value returned error: %v", err)
+        t.Errorf("FromMicrovoltsPerSecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerSecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMicrovoltsPerSeconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromMicrovoltsPerSecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMillivoltsPerSeconds function
-func TestElectricPotentialChangeRateFactory_FromMillivoltsPerSeconds(t *testing.T) {
+// Test FromMillivoltsPerSecond function
+func TestElectricPotentialChangeRateFactory_FromMillivoltsPerSecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMillivoltsPerSeconds(100)
+    result, err := factory.FromMillivoltsPerSecond(100)
     if err != nil {
-        t.Errorf("FromMillivoltsPerSeconds() returned error: %v", err)
+        t.Errorf("FromMillivoltsPerSecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMillivoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMillivoltsPerSeconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMillivoltsPerSecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMillivoltsPerSeconds(math.NaN())
+    _, err = factory.FromMillivoltsPerSecond(math.NaN())
     if err == nil {
-        t.Error("FromMillivoltsPerSeconds() with NaN value should return error")
+        t.Error("FromMillivoltsPerSecond() with NaN value should return error")
     }
 
-    _, err = factory.FromMillivoltsPerSeconds(math.Inf(1))
+    _, err = factory.FromMillivoltsPerSecond(math.Inf(1))
     if err == nil {
-        t.Error("FromMillivoltsPerSeconds() with +Inf value should return error")
+        t.Error("FromMillivoltsPerSecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromMillivoltsPerSeconds(math.Inf(-1))
+    _, err = factory.FromMillivoltsPerSecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromMillivoltsPerSeconds() with -Inf value should return error")
+        t.Error("FromMillivoltsPerSecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMillivoltsPerSeconds(0)
+    zeroResult, err := factory.FromMillivoltsPerSecond(0)
     if err != nil {
-        t.Errorf("FromMillivoltsPerSeconds() with zero value returned error: %v", err)
+        t.Errorf("FromMillivoltsPerSecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMillivoltPerSecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMillivoltsPerSeconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromMillivoltsPerSecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromKilovoltsPerSeconds function
-func TestElectricPotentialChangeRateFactory_FromKilovoltsPerSeconds(t *testing.T) {
+// Test FromKilovoltsPerSecond function
+func TestElectricPotentialChangeRateFactory_FromKilovoltsPerSecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromKilovoltsPerSeconds(100)
+    result, err := factory.FromKilovoltsPerSecond(100)
     if err != nil {
-        t.Errorf("FromKilovoltsPerSeconds() returned error: %v", err)
+        t.Errorf("FromKilovoltsPerSecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateKilovoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromKilovoltsPerSeconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromKilovoltsPerSecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromKilovoltsPerSeconds(math.NaN())
+    _, err = factory.FromKilovoltsPerSecond(math.NaN())
     if err == nil {
-        t.Error("FromKilovoltsPerSeconds() with NaN value should return error")
+        t.Error("FromKilovoltsPerSecond() with NaN value should return error")
     }
 
-    _, err = factory.FromKilovoltsPerSeconds(math.Inf(1))
+    _, err = factory.FromKilovoltsPerSecond(math.Inf(1))
     if err == nil {
-        t.Error("FromKilovoltsPerSeconds() with +Inf value should return error")
+        t.Error("FromKilovoltsPerSecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromKilovoltsPerSeconds(math.Inf(-1))
+    _, err = factory.FromKilovoltsPerSecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromKilovoltsPerSeconds() with -Inf value should return error")
+        t.Error("FromKilovoltsPerSecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromKilovoltsPerSeconds(0)
+    zeroResult, err := factory.FromKilovoltsPerSecond(0)
     if err != nil {
-        t.Errorf("FromKilovoltsPerSeconds() with zero value returned error: %v", err)
+        t.Errorf("FromKilovoltsPerSecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateKilovoltPerSecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromKilovoltsPerSeconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromKilovoltsPerSecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMegavoltsPerSeconds function
-func TestElectricPotentialChangeRateFactory_FromMegavoltsPerSeconds(t *testing.T) {
+// Test FromMegavoltsPerSecond function
+func TestElectricPotentialChangeRateFactory_FromMegavoltsPerSecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMegavoltsPerSeconds(100)
+    result, err := factory.FromMegavoltsPerSecond(100)
     if err != nil {
-        t.Errorf("FromMegavoltsPerSeconds() returned error: %v", err)
+        t.Errorf("FromMegavoltsPerSecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMegavoltPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMegavoltsPerSeconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMegavoltsPerSecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMegavoltsPerSeconds(math.NaN())
+    _, err = factory.FromMegavoltsPerSecond(math.NaN())
     if err == nil {
-        t.Error("FromMegavoltsPerSeconds() with NaN value should return error")
+        t.Error("FromMegavoltsPerSecond() with NaN value should return error")
     }
 
-    _, err = factory.FromMegavoltsPerSeconds(math.Inf(1))
+    _, err = factory.FromMegavoltsPerSecond(math.Inf(1))
     if err == nil {
-        t.Error("FromMegavoltsPerSeconds() with +Inf value should return error")
+        t.Error("FromMegavoltsPerSecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromMegavoltsPerSeconds(math.Inf(-1))
+    _, err = factory.FromMegavoltsPerSecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromMegavoltsPerSeconds() with -Inf value should return error")
+        t.Error("FromMegavoltsPerSecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMegavoltsPerSeconds(0)
+    zeroResult, err := factory.FromMegavoltsPerSecond(0)
     if err != nil {
-        t.Errorf("FromMegavoltsPerSeconds() with zero value returned error: %v", err)
+        t.Errorf("FromMegavoltsPerSecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMegavoltPerSecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMegavoltsPerSeconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromMegavoltsPerSecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMicrovoltsPerMicroseconds function
-func TestElectricPotentialChangeRateFactory_FromMicrovoltsPerMicroseconds(t *testing.T) {
+// Test FromMicrovoltsPerMicrosecond function
+func TestElectricPotentialChangeRateFactory_FromMicrovoltsPerMicrosecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMicrovoltsPerMicroseconds(100)
+    result, err := factory.FromMicrovoltsPerMicrosecond(100)
     if err != nil {
-        t.Errorf("FromMicrovoltsPerMicroseconds() returned error: %v", err)
+        t.Errorf("FromMicrovoltsPerMicrosecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMicrovoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMicrovoltsPerMicroseconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMicrovoltsPerMicrosecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMicrovoltsPerMicroseconds(math.NaN())
+    _, err = factory.FromMicrovoltsPerMicrosecond(math.NaN())
     if err == nil {
-        t.Error("FromMicrovoltsPerMicroseconds() with NaN value should return error")
+        t.Error("FromMicrovoltsPerMicrosecond() with NaN value should return error")
     }
 
-    _, err = factory.FromMicrovoltsPerMicroseconds(math.Inf(1))
+    _, err = factory.FromMicrovoltsPerMicrosecond(math.Inf(1))
     if err == nil {
-        t.Error("FromMicrovoltsPerMicroseconds() with +Inf value should return error")
+        t.Error("FromMicrovoltsPerMicrosecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromMicrovoltsPerMicroseconds(math.Inf(-1))
+    _, err = factory.FromMicrovoltsPerMicrosecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromMicrovoltsPerMicroseconds() with -Inf value should return error")
+        t.Error("FromMicrovoltsPerMicrosecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMicrovoltsPerMicroseconds(0)
+    zeroResult, err := factory.FromMicrovoltsPerMicrosecond(0)
     if err != nil {
-        t.Errorf("FromMicrovoltsPerMicroseconds() with zero value returned error: %v", err)
+        t.Errorf("FromMicrovoltsPerMicrosecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMicrosecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMicrovoltsPerMicroseconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromMicrovoltsPerMicrosecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMillivoltsPerMicroseconds function
-func TestElectricPotentialChangeRateFactory_FromMillivoltsPerMicroseconds(t *testing.T) {
+// Test FromMillivoltsPerMicrosecond function
+func TestElectricPotentialChangeRateFactory_FromMillivoltsPerMicrosecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMillivoltsPerMicroseconds(100)
+    result, err := factory.FromMillivoltsPerMicrosecond(100)
     if err != nil {
-        t.Errorf("FromMillivoltsPerMicroseconds() returned error: %v", err)
+        t.Errorf("FromMillivoltsPerMicrosecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMillivoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMillivoltsPerMicroseconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMillivoltsPerMicrosecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMillivoltsPerMicroseconds(math.NaN())
+    _, err = factory.FromMillivoltsPerMicrosecond(math.NaN())
     if err == nil {
-        t.Error("FromMillivoltsPerMicroseconds() with NaN value should return error")
+        t.Error("FromMillivoltsPerMicrosecond() with NaN value should return error")
     }
 
-    _, err = factory.FromMillivoltsPerMicroseconds(math.Inf(1))
+    _, err = factory.FromMillivoltsPerMicrosecond(math.Inf(1))
     if err == nil {
-        t.Error("FromMillivoltsPerMicroseconds() with +Inf value should return error")
+        t.Error("FromMillivoltsPerMicrosecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromMillivoltsPerMicroseconds(math.Inf(-1))
+    _, err = factory.FromMillivoltsPerMicrosecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromMillivoltsPerMicroseconds() with -Inf value should return error")
+        t.Error("FromMillivoltsPerMicrosecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMillivoltsPerMicroseconds(0)
+    zeroResult, err := factory.FromMillivoltsPerMicrosecond(0)
     if err != nil {
-        t.Errorf("FromMillivoltsPerMicroseconds() with zero value returned error: %v", err)
+        t.Errorf("FromMillivoltsPerMicrosecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMicrosecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMillivoltsPerMicroseconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromMillivoltsPerMicrosecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromKilovoltsPerMicroseconds function
-func TestElectricPotentialChangeRateFactory_FromKilovoltsPerMicroseconds(t *testing.T) {
+// Test FromKilovoltsPerMicrosecond function
+func TestElectricPotentialChangeRateFactory_FromKilovoltsPerMicrosecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromKilovoltsPerMicroseconds(100)
+    result, err := factory.FromKilovoltsPerMicrosecond(100)
     if err != nil {
-        t.Errorf("FromKilovoltsPerMicroseconds() returned error: %v", err)
+        t.Errorf("FromKilovoltsPerMicrosecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateKilovoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromKilovoltsPerMicroseconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromKilovoltsPerMicrosecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromKilovoltsPerMicroseconds(math.NaN())
+    _, err = factory.FromKilovoltsPerMicrosecond(math.NaN())
     if err == nil {
-        t.Error("FromKilovoltsPerMicroseconds() with NaN value should return error")
+        t.Error("FromKilovoltsPerMicrosecond() with NaN value should return error")
     }
 
-    _, err = factory.FromKilovoltsPerMicroseconds(math.Inf(1))
+    _, err = factory.FromKilovoltsPerMicrosecond(math.Inf(1))
     if err == nil {
-        t.Error("FromKilovoltsPerMicroseconds() with +Inf value should return error")
+        t.Error("FromKilovoltsPerMicrosecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromKilovoltsPerMicroseconds(math.Inf(-1))
+    _, err = factory.FromKilovoltsPerMicrosecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromKilovoltsPerMicroseconds() with -Inf value should return error")
+        t.Error("FromKilovoltsPerMicrosecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromKilovoltsPerMicroseconds(0)
+    zeroResult, err := factory.FromKilovoltsPerMicrosecond(0)
     if err != nil {
-        t.Errorf("FromKilovoltsPerMicroseconds() with zero value returned error: %v", err)
+        t.Errorf("FromKilovoltsPerMicrosecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMicrosecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromKilovoltsPerMicroseconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromKilovoltsPerMicrosecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMegavoltsPerMicroseconds function
-func TestElectricPotentialChangeRateFactory_FromMegavoltsPerMicroseconds(t *testing.T) {
+// Test FromMegavoltsPerMicrosecond function
+func TestElectricPotentialChangeRateFactory_FromMegavoltsPerMicrosecond(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMegavoltsPerMicroseconds(100)
+    result, err := factory.FromMegavoltsPerMicrosecond(100)
     if err != nil {
-        t.Errorf("FromMegavoltsPerMicroseconds() returned error: %v", err)
+        t.Errorf("FromMegavoltsPerMicrosecond() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMegavoltPerMicrosecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMegavoltsPerMicroseconds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMegavoltsPerMicrosecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMegavoltsPerMicroseconds(math.NaN())
+    _, err = factory.FromMegavoltsPerMicrosecond(math.NaN())
     if err == nil {
-        t.Error("FromMegavoltsPerMicroseconds() with NaN value should return error")
+        t.Error("FromMegavoltsPerMicrosecond() with NaN value should return error")
     }
 
-    _, err = factory.FromMegavoltsPerMicroseconds(math.Inf(1))
+    _, err = factory.FromMegavoltsPerMicrosecond(math.Inf(1))
     if err == nil {
-        t.Error("FromMegavoltsPerMicroseconds() with +Inf value should return error")
+        t.Error("FromMegavoltsPerMicrosecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromMegavoltsPerMicroseconds(math.Inf(-1))
+    _, err = factory.FromMegavoltsPerMicrosecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromMegavoltsPerMicroseconds() with -Inf value should return error")
+        t.Error("FromMegavoltsPerMicrosecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMegavoltsPerMicroseconds(0)
+    zeroResult, err := factory.FromMegavoltsPerMicrosecond(0)
     if err != nil {
-        t.Errorf("FromMegavoltsPerMicroseconds() with zero value returned error: %v", err)
+        t.Errorf("FromMegavoltsPerMicrosecond() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMicrosecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMegavoltsPerMicroseconds() with zero value = %v, want 0", converted)
+        t.Errorf("FromMegavoltsPerMicrosecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMicrovoltsPerMinutes function
-func TestElectricPotentialChangeRateFactory_FromMicrovoltsPerMinutes(t *testing.T) {
+// Test FromMicrovoltsPerMinute function
+func TestElectricPotentialChangeRateFactory_FromMicrovoltsPerMinute(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMicrovoltsPerMinutes(100)
+    result, err := factory.FromMicrovoltsPerMinute(100)
     if err != nil {
-        t.Errorf("FromMicrovoltsPerMinutes() returned error: %v", err)
+        t.Errorf("FromMicrovoltsPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMicrovoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMicrovoltsPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMicrovoltsPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMicrovoltsPerMinutes(math.NaN())
+    _, err = factory.FromMicrovoltsPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromMicrovoltsPerMinutes() with NaN value should return error")
+        t.Error("FromMicrovoltsPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromMicrovoltsPerMinutes(math.Inf(1))
+    _, err = factory.FromMicrovoltsPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromMicrovoltsPerMinutes() with +Inf value should return error")
+        t.Error("FromMicrovoltsPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromMicrovoltsPerMinutes(math.Inf(-1))
+    _, err = factory.FromMicrovoltsPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromMicrovoltsPerMinutes() with -Inf value should return error")
+        t.Error("FromMicrovoltsPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMicrovoltsPerMinutes(0)
+    zeroResult, err := factory.FromMicrovoltsPerMinute(0)
     if err != nil {
-        t.Errorf("FromMicrovoltsPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromMicrovoltsPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMicrovoltsPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromMicrovoltsPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMillivoltsPerMinutes function
-func TestElectricPotentialChangeRateFactory_FromMillivoltsPerMinutes(t *testing.T) {
+// Test FromMillivoltsPerMinute function
+func TestElectricPotentialChangeRateFactory_FromMillivoltsPerMinute(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMillivoltsPerMinutes(100)
+    result, err := factory.FromMillivoltsPerMinute(100)
     if err != nil {
-        t.Errorf("FromMillivoltsPerMinutes() returned error: %v", err)
+        t.Errorf("FromMillivoltsPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMillivoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMillivoltsPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMillivoltsPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMillivoltsPerMinutes(math.NaN())
+    _, err = factory.FromMillivoltsPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromMillivoltsPerMinutes() with NaN value should return error")
+        t.Error("FromMillivoltsPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromMillivoltsPerMinutes(math.Inf(1))
+    _, err = factory.FromMillivoltsPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromMillivoltsPerMinutes() with +Inf value should return error")
+        t.Error("FromMillivoltsPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromMillivoltsPerMinutes(math.Inf(-1))
+    _, err = factory.FromMillivoltsPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromMillivoltsPerMinutes() with -Inf value should return error")
+        t.Error("FromMillivoltsPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMillivoltsPerMinutes(0)
+    zeroResult, err := factory.FromMillivoltsPerMinute(0)
     if err != nil {
-        t.Errorf("FromMillivoltsPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromMillivoltsPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMillivoltPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMillivoltsPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromMillivoltsPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromKilovoltsPerMinutes function
-func TestElectricPotentialChangeRateFactory_FromKilovoltsPerMinutes(t *testing.T) {
+// Test FromKilovoltsPerMinute function
+func TestElectricPotentialChangeRateFactory_FromKilovoltsPerMinute(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromKilovoltsPerMinutes(100)
+    result, err := factory.FromKilovoltsPerMinute(100)
     if err != nil {
-        t.Errorf("FromKilovoltsPerMinutes() returned error: %v", err)
+        t.Errorf("FromKilovoltsPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateKilovoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromKilovoltsPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromKilovoltsPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromKilovoltsPerMinutes(math.NaN())
+    _, err = factory.FromKilovoltsPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromKilovoltsPerMinutes() with NaN value should return error")
+        t.Error("FromKilovoltsPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromKilovoltsPerMinutes(math.Inf(1))
+    _, err = factory.FromKilovoltsPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromKilovoltsPerMinutes() with +Inf value should return error")
+        t.Error("FromKilovoltsPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromKilovoltsPerMinutes(math.Inf(-1))
+    _, err = factory.FromKilovoltsPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromKilovoltsPerMinutes() with -Inf value should return error")
+        t.Error("FromKilovoltsPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromKilovoltsPerMinutes(0)
+    zeroResult, err := factory.FromKilovoltsPerMinute(0)
     if err != nil {
-        t.Errorf("FromKilovoltsPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromKilovoltsPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateKilovoltPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromKilovoltsPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromKilovoltsPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMegavoltsPerMinutes function
-func TestElectricPotentialChangeRateFactory_FromMegavoltsPerMinutes(t *testing.T) {
+// Test FromMegavoltsPerMinute function
+func TestElectricPotentialChangeRateFactory_FromMegavoltsPerMinute(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMegavoltsPerMinutes(100)
+    result, err := factory.FromMegavoltsPerMinute(100)
     if err != nil {
-        t.Errorf("FromMegavoltsPerMinutes() returned error: %v", err)
+        t.Errorf("FromMegavoltsPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMegavoltPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMegavoltsPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMegavoltsPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMegavoltsPerMinutes(math.NaN())
+    _, err = factory.FromMegavoltsPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromMegavoltsPerMinutes() with NaN value should return error")
+        t.Error("FromMegavoltsPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromMegavoltsPerMinutes(math.Inf(1))
+    _, err = factory.FromMegavoltsPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromMegavoltsPerMinutes() with +Inf value should return error")
+        t.Error("FromMegavoltsPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromMegavoltsPerMinutes(math.Inf(-1))
+    _, err = factory.FromMegavoltsPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromMegavoltsPerMinutes() with -Inf value should return error")
+        t.Error("FromMegavoltsPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMegavoltsPerMinutes(0)
+    zeroResult, err := factory.FromMegavoltsPerMinute(0)
     if err != nil {
-        t.Errorf("FromMegavoltsPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromMegavoltsPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMegavoltPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMegavoltsPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromMegavoltsPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMicrovoltsPerHours function
-func TestElectricPotentialChangeRateFactory_FromMicrovoltsPerHours(t *testing.T) {
+// Test FromMicrovoltsPerHour function
+func TestElectricPotentialChangeRateFactory_FromMicrovoltsPerHour(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMicrovoltsPerHours(100)
+    result, err := factory.FromMicrovoltsPerHour(100)
     if err != nil {
-        t.Errorf("FromMicrovoltsPerHours() returned error: %v", err)
+        t.Errorf("FromMicrovoltsPerHour() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMicrovoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMicrovoltsPerHours() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMicrovoltsPerHour() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMicrovoltsPerHours(math.NaN())
+    _, err = factory.FromMicrovoltsPerHour(math.NaN())
     if err == nil {
-        t.Error("FromMicrovoltsPerHours() with NaN value should return error")
+        t.Error("FromMicrovoltsPerHour() with NaN value should return error")
     }
 
-    _, err = factory.FromMicrovoltsPerHours(math.Inf(1))
+    _, err = factory.FromMicrovoltsPerHour(math.Inf(1))
     if err == nil {
-        t.Error("FromMicrovoltsPerHours() with +Inf value should return error")
+        t.Error("FromMicrovoltsPerHour() with +Inf value should return error")
     }
 
-    _, err = factory.FromMicrovoltsPerHours(math.Inf(-1))
+    _, err = factory.FromMicrovoltsPerHour(math.Inf(-1))
     if err == nil {
-        t.Error("FromMicrovoltsPerHours() with -Inf value should return error")
+        t.Error("FromMicrovoltsPerHour() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMicrovoltsPerHours(0)
+    zeroResult, err := factory.FromMicrovoltsPerHour(0)
     if err != nil {
-        t.Errorf("FromMicrovoltsPerHours() with zero value returned error: %v", err)
+        t.Errorf("FromMicrovoltsPerHour() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMicrovoltPerHour)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMicrovoltsPerHours() with zero value = %v, want 0", converted)
+        t.Errorf("FromMicrovoltsPerHour() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMillivoltsPerHours function
-func TestElectricPotentialChangeRateFactory_FromMillivoltsPerHours(t *testing.T) {
+// Test FromMillivoltsPerHour function
+func TestElectricPotentialChangeRateFactory_FromMillivoltsPerHour(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMillivoltsPerHours(100)
+    result, err := factory.FromMillivoltsPerHour(100)
     if err != nil {
-        t.Errorf("FromMillivoltsPerHours() returned error: %v", err)
+        t.Errorf("FromMillivoltsPerHour() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMillivoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMillivoltsPerHours() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMillivoltsPerHour() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMillivoltsPerHours(math.NaN())
+    _, err = factory.FromMillivoltsPerHour(math.NaN())
     if err == nil {
-        t.Error("FromMillivoltsPerHours() with NaN value should return error")
+        t.Error("FromMillivoltsPerHour() with NaN value should return error")
     }
 
-    _, err = factory.FromMillivoltsPerHours(math.Inf(1))
+    _, err = factory.FromMillivoltsPerHour(math.Inf(1))
     if err == nil {
-        t.Error("FromMillivoltsPerHours() with +Inf value should return error")
+        t.Error("FromMillivoltsPerHour() with +Inf value should return error")
     }
 
-    _, err = factory.FromMillivoltsPerHours(math.Inf(-1))
+    _, err = factory.FromMillivoltsPerHour(math.Inf(-1))
     if err == nil {
-        t.Error("FromMillivoltsPerHours() with -Inf value should return error")
+        t.Error("FromMillivoltsPerHour() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMillivoltsPerHours(0)
+    zeroResult, err := factory.FromMillivoltsPerHour(0)
     if err != nil {
-        t.Errorf("FromMillivoltsPerHours() with zero value returned error: %v", err)
+        t.Errorf("FromMillivoltsPerHour() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMillivoltPerHour)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMillivoltsPerHours() with zero value = %v, want 0", converted)
+        t.Errorf("FromMillivoltsPerHour() with zero value = %v, want 0", converted)
     }
 }
-// Test FromKilovoltsPerHours function
-func TestElectricPotentialChangeRateFactory_FromKilovoltsPerHours(t *testing.T) {
+// Test FromKilovoltsPerHour function
+func TestElectricPotentialChangeRateFactory_FromKilovoltsPerHour(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromKilovoltsPerHours(100)
+    result, err := factory.FromKilovoltsPerHour(100)
     if err != nil {
-        t.Errorf("FromKilovoltsPerHours() returned error: %v", err)
+        t.Errorf("FromKilovoltsPerHour() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateKilovoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromKilovoltsPerHours() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromKilovoltsPerHour() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromKilovoltsPerHours(math.NaN())
+    _, err = factory.FromKilovoltsPerHour(math.NaN())
     if err == nil {
-        t.Error("FromKilovoltsPerHours() with NaN value should return error")
+        t.Error("FromKilovoltsPerHour() with NaN value should return error")
     }
 
-    _, err = factory.FromKilovoltsPerHours(math.Inf(1))
+    _, err = factory.FromKilovoltsPerHour(math.Inf(1))
     if err == nil {
-        t.Error("FromKilovoltsPerHours() with +Inf value should return error")
+        t.Error("FromKilovoltsPerHour() with +Inf value should return error")
     }
 
-    _, err = factory.FromKilovoltsPerHours(math.Inf(-1))
+    _, err = factory.FromKilovoltsPerHour(math.Inf(-1))
     if err == nil {
-        t.Error("FromKilovoltsPerHours() with -Inf value should return error")
+        t.Error("FromKilovoltsPerHour() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromKilovoltsPerHours(0)
+    zeroResult, err := factory.FromKilovoltsPerHour(0)
     if err != nil {
-        t.Errorf("FromKilovoltsPerHours() with zero value returned error: %v", err)
+        t.Errorf("FromKilovoltsPerHour() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateKilovoltPerHour)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromKilovoltsPerHours() with zero value = %v, want 0", converted)
+        t.Errorf("FromKilovoltsPerHour() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMegavoltsPerHours function
-func TestElectricPotentialChangeRateFactory_FromMegavoltsPerHours(t *testing.T) {
+// Test FromMegavoltsPerHour function
+func TestElectricPotentialChangeRateFactory_FromMegavoltsPerHour(t *testing.T) {
     factory := units.ElectricPotentialChangeRateFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMegavoltsPerHours(100)
+    result, err := factory.FromMegavoltsPerHour(100)
     if err != nil {
-        t.Errorf("FromMegavoltsPerHours() returned error: %v", err)
+        t.Errorf("FromMegavoltsPerHour() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.ElectricPotentialChangeRateMegavoltPerHour)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMegavoltsPerHours() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMegavoltsPerHour() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMegavoltsPerHours(math.NaN())
+    _, err = factory.FromMegavoltsPerHour(math.NaN())
     if err == nil {
-        t.Error("FromMegavoltsPerHours() with NaN value should return error")
+        t.Error("FromMegavoltsPerHour() with NaN value should return error")
     }
 
-    _, err = factory.FromMegavoltsPerHours(math.Inf(1))
+    _, err = factory.FromMegavoltsPerHour(math.Inf(1))
     if err == nil {
-        t.Error("FromMegavoltsPerHours() with +Inf value should return error")
+        t.Error("FromMegavoltsPerHour() with +Inf value should return error")
     }
 
-    _, err = factory.FromMegavoltsPerHours(math.Inf(-1))
+    _, err = factory.FromMegavoltsPerHour(math.Inf(-1))
     if err == nil {
-        t.Error("FromMegavoltsPerHours() with -Inf value should return error")
+        t.Error("FromMegavoltsPerHour() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMegavoltsPerHours(0)
+    zeroResult, err := factory.FromMegavoltsPerHour(0)
     if err != nil {
-        t.Errorf("FromMegavoltsPerHours() with zero value returned error: %v", err)
+        t.Errorf("FromMegavoltsPerHour() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.ElectricPotentialChangeRateMegavoltPerHour)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMegavoltsPerHours() with zero value = %v, want 0", converted)
+        t.Errorf("FromMegavoltsPerHour() with zero value = %v, want 0", converted)
     }
 }
 

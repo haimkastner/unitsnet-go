@@ -704,27 +704,27 @@ func TestGetHeatTransferCoefficientAbbreviation(t *testing.T) {
         {
             name: "WattPerSquareMeterKelvin abbreviation",
             unit: units.HeatTransferCoefficientWattPerSquareMeterKelvin,
-            want: "W/m²·K",
+            want: "W/(m²·K)",
         },
         {
             name: "WattPerSquareMeterCelsius abbreviation",
             unit: units.HeatTransferCoefficientWattPerSquareMeterCelsius,
-            want: "W/m²·°C",
+            want: "W/(m²·°C)",
         },
         {
             name: "BtuPerHourSquareFootDegreeFahrenheit abbreviation",
             unit: units.HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit,
-            want: "Btu/h·ft²·°F",
+            want: "Btu/(h·ft²·°F)",
         },
         {
             name: "CaloriePerHourSquareMeterDegreeCelsius abbreviation",
             unit: units.HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius,
-            want: "kcal/h·m²·°C",
+            want: "kcal/(h·m²·°C)",
         },
         {
             name: "KilocaloriePerHourSquareMeterDegreeCelsius abbreviation",
             unit: units.HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius,
-            want: "kkcal/h·m²·°C",
+            want: "kkcal/(h·m²·°C)",
         },
         {
             name: "invalid unit",

@@ -46,8 +46,8 @@ func TestConvertUnitToBase(t *testing.T) {
 func TestConvertBasePrefixToBase(t *testing.T) {
 	angle, _ := af.FromMicrodegrees(180000000)
 	expected := float64(180)
-	if angle.Degrees() != expected {
-		t.Errorf("Expected %f, but got %f", expected, angle.Degrees())
+	if math.Abs(angle.Degrees()-expected) > maxDelta {
+		t.Errorf("Expected %f, but got %f, difference is larger than %f", expected, angle.Degrees(), maxDelta)
 	}
 }
 

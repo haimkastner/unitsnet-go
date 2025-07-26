@@ -114,6 +114,15 @@ func TestDoseAreaProductConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to GraySquareMicrometers.
+		// No expected conversion value provided for GraySquareMicrometers, verifying result is not NaN.
+		result := a.GraySquareMicrometers()
+		cacheResult := a.GraySquareMicrometers()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to GraySquareMicrometers returned NaN")
+		}
+	}
+	{
 		// Test conversion to MicrograySquareMeters.
 		// No expected conversion value provided for MicrograySquareMeters, verifying result is not NaN.
 		result := a.MicrograySquareMeters()
@@ -257,6 +266,42 @@ func TestDoseAreaProductConversions(t *testing.T) {
 			t.Errorf("conversion to DecigraySquareMillimeters returned NaN")
 		}
 	}
+	{
+		// Test conversion to MicrograySquareMicrometers.
+		// No expected conversion value provided for MicrograySquareMicrometers, verifying result is not NaN.
+		result := a.MicrograySquareMicrometers()
+		cacheResult := a.MicrograySquareMicrometers()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to MicrograySquareMicrometers returned NaN")
+		}
+	}
+	{
+		// Test conversion to MilligraySquareMicrometers.
+		// No expected conversion value provided for MilligraySquareMicrometers, verifying result is not NaN.
+		result := a.MilligraySquareMicrometers()
+		cacheResult := a.MilligraySquareMicrometers()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to MilligraySquareMicrometers returned NaN")
+		}
+	}
+	{
+		// Test conversion to CentigraySquareMicrometers.
+		// No expected conversion value provided for CentigraySquareMicrometers, verifying result is not NaN.
+		result := a.CentigraySquareMicrometers()
+		cacheResult := a.CentigraySquareMicrometers()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to CentigraySquareMicrometers returned NaN")
+		}
+	}
+	{
+		// Test conversion to DecigraySquareMicrometers.
+		// No expected conversion value provided for DecigraySquareMicrometers, verifying result is not NaN.
+		result := a.DecigraySquareMicrometers()
+		cacheResult := a.DecigraySquareMicrometers()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to DecigraySquareMicrometers returned NaN")
+		}
+	}
 }
 
 func TestDoseAreaProduct_ToDtoAndToDtoJSON(t *testing.T) {
@@ -393,6 +438,23 @@ func TestDoseAreaProductFactory_FromDto(t *testing.T) {
     converted = gray_square_millimetersResult.Convert(units.DoseAreaProductGraySquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for GraySquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test GraySquareMicrometer conversion
+    gray_square_micrometersDto := units.DoseAreaProductDto{
+        Value: 100,
+        Unit:  units.DoseAreaProductGraySquareMicrometer,
+    }
+    
+    var gray_square_micrometersResult *units.DoseAreaProduct
+    gray_square_micrometersResult, err = factory.FromDto(gray_square_micrometersDto)
+    if err != nil {
+        t.Errorf("FromDto() with GraySquareMicrometer returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gray_square_micrometersResult.Convert(units.DoseAreaProductGraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GraySquareMicrometer = %v, want %v", converted, 100)
     }
     // Test MicrograySquareMeter conversion
     microgray_square_metersDto := units.DoseAreaProductDto{
@@ -666,6 +728,74 @@ func TestDoseAreaProductFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DecigraySquareMillimeter = %v, want %v", converted, 100)
     }
+    // Test MicrograySquareMicrometer conversion
+    microgray_square_micrometersDto := units.DoseAreaProductDto{
+        Value: 100,
+        Unit:  units.DoseAreaProductMicrograySquareMicrometer,
+    }
+    
+    var microgray_square_micrometersResult *units.DoseAreaProduct
+    microgray_square_micrometersResult, err = factory.FromDto(microgray_square_micrometersDto)
+    if err != nil {
+        t.Errorf("FromDto() with MicrograySquareMicrometer returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microgray_square_micrometersResult.Convert(units.DoseAreaProductMicrograySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrograySquareMicrometer = %v, want %v", converted, 100)
+    }
+    // Test MilligraySquareMicrometer conversion
+    milligray_square_micrometersDto := units.DoseAreaProductDto{
+        Value: 100,
+        Unit:  units.DoseAreaProductMilligraySquareMicrometer,
+    }
+    
+    var milligray_square_micrometersResult *units.DoseAreaProduct
+    milligray_square_micrometersResult, err = factory.FromDto(milligray_square_micrometersDto)
+    if err != nil {
+        t.Errorf("FromDto() with MilligraySquareMicrometer returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligray_square_micrometersResult.Convert(units.DoseAreaProductMilligraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilligraySquareMicrometer = %v, want %v", converted, 100)
+    }
+    // Test CentigraySquareMicrometer conversion
+    centigray_square_micrometersDto := units.DoseAreaProductDto{
+        Value: 100,
+        Unit:  units.DoseAreaProductCentigraySquareMicrometer,
+    }
+    
+    var centigray_square_micrometersResult *units.DoseAreaProduct
+    centigray_square_micrometersResult, err = factory.FromDto(centigray_square_micrometersDto)
+    if err != nil {
+        t.Errorf("FromDto() with CentigraySquareMicrometer returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centigray_square_micrometersResult.Convert(units.DoseAreaProductCentigraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentigraySquareMicrometer = %v, want %v", converted, 100)
+    }
+    // Test DecigraySquareMicrometer conversion
+    decigray_square_micrometersDto := units.DoseAreaProductDto{
+        Value: 100,
+        Unit:  units.DoseAreaProductDecigraySquareMicrometer,
+    }
+    
+    var decigray_square_micrometersResult *units.DoseAreaProduct
+    decigray_square_micrometersResult, err = factory.FromDto(decigray_square_micrometersDto)
+    if err != nil {
+        t.Errorf("FromDto() with DecigraySquareMicrometer returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decigray_square_micrometersResult.Convert(units.DoseAreaProductDecigraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecigraySquareMicrometer = %v, want %v", converted, 100)
+    }
 
     // Test zero value
     zeroDto := units.DoseAreaProductDto{
@@ -777,6 +907,18 @@ func TestDoseAreaProductFactory_FromDtoJSON(t *testing.T) {
     converted = gray_square_millimetersResult.Convert(units.DoseAreaProductGraySquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for GraySquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with GraySquareMicrometer unit
+    gray_square_micrometersJSON := []byte(`{"value": 100, "unit": "GraySquareMicrometer"}`)
+    gray_square_micrometersResult, err := factory.FromDtoJSON(gray_square_micrometersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GraySquareMicrometer unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gray_square_micrometersResult.Convert(units.DoseAreaProductGraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GraySquareMicrometer = %v, want %v", converted, 100)
     }
     // Test JSON with MicrograySquareMeter unit
     microgray_square_metersJSON := []byte(`{"value": 100, "unit": "MicrograySquareMeter"}`)
@@ -970,6 +1112,54 @@ func TestDoseAreaProductFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DecigraySquareMillimeter = %v, want %v", converted, 100)
     }
+    // Test JSON with MicrograySquareMicrometer unit
+    microgray_square_micrometersJSON := []byte(`{"value": 100, "unit": "MicrograySquareMicrometer"}`)
+    microgray_square_micrometersResult, err := factory.FromDtoJSON(microgray_square_micrometersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MicrograySquareMicrometer unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microgray_square_micrometersResult.Convert(units.DoseAreaProductMicrograySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrograySquareMicrometer = %v, want %v", converted, 100)
+    }
+    // Test JSON with MilligraySquareMicrometer unit
+    milligray_square_micrometersJSON := []byte(`{"value": 100, "unit": "MilligraySquareMicrometer"}`)
+    milligray_square_micrometersResult, err := factory.FromDtoJSON(milligray_square_micrometersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MilligraySquareMicrometer unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligray_square_micrometersResult.Convert(units.DoseAreaProductMilligraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilligraySquareMicrometer = %v, want %v", converted, 100)
+    }
+    // Test JSON with CentigraySquareMicrometer unit
+    centigray_square_micrometersJSON := []byte(`{"value": 100, "unit": "CentigraySquareMicrometer"}`)
+    centigray_square_micrometersResult, err := factory.FromDtoJSON(centigray_square_micrometersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CentigraySquareMicrometer unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centigray_square_micrometersResult.Convert(units.DoseAreaProductCentigraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentigraySquareMicrometer = %v, want %v", converted, 100)
+    }
+    // Test JSON with DecigraySquareMicrometer unit
+    decigray_square_micrometersJSON := []byte(`{"value": 100, "unit": "DecigraySquareMicrometer"}`)
+    decigray_square_micrometersResult, err := factory.FromDtoJSON(decigray_square_micrometersJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DecigraySquareMicrometer unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decigray_square_micrometersResult.Convert(units.DoseAreaProductDecigraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DecigraySquareMicrometer = %v, want %v", converted, 100)
+    }
 
     // Test zero value JSON
     zeroJSON := []byte(`{"value": 0, "unit": "GraySquareMeter"}`)
@@ -1151,6 +1341,49 @@ func TestDoseAreaProductFactory_FromGraySquareMillimeters(t *testing.T) {
     converted = zeroResult.Convert(units.DoseAreaProductGraySquareMillimeter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromGraySquareMillimeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGraySquareMicrometers function
+func TestDoseAreaProductFactory_FromGraySquareMicrometers(t *testing.T) {
+    factory := units.DoseAreaProductFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGraySquareMicrometers(100)
+    if err != nil {
+        t.Errorf("FromGraySquareMicrometers() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DoseAreaProductGraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGraySquareMicrometers() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGraySquareMicrometers(math.NaN())
+    if err == nil {
+        t.Error("FromGraySquareMicrometers() with NaN value should return error")
+    }
+
+    _, err = factory.FromGraySquareMicrometers(math.Inf(1))
+    if err == nil {
+        t.Error("FromGraySquareMicrometers() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGraySquareMicrometers(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGraySquareMicrometers() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGraySquareMicrometers(0)
+    if err != nil {
+        t.Errorf("FromGraySquareMicrometers() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DoseAreaProductGraySquareMicrometer)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGraySquareMicrometers() with zero value = %v, want 0", converted)
     }
 }
 // Test FromMicrograySquareMeters function
@@ -1841,6 +2074,178 @@ func TestDoseAreaProductFactory_FromDecigraySquareMillimeters(t *testing.T) {
         t.Errorf("FromDecigraySquareMillimeters() with zero value = %v, want 0", converted)
     }
 }
+// Test FromMicrograySquareMicrometers function
+func TestDoseAreaProductFactory_FromMicrograySquareMicrometers(t *testing.T) {
+    factory := units.DoseAreaProductFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrograySquareMicrometers(100)
+    if err != nil {
+        t.Errorf("FromMicrograySquareMicrometers() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DoseAreaProductMicrograySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrograySquareMicrometers() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrograySquareMicrometers(math.NaN())
+    if err == nil {
+        t.Error("FromMicrograySquareMicrometers() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrograySquareMicrometers(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrograySquareMicrometers() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrograySquareMicrometers(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrograySquareMicrometers() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrograySquareMicrometers(0)
+    if err != nil {
+        t.Errorf("FromMicrograySquareMicrometers() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DoseAreaProductMicrograySquareMicrometer)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrograySquareMicrometers() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilligraySquareMicrometers function
+func TestDoseAreaProductFactory_FromMilligraySquareMicrometers(t *testing.T) {
+    factory := units.DoseAreaProductFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilligraySquareMicrometers(100)
+    if err != nil {
+        t.Errorf("FromMilligraySquareMicrometers() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DoseAreaProductMilligraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilligraySquareMicrometers() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilligraySquareMicrometers(math.NaN())
+    if err == nil {
+        t.Error("FromMilligraySquareMicrometers() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilligraySquareMicrometers(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilligraySquareMicrometers() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilligraySquareMicrometers(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilligraySquareMicrometers() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilligraySquareMicrometers(0)
+    if err != nil {
+        t.Errorf("FromMilligraySquareMicrometers() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DoseAreaProductMilligraySquareMicrometer)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilligraySquareMicrometers() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCentigraySquareMicrometers function
+func TestDoseAreaProductFactory_FromCentigraySquareMicrometers(t *testing.T) {
+    factory := units.DoseAreaProductFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCentigraySquareMicrometers(100)
+    if err != nil {
+        t.Errorf("FromCentigraySquareMicrometers() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DoseAreaProductCentigraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCentigraySquareMicrometers() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCentigraySquareMicrometers(math.NaN())
+    if err == nil {
+        t.Error("FromCentigraySquareMicrometers() with NaN value should return error")
+    }
+
+    _, err = factory.FromCentigraySquareMicrometers(math.Inf(1))
+    if err == nil {
+        t.Error("FromCentigraySquareMicrometers() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCentigraySquareMicrometers(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCentigraySquareMicrometers() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCentigraySquareMicrometers(0)
+    if err != nil {
+        t.Errorf("FromCentigraySquareMicrometers() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DoseAreaProductCentigraySquareMicrometer)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCentigraySquareMicrometers() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecigraySquareMicrometers function
+func TestDoseAreaProductFactory_FromDecigraySquareMicrometers(t *testing.T) {
+    factory := units.DoseAreaProductFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecigraySquareMicrometers(100)
+    if err != nil {
+        t.Errorf("FromDecigraySquareMicrometers() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DoseAreaProductDecigraySquareMicrometer)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecigraySquareMicrometers() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecigraySquareMicrometers(math.NaN())
+    if err == nil {
+        t.Error("FromDecigraySquareMicrometers() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecigraySquareMicrometers(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecigraySquareMicrometers() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecigraySquareMicrometers(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecigraySquareMicrometers() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecigraySquareMicrometers(0)
+    if err != nil {
+        t.Errorf("FromDecigraySquareMicrometers() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DoseAreaProductDecigraySquareMicrometer)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecigraySquareMicrometers() with zero value = %v, want 0", converted)
+    }
+}
 
 func TestDoseAreaProductToString(t *testing.T) {
 	factory := units.DoseAreaProductFactory{}
@@ -1937,6 +2342,11 @@ func TestGetDoseAreaProductAbbreviation(t *testing.T) {
             want: "Gy·mm²",
         },
         {
+            name: "GraySquareMicrometer abbreviation",
+            unit: units.DoseAreaProductGraySquareMicrometer,
+            want: "Gy·μm²",
+        },
+        {
             name: "MicrograySquareMeter abbreviation",
             unit: units.DoseAreaProductMicrograySquareMeter,
             want: "μGy·m²",
@@ -2015,6 +2425,26 @@ func TestGetDoseAreaProductAbbreviation(t *testing.T) {
             name: "DecigraySquareMillimeter abbreviation",
             unit: units.DoseAreaProductDecigraySquareMillimeter,
             want: "dGy·mm²",
+        },
+        {
+            name: "MicrograySquareMicrometer abbreviation",
+            unit: units.DoseAreaProductMicrograySquareMicrometer,
+            want: "μGy·μm²",
+        },
+        {
+            name: "MilligraySquareMicrometer abbreviation",
+            unit: units.DoseAreaProductMilligraySquareMicrometer,
+            want: "mGy·μm²",
+        },
+        {
+            name: "CentigraySquareMicrometer abbreviation",
+            unit: units.DoseAreaProductCentigraySquareMicrometer,
+            want: "cGy·μm²",
+        },
+        {
+            name: "DecigraySquareMicrometer abbreviation",
+            unit: units.DoseAreaProductDecigraySquareMicrometer,
+            want: "dGy·μm²",
         },
         {
             name: "invalid unit",

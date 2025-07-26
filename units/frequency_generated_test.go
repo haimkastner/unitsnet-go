@@ -132,15 +132,6 @@ func TestFrequencyConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to BUnits.
-		// No expected conversion value provided for BUnits, verifying result is not NaN.
-		result := a.BUnits()
-		cacheResult := a.BUnits()
-		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to BUnits returned NaN")
-		}
-	}
-	{
 		// Test conversion to Microhertz.
 		// No expected conversion value provided for Microhertz, verifying result is not NaN.
 		result := a.Microhertz()
@@ -364,23 +355,6 @@ func TestFrequencyFactory_FromDto(t *testing.T) {
     converted = per_secondResult.Convert(units.FrequencyPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for PerSecond = %v, want %v", converted, 100)
-    }
-    // Test BUnit conversion
-    b_unitsDto := units.FrequencyDto{
-        Value: 100,
-        Unit:  units.FrequencyBUnit,
-    }
-    
-    var b_unitsResult *units.Frequency
-    b_unitsResult, err = factory.FromDto(b_unitsDto)
-    if err != nil {
-        t.Errorf("FromDto() with BUnit returned error: %v", err)
-    }
-    
-    // Convert back to original unit and compare
-    converted = b_unitsResult.Convert(units.FrequencyBUnit)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for BUnit = %v, want %v", converted, 100)
     }
     // Test Microhertz conversion
     microhertzDto := units.FrequencyDto{
@@ -619,18 +593,6 @@ func TestFrequencyFactory_FromDtoJSON(t *testing.T) {
     converted = per_secondResult.Convert(units.FrequencyPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for PerSecond = %v, want %v", converted, 100)
-    }
-    // Test JSON with BUnit unit
-    b_unitsJSON := []byte(`{"value": 100, "unit": "BUnit"}`)
-    b_unitsResult, err := factory.FromDtoJSON(b_unitsJSON)
-    if err != nil {
-        t.Errorf("FromDtoJSON() with BUnit unit returned error: %v", err)
-    }
-    
-    // Convert back to original unit and compare
-    converted = b_unitsResult.Convert(units.FrequencyBUnit)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for BUnit = %v, want %v", converted, 100)
     }
     // Test JSON with Microhertz unit
     microhertzJSON := []byte(`{"value": 100, "unit": "Microhertz"}`)
@@ -971,49 +933,6 @@ func TestFrequencyFactory_FromPerSecond(t *testing.T) {
     converted = zeroResult.Convert(units.FrequencyPerSecond)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromPerSecond() with zero value = %v, want 0", converted)
-    }
-}
-// Test FromBUnits function
-func TestFrequencyFactory_FromBUnits(t *testing.T) {
-    factory := units.FrequencyFactory{}
-    var err error
-
-    // Test valid value
-    result, err := factory.FromBUnits(100)
-    if err != nil {
-        t.Errorf("FromBUnits() returned error: %v", err)
-    }
-    
-    // Convert back and verify
-    converted := result.Convert(units.FrequencyBUnit)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromBUnits() round-trip = %v, want %v", converted, 100)
-    }
-
-    // Test invalid values
-    _, err = factory.FromBUnits(math.NaN())
-    if err == nil {
-        t.Error("FromBUnits() with NaN value should return error")
-    }
-
-    _, err = factory.FromBUnits(math.Inf(1))
-    if err == nil {
-        t.Error("FromBUnits() with +Inf value should return error")
-    }
-
-    _, err = factory.FromBUnits(math.Inf(-1))
-    if err == nil {
-        t.Error("FromBUnits() with -Inf value should return error")
-    }
-
-    // Test zero value
-    zeroResult, err := factory.FromBUnits(0)
-    if err != nil {
-        t.Errorf("FromBUnits() with zero value returned error: %v", err)
-    }
-    converted = zeroResult.Convert(units.FrequencyBUnit)
-    if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromBUnits() with zero value = %v, want 0", converted)
     }
 }
 // Test FromMicrohertz function
@@ -1378,11 +1297,6 @@ func TestGetFrequencyAbbreviation(t *testing.T) {
             name: "PerSecond abbreviation",
             unit: units.FrequencyPerSecond,
             want: "s⁻¹",
-        },
-        {
-            name: "BUnit abbreviation",
-            unit: units.FrequencyBUnit,
-            want: "B Units",
         },
         {
             name: "Microhertz abbreviation",

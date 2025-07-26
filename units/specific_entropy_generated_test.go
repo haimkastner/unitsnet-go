@@ -1043,7 +1043,7 @@ func TestGetSpecificEntropyAbbreviation(t *testing.T) {
         {
             name: "BtuPerPoundFahrenheit abbreviation",
             unit: units.SpecificEntropyBtuPerPoundFahrenheit,
-            want: "BTU/lb·°F",
+            want: "BTU/(lb·°F)",
         },
         {
             name: "KilojoulePerKilogramKelvin abbreviation",

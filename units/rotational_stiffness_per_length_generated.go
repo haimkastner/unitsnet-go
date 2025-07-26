@@ -269,9 +269,9 @@ func (a *RotationalStiffnessPerLength) convertFromBase(toUnit RotationalStiffnes
 	case RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter:
 		return (value) 
 	case RotationalStiffnessPerLengthPoundForceFootPerDegreesPerFoot:
-		return (value / 254.864324570) 
+		return (value / (4.4482216152605 * 180 / math.Pi)) 
 	case RotationalStiffnessPerLengthKilopoundForceFootPerDegreesPerFoot:
-		return (value / 254864.324570) 
+		return (value / (4.4482216152605e3 * 180 / math.Pi)) 
 	case RotationalStiffnessPerLengthKilonewtonMeterPerRadianPerMeter:
 		return ((value) / 1000.0) 
 	case RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter:
@@ -286,9 +286,9 @@ func (a *RotationalStiffnessPerLength) convertToBase(value float64, fromUnit Rot
 	case RotationalStiffnessPerLengthNewtonMeterPerRadianPerMeter:
 		return (value) 
 	case RotationalStiffnessPerLengthPoundForceFootPerDegreesPerFoot:
-		return (value * 254.864324570) 
+		return (value * (4.4482216152605 * 180 / math.Pi)) 
 	case RotationalStiffnessPerLengthKilopoundForceFootPerDegreesPerFoot:
-		return (value * 254864.324570) 
+		return (value * (4.4482216152605e3 * 180 / math.Pi)) 
 	case RotationalStiffnessPerLengthKilonewtonMeterPerRadianPerMeter:
 		return ((value) * 1000.0) 
 	case RotationalStiffnessPerLengthMeganewtonMeterPerRadianPerMeter:

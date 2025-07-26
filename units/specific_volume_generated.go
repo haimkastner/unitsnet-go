@@ -223,7 +223,7 @@ func (a *SpecificVolume) convertFromBase(toUnit SpecificVolumeUnits) float64 {
 	case SpecificVolumeCubicMeterPerKilogram:
 		return (value) 
 	case SpecificVolumeCubicFootPerPound:
-		return (value * 16.01846353) 
+		return (value * 0.45359237 / 0.028316846592) 
 	case SpecificVolumeMillicubicMeterPerKilogram:
 		return ((value) / 0.001) 
 	default:
@@ -236,7 +236,7 @@ func (a *SpecificVolume) convertToBase(value float64, fromUnit SpecificVolumeUni
 	case SpecificVolumeCubicMeterPerKilogram:
 		return (value) 
 	case SpecificVolumeCubicFootPerPound:
-		return (value / 16.01846353) 
+		return (value * 0.028316846592 / 0.45359237) 
 	case SpecificVolumeMillicubicMeterPerKilogram:
 		return ((value) * 0.001) 
 	default:

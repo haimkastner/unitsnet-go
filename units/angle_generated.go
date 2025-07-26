@@ -32,8 +32,6 @@ const (
         // 
         AngleRevolution AngleUnits = "Revolution"
         // 
-        AngleTilt AngleUnits = "Tilt"
-        // 
         AngleNanoradian AngleUnits = "Nanoradian"
         // 
         AngleMicroradian AngleUnits = "Microradian"
@@ -60,7 +58,6 @@ var internalAngleUnitsMap = map[AngleUnits]bool{
 	AngleGradian: true,
 	AngleNatoMil: true,
 	AngleRevolution: true,
-	AngleTilt: true,
 	AngleNanoradian: true,
 	AngleMicroradian: true,
 	AngleMilliradian: true,
@@ -76,7 +73,7 @@ type AngleDto struct {
     // Value is the numerical representation of the Angle.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Angle, as defined in the AngleUnits enumeration.
-	Unit  AngleUnits `json:"unit" validate:"required,oneof=Radian Degree Arcminute Arcsecond Gradian NatoMil Revolution Tilt Nanoradian Microradian Milliradian Centiradian Deciradian Nanodegree Microdegree Millidegree"`
+	Unit  AngleUnits `json:"unit" validate:"required,oneof=Radian Degree Arcminute Arcsecond Gradian NatoMil Revolution Nanoradian Microradian Milliradian Centiradian Deciradian Nanodegree Microdegree Millidegree"`
 }
 
 // AngleDtoFactory groups methods for creating and serializing AngleDto objects.
@@ -122,7 +119,6 @@ type Angle struct {
     gradiansLazy *float64 
     nato_milsLazy *float64 
     revolutionsLazy *float64 
-    tiltLazy *float64 
     nanoradiansLazy *float64 
     microradiansLazy *float64 
     milliradiansLazy *float64 
@@ -191,11 +187,6 @@ func (uf AngleFactory) FromRevolutions(value float64) (*Angle, error) {
 	return newAngle(value, AngleRevolution)
 }
 
-// FromTilt creates a new Angle instance from a value in Tilt.
-func (uf AngleFactory) FromTilt(value float64) (*Angle, error) {
-	return newAngle(value, AngleTilt)
-}
-
 // FromNanoradians creates a new Angle instance from a value in Nanoradians.
 func (uf AngleFactory) FromNanoradians(value float64) (*Angle, error) {
 	return newAngle(value, AngleNanoradian)
@@ -250,7 +241,7 @@ func newAngle(value float64, fromUnit AngleUnits) (*Angle, error) {
 	return a, nil
 }
 
-// BaseValue returns the base value of Angle in Degree unit (the base/default quantity).
+// BaseValue returns the base value of Angle in Radian unit (the base/default quantity).
 func (a *Angle) BaseValue() float64 {
 	return a.value
 }
@@ -338,18 +329,6 @@ func (a *Angle) Revolutions() float64 {
 	revolutions := a.convertFromBase(AngleRevolution)
 	a.revolutionsLazy = &revolutions
 	return revolutions
-}
-
-// Tilt returns the Angle value in Tilt.
-//
-// 
-func (a *Angle) Tilt() float64 {
-	if a.tiltLazy != nil {
-		return *a.tiltLazy
-	}
-	tilt := a.convertFromBase(AngleTilt)
-	a.tiltLazy = &tilt
-	return tilt
 }
 
 // Nanoradians returns the Angle value in Nanoradians.
@@ -451,10 +430,10 @@ func (a *Angle) Millidegrees() float64 {
 
 // ToDto creates a AngleDto representation from the Angle instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by Degree by default.
+// If the provided holdInUnit is nil, the value will be repesented by Radian by default.
 func (a *Angle) ToDto(holdInUnit *AngleUnits) AngleDto {
 	if holdInUnit == nil {
-		defaultUnit := AngleDegree // Default value
+		defaultUnit := AngleRadian // Default value
 		holdInUnit = &defaultUnit
 	}
 
@@ -466,7 +445,7 @@ func (a *Angle) ToDto(holdInUnit *AngleUnits) AngleDto {
 
 // ToDtoJSON creates a JSON representation of the Angle instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by Degree by default.
+// If the provided holdInUnit is nil, the value will be repesented by Radian by default.
 func (a *Angle) ToDtoJSON(holdInUnit *AngleUnits) ([]byte, error) {
 	// Convert to AngleDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
@@ -493,8 +472,6 @@ func (a *Angle) Convert(toUnit AngleUnits) float64 {
 		return a.NatoMils()
     case AngleRevolution:
 		return a.Revolutions()
-    case AngleTilt:
-		return a.Tilt()
     case AngleNanoradian:
 		return a.Nanoradians()
     case AngleMicroradian:
@@ -520,37 +497,35 @@ func (a *Angle) convertFromBase(toUnit AngleUnits) float64 {
     value := a.value
 	switch toUnit { 
 	case AngleRadian:
-		return (value / 180 * math.Pi) 
-	case AngleDegree:
 		return (value) 
+	case AngleDegree:
+		return (value * 180 / math.Pi) 
 	case AngleArcminute:
-		return (value * 60) 
+		return (value * 60 * 180 / math.Pi) 
 	case AngleArcsecond:
-		return (value * 3600) 
+		return (value * 3600 * 180 / math.Pi) 
 	case AngleGradian:
-		return (value / 0.9) 
+		return (value * 200 / math.Pi) 
 	case AngleNatoMil:
-		return (value * 160 / 9) 
+		return (value * 3200 / math.Pi) 
 	case AngleRevolution:
-		return (value / 360) 
-	case AngleTilt:
-		return (math.Sin(value / 180 * math.Pi)) 
+		return (value / (2 * math.Pi)) 
 	case AngleNanoradian:
-		return ((value / 180 * math.Pi) / 1e-09) 
-	case AngleMicroradian:
-		return ((value / 180 * math.Pi) / 1e-06) 
-	case AngleMilliradian:
-		return ((value / 180 * math.Pi) / 0.001) 
-	case AngleCentiradian:
-		return ((value / 180 * math.Pi) / 0.01) 
-	case AngleDeciradian:
-		return ((value / 180 * math.Pi) / 0.1) 
-	case AngleNanodegree:
 		return ((value) / 1e-09) 
-	case AngleMicrodegree:
+	case AngleMicroradian:
 		return ((value) / 1e-06) 
-	case AngleMillidegree:
+	case AngleMilliradian:
 		return ((value) / 0.001) 
+	case AngleCentiradian:
+		return ((value) / 0.01) 
+	case AngleDeciradian:
+		return ((value) / 0.1) 
+	case AngleNanodegree:
+		return ((value * 180 / math.Pi) / 1e-09) 
+	case AngleMicrodegree:
+		return ((value * 180 / math.Pi) / 1e-06) 
+	case AngleMillidegree:
+		return ((value * 180 / math.Pi) / 0.001) 
 	default:
 		return math.NaN()
 	}
@@ -559,53 +534,51 @@ func (a *Angle) convertFromBase(toUnit AngleUnits) float64 {
 func (a *Angle) convertToBase(value float64, fromUnit AngleUnits) float64 {
 	switch fromUnit { 
 	case AngleRadian:
-		return (value * 180 / math.Pi) 
-	case AngleDegree:
 		return (value) 
+	case AngleDegree:
+		return (value * math.Pi / 180) 
 	case AngleArcminute:
-		return (value / 60) 
+		return (value * math.Pi / (60 * 180)) 
 	case AngleArcsecond:
-		return (value / 3600) 
+		return (value * math.Pi / (3600 * 180)) 
 	case AngleGradian:
-		return (value * 0.9) 
+		return (value * math.Pi / 200) 
 	case AngleNatoMil:
-		return (value * 9 / 160) 
+		return (value * math.Pi / 3200) 
 	case AngleRevolution:
-		return (value * 360) 
-	case AngleTilt:
-		return (math.Asin(value) * 180 / math.Pi) 
+		return (value * 2 * math.Pi) 
 	case AngleNanoradian:
-		return ((value * 180 / math.Pi) * 1e-09) 
-	case AngleMicroradian:
-		return ((value * 180 / math.Pi) * 1e-06) 
-	case AngleMilliradian:
-		return ((value * 180 / math.Pi) * 0.001) 
-	case AngleCentiradian:
-		return ((value * 180 / math.Pi) * 0.01) 
-	case AngleDeciradian:
-		return ((value * 180 / math.Pi) * 0.1) 
-	case AngleNanodegree:
 		return ((value) * 1e-09) 
-	case AngleMicrodegree:
+	case AngleMicroradian:
 		return ((value) * 1e-06) 
-	case AngleMillidegree:
+	case AngleMilliradian:
 		return ((value) * 0.001) 
+	case AngleCentiradian:
+		return ((value) * 0.01) 
+	case AngleDeciradian:
+		return ((value) * 0.1) 
+	case AngleNanodegree:
+		return ((value * math.Pi / 180) * 1e-09) 
+	case AngleMicrodegree:
+		return ((value * math.Pi / 180) * 1e-06) 
+	case AngleMillidegree:
+		return ((value * math.Pi / 180) * 0.001) 
 	default:
 		return math.NaN()
 	}
 }
 
-// String returns a string representation of the Angle in the default unit (Degree),
+// String returns a string representation of the Angle in the default unit (Radian),
 // formatted to two decimal places.
 func (a Angle) String() string {
-	return a.ToString(AngleDegree, 2)
+	return a.ToString(AngleRadian, 2)
 }
 
 // ToString formats the Angle value as a string with the specified unit and fractional digits.
 // It converts the Angle to the specified unit and returns the formatted value with the appropriate unit abbreviation.
 // 
 // Parameters:
-//    unit: The unit to which the Angle value will be converted (e.g., Degree))
+//    unit: The unit to which the Angle value will be converted (e.g., Radian))
 //    fractionalDigits: The number of digits to show after the decimal point. 
 //                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
 // 
@@ -717,8 +690,6 @@ func GetAngleAbbreviation(unit AngleUnits) string {
 		return "mil" 
 	case AngleRevolution:
 		return "r" 
-	case AngleTilt:
-		return "sin(θ)" 
 	case AngleNanoradian:
 		return "nrad" 
 	case AngleMicroradian:

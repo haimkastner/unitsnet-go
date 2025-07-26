@@ -23,11 +23,11 @@ const (
         LengthMile LengthUnits = "Mile"
         // The yard (symbol: yd) is an English unit of length in both the British imperial and US customary systems of measurement equalling 3 feet (or 36 inches). Since 1959 the yard has been by international agreement standardized as exactly 0.9144 meter. A distance of 1,760 yards is equal to 1 mile.
         LengthYard LengthUnits = "Yard"
-        // 
+        // The foot (pl. feet; standard symbol: ft) is a unit of length in the British imperial and United States customary systems of measurement. The prime symbol, ′, is commonly used to represent the foot. In both customary and imperial units, one foot comprises 12 inches, and one yard comprises three feet. Since an international agreement in 1959, the foot is defined as equal to exactly 0.3048 meters.
         LengthFoot LengthUnits = "Foot"
         // In the United States, the foot was defined as 12 inches, with the inch being defined by the Mendenhall Order of 1893 as 39.37 inches = 1 m. This makes a U.S. survey foot exactly 1200/3937 meters.
         LengthUsSurveyFoot LengthUnits = "UsSurveyFoot"
-        // 
+        // The inch (symbol: in or ″) is a unit of length in the British Imperial and the United States customary systems of measurement. It is equal to 1/36 yard or 1/12 of a foot. Derived from the Roman uncia ("twelfth"), the word inch is also sometimes used to translate similar units in other measurement systems, usually understood as deriving from the width of the human thumb.
         LengthInch LengthUnits = "Inch"
         // 
         LengthMil LengthUnits = "Mil"
@@ -39,17 +39,17 @@ const (
         LengthShackle LengthUnits = "Shackle"
         // 
         LengthMicroinch LengthUnits = "Microinch"
-        // 
+        // In typography, the point is the smallest unit of measure. It is used for measuring font size, leading, and other items on a printed page. In modern times this size of the point has been approximated as exactly 1⁄72.27 (0.01383700013837) of the inch by Donald Knuth for the default unit of his TeX computer typesetting system and is thus sometimes known as the TeX point.
         LengthPrinterPoint LengthUnits = "PrinterPoint"
-        // 
+        // The desktop publishing point (DTP) is defined as 1⁄72 of an inch (1/72 × 25.4 mm ≈ 0.353 mm) and, as with earlier American point sizes, is considered to be 1⁄12 of a pica.
         LengthDtpPoint LengthUnits = "DtpPoint"
-        // 
+        // The American pica of 0.16604 inches (~4.217 mm) was established by the United States Type Founders' Association in 1886. In TeX one pica is 400⁄2409 of an inch.
         LengthPrinterPica LengthUnits = "PrinterPica"
-        // 
+        // The pica is a typographic unit of measure corresponding to approximately 1⁄6 of an inch, or from 1⁄68 to 1⁄73 of a foot. One pica is further divided into 12 points.
         LengthDtpPica LengthUnits = "DtpPica"
-        // 
+        // A twip (abbreviating "twentieth of a point" or "twentieth of an inch point") is a typographical measurement, defined as 1⁄20 of a typographical point. One twip is 1⁄1440 inch, or ~17.64 μm.
         LengthTwip LengthUnits = "Twip"
-        // 
+        // The hand is a non-SI unit of measurement of length standardized to 4 in (101.6 mm). It is used to measure the height of horses in many English-speaking countries, including Australia, Canada, Ireland, the United Kingdom, and the United States. It was originally based on the breadth of a human hand.
         LengthHand LengthUnits = "Hand"
         // One Astronomical Unit is the distance from the solar system Star, the sun, to planet Earth.
         LengthAstronomicalUnit LengthUnits = "AstronomicalUnit"
@@ -59,7 +59,7 @@ const (
         LengthLightYear LengthUnits = "LightYear"
         // Solar radius is a ratio unit to the radius of the solar system star, the sun.
         LengthSolarRadius LengthUnits = "SolarRadius"
-        // 
+        // The chain (abbreviated ch) is a unit of length equal to 66 feet (22 yards), used in both the US customary and Imperial unit systems. It is subdivided into 100 links. There are 10 chains in a furlong, and 80 chains in one statute mile. In metric terms, it is 20.1168 m long.
         LengthChain LengthUnits = "Chain"
         // Angstrom is a metric unit of length equal to 1e-10 meter
         LengthAngstrom LengthUnits = "Angstrom"
@@ -528,7 +528,7 @@ func (a *Length) Yards() float64 {
 
 // Feet returns the Length value in Feet.
 //
-// 
+// The foot (pl. feet; standard symbol: ft) is a unit of length in the British imperial and United States customary systems of measurement. The prime symbol, ′, is commonly used to represent the foot. In both customary and imperial units, one foot comprises 12 inches, and one yard comprises three feet. Since an international agreement in 1959, the foot is defined as equal to exactly 0.3048 meters.
 func (a *Length) Feet() float64 {
 	if a.feetLazy != nil {
 		return *a.feetLazy
@@ -552,7 +552,7 @@ func (a *Length) UsSurveyFeet() float64 {
 
 // Inches returns the Length value in Inches.
 //
-// 
+// The inch (symbol: in or ″) is a unit of length in the British Imperial and the United States customary systems of measurement. It is equal to 1/36 yard or 1/12 of a foot. Derived from the Roman uncia ("twelfth"), the word inch is also sometimes used to translate similar units in other measurement systems, usually understood as deriving from the width of the human thumb.
 func (a *Length) Inches() float64 {
 	if a.inchesLazy != nil {
 		return *a.inchesLazy
@@ -624,7 +624,7 @@ func (a *Length) Microinches() float64 {
 
 // PrinterPoints returns the Length value in PrinterPoints.
 //
-// 
+// In typography, the point is the smallest unit of measure. It is used for measuring font size, leading, and other items on a printed page. In modern times this size of the point has been approximated as exactly 1⁄72.27 (0.01383700013837) of the inch by Donald Knuth for the default unit of his TeX computer typesetting system and is thus sometimes known as the TeX point.
 func (a *Length) PrinterPoints() float64 {
 	if a.printer_pointsLazy != nil {
 		return *a.printer_pointsLazy
@@ -636,7 +636,7 @@ func (a *Length) PrinterPoints() float64 {
 
 // DtpPoints returns the Length value in DtpPoints.
 //
-// 
+// The desktop publishing point (DTP) is defined as 1⁄72 of an inch (1/72 × 25.4 mm ≈ 0.353 mm) and, as with earlier American point sizes, is considered to be 1⁄12 of a pica.
 func (a *Length) DtpPoints() float64 {
 	if a.dtp_pointsLazy != nil {
 		return *a.dtp_pointsLazy
@@ -648,7 +648,7 @@ func (a *Length) DtpPoints() float64 {
 
 // PrinterPicas returns the Length value in PrinterPicas.
 //
-// 
+// The American pica of 0.16604 inches (~4.217 mm) was established by the United States Type Founders' Association in 1886. In TeX one pica is 400⁄2409 of an inch.
 func (a *Length) PrinterPicas() float64 {
 	if a.printer_picasLazy != nil {
 		return *a.printer_picasLazy
@@ -660,7 +660,7 @@ func (a *Length) PrinterPicas() float64 {
 
 // DtpPicas returns the Length value in DtpPicas.
 //
-// 
+// The pica is a typographic unit of measure corresponding to approximately 1⁄6 of an inch, or from 1⁄68 to 1⁄73 of a foot. One pica is further divided into 12 points.
 func (a *Length) DtpPicas() float64 {
 	if a.dtp_picasLazy != nil {
 		return *a.dtp_picasLazy
@@ -672,7 +672,7 @@ func (a *Length) DtpPicas() float64 {
 
 // Twips returns the Length value in Twips.
 //
-// 
+// A twip (abbreviating "twentieth of a point" or "twentieth of an inch point") is a typographical measurement, defined as 1⁄20 of a typographical point. One twip is 1⁄1440 inch, or ~17.64 μm.
 func (a *Length) Twips() float64 {
 	if a.twipsLazy != nil {
 		return *a.twipsLazy
@@ -684,7 +684,7 @@ func (a *Length) Twips() float64 {
 
 // Hands returns the Length value in Hands.
 //
-// 
+// The hand is a non-SI unit of measurement of length standardized to 4 in (101.6 mm). It is used to measure the height of horses in many English-speaking countries, including Australia, Canada, Ireland, the United Kingdom, and the United States. It was originally based on the breadth of a human hand.
 func (a *Length) Hands() float64 {
 	if a.handsLazy != nil {
 		return *a.handsLazy
@@ -744,7 +744,7 @@ func (a *Length) SolarRadiuses() float64 {
 
 // Chains returns the Length value in Chains.
 //
-// 
+// The chain (abbreviated ch) is a unit of length equal to 66 feet (22 yards), used in both the US customary and Imperial unit systems. It is subdivided into 100 links. There are 10 chains in a furlong, and 80 chains in one statute mile. In metric terms, it is 20.1168 m long.
 func (a *Length) Chains() float64 {
 	if a.chainsLazy != nil {
 		return *a.chainsLazy
@@ -1140,15 +1140,15 @@ func (a *Length) convertFromBase(toUnit LengthUnits) float64 {
 	case LengthMicroinch:
 		return (value / 2.54e-8) 
 	case LengthPrinterPoint:
-		return ((value / 2.54e-2) * 72.27) 
+		return (value * 72.27 / 2.54e-2) 
 	case LengthDtpPoint:
-		return ((value / 2.54e-2) * 72) 
+		return (value * 72 / 2.54e-2) 
 	case LengthPrinterPica:
-		return (value * 237.106301584) 
+		return (value / (2.54e-2 * 400 / 2409)) 
 	case LengthDtpPica:
-		return (value * 236.220472441) 
+		return (value * 6 / 2.54e-2) 
 	case LengthTwip:
-		return (value * 56692.913385826) 
+		return (value * 1440 / 2.54e-2) 
 	case LengthHand:
 		return (value / 1.016e-1) 
 	case LengthAstronomicalUnit:
@@ -1231,15 +1231,15 @@ func (a *Length) convertToBase(value float64, fromUnit LengthUnits) float64 {
 	case LengthMicroinch:
 		return (value * 2.54e-8) 
 	case LengthPrinterPoint:
-		return ((value / 72.27) * 2.54e-2) 
+		return (value * 2.54e-2 / 72.27 ) 
 	case LengthDtpPoint:
-		return ((value / 72) * 2.54e-2) 
+		return (value * 2.54e-2 / 72) 
 	case LengthPrinterPica:
-		return (value / 237.106301584) 
+		return (value * 2.54e-2 * 400 / 2409) 
 	case LengthDtpPica:
-		return (value / 236.220472441) 
+		return (value * 2.54e-2 / 6) 
 	case LengthTwip:
-		return (value / 56692.913385826) 
+		return (value * 2.54e-2 / 1440) 
 	case LengthHand:
 		return (value * 1.016e-1) 
 	case LengthAstronomicalUnit:

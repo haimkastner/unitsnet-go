@@ -22,17 +22,17 @@ const (
         // 
         SpecificFuelConsumptionKilogramPerKilogramForceHour SpecificFuelConsumptionUnits = "KilogramPerKilogramForceHour"
         // 
-        SpecificFuelConsumptionGramPerKiloNewtonSecond SpecificFuelConsumptionUnits = "GramPerKiloNewtonSecond"
+        SpecificFuelConsumptionGramPerKilonewtonSecond SpecificFuelConsumptionUnits = "GramPerKilonewtonSecond"
         // 
-        SpecificFuelConsumptionKilogramPerKiloNewtonSecond SpecificFuelConsumptionUnits = "KilogramPerKiloNewtonSecond"
+        SpecificFuelConsumptionKilogramPerKilonewtonSecond SpecificFuelConsumptionUnits = "KilogramPerKilonewtonSecond"
 )
 
 var internalSpecificFuelConsumptionUnitsMap = map[SpecificFuelConsumptionUnits]bool{
 	
 	SpecificFuelConsumptionPoundMassPerPoundForceHour: true,
 	SpecificFuelConsumptionKilogramPerKilogramForceHour: true,
-	SpecificFuelConsumptionGramPerKiloNewtonSecond: true,
-	SpecificFuelConsumptionKilogramPerKiloNewtonSecond: true,
+	SpecificFuelConsumptionGramPerKilonewtonSecond: true,
+	SpecificFuelConsumptionKilogramPerKilonewtonSecond: true,
 }
 
 // SpecificFuelConsumptionDto represents a SpecificFuelConsumption measurement with a numerical value and its corresponding unit.
@@ -40,7 +40,7 @@ type SpecificFuelConsumptionDto struct {
     // Value is the numerical representation of the SpecificFuelConsumption.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificFuelConsumption, as defined in the SpecificFuelConsumptionUnits enumeration.
-	Unit  SpecificFuelConsumptionUnits `json:"unit" validate:"required,oneof=PoundMassPerPoundForceHour KilogramPerKilogramForceHour GramPerKiloNewtonSecond KilogramPerKiloNewtonSecond"`
+	Unit  SpecificFuelConsumptionUnits `json:"unit" validate:"required,oneof=PoundMassPerPoundForceHour KilogramPerKilogramForceHour GramPerKilonewtonSecond KilogramPerKilonewtonSecond"`
 }
 
 // SpecificFuelConsumptionDtoFactory groups methods for creating and serializing SpecificFuelConsumptionDto objects.
@@ -81,8 +81,8 @@ type SpecificFuelConsumption struct {
     
     pounds_mass_per_pound_force_hourLazy *float64 
     kilograms_per_kilogram_force_hourLazy *float64 
-    grams_per_kilo_newton_secondLazy *float64 
-    kilograms_per_kilo_newton_secondLazy *float64 
+    grams_per_kilonewton_secondLazy *float64 
+    kilograms_per_kilonewton_secondLazy *float64 
 }
 
 // SpecificFuelConsumptionFactory groups methods for creating SpecificFuelConsumption instances.
@@ -118,14 +118,14 @@ func (uf SpecificFuelConsumptionFactory) FromKilogramsPerKilogramForceHour(value
 	return newSpecificFuelConsumption(value, SpecificFuelConsumptionKilogramPerKilogramForceHour)
 }
 
-// FromGramsPerKiloNewtonSecond creates a new SpecificFuelConsumption instance from a value in GramsPerKiloNewtonSecond.
-func (uf SpecificFuelConsumptionFactory) FromGramsPerKiloNewtonSecond(value float64) (*SpecificFuelConsumption, error) {
-	return newSpecificFuelConsumption(value, SpecificFuelConsumptionGramPerKiloNewtonSecond)
+// FromGramsPerKilonewtonSecond creates a new SpecificFuelConsumption instance from a value in GramsPerKilonewtonSecond.
+func (uf SpecificFuelConsumptionFactory) FromGramsPerKilonewtonSecond(value float64) (*SpecificFuelConsumption, error) {
+	return newSpecificFuelConsumption(value, SpecificFuelConsumptionGramPerKilonewtonSecond)
 }
 
-// FromKilogramsPerKiloNewtonSecond creates a new SpecificFuelConsumption instance from a value in KilogramsPerKiloNewtonSecond.
-func (uf SpecificFuelConsumptionFactory) FromKilogramsPerKiloNewtonSecond(value float64) (*SpecificFuelConsumption, error) {
-	return newSpecificFuelConsumption(value, SpecificFuelConsumptionKilogramPerKiloNewtonSecond)
+// FromKilogramsPerKilonewtonSecond creates a new SpecificFuelConsumption instance from a value in KilogramsPerKilonewtonSecond.
+func (uf SpecificFuelConsumptionFactory) FromKilogramsPerKilonewtonSecond(value float64) (*SpecificFuelConsumption, error) {
+	return newSpecificFuelConsumption(value, SpecificFuelConsumptionKilogramPerKilonewtonSecond)
 }
 
 
@@ -142,7 +142,7 @@ func newSpecificFuelConsumption(value float64, fromUnit SpecificFuelConsumptionU
 	return a, nil
 }
 
-// BaseValue returns the base value of SpecificFuelConsumption in GramPerKiloNewtonSecond unit (the base/default quantity).
+// BaseValue returns the base value of SpecificFuelConsumption in GramPerKilonewtonSecond unit (the base/default quantity).
 func (a *SpecificFuelConsumption) BaseValue() float64 {
 	return a.value
 }
@@ -172,37 +172,37 @@ func (a *SpecificFuelConsumption) KilogramsPerKilogramForceHour() float64 {
 	return kilograms_per_kilogram_force_hour
 }
 
-// GramsPerKiloNewtonSecond returns the SpecificFuelConsumption value in GramsPerKiloNewtonSecond.
+// GramsPerKilonewtonSecond returns the SpecificFuelConsumption value in GramsPerKilonewtonSecond.
 //
 // 
-func (a *SpecificFuelConsumption) GramsPerKiloNewtonSecond() float64 {
-	if a.grams_per_kilo_newton_secondLazy != nil {
-		return *a.grams_per_kilo_newton_secondLazy
+func (a *SpecificFuelConsumption) GramsPerKilonewtonSecond() float64 {
+	if a.grams_per_kilonewton_secondLazy != nil {
+		return *a.grams_per_kilonewton_secondLazy
 	}
-	grams_per_kilo_newton_second := a.convertFromBase(SpecificFuelConsumptionGramPerKiloNewtonSecond)
-	a.grams_per_kilo_newton_secondLazy = &grams_per_kilo_newton_second
-	return grams_per_kilo_newton_second
+	grams_per_kilonewton_second := a.convertFromBase(SpecificFuelConsumptionGramPerKilonewtonSecond)
+	a.grams_per_kilonewton_secondLazy = &grams_per_kilonewton_second
+	return grams_per_kilonewton_second
 }
 
-// KilogramsPerKiloNewtonSecond returns the SpecificFuelConsumption value in KilogramsPerKiloNewtonSecond.
+// KilogramsPerKilonewtonSecond returns the SpecificFuelConsumption value in KilogramsPerKilonewtonSecond.
 //
 // 
-func (a *SpecificFuelConsumption) KilogramsPerKiloNewtonSecond() float64 {
-	if a.kilograms_per_kilo_newton_secondLazy != nil {
-		return *a.kilograms_per_kilo_newton_secondLazy
+func (a *SpecificFuelConsumption) KilogramsPerKilonewtonSecond() float64 {
+	if a.kilograms_per_kilonewton_secondLazy != nil {
+		return *a.kilograms_per_kilonewton_secondLazy
 	}
-	kilograms_per_kilo_newton_second := a.convertFromBase(SpecificFuelConsumptionKilogramPerKiloNewtonSecond)
-	a.kilograms_per_kilo_newton_secondLazy = &kilograms_per_kilo_newton_second
-	return kilograms_per_kilo_newton_second
+	kilograms_per_kilonewton_second := a.convertFromBase(SpecificFuelConsumptionKilogramPerKilonewtonSecond)
+	a.kilograms_per_kilonewton_secondLazy = &kilograms_per_kilonewton_second
+	return kilograms_per_kilonewton_second
 }
 
 
 // ToDto creates a SpecificFuelConsumptionDto representation from the SpecificFuelConsumption instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by GramPerKiloNewtonSecond by default.
+// If the provided holdInUnit is nil, the value will be repesented by GramPerKilonewtonSecond by default.
 func (a *SpecificFuelConsumption) ToDto(holdInUnit *SpecificFuelConsumptionUnits) SpecificFuelConsumptionDto {
 	if holdInUnit == nil {
-		defaultUnit := SpecificFuelConsumptionGramPerKiloNewtonSecond // Default value
+		defaultUnit := SpecificFuelConsumptionGramPerKilonewtonSecond // Default value
 		holdInUnit = &defaultUnit
 	}
 
@@ -214,7 +214,7 @@ func (a *SpecificFuelConsumption) ToDto(holdInUnit *SpecificFuelConsumptionUnits
 
 // ToDtoJSON creates a JSON representation of the SpecificFuelConsumption instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by GramPerKiloNewtonSecond by default.
+// If the provided holdInUnit is nil, the value will be repesented by GramPerKilonewtonSecond by default.
 func (a *SpecificFuelConsumption) ToDtoJSON(holdInUnit *SpecificFuelConsumptionUnits) ([]byte, error) {
 	// Convert to SpecificFuelConsumptionDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
@@ -231,10 +231,10 @@ func (a *SpecificFuelConsumption) Convert(toUnit SpecificFuelConsumptionUnits) f
 		return a.PoundsMassPerPoundForceHour()
     case SpecificFuelConsumptionKilogramPerKilogramForceHour:
 		return a.KilogramsPerKilogramForceHour()
-    case SpecificFuelConsumptionGramPerKiloNewtonSecond:
-		return a.GramsPerKiloNewtonSecond()
-    case SpecificFuelConsumptionKilogramPerKiloNewtonSecond:
-		return a.KilogramsPerKiloNewtonSecond()
+    case SpecificFuelConsumptionGramPerKilonewtonSecond:
+		return a.GramsPerKilonewtonSecond()
+    case SpecificFuelConsumptionKilogramPerKilonewtonSecond:
+		return a.KilogramsPerKilonewtonSecond()
 	default:
 		return math.NaN()
 	}
@@ -244,12 +244,12 @@ func (a *SpecificFuelConsumption) convertFromBase(toUnit SpecificFuelConsumption
     value := a.value
 	switch toUnit { 
 	case SpecificFuelConsumptionPoundMassPerPoundForceHour:
-		return (value / 28.33) 
+		return (value * 9.80665e-3 * 3600 / 1000) 
 	case SpecificFuelConsumptionKilogramPerKilogramForceHour:
-		return (value / 28.33) 
-	case SpecificFuelConsumptionGramPerKiloNewtonSecond:
+		return (value * 9.80665e-3 * 3600 / 1000) 
+	case SpecificFuelConsumptionGramPerKilonewtonSecond:
 		return (value) 
-	case SpecificFuelConsumptionKilogramPerKiloNewtonSecond:
+	case SpecificFuelConsumptionKilogramPerKilonewtonSecond:
 		return ((value) / 1000.0) 
 	default:
 		return math.NaN()
@@ -259,29 +259,29 @@ func (a *SpecificFuelConsumption) convertFromBase(toUnit SpecificFuelConsumption
 func (a *SpecificFuelConsumption) convertToBase(value float64, fromUnit SpecificFuelConsumptionUnits) float64 {
 	switch fromUnit { 
 	case SpecificFuelConsumptionPoundMassPerPoundForceHour:
-		return (value * 28.33) 
+		return (value * 1000 / (9.80665e-3 * 3600)) 
 	case SpecificFuelConsumptionKilogramPerKilogramForceHour:
-		return (value * 28.33) 
-	case SpecificFuelConsumptionGramPerKiloNewtonSecond:
+		return (value * 1000 / (9.80665e-3 * 3600)) 
+	case SpecificFuelConsumptionGramPerKilonewtonSecond:
 		return (value) 
-	case SpecificFuelConsumptionKilogramPerKiloNewtonSecond:
+	case SpecificFuelConsumptionKilogramPerKilonewtonSecond:
 		return ((value) * 1000.0) 
 	default:
 		return math.NaN()
 	}
 }
 
-// String returns a string representation of the SpecificFuelConsumption in the default unit (GramPerKiloNewtonSecond),
+// String returns a string representation of the SpecificFuelConsumption in the default unit (GramPerKilonewtonSecond),
 // formatted to two decimal places.
 func (a SpecificFuelConsumption) String() string {
-	return a.ToString(SpecificFuelConsumptionGramPerKiloNewtonSecond, 2)
+	return a.ToString(SpecificFuelConsumptionGramPerKilonewtonSecond, 2)
 }
 
 // ToString formats the SpecificFuelConsumption value as a string with the specified unit and fractional digits.
 // It converts the SpecificFuelConsumption to the specified unit and returns the formatted value with the appropriate unit abbreviation.
 // 
 // Parameters:
-//    unit: The unit to which the SpecificFuelConsumption value will be converted (e.g., GramPerKiloNewtonSecond))
+//    unit: The unit to which the SpecificFuelConsumption value will be converted (e.g., GramPerKilonewtonSecond))
 //    fractionalDigits: The number of digits to show after the decimal point. 
 //                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
 // 
@@ -383,9 +383,9 @@ func GetSpecificFuelConsumptionAbbreviation(unit SpecificFuelConsumptionUnits) s
 		return "lb/(lbf·h)" 
 	case SpecificFuelConsumptionKilogramPerKilogramForceHour:
 		return "kg/(kgf·h)" 
-	case SpecificFuelConsumptionGramPerKiloNewtonSecond:
+	case SpecificFuelConsumptionGramPerKilonewtonSecond:
 		return "g/(kN·s)" 
-	case SpecificFuelConsumptionKilogramPerKiloNewtonSecond:
+	case SpecificFuelConsumptionKilogramPerKilonewtonSecond:
 		return "kg/(kN·s)" 
 	default:
 		return ""

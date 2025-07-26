@@ -150,6 +150,15 @@ func TestAbsorbedDoseOfIonizingRadiationConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to Decigrays.
+		// No expected conversion value provided for Decigrays, verifying result is not NaN.
+		result := a.Decigrays()
+		cacheResult := a.Decigrays()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Decigrays returned NaN")
+		}
+	}
+	{
 		// Test conversion to Kilograys.
 		// No expected conversion value provided for Kilograys, verifying result is not NaN.
 		result := a.Kilograys()
@@ -425,6 +434,23 @@ func TestAbsorbedDoseOfIonizingRadiationFactory_FromDto(t *testing.T) {
     converted = centigraysResult.Convert(units.AbsorbedDoseOfIonizingRadiationCentigray)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Centigray = %v, want %v", converted, 100)
+    }
+    // Test Decigray conversion
+    decigraysDto := units.AbsorbedDoseOfIonizingRadiationDto{
+        Value: 100,
+        Unit:  units.AbsorbedDoseOfIonizingRadiationDecigray,
+    }
+    
+    var decigraysResult *units.AbsorbedDoseOfIonizingRadiation
+    decigraysResult, err = factory.FromDto(decigraysDto)
+    if err != nil {
+        t.Errorf("FromDto() with Decigray returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decigraysResult.Convert(units.AbsorbedDoseOfIonizingRadiationDecigray)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Decigray = %v, want %v", converted, 100)
     }
     // Test Kilogray conversion
     kilograysDto := units.AbsorbedDoseOfIonizingRadiationDto{
@@ -721,6 +747,18 @@ func TestAbsorbedDoseOfIonizingRadiationFactory_FromDtoJSON(t *testing.T) {
     converted = centigraysResult.Convert(units.AbsorbedDoseOfIonizingRadiationCentigray)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Centigray = %v, want %v", converted, 100)
+    }
+    // Test JSON with Decigray unit
+    decigraysJSON := []byte(`{"value": 100, "unit": "Decigray"}`)
+    decigraysResult, err := factory.FromDtoJSON(decigraysJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Decigray unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = decigraysResult.Convert(units.AbsorbedDoseOfIonizingRadiationDecigray)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Decigray = %v, want %v", converted, 100)
     }
     // Test JSON with Kilogray unit
     kilograysJSON := []byte(`{"value": 100, "unit": "Kilogray"}`)
@@ -1171,6 +1209,49 @@ func TestAbsorbedDoseOfIonizingRadiationFactory_FromCentigrays(t *testing.T) {
     converted = zeroResult.Convert(units.AbsorbedDoseOfIonizingRadiationCentigray)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromCentigrays() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDecigrays function
+func TestAbsorbedDoseOfIonizingRadiationFactory_FromDecigrays(t *testing.T) {
+    factory := units.AbsorbedDoseOfIonizingRadiationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDecigrays(100)
+    if err != nil {
+        t.Errorf("FromDecigrays() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AbsorbedDoseOfIonizingRadiationDecigray)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDecigrays() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDecigrays(math.NaN())
+    if err == nil {
+        t.Error("FromDecigrays() with NaN value should return error")
+    }
+
+    _, err = factory.FromDecigrays(math.Inf(1))
+    if err == nil {
+        t.Error("FromDecigrays() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDecigrays(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDecigrays() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDecigrays(0)
+    if err != nil {
+        t.Errorf("FromDecigrays() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AbsorbedDoseOfIonizingRadiationDecigray)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDecigrays() with zero value = %v, want 0", converted)
     }
 }
 // Test FromKilograys function
@@ -1631,6 +1712,11 @@ func TestGetAbsorbedDoseOfIonizingRadiationAbbreviation(t *testing.T) {
             name: "Centigray abbreviation",
             unit: units.AbsorbedDoseOfIonizingRadiationCentigray,
             want: "cGy",
+        },
+        {
+            name: "Decigray abbreviation",
+            unit: units.AbsorbedDoseOfIonizingRadiationDecigray,
+            want: "dGy",
         },
         {
             name: "Kilogray abbreviation",

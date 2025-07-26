@@ -9,7 +9,7 @@ import (
 
 func TestFmtFormatDefault(t *testing.T) {
 	angle, _ := units.AngleFactory{}.FromDegrees(180)
-	expected := "180.00 °"
+	expected := "3.14 rad"
 	if fmt.Sprintf("%v", angle) != expected {
 		t.Errorf("Expected '%s', got '%s'", expected, fmt.Sprintf("%v", angle))
 	}

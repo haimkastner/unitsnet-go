@@ -225,7 +225,7 @@ func (a *BrakeSpecificFuelConsumption) convertFromBase(toUnit BrakeSpecificFuelC
 	case BrakeSpecificFuelConsumptionKilogramPerJoule:
 		return (value) 
 	case BrakeSpecificFuelConsumptionPoundPerMechanicalHorsepowerHour:
-		return (value / 1.689659410672e-7) 
+		return (value * 3600 / (0.45359237 / (76.0402249 * 9.80665))) 
 	default:
 		return math.NaN()
 	}
@@ -238,7 +238,7 @@ func (a *BrakeSpecificFuelConsumption) convertToBase(value float64, fromUnit Bra
 	case BrakeSpecificFuelConsumptionKilogramPerJoule:
 		return (value) 
 	case BrakeSpecificFuelConsumptionPoundPerMechanicalHorsepowerHour:
-		return (value * 1.689659410672e-7) 
+		return (value * (0.45359237 / (76.0402249 * 9.80665))/3600) 
 	default:
 		return math.NaN()
 	}

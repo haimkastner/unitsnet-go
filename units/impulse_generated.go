@@ -455,11 +455,11 @@ func (a *Impulse) convertFromBase(toUnit ImpulseUnits) float64 {
 	case ImpulseNewtonSecond:
 		return (value) 
 	case ImpulsePoundFootPerSecond:
-		return (value * 7.230657989877) 
+		return (value / (0.45359237 * 0.3048)) 
 	case ImpulsePoundForceSecond:
-		return (value * 0.2248089430997) 
+		return (value / (0.45359237 * 9.80665)) 
 	case ImpulseSlugFootPerSecond:
-		return (value * 0.224735720691) 
+		return (value / (0.45359237 * 9.80665)) 
 	case ImpulseNanonewtonSecond:
 		return ((value) / 1e-09) 
 	case ImpulseMicronewtonSecond:
@@ -488,11 +488,11 @@ func (a *Impulse) convertToBase(value float64, fromUnit ImpulseUnits) float64 {
 	case ImpulseNewtonSecond:
 		return (value) 
 	case ImpulsePoundFootPerSecond:
-		return (value / 7.230657989877) 
+		return (value * (0.45359237 * 0.3048)) 
 	case ImpulsePoundForceSecond:
-		return (value / 0.2248089430997) 
+		return (value * 0.45359237 * 9.80665) 
 	case ImpulseSlugFootPerSecond:
-		return (value / 0.224735720691) 
+		return (value * (0.45359237 * 9.80665)) 
 	case ImpulseNanonewtonSecond:
 		return ((value) * 1e-09) 
 	case ImpulseMicronewtonSecond:

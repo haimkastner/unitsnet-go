@@ -570,13 +570,13 @@ func (a *PressureChangeRate) convertFromBase(toUnit PressureChangeRateUnits) flo
 	case PressureChangeRatePascalPerMinute:
 		return (value * 60) 
 	case PressureChangeRateMillimeterOfMercuryPerSecond:
-		return (value / 133.322) 
+		return (value / 133.322387415) 
 	case PressureChangeRateAtmospherePerSecond:
 		return (value / (1.01325 * 1e5)) 
 	case PressureChangeRatePoundForcePerSquareInchPerSecond:
-		return (value / 6.894757293168361e3) 
+		return (value * 0.00064516 / 4.4482216152605) 
 	case PressureChangeRatePoundForcePerSquareInchPerMinute:
-		return (value / 6.894757293168361e3 * 60) 
+		return (value * 60 / (4.4482216152605 / 0.00064516)) 
 	case PressureChangeRateBarPerSecond:
 		return (value / 1e5) 
 	case PressureChangeRateBarPerMinute:
@@ -590,13 +590,13 @@ func (a *PressureChangeRate) convertFromBase(toUnit PressureChangeRateUnits) flo
 	case PressureChangeRateMegapascalPerMinute:
 		return ((value * 60) / 1000000.0) 
 	case PressureChangeRateKilopoundForcePerSquareInchPerSecond:
-		return ((value / 6.894757293168361e3) / 1000.0) 
+		return ((value * 0.00064516 / 4.4482216152605) / 1000.0) 
 	case PressureChangeRateMegapoundForcePerSquareInchPerSecond:
-		return ((value / 6.894757293168361e3) / 1000000.0) 
+		return ((value * 0.00064516 / 4.4482216152605) / 1000000.0) 
 	case PressureChangeRateKilopoundForcePerSquareInchPerMinute:
-		return ((value / 6.894757293168361e3 * 60) / 1000.0) 
+		return ((value * 60 / (4.4482216152605 / 0.00064516)) / 1000.0) 
 	case PressureChangeRateMegapoundForcePerSquareInchPerMinute:
-		return ((value / 6.894757293168361e3 * 60) / 1000000.0) 
+		return ((value * 60 / (4.4482216152605 / 0.00064516)) / 1000000.0) 
 	case PressureChangeRateMillibarPerSecond:
 		return ((value / 1e5) / 0.001) 
 	case PressureChangeRateMillibarPerMinute:
@@ -613,13 +613,13 @@ func (a *PressureChangeRate) convertToBase(value float64, fromUnit PressureChang
 	case PressureChangeRatePascalPerMinute:
 		return (value / 60) 
 	case PressureChangeRateMillimeterOfMercuryPerSecond:
-		return (value * 133.322) 
+		return (value * 133.322387415) 
 	case PressureChangeRateAtmospherePerSecond:
 		return (value * 1.01325 * 1e5) 
 	case PressureChangeRatePoundForcePerSquareInchPerSecond:
-		return (value * 6.894757293168361e3) 
+		return (value * 4.4482216152605 / 0.00064516) 
 	case PressureChangeRatePoundForcePerSquareInchPerMinute:
-		return (value * 6.894757293168361e3 / 60) 
+		return (value * (4.4482216152605 / 0.00064516) / 60) 
 	case PressureChangeRateBarPerSecond:
 		return (value * 1e5) 
 	case PressureChangeRateBarPerMinute:
@@ -633,13 +633,13 @@ func (a *PressureChangeRate) convertToBase(value float64, fromUnit PressureChang
 	case PressureChangeRateMegapascalPerMinute:
 		return ((value / 60) * 1000000.0) 
 	case PressureChangeRateKilopoundForcePerSquareInchPerSecond:
-		return ((value * 6.894757293168361e3) * 1000.0) 
+		return ((value * 4.4482216152605 / 0.00064516) * 1000.0) 
 	case PressureChangeRateMegapoundForcePerSquareInchPerSecond:
-		return ((value * 6.894757293168361e3) * 1000000.0) 
+		return ((value * 4.4482216152605 / 0.00064516) * 1000000.0) 
 	case PressureChangeRateKilopoundForcePerSquareInchPerMinute:
-		return ((value * 6.894757293168361e3 / 60) * 1000.0) 
+		return ((value * (4.4482216152605 / 0.00064516) / 60) * 1000.0) 
 	case PressureChangeRateMegapoundForcePerSquareInchPerMinute:
-		return ((value * 6.894757293168361e3 / 60) * 1000000.0) 
+		return ((value * (4.4482216152605 / 0.00064516) / 60) * 1000000.0) 
 	case PressureChangeRateMillibarPerSecond:
 		return ((value * 1e5) * 0.001) 
 	case PressureChangeRateMillibarPerMinute:

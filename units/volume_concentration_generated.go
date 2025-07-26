@@ -20,9 +20,9 @@ const (
         // 
         VolumeConcentrationDecimalFraction VolumeConcentrationUnits = "DecimalFraction"
         // 
-        VolumeConcentrationLitersPerLiter VolumeConcentrationUnits = "LitersPerLiter"
+        VolumeConcentrationLiterPerLiter VolumeConcentrationUnits = "LiterPerLiter"
         // 
-        VolumeConcentrationLitersPerMililiter VolumeConcentrationUnits = "LitersPerMililiter"
+        VolumeConcentrationLiterPerMilliliter VolumeConcentrationUnits = "LiterPerMilliliter"
         // 
         VolumeConcentrationPercent VolumeConcentrationUnits = "Percent"
         // 
@@ -34,53 +34,53 @@ const (
         // 
         VolumeConcentrationPartPerTrillion VolumeConcentrationUnits = "PartPerTrillion"
         // 
-        VolumeConcentrationPicolitersPerLiter VolumeConcentrationUnits = "PicolitersPerLiter"
+        VolumeConcentrationPicoliterPerLiter VolumeConcentrationUnits = "PicoliterPerLiter"
         // 
-        VolumeConcentrationNanolitersPerLiter VolumeConcentrationUnits = "NanolitersPerLiter"
+        VolumeConcentrationNanoliterPerLiter VolumeConcentrationUnits = "NanoliterPerLiter"
         // 
-        VolumeConcentrationMicrolitersPerLiter VolumeConcentrationUnits = "MicrolitersPerLiter"
+        VolumeConcentrationMicroliterPerLiter VolumeConcentrationUnits = "MicroliterPerLiter"
         // 
-        VolumeConcentrationMillilitersPerLiter VolumeConcentrationUnits = "MillilitersPerLiter"
+        VolumeConcentrationMilliliterPerLiter VolumeConcentrationUnits = "MilliliterPerLiter"
         // 
-        VolumeConcentrationCentilitersPerLiter VolumeConcentrationUnits = "CentilitersPerLiter"
+        VolumeConcentrationCentiliterPerLiter VolumeConcentrationUnits = "CentiliterPerLiter"
         // 
-        VolumeConcentrationDecilitersPerLiter VolumeConcentrationUnits = "DecilitersPerLiter"
+        VolumeConcentrationDeciliterPerLiter VolumeConcentrationUnits = "DeciliterPerLiter"
         // 
-        VolumeConcentrationPicolitersPerMililiter VolumeConcentrationUnits = "PicolitersPerMililiter"
+        VolumeConcentrationPicoliterPerMilliliter VolumeConcentrationUnits = "PicoliterPerMilliliter"
         // 
-        VolumeConcentrationNanolitersPerMililiter VolumeConcentrationUnits = "NanolitersPerMililiter"
+        VolumeConcentrationNanoliterPerMilliliter VolumeConcentrationUnits = "NanoliterPerMilliliter"
         // 
-        VolumeConcentrationMicrolitersPerMililiter VolumeConcentrationUnits = "MicrolitersPerMililiter"
+        VolumeConcentrationMicroliterPerMilliliter VolumeConcentrationUnits = "MicroliterPerMilliliter"
         // 
-        VolumeConcentrationMillilitersPerMililiter VolumeConcentrationUnits = "MillilitersPerMililiter"
+        VolumeConcentrationMilliliterPerMilliliter VolumeConcentrationUnits = "MilliliterPerMilliliter"
         // 
-        VolumeConcentrationCentilitersPerMililiter VolumeConcentrationUnits = "CentilitersPerMililiter"
+        VolumeConcentrationCentiliterPerMilliliter VolumeConcentrationUnits = "CentiliterPerMilliliter"
         // 
-        VolumeConcentrationDecilitersPerMililiter VolumeConcentrationUnits = "DecilitersPerMililiter"
+        VolumeConcentrationDeciliterPerMilliliter VolumeConcentrationUnits = "DeciliterPerMilliliter"
 )
 
 var internalVolumeConcentrationUnitsMap = map[VolumeConcentrationUnits]bool{
 	
 	VolumeConcentrationDecimalFraction: true,
-	VolumeConcentrationLitersPerLiter: true,
-	VolumeConcentrationLitersPerMililiter: true,
+	VolumeConcentrationLiterPerLiter: true,
+	VolumeConcentrationLiterPerMilliliter: true,
 	VolumeConcentrationPercent: true,
 	VolumeConcentrationPartPerThousand: true,
 	VolumeConcentrationPartPerMillion: true,
 	VolumeConcentrationPartPerBillion: true,
 	VolumeConcentrationPartPerTrillion: true,
-	VolumeConcentrationPicolitersPerLiter: true,
-	VolumeConcentrationNanolitersPerLiter: true,
-	VolumeConcentrationMicrolitersPerLiter: true,
-	VolumeConcentrationMillilitersPerLiter: true,
-	VolumeConcentrationCentilitersPerLiter: true,
-	VolumeConcentrationDecilitersPerLiter: true,
-	VolumeConcentrationPicolitersPerMililiter: true,
-	VolumeConcentrationNanolitersPerMililiter: true,
-	VolumeConcentrationMicrolitersPerMililiter: true,
-	VolumeConcentrationMillilitersPerMililiter: true,
-	VolumeConcentrationCentilitersPerMililiter: true,
-	VolumeConcentrationDecilitersPerMililiter: true,
+	VolumeConcentrationPicoliterPerLiter: true,
+	VolumeConcentrationNanoliterPerLiter: true,
+	VolumeConcentrationMicroliterPerLiter: true,
+	VolumeConcentrationMilliliterPerLiter: true,
+	VolumeConcentrationCentiliterPerLiter: true,
+	VolumeConcentrationDeciliterPerLiter: true,
+	VolumeConcentrationPicoliterPerMilliliter: true,
+	VolumeConcentrationNanoliterPerMilliliter: true,
+	VolumeConcentrationMicroliterPerMilliliter: true,
+	VolumeConcentrationMilliliterPerMilliliter: true,
+	VolumeConcentrationCentiliterPerMilliliter: true,
+	VolumeConcentrationDeciliterPerMilliliter: true,
 }
 
 // VolumeConcentrationDto represents a VolumeConcentration measurement with a numerical value and its corresponding unit.
@@ -88,7 +88,7 @@ type VolumeConcentrationDto struct {
     // Value is the numerical representation of the VolumeConcentration.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the VolumeConcentration, as defined in the VolumeConcentrationUnits enumeration.
-	Unit  VolumeConcentrationUnits `json:"unit" validate:"required,oneof=DecimalFraction LitersPerLiter LitersPerMililiter Percent PartPerThousand PartPerMillion PartPerBillion PartPerTrillion PicolitersPerLiter NanolitersPerLiter MicrolitersPerLiter MillilitersPerLiter CentilitersPerLiter DecilitersPerLiter PicolitersPerMililiter NanolitersPerMililiter MicrolitersPerMililiter MillilitersPerMililiter CentilitersPerMililiter DecilitersPerMililiter"`
+	Unit  VolumeConcentrationUnits `json:"unit" validate:"required,oneof=DecimalFraction LiterPerLiter LiterPerMilliliter Percent PartPerThousand PartPerMillion PartPerBillion PartPerTrillion PicoliterPerLiter NanoliterPerLiter MicroliterPerLiter MilliliterPerLiter CentiliterPerLiter DeciliterPerLiter PicoliterPerMilliliter NanoliterPerMilliliter MicroliterPerMilliliter MilliliterPerMilliliter CentiliterPerMilliliter DeciliterPerMilliliter"`
 }
 
 // VolumeConcentrationDtoFactory groups methods for creating and serializing VolumeConcentrationDto objects.
@@ -129,7 +129,7 @@ type VolumeConcentration struct {
     
     decimal_fractionsLazy *float64 
     liters_per_literLazy *float64 
-    liters_per_mililiterLazy *float64 
+    liters_per_milliliterLazy *float64 
     percentLazy *float64 
     parts_per_thousandLazy *float64 
     parts_per_millionLazy *float64 
@@ -141,12 +141,12 @@ type VolumeConcentration struct {
     milliliters_per_literLazy *float64 
     centiliters_per_literLazy *float64 
     deciliters_per_literLazy *float64 
-    picoliters_per_mililiterLazy *float64 
-    nanoliters_per_mililiterLazy *float64 
-    microliters_per_mililiterLazy *float64 
-    milliliters_per_mililiterLazy *float64 
-    centiliters_per_mililiterLazy *float64 
-    deciliters_per_mililiterLazy *float64 
+    picoliters_per_milliliterLazy *float64 
+    nanoliters_per_milliliterLazy *float64 
+    microliters_per_milliliterLazy *float64 
+    milliliters_per_milliliterLazy *float64 
+    centiliters_per_milliliterLazy *float64 
+    deciliters_per_milliliterLazy *float64 
 }
 
 // VolumeConcentrationFactory groups methods for creating VolumeConcentration instances.
@@ -179,12 +179,12 @@ func (uf VolumeConcentrationFactory) FromDecimalFractions(value float64) (*Volum
 
 // FromLitersPerLiter creates a new VolumeConcentration instance from a value in LitersPerLiter.
 func (uf VolumeConcentrationFactory) FromLitersPerLiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationLitersPerLiter)
+	return newVolumeConcentration(value, VolumeConcentrationLiterPerLiter)
 }
 
-// FromLitersPerMililiter creates a new VolumeConcentration instance from a value in LitersPerMililiter.
-func (uf VolumeConcentrationFactory) FromLitersPerMililiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationLitersPerMililiter)
+// FromLitersPerMilliliter creates a new VolumeConcentration instance from a value in LitersPerMilliliter.
+func (uf VolumeConcentrationFactory) FromLitersPerMilliliter(value float64) (*VolumeConcentration, error) {
+	return newVolumeConcentration(value, VolumeConcentrationLiterPerMilliliter)
 }
 
 // FromPercent creates a new VolumeConcentration instance from a value in Percent.
@@ -214,62 +214,62 @@ func (uf VolumeConcentrationFactory) FromPartsPerTrillion(value float64) (*Volum
 
 // FromPicolitersPerLiter creates a new VolumeConcentration instance from a value in PicolitersPerLiter.
 func (uf VolumeConcentrationFactory) FromPicolitersPerLiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationPicolitersPerLiter)
+	return newVolumeConcentration(value, VolumeConcentrationPicoliterPerLiter)
 }
 
 // FromNanolitersPerLiter creates a new VolumeConcentration instance from a value in NanolitersPerLiter.
 func (uf VolumeConcentrationFactory) FromNanolitersPerLiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationNanolitersPerLiter)
+	return newVolumeConcentration(value, VolumeConcentrationNanoliterPerLiter)
 }
 
 // FromMicrolitersPerLiter creates a new VolumeConcentration instance from a value in MicrolitersPerLiter.
 func (uf VolumeConcentrationFactory) FromMicrolitersPerLiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationMicrolitersPerLiter)
+	return newVolumeConcentration(value, VolumeConcentrationMicroliterPerLiter)
 }
 
 // FromMillilitersPerLiter creates a new VolumeConcentration instance from a value in MillilitersPerLiter.
 func (uf VolumeConcentrationFactory) FromMillilitersPerLiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationMillilitersPerLiter)
+	return newVolumeConcentration(value, VolumeConcentrationMilliliterPerLiter)
 }
 
 // FromCentilitersPerLiter creates a new VolumeConcentration instance from a value in CentilitersPerLiter.
 func (uf VolumeConcentrationFactory) FromCentilitersPerLiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationCentilitersPerLiter)
+	return newVolumeConcentration(value, VolumeConcentrationCentiliterPerLiter)
 }
 
 // FromDecilitersPerLiter creates a new VolumeConcentration instance from a value in DecilitersPerLiter.
 func (uf VolumeConcentrationFactory) FromDecilitersPerLiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationDecilitersPerLiter)
+	return newVolumeConcentration(value, VolumeConcentrationDeciliterPerLiter)
 }
 
-// FromPicolitersPerMililiter creates a new VolumeConcentration instance from a value in PicolitersPerMililiter.
-func (uf VolumeConcentrationFactory) FromPicolitersPerMililiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationPicolitersPerMililiter)
+// FromPicolitersPerMilliliter creates a new VolumeConcentration instance from a value in PicolitersPerMilliliter.
+func (uf VolumeConcentrationFactory) FromPicolitersPerMilliliter(value float64) (*VolumeConcentration, error) {
+	return newVolumeConcentration(value, VolumeConcentrationPicoliterPerMilliliter)
 }
 
-// FromNanolitersPerMililiter creates a new VolumeConcentration instance from a value in NanolitersPerMililiter.
-func (uf VolumeConcentrationFactory) FromNanolitersPerMililiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationNanolitersPerMililiter)
+// FromNanolitersPerMilliliter creates a new VolumeConcentration instance from a value in NanolitersPerMilliliter.
+func (uf VolumeConcentrationFactory) FromNanolitersPerMilliliter(value float64) (*VolumeConcentration, error) {
+	return newVolumeConcentration(value, VolumeConcentrationNanoliterPerMilliliter)
 }
 
-// FromMicrolitersPerMililiter creates a new VolumeConcentration instance from a value in MicrolitersPerMililiter.
-func (uf VolumeConcentrationFactory) FromMicrolitersPerMililiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationMicrolitersPerMililiter)
+// FromMicrolitersPerMilliliter creates a new VolumeConcentration instance from a value in MicrolitersPerMilliliter.
+func (uf VolumeConcentrationFactory) FromMicrolitersPerMilliliter(value float64) (*VolumeConcentration, error) {
+	return newVolumeConcentration(value, VolumeConcentrationMicroliterPerMilliliter)
 }
 
-// FromMillilitersPerMililiter creates a new VolumeConcentration instance from a value in MillilitersPerMililiter.
-func (uf VolumeConcentrationFactory) FromMillilitersPerMililiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationMillilitersPerMililiter)
+// FromMillilitersPerMilliliter creates a new VolumeConcentration instance from a value in MillilitersPerMilliliter.
+func (uf VolumeConcentrationFactory) FromMillilitersPerMilliliter(value float64) (*VolumeConcentration, error) {
+	return newVolumeConcentration(value, VolumeConcentrationMilliliterPerMilliliter)
 }
 
-// FromCentilitersPerMililiter creates a new VolumeConcentration instance from a value in CentilitersPerMililiter.
-func (uf VolumeConcentrationFactory) FromCentilitersPerMililiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationCentilitersPerMililiter)
+// FromCentilitersPerMilliliter creates a new VolumeConcentration instance from a value in CentilitersPerMilliliter.
+func (uf VolumeConcentrationFactory) FromCentilitersPerMilliliter(value float64) (*VolumeConcentration, error) {
+	return newVolumeConcentration(value, VolumeConcentrationCentiliterPerMilliliter)
 }
 
-// FromDecilitersPerMililiter creates a new VolumeConcentration instance from a value in DecilitersPerMililiter.
-func (uf VolumeConcentrationFactory) FromDecilitersPerMililiter(value float64) (*VolumeConcentration, error) {
-	return newVolumeConcentration(value, VolumeConcentrationDecilitersPerMililiter)
+// FromDecilitersPerMilliliter creates a new VolumeConcentration instance from a value in DecilitersPerMilliliter.
+func (uf VolumeConcentrationFactory) FromDecilitersPerMilliliter(value float64) (*VolumeConcentration, error) {
+	return newVolumeConcentration(value, VolumeConcentrationDeciliterPerMilliliter)
 }
 
 
@@ -311,21 +311,21 @@ func (a *VolumeConcentration) LitersPerLiter() float64 {
 	if a.liters_per_literLazy != nil {
 		return *a.liters_per_literLazy
 	}
-	liters_per_liter := a.convertFromBase(VolumeConcentrationLitersPerLiter)
+	liters_per_liter := a.convertFromBase(VolumeConcentrationLiterPerLiter)
 	a.liters_per_literLazy = &liters_per_liter
 	return liters_per_liter
 }
 
-// LitersPerMililiter returns the VolumeConcentration value in LitersPerMililiter.
+// LitersPerMilliliter returns the VolumeConcentration value in LitersPerMilliliter.
 //
 // 
-func (a *VolumeConcentration) LitersPerMililiter() float64 {
-	if a.liters_per_mililiterLazy != nil {
-		return *a.liters_per_mililiterLazy
+func (a *VolumeConcentration) LitersPerMilliliter() float64 {
+	if a.liters_per_milliliterLazy != nil {
+		return *a.liters_per_milliliterLazy
 	}
-	liters_per_mililiter := a.convertFromBase(VolumeConcentrationLitersPerMililiter)
-	a.liters_per_mililiterLazy = &liters_per_mililiter
-	return liters_per_mililiter
+	liters_per_milliliter := a.convertFromBase(VolumeConcentrationLiterPerMilliliter)
+	a.liters_per_milliliterLazy = &liters_per_milliliter
+	return liters_per_milliliter
 }
 
 // Percent returns the VolumeConcentration value in Percent.
@@ -395,7 +395,7 @@ func (a *VolumeConcentration) PicolitersPerLiter() float64 {
 	if a.picoliters_per_literLazy != nil {
 		return *a.picoliters_per_literLazy
 	}
-	picoliters_per_liter := a.convertFromBase(VolumeConcentrationPicolitersPerLiter)
+	picoliters_per_liter := a.convertFromBase(VolumeConcentrationPicoliterPerLiter)
 	a.picoliters_per_literLazy = &picoliters_per_liter
 	return picoliters_per_liter
 }
@@ -407,7 +407,7 @@ func (a *VolumeConcentration) NanolitersPerLiter() float64 {
 	if a.nanoliters_per_literLazy != nil {
 		return *a.nanoliters_per_literLazy
 	}
-	nanoliters_per_liter := a.convertFromBase(VolumeConcentrationNanolitersPerLiter)
+	nanoliters_per_liter := a.convertFromBase(VolumeConcentrationNanoliterPerLiter)
 	a.nanoliters_per_literLazy = &nanoliters_per_liter
 	return nanoliters_per_liter
 }
@@ -419,7 +419,7 @@ func (a *VolumeConcentration) MicrolitersPerLiter() float64 {
 	if a.microliters_per_literLazy != nil {
 		return *a.microliters_per_literLazy
 	}
-	microliters_per_liter := a.convertFromBase(VolumeConcentrationMicrolitersPerLiter)
+	microliters_per_liter := a.convertFromBase(VolumeConcentrationMicroliterPerLiter)
 	a.microliters_per_literLazy = &microliters_per_liter
 	return microliters_per_liter
 }
@@ -431,7 +431,7 @@ func (a *VolumeConcentration) MillilitersPerLiter() float64 {
 	if a.milliliters_per_literLazy != nil {
 		return *a.milliliters_per_literLazy
 	}
-	milliliters_per_liter := a.convertFromBase(VolumeConcentrationMillilitersPerLiter)
+	milliliters_per_liter := a.convertFromBase(VolumeConcentrationMilliliterPerLiter)
 	a.milliliters_per_literLazy = &milliliters_per_liter
 	return milliliters_per_liter
 }
@@ -443,7 +443,7 @@ func (a *VolumeConcentration) CentilitersPerLiter() float64 {
 	if a.centiliters_per_literLazy != nil {
 		return *a.centiliters_per_literLazy
 	}
-	centiliters_per_liter := a.convertFromBase(VolumeConcentrationCentilitersPerLiter)
+	centiliters_per_liter := a.convertFromBase(VolumeConcentrationCentiliterPerLiter)
 	a.centiliters_per_literLazy = &centiliters_per_liter
 	return centiliters_per_liter
 }
@@ -455,81 +455,81 @@ func (a *VolumeConcentration) DecilitersPerLiter() float64 {
 	if a.deciliters_per_literLazy != nil {
 		return *a.deciliters_per_literLazy
 	}
-	deciliters_per_liter := a.convertFromBase(VolumeConcentrationDecilitersPerLiter)
+	deciliters_per_liter := a.convertFromBase(VolumeConcentrationDeciliterPerLiter)
 	a.deciliters_per_literLazy = &deciliters_per_liter
 	return deciliters_per_liter
 }
 
-// PicolitersPerMililiter returns the VolumeConcentration value in PicolitersPerMililiter.
+// PicolitersPerMilliliter returns the VolumeConcentration value in PicolitersPerMilliliter.
 //
 // 
-func (a *VolumeConcentration) PicolitersPerMililiter() float64 {
-	if a.picoliters_per_mililiterLazy != nil {
-		return *a.picoliters_per_mililiterLazy
+func (a *VolumeConcentration) PicolitersPerMilliliter() float64 {
+	if a.picoliters_per_milliliterLazy != nil {
+		return *a.picoliters_per_milliliterLazy
 	}
-	picoliters_per_mililiter := a.convertFromBase(VolumeConcentrationPicolitersPerMililiter)
-	a.picoliters_per_mililiterLazy = &picoliters_per_mililiter
-	return picoliters_per_mililiter
+	picoliters_per_milliliter := a.convertFromBase(VolumeConcentrationPicoliterPerMilliliter)
+	a.picoliters_per_milliliterLazy = &picoliters_per_milliliter
+	return picoliters_per_milliliter
 }
 
-// NanolitersPerMililiter returns the VolumeConcentration value in NanolitersPerMililiter.
+// NanolitersPerMilliliter returns the VolumeConcentration value in NanolitersPerMilliliter.
 //
 // 
-func (a *VolumeConcentration) NanolitersPerMililiter() float64 {
-	if a.nanoliters_per_mililiterLazy != nil {
-		return *a.nanoliters_per_mililiterLazy
+func (a *VolumeConcentration) NanolitersPerMilliliter() float64 {
+	if a.nanoliters_per_milliliterLazy != nil {
+		return *a.nanoliters_per_milliliterLazy
 	}
-	nanoliters_per_mililiter := a.convertFromBase(VolumeConcentrationNanolitersPerMililiter)
-	a.nanoliters_per_mililiterLazy = &nanoliters_per_mililiter
-	return nanoliters_per_mililiter
+	nanoliters_per_milliliter := a.convertFromBase(VolumeConcentrationNanoliterPerMilliliter)
+	a.nanoliters_per_milliliterLazy = &nanoliters_per_milliliter
+	return nanoliters_per_milliliter
 }
 
-// MicrolitersPerMililiter returns the VolumeConcentration value in MicrolitersPerMililiter.
+// MicrolitersPerMilliliter returns the VolumeConcentration value in MicrolitersPerMilliliter.
 //
 // 
-func (a *VolumeConcentration) MicrolitersPerMililiter() float64 {
-	if a.microliters_per_mililiterLazy != nil {
-		return *a.microliters_per_mililiterLazy
+func (a *VolumeConcentration) MicrolitersPerMilliliter() float64 {
+	if a.microliters_per_milliliterLazy != nil {
+		return *a.microliters_per_milliliterLazy
 	}
-	microliters_per_mililiter := a.convertFromBase(VolumeConcentrationMicrolitersPerMililiter)
-	a.microliters_per_mililiterLazy = &microliters_per_mililiter
-	return microliters_per_mililiter
+	microliters_per_milliliter := a.convertFromBase(VolumeConcentrationMicroliterPerMilliliter)
+	a.microliters_per_milliliterLazy = &microliters_per_milliliter
+	return microliters_per_milliliter
 }
 
-// MillilitersPerMililiter returns the VolumeConcentration value in MillilitersPerMililiter.
+// MillilitersPerMilliliter returns the VolumeConcentration value in MillilitersPerMilliliter.
 //
 // 
-func (a *VolumeConcentration) MillilitersPerMililiter() float64 {
-	if a.milliliters_per_mililiterLazy != nil {
-		return *a.milliliters_per_mililiterLazy
+func (a *VolumeConcentration) MillilitersPerMilliliter() float64 {
+	if a.milliliters_per_milliliterLazy != nil {
+		return *a.milliliters_per_milliliterLazy
 	}
-	milliliters_per_mililiter := a.convertFromBase(VolumeConcentrationMillilitersPerMililiter)
-	a.milliliters_per_mililiterLazy = &milliliters_per_mililiter
-	return milliliters_per_mililiter
+	milliliters_per_milliliter := a.convertFromBase(VolumeConcentrationMilliliterPerMilliliter)
+	a.milliliters_per_milliliterLazy = &milliliters_per_milliliter
+	return milliliters_per_milliliter
 }
 
-// CentilitersPerMililiter returns the VolumeConcentration value in CentilitersPerMililiter.
+// CentilitersPerMilliliter returns the VolumeConcentration value in CentilitersPerMilliliter.
 //
 // 
-func (a *VolumeConcentration) CentilitersPerMililiter() float64 {
-	if a.centiliters_per_mililiterLazy != nil {
-		return *a.centiliters_per_mililiterLazy
+func (a *VolumeConcentration) CentilitersPerMilliliter() float64 {
+	if a.centiliters_per_milliliterLazy != nil {
+		return *a.centiliters_per_milliliterLazy
 	}
-	centiliters_per_mililiter := a.convertFromBase(VolumeConcentrationCentilitersPerMililiter)
-	a.centiliters_per_mililiterLazy = &centiliters_per_mililiter
-	return centiliters_per_mililiter
+	centiliters_per_milliliter := a.convertFromBase(VolumeConcentrationCentiliterPerMilliliter)
+	a.centiliters_per_milliliterLazy = &centiliters_per_milliliter
+	return centiliters_per_milliliter
 }
 
-// DecilitersPerMililiter returns the VolumeConcentration value in DecilitersPerMililiter.
+// DecilitersPerMilliliter returns the VolumeConcentration value in DecilitersPerMilliliter.
 //
 // 
-func (a *VolumeConcentration) DecilitersPerMililiter() float64 {
-	if a.deciliters_per_mililiterLazy != nil {
-		return *a.deciliters_per_mililiterLazy
+func (a *VolumeConcentration) DecilitersPerMilliliter() float64 {
+	if a.deciliters_per_milliliterLazy != nil {
+		return *a.deciliters_per_milliliterLazy
 	}
-	deciliters_per_mililiter := a.convertFromBase(VolumeConcentrationDecilitersPerMililiter)
-	a.deciliters_per_mililiterLazy = &deciliters_per_mililiter
-	return deciliters_per_mililiter
+	deciliters_per_milliliter := a.convertFromBase(VolumeConcentrationDeciliterPerMilliliter)
+	a.deciliters_per_milliliterLazy = &deciliters_per_milliliter
+	return deciliters_per_milliliter
 }
 
 
@@ -565,10 +565,10 @@ func (a *VolumeConcentration) Convert(toUnit VolumeConcentrationUnits) float64 {
 	switch toUnit { 
     case VolumeConcentrationDecimalFraction:
 		return a.DecimalFractions()
-    case VolumeConcentrationLitersPerLiter:
+    case VolumeConcentrationLiterPerLiter:
 		return a.LitersPerLiter()
-    case VolumeConcentrationLitersPerMililiter:
-		return a.LitersPerMililiter()
+    case VolumeConcentrationLiterPerMilliliter:
+		return a.LitersPerMilliliter()
     case VolumeConcentrationPercent:
 		return a.Percent()
     case VolumeConcentrationPartPerThousand:
@@ -579,30 +579,30 @@ func (a *VolumeConcentration) Convert(toUnit VolumeConcentrationUnits) float64 {
 		return a.PartsPerBillion()
     case VolumeConcentrationPartPerTrillion:
 		return a.PartsPerTrillion()
-    case VolumeConcentrationPicolitersPerLiter:
+    case VolumeConcentrationPicoliterPerLiter:
 		return a.PicolitersPerLiter()
-    case VolumeConcentrationNanolitersPerLiter:
+    case VolumeConcentrationNanoliterPerLiter:
 		return a.NanolitersPerLiter()
-    case VolumeConcentrationMicrolitersPerLiter:
+    case VolumeConcentrationMicroliterPerLiter:
 		return a.MicrolitersPerLiter()
-    case VolumeConcentrationMillilitersPerLiter:
+    case VolumeConcentrationMilliliterPerLiter:
 		return a.MillilitersPerLiter()
-    case VolumeConcentrationCentilitersPerLiter:
+    case VolumeConcentrationCentiliterPerLiter:
 		return a.CentilitersPerLiter()
-    case VolumeConcentrationDecilitersPerLiter:
+    case VolumeConcentrationDeciliterPerLiter:
 		return a.DecilitersPerLiter()
-    case VolumeConcentrationPicolitersPerMililiter:
-		return a.PicolitersPerMililiter()
-    case VolumeConcentrationNanolitersPerMililiter:
-		return a.NanolitersPerMililiter()
-    case VolumeConcentrationMicrolitersPerMililiter:
-		return a.MicrolitersPerMililiter()
-    case VolumeConcentrationMillilitersPerMililiter:
-		return a.MillilitersPerMililiter()
-    case VolumeConcentrationCentilitersPerMililiter:
-		return a.CentilitersPerMililiter()
-    case VolumeConcentrationDecilitersPerMililiter:
-		return a.DecilitersPerMililiter()
+    case VolumeConcentrationPicoliterPerMilliliter:
+		return a.PicolitersPerMilliliter()
+    case VolumeConcentrationNanoliterPerMilliliter:
+		return a.NanolitersPerMilliliter()
+    case VolumeConcentrationMicroliterPerMilliliter:
+		return a.MicrolitersPerMilliliter()
+    case VolumeConcentrationMilliliterPerMilliliter:
+		return a.MillilitersPerMilliliter()
+    case VolumeConcentrationCentiliterPerMilliliter:
+		return a.CentilitersPerMilliliter()
+    case VolumeConcentrationDeciliterPerMilliliter:
+		return a.DecilitersPerMilliliter()
 	default:
 		return math.NaN()
 	}
@@ -613,9 +613,9 @@ func (a *VolumeConcentration) convertFromBase(toUnit VolumeConcentrationUnits) f
 	switch toUnit { 
 	case VolumeConcentrationDecimalFraction:
 		return (value) 
-	case VolumeConcentrationLitersPerLiter:
+	case VolumeConcentrationLiterPerLiter:
 		return (value) 
-	case VolumeConcentrationLitersPerMililiter:
+	case VolumeConcentrationLiterPerMilliliter:
 		return (value * 1e-3) 
 	case VolumeConcentrationPercent:
 		return (value * 1e2) 
@@ -627,29 +627,29 @@ func (a *VolumeConcentration) convertFromBase(toUnit VolumeConcentrationUnits) f
 		return (value * 1e9) 
 	case VolumeConcentrationPartPerTrillion:
 		return (value * 1e12) 
-	case VolumeConcentrationPicolitersPerLiter:
+	case VolumeConcentrationPicoliterPerLiter:
 		return ((value) / 1e-12) 
-	case VolumeConcentrationNanolitersPerLiter:
+	case VolumeConcentrationNanoliterPerLiter:
 		return ((value) / 1e-09) 
-	case VolumeConcentrationMicrolitersPerLiter:
+	case VolumeConcentrationMicroliterPerLiter:
 		return ((value) / 1e-06) 
-	case VolumeConcentrationMillilitersPerLiter:
+	case VolumeConcentrationMilliliterPerLiter:
 		return ((value) / 0.001) 
-	case VolumeConcentrationCentilitersPerLiter:
+	case VolumeConcentrationCentiliterPerLiter:
 		return ((value) / 0.01) 
-	case VolumeConcentrationDecilitersPerLiter:
+	case VolumeConcentrationDeciliterPerLiter:
 		return ((value) / 0.1) 
-	case VolumeConcentrationPicolitersPerMililiter:
+	case VolumeConcentrationPicoliterPerMilliliter:
 		return ((value * 1e-3) / 1e-12) 
-	case VolumeConcentrationNanolitersPerMililiter:
+	case VolumeConcentrationNanoliterPerMilliliter:
 		return ((value * 1e-3) / 1e-09) 
-	case VolumeConcentrationMicrolitersPerMililiter:
+	case VolumeConcentrationMicroliterPerMilliliter:
 		return ((value * 1e-3) / 1e-06) 
-	case VolumeConcentrationMillilitersPerMililiter:
+	case VolumeConcentrationMilliliterPerMilliliter:
 		return ((value * 1e-3) / 0.001) 
-	case VolumeConcentrationCentilitersPerMililiter:
+	case VolumeConcentrationCentiliterPerMilliliter:
 		return ((value * 1e-3) / 0.01) 
-	case VolumeConcentrationDecilitersPerMililiter:
+	case VolumeConcentrationDeciliterPerMilliliter:
 		return ((value * 1e-3) / 0.1) 
 	default:
 		return math.NaN()
@@ -660,9 +660,9 @@ func (a *VolumeConcentration) convertToBase(value float64, fromUnit VolumeConcen
 	switch fromUnit { 
 	case VolumeConcentrationDecimalFraction:
 		return (value) 
-	case VolumeConcentrationLitersPerLiter:
+	case VolumeConcentrationLiterPerLiter:
 		return (value) 
-	case VolumeConcentrationLitersPerMililiter:
+	case VolumeConcentrationLiterPerMilliliter:
 		return (value / 1e-3) 
 	case VolumeConcentrationPercent:
 		return (value / 1e2) 
@@ -674,29 +674,29 @@ func (a *VolumeConcentration) convertToBase(value float64, fromUnit VolumeConcen
 		return (value / 1e9) 
 	case VolumeConcentrationPartPerTrillion:
 		return (value / 1e12) 
-	case VolumeConcentrationPicolitersPerLiter:
+	case VolumeConcentrationPicoliterPerLiter:
 		return ((value) * 1e-12) 
-	case VolumeConcentrationNanolitersPerLiter:
+	case VolumeConcentrationNanoliterPerLiter:
 		return ((value) * 1e-09) 
-	case VolumeConcentrationMicrolitersPerLiter:
+	case VolumeConcentrationMicroliterPerLiter:
 		return ((value) * 1e-06) 
-	case VolumeConcentrationMillilitersPerLiter:
+	case VolumeConcentrationMilliliterPerLiter:
 		return ((value) * 0.001) 
-	case VolumeConcentrationCentilitersPerLiter:
+	case VolumeConcentrationCentiliterPerLiter:
 		return ((value) * 0.01) 
-	case VolumeConcentrationDecilitersPerLiter:
+	case VolumeConcentrationDeciliterPerLiter:
 		return ((value) * 0.1) 
-	case VolumeConcentrationPicolitersPerMililiter:
+	case VolumeConcentrationPicoliterPerMilliliter:
 		return ((value / 1e-3) * 1e-12) 
-	case VolumeConcentrationNanolitersPerMililiter:
+	case VolumeConcentrationNanoliterPerMilliliter:
 		return ((value / 1e-3) * 1e-09) 
-	case VolumeConcentrationMicrolitersPerMililiter:
+	case VolumeConcentrationMicroliterPerMilliliter:
 		return ((value / 1e-3) * 1e-06) 
-	case VolumeConcentrationMillilitersPerMililiter:
+	case VolumeConcentrationMilliliterPerMilliliter:
 		return ((value / 1e-3) * 0.001) 
-	case VolumeConcentrationCentilitersPerMililiter:
+	case VolumeConcentrationCentiliterPerMilliliter:
 		return ((value / 1e-3) * 0.01) 
-	case VolumeConcentrationDecilitersPerMililiter:
+	case VolumeConcentrationDeciliterPerMilliliter:
 		return ((value / 1e-3) * 0.1) 
 	default:
 		return math.NaN()
@@ -813,10 +813,10 @@ func GetVolumeConcentrationAbbreviation(unit VolumeConcentrationUnits) string {
 	switch unit { 
 	case VolumeConcentrationDecimalFraction:
 		return "" 
-	case VolumeConcentrationLitersPerLiter:
-		return "L/L" 
-	case VolumeConcentrationLitersPerMililiter:
-		return "L/mL" 
+	case VolumeConcentrationLiterPerLiter:
+		return "l/l" 
+	case VolumeConcentrationLiterPerMilliliter:
+		return "l/ml" 
 	case VolumeConcentrationPercent:
 		return "%" 
 	case VolumeConcentrationPartPerThousand:
@@ -827,30 +827,30 @@ func GetVolumeConcentrationAbbreviation(unit VolumeConcentrationUnits) string {
 		return "ppb" 
 	case VolumeConcentrationPartPerTrillion:
 		return "ppt" 
-	case VolumeConcentrationPicolitersPerLiter:
-		return "pL/L" 
-	case VolumeConcentrationNanolitersPerLiter:
-		return "nL/L" 
-	case VolumeConcentrationMicrolitersPerLiter:
-		return "μL/L" 
-	case VolumeConcentrationMillilitersPerLiter:
-		return "mL/L" 
-	case VolumeConcentrationCentilitersPerLiter:
-		return "cL/L" 
-	case VolumeConcentrationDecilitersPerLiter:
-		return "dL/L" 
-	case VolumeConcentrationPicolitersPerMililiter:
-		return "pL/mL" 
-	case VolumeConcentrationNanolitersPerMililiter:
-		return "nL/mL" 
-	case VolumeConcentrationMicrolitersPerMililiter:
-		return "μL/mL" 
-	case VolumeConcentrationMillilitersPerMililiter:
-		return "mL/mL" 
-	case VolumeConcentrationCentilitersPerMililiter:
-		return "cL/mL" 
-	case VolumeConcentrationDecilitersPerMililiter:
-		return "dL/mL" 
+	case VolumeConcentrationPicoliterPerLiter:
+		return "pl/l" 
+	case VolumeConcentrationNanoliterPerLiter:
+		return "nl/l" 
+	case VolumeConcentrationMicroliterPerLiter:
+		return "μl/l" 
+	case VolumeConcentrationMilliliterPerLiter:
+		return "ml/l" 
+	case VolumeConcentrationCentiliterPerLiter:
+		return "cl/l" 
+	case VolumeConcentrationDeciliterPerLiter:
+		return "dl/l" 
+	case VolumeConcentrationPicoliterPerMilliliter:
+		return "pl/ml" 
+	case VolumeConcentrationNanoliterPerMilliliter:
+		return "nl/ml" 
+	case VolumeConcentrationMicroliterPerMilliliter:
+		return "μl/ml" 
+	case VolumeConcentrationMilliliterPerMilliliter:
+		return "ml/ml" 
+	case VolumeConcentrationCentiliterPerMilliliter:
+		return "cl/ml" 
+	case VolumeConcentrationDeciliterPerMilliliter:
+		return "dl/ml" 
 	default:
 		return ""
 	}

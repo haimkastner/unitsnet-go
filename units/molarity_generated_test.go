@@ -1195,7 +1195,7 @@ func TestGetMolarityAbbreviation(t *testing.T) {
         {
             name: "MolePerLiter abbreviation",
             unit: units.MolarityMolePerLiter,
-            want: "mol/L",
+            want: "mol/l",
         },
         {
             name: "PoundMolePerCubicFoot abbreviation",
@@ -1210,37 +1210,37 @@ func TestGetMolarityAbbreviation(t *testing.T) {
         {
             name: "FemtomolePerLiter abbreviation",
             unit: units.MolarityFemtomolePerLiter,
-            want: "fmol/L",
+            want: "fmol/l",
         },
         {
             name: "PicomolePerLiter abbreviation",
             unit: units.MolarityPicomolePerLiter,
-            want: "pmol/L",
+            want: "pmol/l",
         },
         {
             name: "NanomolePerLiter abbreviation",
             unit: units.MolarityNanomolePerLiter,
-            want: "nmol/L",
+            want: "nmol/l",
         },
         {
             name: "MicromolePerLiter abbreviation",
             unit: units.MolarityMicromolePerLiter,
-            want: "μmol/L",
+            want: "μmol/l",
         },
         {
             name: "MillimolePerLiter abbreviation",
             unit: units.MolarityMillimolePerLiter,
-            want: "mmol/L",
+            want: "mmol/l",
         },
         {
             name: "CentimolePerLiter abbreviation",
             unit: units.MolarityCentimolePerLiter,
-            want: "cmol/L",
+            want: "cmol/l",
         },
         {
             name: "DecimolePerLiter abbreviation",
             unit: units.MolarityDecimolePerLiter,
-            want: "dmol/L",
+            want: "dmol/l",
         },
         {
             name: "invalid unit",

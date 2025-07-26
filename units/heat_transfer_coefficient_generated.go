@@ -271,11 +271,11 @@ func (a *HeatTransferCoefficient) convertFromBase(toUnit HeatTransferCoefficient
 	case HeatTransferCoefficientWattPerSquareMeterCelsius:
 		return (value) 
 	case HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit:
-		return (value / 5.6782633411134878) 
+		return (value / ((1055.05585262 / (0.3048 * 0.3048 * 3600)) * 1.8)) 
 	case HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius:
-		return ((value / 4.1868) * 3600) 
+		return ((value / 4.184) * 3600) 
 	case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:
-		return (((value / 4.1868) * 3600) / 1000.0) 
+		return (((value / 4.184) * 3600) / 1000.0) 
 	default:
 		return math.NaN()
 	}
@@ -288,11 +288,11 @@ func (a *HeatTransferCoefficient) convertToBase(value float64, fromUnit HeatTran
 	case HeatTransferCoefficientWattPerSquareMeterCelsius:
 		return (value) 
 	case HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit:
-		return (value * 5.6782633411134878) 
+		return (value * ((1055.05585262 / (0.3048 * 0.3048 * 3600)) * 1.8)) 
 	case HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius:
-		return ((value * 4.1868) / 3600) 
+		return ((value * 4.184) / 3600) 
 	case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:
-		return (((value * 4.1868) / 3600) * 1000.0) 
+		return (((value * 4.184) / 3600) * 1000.0) 
 	default:
 		return math.NaN()
 	}
@@ -407,15 +407,15 @@ func (a *HeatTransferCoefficient) Divide(other *HeatTransferCoefficient) *HeatTr
 func GetHeatTransferCoefficientAbbreviation(unit HeatTransferCoefficientUnits) string {
 	switch unit { 
 	case HeatTransferCoefficientWattPerSquareMeterKelvin:
-		return "W/m²·K" 
+		return "W/(m²·K)" 
 	case HeatTransferCoefficientWattPerSquareMeterCelsius:
-		return "W/m²·°C" 
+		return "W/(m²·°C)" 
 	case HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit:
-		return "Btu/h·ft²·°F" 
+		return "Btu/(h·ft²·°F)" 
 	case HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius:
-		return "kcal/h·m²·°C" 
+		return "kcal/(h·m²·°C)" 
 	case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:
-		return "kkcal/h·m²·°C" 
+		return "kkcal/(h·m²·°C)" 
 	default:
 		return ""
 	}

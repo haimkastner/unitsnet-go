@@ -1166,9 +1166,9 @@ func (a *PowerDensity) convertFromBase(toUnit PowerDensityUnits) float64 {
 	case PowerDensityWattPerCubicMeter:
 		return (value) 
 	case PowerDensityWattPerCubicInch:
-		return (value / 6.102374409473228e4) 
+		return (value * 1.6387064e-5) 
 	case PowerDensityWattPerCubicFoot:
-		return (value / 3.531466672148859e1) 
+		return (value * 0.028316846592) 
 	case PowerDensityWattPerLiter:
 		return (value / 1.0e3) 
 	case PowerDensityPicowattPerCubicMeter:
@@ -1192,45 +1192,45 @@ func (a *PowerDensity) convertFromBase(toUnit PowerDensityUnits) float64 {
 	case PowerDensityTerawattPerCubicMeter:
 		return ((value) / 1000000000000.0) 
 	case PowerDensityPicowattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 1e-12) 
+		return ((value * 1.6387064e-5) / 1e-12) 
 	case PowerDensityNanowattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 1e-09) 
+		return ((value * 1.6387064e-5) / 1e-09) 
 	case PowerDensityMicrowattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 1e-06) 
+		return ((value * 1.6387064e-5) / 1e-06) 
 	case PowerDensityMilliwattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 0.001) 
+		return ((value * 1.6387064e-5) / 0.001) 
 	case PowerDensityDeciwattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 0.1) 
+		return ((value * 1.6387064e-5) / 0.1) 
 	case PowerDensityDecawattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 10.0) 
+		return ((value * 1.6387064e-5) / 10.0) 
 	case PowerDensityKilowattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 1000.0) 
+		return ((value * 1.6387064e-5) / 1000.0) 
 	case PowerDensityMegawattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 1000000.0) 
+		return ((value * 1.6387064e-5) / 1000000.0) 
 	case PowerDensityGigawattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 1000000000.0) 
+		return ((value * 1.6387064e-5) / 1000000000.0) 
 	case PowerDensityTerawattPerCubicInch:
-		return ((value / 6.102374409473228e4) / 1000000000000.0) 
+		return ((value * 1.6387064e-5) / 1000000000000.0) 
 	case PowerDensityPicowattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 1e-12) 
+		return ((value * 0.028316846592) / 1e-12) 
 	case PowerDensityNanowattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 1e-09) 
+		return ((value * 0.028316846592) / 1e-09) 
 	case PowerDensityMicrowattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 1e-06) 
+		return ((value * 0.028316846592) / 1e-06) 
 	case PowerDensityMilliwattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 0.001) 
+		return ((value * 0.028316846592) / 0.001) 
 	case PowerDensityDeciwattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 0.1) 
+		return ((value * 0.028316846592) / 0.1) 
 	case PowerDensityDecawattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 10.0) 
+		return ((value * 0.028316846592) / 10.0) 
 	case PowerDensityKilowattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 1000.0) 
+		return ((value * 0.028316846592) / 1000.0) 
 	case PowerDensityMegawattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 1000000.0) 
+		return ((value * 0.028316846592) / 1000000.0) 
 	case PowerDensityGigawattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 1000000000.0) 
+		return ((value * 0.028316846592) / 1000000000.0) 
 	case PowerDensityTerawattPerCubicFoot:
-		return ((value / 3.531466672148859e1) / 1000000000000.0) 
+		return ((value * 0.028316846592) / 1000000000000.0) 
 	case PowerDensityPicowattPerLiter:
 		return ((value / 1.0e3) / 1e-12) 
 	case PowerDensityNanowattPerLiter:
@@ -1261,9 +1261,9 @@ func (a *PowerDensity) convertToBase(value float64, fromUnit PowerDensityUnits) 
 	case PowerDensityWattPerCubicMeter:
 		return (value) 
 	case PowerDensityWattPerCubicInch:
-		return (value * 6.102374409473228e4) 
+		return (value / 1.6387064e-5) 
 	case PowerDensityWattPerCubicFoot:
-		return (value * 3.531466672148859e1) 
+		return (value / 0.028316846592) 
 	case PowerDensityWattPerLiter:
 		return (value * 1.0e3) 
 	case PowerDensityPicowattPerCubicMeter:
@@ -1287,45 +1287,45 @@ func (a *PowerDensity) convertToBase(value float64, fromUnit PowerDensityUnits) 
 	case PowerDensityTerawattPerCubicMeter:
 		return ((value) * 1000000000000.0) 
 	case PowerDensityPicowattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 1e-12) 
+		return ((value / 1.6387064e-5) * 1e-12) 
 	case PowerDensityNanowattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 1e-09) 
+		return ((value / 1.6387064e-5) * 1e-09) 
 	case PowerDensityMicrowattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 1e-06) 
+		return ((value / 1.6387064e-5) * 1e-06) 
 	case PowerDensityMilliwattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 0.001) 
+		return ((value / 1.6387064e-5) * 0.001) 
 	case PowerDensityDeciwattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 0.1) 
+		return ((value / 1.6387064e-5) * 0.1) 
 	case PowerDensityDecawattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 10.0) 
+		return ((value / 1.6387064e-5) * 10.0) 
 	case PowerDensityKilowattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 1000.0) 
+		return ((value / 1.6387064e-5) * 1000.0) 
 	case PowerDensityMegawattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 1000000.0) 
+		return ((value / 1.6387064e-5) * 1000000.0) 
 	case PowerDensityGigawattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 1000000000.0) 
+		return ((value / 1.6387064e-5) * 1000000000.0) 
 	case PowerDensityTerawattPerCubicInch:
-		return ((value * 6.102374409473228e4) * 1000000000000.0) 
+		return ((value / 1.6387064e-5) * 1000000000000.0) 
 	case PowerDensityPicowattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 1e-12) 
+		return ((value / 0.028316846592) * 1e-12) 
 	case PowerDensityNanowattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 1e-09) 
+		return ((value / 0.028316846592) * 1e-09) 
 	case PowerDensityMicrowattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 1e-06) 
+		return ((value / 0.028316846592) * 1e-06) 
 	case PowerDensityMilliwattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 0.001) 
+		return ((value / 0.028316846592) * 0.001) 
 	case PowerDensityDeciwattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 0.1) 
+		return ((value / 0.028316846592) * 0.1) 
 	case PowerDensityDecawattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 10.0) 
+		return ((value / 0.028316846592) * 10.0) 
 	case PowerDensityKilowattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 1000.0) 
+		return ((value / 0.028316846592) * 1000.0) 
 	case PowerDensityMegawattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 1000000.0) 
+		return ((value / 0.028316846592) * 1000000.0) 
 	case PowerDensityGigawattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 1000000000.0) 
+		return ((value / 0.028316846592) * 1000000000.0) 
 	case PowerDensityTerawattPerCubicFoot:
-		return ((value * 3.531466672148859e1) * 1000000000000.0) 
+		return ((value / 0.028316846592) * 1000000000000.0) 
 	case PowerDensityPicowattPerLiter:
 		return ((value * 1.0e3) * 1e-12) 
 	case PowerDensityNanowattPerLiter:

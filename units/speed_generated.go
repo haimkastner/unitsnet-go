@@ -167,7 +167,7 @@ type Speed struct {
 	value       float64
     
     meters_per_secondLazy *float64 
-    meters_per_minutesLazy *float64 
+    meters_per_minuteLazy *float64 
     meters_per_hourLazy *float64 
     feet_per_secondLazy *float64 
     feet_per_minuteLazy *float64 
@@ -190,12 +190,12 @@ type Speed struct {
     centimeters_per_secondLazy *float64 
     decimeters_per_secondLazy *float64 
     kilometers_per_secondLazy *float64 
-    nanometers_per_minutesLazy *float64 
-    micrometers_per_minutesLazy *float64 
-    millimeters_per_minutesLazy *float64 
-    centimeters_per_minutesLazy *float64 
-    decimeters_per_minutesLazy *float64 
-    kilometers_per_minutesLazy *float64 
+    nanometers_per_minuteLazy *float64 
+    micrometers_per_minuteLazy *float64 
+    millimeters_per_minuteLazy *float64 
+    centimeters_per_minuteLazy *float64 
+    decimeters_per_minuteLazy *float64 
+    kilometers_per_minuteLazy *float64 
     millimeters_per_hourLazy *float64 
     centimeters_per_hourLazy *float64 
     kilometers_per_hourLazy *float64 
@@ -229,8 +229,8 @@ func (uf SpeedFactory) FromMetersPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMeterPerSecond)
 }
 
-// FromMetersPerMinutes creates a new Speed instance from a value in MetersPerMinutes.
-func (uf SpeedFactory) FromMetersPerMinutes(value float64) (*Speed, error) {
+// FromMetersPerMinute creates a new Speed instance from a value in MetersPerMinute.
+func (uf SpeedFactory) FromMetersPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMeterPerMinute)
 }
 
@@ -344,33 +344,33 @@ func (uf SpeedFactory) FromKilometersPerSecond(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedKilometerPerSecond)
 }
 
-// FromNanometersPerMinutes creates a new Speed instance from a value in NanometersPerMinutes.
-func (uf SpeedFactory) FromNanometersPerMinutes(value float64) (*Speed, error) {
+// FromNanometersPerMinute creates a new Speed instance from a value in NanometersPerMinute.
+func (uf SpeedFactory) FromNanometersPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedNanometerPerMinute)
 }
 
-// FromMicrometersPerMinutes creates a new Speed instance from a value in MicrometersPerMinutes.
-func (uf SpeedFactory) FromMicrometersPerMinutes(value float64) (*Speed, error) {
+// FromMicrometersPerMinute creates a new Speed instance from a value in MicrometersPerMinute.
+func (uf SpeedFactory) FromMicrometersPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMicrometerPerMinute)
 }
 
-// FromMillimetersPerMinutes creates a new Speed instance from a value in MillimetersPerMinutes.
-func (uf SpeedFactory) FromMillimetersPerMinutes(value float64) (*Speed, error) {
+// FromMillimetersPerMinute creates a new Speed instance from a value in MillimetersPerMinute.
+func (uf SpeedFactory) FromMillimetersPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedMillimeterPerMinute)
 }
 
-// FromCentimetersPerMinutes creates a new Speed instance from a value in CentimetersPerMinutes.
-func (uf SpeedFactory) FromCentimetersPerMinutes(value float64) (*Speed, error) {
+// FromCentimetersPerMinute creates a new Speed instance from a value in CentimetersPerMinute.
+func (uf SpeedFactory) FromCentimetersPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedCentimeterPerMinute)
 }
 
-// FromDecimetersPerMinutes creates a new Speed instance from a value in DecimetersPerMinutes.
-func (uf SpeedFactory) FromDecimetersPerMinutes(value float64) (*Speed, error) {
+// FromDecimetersPerMinute creates a new Speed instance from a value in DecimetersPerMinute.
+func (uf SpeedFactory) FromDecimetersPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedDecimeterPerMinute)
 }
 
-// FromKilometersPerMinutes creates a new Speed instance from a value in KilometersPerMinutes.
-func (uf SpeedFactory) FromKilometersPerMinutes(value float64) (*Speed, error) {
+// FromKilometersPerMinute creates a new Speed instance from a value in KilometersPerMinute.
+func (uf SpeedFactory) FromKilometersPerMinute(value float64) (*Speed, error) {
 	return newSpeed(value, SpeedKilometerPerMinute)
 }
 
@@ -421,16 +421,16 @@ func (a *Speed) MetersPerSecond() float64 {
 	return meters_per_second
 }
 
-// MetersPerMinutes returns the Speed value in MetersPerMinutes.
+// MetersPerMinute returns the Speed value in MetersPerMinute.
 //
 // 
-func (a *Speed) MetersPerMinutes() float64 {
-	if a.meters_per_minutesLazy != nil {
-		return *a.meters_per_minutesLazy
+func (a *Speed) MetersPerMinute() float64 {
+	if a.meters_per_minuteLazy != nil {
+		return *a.meters_per_minuteLazy
 	}
-	meters_per_minutes := a.convertFromBase(SpeedMeterPerMinute)
-	a.meters_per_minutesLazy = &meters_per_minutes
-	return meters_per_minutes
+	meters_per_minute := a.convertFromBase(SpeedMeterPerMinute)
+	a.meters_per_minuteLazy = &meters_per_minute
+	return meters_per_minute
 }
 
 // MetersPerHour returns the Speed value in MetersPerHour.
@@ -697,76 +697,76 @@ func (a *Speed) KilometersPerSecond() float64 {
 	return kilometers_per_second
 }
 
-// NanometersPerMinutes returns the Speed value in NanometersPerMinutes.
+// NanometersPerMinute returns the Speed value in NanometersPerMinute.
 //
 // 
-func (a *Speed) NanometersPerMinutes() float64 {
-	if a.nanometers_per_minutesLazy != nil {
-		return *a.nanometers_per_minutesLazy
+func (a *Speed) NanometersPerMinute() float64 {
+	if a.nanometers_per_minuteLazy != nil {
+		return *a.nanometers_per_minuteLazy
 	}
-	nanometers_per_minutes := a.convertFromBase(SpeedNanometerPerMinute)
-	a.nanometers_per_minutesLazy = &nanometers_per_minutes
-	return nanometers_per_minutes
+	nanometers_per_minute := a.convertFromBase(SpeedNanometerPerMinute)
+	a.nanometers_per_minuteLazy = &nanometers_per_minute
+	return nanometers_per_minute
 }
 
-// MicrometersPerMinutes returns the Speed value in MicrometersPerMinutes.
+// MicrometersPerMinute returns the Speed value in MicrometersPerMinute.
 //
 // 
-func (a *Speed) MicrometersPerMinutes() float64 {
-	if a.micrometers_per_minutesLazy != nil {
-		return *a.micrometers_per_minutesLazy
+func (a *Speed) MicrometersPerMinute() float64 {
+	if a.micrometers_per_minuteLazy != nil {
+		return *a.micrometers_per_minuteLazy
 	}
-	micrometers_per_minutes := a.convertFromBase(SpeedMicrometerPerMinute)
-	a.micrometers_per_minutesLazy = &micrometers_per_minutes
-	return micrometers_per_minutes
+	micrometers_per_minute := a.convertFromBase(SpeedMicrometerPerMinute)
+	a.micrometers_per_minuteLazy = &micrometers_per_minute
+	return micrometers_per_minute
 }
 
-// MillimetersPerMinutes returns the Speed value in MillimetersPerMinutes.
+// MillimetersPerMinute returns the Speed value in MillimetersPerMinute.
 //
 // 
-func (a *Speed) MillimetersPerMinutes() float64 {
-	if a.millimeters_per_minutesLazy != nil {
-		return *a.millimeters_per_minutesLazy
+func (a *Speed) MillimetersPerMinute() float64 {
+	if a.millimeters_per_minuteLazy != nil {
+		return *a.millimeters_per_minuteLazy
 	}
-	millimeters_per_minutes := a.convertFromBase(SpeedMillimeterPerMinute)
-	a.millimeters_per_minutesLazy = &millimeters_per_minutes
-	return millimeters_per_minutes
+	millimeters_per_minute := a.convertFromBase(SpeedMillimeterPerMinute)
+	a.millimeters_per_minuteLazy = &millimeters_per_minute
+	return millimeters_per_minute
 }
 
-// CentimetersPerMinutes returns the Speed value in CentimetersPerMinutes.
+// CentimetersPerMinute returns the Speed value in CentimetersPerMinute.
 //
 // 
-func (a *Speed) CentimetersPerMinutes() float64 {
-	if a.centimeters_per_minutesLazy != nil {
-		return *a.centimeters_per_minutesLazy
+func (a *Speed) CentimetersPerMinute() float64 {
+	if a.centimeters_per_minuteLazy != nil {
+		return *a.centimeters_per_minuteLazy
 	}
-	centimeters_per_minutes := a.convertFromBase(SpeedCentimeterPerMinute)
-	a.centimeters_per_minutesLazy = &centimeters_per_minutes
-	return centimeters_per_minutes
+	centimeters_per_minute := a.convertFromBase(SpeedCentimeterPerMinute)
+	a.centimeters_per_minuteLazy = &centimeters_per_minute
+	return centimeters_per_minute
 }
 
-// DecimetersPerMinutes returns the Speed value in DecimetersPerMinutes.
+// DecimetersPerMinute returns the Speed value in DecimetersPerMinute.
 //
 // 
-func (a *Speed) DecimetersPerMinutes() float64 {
-	if a.decimeters_per_minutesLazy != nil {
-		return *a.decimeters_per_minutesLazy
+func (a *Speed) DecimetersPerMinute() float64 {
+	if a.decimeters_per_minuteLazy != nil {
+		return *a.decimeters_per_minuteLazy
 	}
-	decimeters_per_minutes := a.convertFromBase(SpeedDecimeterPerMinute)
-	a.decimeters_per_minutesLazy = &decimeters_per_minutes
-	return decimeters_per_minutes
+	decimeters_per_minute := a.convertFromBase(SpeedDecimeterPerMinute)
+	a.decimeters_per_minuteLazy = &decimeters_per_minute
+	return decimeters_per_minute
 }
 
-// KilometersPerMinutes returns the Speed value in KilometersPerMinutes.
+// KilometersPerMinute returns the Speed value in KilometersPerMinute.
 //
 // 
-func (a *Speed) KilometersPerMinutes() float64 {
-	if a.kilometers_per_minutesLazy != nil {
-		return *a.kilometers_per_minutesLazy
+func (a *Speed) KilometersPerMinute() float64 {
+	if a.kilometers_per_minuteLazy != nil {
+		return *a.kilometers_per_minuteLazy
 	}
-	kilometers_per_minutes := a.convertFromBase(SpeedKilometerPerMinute)
-	a.kilometers_per_minutesLazy = &kilometers_per_minutes
-	return kilometers_per_minutes
+	kilometers_per_minute := a.convertFromBase(SpeedKilometerPerMinute)
+	a.kilometers_per_minuteLazy = &kilometers_per_minute
+	return kilometers_per_minute
 }
 
 // MillimetersPerHour returns the Speed value in MillimetersPerHour.
@@ -839,7 +839,7 @@ func (a *Speed) Convert(toUnit SpeedUnits) float64 {
     case SpeedMeterPerSecond:
 		return a.MetersPerSecond()
     case SpeedMeterPerMinute:
-		return a.MetersPerMinutes()
+		return a.MetersPerMinute()
     case SpeedMeterPerHour:
 		return a.MetersPerHour()
     case SpeedFootPerSecond:
@@ -885,17 +885,17 @@ func (a *Speed) Convert(toUnit SpeedUnits) float64 {
     case SpeedKilometerPerSecond:
 		return a.KilometersPerSecond()
     case SpeedNanometerPerMinute:
-		return a.NanometersPerMinutes()
+		return a.NanometersPerMinute()
     case SpeedMicrometerPerMinute:
-		return a.MicrometersPerMinutes()
+		return a.MicrometersPerMinute()
     case SpeedMillimeterPerMinute:
-		return a.MillimetersPerMinutes()
+		return a.MillimetersPerMinute()
     case SpeedCentimeterPerMinute:
-		return a.CentimetersPerMinutes()
+		return a.CentimetersPerMinute()
     case SpeedDecimeterPerMinute:
-		return a.DecimetersPerMinutes()
+		return a.DecimetersPerMinute()
     case SpeedKilometerPerMinute:
-		return a.KilometersPerMinutes()
+		return a.KilometersPerMinute()
     case SpeedMillimeterPerHour:
 		return a.MillimetersPerHour()
     case SpeedCentimeterPerHour:

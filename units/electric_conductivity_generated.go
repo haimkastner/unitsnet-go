@@ -292,9 +292,9 @@ func (a *ElectricConductivity) convertFromBase(toUnit ElectricConductivityUnits)
 	case ElectricConductivitySiemensPerMeter:
 		return (value) 
 	case ElectricConductivitySiemensPerInch:
-		return (value / 3.937007874015748e1) 
+		return (value * 2.54e-2) 
 	case ElectricConductivitySiemensPerFoot:
-		return (value / 3.2808398950131234) 
+		return (value * 0.3048) 
 	case ElectricConductivitySiemensPerCentimeter:
 		return (value / 1e2) 
 	case ElectricConductivityMicrosiemensPerCentimeter:
@@ -311,9 +311,9 @@ func (a *ElectricConductivity) convertToBase(value float64, fromUnit ElectricCon
 	case ElectricConductivitySiemensPerMeter:
 		return (value) 
 	case ElectricConductivitySiemensPerInch:
-		return (value * 3.937007874015748e1) 
+		return (value / 2.54e-2) 
 	case ElectricConductivitySiemensPerFoot:
-		return (value * 3.2808398950131234) 
+		return (value / 0.3048) 
 	case ElectricConductivitySiemensPerCentimeter:
 		return (value * 1e2) 
 	case ElectricConductivityMicrosiemensPerCentimeter:

@@ -200,7 +200,7 @@ func (a *ThermalConductivity) convertFromBase(toUnit ThermalConductivityUnits) f
 	case ThermalConductivityWattPerMeterKelvin:
 		return (value) 
 	case ThermalConductivityBtuPerHourFootFahrenheit:
-		return (value / 1.73073467) 
+		return (value / ((1055.05585262 / (0.3048 * 3600)) * 1.8)) 
 	default:
 		return math.NaN()
 	}
@@ -211,7 +211,7 @@ func (a *ThermalConductivity) convertToBase(value float64, fromUnit ThermalCondu
 	case ThermalConductivityWattPerMeterKelvin:
 		return (value) 
 	case ThermalConductivityBtuPerHourFootFahrenheit:
-		return (value * 1.73073467) 
+		return (value * ((1055.05585262 / (0.3048 * 3600)) * 1.8)) 
 	default:
 		return math.NaN()
 	}
@@ -326,9 +326,9 @@ func (a *ThermalConductivity) Divide(other *ThermalConductivity) *ThermalConduct
 func GetThermalConductivityAbbreviation(unit ThermalConductivityUnits) string {
 	switch unit { 
 	case ThermalConductivityWattPerMeterKelvin:
-		return "W/m·K" 
+		return "W/(m·K)" 
 	case ThermalConductivityBtuPerHourFootFahrenheit:
-		return "BTU/h·ft·°F" 
+		return "BTU/(h·ft·°F)" 
 	default:
 		return ""
 	}

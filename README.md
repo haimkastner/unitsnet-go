@@ -42,9 +42,11 @@ func main() {
     // Create a factory instance
     af := units.AngleFactory{}
     
-    angle, _ := af.FromDegrees(180)
+    var angle *units.Angle
+
+    angle, _ = units.AngleFactory{}.FromDegrees(180)
     // equals to
-    angle, _ := af.CreateAngle(180, units.AngleDegree)
+    angle, _ = af.CreateAngle(180, units.AngleDegree)
 
     log.Println(angle.Radians())      // 3.141592653589793
     log.Println(angle.Microradians()) // 3141592.65358979

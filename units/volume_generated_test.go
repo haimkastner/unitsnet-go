@@ -4753,17 +4753,17 @@ func TestGetVolumeAbbreviation(t *testing.T) {
         {
             name: "UsTablespoon abbreviation",
             unit: units.VolumeUsTablespoon,
-            want: "",
+            want: "tablespoon (U.S.)",
         },
         {
             name: "AuTablespoon abbreviation",
             unit: units.VolumeAuTablespoon,
-            want: "",
+            want: "tablespoon (A.U.)",
         },
         {
             name: "UkTablespoon abbreviation",
             unit: units.VolumeUkTablespoon,
-            want: "",
+            want: "tablespoon (U.K.)",
         },
         {
             name: "MetricTeaspoon abbreviation",
@@ -4773,22 +4773,22 @@ func TestGetVolumeAbbreviation(t *testing.T) {
         {
             name: "UsTeaspoon abbreviation",
             unit: units.VolumeUsTeaspoon,
-            want: "",
+            want: "teaspoon (U.S.)",
         },
         {
             name: "MetricCup abbreviation",
             unit: units.VolumeMetricCup,
-            want: "",
+            want: "metric cup",
         },
         {
             name: "UsCustomaryCup abbreviation",
             unit: units.VolumeUsCustomaryCup,
-            want: "",
+            want: "cup (U.S. customary)",
         },
         {
             name: "UsLegalCup abbreviation",
             unit: units.VolumeUsLegalCup,
-            want: "",
+            want: "cup (U.S.)",
         },
         {
             name: "OilBarrel abbreviation",
