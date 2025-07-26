@@ -18,27 +18,15 @@ type ThermalResistanceUnits string
 const (
     
         // 
-        ThermalResistanceSquareMeterKelvinPerKilowatt ThermalResistanceUnits = "SquareMeterKelvinPerKilowatt"
+        ThermalResistanceKelvinPerWatt ThermalResistanceUnits = "KelvinPerWatt"
         // 
-        ThermalResistanceSquareMeterKelvinPerWatt ThermalResistanceUnits = "SquareMeterKelvinPerWatt"
-        // 
-        ThermalResistanceSquareMeterDegreeCelsiusPerWatt ThermalResistanceUnits = "SquareMeterDegreeCelsiusPerWatt"
-        // 
-        ThermalResistanceSquareCentimeterKelvinPerWatt ThermalResistanceUnits = "SquareCentimeterKelvinPerWatt"
-        // 
-        ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie ThermalResistanceUnits = "SquareCentimeterHourDegreeCelsiusPerKilocalorie"
-        // 
-        ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu ThermalResistanceUnits = "HourSquareFeetDegreeFahrenheitPerBtu"
+        ThermalResistanceDegreeCelsiusPerWatt ThermalResistanceUnits = "DegreeCelsiusPerWatt"
 )
 
 var internalThermalResistanceUnitsMap = map[ThermalResistanceUnits]bool{
 	
-	ThermalResistanceSquareMeterKelvinPerKilowatt: true,
-	ThermalResistanceSquareMeterKelvinPerWatt: true,
-	ThermalResistanceSquareMeterDegreeCelsiusPerWatt: true,
-	ThermalResistanceSquareCentimeterKelvinPerWatt: true,
-	ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie: true,
-	ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu: true,
+	ThermalResistanceKelvinPerWatt: true,
+	ThermalResistanceDegreeCelsiusPerWatt: true,
 }
 
 // ThermalResistanceDto represents a ThermalResistance measurement with a numerical value and its corresponding unit.
@@ -46,7 +34,7 @@ type ThermalResistanceDto struct {
     // Value is the numerical representation of the ThermalResistance.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ThermalResistance, as defined in the ThermalResistanceUnits enumeration.
-	Unit  ThermalResistanceUnits `json:"unit" validate:"required,oneof=SquareMeterKelvinPerKilowatt SquareMeterKelvinPerWatt SquareMeterDegreeCelsiusPerWatt SquareCentimeterKelvinPerWatt SquareCentimeterHourDegreeCelsiusPerKilocalorie HourSquareFeetDegreeFahrenheitPerBtu"`
+	Unit  ThermalResistanceUnits `json:"unit" validate:"required,oneof=KelvinPerWatt DegreeCelsiusPerWatt"`
 }
 
 // ThermalResistanceDtoFactory groups methods for creating and serializing ThermalResistanceDto objects.
@@ -80,17 +68,13 @@ func (a ThermalResistanceDto) ToJSON() ([]byte, error) {
 
 // ThermalResistance represents a measurement in a of ThermalResistance.
 //
-// Heat Transfer Coefficient or Thermal conductivity - indicates a materials ability to conduct heat.
+// Thermal resistance (R) measures the opposition to the heat current in a material or system. It is measured in units of kelvins per watt (K/W) and indicates how much temperature difference (in kelvins) is required to transfer a unit of heat current (in watts) through the material or object. It is essential to optimize the building insulation, evaluate the efficiency of electronic devices, and enhance the performance of heat sinks in various applications.
 type ThermalResistance struct {
 	// value is the base measurement stored internally.
 	value       float64
     
-    square_meter_kelvins_per_kilowattLazy *float64 
-    square_meter_kelvins_per_wattLazy *float64 
-    square_meter_degrees_celsius_per_wattLazy *float64 
-    square_centimeter_kelvins_per_wattLazy *float64 
-    square_centimeter_hour_degrees_celsius_per_kilocalorieLazy *float64 
-    hour_square_feet_degrees_fahrenheit_per_btuLazy *float64 
+    kelvins_per_wattLazy *float64 
+    degrees_celsius_per_wattLazy *float64 
 }
 
 // ThermalResistanceFactory groups methods for creating ThermalResistance instances.
@@ -116,34 +100,14 @@ func (uf ThermalResistanceFactory) FromDtoJSON(data []byte) (*ThermalResistance,
 }
 
 
-// FromSquareMeterKelvinsPerKilowatt creates a new ThermalResistance instance from a value in SquareMeterKelvinsPerKilowatt.
-func (uf ThermalResistanceFactory) FromSquareMeterKelvinsPerKilowatt(value float64) (*ThermalResistance, error) {
-	return newThermalResistance(value, ThermalResistanceSquareMeterKelvinPerKilowatt)
+// FromKelvinsPerWatt creates a new ThermalResistance instance from a value in KelvinsPerWatt.
+func (uf ThermalResistanceFactory) FromKelvinsPerWatt(value float64) (*ThermalResistance, error) {
+	return newThermalResistance(value, ThermalResistanceKelvinPerWatt)
 }
 
-// FromSquareMeterKelvinsPerWatt creates a new ThermalResistance instance from a value in SquareMeterKelvinsPerWatt.
-func (uf ThermalResistanceFactory) FromSquareMeterKelvinsPerWatt(value float64) (*ThermalResistance, error) {
-	return newThermalResistance(value, ThermalResistanceSquareMeterKelvinPerWatt)
-}
-
-// FromSquareMeterDegreesCelsiusPerWatt creates a new ThermalResistance instance from a value in SquareMeterDegreesCelsiusPerWatt.
-func (uf ThermalResistanceFactory) FromSquareMeterDegreesCelsiusPerWatt(value float64) (*ThermalResistance, error) {
-	return newThermalResistance(value, ThermalResistanceSquareMeterDegreeCelsiusPerWatt)
-}
-
-// FromSquareCentimeterKelvinsPerWatt creates a new ThermalResistance instance from a value in SquareCentimeterKelvinsPerWatt.
-func (uf ThermalResistanceFactory) FromSquareCentimeterKelvinsPerWatt(value float64) (*ThermalResistance, error) {
-	return newThermalResistance(value, ThermalResistanceSquareCentimeterKelvinPerWatt)
-}
-
-// FromSquareCentimeterHourDegreesCelsiusPerKilocalorie creates a new ThermalResistance instance from a value in SquareCentimeterHourDegreesCelsiusPerKilocalorie.
-func (uf ThermalResistanceFactory) FromSquareCentimeterHourDegreesCelsiusPerKilocalorie(value float64) (*ThermalResistance, error) {
-	return newThermalResistance(value, ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie)
-}
-
-// FromHourSquareFeetDegreesFahrenheitPerBtu creates a new ThermalResistance instance from a value in HourSquareFeetDegreesFahrenheitPerBtu.
-func (uf ThermalResistanceFactory) FromHourSquareFeetDegreesFahrenheitPerBtu(value float64) (*ThermalResistance, error) {
-	return newThermalResistance(value, ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu)
+// FromDegreesCelsiusPerWatt creates a new ThermalResistance instance from a value in DegreesCelsiusPerWatt.
+func (uf ThermalResistanceFactory) FromDegreesCelsiusPerWatt(value float64) (*ThermalResistance, error) {
+	return newThermalResistance(value, ThermalResistanceDegreeCelsiusPerWatt)
 }
 
 
@@ -160,91 +124,43 @@ func newThermalResistance(value float64, fromUnit ThermalResistanceUnits) (*Ther
 	return a, nil
 }
 
-// BaseValue returns the base value of ThermalResistance in SquareMeterKelvinPerKilowatt unit (the base/default quantity).
+// BaseValue returns the base value of ThermalResistance in KelvinPerWatt unit (the base/default quantity).
 func (a *ThermalResistance) BaseValue() float64 {
 	return a.value
 }
 
 
-// SquareMeterKelvinsPerKilowatt returns the ThermalResistance value in SquareMeterKelvinsPerKilowatt.
+// KelvinsPerWatt returns the ThermalResistance value in KelvinsPerWatt.
 //
 // 
-func (a *ThermalResistance) SquareMeterKelvinsPerKilowatt() float64 {
-	if a.square_meter_kelvins_per_kilowattLazy != nil {
-		return *a.square_meter_kelvins_per_kilowattLazy
+func (a *ThermalResistance) KelvinsPerWatt() float64 {
+	if a.kelvins_per_wattLazy != nil {
+		return *a.kelvins_per_wattLazy
 	}
-	square_meter_kelvins_per_kilowatt := a.convertFromBase(ThermalResistanceSquareMeterKelvinPerKilowatt)
-	a.square_meter_kelvins_per_kilowattLazy = &square_meter_kelvins_per_kilowatt
-	return square_meter_kelvins_per_kilowatt
+	kelvins_per_watt := a.convertFromBase(ThermalResistanceKelvinPerWatt)
+	a.kelvins_per_wattLazy = &kelvins_per_watt
+	return kelvins_per_watt
 }
 
-// SquareMeterKelvinsPerWatt returns the ThermalResistance value in SquareMeterKelvinsPerWatt.
+// DegreesCelsiusPerWatt returns the ThermalResistance value in DegreesCelsiusPerWatt.
 //
 // 
-func (a *ThermalResistance) SquareMeterKelvinsPerWatt() float64 {
-	if a.square_meter_kelvins_per_wattLazy != nil {
-		return *a.square_meter_kelvins_per_wattLazy
+func (a *ThermalResistance) DegreesCelsiusPerWatt() float64 {
+	if a.degrees_celsius_per_wattLazy != nil {
+		return *a.degrees_celsius_per_wattLazy
 	}
-	square_meter_kelvins_per_watt := a.convertFromBase(ThermalResistanceSquareMeterKelvinPerWatt)
-	a.square_meter_kelvins_per_wattLazy = &square_meter_kelvins_per_watt
-	return square_meter_kelvins_per_watt
-}
-
-// SquareMeterDegreesCelsiusPerWatt returns the ThermalResistance value in SquareMeterDegreesCelsiusPerWatt.
-//
-// 
-func (a *ThermalResistance) SquareMeterDegreesCelsiusPerWatt() float64 {
-	if a.square_meter_degrees_celsius_per_wattLazy != nil {
-		return *a.square_meter_degrees_celsius_per_wattLazy
-	}
-	square_meter_degrees_celsius_per_watt := a.convertFromBase(ThermalResistanceSquareMeterDegreeCelsiusPerWatt)
-	a.square_meter_degrees_celsius_per_wattLazy = &square_meter_degrees_celsius_per_watt
-	return square_meter_degrees_celsius_per_watt
-}
-
-// SquareCentimeterKelvinsPerWatt returns the ThermalResistance value in SquareCentimeterKelvinsPerWatt.
-//
-// 
-func (a *ThermalResistance) SquareCentimeterKelvinsPerWatt() float64 {
-	if a.square_centimeter_kelvins_per_wattLazy != nil {
-		return *a.square_centimeter_kelvins_per_wattLazy
-	}
-	square_centimeter_kelvins_per_watt := a.convertFromBase(ThermalResistanceSquareCentimeterKelvinPerWatt)
-	a.square_centimeter_kelvins_per_wattLazy = &square_centimeter_kelvins_per_watt
-	return square_centimeter_kelvins_per_watt
-}
-
-// SquareCentimeterHourDegreesCelsiusPerKilocalorie returns the ThermalResistance value in SquareCentimeterHourDegreesCelsiusPerKilocalorie.
-//
-// 
-func (a *ThermalResistance) SquareCentimeterHourDegreesCelsiusPerKilocalorie() float64 {
-	if a.square_centimeter_hour_degrees_celsius_per_kilocalorieLazy != nil {
-		return *a.square_centimeter_hour_degrees_celsius_per_kilocalorieLazy
-	}
-	square_centimeter_hour_degrees_celsius_per_kilocalorie := a.convertFromBase(ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie)
-	a.square_centimeter_hour_degrees_celsius_per_kilocalorieLazy = &square_centimeter_hour_degrees_celsius_per_kilocalorie
-	return square_centimeter_hour_degrees_celsius_per_kilocalorie
-}
-
-// HourSquareFeetDegreesFahrenheitPerBtu returns the ThermalResistance value in HourSquareFeetDegreesFahrenheitPerBtu.
-//
-// 
-func (a *ThermalResistance) HourSquareFeetDegreesFahrenheitPerBtu() float64 {
-	if a.hour_square_feet_degrees_fahrenheit_per_btuLazy != nil {
-		return *a.hour_square_feet_degrees_fahrenheit_per_btuLazy
-	}
-	hour_square_feet_degrees_fahrenheit_per_btu := a.convertFromBase(ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu)
-	a.hour_square_feet_degrees_fahrenheit_per_btuLazy = &hour_square_feet_degrees_fahrenheit_per_btu
-	return hour_square_feet_degrees_fahrenheit_per_btu
+	degrees_celsius_per_watt := a.convertFromBase(ThermalResistanceDegreeCelsiusPerWatt)
+	a.degrees_celsius_per_wattLazy = &degrees_celsius_per_watt
+	return degrees_celsius_per_watt
 }
 
 
 // ToDto creates a ThermalResistanceDto representation from the ThermalResistance instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by SquareMeterKelvinPerKilowatt by default.
+// If the provided holdInUnit is nil, the value will be repesented by KelvinPerWatt by default.
 func (a *ThermalResistance) ToDto(holdInUnit *ThermalResistanceUnits) ThermalResistanceDto {
 	if holdInUnit == nil {
-		defaultUnit := ThermalResistanceSquareMeterKelvinPerKilowatt // Default value
+		defaultUnit := ThermalResistanceKelvinPerWatt // Default value
 		holdInUnit = &defaultUnit
 	}
 
@@ -256,7 +172,7 @@ func (a *ThermalResistance) ToDto(holdInUnit *ThermalResistanceUnits) ThermalRes
 
 // ToDtoJSON creates a JSON representation of the ThermalResistance instance.
 //
-// If the provided holdInUnit is nil, the value will be repesented by SquareMeterKelvinPerKilowatt by default.
+// If the provided holdInUnit is nil, the value will be repesented by KelvinPerWatt by default.
 func (a *ThermalResistance) ToDtoJSON(holdInUnit *ThermalResistanceUnits) ([]byte, error) {
 	// Convert to ThermalResistanceDto and then serialize to JSON
 	return a.ToDto(holdInUnit).ToJSON()
@@ -269,18 +185,10 @@ func (a *ThermalResistance) ToDtoJSON(holdInUnit *ThermalResistanceUnits) ([]byt
 //    float64: The converted value in the target unit.
 func (a *ThermalResistance) Convert(toUnit ThermalResistanceUnits) float64 {
 	switch toUnit { 
-    case ThermalResistanceSquareMeterKelvinPerKilowatt:
-		return a.SquareMeterKelvinsPerKilowatt()
-    case ThermalResistanceSquareMeterKelvinPerWatt:
-		return a.SquareMeterKelvinsPerWatt()
-    case ThermalResistanceSquareMeterDegreeCelsiusPerWatt:
-		return a.SquareMeterDegreesCelsiusPerWatt()
-    case ThermalResistanceSquareCentimeterKelvinPerWatt:
-		return a.SquareCentimeterKelvinsPerWatt()
-    case ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie:
-		return a.SquareCentimeterHourDegreesCelsiusPerKilocalorie()
-    case ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu:
-		return a.HourSquareFeetDegreesFahrenheitPerBtu()
+    case ThermalResistanceKelvinPerWatt:
+		return a.KelvinsPerWatt()
+    case ThermalResistanceDegreeCelsiusPerWatt:
+		return a.DegreesCelsiusPerWatt()
 	default:
 		return math.NaN()
 	}
@@ -289,18 +197,10 @@ func (a *ThermalResistance) Convert(toUnit ThermalResistanceUnits) float64 {
 func (a *ThermalResistance) convertFromBase(toUnit ThermalResistanceUnits) float64 {
     value := a.value
 	switch toUnit { 
-	case ThermalResistanceSquareMeterKelvinPerKilowatt:
+	case ThermalResistanceKelvinPerWatt:
 		return (value) 
-	case ThermalResistanceSquareMeterKelvinPerWatt:
-		return (value / 1000) 
-	case ThermalResistanceSquareMeterDegreeCelsiusPerWatt:
-		return (value / 1000.0) 
-	case ThermalResistanceSquareCentimeterKelvinPerWatt:
-		return (value / 0.1) 
-	case ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie:
-		return (value / 0.0859779507590433) 
-	case ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu:
-		return (value / 176.1121482159839) 
+	case ThermalResistanceDegreeCelsiusPerWatt:
+		return (value) 
 	default:
 		return math.NaN()
 	}
@@ -308,34 +208,26 @@ func (a *ThermalResistance) convertFromBase(toUnit ThermalResistanceUnits) float
 
 func (a *ThermalResistance) convertToBase(value float64, fromUnit ThermalResistanceUnits) float64 {
 	switch fromUnit { 
-	case ThermalResistanceSquareMeterKelvinPerKilowatt:
+	case ThermalResistanceKelvinPerWatt:
 		return (value) 
-	case ThermalResistanceSquareMeterKelvinPerWatt:
-		return (value * 1000) 
-	case ThermalResistanceSquareMeterDegreeCelsiusPerWatt:
-		return (value * 1000.0) 
-	case ThermalResistanceSquareCentimeterKelvinPerWatt:
-		return (value * 0.1) 
-	case ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie:
-		return (value * 0.0859779507590433) 
-	case ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu:
-		return (value * 176.1121482159839) 
+	case ThermalResistanceDegreeCelsiusPerWatt:
+		return (value) 
 	default:
 		return math.NaN()
 	}
 }
 
-// String returns a string representation of the ThermalResistance in the default unit (SquareMeterKelvinPerKilowatt),
+// String returns a string representation of the ThermalResistance in the default unit (KelvinPerWatt),
 // formatted to two decimal places.
 func (a ThermalResistance) String() string {
-	return a.ToString(ThermalResistanceSquareMeterKelvinPerKilowatt, 2)
+	return a.ToString(ThermalResistanceKelvinPerWatt, 2)
 }
 
 // ToString formats the ThermalResistance value as a string with the specified unit and fractional digits.
 // It converts the ThermalResistance to the specified unit and returns the formatted value with the appropriate unit abbreviation.
 // 
 // Parameters:
-//    unit: The unit to which the ThermalResistance value will be converted (e.g., SquareMeterKelvinPerKilowatt))
+//    unit: The unit to which the ThermalResistance value will be converted (e.g., KelvinPerWatt))
 //    fractionalDigits: The number of digits to show after the decimal point. 
 //                       If fractionalDigits is -1, it uses the most compact format without rounding or padding.
 // 
@@ -433,18 +325,10 @@ func (a *ThermalResistance) Divide(other *ThermalResistance) *ThermalResistance 
 // GetThermalResistanceAbbreviation gets the unit abbreviation.
 func GetThermalResistanceAbbreviation(unit ThermalResistanceUnits) string {
 	switch unit { 
-	case ThermalResistanceSquareMeterKelvinPerKilowatt:
-		return "m²K/kW" 
-	case ThermalResistanceSquareMeterKelvinPerWatt:
-		return "m²K/W" 
-	case ThermalResistanceSquareMeterDegreeCelsiusPerWatt:
-		return "m²°C/W" 
-	case ThermalResistanceSquareCentimeterKelvinPerWatt:
-		return "cm²K/W" 
-	case ThermalResistanceSquareCentimeterHourDegreeCelsiusPerKilocalorie:
-		return "cm²Hr°C/kcal" 
-	case ThermalResistanceHourSquareFeetDegreeFahrenheitPerBtu:
-		return "Hrft²°F/Btu" 
+	case ThermalResistanceKelvinPerWatt:
+		return "K/W" 
+	case ThermalResistanceDegreeCelsiusPerWatt:
+		return "°C/W" 
 	default:
 		return ""
 	}

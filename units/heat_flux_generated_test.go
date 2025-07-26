@@ -1772,32 +1772,32 @@ func TestGetHeatFluxAbbreviation(t *testing.T) {
         {
             name: "BtuPerSecondSquareInch abbreviation",
             unit: units.HeatFluxBtuPerSecondSquareInch,
-            want: "BTU/s·in²",
+            want: "BTU/(s·in²)",
         },
         {
             name: "BtuPerSecondSquareFoot abbreviation",
             unit: units.HeatFluxBtuPerSecondSquareFoot,
-            want: "BTU/s·ft²",
+            want: "BTU/(s·ft²)",
         },
         {
             name: "BtuPerMinuteSquareFoot abbreviation",
             unit: units.HeatFluxBtuPerMinuteSquareFoot,
-            want: "BTU/min·ft²",
+            want: "BTU/(min·ft²)",
         },
         {
             name: "BtuPerHourSquareFoot abbreviation",
             unit: units.HeatFluxBtuPerHourSquareFoot,
-            want: "BTU/h·ft²",
+            want: "BTU/(h·ft²)",
         },
         {
             name: "CaloriePerSecondSquareCentimeter abbreviation",
             unit: units.HeatFluxCaloriePerSecondSquareCentimeter,
-            want: "cal/s·cm²",
+            want: "cal/(s·cm²)",
         },
         {
             name: "KilocaloriePerHourSquareMeter abbreviation",
             unit: units.HeatFluxKilocaloriePerHourSquareMeter,
-            want: "kcal/h·m²",
+            want: "kcal/(h·m²)",
         },
         {
             name: "PoundForcePerFootSecond abbreviation",
@@ -1842,7 +1842,7 @@ func TestGetHeatFluxAbbreviation(t *testing.T) {
         {
             name: "KilocaloriePerSecondSquareCentimeter abbreviation",
             unit: units.HeatFluxKilocaloriePerSecondSquareCentimeter,
-            want: "kcal/s·cm²",
+            want: "kcal/(s·cm²)",
         },
         {
             name: "invalid unit",

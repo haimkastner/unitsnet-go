@@ -87,12 +87,12 @@ func TestTemperatureGradientConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to DegreesCelciusPerMeter.
-		// No expected conversion value provided for DegreesCelciusPerMeter, verifying result is not NaN.
-		result := a.DegreesCelciusPerMeter()
-		cacheResult := a.DegreesCelciusPerMeter()
+		// Test conversion to DegreesCelsiusPerMeter.
+		// No expected conversion value provided for DegreesCelsiusPerMeter, verifying result is not NaN.
+		result := a.DegreesCelsiusPerMeter()
+		cacheResult := a.DegreesCelsiusPerMeter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to DegreesCelciusPerMeter returned NaN")
+			t.Errorf("conversion to DegreesCelsiusPerMeter returned NaN")
 		}
 	}
 	{
@@ -105,12 +105,12 @@ func TestTemperatureGradientConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to DegreesCelciusPerKilometer.
-		// No expected conversion value provided for DegreesCelciusPerKilometer, verifying result is not NaN.
-		result := a.DegreesCelciusPerKilometer()
-		cacheResult := a.DegreesCelciusPerKilometer()
+		// Test conversion to DegreesCelsiusPerKilometer.
+		// No expected conversion value provided for DegreesCelsiusPerKilometer, verifying result is not NaN.
+		result := a.DegreesCelsiusPerKilometer()
+		cacheResult := a.DegreesCelsiusPerKilometer()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to DegreesCelciusPerKilometer returned NaN")
+			t.Errorf("conversion to DegreesCelsiusPerKilometer returned NaN")
 		}
 	}
 }
@@ -200,19 +200,19 @@ func TestTemperatureGradientFactory_FromDto(t *testing.T) {
         t.Errorf("Round-trip conversion for KelvinPerMeter = %v, want %v", converted, 100)
     }
     // Test DegreeCelsiusPerMeter conversion
-    degrees_celcius_per_meterDto := units.TemperatureGradientDto{
+    degrees_celsius_per_meterDto := units.TemperatureGradientDto{
         Value: 100,
         Unit:  units.TemperatureGradientDegreeCelsiusPerMeter,
     }
     
-    var degrees_celcius_per_meterResult *units.TemperatureGradient
-    degrees_celcius_per_meterResult, err = factory.FromDto(degrees_celcius_per_meterDto)
+    var degrees_celsius_per_meterResult *units.TemperatureGradient
+    degrees_celsius_per_meterResult, err = factory.FromDto(degrees_celsius_per_meterDto)
     if err != nil {
         t.Errorf("FromDto() with DegreeCelsiusPerMeter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = degrees_celcius_per_meterResult.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
+    converted = degrees_celsius_per_meterResult.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DegreeCelsiusPerMeter = %v, want %v", converted, 100)
     }
@@ -234,19 +234,19 @@ func TestTemperatureGradientFactory_FromDto(t *testing.T) {
         t.Errorf("Round-trip conversion for DegreeFahrenheitPerFoot = %v, want %v", converted, 100)
     }
     // Test DegreeCelsiusPerKilometer conversion
-    degrees_celcius_per_kilometerDto := units.TemperatureGradientDto{
+    degrees_celsius_per_kilometerDto := units.TemperatureGradientDto{
         Value: 100,
         Unit:  units.TemperatureGradientDegreeCelsiusPerKilometer,
     }
     
-    var degrees_celcius_per_kilometerResult *units.TemperatureGradient
-    degrees_celcius_per_kilometerResult, err = factory.FromDto(degrees_celcius_per_kilometerDto)
+    var degrees_celsius_per_kilometerResult *units.TemperatureGradient
+    degrees_celsius_per_kilometerResult, err = factory.FromDto(degrees_celsius_per_kilometerDto)
     if err != nil {
         t.Errorf("FromDto() with DegreeCelsiusPerKilometer returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = degrees_celcius_per_kilometerResult.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
+    converted = degrees_celsius_per_kilometerResult.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DegreeCelsiusPerKilometer = %v, want %v", converted, 100)
     }
@@ -327,14 +327,14 @@ func TestTemperatureGradientFactory_FromDtoJSON(t *testing.T) {
         t.Errorf("Round-trip conversion for KelvinPerMeter = %v, want %v", converted, 100)
     }
     // Test JSON with DegreeCelsiusPerMeter unit
-    degrees_celcius_per_meterJSON := []byte(`{"value": 100, "unit": "DegreeCelsiusPerMeter"}`)
-    degrees_celcius_per_meterResult, err := factory.FromDtoJSON(degrees_celcius_per_meterJSON)
+    degrees_celsius_per_meterJSON := []byte(`{"value": 100, "unit": "DegreeCelsiusPerMeter"}`)
+    degrees_celsius_per_meterResult, err := factory.FromDtoJSON(degrees_celsius_per_meterJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with DegreeCelsiusPerMeter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = degrees_celcius_per_meterResult.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
+    converted = degrees_celsius_per_meterResult.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DegreeCelsiusPerMeter = %v, want %v", converted, 100)
     }
@@ -351,14 +351,14 @@ func TestTemperatureGradientFactory_FromDtoJSON(t *testing.T) {
         t.Errorf("Round-trip conversion for DegreeFahrenheitPerFoot = %v, want %v", converted, 100)
     }
     // Test JSON with DegreeCelsiusPerKilometer unit
-    degrees_celcius_per_kilometerJSON := []byte(`{"value": 100, "unit": "DegreeCelsiusPerKilometer"}`)
-    degrees_celcius_per_kilometerResult, err := factory.FromDtoJSON(degrees_celcius_per_kilometerJSON)
+    degrees_celsius_per_kilometerJSON := []byte(`{"value": 100, "unit": "DegreeCelsiusPerKilometer"}`)
+    degrees_celsius_per_kilometerResult, err := factory.FromDtoJSON(degrees_celsius_per_kilometerJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with DegreeCelsiusPerKilometer unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = degrees_celcius_per_kilometerResult.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
+    converted = degrees_celsius_per_kilometerResult.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DegreeCelsiusPerKilometer = %v, want %v", converted, 100)
     }
@@ -416,47 +416,47 @@ func TestTemperatureGradientFactory_FromKelvinsPerMeter(t *testing.T) {
         t.Errorf("FromKelvinsPerMeter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromDegreesCelciusPerMeter function
-func TestTemperatureGradientFactory_FromDegreesCelciusPerMeter(t *testing.T) {
+// Test FromDegreesCelsiusPerMeter function
+func TestTemperatureGradientFactory_FromDegreesCelsiusPerMeter(t *testing.T) {
     factory := units.TemperatureGradientFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromDegreesCelciusPerMeter(100)
+    result, err := factory.FromDegreesCelsiusPerMeter(100)
     if err != nil {
-        t.Errorf("FromDegreesCelciusPerMeter() returned error: %v", err)
+        t.Errorf("FromDegreesCelsiusPerMeter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromDegreesCelciusPerMeter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromDegreesCelsiusPerMeter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromDegreesCelciusPerMeter(math.NaN())
+    _, err = factory.FromDegreesCelsiusPerMeter(math.NaN())
     if err == nil {
-        t.Error("FromDegreesCelciusPerMeter() with NaN value should return error")
+        t.Error("FromDegreesCelsiusPerMeter() with NaN value should return error")
     }
 
-    _, err = factory.FromDegreesCelciusPerMeter(math.Inf(1))
+    _, err = factory.FromDegreesCelsiusPerMeter(math.Inf(1))
     if err == nil {
-        t.Error("FromDegreesCelciusPerMeter() with +Inf value should return error")
+        t.Error("FromDegreesCelsiusPerMeter() with +Inf value should return error")
     }
 
-    _, err = factory.FromDegreesCelciusPerMeter(math.Inf(-1))
+    _, err = factory.FromDegreesCelsiusPerMeter(math.Inf(-1))
     if err == nil {
-        t.Error("FromDegreesCelciusPerMeter() with -Inf value should return error")
+        t.Error("FromDegreesCelsiusPerMeter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromDegreesCelciusPerMeter(0)
+    zeroResult, err := factory.FromDegreesCelsiusPerMeter(0)
     if err != nil {
-        t.Errorf("FromDegreesCelciusPerMeter() with zero value returned error: %v", err)
+        t.Errorf("FromDegreesCelsiusPerMeter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.TemperatureGradientDegreeCelsiusPerMeter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromDegreesCelciusPerMeter() with zero value = %v, want 0", converted)
+        t.Errorf("FromDegreesCelsiusPerMeter() with zero value = %v, want 0", converted)
     }
 }
 // Test FromDegreesFahrenheitPerFoot function
@@ -502,47 +502,47 @@ func TestTemperatureGradientFactory_FromDegreesFahrenheitPerFoot(t *testing.T) {
         t.Errorf("FromDegreesFahrenheitPerFoot() with zero value = %v, want 0", converted)
     }
 }
-// Test FromDegreesCelciusPerKilometer function
-func TestTemperatureGradientFactory_FromDegreesCelciusPerKilometer(t *testing.T) {
+// Test FromDegreesCelsiusPerKilometer function
+func TestTemperatureGradientFactory_FromDegreesCelsiusPerKilometer(t *testing.T) {
     factory := units.TemperatureGradientFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromDegreesCelciusPerKilometer(100)
+    result, err := factory.FromDegreesCelsiusPerKilometer(100)
     if err != nil {
-        t.Errorf("FromDegreesCelciusPerKilometer() returned error: %v", err)
+        t.Errorf("FromDegreesCelsiusPerKilometer() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromDegreesCelciusPerKilometer() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromDegreesCelsiusPerKilometer() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromDegreesCelciusPerKilometer(math.NaN())
+    _, err = factory.FromDegreesCelsiusPerKilometer(math.NaN())
     if err == nil {
-        t.Error("FromDegreesCelciusPerKilometer() with NaN value should return error")
+        t.Error("FromDegreesCelsiusPerKilometer() with NaN value should return error")
     }
 
-    _, err = factory.FromDegreesCelciusPerKilometer(math.Inf(1))
+    _, err = factory.FromDegreesCelsiusPerKilometer(math.Inf(1))
     if err == nil {
-        t.Error("FromDegreesCelciusPerKilometer() with +Inf value should return error")
+        t.Error("FromDegreesCelsiusPerKilometer() with +Inf value should return error")
     }
 
-    _, err = factory.FromDegreesCelciusPerKilometer(math.Inf(-1))
+    _, err = factory.FromDegreesCelsiusPerKilometer(math.Inf(-1))
     if err == nil {
-        t.Error("FromDegreesCelciusPerKilometer() with -Inf value should return error")
+        t.Error("FromDegreesCelsiusPerKilometer() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromDegreesCelciusPerKilometer(0)
+    zeroResult, err := factory.FromDegreesCelsiusPerKilometer(0)
     if err != nil {
-        t.Errorf("FromDegreesCelciusPerKilometer() with zero value returned error: %v", err)
+        t.Errorf("FromDegreesCelsiusPerKilometer() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.TemperatureGradientDegreeCelsiusPerKilometer)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromDegreesCelciusPerKilometer() with zero value = %v, want 0", converted)
+        t.Errorf("FromDegreesCelsiusPerKilometer() with zero value = %v, want 0", converted)
     }
 }
 

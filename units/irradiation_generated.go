@@ -367,7 +367,7 @@ func (a *Irradiation) convertFromBase(toUnit IrradiationUnits) float64 {
 	case IrradiationWattHourPerSquareMeter:
 		return (value / 3600) 
 	case IrradiationBtuPerSquareFoot:
-		return (value / (52752792631 / 4645152)) 
+		return (value * 9.290304e-2 / 1055.05585262) 
 	case IrradiationKilojoulePerSquareMeter:
 		return ((value) / 1000.0) 
 	case IrradiationMillijoulePerSquareCentimeter:
@@ -375,7 +375,7 @@ func (a *Irradiation) convertFromBase(toUnit IrradiationUnits) float64 {
 	case IrradiationKilowattHourPerSquareMeter:
 		return ((value / 3600) / 1000.0) 
 	case IrradiationKilobtuPerSquareFoot:
-		return ((value / (52752792631 / 4645152)) / 1000.0) 
+		return ((value * 9.290304e-2 / 1055.05585262) / 1000.0) 
 	default:
 		return math.NaN()
 	}
@@ -392,7 +392,7 @@ func (a *Irradiation) convertToBase(value float64, fromUnit IrradiationUnits) fl
 	case IrradiationWattHourPerSquareMeter:
 		return (value * 3600) 
 	case IrradiationBtuPerSquareFoot:
-		return (value * (52752792631 / 4645152)) 
+		return (value * 1055.05585262 / 9.290304e-2) 
 	case IrradiationKilojoulePerSquareMeter:
 		return ((value) * 1000.0) 
 	case IrradiationMillijoulePerSquareCentimeter:
@@ -400,7 +400,7 @@ func (a *Irradiation) convertToBase(value float64, fromUnit IrradiationUnits) fl
 	case IrradiationKilowattHourPerSquareMeter:
 		return ((value * 3600) * 1000.0) 
 	case IrradiationKilobtuPerSquareFoot:
-		return ((value * (52752792631 / 4645152)) * 1000.0) 
+		return ((value * 1055.05585262 / 9.290304e-2) * 1000.0) 
 	default:
 		return math.NaN()
 	}

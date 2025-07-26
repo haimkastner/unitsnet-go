@@ -36,6 +36,8 @@ const (
         // 
         DurationSol DurationUnits = "Sol"
         // 
+        DurationPicosecond DurationUnits = "Picosecond"
+        // 
         DurationNanosecond DurationUnits = "Nanosecond"
         // 
         DurationMicrosecond DurationUnits = "Microsecond"
@@ -54,6 +56,7 @@ var internalDurationUnitsMap = map[DurationUnits]bool{
 	DurationSecond: true,
 	DurationJulianYear: true,
 	DurationSol: true,
+	DurationPicosecond: true,
 	DurationNanosecond: true,
 	DurationMicrosecond: true,
 	DurationMillisecond: true,
@@ -64,7 +67,7 @@ type DurationDto struct {
     // Value is the numerical representation of the Duration.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Duration, as defined in the DurationUnits enumeration.
-	Unit  DurationUnits `json:"unit" validate:"required,oneof=Year365 Month30 Week Day Hour Minute Second JulianYear Sol Nanosecond Microsecond Millisecond"`
+	Unit  DurationUnits `json:"unit" validate:"required,oneof=Year365 Month30 Week Day Hour Minute Second JulianYear Sol Picosecond Nanosecond Microsecond Millisecond"`
 }
 
 // DurationDtoFactory groups methods for creating and serializing DurationDto objects.
@@ -112,6 +115,7 @@ type Duration struct {
     secondsLazy *float64 
     julian_yearsLazy *float64 
     solsLazy *float64 
+    picosecondsLazy *float64 
     nanosecondsLazy *float64 
     microsecondsLazy *float64 
     millisecondsLazy *float64 
@@ -183,6 +187,11 @@ func (uf DurationFactory) FromJulianYears(value float64) (*Duration, error) {
 // FromSols creates a new Duration instance from a value in Sols.
 func (uf DurationFactory) FromSols(value float64) (*Duration, error) {
 	return newDuration(value, DurationSol)
+}
+
+// FromPicoseconds creates a new Duration instance from a value in Picoseconds.
+func (uf DurationFactory) FromPicoseconds(value float64) (*Duration, error) {
+	return newDuration(value, DurationPicosecond)
 }
 
 // FromNanoseconds creates a new Duration instance from a value in Nanoseconds.
@@ -328,6 +337,18 @@ func (a *Duration) Sols() float64 {
 	return sols
 }
 
+// Picoseconds returns the Duration value in Picoseconds.
+//
+// 
+func (a *Duration) Picoseconds() float64 {
+	if a.picosecondsLazy != nil {
+		return *a.picosecondsLazy
+	}
+	picoseconds := a.convertFromBase(DurationPicosecond)
+	a.picosecondsLazy = &picoseconds
+	return picoseconds
+}
+
 // Nanoseconds returns the Duration value in Nanoseconds.
 //
 // 
@@ -413,6 +434,8 @@ func (a *Duration) Convert(toUnit DurationUnits) float64 {
 		return a.JulianYears()
     case DurationSol:
 		return a.Sols()
+    case DurationPicosecond:
+		return a.Picoseconds()
     case DurationNanosecond:
 		return a.Nanoseconds()
     case DurationMicrosecond:
@@ -445,6 +468,8 @@ func (a *Duration) convertFromBase(toUnit DurationUnits) float64 {
 		return (value / (365.25 * 24 * 3600)) 
 	case DurationSol:
 		return (value / 88775.244) 
+	case DurationPicosecond:
+		return ((value) / 1e-12) 
 	case DurationNanosecond:
 		return ((value) / 1e-09) 
 	case DurationMicrosecond:
@@ -476,6 +501,8 @@ func (a *Duration) convertToBase(value float64, fromUnit DurationUnits) float64 
 		return (value * 365.25 * 24 * 3600) 
 	case DurationSol:
 		return (value * 88775.244) 
+	case DurationPicosecond:
+		return ((value) * 1e-12) 
 	case DurationNanosecond:
 		return ((value) * 1e-09) 
 	case DurationMicrosecond:
@@ -613,6 +640,8 @@ func GetDurationAbbreviation(unit DurationUnits) string {
 		return "jyr" 
 	case DurationSol:
 		return "sol" 
+	case DurationPicosecond:
+		return "ps" 
 	case DurationNanosecond:
 		return "ns" 
 	case DurationMicrosecond:

@@ -388,13 +388,13 @@ func (a *DynamicViscosity) convertFromBase(toUnit DynamicViscosityUnits) float64
 	case DynamicViscosityPoise:
 		return (value * 10) 
 	case DynamicViscosityReyn:
-		return (value / 6.8947572931683613e3) 
+		return (value * 0.00064516 / 4.4482216152605) 
 	case DynamicViscosityPoundForceSecondPerSquareInch:
-		return (value / 6.8947572931683613e3) 
+		return (value * 0.00064516 / 4.4482216152605) 
 	case DynamicViscosityPoundForceSecondPerSquareFoot:
-		return (value / 4.7880258980335843e1) 
+		return (value * 9.290304e-2 / 4.4482216152605) 
 	case DynamicViscosityPoundPerFootSecond:
-		return (value / 1.4881639) 
+		return (value * 0.3048 / 0.45359237) 
 	case DynamicViscosityMillipascalSecond:
 		return ((value) / 0.001) 
 	case DynamicViscosityMicropascalSecond:
@@ -415,13 +415,13 @@ func (a *DynamicViscosity) convertToBase(value float64, fromUnit DynamicViscosit
 	case DynamicViscosityPoise:
 		return (value / 10) 
 	case DynamicViscosityReyn:
-		return (value * 6.8947572931683613e3) 
+		return (value * 4.4482216152605 / 0.00064516) 
 	case DynamicViscosityPoundForceSecondPerSquareInch:
-		return (value * 6.8947572931683613e3) 
+		return (value * 4.4482216152605 / 0.00064516) 
 	case DynamicViscosityPoundForceSecondPerSquareFoot:
-		return (value * 4.7880258980335843e1) 
+		return (value * 4.4482216152605 / 9.290304e-2) 
 	case DynamicViscosityPoundPerFootSecond:
-		return (value * 1.4881639) 
+		return (value * 0.45359237 / 0.3048) 
 	case DynamicViscosityMillipascalSecond:
 		return ((value) * 0.001) 
 	case DynamicViscosityMicropascalSecond:
@@ -554,7 +554,7 @@ func GetDynamicViscosityAbbreviation(unit DynamicViscosityUnits) string {
 	case DynamicViscosityPoundForceSecondPerSquareFoot:
 		return "lbf·s/ft²" 
 	case DynamicViscosityPoundPerFootSecond:
-		return "lb/ft·s" 
+		return "lb/(ft·s)" 
 	case DynamicViscosityMillipascalSecond:
 		return "mPa·s" 
 	case DynamicViscosityMicropascalSecond:

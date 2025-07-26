@@ -461,12 +461,12 @@ func TestGetThermalConductivityAbbreviation(t *testing.T) {
         {
             name: "WattPerMeterKelvin abbreviation",
             unit: units.ThermalConductivityWattPerMeterKelvin,
-            want: "W/m·K",
+            want: "W/(m·K)",
         },
         {
             name: "BtuPerHourFootFahrenheit abbreviation",
             unit: units.ThermalConductivityBtuPerHourFootFahrenheit,
-            want: "BTU/h·ft·°F",
+            want: "BTU/(h·ft·°F)",
         },
         {
             name: "invalid unit",

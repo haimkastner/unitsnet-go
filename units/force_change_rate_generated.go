@@ -501,9 +501,9 @@ func (a *ForceChangeRate) convertFromBase(toUnit ForceChangeRateUnits) float64 {
 	case ForceChangeRateNewtonPerSecond:
 		return (value) 
 	case ForceChangeRatePoundForcePerMinute:
-		return (value / 4.4482216152605095551842641431421 * 60) 
+		return (value / 4.4482216152605 * 60) 
 	case ForceChangeRatePoundForcePerSecond:
-		return (value / 4.4482216152605095551842641431421) 
+		return (value / 4.4482216152605) 
 	case ForceChangeRateDecanewtonPerMinute:
 		return ((value * 60) / 10.0) 
 	case ForceChangeRateKilonewtonPerMinute:
@@ -523,9 +523,9 @@ func (a *ForceChangeRate) convertFromBase(toUnit ForceChangeRateUnits) float64 {
 	case ForceChangeRateKilonewtonPerSecond:
 		return ((value) / 1000.0) 
 	case ForceChangeRateKilopoundForcePerMinute:
-		return ((value / 4.4482216152605095551842641431421 * 60) / 1000.0) 
+		return ((value / 4.4482216152605 * 60) / 1000.0) 
 	case ForceChangeRateKilopoundForcePerSecond:
-		return ((value / 4.4482216152605095551842641431421) / 1000.0) 
+		return ((value / 4.4482216152605) / 1000.0) 
 	default:
 		return math.NaN()
 	}
@@ -538,9 +538,9 @@ func (a *ForceChangeRate) convertToBase(value float64, fromUnit ForceChangeRateU
 	case ForceChangeRateNewtonPerSecond:
 		return (value) 
 	case ForceChangeRatePoundForcePerMinute:
-		return (value * 4.4482216152605095551842641431421 / 60) 
+		return (value * 4.4482216152605 / 60) 
 	case ForceChangeRatePoundForcePerSecond:
-		return (value * 4.4482216152605095551842641431421) 
+		return (value * 4.4482216152605) 
 	case ForceChangeRateDecanewtonPerMinute:
 		return ((value / 60) * 10.0) 
 	case ForceChangeRateKilonewtonPerMinute:
@@ -560,9 +560,9 @@ func (a *ForceChangeRate) convertToBase(value float64, fromUnit ForceChangeRateU
 	case ForceChangeRateKilonewtonPerSecond:
 		return ((value) * 1000.0) 
 	case ForceChangeRateKilopoundForcePerMinute:
-		return ((value * 4.4482216152605095551842641431421 / 60) * 1000.0) 
+		return ((value * 4.4482216152605 / 60) * 1000.0) 
 	case ForceChangeRateKilopoundForcePerSecond:
-		return ((value * 4.4482216152605095551842641431421) * 1000.0) 
+		return ((value * 4.4482216152605) * 1000.0) 
 	default:
 		return math.NaN()
 	}

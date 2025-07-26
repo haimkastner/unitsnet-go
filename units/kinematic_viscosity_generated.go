@@ -363,7 +363,7 @@ func (a *KinematicViscosity) convertFromBase(toUnit KinematicViscosityUnits) flo
 	case KinematicViscosityStokes:
 		return (value * 1e4) 
 	case KinematicViscositySquareFootPerSecond:
-		return (value * 10.7639) 
+		return (value / 9.290304e-2) 
 	case KinematicViscosityNanostokes:
 		return ((value * 1e4) / 1e-09) 
 	case KinematicViscosityMicrostokes:
@@ -388,7 +388,7 @@ func (a *KinematicViscosity) convertToBase(value float64, fromUnit KinematicVisc
 	case KinematicViscosityStokes:
 		return (value / 1e4) 
 	case KinematicViscositySquareFootPerSecond:
-		return (value / 10.7639) 
+		return (value * 9.290304e-2) 
 	case KinematicViscosityNanostokes:
 		return ((value / 1e4) * 1e-09) 
 	case KinematicViscosityMicrostokes:

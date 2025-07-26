@@ -177,12 +177,12 @@ func TestDensityConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to GramsPerDeciLiter.
-		// No expected conversion value provided for GramsPerDeciLiter, verifying result is not NaN.
-		result := a.GramsPerDeciLiter()
-		cacheResult := a.GramsPerDeciLiter()
+		// Test conversion to GramsPerDeciliter.
+		// No expected conversion value provided for GramsPerDeciliter, verifying result is not NaN.
+		result := a.GramsPerDeciliter()
+		cacheResult := a.GramsPerDeciliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to GramsPerDeciLiter returned NaN")
+			t.Errorf("conversion to GramsPerDeciliter returned NaN")
 		}
 	}
 	{
@@ -456,66 +456,66 @@ func TestDensityConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to FemtogramsPerDeciLiter.
-		// No expected conversion value provided for FemtogramsPerDeciLiter, verifying result is not NaN.
-		result := a.FemtogramsPerDeciLiter()
-		cacheResult := a.FemtogramsPerDeciLiter()
+		// Test conversion to FemtogramsPerDeciliter.
+		// No expected conversion value provided for FemtogramsPerDeciliter, verifying result is not NaN.
+		result := a.FemtogramsPerDeciliter()
+		cacheResult := a.FemtogramsPerDeciliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to FemtogramsPerDeciLiter returned NaN")
+			t.Errorf("conversion to FemtogramsPerDeciliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to PicogramsPerDeciLiter.
-		// No expected conversion value provided for PicogramsPerDeciLiter, verifying result is not NaN.
-		result := a.PicogramsPerDeciLiter()
-		cacheResult := a.PicogramsPerDeciLiter()
+		// Test conversion to PicogramsPerDeciliter.
+		// No expected conversion value provided for PicogramsPerDeciliter, verifying result is not NaN.
+		result := a.PicogramsPerDeciliter()
+		cacheResult := a.PicogramsPerDeciliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to PicogramsPerDeciLiter returned NaN")
+			t.Errorf("conversion to PicogramsPerDeciliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to NanogramsPerDeciLiter.
-		// No expected conversion value provided for NanogramsPerDeciLiter, verifying result is not NaN.
-		result := a.NanogramsPerDeciLiter()
-		cacheResult := a.NanogramsPerDeciLiter()
+		// Test conversion to NanogramsPerDeciliter.
+		// No expected conversion value provided for NanogramsPerDeciliter, verifying result is not NaN.
+		result := a.NanogramsPerDeciliter()
+		cacheResult := a.NanogramsPerDeciliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to NanogramsPerDeciLiter returned NaN")
+			t.Errorf("conversion to NanogramsPerDeciliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to MicrogramsPerDeciLiter.
-		// No expected conversion value provided for MicrogramsPerDeciLiter, verifying result is not NaN.
-		result := a.MicrogramsPerDeciLiter()
-		cacheResult := a.MicrogramsPerDeciLiter()
+		// Test conversion to MicrogramsPerDeciliter.
+		// No expected conversion value provided for MicrogramsPerDeciliter, verifying result is not NaN.
+		result := a.MicrogramsPerDeciliter()
+		cacheResult := a.MicrogramsPerDeciliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MicrogramsPerDeciLiter returned NaN")
+			t.Errorf("conversion to MicrogramsPerDeciliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to MilligramsPerDeciLiter.
-		// No expected conversion value provided for MilligramsPerDeciLiter, verifying result is not NaN.
-		result := a.MilligramsPerDeciLiter()
-		cacheResult := a.MilligramsPerDeciLiter()
+		// Test conversion to MilligramsPerDeciliter.
+		// No expected conversion value provided for MilligramsPerDeciliter, verifying result is not NaN.
+		result := a.MilligramsPerDeciliter()
+		cacheResult := a.MilligramsPerDeciliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MilligramsPerDeciLiter returned NaN")
+			t.Errorf("conversion to MilligramsPerDeciliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to CentigramsPerDeciLiter.
-		// No expected conversion value provided for CentigramsPerDeciLiter, verifying result is not NaN.
-		result := a.CentigramsPerDeciLiter()
-		cacheResult := a.CentigramsPerDeciLiter()
+		// Test conversion to CentigramsPerDeciliter.
+		// No expected conversion value provided for CentigramsPerDeciliter, verifying result is not NaN.
+		result := a.CentigramsPerDeciliter()
+		cacheResult := a.CentigramsPerDeciliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to CentigramsPerDeciLiter returned NaN")
+			t.Errorf("conversion to CentigramsPerDeciliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to DecigramsPerDeciLiter.
-		// No expected conversion value provided for DecigramsPerDeciLiter, verifying result is not NaN.
-		result := a.DecigramsPerDeciLiter()
-		cacheResult := a.DecigramsPerDeciLiter()
+		// Test conversion to DecigramsPerDeciliter.
+		// No expected conversion value provided for DecigramsPerDeciliter, verifying result is not NaN.
+		result := a.DecigramsPerDeciliter()
+		cacheResult := a.DecigramsPerDeciliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to DecigramsPerDeciLiter returned NaN")
+			t.Errorf("conversion to DecigramsPerDeciliter returned NaN")
 		}
 	}
 	{
@@ -838,19 +838,19 @@ func TestDensityFactory_FromDto(t *testing.T) {
         t.Errorf("Round-trip conversion for GramPerLiter = %v, want %v", converted, 100)
     }
     // Test GramPerDeciliter conversion
-    grams_per_deci_literDto := units.DensityDto{
+    grams_per_deciliterDto := units.DensityDto{
         Value: 100,
         Unit:  units.DensityGramPerDeciliter,
     }
     
-    var grams_per_deci_literResult *units.Density
-    grams_per_deci_literResult, err = factory.FromDto(grams_per_deci_literDto)
+    var grams_per_deciliterResult *units.Density
+    grams_per_deciliterResult, err = factory.FromDto(grams_per_deciliterDto)
     if err != nil {
         t.Errorf("FromDto() with GramPerDeciliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = grams_per_deci_literResult.Convert(units.DensityGramPerDeciliter)
+    converted = grams_per_deciliterResult.Convert(units.DensityGramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for GramPerDeciliter = %v, want %v", converted, 100)
     }
@@ -1365,121 +1365,121 @@ func TestDensityFactory_FromDto(t *testing.T) {
         t.Errorf("Round-trip conversion for DecigramPerLiter = %v, want %v", converted, 100)
     }
     // Test FemtogramPerDeciliter conversion
-    femtograms_per_deci_literDto := units.DensityDto{
+    femtograms_per_deciliterDto := units.DensityDto{
         Value: 100,
         Unit:  units.DensityFemtogramPerDeciliter,
     }
     
-    var femtograms_per_deci_literResult *units.Density
-    femtograms_per_deci_literResult, err = factory.FromDto(femtograms_per_deci_literDto)
+    var femtograms_per_deciliterResult *units.Density
+    femtograms_per_deciliterResult, err = factory.FromDto(femtograms_per_deciliterDto)
     if err != nil {
         t.Errorf("FromDto() with FemtogramPerDeciliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = femtograms_per_deci_literResult.Convert(units.DensityFemtogramPerDeciliter)
+    converted = femtograms_per_deciliterResult.Convert(units.DensityFemtogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for FemtogramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test PicogramPerDeciliter conversion
-    picograms_per_deci_literDto := units.DensityDto{
+    picograms_per_deciliterDto := units.DensityDto{
         Value: 100,
         Unit:  units.DensityPicogramPerDeciliter,
     }
     
-    var picograms_per_deci_literResult *units.Density
-    picograms_per_deci_literResult, err = factory.FromDto(picograms_per_deci_literDto)
+    var picograms_per_deciliterResult *units.Density
+    picograms_per_deciliterResult, err = factory.FromDto(picograms_per_deciliterDto)
     if err != nil {
         t.Errorf("FromDto() with PicogramPerDeciliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = picograms_per_deci_literResult.Convert(units.DensityPicogramPerDeciliter)
+    converted = picograms_per_deciliterResult.Convert(units.DensityPicogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for PicogramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test NanogramPerDeciliter conversion
-    nanograms_per_deci_literDto := units.DensityDto{
+    nanograms_per_deciliterDto := units.DensityDto{
         Value: 100,
         Unit:  units.DensityNanogramPerDeciliter,
     }
     
-    var nanograms_per_deci_literResult *units.Density
-    nanograms_per_deci_literResult, err = factory.FromDto(nanograms_per_deci_literDto)
+    var nanograms_per_deciliterResult *units.Density
+    nanograms_per_deciliterResult, err = factory.FromDto(nanograms_per_deciliterDto)
     if err != nil {
         t.Errorf("FromDto() with NanogramPerDeciliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = nanograms_per_deci_literResult.Convert(units.DensityNanogramPerDeciliter)
+    converted = nanograms_per_deciliterResult.Convert(units.DensityNanogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for NanogramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test MicrogramPerDeciliter conversion
-    micrograms_per_deci_literDto := units.DensityDto{
+    micrograms_per_deciliterDto := units.DensityDto{
         Value: 100,
         Unit:  units.DensityMicrogramPerDeciliter,
     }
     
-    var micrograms_per_deci_literResult *units.Density
-    micrograms_per_deci_literResult, err = factory.FromDto(micrograms_per_deci_literDto)
+    var micrograms_per_deciliterResult *units.Density
+    micrograms_per_deciliterResult, err = factory.FromDto(micrograms_per_deciliterDto)
     if err != nil {
         t.Errorf("FromDto() with MicrogramPerDeciliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = micrograms_per_deci_literResult.Convert(units.DensityMicrogramPerDeciliter)
+    converted = micrograms_per_deciliterResult.Convert(units.DensityMicrogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrogramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test MilligramPerDeciliter conversion
-    milligrams_per_deci_literDto := units.DensityDto{
+    milligrams_per_deciliterDto := units.DensityDto{
         Value: 100,
         Unit:  units.DensityMilligramPerDeciliter,
     }
     
-    var milligrams_per_deci_literResult *units.Density
-    milligrams_per_deci_literResult, err = factory.FromDto(milligrams_per_deci_literDto)
+    var milligrams_per_deciliterResult *units.Density
+    milligrams_per_deciliterResult, err = factory.FromDto(milligrams_per_deciliterDto)
     if err != nil {
         t.Errorf("FromDto() with MilligramPerDeciliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = milligrams_per_deci_literResult.Convert(units.DensityMilligramPerDeciliter)
+    converted = milligrams_per_deciliterResult.Convert(units.DensityMilligramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MilligramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test CentigramPerDeciliter conversion
-    centigrams_per_deci_literDto := units.DensityDto{
+    centigrams_per_deciliterDto := units.DensityDto{
         Value: 100,
         Unit:  units.DensityCentigramPerDeciliter,
     }
     
-    var centigrams_per_deci_literResult *units.Density
-    centigrams_per_deci_literResult, err = factory.FromDto(centigrams_per_deci_literDto)
+    var centigrams_per_deciliterResult *units.Density
+    centigrams_per_deciliterResult, err = factory.FromDto(centigrams_per_deciliterDto)
     if err != nil {
         t.Errorf("FromDto() with CentigramPerDeciliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = centigrams_per_deci_literResult.Convert(units.DensityCentigramPerDeciliter)
+    converted = centigrams_per_deciliterResult.Convert(units.DensityCentigramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for CentigramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test DecigramPerDeciliter conversion
-    decigrams_per_deci_literDto := units.DensityDto{
+    decigrams_per_deciliterDto := units.DensityDto{
         Value: 100,
         Unit:  units.DensityDecigramPerDeciliter,
     }
     
-    var decigrams_per_deci_literResult *units.Density
-    decigrams_per_deci_literResult, err = factory.FromDto(decigrams_per_deci_literDto)
+    var decigrams_per_deciliterResult *units.Density
+    decigrams_per_deciliterResult, err = factory.FromDto(decigrams_per_deciliterDto)
     if err != nil {
         t.Errorf("FromDto() with DecigramPerDeciliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = decigrams_per_deci_literResult.Convert(units.DensityDecigramPerDeciliter)
+    converted = decigrams_per_deciliterResult.Convert(units.DensityDecigramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DecigramPerDeciliter = %v, want %v", converted, 100)
     }
@@ -1799,14 +1799,14 @@ func TestDensityFactory_FromDtoJSON(t *testing.T) {
         t.Errorf("Round-trip conversion for GramPerLiter = %v, want %v", converted, 100)
     }
     // Test JSON with GramPerDeciliter unit
-    grams_per_deci_literJSON := []byte(`{"value": 100, "unit": "GramPerDeciliter"}`)
-    grams_per_deci_literResult, err := factory.FromDtoJSON(grams_per_deci_literJSON)
+    grams_per_deciliterJSON := []byte(`{"value": 100, "unit": "GramPerDeciliter"}`)
+    grams_per_deciliterResult, err := factory.FromDtoJSON(grams_per_deciliterJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with GramPerDeciliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = grams_per_deci_literResult.Convert(units.DensityGramPerDeciliter)
+    converted = grams_per_deciliterResult.Convert(units.DensityGramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for GramPerDeciliter = %v, want %v", converted, 100)
     }
@@ -2171,86 +2171,86 @@ func TestDensityFactory_FromDtoJSON(t *testing.T) {
         t.Errorf("Round-trip conversion for DecigramPerLiter = %v, want %v", converted, 100)
     }
     // Test JSON with FemtogramPerDeciliter unit
-    femtograms_per_deci_literJSON := []byte(`{"value": 100, "unit": "FemtogramPerDeciliter"}`)
-    femtograms_per_deci_literResult, err := factory.FromDtoJSON(femtograms_per_deci_literJSON)
+    femtograms_per_deciliterJSON := []byte(`{"value": 100, "unit": "FemtogramPerDeciliter"}`)
+    femtograms_per_deciliterResult, err := factory.FromDtoJSON(femtograms_per_deciliterJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with FemtogramPerDeciliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = femtograms_per_deci_literResult.Convert(units.DensityFemtogramPerDeciliter)
+    converted = femtograms_per_deciliterResult.Convert(units.DensityFemtogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for FemtogramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test JSON with PicogramPerDeciliter unit
-    picograms_per_deci_literJSON := []byte(`{"value": 100, "unit": "PicogramPerDeciliter"}`)
-    picograms_per_deci_literResult, err := factory.FromDtoJSON(picograms_per_deci_literJSON)
+    picograms_per_deciliterJSON := []byte(`{"value": 100, "unit": "PicogramPerDeciliter"}`)
+    picograms_per_deciliterResult, err := factory.FromDtoJSON(picograms_per_deciliterJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with PicogramPerDeciliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = picograms_per_deci_literResult.Convert(units.DensityPicogramPerDeciliter)
+    converted = picograms_per_deciliterResult.Convert(units.DensityPicogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for PicogramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test JSON with NanogramPerDeciliter unit
-    nanograms_per_deci_literJSON := []byte(`{"value": 100, "unit": "NanogramPerDeciliter"}`)
-    nanograms_per_deci_literResult, err := factory.FromDtoJSON(nanograms_per_deci_literJSON)
+    nanograms_per_deciliterJSON := []byte(`{"value": 100, "unit": "NanogramPerDeciliter"}`)
+    nanograms_per_deciliterResult, err := factory.FromDtoJSON(nanograms_per_deciliterJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with NanogramPerDeciliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = nanograms_per_deci_literResult.Convert(units.DensityNanogramPerDeciliter)
+    converted = nanograms_per_deciliterResult.Convert(units.DensityNanogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for NanogramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test JSON with MicrogramPerDeciliter unit
-    micrograms_per_deci_literJSON := []byte(`{"value": 100, "unit": "MicrogramPerDeciliter"}`)
-    micrograms_per_deci_literResult, err := factory.FromDtoJSON(micrograms_per_deci_literJSON)
+    micrograms_per_deciliterJSON := []byte(`{"value": 100, "unit": "MicrogramPerDeciliter"}`)
+    micrograms_per_deciliterResult, err := factory.FromDtoJSON(micrograms_per_deciliterJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MicrogramPerDeciliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = micrograms_per_deci_literResult.Convert(units.DensityMicrogramPerDeciliter)
+    converted = micrograms_per_deciliterResult.Convert(units.DensityMicrogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrogramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test JSON with MilligramPerDeciliter unit
-    milligrams_per_deci_literJSON := []byte(`{"value": 100, "unit": "MilligramPerDeciliter"}`)
-    milligrams_per_deci_literResult, err := factory.FromDtoJSON(milligrams_per_deci_literJSON)
+    milligrams_per_deciliterJSON := []byte(`{"value": 100, "unit": "MilligramPerDeciliter"}`)
+    milligrams_per_deciliterResult, err := factory.FromDtoJSON(milligrams_per_deciliterJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MilligramPerDeciliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = milligrams_per_deci_literResult.Convert(units.DensityMilligramPerDeciliter)
+    converted = milligrams_per_deciliterResult.Convert(units.DensityMilligramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MilligramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test JSON with CentigramPerDeciliter unit
-    centigrams_per_deci_literJSON := []byte(`{"value": 100, "unit": "CentigramPerDeciliter"}`)
-    centigrams_per_deci_literResult, err := factory.FromDtoJSON(centigrams_per_deci_literJSON)
+    centigrams_per_deciliterJSON := []byte(`{"value": 100, "unit": "CentigramPerDeciliter"}`)
+    centigrams_per_deciliterResult, err := factory.FromDtoJSON(centigrams_per_deciliterJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with CentigramPerDeciliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = centigrams_per_deci_literResult.Convert(units.DensityCentigramPerDeciliter)
+    converted = centigrams_per_deciliterResult.Convert(units.DensityCentigramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for CentigramPerDeciliter = %v, want %v", converted, 100)
     }
     // Test JSON with DecigramPerDeciliter unit
-    decigrams_per_deci_literJSON := []byte(`{"value": 100, "unit": "DecigramPerDeciliter"}`)
-    decigrams_per_deci_literResult, err := factory.FromDtoJSON(decigrams_per_deci_literJSON)
+    decigrams_per_deciliterJSON := []byte(`{"value": 100, "unit": "DecigramPerDeciliter"}`)
+    decigrams_per_deciliterResult, err := factory.FromDtoJSON(decigrams_per_deciliterJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with DecigramPerDeciliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = decigrams_per_deci_literResult.Convert(units.DensityDecigramPerDeciliter)
+    converted = decigrams_per_deciliterResult.Convert(units.DensityDecigramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DecigramPerDeciliter = %v, want %v", converted, 100)
     }
@@ -2822,47 +2822,47 @@ func TestDensityFactory_FromGramsPerLiter(t *testing.T) {
         t.Errorf("FromGramsPerLiter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromGramsPerDeciLiter function
-func TestDensityFactory_FromGramsPerDeciLiter(t *testing.T) {
+// Test FromGramsPerDeciliter function
+func TestDensityFactory_FromGramsPerDeciliter(t *testing.T) {
     factory := units.DensityFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromGramsPerDeciLiter(100)
+    result, err := factory.FromGramsPerDeciliter(100)
     if err != nil {
-        t.Errorf("FromGramsPerDeciLiter() returned error: %v", err)
+        t.Errorf("FromGramsPerDeciliter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.DensityGramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromGramsPerDeciLiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromGramsPerDeciliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromGramsPerDeciLiter(math.NaN())
+    _, err = factory.FromGramsPerDeciliter(math.NaN())
     if err == nil {
-        t.Error("FromGramsPerDeciLiter() with NaN value should return error")
+        t.Error("FromGramsPerDeciliter() with NaN value should return error")
     }
 
-    _, err = factory.FromGramsPerDeciLiter(math.Inf(1))
+    _, err = factory.FromGramsPerDeciliter(math.Inf(1))
     if err == nil {
-        t.Error("FromGramsPerDeciLiter() with +Inf value should return error")
+        t.Error("FromGramsPerDeciliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromGramsPerDeciLiter(math.Inf(-1))
+    _, err = factory.FromGramsPerDeciliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromGramsPerDeciLiter() with -Inf value should return error")
+        t.Error("FromGramsPerDeciliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromGramsPerDeciLiter(0)
+    zeroResult, err := factory.FromGramsPerDeciliter(0)
     if err != nil {
-        t.Errorf("FromGramsPerDeciLiter() with zero value returned error: %v", err)
+        t.Errorf("FromGramsPerDeciliter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.DensityGramPerDeciliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromGramsPerDeciLiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromGramsPerDeciliter() with zero value = %v, want 0", converted)
     }
 }
 // Test FromGramsPerMilliliter function
@@ -4155,305 +4155,305 @@ func TestDensityFactory_FromDecigramsPerLiter(t *testing.T) {
         t.Errorf("FromDecigramsPerLiter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromFemtogramsPerDeciLiter function
-func TestDensityFactory_FromFemtogramsPerDeciLiter(t *testing.T) {
+// Test FromFemtogramsPerDeciliter function
+func TestDensityFactory_FromFemtogramsPerDeciliter(t *testing.T) {
     factory := units.DensityFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromFemtogramsPerDeciLiter(100)
+    result, err := factory.FromFemtogramsPerDeciliter(100)
     if err != nil {
-        t.Errorf("FromFemtogramsPerDeciLiter() returned error: %v", err)
+        t.Errorf("FromFemtogramsPerDeciliter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.DensityFemtogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromFemtogramsPerDeciLiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromFemtogramsPerDeciliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromFemtogramsPerDeciLiter(math.NaN())
+    _, err = factory.FromFemtogramsPerDeciliter(math.NaN())
     if err == nil {
-        t.Error("FromFemtogramsPerDeciLiter() with NaN value should return error")
+        t.Error("FromFemtogramsPerDeciliter() with NaN value should return error")
     }
 
-    _, err = factory.FromFemtogramsPerDeciLiter(math.Inf(1))
+    _, err = factory.FromFemtogramsPerDeciliter(math.Inf(1))
     if err == nil {
-        t.Error("FromFemtogramsPerDeciLiter() with +Inf value should return error")
+        t.Error("FromFemtogramsPerDeciliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromFemtogramsPerDeciLiter(math.Inf(-1))
+    _, err = factory.FromFemtogramsPerDeciliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromFemtogramsPerDeciLiter() with -Inf value should return error")
+        t.Error("FromFemtogramsPerDeciliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromFemtogramsPerDeciLiter(0)
+    zeroResult, err := factory.FromFemtogramsPerDeciliter(0)
     if err != nil {
-        t.Errorf("FromFemtogramsPerDeciLiter() with zero value returned error: %v", err)
+        t.Errorf("FromFemtogramsPerDeciliter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.DensityFemtogramPerDeciliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromFemtogramsPerDeciLiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromFemtogramsPerDeciliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromPicogramsPerDeciLiter function
-func TestDensityFactory_FromPicogramsPerDeciLiter(t *testing.T) {
+// Test FromPicogramsPerDeciliter function
+func TestDensityFactory_FromPicogramsPerDeciliter(t *testing.T) {
     factory := units.DensityFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromPicogramsPerDeciLiter(100)
+    result, err := factory.FromPicogramsPerDeciliter(100)
     if err != nil {
-        t.Errorf("FromPicogramsPerDeciLiter() returned error: %v", err)
+        t.Errorf("FromPicogramsPerDeciliter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.DensityPicogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromPicogramsPerDeciLiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromPicogramsPerDeciliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromPicogramsPerDeciLiter(math.NaN())
+    _, err = factory.FromPicogramsPerDeciliter(math.NaN())
     if err == nil {
-        t.Error("FromPicogramsPerDeciLiter() with NaN value should return error")
+        t.Error("FromPicogramsPerDeciliter() with NaN value should return error")
     }
 
-    _, err = factory.FromPicogramsPerDeciLiter(math.Inf(1))
+    _, err = factory.FromPicogramsPerDeciliter(math.Inf(1))
     if err == nil {
-        t.Error("FromPicogramsPerDeciLiter() with +Inf value should return error")
+        t.Error("FromPicogramsPerDeciliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromPicogramsPerDeciLiter(math.Inf(-1))
+    _, err = factory.FromPicogramsPerDeciliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromPicogramsPerDeciLiter() with -Inf value should return error")
+        t.Error("FromPicogramsPerDeciliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromPicogramsPerDeciLiter(0)
+    zeroResult, err := factory.FromPicogramsPerDeciliter(0)
     if err != nil {
-        t.Errorf("FromPicogramsPerDeciLiter() with zero value returned error: %v", err)
+        t.Errorf("FromPicogramsPerDeciliter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.DensityPicogramPerDeciliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromPicogramsPerDeciLiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromPicogramsPerDeciliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromNanogramsPerDeciLiter function
-func TestDensityFactory_FromNanogramsPerDeciLiter(t *testing.T) {
+// Test FromNanogramsPerDeciliter function
+func TestDensityFactory_FromNanogramsPerDeciliter(t *testing.T) {
     factory := units.DensityFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromNanogramsPerDeciLiter(100)
+    result, err := factory.FromNanogramsPerDeciliter(100)
     if err != nil {
-        t.Errorf("FromNanogramsPerDeciLiter() returned error: %v", err)
+        t.Errorf("FromNanogramsPerDeciliter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.DensityNanogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromNanogramsPerDeciLiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromNanogramsPerDeciliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromNanogramsPerDeciLiter(math.NaN())
+    _, err = factory.FromNanogramsPerDeciliter(math.NaN())
     if err == nil {
-        t.Error("FromNanogramsPerDeciLiter() with NaN value should return error")
+        t.Error("FromNanogramsPerDeciliter() with NaN value should return error")
     }
 
-    _, err = factory.FromNanogramsPerDeciLiter(math.Inf(1))
+    _, err = factory.FromNanogramsPerDeciliter(math.Inf(1))
     if err == nil {
-        t.Error("FromNanogramsPerDeciLiter() with +Inf value should return error")
+        t.Error("FromNanogramsPerDeciliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromNanogramsPerDeciLiter(math.Inf(-1))
+    _, err = factory.FromNanogramsPerDeciliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromNanogramsPerDeciLiter() with -Inf value should return error")
+        t.Error("FromNanogramsPerDeciliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromNanogramsPerDeciLiter(0)
+    zeroResult, err := factory.FromNanogramsPerDeciliter(0)
     if err != nil {
-        t.Errorf("FromNanogramsPerDeciLiter() with zero value returned error: %v", err)
+        t.Errorf("FromNanogramsPerDeciliter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.DensityNanogramPerDeciliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromNanogramsPerDeciLiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromNanogramsPerDeciliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMicrogramsPerDeciLiter function
-func TestDensityFactory_FromMicrogramsPerDeciLiter(t *testing.T) {
+// Test FromMicrogramsPerDeciliter function
+func TestDensityFactory_FromMicrogramsPerDeciliter(t *testing.T) {
     factory := units.DensityFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMicrogramsPerDeciLiter(100)
+    result, err := factory.FromMicrogramsPerDeciliter(100)
     if err != nil {
-        t.Errorf("FromMicrogramsPerDeciLiter() returned error: %v", err)
+        t.Errorf("FromMicrogramsPerDeciliter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.DensityMicrogramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMicrogramsPerDeciLiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMicrogramsPerDeciliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMicrogramsPerDeciLiter(math.NaN())
+    _, err = factory.FromMicrogramsPerDeciliter(math.NaN())
     if err == nil {
-        t.Error("FromMicrogramsPerDeciLiter() with NaN value should return error")
+        t.Error("FromMicrogramsPerDeciliter() with NaN value should return error")
     }
 
-    _, err = factory.FromMicrogramsPerDeciLiter(math.Inf(1))
+    _, err = factory.FromMicrogramsPerDeciliter(math.Inf(1))
     if err == nil {
-        t.Error("FromMicrogramsPerDeciLiter() with +Inf value should return error")
+        t.Error("FromMicrogramsPerDeciliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromMicrogramsPerDeciLiter(math.Inf(-1))
+    _, err = factory.FromMicrogramsPerDeciliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromMicrogramsPerDeciLiter() with -Inf value should return error")
+        t.Error("FromMicrogramsPerDeciliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMicrogramsPerDeciLiter(0)
+    zeroResult, err := factory.FromMicrogramsPerDeciliter(0)
     if err != nil {
-        t.Errorf("FromMicrogramsPerDeciLiter() with zero value returned error: %v", err)
+        t.Errorf("FromMicrogramsPerDeciliter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.DensityMicrogramPerDeciliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMicrogramsPerDeciLiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromMicrogramsPerDeciliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMilligramsPerDeciLiter function
-func TestDensityFactory_FromMilligramsPerDeciLiter(t *testing.T) {
+// Test FromMilligramsPerDeciliter function
+func TestDensityFactory_FromMilligramsPerDeciliter(t *testing.T) {
     factory := units.DensityFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMilligramsPerDeciLiter(100)
+    result, err := factory.FromMilligramsPerDeciliter(100)
     if err != nil {
-        t.Errorf("FromMilligramsPerDeciLiter() returned error: %v", err)
+        t.Errorf("FromMilligramsPerDeciliter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.DensityMilligramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMilligramsPerDeciLiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMilligramsPerDeciliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMilligramsPerDeciLiter(math.NaN())
+    _, err = factory.FromMilligramsPerDeciliter(math.NaN())
     if err == nil {
-        t.Error("FromMilligramsPerDeciLiter() with NaN value should return error")
+        t.Error("FromMilligramsPerDeciliter() with NaN value should return error")
     }
 
-    _, err = factory.FromMilligramsPerDeciLiter(math.Inf(1))
+    _, err = factory.FromMilligramsPerDeciliter(math.Inf(1))
     if err == nil {
-        t.Error("FromMilligramsPerDeciLiter() with +Inf value should return error")
+        t.Error("FromMilligramsPerDeciliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromMilligramsPerDeciLiter(math.Inf(-1))
+    _, err = factory.FromMilligramsPerDeciliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromMilligramsPerDeciLiter() with -Inf value should return error")
+        t.Error("FromMilligramsPerDeciliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMilligramsPerDeciLiter(0)
+    zeroResult, err := factory.FromMilligramsPerDeciliter(0)
     if err != nil {
-        t.Errorf("FromMilligramsPerDeciLiter() with zero value returned error: %v", err)
+        t.Errorf("FromMilligramsPerDeciliter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.DensityMilligramPerDeciliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMilligramsPerDeciLiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromMilligramsPerDeciliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromCentigramsPerDeciLiter function
-func TestDensityFactory_FromCentigramsPerDeciLiter(t *testing.T) {
+// Test FromCentigramsPerDeciliter function
+func TestDensityFactory_FromCentigramsPerDeciliter(t *testing.T) {
     factory := units.DensityFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromCentigramsPerDeciLiter(100)
+    result, err := factory.FromCentigramsPerDeciliter(100)
     if err != nil {
-        t.Errorf("FromCentigramsPerDeciLiter() returned error: %v", err)
+        t.Errorf("FromCentigramsPerDeciliter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.DensityCentigramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromCentigramsPerDeciLiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromCentigramsPerDeciliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromCentigramsPerDeciLiter(math.NaN())
+    _, err = factory.FromCentigramsPerDeciliter(math.NaN())
     if err == nil {
-        t.Error("FromCentigramsPerDeciLiter() with NaN value should return error")
+        t.Error("FromCentigramsPerDeciliter() with NaN value should return error")
     }
 
-    _, err = factory.FromCentigramsPerDeciLiter(math.Inf(1))
+    _, err = factory.FromCentigramsPerDeciliter(math.Inf(1))
     if err == nil {
-        t.Error("FromCentigramsPerDeciLiter() with +Inf value should return error")
+        t.Error("FromCentigramsPerDeciliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromCentigramsPerDeciLiter(math.Inf(-1))
+    _, err = factory.FromCentigramsPerDeciliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromCentigramsPerDeciLiter() with -Inf value should return error")
+        t.Error("FromCentigramsPerDeciliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromCentigramsPerDeciLiter(0)
+    zeroResult, err := factory.FromCentigramsPerDeciliter(0)
     if err != nil {
-        t.Errorf("FromCentigramsPerDeciLiter() with zero value returned error: %v", err)
+        t.Errorf("FromCentigramsPerDeciliter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.DensityCentigramPerDeciliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromCentigramsPerDeciLiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromCentigramsPerDeciliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromDecigramsPerDeciLiter function
-func TestDensityFactory_FromDecigramsPerDeciLiter(t *testing.T) {
+// Test FromDecigramsPerDeciliter function
+func TestDensityFactory_FromDecigramsPerDeciliter(t *testing.T) {
     factory := units.DensityFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromDecigramsPerDeciLiter(100)
+    result, err := factory.FromDecigramsPerDeciliter(100)
     if err != nil {
-        t.Errorf("FromDecigramsPerDeciLiter() returned error: %v", err)
+        t.Errorf("FromDecigramsPerDeciliter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.DensityDecigramPerDeciliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromDecigramsPerDeciLiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromDecigramsPerDeciliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromDecigramsPerDeciLiter(math.NaN())
+    _, err = factory.FromDecigramsPerDeciliter(math.NaN())
     if err == nil {
-        t.Error("FromDecigramsPerDeciLiter() with NaN value should return error")
+        t.Error("FromDecigramsPerDeciliter() with NaN value should return error")
     }
 
-    _, err = factory.FromDecigramsPerDeciLiter(math.Inf(1))
+    _, err = factory.FromDecigramsPerDeciliter(math.Inf(1))
     if err == nil {
-        t.Error("FromDecigramsPerDeciLiter() with +Inf value should return error")
+        t.Error("FromDecigramsPerDeciliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromDecigramsPerDeciLiter(math.Inf(-1))
+    _, err = factory.FromDecigramsPerDeciliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromDecigramsPerDeciLiter() with -Inf value should return error")
+        t.Error("FromDecigramsPerDeciliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromDecigramsPerDeciLiter(0)
+    zeroResult, err := factory.FromDecigramsPerDeciliter(0)
     if err != nil {
-        t.Errorf("FromDecigramsPerDeciLiter() with zero value returned error: %v", err)
+        t.Errorf("FromDecigramsPerDeciliter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.DensityDecigramPerDeciliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromDecigramsPerDeciLiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromDecigramsPerDeciliter() with zero value = %v, want 0", converted)
     }
 }
 // Test FromFemtogramsPerMilliliter function
@@ -4885,7 +4885,7 @@ func TestGetDensityAbbreviation(t *testing.T) {
         {
             name: "GramPerLiter abbreviation",
             unit: units.DensityGramPerLiter,
-            want: "g/L",
+            want: "g/l",
         },
         {
             name: "GramPerDeciliter abbreviation",
@@ -5010,37 +5010,37 @@ func TestGetDensityAbbreviation(t *testing.T) {
         {
             name: "FemtogramPerLiter abbreviation",
             unit: units.DensityFemtogramPerLiter,
-            want: "fg/L",
+            want: "fg/l",
         },
         {
             name: "PicogramPerLiter abbreviation",
             unit: units.DensityPicogramPerLiter,
-            want: "pg/L",
+            want: "pg/l",
         },
         {
             name: "NanogramPerLiter abbreviation",
             unit: units.DensityNanogramPerLiter,
-            want: "ng/L",
+            want: "ng/l",
         },
         {
             name: "MicrogramPerLiter abbreviation",
             unit: units.DensityMicrogramPerLiter,
-            want: "μg/L",
+            want: "μg/l",
         },
         {
             name: "MilligramPerLiter abbreviation",
             unit: units.DensityMilligramPerLiter,
-            want: "mg/L",
+            want: "mg/l",
         },
         {
             name: "CentigramPerLiter abbreviation",
             unit: units.DensityCentigramPerLiter,
-            want: "cg/L",
+            want: "cg/l",
         },
         {
             name: "DecigramPerLiter abbreviation",
             unit: units.DensityDecigramPerLiter,
-            want: "dg/L",
+            want: "dg/l",
         },
         {
             name: "FemtogramPerDeciliter abbreviation",

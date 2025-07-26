@@ -913,9 +913,9 @@ func (a *RotationalStiffness) convertFromBase(toUnit RotationalStiffnessUnits) f
 	case RotationalStiffnessNewtonMeterPerRadian:
 		return (value) 
 	case RotationalStiffnessPoundForceFootPerDegrees:
-		return (value / 77.6826) 
+		return (value / (4.4482216152605 * 0.3048 * 180 / math.Pi)) 
 	case RotationalStiffnessKilopoundForceFootPerDegrees:
-		return (value / 77682.6) 
+		return (value / (4.4482216152605e3 * 0.3048 * 180 / math.Pi)) 
 	case RotationalStiffnessNewtonMillimeterPerDegree:
 		return (value / 180 * math.Pi * 1000) 
 	case RotationalStiffnessNewtonMeterPerDegree:
@@ -923,7 +923,7 @@ func (a *RotationalStiffness) convertFromBase(toUnit RotationalStiffnessUnits) f
 	case RotationalStiffnessNewtonMillimeterPerRadian:
 		return (value * 1000) 
 	case RotationalStiffnessPoundForceFeetPerRadian:
-		return (value / 1.3558179483314) 
+		return (value / (4.4482216152605 * 0.3048)) 
 	case RotationalStiffnessKilonewtonMeterPerRadian:
 		return ((value) / 1000.0) 
 	case RotationalStiffnessMeganewtonMeterPerRadian:
@@ -986,9 +986,9 @@ func (a *RotationalStiffness) convertToBase(value float64, fromUnit RotationalSt
 	case RotationalStiffnessNewtonMeterPerRadian:
 		return (value) 
 	case RotationalStiffnessPoundForceFootPerDegrees:
-		return (value * 77.6826) 
+		return (value * (4.4482216152605 * 0.3048 * 180 / math.Pi)) 
 	case RotationalStiffnessKilopoundForceFootPerDegrees:
-		return (value * 77682.6) 
+		return (value * (4.4482216152605e3 * 0.3048 * 180 / math.Pi)) 
 	case RotationalStiffnessNewtonMillimeterPerDegree:
 		return (value * 180 / math.Pi * 0.001) 
 	case RotationalStiffnessNewtonMeterPerDegree:
@@ -996,7 +996,7 @@ func (a *RotationalStiffness) convertToBase(value float64, fromUnit RotationalSt
 	case RotationalStiffnessNewtonMillimeterPerRadian:
 		return (value * 0.001) 
 	case RotationalStiffnessPoundForceFeetPerRadian:
-		return (value * 1.3558179483314) 
+		return (value * 4.4482216152605 * 0.3048) 
 	case RotationalStiffnessKilonewtonMeterPerRadian:
 		return ((value) * 1000.0) 
 	case RotationalStiffnessMeganewtonMeterPerRadian:

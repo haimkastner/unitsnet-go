@@ -572,9 +572,9 @@ func (a *LinearDensity) convertFromBase(toUnit LinearDensityUnits) float64 {
 	case LinearDensityGramPerMeter:
 		return (value / 1e-3) 
 	case LinearDensityPoundPerInch:
-		return (value * 5.5997415e-2) 
+		return (value * 2.54e-2 / 0.45359237) 
 	case LinearDensityPoundPerFoot:
-		return (value / 1.48816394) 
+		return (value * 0.3048 / 0.45359237) 
 	case LinearDensityGramPerFoot:
 		return (value / ( 1e-3 / 0.3048 )) 
 	case LinearDensityMicrogramPerMillimeter:
@@ -615,9 +615,9 @@ func (a *LinearDensity) convertToBase(value float64, fromUnit LinearDensityUnits
 	case LinearDensityGramPerMeter:
 		return (value * 1e-3) 
 	case LinearDensityPoundPerInch:
-		return (value / 5.5997415e-2) 
+		return (value * 0.45359237 / 2.54e-2) 
 	case LinearDensityPoundPerFoot:
-		return (value * 1.48816394) 
+		return (value * 0.45359237 / 0.3048) 
 	case LinearDensityGramPerFoot:
 		return (value * ( 1e-3 / 0.3048 )) 
 	case LinearDensityMicrogramPerMillimeter:

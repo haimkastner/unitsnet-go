@@ -13,7 +13,7 @@ import (
 )
 
 func TestAngleDtoFactory_FromJSON(t *testing.T) {
-	validJSON := `{"value": 90, "unit": "Degree"}`
+	validJSON := `{"value": 90, "unit": "Radian"}`
 	
 	factory := units.AngleDtoFactory{}
 	dto, err := factory.FromJSON([]byte(validJSON))
@@ -23,11 +23,11 @@ func TestAngleDtoFactory_FromJSON(t *testing.T) {
 	if dto.Value != 90 {
 		t.Errorf("expected value 90, got %v", dto.Value)
 	}
-	if dto.Unit != units.AngleDegree {
-		t.Errorf("expected unit %v, got %v", units.AngleDegree, dto.Unit)
+	if dto.Unit != units.AngleRadian {
+		t.Errorf("expected unit %v, got %v", units.AngleRadian, dto.Unit)
 	}
 
-	invalidJSON := `{"value": "ninety", "unit": "Degree"}`
+	invalidJSON := `{"value": "ninety", "unit": "Radian"}`
 
 	_, err = factory.FromJSON([]byte(invalidJSON))
 	if err == nil {
@@ -38,7 +38,7 @@ func TestAngleDtoFactory_FromJSON(t *testing.T) {
 func TestAngleDto_ToJSON(t *testing.T) {
 	dto := units.AngleDto{
 		Value: 45,
-		Unit:  units.AngleDegree,
+		Unit:  units.AngleRadian,
 	}
 	data, err := dto.ToJSON()
 	if err != nil {
@@ -51,20 +51,20 @@ func TestAngleDto_ToJSON(t *testing.T) {
 	if result["value"].(float64) != 45 {
 		t.Errorf("expected value 45, got %v", result["value"])
 	}
-	if result["unit"].(string) != string(units.AngleDegree) {
-		t.Errorf("expected unit %s, got %v", units.AngleDegree, result["unit"])
+	if result["unit"].(string) != string(units.AngleRadian) {
+		t.Errorf("expected unit %s, got %v", units.AngleRadian, result["unit"])
 	}
 }
 
 func TestNewAngle_InvalidValue(t *testing.T) {
 	factory := units.AngleFactory{}
 	// NaN value should return an error.
-	_, err := factory.CreateAngle(math.NaN(), units.AngleDegree)
+	_, err := factory.CreateAngle(math.NaN(), units.AngleRadian)
 	if err == nil {
 		t.Error("expected error for NaN value")
 	}
 	// Inf value should return an error.
-	_, err = factory.CreateAngle(math.Inf(1), units.AngleDegree)
+	_, err = factory.CreateAngle(math.Inf(1), units.AngleRadian)
 	if err == nil {
 		t.Error("expected error for Inf value")
 	}
@@ -73,7 +73,7 @@ func TestNewAngle_InvalidValue(t *testing.T) {
 func TestAngleConversions(t *testing.T) {
 	factory := units.AngleFactory{}
 	// Creating a value of 180 in the base unit.
-	a, err := factory.CreateAngle(180, units.AngleDegree)
+	a, err := factory.CreateAngle(180, units.AngleRadian)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -138,15 +138,6 @@ func TestAngleConversions(t *testing.T) {
 		cacheResult := a.Revolutions()
 		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Revolutions returned NaN")
-		}
-	}
-	{
-		// Test conversion to Tilt.
-		// No expected conversion value provided for Tilt, verifying result is not NaN.
-		result := a.Tilt()
-		cacheResult := a.Tilt()
-		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to Tilt returned NaN")
 		}
 	}
 	{
@@ -225,15 +216,15 @@ func TestAngleConversions(t *testing.T) {
 
 func TestAngle_ToDtoAndToDtoJSON(t *testing.T) {
 	factory := units.AngleFactory{}
-	a, err := factory.CreateAngle(90, units.AngleDegree)
+	a, err := factory.CreateAngle(90, units.AngleRadian)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
 	// Test default conversion (nil unit parameter should use base unit).
 	dto := a.ToDto(nil)
-	if dto.Unit != units.AngleDegree {
-		t.Errorf("expected default unit Degree, got %v", dto.Unit)
+	if dto.Unit != units.AngleRadian {
+		t.Errorf("expected default unit Radian, got %v", dto.Unit)
 	}
 	if math.Abs(dto.Value-90) > 1e-9 {
 		t.Errorf("expected value 90, got %v", dto.Value)
@@ -252,8 +243,8 @@ func TestAngle_ToDtoAndToDtoJSON(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed unmarshalling JSON: %v", err)
 	}
-	if result.Unit != units.AngleDegree {
-		t.Errorf("expected unit Degree, got %v", result.Unit)
+	if result.Unit != units.AngleRadian {
+		t.Errorf("expected unit Radian, got %v", result.Unit)
 	}
 	if math.Abs(result.Value-90) > 1e-9 {
 		t.Errorf("expected value 90, got %v", result.Value)
@@ -267,7 +258,7 @@ func TestAngleFactory_FromDto(t *testing.T) {
     // Test valid base unit conversion
     baseDto := units.AngleDto{
         Value: 100,
-        Unit:  units.AngleDegree,
+        Unit:  units.AngleRadian,
     }
     
     baseResult, err := factory.FromDto(baseDto)
@@ -281,7 +272,7 @@ func TestAngleFactory_FromDto(t *testing.T) {
     // Test invalid values
     invalidDto := units.AngleDto{
         Value: math.NaN(),
-        Unit:  units.AngleDegree,
+        Unit:  units.AngleRadian,
     }
     
     _, err = factory.FromDto(invalidDto)
@@ -408,23 +399,6 @@ func TestAngleFactory_FromDto(t *testing.T) {
     converted = revolutionsResult.Convert(units.AngleRevolution)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Revolution = %v, want %v", converted, 100)
-    }
-    // Test Tilt conversion
-    tiltDto := units.AngleDto{
-        Value: 100,
-        Unit:  units.AngleTilt,
-    }
-    
-    var tiltResult *units.Angle
-    tiltResult, err = factory.FromDto(tiltDto)
-    if err != nil {
-        t.Errorf("FromDto() with Tilt returned error: %v", err)
-    }
-    
-    // Convert back to original unit and compare
-    converted = tiltResult.Convert(units.AngleTilt)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for Tilt = %v, want %v", converted, 100)
     }
     // Test Nanoradian conversion
     nanoradiansDto := units.AngleDto{
@@ -566,7 +540,7 @@ func TestAngleFactory_FromDto(t *testing.T) {
     // Test zero value
     zeroDto := units.AngleDto{
         Value: 0,
-        Unit:  units.AngleDegree,
+        Unit:  units.AngleRadian,
     }
     
     var zeroResult *units.Angle
@@ -586,7 +560,7 @@ func TestAngleFactory_FromDtoJSON(t *testing.T) {
 	var converted float64
 
     // Test valid JSON with base unit
-    validJSON := []byte(`{"value": 100, "unit": "Degree"}`)
+    validJSON := []byte(`{"value": 100, "unit": "Radian"}`)
     baseResult, err := factory.FromDtoJSON(validJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
@@ -596,7 +570,7 @@ func TestAngleFactory_FromDtoJSON(t *testing.T) {
     }
 
     // Test invalid JSON format
-    invalidJSON := []byte(`{"value": "not a number", "unit": "Degree"}`)
+    invalidJSON := []byte(`{"value": "not a number", "unit": "Radian"}`)
     _, err = factory.FromDtoJSON(invalidJSON)
     if err == nil {
         t.Error("FromDtoJSON() with invalid JSON should return error")
@@ -620,7 +594,7 @@ func TestAngleFactory_FromDtoJSON(t *testing.T) {
     nanValue := math.NaN()
     nanJSON, _ := json.Marshal(units.AngleDto{
         Value: nanValue,
-        Unit:  units.AngleDegree,
+        Unit:  units.AngleRadian,
     })
     _, err = factory.FromDtoJSON(nanJSON)
     if err == nil {
@@ -709,18 +683,6 @@ func TestAngleFactory_FromDtoJSON(t *testing.T) {
     converted = revolutionsResult.Convert(units.AngleRevolution)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Revolution = %v, want %v", converted, 100)
-    }
-    // Test JSON with Tilt unit
-    tiltJSON := []byte(`{"value": 100, "unit": "Tilt"}`)
-    tiltResult, err := factory.FromDtoJSON(tiltJSON)
-    if err != nil {
-        t.Errorf("FromDtoJSON() with Tilt unit returned error: %v", err)
-    }
-    
-    // Convert back to original unit and compare
-    converted = tiltResult.Convert(units.AngleTilt)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for Tilt = %v, want %v", converted, 100)
     }
     // Test JSON with Nanoradian unit
     nanoradiansJSON := []byte(`{"value": 100, "unit": "Nanoradian"}`)
@@ -820,7 +782,7 @@ func TestAngleFactory_FromDtoJSON(t *testing.T) {
     }
 
     // Test zero value JSON
-    zeroJSON := []byte(`{"value": 0, "unit": "Degree"}`)
+    zeroJSON := []byte(`{"value": 0, "unit": "Radian"}`)
     zeroResult, err := factory.FromDtoJSON(zeroJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
@@ -1128,49 +1090,6 @@ func TestAngleFactory_FromRevolutions(t *testing.T) {
     converted = zeroResult.Convert(units.AngleRevolution)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromRevolutions() with zero value = %v, want 0", converted)
-    }
-}
-// Test FromTilt function
-func TestAngleFactory_FromTilt(t *testing.T) {
-    factory := units.AngleFactory{}
-    var err error
-
-    // Test valid value
-    result, err := factory.FromTilt(100)
-    if err != nil {
-        t.Errorf("FromTilt() returned error: %v", err)
-    }
-    
-    // Convert back and verify
-    converted := result.Convert(units.AngleTilt)
-    if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromTilt() round-trip = %v, want %v", converted, 100)
-    }
-
-    // Test invalid values
-    _, err = factory.FromTilt(math.NaN())
-    if err == nil {
-        t.Error("FromTilt() with NaN value should return error")
-    }
-
-    _, err = factory.FromTilt(math.Inf(1))
-    if err == nil {
-        t.Error("FromTilt() with +Inf value should return error")
-    }
-
-    _, err = factory.FromTilt(math.Inf(-1))
-    if err == nil {
-        t.Error("FromTilt() with -Inf value should return error")
-    }
-
-    // Test zero value
-    zeroResult, err := factory.FromTilt(0)
-    if err != nil {
-        t.Errorf("FromTilt() with zero value returned error: %v", err)
-    }
-    converted = zeroResult.Convert(units.AngleTilt)
-    if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromTilt() with zero value = %v, want 0", converted)
     }
 }
 // Test FromNanoradians function
@@ -1520,17 +1439,17 @@ func TestAngleFactory_FromMillidegrees(t *testing.T) {
 
 func TestAngleToString(t *testing.T) {
 	factory := units.AngleFactory{}
-	a, err := factory.CreateAngle(45, units.AngleDegree)
+	a, err := factory.CreateAngle(45, units.AngleRadian)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	formatted := a.ToString(units.AngleDegree, 2)
-	expected := "45.00 " + units.GetAngleAbbreviation(units.AngleDegree)
+	formatted := a.ToString(units.AngleRadian, 2)
+	expected := "45.00 " + units.GetAngleAbbreviation(units.AngleRadian)
 	if formatted != expected {
 		t.Errorf("expected '%s', got '%s'", expected, formatted)
 	}
-	formatted = a.ToString(units.AngleDegree, -1)
-	expected = "45 " + units.GetAngleAbbreviation(units.AngleDegree)
+	formatted = a.ToString(units.AngleRadian, -1)
+	expected = "45 " + units.GetAngleAbbreviation(units.AngleRadian)
 	if formatted != expected {
 		t.Errorf("expected '%s', got '%s'", expected, formatted)
 	}
@@ -1538,9 +1457,9 @@ func TestAngleToString(t *testing.T) {
 
 func TestAngle_EqualityAndComparison(t *testing.T) {
 	factory := units.AngleFactory{}
-	a1, _ := factory.CreateAngle(60, units.AngleDegree)
-	a2, _ := factory.CreateAngle(60, units.AngleDegree)
-	a3, _ := factory.CreateAngle(120, units.AngleDegree)
+	a1, _ := factory.CreateAngle(60, units.AngleRadian)
+	a2, _ := factory.CreateAngle(60, units.AngleRadian)
+	a3, _ := factory.CreateAngle(120, units.AngleRadian)
 
 	if !a1.Equals(a2) {
 		t.Error("expected a1 and a2 to be equal")
@@ -1561,8 +1480,8 @@ func TestAngle_EqualityAndComparison(t *testing.T) {
 
 func TestAngle_Arithmetic(t *testing.T) {
 	factory := units.AngleFactory{}
-	a1, _ := factory.CreateAngle(30, units.AngleDegree)
-	a2, _ := factory.CreateAngle(45, units.AngleDegree)
+	a1, _ := factory.CreateAngle(30, units.AngleRadian)
+	a2, _ := factory.CreateAngle(45, units.AngleRadian)
 
 	added := a1.Add(a2)
 	if math.Abs(added.BaseValue()-75) > 1e-9 {
@@ -1626,11 +1545,6 @@ func TestGetAngleAbbreviation(t *testing.T) {
             name: "Revolution abbreviation",
             unit: units.AngleRevolution,
             want: "r",
-        },
-        {
-            name: "Tilt abbreviation",
-            unit: units.AngleTilt,
-            want: "sin(θ)",
         },
         {
             name: "Nanoradian abbreviation",
@@ -1737,7 +1651,7 @@ func TestAngle_String(t *testing.T) {
 
     for _, tt := range tests {
         t.Run(tt.name, func(t *testing.T) {
-            unit, err := factory.CreateAngle(tt.value, units.AngleDegree)
+            unit, err := factory.CreateAngle(tt.value, units.AngleRadian)
             if err != nil {
                 t.Errorf("Failed to create test unit: %v", err)
                 return

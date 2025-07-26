@@ -367,15 +367,15 @@ func (a *VolumePerLength) convertFromBase(toUnit VolumePerLengthUnits) float64 {
 	case VolumePerLengthLiterPerMillimeter:
 		return (value) 
 	case VolumePerLengthOilBarrelPerFoot:
-		return (value * 1.91713408) 
+		return (value * 0.3048 / 0.158987294928) 
 	case VolumePerLengthCubicYardPerFoot:
-		return (value / 2.50838208) 
+		return (value * 0.3048 / 0.764554857984) 
 	case VolumePerLengthCubicYardPerUsSurveyFoot:
-		return (value / 2.50837706323584) 
+		return (value * 1200 / (0.764554857984 * 3937)) 
 	case VolumePerLengthUsGallonPerMile:
-		return (value * (1000 * 1609.344 / 3.785411784)) 
+		return (value * 1609.344 / 0.003785411784) 
 	case VolumePerLengthImperialGallonPerMile:
-		return (value * (1000 * 1609.344 / 4.54609)) 
+		return (value * 1609.344 / 0.00454609) 
 	default:
 		return math.NaN()
 	}
@@ -392,15 +392,15 @@ func (a *VolumePerLength) convertToBase(value float64, fromUnit VolumePerLengthU
 	case VolumePerLengthLiterPerMillimeter:
 		return (value) 
 	case VolumePerLengthOilBarrelPerFoot:
-		return (value / 1.91713408) 
+		return (value * 0.158987294928 / 0.3048) 
 	case VolumePerLengthCubicYardPerFoot:
-		return (value * 2.50838208) 
+		return (value * 0.764554857984 / 0.3048) 
 	case VolumePerLengthCubicYardPerUsSurveyFoot:
-		return (value * 2.50837706323584) 
+		return (value * 0.764554857984 * 3937 / 1200) 
 	case VolumePerLengthUsGallonPerMile:
-		return (value / (1000 * 1609.344 / 3.785411784)) 
+		return (value * 0.003785411784 / 1609.344) 
 	case VolumePerLengthImperialGallonPerMile:
-		return (value / (1000 * 1609.344 / 4.54609)) 
+		return (value * 0.00454609 / 1609.344) 
 	default:
 		return math.NaN()
 	}

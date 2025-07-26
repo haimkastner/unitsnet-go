@@ -27,7 +27,7 @@ const (
         DensityPoundPerCubicInch DensityUnits = "PoundPerCubicInch"
         // 
         DensityPoundPerCubicFoot DensityUnits = "PoundPerCubicFoot"
-        // Calculated from the definition of <a href="https://en.wikipedia.org/wiki/Pound_(mass)">pound</a> and <a href="https://en.wikipedia.org/wiki/Yard">yard</a> compared to metric kilogram and meter.
+        // Calculated from the definition of <a href="https://en.wikipedia.org/wiki/Pound_(mass)">pound</a> and <a href="https://en.wikipedia.org/wiki/Cubic_yard">Cubic yard</a> compared to metric kilogram and meter.
         DensityPoundPerCubicYard DensityUnits = "PoundPerCubicYard"
         // 
         DensityTonnePerCubicMillimeter DensityUnits = "TonnePerCubicMillimeter"
@@ -246,7 +246,7 @@ type Density struct {
     tonnes_per_cubic_meterLazy *float64 
     slugs_per_cubic_footLazy *float64 
     grams_per_literLazy *float64 
-    grams_per_deci_literLazy *float64 
+    grams_per_deciliterLazy *float64 
     grams_per_milliliterLazy *float64 
     pounds_per_us_gallonLazy *float64 
     pounds_per_imperial_gallonLazy *float64 
@@ -277,13 +277,13 @@ type Density struct {
     milligrams_per_literLazy *float64 
     centigrams_per_literLazy *float64 
     decigrams_per_literLazy *float64 
-    femtograms_per_deci_literLazy *float64 
-    picograms_per_deci_literLazy *float64 
-    nanograms_per_deci_literLazy *float64 
-    micrograms_per_deci_literLazy *float64 
-    milligrams_per_deci_literLazy *float64 
-    centigrams_per_deci_literLazy *float64 
-    decigrams_per_deci_literLazy *float64 
+    femtograms_per_deciliterLazy *float64 
+    picograms_per_deciliterLazy *float64 
+    nanograms_per_deciliterLazy *float64 
+    micrograms_per_deciliterLazy *float64 
+    milligrams_per_deciliterLazy *float64 
+    centigrams_per_deciliterLazy *float64 
+    decigrams_per_deciliterLazy *float64 
     femtograms_per_milliliterLazy *float64 
     picograms_per_milliliterLazy *float64 
     nanograms_per_milliliterLazy *float64 
@@ -371,8 +371,8 @@ func (uf DensityFactory) FromGramsPerLiter(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerLiter)
 }
 
-// FromGramsPerDeciLiter creates a new Density instance from a value in GramsPerDeciLiter.
-func (uf DensityFactory) FromGramsPerDeciLiter(value float64) (*Density, error) {
+// FromGramsPerDeciliter creates a new Density instance from a value in GramsPerDeciliter.
+func (uf DensityFactory) FromGramsPerDeciliter(value float64) (*Density, error) {
 	return newDensity(value, DensityGramPerDeciliter)
 }
 
@@ -526,38 +526,38 @@ func (uf DensityFactory) FromDecigramsPerLiter(value float64) (*Density, error) 
 	return newDensity(value, DensityDecigramPerLiter)
 }
 
-// FromFemtogramsPerDeciLiter creates a new Density instance from a value in FemtogramsPerDeciLiter.
-func (uf DensityFactory) FromFemtogramsPerDeciLiter(value float64) (*Density, error) {
+// FromFemtogramsPerDeciliter creates a new Density instance from a value in FemtogramsPerDeciliter.
+func (uf DensityFactory) FromFemtogramsPerDeciliter(value float64) (*Density, error) {
 	return newDensity(value, DensityFemtogramPerDeciliter)
 }
 
-// FromPicogramsPerDeciLiter creates a new Density instance from a value in PicogramsPerDeciLiter.
-func (uf DensityFactory) FromPicogramsPerDeciLiter(value float64) (*Density, error) {
+// FromPicogramsPerDeciliter creates a new Density instance from a value in PicogramsPerDeciliter.
+func (uf DensityFactory) FromPicogramsPerDeciliter(value float64) (*Density, error) {
 	return newDensity(value, DensityPicogramPerDeciliter)
 }
 
-// FromNanogramsPerDeciLiter creates a new Density instance from a value in NanogramsPerDeciLiter.
-func (uf DensityFactory) FromNanogramsPerDeciLiter(value float64) (*Density, error) {
+// FromNanogramsPerDeciliter creates a new Density instance from a value in NanogramsPerDeciliter.
+func (uf DensityFactory) FromNanogramsPerDeciliter(value float64) (*Density, error) {
 	return newDensity(value, DensityNanogramPerDeciliter)
 }
 
-// FromMicrogramsPerDeciLiter creates a new Density instance from a value in MicrogramsPerDeciLiter.
-func (uf DensityFactory) FromMicrogramsPerDeciLiter(value float64) (*Density, error) {
+// FromMicrogramsPerDeciliter creates a new Density instance from a value in MicrogramsPerDeciliter.
+func (uf DensityFactory) FromMicrogramsPerDeciliter(value float64) (*Density, error) {
 	return newDensity(value, DensityMicrogramPerDeciliter)
 }
 
-// FromMilligramsPerDeciLiter creates a new Density instance from a value in MilligramsPerDeciLiter.
-func (uf DensityFactory) FromMilligramsPerDeciLiter(value float64) (*Density, error) {
+// FromMilligramsPerDeciliter creates a new Density instance from a value in MilligramsPerDeciliter.
+func (uf DensityFactory) FromMilligramsPerDeciliter(value float64) (*Density, error) {
 	return newDensity(value, DensityMilligramPerDeciliter)
 }
 
-// FromCentigramsPerDeciLiter creates a new Density instance from a value in CentigramsPerDeciLiter.
-func (uf DensityFactory) FromCentigramsPerDeciLiter(value float64) (*Density, error) {
+// FromCentigramsPerDeciliter creates a new Density instance from a value in CentigramsPerDeciliter.
+func (uf DensityFactory) FromCentigramsPerDeciliter(value float64) (*Density, error) {
 	return newDensity(value, DensityCentigramPerDeciliter)
 }
 
-// FromDecigramsPerDeciLiter creates a new Density instance from a value in DecigramsPerDeciLiter.
-func (uf DensityFactory) FromDecigramsPerDeciLiter(value float64) (*Density, error) {
+// FromDecigramsPerDeciliter creates a new Density instance from a value in DecigramsPerDeciliter.
+func (uf DensityFactory) FromDecigramsPerDeciliter(value float64) (*Density, error) {
 	return newDensity(value, DensityDecigramPerDeciliter)
 }
 
@@ -678,7 +678,7 @@ func (a *Density) PoundsPerCubicFoot() float64 {
 
 // PoundsPerCubicYard returns the Density value in PoundsPerCubicYard.
 //
-// Calculated from the definition of <a href="https://en.wikipedia.org/wiki/Pound_(mass)">pound</a> and <a href="https://en.wikipedia.org/wiki/Yard">yard</a> compared to metric kilogram and meter.
+// Calculated from the definition of <a href="https://en.wikipedia.org/wiki/Pound_(mass)">pound</a> and <a href="https://en.wikipedia.org/wiki/Cubic_yard">Cubic yard</a> compared to metric kilogram and meter.
 func (a *Density) PoundsPerCubicYard() float64 {
 	if a.pounds_per_cubic_yardLazy != nil {
 		return *a.pounds_per_cubic_yardLazy
@@ -748,16 +748,16 @@ func (a *Density) GramsPerLiter() float64 {
 	return grams_per_liter
 }
 
-// GramsPerDeciLiter returns the Density value in GramsPerDeciLiter.
+// GramsPerDeciliter returns the Density value in GramsPerDeciliter.
 //
 // 
-func (a *Density) GramsPerDeciLiter() float64 {
-	if a.grams_per_deci_literLazy != nil {
-		return *a.grams_per_deci_literLazy
+func (a *Density) GramsPerDeciliter() float64 {
+	if a.grams_per_deciliterLazy != nil {
+		return *a.grams_per_deciliterLazy
 	}
-	grams_per_deci_liter := a.convertFromBase(DensityGramPerDeciliter)
-	a.grams_per_deci_literLazy = &grams_per_deci_liter
-	return grams_per_deci_liter
+	grams_per_deciliter := a.convertFromBase(DensityGramPerDeciliter)
+	a.grams_per_deciliterLazy = &grams_per_deciliter
+	return grams_per_deciliter
 }
 
 // GramsPerMilliliter returns the Density value in GramsPerMilliliter.
@@ -1120,88 +1120,88 @@ func (a *Density) DecigramsPerLiter() float64 {
 	return decigrams_per_liter
 }
 
-// FemtogramsPerDeciLiter returns the Density value in FemtogramsPerDeciLiter.
+// FemtogramsPerDeciliter returns the Density value in FemtogramsPerDeciliter.
 //
 // 
-func (a *Density) FemtogramsPerDeciLiter() float64 {
-	if a.femtograms_per_deci_literLazy != nil {
-		return *a.femtograms_per_deci_literLazy
+func (a *Density) FemtogramsPerDeciliter() float64 {
+	if a.femtograms_per_deciliterLazy != nil {
+		return *a.femtograms_per_deciliterLazy
 	}
-	femtograms_per_deci_liter := a.convertFromBase(DensityFemtogramPerDeciliter)
-	a.femtograms_per_deci_literLazy = &femtograms_per_deci_liter
-	return femtograms_per_deci_liter
+	femtograms_per_deciliter := a.convertFromBase(DensityFemtogramPerDeciliter)
+	a.femtograms_per_deciliterLazy = &femtograms_per_deciliter
+	return femtograms_per_deciliter
 }
 
-// PicogramsPerDeciLiter returns the Density value in PicogramsPerDeciLiter.
+// PicogramsPerDeciliter returns the Density value in PicogramsPerDeciliter.
 //
 // 
-func (a *Density) PicogramsPerDeciLiter() float64 {
-	if a.picograms_per_deci_literLazy != nil {
-		return *a.picograms_per_deci_literLazy
+func (a *Density) PicogramsPerDeciliter() float64 {
+	if a.picograms_per_deciliterLazy != nil {
+		return *a.picograms_per_deciliterLazy
 	}
-	picograms_per_deci_liter := a.convertFromBase(DensityPicogramPerDeciliter)
-	a.picograms_per_deci_literLazy = &picograms_per_deci_liter
-	return picograms_per_deci_liter
+	picograms_per_deciliter := a.convertFromBase(DensityPicogramPerDeciliter)
+	a.picograms_per_deciliterLazy = &picograms_per_deciliter
+	return picograms_per_deciliter
 }
 
-// NanogramsPerDeciLiter returns the Density value in NanogramsPerDeciLiter.
+// NanogramsPerDeciliter returns the Density value in NanogramsPerDeciliter.
 //
 // 
-func (a *Density) NanogramsPerDeciLiter() float64 {
-	if a.nanograms_per_deci_literLazy != nil {
-		return *a.nanograms_per_deci_literLazy
+func (a *Density) NanogramsPerDeciliter() float64 {
+	if a.nanograms_per_deciliterLazy != nil {
+		return *a.nanograms_per_deciliterLazy
 	}
-	nanograms_per_deci_liter := a.convertFromBase(DensityNanogramPerDeciliter)
-	a.nanograms_per_deci_literLazy = &nanograms_per_deci_liter
-	return nanograms_per_deci_liter
+	nanograms_per_deciliter := a.convertFromBase(DensityNanogramPerDeciliter)
+	a.nanograms_per_deciliterLazy = &nanograms_per_deciliter
+	return nanograms_per_deciliter
 }
 
-// MicrogramsPerDeciLiter returns the Density value in MicrogramsPerDeciLiter.
+// MicrogramsPerDeciliter returns the Density value in MicrogramsPerDeciliter.
 //
 // 
-func (a *Density) MicrogramsPerDeciLiter() float64 {
-	if a.micrograms_per_deci_literLazy != nil {
-		return *a.micrograms_per_deci_literLazy
+func (a *Density) MicrogramsPerDeciliter() float64 {
+	if a.micrograms_per_deciliterLazy != nil {
+		return *a.micrograms_per_deciliterLazy
 	}
-	micrograms_per_deci_liter := a.convertFromBase(DensityMicrogramPerDeciliter)
-	a.micrograms_per_deci_literLazy = &micrograms_per_deci_liter
-	return micrograms_per_deci_liter
+	micrograms_per_deciliter := a.convertFromBase(DensityMicrogramPerDeciliter)
+	a.micrograms_per_deciliterLazy = &micrograms_per_deciliter
+	return micrograms_per_deciliter
 }
 
-// MilligramsPerDeciLiter returns the Density value in MilligramsPerDeciLiter.
+// MilligramsPerDeciliter returns the Density value in MilligramsPerDeciliter.
 //
 // 
-func (a *Density) MilligramsPerDeciLiter() float64 {
-	if a.milligrams_per_deci_literLazy != nil {
-		return *a.milligrams_per_deci_literLazy
+func (a *Density) MilligramsPerDeciliter() float64 {
+	if a.milligrams_per_deciliterLazy != nil {
+		return *a.milligrams_per_deciliterLazy
 	}
-	milligrams_per_deci_liter := a.convertFromBase(DensityMilligramPerDeciliter)
-	a.milligrams_per_deci_literLazy = &milligrams_per_deci_liter
-	return milligrams_per_deci_liter
+	milligrams_per_deciliter := a.convertFromBase(DensityMilligramPerDeciliter)
+	a.milligrams_per_deciliterLazy = &milligrams_per_deciliter
+	return milligrams_per_deciliter
 }
 
-// CentigramsPerDeciLiter returns the Density value in CentigramsPerDeciLiter.
+// CentigramsPerDeciliter returns the Density value in CentigramsPerDeciliter.
 //
 // 
-func (a *Density) CentigramsPerDeciLiter() float64 {
-	if a.centigrams_per_deci_literLazy != nil {
-		return *a.centigrams_per_deci_literLazy
+func (a *Density) CentigramsPerDeciliter() float64 {
+	if a.centigrams_per_deciliterLazy != nil {
+		return *a.centigrams_per_deciliterLazy
 	}
-	centigrams_per_deci_liter := a.convertFromBase(DensityCentigramPerDeciliter)
-	a.centigrams_per_deci_literLazy = &centigrams_per_deci_liter
-	return centigrams_per_deci_liter
+	centigrams_per_deciliter := a.convertFromBase(DensityCentigramPerDeciliter)
+	a.centigrams_per_deciliterLazy = &centigrams_per_deciliter
+	return centigrams_per_deciliter
 }
 
-// DecigramsPerDeciLiter returns the Density value in DecigramsPerDeciLiter.
+// DecigramsPerDeciliter returns the Density value in DecigramsPerDeciliter.
 //
 // 
-func (a *Density) DecigramsPerDeciLiter() float64 {
-	if a.decigrams_per_deci_literLazy != nil {
-		return *a.decigrams_per_deci_literLazy
+func (a *Density) DecigramsPerDeciliter() float64 {
+	if a.decigrams_per_deciliterLazy != nil {
+		return *a.decigrams_per_deciliterLazy
 	}
-	decigrams_per_deci_liter := a.convertFromBase(DensityDecigramPerDeciliter)
-	a.decigrams_per_deci_literLazy = &decigrams_per_deci_liter
-	return decigrams_per_deci_liter
+	decigrams_per_deciliter := a.convertFromBase(DensityDecigramPerDeciliter)
+	a.decigrams_per_deciliterLazy = &decigrams_per_deciliter
+	return decigrams_per_deciliter
 }
 
 // FemtogramsPerMilliliter returns the Density value in FemtogramsPerMilliliter.
@@ -1342,7 +1342,7 @@ func (a *Density) Convert(toUnit DensityUnits) float64 {
     case DensityGramPerLiter:
 		return a.GramsPerLiter()
     case DensityGramPerDeciliter:
-		return a.GramsPerDeciLiter()
+		return a.GramsPerDeciliter()
     case DensityGramPerMilliliter:
 		return a.GramsPerMilliliter()
     case DensityPoundPerUSGallon:
@@ -1404,19 +1404,19 @@ func (a *Density) Convert(toUnit DensityUnits) float64 {
     case DensityDecigramPerLiter:
 		return a.DecigramsPerLiter()
     case DensityFemtogramPerDeciliter:
-		return a.FemtogramsPerDeciLiter()
+		return a.FemtogramsPerDeciliter()
     case DensityPicogramPerDeciliter:
-		return a.PicogramsPerDeciLiter()
+		return a.PicogramsPerDeciliter()
     case DensityNanogramPerDeciliter:
-		return a.NanogramsPerDeciLiter()
+		return a.NanogramsPerDeciliter()
     case DensityMicrogramPerDeciliter:
-		return a.MicrogramsPerDeciLiter()
+		return a.MicrogramsPerDeciliter()
     case DensityMilligramPerDeciliter:
-		return a.MilligramsPerDeciLiter()
+		return a.MilligramsPerDeciliter()
     case DensityCentigramPerDeciliter:
-		return a.CentigramsPerDeciLiter()
+		return a.CentigramsPerDeciliter()
     case DensityDecigramPerDeciliter:
-		return a.DecigramsPerDeciLiter()
+		return a.DecigramsPerDeciliter()
     case DensityFemtogramPerMilliliter:
 		return a.FemtogramsPerMilliliter()
     case DensityPicogramPerMilliliter:
@@ -1446,11 +1446,11 @@ func (a *Density) convertFromBase(toUnit DensityUnits) float64 {
 	case DensityGramPerCubicMeter:
 		return (value * 1e3) 
 	case DensityPoundPerCubicInch:
-		return (value * 3.6127298147753e-5) 
+		return (value * 1.6387064e-5 / 0.45359237) 
 	case DensityPoundPerCubicFoot:
-		return (value * 0.062427961) 
+		return (value * 0.028316846592 / 0.45359237) 
 	case DensityPoundPerCubicYard:
-		return (value / (0.45359237 / 0.9144 / 0.9144 / 0.9144)) 
+		return (value * 0.764554857984 / 0.45359237) 
 	case DensityTonnePerCubicMillimeter:
 		return (value * 1e-12) 
 	case DensityTonnePerCubicCentimeter:
@@ -1458,7 +1458,7 @@ func (a *Density) convertFromBase(toUnit DensityUnits) float64 {
 	case DensityTonnePerCubicMeter:
 		return (value * 0.001) 
 	case DensitySlugPerCubicFoot:
-		return (value * 0.00194032033) 
+		return (value * (0.3048 * 0.028316846592) / (0.45359237 * 9.80665)) 
 	case DensityGramPerLiter:
 		return (value * 1) 
 	case DensityGramPerDeciliter:
@@ -1466,33 +1466,33 @@ func (a *Density) convertFromBase(toUnit DensityUnits) float64 {
 	case DensityGramPerMilliliter:
 		return (value * 1e-3) 
 	case DensityPoundPerUSGallon:
-		return (value / 1.19826427e2) 
+		return (value * 0.003785411784 / 0.45359237) 
 	case DensityPoundPerImperialGallon:
-		return (value / 9.9776398e1) 
+		return (value * 0.00454609 / 0.45359237) 
 	case DensityKilogramPerLiter:
 		return (value / 1e3) 
 	case DensityTonnePerCubicFoot:
-		return (value / 3.53146667214886e4) 
+		return (value * 0.028316846592 / 1000) 
 	case DensityTonnePerCubicInch:
-		return (value / 6.10237440947323e7) 
+		return (value * 1.6387064e-5 / 1000) 
 	case DensityGramPerCubicFoot:
-		return (value / 0.0353146667214886) 
+		return (value * 0.028316846592 / 0.001) 
 	case DensityGramPerCubicInch:
-		return (value / 61.0237440947323) 
+		return (value * 1.6387064e-5 / 0.001) 
 	case DensityPoundPerCubicMeter:
-		return (value * 2.204622621848775) 
+		return (value / 0.45359237) 
 	case DensityPoundPerCubicCentimeter:
-		return (value * 2.204622621848775e-6) 
+		return (value / 0.45359237e6) 
 	case DensityPoundPerCubicMillimeter:
-		return (value * 2.204622621848775e-9) 
+		return (value / 0.45359237e9) 
 	case DensitySlugPerCubicMeter:
-		return (value / 14.5939) 
+		return (value * 0.3048 / (0.45359237 * 9.80665)) 
 	case DensitySlugPerCubicCentimeter:
-		return (value / 14593903) 
+		return (value * 0.3048 / (0.45359237e6 * 9.80665)) 
 	case DensitySlugPerCubicMillimeter:
-		return (value / 14593903000) 
+		return (value * 0.3048 / (0.45359237e9 * 9.80665)) 
 	case DensitySlugPerCubicInch:
-		return (value / 890574.60201535) 
+		return (value * (0.3048 * 1.6387064e-5) / (0.45359237 * 9.80665)) 
 	case DensityKilogramPerCubicMillimeter:
 		return ((value * 1e-6) / 1000.0) 
 	case DensityKilogramPerCubicCentimeter:
@@ -1504,11 +1504,11 @@ func (a *Density) convertFromBase(toUnit DensityUnits) float64 {
 	case DensityMicrogramPerCubicMeter:
 		return ((value * 1e3) / 1e-06) 
 	case DensityKilopoundPerCubicInch:
-		return ((value * 3.6127298147753e-5) / 1000.0) 
+		return ((value * 1.6387064e-5 / 0.45359237) / 1000.0) 
 	case DensityKilopoundPerCubicFoot:
-		return ((value * 0.062427961) / 1000.0) 
+		return ((value * 0.028316846592 / 0.45359237) / 1000.0) 
 	case DensityKilopoundPerCubicYard:
-		return ((value / (0.45359237 / 0.9144 / 0.9144 / 0.9144)) / 1000.0) 
+		return ((value * 0.764554857984 / 0.45359237) / 1000.0) 
 	case DensityFemtogramPerLiter:
 		return ((value * 1) / 1e-15) 
 	case DensityPicogramPerLiter:
@@ -1565,11 +1565,11 @@ func (a *Density) convertToBase(value float64, fromUnit DensityUnits) float64 {
 	case DensityGramPerCubicMeter:
 		return (value / 1e3) 
 	case DensityPoundPerCubicInch:
-		return (value / 3.6127298147753e-5) 
+		return (value * 0.45359237 / 1.6387064e-5) 
 	case DensityPoundPerCubicFoot:
-		return (value / 0.062427961) 
+		return (value * 0.45359237 / 0.028316846592) 
 	case DensityPoundPerCubicYard:
-		return (value * (0.45359237 / 0.9144 / 0.9144 / 0.9144)) 
+		return (value * 0.45359237 / 0.764554857984) 
 	case DensityTonnePerCubicMillimeter:
 		return (value / 1e-12) 
 	case DensityTonnePerCubicCentimeter:
@@ -1577,7 +1577,7 @@ func (a *Density) convertToBase(value float64, fromUnit DensityUnits) float64 {
 	case DensityTonnePerCubicMeter:
 		return (value / 0.001) 
 	case DensitySlugPerCubicFoot:
-		return (value * 515.378818) 
+		return (value * (0.45359237 * 9.80665) / (0.3048 * 0.028316846592)) 
 	case DensityGramPerLiter:
 		return (value / 1) 
 	case DensityGramPerDeciliter:
@@ -1585,33 +1585,33 @@ func (a *Density) convertToBase(value float64, fromUnit DensityUnits) float64 {
 	case DensityGramPerMilliliter:
 		return (value / 1e-3) 
 	case DensityPoundPerUSGallon:
-		return (value * 1.19826427e2) 
+		return (value * 0.45359237 / 0.003785411784) 
 	case DensityPoundPerImperialGallon:
-		return (value * 9.9776398e1) 
+		return (value * 0.45359237 / 0.00454609) 
 	case DensityKilogramPerLiter:
 		return (value * 1e3) 
 	case DensityTonnePerCubicFoot:
-		return (value * 3.53146667214886e4) 
+		return (value * 1000 / 0.028316846592) 
 	case DensityTonnePerCubicInch:
-		return (value * 6.10237440947323e7) 
+		return (value * 1000 / 1.6387064e-5) 
 	case DensityGramPerCubicFoot:
-		return (value * 0.0353146667214886) 
+		return (value * 0.001 / 0.028316846592) 
 	case DensityGramPerCubicInch:
-		return (value * 61.0237440947323) 
+		return (value * 0.001 / 1.6387064e-5) 
 	case DensityPoundPerCubicMeter:
-		return (value / 2.204622621848775) 
+		return (value * 0.45359237) 
 	case DensityPoundPerCubicCentimeter:
-		return (value / 2.204622621848775e-6) 
+		return (value * 0.45359237e6) 
 	case DensityPoundPerCubicMillimeter:
-		return (value / 2.204622621848775e-9) 
+		return (value * 0.45359237e9) 
 	case DensitySlugPerCubicMeter:
-		return (value * 14.5939) 
+		return (value * 0.45359237 * 9.80665 / 0.3048) 
 	case DensitySlugPerCubicCentimeter:
-		return (value * 14593903) 
+		return (value * 0.45359237e6 * 9.80665 / 0.3048) 
 	case DensitySlugPerCubicMillimeter:
-		return (value * 14593903000) 
+		return (value * 0.45359237e9 * 9.80665 / 0.3048) 
 	case DensitySlugPerCubicInch:
-		return (value * 890574.60201535) 
+		return (value * (0.45359237 * 9.80665) / (0.3048 * 1.6387064e-5)) 
 	case DensityKilogramPerCubicMillimeter:
 		return ((value / 1e-6) * 1000.0) 
 	case DensityKilogramPerCubicCentimeter:
@@ -1623,11 +1623,11 @@ func (a *Density) convertToBase(value float64, fromUnit DensityUnits) float64 {
 	case DensityMicrogramPerCubicMeter:
 		return ((value / 1e3) * 1e-06) 
 	case DensityKilopoundPerCubicInch:
-		return ((value / 3.6127298147753e-5) * 1000.0) 
+		return ((value * 0.45359237 / 1.6387064e-5) * 1000.0) 
 	case DensityKilopoundPerCubicFoot:
-		return ((value / 0.062427961) * 1000.0) 
+		return ((value * 0.45359237 / 0.028316846592) * 1000.0) 
 	case DensityKilopoundPerCubicYard:
-		return ((value * (0.45359237 / 0.9144 / 0.9144 / 0.9144)) * 1000.0) 
+		return ((value * 0.45359237 / 0.764554857984) * 1000.0) 
 	case DensityFemtogramPerLiter:
 		return ((value / 1) * 1e-15) 
 	case DensityPicogramPerLiter:
@@ -1804,7 +1804,7 @@ func GetDensityAbbreviation(unit DensityUnits) string {
 	case DensitySlugPerCubicFoot:
 		return "slug/ft³" 
 	case DensityGramPerLiter:
-		return "g/L" 
+		return "g/l" 
 	case DensityGramPerDeciliter:
 		return "g/dl" 
 	case DensityGramPerMilliliter:
@@ -1854,19 +1854,19 @@ func GetDensityAbbreviation(unit DensityUnits) string {
 	case DensityKilopoundPerCubicYard:
 		return "klb/yd³" 
 	case DensityFemtogramPerLiter:
-		return "fg/L" 
+		return "fg/l" 
 	case DensityPicogramPerLiter:
-		return "pg/L" 
+		return "pg/l" 
 	case DensityNanogramPerLiter:
-		return "ng/L" 
+		return "ng/l" 
 	case DensityMicrogramPerLiter:
-		return "μg/L" 
+		return "μg/l" 
 	case DensityMilligramPerLiter:
-		return "mg/L" 
+		return "mg/l" 
 	case DensityCentigramPerLiter:
-		return "cg/L" 
+		return "cg/l" 
 	case DensityDecigramPerLiter:
-		return "dg/L" 
+		return "dg/l" 
 	case DensityFemtogramPerDeciliter:
 		return "fg/dl" 
 	case DensityPicogramPerDeciliter:

@@ -159,6 +159,15 @@ func TestDurationConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to Picoseconds.
+		// No expected conversion value provided for Picoseconds, verifying result is not NaN.
+		result := a.Picoseconds()
+		cacheResult := a.Picoseconds()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Picoseconds returned NaN")
+		}
+	}
+	{
 		// Test conversion to Nanoseconds.
 		// No expected conversion value provided for Nanoseconds, verifying result is not NaN.
 		result := a.Nanoseconds()
@@ -407,6 +416,23 @@ func TestDurationFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Sol = %v, want %v", converted, 100)
     }
+    // Test Picosecond conversion
+    picosecondsDto := units.DurationDto{
+        Value: 100,
+        Unit:  units.DurationPicosecond,
+    }
+    
+    var picosecondsResult *units.Duration
+    picosecondsResult, err = factory.FromDto(picosecondsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Picosecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picosecondsResult.Convert(units.DurationPicosecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Picosecond = %v, want %v", converted, 100)
+    }
     // Test Nanosecond conversion
     nanosecondsDto := units.DurationDto{
         Value: 100,
@@ -629,6 +655,18 @@ func TestDurationFactory_FromDtoJSON(t *testing.T) {
     converted = solsResult.Convert(units.DurationSol)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Sol = %v, want %v", converted, 100)
+    }
+    // Test JSON with Picosecond unit
+    picosecondsJSON := []byte(`{"value": 100, "unit": "Picosecond"}`)
+    picosecondsResult, err := factory.FromDtoJSON(picosecondsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Picosecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = picosecondsResult.Convert(units.DurationPicosecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Picosecond = %v, want %v", converted, 100)
     }
     // Test JSON with Nanosecond unit
     nanosecondsJSON := []byte(`{"value": 100, "unit": "Nanosecond"}`)
@@ -1064,6 +1102,49 @@ func TestDurationFactory_FromSols(t *testing.T) {
         t.Errorf("FromSols() with zero value = %v, want 0", converted)
     }
 }
+// Test FromPicoseconds function
+func TestDurationFactory_FromPicoseconds(t *testing.T) {
+    factory := units.DurationFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPicoseconds(100)
+    if err != nil {
+        t.Errorf("FromPicoseconds() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.DurationPicosecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPicoseconds() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPicoseconds(math.NaN())
+    if err == nil {
+        t.Error("FromPicoseconds() with NaN value should return error")
+    }
+
+    _, err = factory.FromPicoseconds(math.Inf(1))
+    if err == nil {
+        t.Error("FromPicoseconds() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPicoseconds(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPicoseconds() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPicoseconds(0)
+    if err != nil {
+        t.Errorf("FromPicoseconds() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.DurationPicosecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPicoseconds() with zero value = %v, want 0", converted)
+    }
+}
 // Test FromNanoseconds function
 func TestDurationFactory_FromNanoseconds(t *testing.T) {
     factory := units.DurationFactory{}
@@ -1312,6 +1393,11 @@ func TestGetDurationAbbreviation(t *testing.T) {
             name: "Sol abbreviation",
             unit: units.DurationSol,
             want: "sol",
+        },
+        {
+            name: "Picosecond abbreviation",
+            unit: units.DurationPicosecond,
+            want: "ps",
         },
         {
             name: "Nanosecond abbreviation",

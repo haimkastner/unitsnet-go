@@ -733,11 +733,11 @@ func (a *Torque) convertFromBase(toUnit TorqueUnits) float64 {
 	case TorqueNewtonMeter:
 		return (value) 
 	case TorquePoundalFoot:
-		return (value / 4.21401100938048e-2) 
+		return (value / (0.138254954376 * 0.3048)) 
 	case TorquePoundForceInch:
-		return (value / 1.129848290276167e-1) 
+		return (value / (4.4482216152605 * 2.54e-2)) 
 	case TorquePoundForceFoot:
-		return (value / 1.3558179483314) 
+		return (value / (4.4482216152605 * 0.3048)) 
 	case TorqueGramForceMillimeter:
 		return (value / 9.80665e-6) 
 	case TorqueGramForceCentimeter:
@@ -769,13 +769,13 @@ func (a *Torque) convertFromBase(toUnit TorqueUnits) float64 {
 	case TorqueMeganewtonMeter:
 		return ((value) / 1000000.0) 
 	case TorqueKilopoundForceInch:
-		return ((value / 1.129848290276167e-1) / 1000.0) 
+		return ((value / (4.4482216152605 * 2.54e-2)) / 1000.0) 
 	case TorqueMegapoundForceInch:
-		return ((value / 1.129848290276167e-1) / 1000000.0) 
+		return ((value / (4.4482216152605 * 2.54e-2)) / 1000000.0) 
 	case TorqueKilopoundForceFoot:
-		return ((value / 1.3558179483314) / 1000.0) 
+		return ((value / (4.4482216152605 * 0.3048)) / 1000.0) 
 	case TorqueMegapoundForceFoot:
-		return ((value / 1.3558179483314) / 1000000.0) 
+		return ((value / (4.4482216152605 * 0.3048)) / 1000000.0) 
 	default:
 		return math.NaN()
 	}
@@ -790,11 +790,11 @@ func (a *Torque) convertToBase(value float64, fromUnit TorqueUnits) float64 {
 	case TorqueNewtonMeter:
 		return (value) 
 	case TorquePoundalFoot:
-		return (value * 4.21401100938048e-2) 
+		return (value * 0.138254954376 * 0.3048) 
 	case TorquePoundForceInch:
-		return (value * 1.129848290276167e-1) 
+		return (value * 4.4482216152605 * 2.54e-2) 
 	case TorquePoundForceFoot:
-		return (value * 1.3558179483314) 
+		return (value * 4.4482216152605 * 0.3048) 
 	case TorqueGramForceMillimeter:
 		return (value * 9.80665e-6) 
 	case TorqueGramForceCentimeter:
@@ -826,13 +826,13 @@ func (a *Torque) convertToBase(value float64, fromUnit TorqueUnits) float64 {
 	case TorqueMeganewtonMeter:
 		return ((value) * 1000000.0) 
 	case TorqueKilopoundForceInch:
-		return ((value * 1.129848290276167e-1) * 1000.0) 
+		return ((value * 4.4482216152605 * 2.54e-2) * 1000.0) 
 	case TorqueMegapoundForceInch:
-		return ((value * 1.129848290276167e-1) * 1000000.0) 
+		return ((value * 4.4482216152605 * 2.54e-2) * 1000000.0) 
 	case TorqueKilopoundForceFoot:
-		return ((value * 1.3558179483314) * 1000.0) 
+		return ((value * 4.4482216152605 * 0.3048) * 1000.0) 
 	case TorqueMegapoundForceFoot:
-		return ((value * 1.3558179483314) * 1000000.0) 
+		return ((value * 4.4482216152605 * 0.3048) * 1000000.0) 
 	default:
 		return math.NaN()
 	}

@@ -32,7 +32,7 @@ const (
         // 
         MassMomentOfInertiaTonneSquareCentimeter MassMomentOfInertiaUnits = "TonneSquareCentimeter"
         // 
-        MassMomentOfInertiaTonneSquareMilimeter MassMomentOfInertiaUnits = "TonneSquareMilimeter"
+        MassMomentOfInertiaTonneSquareMillimeter MassMomentOfInertiaUnits = "TonneSquareMillimeter"
         // 
         MassMomentOfInertiaPoundSquareFoot MassMomentOfInertiaUnits = "PoundSquareFoot"
         // 
@@ -70,9 +70,9 @@ const (
         // 
         MassMomentOfInertiaMegatonneSquareCentimeter MassMomentOfInertiaUnits = "MegatonneSquareCentimeter"
         // 
-        MassMomentOfInertiaKilotonneSquareMilimeter MassMomentOfInertiaUnits = "KilotonneSquareMilimeter"
+        MassMomentOfInertiaKilotonneSquareMillimeter MassMomentOfInertiaUnits = "KilotonneSquareMillimeter"
         // 
-        MassMomentOfInertiaMegatonneSquareMilimeter MassMomentOfInertiaUnits = "MegatonneSquareMilimeter"
+        MassMomentOfInertiaMegatonneSquareMillimeter MassMomentOfInertiaUnits = "MegatonneSquareMillimeter"
 )
 
 var internalMassMomentOfInertiaUnitsMap = map[MassMomentOfInertiaUnits]bool{
@@ -84,7 +84,7 @@ var internalMassMomentOfInertiaUnitsMap = map[MassMomentOfInertiaUnits]bool{
 	MassMomentOfInertiaTonneSquareMeter: true,
 	MassMomentOfInertiaTonneSquareDecimeter: true,
 	MassMomentOfInertiaTonneSquareCentimeter: true,
-	MassMomentOfInertiaTonneSquareMilimeter: true,
+	MassMomentOfInertiaTonneSquareMillimeter: true,
 	MassMomentOfInertiaPoundSquareFoot: true,
 	MassMomentOfInertiaPoundSquareInch: true,
 	MassMomentOfInertiaSlugSquareFoot: true,
@@ -103,8 +103,8 @@ var internalMassMomentOfInertiaUnitsMap = map[MassMomentOfInertiaUnits]bool{
 	MassMomentOfInertiaMegatonneSquareDecimeter: true,
 	MassMomentOfInertiaKilotonneSquareCentimeter: true,
 	MassMomentOfInertiaMegatonneSquareCentimeter: true,
-	MassMomentOfInertiaKilotonneSquareMilimeter: true,
-	MassMomentOfInertiaMegatonneSquareMilimeter: true,
+	MassMomentOfInertiaKilotonneSquareMillimeter: true,
+	MassMomentOfInertiaMegatonneSquareMillimeter: true,
 }
 
 // MassMomentOfInertiaDto represents a MassMomentOfInertia measurement with a numerical value and its corresponding unit.
@@ -112,7 +112,7 @@ type MassMomentOfInertiaDto struct {
     // Value is the numerical representation of the MassMomentOfInertia.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the MassMomentOfInertia, as defined in the MassMomentOfInertiaUnits enumeration.
-	Unit  MassMomentOfInertiaUnits `json:"unit" validate:"required,oneof=GramSquareMeter GramSquareDecimeter GramSquareCentimeter GramSquareMillimeter TonneSquareMeter TonneSquareDecimeter TonneSquareCentimeter TonneSquareMilimeter PoundSquareFoot PoundSquareInch SlugSquareFoot SlugSquareInch MilligramSquareMeter KilogramSquareMeter MilligramSquareDecimeter KilogramSquareDecimeter MilligramSquareCentimeter KilogramSquareCentimeter MilligramSquareMillimeter KilogramSquareMillimeter KilotonneSquareMeter MegatonneSquareMeter KilotonneSquareDecimeter MegatonneSquareDecimeter KilotonneSquareCentimeter MegatonneSquareCentimeter KilotonneSquareMilimeter MegatonneSquareMilimeter"`
+	Unit  MassMomentOfInertiaUnits `json:"unit" validate:"required,oneof=GramSquareMeter GramSquareDecimeter GramSquareCentimeter GramSquareMillimeter TonneSquareMeter TonneSquareDecimeter TonneSquareCentimeter TonneSquareMillimeter PoundSquareFoot PoundSquareInch SlugSquareFoot SlugSquareInch MilligramSquareMeter KilogramSquareMeter MilligramSquareDecimeter KilogramSquareDecimeter MilligramSquareCentimeter KilogramSquareCentimeter MilligramSquareMillimeter KilogramSquareMillimeter KilotonneSquareMeter MegatonneSquareMeter KilotonneSquareDecimeter MegatonneSquareDecimeter KilotonneSquareCentimeter MegatonneSquareCentimeter KilotonneSquareMillimeter MegatonneSquareMillimeter"`
 }
 
 // MassMomentOfInertiaDtoFactory groups methods for creating and serializing MassMomentOfInertiaDto objects.
@@ -158,7 +158,7 @@ type MassMomentOfInertia struct {
     tonne_square_metersLazy *float64 
     tonne_square_decimetersLazy *float64 
     tonne_square_centimetersLazy *float64 
-    tonne_square_milimetersLazy *float64 
+    tonne_square_millimetersLazy *float64 
     pound_square_feetLazy *float64 
     pound_square_inchesLazy *float64 
     slug_square_feetLazy *float64 
@@ -177,8 +177,8 @@ type MassMomentOfInertia struct {
     megatonne_square_decimetersLazy *float64 
     kilotonne_square_centimetersLazy *float64 
     megatonne_square_centimetersLazy *float64 
-    kilotonne_square_milimetersLazy *float64 
-    megatonne_square_milimetersLazy *float64 
+    kilotonne_square_millimetersLazy *float64 
+    megatonne_square_millimetersLazy *float64 
 }
 
 // MassMomentOfInertiaFactory groups methods for creating MassMomentOfInertia instances.
@@ -239,9 +239,9 @@ func (uf MassMomentOfInertiaFactory) FromTonneSquareCentimeters(value float64) (
 	return newMassMomentOfInertia(value, MassMomentOfInertiaTonneSquareCentimeter)
 }
 
-// FromTonneSquareMilimeters creates a new MassMomentOfInertia instance from a value in TonneSquareMilimeters.
-func (uf MassMomentOfInertiaFactory) FromTonneSquareMilimeters(value float64) (*MassMomentOfInertia, error) {
-	return newMassMomentOfInertia(value, MassMomentOfInertiaTonneSquareMilimeter)
+// FromTonneSquareMillimeters creates a new MassMomentOfInertia instance from a value in TonneSquareMillimeters.
+func (uf MassMomentOfInertiaFactory) FromTonneSquareMillimeters(value float64) (*MassMomentOfInertia, error) {
+	return newMassMomentOfInertia(value, MassMomentOfInertiaTonneSquareMillimeter)
 }
 
 // FromPoundSquareFeet creates a new MassMomentOfInertia instance from a value in PoundSquareFeet.
@@ -334,14 +334,14 @@ func (uf MassMomentOfInertiaFactory) FromMegatonneSquareCentimeters(value float6
 	return newMassMomentOfInertia(value, MassMomentOfInertiaMegatonneSquareCentimeter)
 }
 
-// FromKilotonneSquareMilimeters creates a new MassMomentOfInertia instance from a value in KilotonneSquareMilimeters.
-func (uf MassMomentOfInertiaFactory) FromKilotonneSquareMilimeters(value float64) (*MassMomentOfInertia, error) {
-	return newMassMomentOfInertia(value, MassMomentOfInertiaKilotonneSquareMilimeter)
+// FromKilotonneSquareMillimeters creates a new MassMomentOfInertia instance from a value in KilotonneSquareMillimeters.
+func (uf MassMomentOfInertiaFactory) FromKilotonneSquareMillimeters(value float64) (*MassMomentOfInertia, error) {
+	return newMassMomentOfInertia(value, MassMomentOfInertiaKilotonneSquareMillimeter)
 }
 
-// FromMegatonneSquareMilimeters creates a new MassMomentOfInertia instance from a value in MegatonneSquareMilimeters.
-func (uf MassMomentOfInertiaFactory) FromMegatonneSquareMilimeters(value float64) (*MassMomentOfInertia, error) {
-	return newMassMomentOfInertia(value, MassMomentOfInertiaMegatonneSquareMilimeter)
+// FromMegatonneSquareMillimeters creates a new MassMomentOfInertia instance from a value in MegatonneSquareMillimeters.
+func (uf MassMomentOfInertiaFactory) FromMegatonneSquareMillimeters(value float64) (*MassMomentOfInertia, error) {
+	return newMassMomentOfInertia(value, MassMomentOfInertiaMegatonneSquareMillimeter)
 }
 
 
@@ -448,16 +448,16 @@ func (a *MassMomentOfInertia) TonneSquareCentimeters() float64 {
 	return tonne_square_centimeters
 }
 
-// TonneSquareMilimeters returns the MassMomentOfInertia value in TonneSquareMilimeters.
+// TonneSquareMillimeters returns the MassMomentOfInertia value in TonneSquareMillimeters.
 //
 // 
-func (a *MassMomentOfInertia) TonneSquareMilimeters() float64 {
-	if a.tonne_square_milimetersLazy != nil {
-		return *a.tonne_square_milimetersLazy
+func (a *MassMomentOfInertia) TonneSquareMillimeters() float64 {
+	if a.tonne_square_millimetersLazy != nil {
+		return *a.tonne_square_millimetersLazy
 	}
-	tonne_square_milimeters := a.convertFromBase(MassMomentOfInertiaTonneSquareMilimeter)
-	a.tonne_square_milimetersLazy = &tonne_square_milimeters
-	return tonne_square_milimeters
+	tonne_square_millimeters := a.convertFromBase(MassMomentOfInertiaTonneSquareMillimeter)
+	a.tonne_square_millimetersLazy = &tonne_square_millimeters
+	return tonne_square_millimeters
 }
 
 // PoundSquareFeet returns the MassMomentOfInertia value in PoundSquareFeet.
@@ -676,28 +676,28 @@ func (a *MassMomentOfInertia) MegatonneSquareCentimeters() float64 {
 	return megatonne_square_centimeters
 }
 
-// KilotonneSquareMilimeters returns the MassMomentOfInertia value in KilotonneSquareMilimeters.
+// KilotonneSquareMillimeters returns the MassMomentOfInertia value in KilotonneSquareMillimeters.
 //
 // 
-func (a *MassMomentOfInertia) KilotonneSquareMilimeters() float64 {
-	if a.kilotonne_square_milimetersLazy != nil {
-		return *a.kilotonne_square_milimetersLazy
+func (a *MassMomentOfInertia) KilotonneSquareMillimeters() float64 {
+	if a.kilotonne_square_millimetersLazy != nil {
+		return *a.kilotonne_square_millimetersLazy
 	}
-	kilotonne_square_milimeters := a.convertFromBase(MassMomentOfInertiaKilotonneSquareMilimeter)
-	a.kilotonne_square_milimetersLazy = &kilotonne_square_milimeters
-	return kilotonne_square_milimeters
+	kilotonne_square_millimeters := a.convertFromBase(MassMomentOfInertiaKilotonneSquareMillimeter)
+	a.kilotonne_square_millimetersLazy = &kilotonne_square_millimeters
+	return kilotonne_square_millimeters
 }
 
-// MegatonneSquareMilimeters returns the MassMomentOfInertia value in MegatonneSquareMilimeters.
+// MegatonneSquareMillimeters returns the MassMomentOfInertia value in MegatonneSquareMillimeters.
 //
 // 
-func (a *MassMomentOfInertia) MegatonneSquareMilimeters() float64 {
-	if a.megatonne_square_milimetersLazy != nil {
-		return *a.megatonne_square_milimetersLazy
+func (a *MassMomentOfInertia) MegatonneSquareMillimeters() float64 {
+	if a.megatonne_square_millimetersLazy != nil {
+		return *a.megatonne_square_millimetersLazy
 	}
-	megatonne_square_milimeters := a.convertFromBase(MassMomentOfInertiaMegatonneSquareMilimeter)
-	a.megatonne_square_milimetersLazy = &megatonne_square_milimeters
-	return megatonne_square_milimeters
+	megatonne_square_millimeters := a.convertFromBase(MassMomentOfInertiaMegatonneSquareMillimeter)
+	a.megatonne_square_millimetersLazy = &megatonne_square_millimeters
+	return megatonne_square_millimeters
 }
 
 
@@ -745,8 +745,8 @@ func (a *MassMomentOfInertia) Convert(toUnit MassMomentOfInertiaUnits) float64 {
 		return a.TonneSquareDecimeters()
     case MassMomentOfInertiaTonneSquareCentimeter:
 		return a.TonneSquareCentimeters()
-    case MassMomentOfInertiaTonneSquareMilimeter:
-		return a.TonneSquareMilimeters()
+    case MassMomentOfInertiaTonneSquareMillimeter:
+		return a.TonneSquareMillimeters()
     case MassMomentOfInertiaPoundSquareFoot:
 		return a.PoundSquareFeet()
     case MassMomentOfInertiaPoundSquareInch:
@@ -783,10 +783,10 @@ func (a *MassMomentOfInertia) Convert(toUnit MassMomentOfInertiaUnits) float64 {
 		return a.KilotonneSquareCentimeters()
     case MassMomentOfInertiaMegatonneSquareCentimeter:
 		return a.MegatonneSquareCentimeters()
-    case MassMomentOfInertiaKilotonneSquareMilimeter:
-		return a.KilotonneSquareMilimeters()
-    case MassMomentOfInertiaMegatonneSquareMilimeter:
-		return a.MegatonneSquareMilimeters()
+    case MassMomentOfInertiaKilotonneSquareMillimeter:
+		return a.KilotonneSquareMillimeters()
+    case MassMomentOfInertiaMegatonneSquareMillimeter:
+		return a.MegatonneSquareMillimeters()
 	default:
 		return math.NaN()
 	}
@@ -809,16 +809,16 @@ func (a *MassMomentOfInertia) convertFromBase(toUnit MassMomentOfInertiaUnits) f
 		return (value * 1e-1) 
 	case MassMomentOfInertiaTonneSquareCentimeter:
 		return (value * 1e1) 
-	case MassMomentOfInertiaTonneSquareMilimeter:
+	case MassMomentOfInertiaTonneSquareMillimeter:
 		return (value * 1e3) 
 	case MassMomentOfInertiaPoundSquareFoot:
-		return (value / 4.21401101e-2) 
+		return (value / (0.45359237 * 9.290304e-2)) 
 	case MassMomentOfInertiaPoundSquareInch:
-		return (value / 2.9263965e-4) 
+		return (value / (0.45359237 * 0.00064516)) 
 	case MassMomentOfInertiaSlugSquareFoot:
-		return (value / 1.3558179619) 
+		return (value * 0.3048 / (0.45359237 * 9.290304e-2 * 9.80665)) 
 	case MassMomentOfInertiaSlugSquareInch:
-		return (value / 9.41540242e-3) 
+		return (value * 0.3048 / (0.45359237 * 0.00064516 * 9.80665)) 
 	case MassMomentOfInertiaMilligramSquareMeter:
 		return ((value * 1e3) / 0.001) 
 	case MassMomentOfInertiaKilogramSquareMeter:
@@ -847,9 +847,9 @@ func (a *MassMomentOfInertia) convertFromBase(toUnit MassMomentOfInertiaUnits) f
 		return ((value * 1e1) / 1000.0) 
 	case MassMomentOfInertiaMegatonneSquareCentimeter:
 		return ((value * 1e1) / 1000000.0) 
-	case MassMomentOfInertiaKilotonneSquareMilimeter:
+	case MassMomentOfInertiaKilotonneSquareMillimeter:
 		return ((value * 1e3) / 1000.0) 
-	case MassMomentOfInertiaMegatonneSquareMilimeter:
+	case MassMomentOfInertiaMegatonneSquareMillimeter:
 		return ((value * 1e3) / 1000000.0) 
 	default:
 		return math.NaN()
@@ -872,16 +872,16 @@ func (a *MassMomentOfInertia) convertToBase(value float64, fromUnit MassMomentOf
 		return (value / 1e-1) 
 	case MassMomentOfInertiaTonneSquareCentimeter:
 		return (value / 1e1) 
-	case MassMomentOfInertiaTonneSquareMilimeter:
+	case MassMomentOfInertiaTonneSquareMillimeter:
 		return (value / 1e3) 
 	case MassMomentOfInertiaPoundSquareFoot:
-		return (value * 4.21401101e-2) 
+		return (value * (0.45359237 * 9.290304e-2)) 
 	case MassMomentOfInertiaPoundSquareInch:
-		return (value * 2.9263965e-4) 
+		return (value * (0.45359237 * 0.00064516)) 
 	case MassMomentOfInertiaSlugSquareFoot:
-		return (value * 1.3558179619) 
+		return (value * 0.45359237 * 9.290304e-2 * 9.80665 / 0.3048) 
 	case MassMomentOfInertiaSlugSquareInch:
-		return (value * 9.41540242e-3) 
+		return (value * 0.45359237 * 0.00064516 * 9.80665 / 0.3048) 
 	case MassMomentOfInertiaMilligramSquareMeter:
 		return ((value / 1e3) * 0.001) 
 	case MassMomentOfInertiaKilogramSquareMeter:
@@ -910,9 +910,9 @@ func (a *MassMomentOfInertia) convertToBase(value float64, fromUnit MassMomentOf
 		return ((value / 1e1) * 1000.0) 
 	case MassMomentOfInertiaMegatonneSquareCentimeter:
 		return ((value / 1e1) * 1000000.0) 
-	case MassMomentOfInertiaKilotonneSquareMilimeter:
+	case MassMomentOfInertiaKilotonneSquareMillimeter:
 		return ((value / 1e3) * 1000.0) 
-	case MassMomentOfInertiaMegatonneSquareMilimeter:
+	case MassMomentOfInertiaMegatonneSquareMillimeter:
 		return ((value / 1e3) * 1000000.0) 
 	default:
 		return math.NaN()
@@ -1041,7 +1041,7 @@ func GetMassMomentOfInertiaAbbreviation(unit MassMomentOfInertiaUnits) string {
 		return "t·dm²" 
 	case MassMomentOfInertiaTonneSquareCentimeter:
 		return "t·cm²" 
-	case MassMomentOfInertiaTonneSquareMilimeter:
+	case MassMomentOfInertiaTonneSquareMillimeter:
 		return "t·mm²" 
 	case MassMomentOfInertiaPoundSquareFoot:
 		return "lb·ft²" 
@@ -1079,9 +1079,9 @@ func GetMassMomentOfInertiaAbbreviation(unit MassMomentOfInertiaUnits) string {
 		return "kt·cm²" 
 	case MassMomentOfInertiaMegatonneSquareCentimeter:
 		return "Mt·cm²" 
-	case MassMomentOfInertiaKilotonneSquareMilimeter:
+	case MassMomentOfInertiaKilotonneSquareMillimeter:
 		return "kt·mm²" 
-	case MassMomentOfInertiaMegatonneSquareMilimeter:
+	case MassMomentOfInertiaMegatonneSquareMillimeter:
 		return "Mt·mm²" 
 	default:
 		return ""

@@ -127,26 +127,26 @@ type ElectricPotentialChangeRate struct {
 	// value is the base measurement stored internally.
 	value       float64
     
-    volts_per_secondsLazy *float64 
-    volts_per_microsecondsLazy *float64 
-    volts_per_minutesLazy *float64 
-    volts_per_hoursLazy *float64 
-    microvolts_per_secondsLazy *float64 
-    millivolts_per_secondsLazy *float64 
-    kilovolts_per_secondsLazy *float64 
-    megavolts_per_secondsLazy *float64 
-    microvolts_per_microsecondsLazy *float64 
-    millivolts_per_microsecondsLazy *float64 
-    kilovolts_per_microsecondsLazy *float64 
-    megavolts_per_microsecondsLazy *float64 
-    microvolts_per_minutesLazy *float64 
-    millivolts_per_minutesLazy *float64 
-    kilovolts_per_minutesLazy *float64 
-    megavolts_per_minutesLazy *float64 
-    microvolts_per_hoursLazy *float64 
-    millivolts_per_hoursLazy *float64 
-    kilovolts_per_hoursLazy *float64 
-    megavolts_per_hoursLazy *float64 
+    volts_per_secondLazy *float64 
+    volts_per_microsecondLazy *float64 
+    volts_per_minuteLazy *float64 
+    volts_per_hourLazy *float64 
+    microvolts_per_secondLazy *float64 
+    millivolts_per_secondLazy *float64 
+    kilovolts_per_secondLazy *float64 
+    megavolts_per_secondLazy *float64 
+    microvolts_per_microsecondLazy *float64 
+    millivolts_per_microsecondLazy *float64 
+    kilovolts_per_microsecondLazy *float64 
+    megavolts_per_microsecondLazy *float64 
+    microvolts_per_minuteLazy *float64 
+    millivolts_per_minuteLazy *float64 
+    kilovolts_per_minuteLazy *float64 
+    megavolts_per_minuteLazy *float64 
+    microvolts_per_hourLazy *float64 
+    millivolts_per_hourLazy *float64 
+    kilovolts_per_hourLazy *float64 
+    megavolts_per_hourLazy *float64 
 }
 
 // ElectricPotentialChangeRateFactory groups methods for creating ElectricPotentialChangeRate instances.
@@ -172,103 +172,103 @@ func (uf ElectricPotentialChangeRateFactory) FromDtoJSON(data []byte) (*Electric
 }
 
 
-// FromVoltsPerSeconds creates a new ElectricPotentialChangeRate instance from a value in VoltsPerSeconds.
-func (uf ElectricPotentialChangeRateFactory) FromVoltsPerSeconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromVoltsPerSecond creates a new ElectricPotentialChangeRate instance from a value in VoltsPerSecond.
+func (uf ElectricPotentialChangeRateFactory) FromVoltsPerSecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateVoltPerSecond)
 }
 
-// FromVoltsPerMicroseconds creates a new ElectricPotentialChangeRate instance from a value in VoltsPerMicroseconds.
-func (uf ElectricPotentialChangeRateFactory) FromVoltsPerMicroseconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromVoltsPerMicrosecond creates a new ElectricPotentialChangeRate instance from a value in VoltsPerMicrosecond.
+func (uf ElectricPotentialChangeRateFactory) FromVoltsPerMicrosecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateVoltPerMicrosecond)
 }
 
-// FromVoltsPerMinutes creates a new ElectricPotentialChangeRate instance from a value in VoltsPerMinutes.
-func (uf ElectricPotentialChangeRateFactory) FromVoltsPerMinutes(value float64) (*ElectricPotentialChangeRate, error) {
+// FromVoltsPerMinute creates a new ElectricPotentialChangeRate instance from a value in VoltsPerMinute.
+func (uf ElectricPotentialChangeRateFactory) FromVoltsPerMinute(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateVoltPerMinute)
 }
 
-// FromVoltsPerHours creates a new ElectricPotentialChangeRate instance from a value in VoltsPerHours.
-func (uf ElectricPotentialChangeRateFactory) FromVoltsPerHours(value float64) (*ElectricPotentialChangeRate, error) {
+// FromVoltsPerHour creates a new ElectricPotentialChangeRate instance from a value in VoltsPerHour.
+func (uf ElectricPotentialChangeRateFactory) FromVoltsPerHour(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateVoltPerHour)
 }
 
-// FromMicrovoltsPerSeconds creates a new ElectricPotentialChangeRate instance from a value in MicrovoltsPerSeconds.
-func (uf ElectricPotentialChangeRateFactory) FromMicrovoltsPerSeconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMicrovoltsPerSecond creates a new ElectricPotentialChangeRate instance from a value in MicrovoltsPerSecond.
+func (uf ElectricPotentialChangeRateFactory) FromMicrovoltsPerSecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMicrovoltPerSecond)
 }
 
-// FromMillivoltsPerSeconds creates a new ElectricPotentialChangeRate instance from a value in MillivoltsPerSeconds.
-func (uf ElectricPotentialChangeRateFactory) FromMillivoltsPerSeconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMillivoltsPerSecond creates a new ElectricPotentialChangeRate instance from a value in MillivoltsPerSecond.
+func (uf ElectricPotentialChangeRateFactory) FromMillivoltsPerSecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMillivoltPerSecond)
 }
 
-// FromKilovoltsPerSeconds creates a new ElectricPotentialChangeRate instance from a value in KilovoltsPerSeconds.
-func (uf ElectricPotentialChangeRateFactory) FromKilovoltsPerSeconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromKilovoltsPerSecond creates a new ElectricPotentialChangeRate instance from a value in KilovoltsPerSecond.
+func (uf ElectricPotentialChangeRateFactory) FromKilovoltsPerSecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateKilovoltPerSecond)
 }
 
-// FromMegavoltsPerSeconds creates a new ElectricPotentialChangeRate instance from a value in MegavoltsPerSeconds.
-func (uf ElectricPotentialChangeRateFactory) FromMegavoltsPerSeconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMegavoltsPerSecond creates a new ElectricPotentialChangeRate instance from a value in MegavoltsPerSecond.
+func (uf ElectricPotentialChangeRateFactory) FromMegavoltsPerSecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMegavoltPerSecond)
 }
 
-// FromMicrovoltsPerMicroseconds creates a new ElectricPotentialChangeRate instance from a value in MicrovoltsPerMicroseconds.
-func (uf ElectricPotentialChangeRateFactory) FromMicrovoltsPerMicroseconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMicrovoltsPerMicrosecond creates a new ElectricPotentialChangeRate instance from a value in MicrovoltsPerMicrosecond.
+func (uf ElectricPotentialChangeRateFactory) FromMicrovoltsPerMicrosecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMicrovoltPerMicrosecond)
 }
 
-// FromMillivoltsPerMicroseconds creates a new ElectricPotentialChangeRate instance from a value in MillivoltsPerMicroseconds.
-func (uf ElectricPotentialChangeRateFactory) FromMillivoltsPerMicroseconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMillivoltsPerMicrosecond creates a new ElectricPotentialChangeRate instance from a value in MillivoltsPerMicrosecond.
+func (uf ElectricPotentialChangeRateFactory) FromMillivoltsPerMicrosecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMillivoltPerMicrosecond)
 }
 
-// FromKilovoltsPerMicroseconds creates a new ElectricPotentialChangeRate instance from a value in KilovoltsPerMicroseconds.
-func (uf ElectricPotentialChangeRateFactory) FromKilovoltsPerMicroseconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromKilovoltsPerMicrosecond creates a new ElectricPotentialChangeRate instance from a value in KilovoltsPerMicrosecond.
+func (uf ElectricPotentialChangeRateFactory) FromKilovoltsPerMicrosecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateKilovoltPerMicrosecond)
 }
 
-// FromMegavoltsPerMicroseconds creates a new ElectricPotentialChangeRate instance from a value in MegavoltsPerMicroseconds.
-func (uf ElectricPotentialChangeRateFactory) FromMegavoltsPerMicroseconds(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMegavoltsPerMicrosecond creates a new ElectricPotentialChangeRate instance from a value in MegavoltsPerMicrosecond.
+func (uf ElectricPotentialChangeRateFactory) FromMegavoltsPerMicrosecond(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMegavoltPerMicrosecond)
 }
 
-// FromMicrovoltsPerMinutes creates a new ElectricPotentialChangeRate instance from a value in MicrovoltsPerMinutes.
-func (uf ElectricPotentialChangeRateFactory) FromMicrovoltsPerMinutes(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMicrovoltsPerMinute creates a new ElectricPotentialChangeRate instance from a value in MicrovoltsPerMinute.
+func (uf ElectricPotentialChangeRateFactory) FromMicrovoltsPerMinute(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMicrovoltPerMinute)
 }
 
-// FromMillivoltsPerMinutes creates a new ElectricPotentialChangeRate instance from a value in MillivoltsPerMinutes.
-func (uf ElectricPotentialChangeRateFactory) FromMillivoltsPerMinutes(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMillivoltsPerMinute creates a new ElectricPotentialChangeRate instance from a value in MillivoltsPerMinute.
+func (uf ElectricPotentialChangeRateFactory) FromMillivoltsPerMinute(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMillivoltPerMinute)
 }
 
-// FromKilovoltsPerMinutes creates a new ElectricPotentialChangeRate instance from a value in KilovoltsPerMinutes.
-func (uf ElectricPotentialChangeRateFactory) FromKilovoltsPerMinutes(value float64) (*ElectricPotentialChangeRate, error) {
+// FromKilovoltsPerMinute creates a new ElectricPotentialChangeRate instance from a value in KilovoltsPerMinute.
+func (uf ElectricPotentialChangeRateFactory) FromKilovoltsPerMinute(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateKilovoltPerMinute)
 }
 
-// FromMegavoltsPerMinutes creates a new ElectricPotentialChangeRate instance from a value in MegavoltsPerMinutes.
-func (uf ElectricPotentialChangeRateFactory) FromMegavoltsPerMinutes(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMegavoltsPerMinute creates a new ElectricPotentialChangeRate instance from a value in MegavoltsPerMinute.
+func (uf ElectricPotentialChangeRateFactory) FromMegavoltsPerMinute(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMegavoltPerMinute)
 }
 
-// FromMicrovoltsPerHours creates a new ElectricPotentialChangeRate instance from a value in MicrovoltsPerHours.
-func (uf ElectricPotentialChangeRateFactory) FromMicrovoltsPerHours(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMicrovoltsPerHour creates a new ElectricPotentialChangeRate instance from a value in MicrovoltsPerHour.
+func (uf ElectricPotentialChangeRateFactory) FromMicrovoltsPerHour(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMicrovoltPerHour)
 }
 
-// FromMillivoltsPerHours creates a new ElectricPotentialChangeRate instance from a value in MillivoltsPerHours.
-func (uf ElectricPotentialChangeRateFactory) FromMillivoltsPerHours(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMillivoltsPerHour creates a new ElectricPotentialChangeRate instance from a value in MillivoltsPerHour.
+func (uf ElectricPotentialChangeRateFactory) FromMillivoltsPerHour(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMillivoltPerHour)
 }
 
-// FromKilovoltsPerHours creates a new ElectricPotentialChangeRate instance from a value in KilovoltsPerHours.
-func (uf ElectricPotentialChangeRateFactory) FromKilovoltsPerHours(value float64) (*ElectricPotentialChangeRate, error) {
+// FromKilovoltsPerHour creates a new ElectricPotentialChangeRate instance from a value in KilovoltsPerHour.
+func (uf ElectricPotentialChangeRateFactory) FromKilovoltsPerHour(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateKilovoltPerHour)
 }
 
-// FromMegavoltsPerHours creates a new ElectricPotentialChangeRate instance from a value in MegavoltsPerHours.
-func (uf ElectricPotentialChangeRateFactory) FromMegavoltsPerHours(value float64) (*ElectricPotentialChangeRate, error) {
+// FromMegavoltsPerHour creates a new ElectricPotentialChangeRate instance from a value in MegavoltsPerHour.
+func (uf ElectricPotentialChangeRateFactory) FromMegavoltsPerHour(value float64) (*ElectricPotentialChangeRate, error) {
 	return newElectricPotentialChangeRate(value, ElectricPotentialChangeRateMegavoltPerHour)
 }
 
@@ -292,244 +292,244 @@ func (a *ElectricPotentialChangeRate) BaseValue() float64 {
 }
 
 
-// VoltsPerSeconds returns the ElectricPotentialChangeRate value in VoltsPerSeconds.
+// VoltsPerSecond returns the ElectricPotentialChangeRate value in VoltsPerSecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) VoltsPerSeconds() float64 {
-	if a.volts_per_secondsLazy != nil {
-		return *a.volts_per_secondsLazy
+func (a *ElectricPotentialChangeRate) VoltsPerSecond() float64 {
+	if a.volts_per_secondLazy != nil {
+		return *a.volts_per_secondLazy
 	}
-	volts_per_seconds := a.convertFromBase(ElectricPotentialChangeRateVoltPerSecond)
-	a.volts_per_secondsLazy = &volts_per_seconds
-	return volts_per_seconds
+	volts_per_second := a.convertFromBase(ElectricPotentialChangeRateVoltPerSecond)
+	a.volts_per_secondLazy = &volts_per_second
+	return volts_per_second
 }
 
-// VoltsPerMicroseconds returns the ElectricPotentialChangeRate value in VoltsPerMicroseconds.
+// VoltsPerMicrosecond returns the ElectricPotentialChangeRate value in VoltsPerMicrosecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) VoltsPerMicroseconds() float64 {
-	if a.volts_per_microsecondsLazy != nil {
-		return *a.volts_per_microsecondsLazy
+func (a *ElectricPotentialChangeRate) VoltsPerMicrosecond() float64 {
+	if a.volts_per_microsecondLazy != nil {
+		return *a.volts_per_microsecondLazy
 	}
-	volts_per_microseconds := a.convertFromBase(ElectricPotentialChangeRateVoltPerMicrosecond)
-	a.volts_per_microsecondsLazy = &volts_per_microseconds
-	return volts_per_microseconds
+	volts_per_microsecond := a.convertFromBase(ElectricPotentialChangeRateVoltPerMicrosecond)
+	a.volts_per_microsecondLazy = &volts_per_microsecond
+	return volts_per_microsecond
 }
 
-// VoltsPerMinutes returns the ElectricPotentialChangeRate value in VoltsPerMinutes.
+// VoltsPerMinute returns the ElectricPotentialChangeRate value in VoltsPerMinute.
 //
 // 
-func (a *ElectricPotentialChangeRate) VoltsPerMinutes() float64 {
-	if a.volts_per_minutesLazy != nil {
-		return *a.volts_per_minutesLazy
+func (a *ElectricPotentialChangeRate) VoltsPerMinute() float64 {
+	if a.volts_per_minuteLazy != nil {
+		return *a.volts_per_minuteLazy
 	}
-	volts_per_minutes := a.convertFromBase(ElectricPotentialChangeRateVoltPerMinute)
-	a.volts_per_minutesLazy = &volts_per_minutes
-	return volts_per_minutes
+	volts_per_minute := a.convertFromBase(ElectricPotentialChangeRateVoltPerMinute)
+	a.volts_per_minuteLazy = &volts_per_minute
+	return volts_per_minute
 }
 
-// VoltsPerHours returns the ElectricPotentialChangeRate value in VoltsPerHours.
+// VoltsPerHour returns the ElectricPotentialChangeRate value in VoltsPerHour.
 //
 // 
-func (a *ElectricPotentialChangeRate) VoltsPerHours() float64 {
-	if a.volts_per_hoursLazy != nil {
-		return *a.volts_per_hoursLazy
+func (a *ElectricPotentialChangeRate) VoltsPerHour() float64 {
+	if a.volts_per_hourLazy != nil {
+		return *a.volts_per_hourLazy
 	}
-	volts_per_hours := a.convertFromBase(ElectricPotentialChangeRateVoltPerHour)
-	a.volts_per_hoursLazy = &volts_per_hours
-	return volts_per_hours
+	volts_per_hour := a.convertFromBase(ElectricPotentialChangeRateVoltPerHour)
+	a.volts_per_hourLazy = &volts_per_hour
+	return volts_per_hour
 }
 
-// MicrovoltsPerSeconds returns the ElectricPotentialChangeRate value in MicrovoltsPerSeconds.
+// MicrovoltsPerSecond returns the ElectricPotentialChangeRate value in MicrovoltsPerSecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) MicrovoltsPerSeconds() float64 {
-	if a.microvolts_per_secondsLazy != nil {
-		return *a.microvolts_per_secondsLazy
+func (a *ElectricPotentialChangeRate) MicrovoltsPerSecond() float64 {
+	if a.microvolts_per_secondLazy != nil {
+		return *a.microvolts_per_secondLazy
 	}
-	microvolts_per_seconds := a.convertFromBase(ElectricPotentialChangeRateMicrovoltPerSecond)
-	a.microvolts_per_secondsLazy = &microvolts_per_seconds
-	return microvolts_per_seconds
+	microvolts_per_second := a.convertFromBase(ElectricPotentialChangeRateMicrovoltPerSecond)
+	a.microvolts_per_secondLazy = &microvolts_per_second
+	return microvolts_per_second
 }
 
-// MillivoltsPerSeconds returns the ElectricPotentialChangeRate value in MillivoltsPerSeconds.
+// MillivoltsPerSecond returns the ElectricPotentialChangeRate value in MillivoltsPerSecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) MillivoltsPerSeconds() float64 {
-	if a.millivolts_per_secondsLazy != nil {
-		return *a.millivolts_per_secondsLazy
+func (a *ElectricPotentialChangeRate) MillivoltsPerSecond() float64 {
+	if a.millivolts_per_secondLazy != nil {
+		return *a.millivolts_per_secondLazy
 	}
-	millivolts_per_seconds := a.convertFromBase(ElectricPotentialChangeRateMillivoltPerSecond)
-	a.millivolts_per_secondsLazy = &millivolts_per_seconds
-	return millivolts_per_seconds
+	millivolts_per_second := a.convertFromBase(ElectricPotentialChangeRateMillivoltPerSecond)
+	a.millivolts_per_secondLazy = &millivolts_per_second
+	return millivolts_per_second
 }
 
-// KilovoltsPerSeconds returns the ElectricPotentialChangeRate value in KilovoltsPerSeconds.
+// KilovoltsPerSecond returns the ElectricPotentialChangeRate value in KilovoltsPerSecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) KilovoltsPerSeconds() float64 {
-	if a.kilovolts_per_secondsLazy != nil {
-		return *a.kilovolts_per_secondsLazy
+func (a *ElectricPotentialChangeRate) KilovoltsPerSecond() float64 {
+	if a.kilovolts_per_secondLazy != nil {
+		return *a.kilovolts_per_secondLazy
 	}
-	kilovolts_per_seconds := a.convertFromBase(ElectricPotentialChangeRateKilovoltPerSecond)
-	a.kilovolts_per_secondsLazy = &kilovolts_per_seconds
-	return kilovolts_per_seconds
+	kilovolts_per_second := a.convertFromBase(ElectricPotentialChangeRateKilovoltPerSecond)
+	a.kilovolts_per_secondLazy = &kilovolts_per_second
+	return kilovolts_per_second
 }
 
-// MegavoltsPerSeconds returns the ElectricPotentialChangeRate value in MegavoltsPerSeconds.
+// MegavoltsPerSecond returns the ElectricPotentialChangeRate value in MegavoltsPerSecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) MegavoltsPerSeconds() float64 {
-	if a.megavolts_per_secondsLazy != nil {
-		return *a.megavolts_per_secondsLazy
+func (a *ElectricPotentialChangeRate) MegavoltsPerSecond() float64 {
+	if a.megavolts_per_secondLazy != nil {
+		return *a.megavolts_per_secondLazy
 	}
-	megavolts_per_seconds := a.convertFromBase(ElectricPotentialChangeRateMegavoltPerSecond)
-	a.megavolts_per_secondsLazy = &megavolts_per_seconds
-	return megavolts_per_seconds
+	megavolts_per_second := a.convertFromBase(ElectricPotentialChangeRateMegavoltPerSecond)
+	a.megavolts_per_secondLazy = &megavolts_per_second
+	return megavolts_per_second
 }
 
-// MicrovoltsPerMicroseconds returns the ElectricPotentialChangeRate value in MicrovoltsPerMicroseconds.
+// MicrovoltsPerMicrosecond returns the ElectricPotentialChangeRate value in MicrovoltsPerMicrosecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) MicrovoltsPerMicroseconds() float64 {
-	if a.microvolts_per_microsecondsLazy != nil {
-		return *a.microvolts_per_microsecondsLazy
+func (a *ElectricPotentialChangeRate) MicrovoltsPerMicrosecond() float64 {
+	if a.microvolts_per_microsecondLazy != nil {
+		return *a.microvolts_per_microsecondLazy
 	}
-	microvolts_per_microseconds := a.convertFromBase(ElectricPotentialChangeRateMicrovoltPerMicrosecond)
-	a.microvolts_per_microsecondsLazy = &microvolts_per_microseconds
-	return microvolts_per_microseconds
+	microvolts_per_microsecond := a.convertFromBase(ElectricPotentialChangeRateMicrovoltPerMicrosecond)
+	a.microvolts_per_microsecondLazy = &microvolts_per_microsecond
+	return microvolts_per_microsecond
 }
 
-// MillivoltsPerMicroseconds returns the ElectricPotentialChangeRate value in MillivoltsPerMicroseconds.
+// MillivoltsPerMicrosecond returns the ElectricPotentialChangeRate value in MillivoltsPerMicrosecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) MillivoltsPerMicroseconds() float64 {
-	if a.millivolts_per_microsecondsLazy != nil {
-		return *a.millivolts_per_microsecondsLazy
+func (a *ElectricPotentialChangeRate) MillivoltsPerMicrosecond() float64 {
+	if a.millivolts_per_microsecondLazy != nil {
+		return *a.millivolts_per_microsecondLazy
 	}
-	millivolts_per_microseconds := a.convertFromBase(ElectricPotentialChangeRateMillivoltPerMicrosecond)
-	a.millivolts_per_microsecondsLazy = &millivolts_per_microseconds
-	return millivolts_per_microseconds
+	millivolts_per_microsecond := a.convertFromBase(ElectricPotentialChangeRateMillivoltPerMicrosecond)
+	a.millivolts_per_microsecondLazy = &millivolts_per_microsecond
+	return millivolts_per_microsecond
 }
 
-// KilovoltsPerMicroseconds returns the ElectricPotentialChangeRate value in KilovoltsPerMicroseconds.
+// KilovoltsPerMicrosecond returns the ElectricPotentialChangeRate value in KilovoltsPerMicrosecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) KilovoltsPerMicroseconds() float64 {
-	if a.kilovolts_per_microsecondsLazy != nil {
-		return *a.kilovolts_per_microsecondsLazy
+func (a *ElectricPotentialChangeRate) KilovoltsPerMicrosecond() float64 {
+	if a.kilovolts_per_microsecondLazy != nil {
+		return *a.kilovolts_per_microsecondLazy
 	}
-	kilovolts_per_microseconds := a.convertFromBase(ElectricPotentialChangeRateKilovoltPerMicrosecond)
-	a.kilovolts_per_microsecondsLazy = &kilovolts_per_microseconds
-	return kilovolts_per_microseconds
+	kilovolts_per_microsecond := a.convertFromBase(ElectricPotentialChangeRateKilovoltPerMicrosecond)
+	a.kilovolts_per_microsecondLazy = &kilovolts_per_microsecond
+	return kilovolts_per_microsecond
 }
 
-// MegavoltsPerMicroseconds returns the ElectricPotentialChangeRate value in MegavoltsPerMicroseconds.
+// MegavoltsPerMicrosecond returns the ElectricPotentialChangeRate value in MegavoltsPerMicrosecond.
 //
 // 
-func (a *ElectricPotentialChangeRate) MegavoltsPerMicroseconds() float64 {
-	if a.megavolts_per_microsecondsLazy != nil {
-		return *a.megavolts_per_microsecondsLazy
+func (a *ElectricPotentialChangeRate) MegavoltsPerMicrosecond() float64 {
+	if a.megavolts_per_microsecondLazy != nil {
+		return *a.megavolts_per_microsecondLazy
 	}
-	megavolts_per_microseconds := a.convertFromBase(ElectricPotentialChangeRateMegavoltPerMicrosecond)
-	a.megavolts_per_microsecondsLazy = &megavolts_per_microseconds
-	return megavolts_per_microseconds
+	megavolts_per_microsecond := a.convertFromBase(ElectricPotentialChangeRateMegavoltPerMicrosecond)
+	a.megavolts_per_microsecondLazy = &megavolts_per_microsecond
+	return megavolts_per_microsecond
 }
 
-// MicrovoltsPerMinutes returns the ElectricPotentialChangeRate value in MicrovoltsPerMinutes.
+// MicrovoltsPerMinute returns the ElectricPotentialChangeRate value in MicrovoltsPerMinute.
 //
 // 
-func (a *ElectricPotentialChangeRate) MicrovoltsPerMinutes() float64 {
-	if a.microvolts_per_minutesLazy != nil {
-		return *a.microvolts_per_minutesLazy
+func (a *ElectricPotentialChangeRate) MicrovoltsPerMinute() float64 {
+	if a.microvolts_per_minuteLazy != nil {
+		return *a.microvolts_per_minuteLazy
 	}
-	microvolts_per_minutes := a.convertFromBase(ElectricPotentialChangeRateMicrovoltPerMinute)
-	a.microvolts_per_minutesLazy = &microvolts_per_minutes
-	return microvolts_per_minutes
+	microvolts_per_minute := a.convertFromBase(ElectricPotentialChangeRateMicrovoltPerMinute)
+	a.microvolts_per_minuteLazy = &microvolts_per_minute
+	return microvolts_per_minute
 }
 
-// MillivoltsPerMinutes returns the ElectricPotentialChangeRate value in MillivoltsPerMinutes.
+// MillivoltsPerMinute returns the ElectricPotentialChangeRate value in MillivoltsPerMinute.
 //
 // 
-func (a *ElectricPotentialChangeRate) MillivoltsPerMinutes() float64 {
-	if a.millivolts_per_minutesLazy != nil {
-		return *a.millivolts_per_minutesLazy
+func (a *ElectricPotentialChangeRate) MillivoltsPerMinute() float64 {
+	if a.millivolts_per_minuteLazy != nil {
+		return *a.millivolts_per_minuteLazy
 	}
-	millivolts_per_minutes := a.convertFromBase(ElectricPotentialChangeRateMillivoltPerMinute)
-	a.millivolts_per_minutesLazy = &millivolts_per_minutes
-	return millivolts_per_minutes
+	millivolts_per_minute := a.convertFromBase(ElectricPotentialChangeRateMillivoltPerMinute)
+	a.millivolts_per_minuteLazy = &millivolts_per_minute
+	return millivolts_per_minute
 }
 
-// KilovoltsPerMinutes returns the ElectricPotentialChangeRate value in KilovoltsPerMinutes.
+// KilovoltsPerMinute returns the ElectricPotentialChangeRate value in KilovoltsPerMinute.
 //
 // 
-func (a *ElectricPotentialChangeRate) KilovoltsPerMinutes() float64 {
-	if a.kilovolts_per_minutesLazy != nil {
-		return *a.kilovolts_per_minutesLazy
+func (a *ElectricPotentialChangeRate) KilovoltsPerMinute() float64 {
+	if a.kilovolts_per_minuteLazy != nil {
+		return *a.kilovolts_per_minuteLazy
 	}
-	kilovolts_per_minutes := a.convertFromBase(ElectricPotentialChangeRateKilovoltPerMinute)
-	a.kilovolts_per_minutesLazy = &kilovolts_per_minutes
-	return kilovolts_per_minutes
+	kilovolts_per_minute := a.convertFromBase(ElectricPotentialChangeRateKilovoltPerMinute)
+	a.kilovolts_per_minuteLazy = &kilovolts_per_minute
+	return kilovolts_per_minute
 }
 
-// MegavoltsPerMinutes returns the ElectricPotentialChangeRate value in MegavoltsPerMinutes.
+// MegavoltsPerMinute returns the ElectricPotentialChangeRate value in MegavoltsPerMinute.
 //
 // 
-func (a *ElectricPotentialChangeRate) MegavoltsPerMinutes() float64 {
-	if a.megavolts_per_minutesLazy != nil {
-		return *a.megavolts_per_minutesLazy
+func (a *ElectricPotentialChangeRate) MegavoltsPerMinute() float64 {
+	if a.megavolts_per_minuteLazy != nil {
+		return *a.megavolts_per_minuteLazy
 	}
-	megavolts_per_minutes := a.convertFromBase(ElectricPotentialChangeRateMegavoltPerMinute)
-	a.megavolts_per_minutesLazy = &megavolts_per_minutes
-	return megavolts_per_minutes
+	megavolts_per_minute := a.convertFromBase(ElectricPotentialChangeRateMegavoltPerMinute)
+	a.megavolts_per_minuteLazy = &megavolts_per_minute
+	return megavolts_per_minute
 }
 
-// MicrovoltsPerHours returns the ElectricPotentialChangeRate value in MicrovoltsPerHours.
+// MicrovoltsPerHour returns the ElectricPotentialChangeRate value in MicrovoltsPerHour.
 //
 // 
-func (a *ElectricPotentialChangeRate) MicrovoltsPerHours() float64 {
-	if a.microvolts_per_hoursLazy != nil {
-		return *a.microvolts_per_hoursLazy
+func (a *ElectricPotentialChangeRate) MicrovoltsPerHour() float64 {
+	if a.microvolts_per_hourLazy != nil {
+		return *a.microvolts_per_hourLazy
 	}
-	microvolts_per_hours := a.convertFromBase(ElectricPotentialChangeRateMicrovoltPerHour)
-	a.microvolts_per_hoursLazy = &microvolts_per_hours
-	return microvolts_per_hours
+	microvolts_per_hour := a.convertFromBase(ElectricPotentialChangeRateMicrovoltPerHour)
+	a.microvolts_per_hourLazy = &microvolts_per_hour
+	return microvolts_per_hour
 }
 
-// MillivoltsPerHours returns the ElectricPotentialChangeRate value in MillivoltsPerHours.
+// MillivoltsPerHour returns the ElectricPotentialChangeRate value in MillivoltsPerHour.
 //
 // 
-func (a *ElectricPotentialChangeRate) MillivoltsPerHours() float64 {
-	if a.millivolts_per_hoursLazy != nil {
-		return *a.millivolts_per_hoursLazy
+func (a *ElectricPotentialChangeRate) MillivoltsPerHour() float64 {
+	if a.millivolts_per_hourLazy != nil {
+		return *a.millivolts_per_hourLazy
 	}
-	millivolts_per_hours := a.convertFromBase(ElectricPotentialChangeRateMillivoltPerHour)
-	a.millivolts_per_hoursLazy = &millivolts_per_hours
-	return millivolts_per_hours
+	millivolts_per_hour := a.convertFromBase(ElectricPotentialChangeRateMillivoltPerHour)
+	a.millivolts_per_hourLazy = &millivolts_per_hour
+	return millivolts_per_hour
 }
 
-// KilovoltsPerHours returns the ElectricPotentialChangeRate value in KilovoltsPerHours.
+// KilovoltsPerHour returns the ElectricPotentialChangeRate value in KilovoltsPerHour.
 //
 // 
-func (a *ElectricPotentialChangeRate) KilovoltsPerHours() float64 {
-	if a.kilovolts_per_hoursLazy != nil {
-		return *a.kilovolts_per_hoursLazy
+func (a *ElectricPotentialChangeRate) KilovoltsPerHour() float64 {
+	if a.kilovolts_per_hourLazy != nil {
+		return *a.kilovolts_per_hourLazy
 	}
-	kilovolts_per_hours := a.convertFromBase(ElectricPotentialChangeRateKilovoltPerHour)
-	a.kilovolts_per_hoursLazy = &kilovolts_per_hours
-	return kilovolts_per_hours
+	kilovolts_per_hour := a.convertFromBase(ElectricPotentialChangeRateKilovoltPerHour)
+	a.kilovolts_per_hourLazy = &kilovolts_per_hour
+	return kilovolts_per_hour
 }
 
-// MegavoltsPerHours returns the ElectricPotentialChangeRate value in MegavoltsPerHours.
+// MegavoltsPerHour returns the ElectricPotentialChangeRate value in MegavoltsPerHour.
 //
 // 
-func (a *ElectricPotentialChangeRate) MegavoltsPerHours() float64 {
-	if a.megavolts_per_hoursLazy != nil {
-		return *a.megavolts_per_hoursLazy
+func (a *ElectricPotentialChangeRate) MegavoltsPerHour() float64 {
+	if a.megavolts_per_hourLazy != nil {
+		return *a.megavolts_per_hourLazy
 	}
-	megavolts_per_hours := a.convertFromBase(ElectricPotentialChangeRateMegavoltPerHour)
-	a.megavolts_per_hoursLazy = &megavolts_per_hours
-	return megavolts_per_hours
+	megavolts_per_hour := a.convertFromBase(ElectricPotentialChangeRateMegavoltPerHour)
+	a.megavolts_per_hourLazy = &megavolts_per_hour
+	return megavolts_per_hour
 }
 
 
@@ -564,45 +564,45 @@ func (a *ElectricPotentialChangeRate) ToDtoJSON(holdInUnit *ElectricPotentialCha
 func (a *ElectricPotentialChangeRate) Convert(toUnit ElectricPotentialChangeRateUnits) float64 {
 	switch toUnit { 
     case ElectricPotentialChangeRateVoltPerSecond:
-		return a.VoltsPerSeconds()
+		return a.VoltsPerSecond()
     case ElectricPotentialChangeRateVoltPerMicrosecond:
-		return a.VoltsPerMicroseconds()
+		return a.VoltsPerMicrosecond()
     case ElectricPotentialChangeRateVoltPerMinute:
-		return a.VoltsPerMinutes()
+		return a.VoltsPerMinute()
     case ElectricPotentialChangeRateVoltPerHour:
-		return a.VoltsPerHours()
+		return a.VoltsPerHour()
     case ElectricPotentialChangeRateMicrovoltPerSecond:
-		return a.MicrovoltsPerSeconds()
+		return a.MicrovoltsPerSecond()
     case ElectricPotentialChangeRateMillivoltPerSecond:
-		return a.MillivoltsPerSeconds()
+		return a.MillivoltsPerSecond()
     case ElectricPotentialChangeRateKilovoltPerSecond:
-		return a.KilovoltsPerSeconds()
+		return a.KilovoltsPerSecond()
     case ElectricPotentialChangeRateMegavoltPerSecond:
-		return a.MegavoltsPerSeconds()
+		return a.MegavoltsPerSecond()
     case ElectricPotentialChangeRateMicrovoltPerMicrosecond:
-		return a.MicrovoltsPerMicroseconds()
+		return a.MicrovoltsPerMicrosecond()
     case ElectricPotentialChangeRateMillivoltPerMicrosecond:
-		return a.MillivoltsPerMicroseconds()
+		return a.MillivoltsPerMicrosecond()
     case ElectricPotentialChangeRateKilovoltPerMicrosecond:
-		return a.KilovoltsPerMicroseconds()
+		return a.KilovoltsPerMicrosecond()
     case ElectricPotentialChangeRateMegavoltPerMicrosecond:
-		return a.MegavoltsPerMicroseconds()
+		return a.MegavoltsPerMicrosecond()
     case ElectricPotentialChangeRateMicrovoltPerMinute:
-		return a.MicrovoltsPerMinutes()
+		return a.MicrovoltsPerMinute()
     case ElectricPotentialChangeRateMillivoltPerMinute:
-		return a.MillivoltsPerMinutes()
+		return a.MillivoltsPerMinute()
     case ElectricPotentialChangeRateKilovoltPerMinute:
-		return a.KilovoltsPerMinutes()
+		return a.KilovoltsPerMinute()
     case ElectricPotentialChangeRateMegavoltPerMinute:
-		return a.MegavoltsPerMinutes()
+		return a.MegavoltsPerMinute()
     case ElectricPotentialChangeRateMicrovoltPerHour:
-		return a.MicrovoltsPerHours()
+		return a.MicrovoltsPerHour()
     case ElectricPotentialChangeRateMillivoltPerHour:
-		return a.MillivoltsPerHours()
+		return a.MillivoltsPerHour()
     case ElectricPotentialChangeRateKilovoltPerHour:
-		return a.KilovoltsPerHours()
+		return a.KilovoltsPerHour()
     case ElectricPotentialChangeRateMegavoltPerHour:
-		return a.MegavoltsPerHours()
+		return a.MegavoltsPerHour()
 	default:
 		return math.NaN()
 	}

@@ -80,9 +80,9 @@ type TemperatureGradient struct {
 	value       float64
     
     kelvins_per_meterLazy *float64 
-    degrees_celcius_per_meterLazy *float64 
+    degrees_celsius_per_meterLazy *float64 
     degrees_fahrenheit_per_footLazy *float64 
-    degrees_celcius_per_kilometerLazy *float64 
+    degrees_celsius_per_kilometerLazy *float64 
 }
 
 // TemperatureGradientFactory groups methods for creating TemperatureGradient instances.
@@ -113,8 +113,8 @@ func (uf TemperatureGradientFactory) FromKelvinsPerMeter(value float64) (*Temper
 	return newTemperatureGradient(value, TemperatureGradientKelvinPerMeter)
 }
 
-// FromDegreesCelciusPerMeter creates a new TemperatureGradient instance from a value in DegreesCelciusPerMeter.
-func (uf TemperatureGradientFactory) FromDegreesCelciusPerMeter(value float64) (*TemperatureGradient, error) {
+// FromDegreesCelsiusPerMeter creates a new TemperatureGradient instance from a value in DegreesCelsiusPerMeter.
+func (uf TemperatureGradientFactory) FromDegreesCelsiusPerMeter(value float64) (*TemperatureGradient, error) {
 	return newTemperatureGradient(value, TemperatureGradientDegreeCelsiusPerMeter)
 }
 
@@ -123,8 +123,8 @@ func (uf TemperatureGradientFactory) FromDegreesFahrenheitPerFoot(value float64)
 	return newTemperatureGradient(value, TemperatureGradientDegreeFahrenheitPerFoot)
 }
 
-// FromDegreesCelciusPerKilometer creates a new TemperatureGradient instance from a value in DegreesCelciusPerKilometer.
-func (uf TemperatureGradientFactory) FromDegreesCelciusPerKilometer(value float64) (*TemperatureGradient, error) {
+// FromDegreesCelsiusPerKilometer creates a new TemperatureGradient instance from a value in DegreesCelsiusPerKilometer.
+func (uf TemperatureGradientFactory) FromDegreesCelsiusPerKilometer(value float64) (*TemperatureGradient, error) {
 	return newTemperatureGradient(value, TemperatureGradientDegreeCelsiusPerKilometer)
 }
 
@@ -160,16 +160,16 @@ func (a *TemperatureGradient) KelvinsPerMeter() float64 {
 	return kelvins_per_meter
 }
 
-// DegreesCelciusPerMeter returns the TemperatureGradient value in DegreesCelciusPerMeter.
+// DegreesCelsiusPerMeter returns the TemperatureGradient value in DegreesCelsiusPerMeter.
 //
 // 
-func (a *TemperatureGradient) DegreesCelciusPerMeter() float64 {
-	if a.degrees_celcius_per_meterLazy != nil {
-		return *a.degrees_celcius_per_meterLazy
+func (a *TemperatureGradient) DegreesCelsiusPerMeter() float64 {
+	if a.degrees_celsius_per_meterLazy != nil {
+		return *a.degrees_celsius_per_meterLazy
 	}
-	degrees_celcius_per_meter := a.convertFromBase(TemperatureGradientDegreeCelsiusPerMeter)
-	a.degrees_celcius_per_meterLazy = &degrees_celcius_per_meter
-	return degrees_celcius_per_meter
+	degrees_celsius_per_meter := a.convertFromBase(TemperatureGradientDegreeCelsiusPerMeter)
+	a.degrees_celsius_per_meterLazy = &degrees_celsius_per_meter
+	return degrees_celsius_per_meter
 }
 
 // DegreesFahrenheitPerFoot returns the TemperatureGradient value in DegreesFahrenheitPerFoot.
@@ -184,16 +184,16 @@ func (a *TemperatureGradient) DegreesFahrenheitPerFoot() float64 {
 	return degrees_fahrenheit_per_foot
 }
 
-// DegreesCelciusPerKilometer returns the TemperatureGradient value in DegreesCelciusPerKilometer.
+// DegreesCelsiusPerKilometer returns the TemperatureGradient value in DegreesCelsiusPerKilometer.
 //
 // 
-func (a *TemperatureGradient) DegreesCelciusPerKilometer() float64 {
-	if a.degrees_celcius_per_kilometerLazy != nil {
-		return *a.degrees_celcius_per_kilometerLazy
+func (a *TemperatureGradient) DegreesCelsiusPerKilometer() float64 {
+	if a.degrees_celsius_per_kilometerLazy != nil {
+		return *a.degrees_celsius_per_kilometerLazy
 	}
-	degrees_celcius_per_kilometer := a.convertFromBase(TemperatureGradientDegreeCelsiusPerKilometer)
-	a.degrees_celcius_per_kilometerLazy = &degrees_celcius_per_kilometer
-	return degrees_celcius_per_kilometer
+	degrees_celsius_per_kilometer := a.convertFromBase(TemperatureGradientDegreeCelsiusPerKilometer)
+	a.degrees_celsius_per_kilometerLazy = &degrees_celsius_per_kilometer
+	return degrees_celsius_per_kilometer
 }
 
 
@@ -230,11 +230,11 @@ func (a *TemperatureGradient) Convert(toUnit TemperatureGradientUnits) float64 {
     case TemperatureGradientKelvinPerMeter:
 		return a.KelvinsPerMeter()
     case TemperatureGradientDegreeCelsiusPerMeter:
-		return a.DegreesCelciusPerMeter()
+		return a.DegreesCelsiusPerMeter()
     case TemperatureGradientDegreeFahrenheitPerFoot:
 		return a.DegreesFahrenheitPerFoot()
     case TemperatureGradientDegreeCelsiusPerKilometer:
-		return a.DegreesCelciusPerKilometer()
+		return a.DegreesCelsiusPerKilometer()
 	default:
 		return math.NaN()
 	}

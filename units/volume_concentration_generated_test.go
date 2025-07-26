@@ -96,12 +96,12 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to LitersPerMililiter.
-		// No expected conversion value provided for LitersPerMililiter, verifying result is not NaN.
-		result := a.LitersPerMililiter()
-		cacheResult := a.LitersPerMililiter()
+		// Test conversion to LitersPerMilliliter.
+		// No expected conversion value provided for LitersPerMilliliter, verifying result is not NaN.
+		result := a.LitersPerMilliliter()
+		cacheResult := a.LitersPerMilliliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to LitersPerMililiter returned NaN")
+			t.Errorf("conversion to LitersPerMilliliter returned NaN")
 		}
 	}
 	{
@@ -204,57 +204,57 @@ func TestVolumeConcentrationConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to PicolitersPerMililiter.
-		// No expected conversion value provided for PicolitersPerMililiter, verifying result is not NaN.
-		result := a.PicolitersPerMililiter()
-		cacheResult := a.PicolitersPerMililiter()
+		// Test conversion to PicolitersPerMilliliter.
+		// No expected conversion value provided for PicolitersPerMilliliter, verifying result is not NaN.
+		result := a.PicolitersPerMilliliter()
+		cacheResult := a.PicolitersPerMilliliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to PicolitersPerMililiter returned NaN")
+			t.Errorf("conversion to PicolitersPerMilliliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to NanolitersPerMililiter.
-		// No expected conversion value provided for NanolitersPerMililiter, verifying result is not NaN.
-		result := a.NanolitersPerMililiter()
-		cacheResult := a.NanolitersPerMililiter()
+		// Test conversion to NanolitersPerMilliliter.
+		// No expected conversion value provided for NanolitersPerMilliliter, verifying result is not NaN.
+		result := a.NanolitersPerMilliliter()
+		cacheResult := a.NanolitersPerMilliliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to NanolitersPerMililiter returned NaN")
+			t.Errorf("conversion to NanolitersPerMilliliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to MicrolitersPerMililiter.
-		// No expected conversion value provided for MicrolitersPerMililiter, verifying result is not NaN.
-		result := a.MicrolitersPerMililiter()
-		cacheResult := a.MicrolitersPerMililiter()
+		// Test conversion to MicrolitersPerMilliliter.
+		// No expected conversion value provided for MicrolitersPerMilliliter, verifying result is not NaN.
+		result := a.MicrolitersPerMilliliter()
+		cacheResult := a.MicrolitersPerMilliliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MicrolitersPerMililiter returned NaN")
+			t.Errorf("conversion to MicrolitersPerMilliliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to MillilitersPerMililiter.
-		// No expected conversion value provided for MillilitersPerMililiter, verifying result is not NaN.
-		result := a.MillilitersPerMililiter()
-		cacheResult := a.MillilitersPerMililiter()
+		// Test conversion to MillilitersPerMilliliter.
+		// No expected conversion value provided for MillilitersPerMilliliter, verifying result is not NaN.
+		result := a.MillilitersPerMilliliter()
+		cacheResult := a.MillilitersPerMilliliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MillilitersPerMililiter returned NaN")
+			t.Errorf("conversion to MillilitersPerMilliliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to CentilitersPerMililiter.
-		// No expected conversion value provided for CentilitersPerMililiter, verifying result is not NaN.
-		result := a.CentilitersPerMililiter()
-		cacheResult := a.CentilitersPerMililiter()
+		// Test conversion to CentilitersPerMilliliter.
+		// No expected conversion value provided for CentilitersPerMilliliter, verifying result is not NaN.
+		result := a.CentilitersPerMilliliter()
+		cacheResult := a.CentilitersPerMilliliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to CentilitersPerMililiter returned NaN")
+			t.Errorf("conversion to CentilitersPerMilliliter returned NaN")
 		}
 	}
 	{
-		// Test conversion to DecilitersPerMililiter.
-		// No expected conversion value provided for DecilitersPerMililiter, verifying result is not NaN.
-		result := a.DecilitersPerMililiter()
-		cacheResult := a.DecilitersPerMililiter()
+		// Test conversion to DecilitersPerMilliliter.
+		// No expected conversion value provided for DecilitersPerMilliliter, verifying result is not NaN.
+		result := a.DecilitersPerMilliliter()
+		cacheResult := a.DecilitersPerMilliliter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to DecilitersPerMililiter returned NaN")
+			t.Errorf("conversion to DecilitersPerMilliliter returned NaN")
 		}
 	}
 }
@@ -343,39 +343,39 @@ func TestVolumeConcentrationFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DecimalFraction = %v, want %v", converted, 100)
     }
-    // Test LitersPerLiter conversion
+    // Test LiterPerLiter conversion
     liters_per_literDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationLitersPerLiter,
+        Unit:  units.VolumeConcentrationLiterPerLiter,
     }
     
     var liters_per_literResult *units.VolumeConcentration
     liters_per_literResult, err = factory.FromDto(liters_per_literDto)
     if err != nil {
-        t.Errorf("FromDto() with LitersPerLiter returned error: %v", err)
+        t.Errorf("FromDto() with LiterPerLiter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = liters_per_literResult.Convert(units.VolumeConcentrationLitersPerLiter)
+    converted = liters_per_literResult.Convert(units.VolumeConcentrationLiterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for LitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for LiterPerLiter = %v, want %v", converted, 100)
     }
-    // Test LitersPerMililiter conversion
-    liters_per_mililiterDto := units.VolumeConcentrationDto{
+    // Test LiterPerMilliliter conversion
+    liters_per_milliliterDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationLitersPerMililiter,
+        Unit:  units.VolumeConcentrationLiterPerMilliliter,
     }
     
-    var liters_per_mililiterResult *units.VolumeConcentration
-    liters_per_mililiterResult, err = factory.FromDto(liters_per_mililiterDto)
+    var liters_per_milliliterResult *units.VolumeConcentration
+    liters_per_milliliterResult, err = factory.FromDto(liters_per_milliliterDto)
     if err != nil {
-        t.Errorf("FromDto() with LitersPerMililiter returned error: %v", err)
+        t.Errorf("FromDto() with LiterPerMilliliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = liters_per_mililiterResult.Convert(units.VolumeConcentrationLitersPerMililiter)
+    converted = liters_per_milliliterResult.Convert(units.VolumeConcentrationLiterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for LitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for LiterPerMilliliter = %v, want %v", converted, 100)
     }
     // Test Percent conversion
     percentDto := units.VolumeConcentrationDto{
@@ -462,209 +462,209 @@ func TestVolumeConcentrationFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for PartPerTrillion = %v, want %v", converted, 100)
     }
-    // Test PicolitersPerLiter conversion
+    // Test PicoliterPerLiter conversion
     picoliters_per_literDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationPicolitersPerLiter,
+        Unit:  units.VolumeConcentrationPicoliterPerLiter,
     }
     
     var picoliters_per_literResult *units.VolumeConcentration
     picoliters_per_literResult, err = factory.FromDto(picoliters_per_literDto)
     if err != nil {
-        t.Errorf("FromDto() with PicolitersPerLiter returned error: %v", err)
+        t.Errorf("FromDto() with PicoliterPerLiter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = picoliters_per_literResult.Convert(units.VolumeConcentrationPicolitersPerLiter)
+    converted = picoliters_per_literResult.Convert(units.VolumeConcentrationPicoliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for PicolitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for PicoliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test NanolitersPerLiter conversion
+    // Test NanoliterPerLiter conversion
     nanoliters_per_literDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationNanolitersPerLiter,
+        Unit:  units.VolumeConcentrationNanoliterPerLiter,
     }
     
     var nanoliters_per_literResult *units.VolumeConcentration
     nanoliters_per_literResult, err = factory.FromDto(nanoliters_per_literDto)
     if err != nil {
-        t.Errorf("FromDto() with NanolitersPerLiter returned error: %v", err)
+        t.Errorf("FromDto() with NanoliterPerLiter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = nanoliters_per_literResult.Convert(units.VolumeConcentrationNanolitersPerLiter)
+    converted = nanoliters_per_literResult.Convert(units.VolumeConcentrationNanoliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for NanolitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for NanoliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test MicrolitersPerLiter conversion
+    // Test MicroliterPerLiter conversion
     microliters_per_literDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationMicrolitersPerLiter,
+        Unit:  units.VolumeConcentrationMicroliterPerLiter,
     }
     
     var microliters_per_literResult *units.VolumeConcentration
     microliters_per_literResult, err = factory.FromDto(microliters_per_literDto)
     if err != nil {
-        t.Errorf("FromDto() with MicrolitersPerLiter returned error: %v", err)
+        t.Errorf("FromDto() with MicroliterPerLiter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microliters_per_literResult.Convert(units.VolumeConcentrationMicrolitersPerLiter)
+    converted = microliters_per_literResult.Convert(units.VolumeConcentrationMicroliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MicrolitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MicroliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test MillilitersPerLiter conversion
+    // Test MilliliterPerLiter conversion
     milliliters_per_literDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationMillilitersPerLiter,
+        Unit:  units.VolumeConcentrationMilliliterPerLiter,
     }
     
     var milliliters_per_literResult *units.VolumeConcentration
     milliliters_per_literResult, err = factory.FromDto(milliliters_per_literDto)
     if err != nil {
-        t.Errorf("FromDto() with MillilitersPerLiter returned error: %v", err)
+        t.Errorf("FromDto() with MilliliterPerLiter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = milliliters_per_literResult.Convert(units.VolumeConcentrationMillilitersPerLiter)
+    converted = milliliters_per_literResult.Convert(units.VolumeConcentrationMilliliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MillilitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MilliliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test CentilitersPerLiter conversion
+    // Test CentiliterPerLiter conversion
     centiliters_per_literDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationCentilitersPerLiter,
+        Unit:  units.VolumeConcentrationCentiliterPerLiter,
     }
     
     var centiliters_per_literResult *units.VolumeConcentration
     centiliters_per_literResult, err = factory.FromDto(centiliters_per_literDto)
     if err != nil {
-        t.Errorf("FromDto() with CentilitersPerLiter returned error: %v", err)
+        t.Errorf("FromDto() with CentiliterPerLiter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = centiliters_per_literResult.Convert(units.VolumeConcentrationCentilitersPerLiter)
+    converted = centiliters_per_literResult.Convert(units.VolumeConcentrationCentiliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for CentilitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for CentiliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test DecilitersPerLiter conversion
+    // Test DeciliterPerLiter conversion
     deciliters_per_literDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationDecilitersPerLiter,
+        Unit:  units.VolumeConcentrationDeciliterPerLiter,
     }
     
     var deciliters_per_literResult *units.VolumeConcentration
     deciliters_per_literResult, err = factory.FromDto(deciliters_per_literDto)
     if err != nil {
-        t.Errorf("FromDto() with DecilitersPerLiter returned error: %v", err)
+        t.Errorf("FromDto() with DeciliterPerLiter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = deciliters_per_literResult.Convert(units.VolumeConcentrationDecilitersPerLiter)
+    converted = deciliters_per_literResult.Convert(units.VolumeConcentrationDeciliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for DecilitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for DeciliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test PicolitersPerMililiter conversion
-    picoliters_per_mililiterDto := units.VolumeConcentrationDto{
+    // Test PicoliterPerMilliliter conversion
+    picoliters_per_milliliterDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationPicolitersPerMililiter,
+        Unit:  units.VolumeConcentrationPicoliterPerMilliliter,
     }
     
-    var picoliters_per_mililiterResult *units.VolumeConcentration
-    picoliters_per_mililiterResult, err = factory.FromDto(picoliters_per_mililiterDto)
+    var picoliters_per_milliliterResult *units.VolumeConcentration
+    picoliters_per_milliliterResult, err = factory.FromDto(picoliters_per_milliliterDto)
     if err != nil {
-        t.Errorf("FromDto() with PicolitersPerMililiter returned error: %v", err)
+        t.Errorf("FromDto() with PicoliterPerMilliliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = picoliters_per_mililiterResult.Convert(units.VolumeConcentrationPicolitersPerMililiter)
+    converted = picoliters_per_milliliterResult.Convert(units.VolumeConcentrationPicoliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for PicolitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for PicoliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test NanolitersPerMililiter conversion
-    nanoliters_per_mililiterDto := units.VolumeConcentrationDto{
+    // Test NanoliterPerMilliliter conversion
+    nanoliters_per_milliliterDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationNanolitersPerMililiter,
+        Unit:  units.VolumeConcentrationNanoliterPerMilliliter,
     }
     
-    var nanoliters_per_mililiterResult *units.VolumeConcentration
-    nanoliters_per_mililiterResult, err = factory.FromDto(nanoliters_per_mililiterDto)
+    var nanoliters_per_milliliterResult *units.VolumeConcentration
+    nanoliters_per_milliliterResult, err = factory.FromDto(nanoliters_per_milliliterDto)
     if err != nil {
-        t.Errorf("FromDto() with NanolitersPerMililiter returned error: %v", err)
+        t.Errorf("FromDto() with NanoliterPerMilliliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = nanoliters_per_mililiterResult.Convert(units.VolumeConcentrationNanolitersPerMililiter)
+    converted = nanoliters_per_milliliterResult.Convert(units.VolumeConcentrationNanoliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for NanolitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for NanoliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test MicrolitersPerMililiter conversion
-    microliters_per_mililiterDto := units.VolumeConcentrationDto{
+    // Test MicroliterPerMilliliter conversion
+    microliters_per_milliliterDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationMicrolitersPerMililiter,
+        Unit:  units.VolumeConcentrationMicroliterPerMilliliter,
     }
     
-    var microliters_per_mililiterResult *units.VolumeConcentration
-    microliters_per_mililiterResult, err = factory.FromDto(microliters_per_mililiterDto)
+    var microliters_per_milliliterResult *units.VolumeConcentration
+    microliters_per_milliliterResult, err = factory.FromDto(microliters_per_milliliterDto)
     if err != nil {
-        t.Errorf("FromDto() with MicrolitersPerMililiter returned error: %v", err)
+        t.Errorf("FromDto() with MicroliterPerMilliliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microliters_per_mililiterResult.Convert(units.VolumeConcentrationMicrolitersPerMililiter)
+    converted = microliters_per_milliliterResult.Convert(units.VolumeConcentrationMicroliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MicrolitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MicroliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test MillilitersPerMililiter conversion
-    milliliters_per_mililiterDto := units.VolumeConcentrationDto{
+    // Test MilliliterPerMilliliter conversion
+    milliliters_per_milliliterDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationMillilitersPerMililiter,
+        Unit:  units.VolumeConcentrationMilliliterPerMilliliter,
     }
     
-    var milliliters_per_mililiterResult *units.VolumeConcentration
-    milliliters_per_mililiterResult, err = factory.FromDto(milliliters_per_mililiterDto)
+    var milliliters_per_milliliterResult *units.VolumeConcentration
+    milliliters_per_milliliterResult, err = factory.FromDto(milliliters_per_milliliterDto)
     if err != nil {
-        t.Errorf("FromDto() with MillilitersPerMililiter returned error: %v", err)
+        t.Errorf("FromDto() with MilliliterPerMilliliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = milliliters_per_mililiterResult.Convert(units.VolumeConcentrationMillilitersPerMililiter)
+    converted = milliliters_per_milliliterResult.Convert(units.VolumeConcentrationMilliliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MillilitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MilliliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test CentilitersPerMililiter conversion
-    centiliters_per_mililiterDto := units.VolumeConcentrationDto{
+    // Test CentiliterPerMilliliter conversion
+    centiliters_per_milliliterDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationCentilitersPerMililiter,
+        Unit:  units.VolumeConcentrationCentiliterPerMilliliter,
     }
     
-    var centiliters_per_mililiterResult *units.VolumeConcentration
-    centiliters_per_mililiterResult, err = factory.FromDto(centiliters_per_mililiterDto)
+    var centiliters_per_milliliterResult *units.VolumeConcentration
+    centiliters_per_milliliterResult, err = factory.FromDto(centiliters_per_milliliterDto)
     if err != nil {
-        t.Errorf("FromDto() with CentilitersPerMililiter returned error: %v", err)
+        t.Errorf("FromDto() with CentiliterPerMilliliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = centiliters_per_mililiterResult.Convert(units.VolumeConcentrationCentilitersPerMililiter)
+    converted = centiliters_per_milliliterResult.Convert(units.VolumeConcentrationCentiliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for CentilitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for CentiliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test DecilitersPerMililiter conversion
-    deciliters_per_mililiterDto := units.VolumeConcentrationDto{
+    // Test DeciliterPerMilliliter conversion
+    deciliters_per_milliliterDto := units.VolumeConcentrationDto{
         Value: 100,
-        Unit:  units.VolumeConcentrationDecilitersPerMililiter,
+        Unit:  units.VolumeConcentrationDeciliterPerMilliliter,
     }
     
-    var deciliters_per_mililiterResult *units.VolumeConcentration
-    deciliters_per_mililiterResult, err = factory.FromDto(deciliters_per_mililiterDto)
+    var deciliters_per_milliliterResult *units.VolumeConcentration
+    deciliters_per_milliliterResult, err = factory.FromDto(deciliters_per_milliliterDto)
     if err != nil {
-        t.Errorf("FromDto() with DecilitersPerMililiter returned error: %v", err)
+        t.Errorf("FromDto() with DeciliterPerMilliliter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = deciliters_per_mililiterResult.Convert(units.VolumeConcentrationDecilitersPerMililiter)
+    converted = deciliters_per_milliliterResult.Convert(units.VolumeConcentrationDeciliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for DecilitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for DeciliterPerMilliliter = %v, want %v", converted, 100)
     }
 
     // Test zero value
@@ -742,29 +742,29 @@ func TestVolumeConcentrationFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DecimalFraction = %v, want %v", converted, 100)
     }
-    // Test JSON with LitersPerLiter unit
-    liters_per_literJSON := []byte(`{"value": 100, "unit": "LitersPerLiter"}`)
+    // Test JSON with LiterPerLiter unit
+    liters_per_literJSON := []byte(`{"value": 100, "unit": "LiterPerLiter"}`)
     liters_per_literResult, err := factory.FromDtoJSON(liters_per_literJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with LitersPerLiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with LiterPerLiter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = liters_per_literResult.Convert(units.VolumeConcentrationLitersPerLiter)
+    converted = liters_per_literResult.Convert(units.VolumeConcentrationLiterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for LitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for LiterPerLiter = %v, want %v", converted, 100)
     }
-    // Test JSON with LitersPerMililiter unit
-    liters_per_mililiterJSON := []byte(`{"value": 100, "unit": "LitersPerMililiter"}`)
-    liters_per_mililiterResult, err := factory.FromDtoJSON(liters_per_mililiterJSON)
+    // Test JSON with LiterPerMilliliter unit
+    liters_per_milliliterJSON := []byte(`{"value": 100, "unit": "LiterPerMilliliter"}`)
+    liters_per_milliliterResult, err := factory.FromDtoJSON(liters_per_milliliterJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with LitersPerMililiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with LiterPerMilliliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = liters_per_mililiterResult.Convert(units.VolumeConcentrationLitersPerMililiter)
+    converted = liters_per_milliliterResult.Convert(units.VolumeConcentrationLiterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for LitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for LiterPerMilliliter = %v, want %v", converted, 100)
     }
     // Test JSON with Percent unit
     percentJSON := []byte(`{"value": 100, "unit": "Percent"}`)
@@ -826,149 +826,149 @@ func TestVolumeConcentrationFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for PartPerTrillion = %v, want %v", converted, 100)
     }
-    // Test JSON with PicolitersPerLiter unit
-    picoliters_per_literJSON := []byte(`{"value": 100, "unit": "PicolitersPerLiter"}`)
+    // Test JSON with PicoliterPerLiter unit
+    picoliters_per_literJSON := []byte(`{"value": 100, "unit": "PicoliterPerLiter"}`)
     picoliters_per_literResult, err := factory.FromDtoJSON(picoliters_per_literJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with PicolitersPerLiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with PicoliterPerLiter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = picoliters_per_literResult.Convert(units.VolumeConcentrationPicolitersPerLiter)
+    converted = picoliters_per_literResult.Convert(units.VolumeConcentrationPicoliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for PicolitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for PicoliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test JSON with NanolitersPerLiter unit
-    nanoliters_per_literJSON := []byte(`{"value": 100, "unit": "NanolitersPerLiter"}`)
+    // Test JSON with NanoliterPerLiter unit
+    nanoliters_per_literJSON := []byte(`{"value": 100, "unit": "NanoliterPerLiter"}`)
     nanoliters_per_literResult, err := factory.FromDtoJSON(nanoliters_per_literJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with NanolitersPerLiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with NanoliterPerLiter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = nanoliters_per_literResult.Convert(units.VolumeConcentrationNanolitersPerLiter)
+    converted = nanoliters_per_literResult.Convert(units.VolumeConcentrationNanoliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for NanolitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for NanoliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test JSON with MicrolitersPerLiter unit
-    microliters_per_literJSON := []byte(`{"value": 100, "unit": "MicrolitersPerLiter"}`)
+    // Test JSON with MicroliterPerLiter unit
+    microliters_per_literJSON := []byte(`{"value": 100, "unit": "MicroliterPerLiter"}`)
     microliters_per_literResult, err := factory.FromDtoJSON(microliters_per_literJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with MicrolitersPerLiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with MicroliterPerLiter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microliters_per_literResult.Convert(units.VolumeConcentrationMicrolitersPerLiter)
+    converted = microliters_per_literResult.Convert(units.VolumeConcentrationMicroliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MicrolitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MicroliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test JSON with MillilitersPerLiter unit
-    milliliters_per_literJSON := []byte(`{"value": 100, "unit": "MillilitersPerLiter"}`)
+    // Test JSON with MilliliterPerLiter unit
+    milliliters_per_literJSON := []byte(`{"value": 100, "unit": "MilliliterPerLiter"}`)
     milliliters_per_literResult, err := factory.FromDtoJSON(milliliters_per_literJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with MillilitersPerLiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with MilliliterPerLiter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = milliliters_per_literResult.Convert(units.VolumeConcentrationMillilitersPerLiter)
+    converted = milliliters_per_literResult.Convert(units.VolumeConcentrationMilliliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MillilitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MilliliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test JSON with CentilitersPerLiter unit
-    centiliters_per_literJSON := []byte(`{"value": 100, "unit": "CentilitersPerLiter"}`)
+    // Test JSON with CentiliterPerLiter unit
+    centiliters_per_literJSON := []byte(`{"value": 100, "unit": "CentiliterPerLiter"}`)
     centiliters_per_literResult, err := factory.FromDtoJSON(centiliters_per_literJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with CentilitersPerLiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with CentiliterPerLiter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = centiliters_per_literResult.Convert(units.VolumeConcentrationCentilitersPerLiter)
+    converted = centiliters_per_literResult.Convert(units.VolumeConcentrationCentiliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for CentilitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for CentiliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test JSON with DecilitersPerLiter unit
-    deciliters_per_literJSON := []byte(`{"value": 100, "unit": "DecilitersPerLiter"}`)
+    // Test JSON with DeciliterPerLiter unit
+    deciliters_per_literJSON := []byte(`{"value": 100, "unit": "DeciliterPerLiter"}`)
     deciliters_per_literResult, err := factory.FromDtoJSON(deciliters_per_literJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with DecilitersPerLiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with DeciliterPerLiter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = deciliters_per_literResult.Convert(units.VolumeConcentrationDecilitersPerLiter)
+    converted = deciliters_per_literResult.Convert(units.VolumeConcentrationDeciliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for DecilitersPerLiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for DeciliterPerLiter = %v, want %v", converted, 100)
     }
-    // Test JSON with PicolitersPerMililiter unit
-    picoliters_per_mililiterJSON := []byte(`{"value": 100, "unit": "PicolitersPerMililiter"}`)
-    picoliters_per_mililiterResult, err := factory.FromDtoJSON(picoliters_per_mililiterJSON)
+    // Test JSON with PicoliterPerMilliliter unit
+    picoliters_per_milliliterJSON := []byte(`{"value": 100, "unit": "PicoliterPerMilliliter"}`)
+    picoliters_per_milliliterResult, err := factory.FromDtoJSON(picoliters_per_milliliterJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with PicolitersPerMililiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with PicoliterPerMilliliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = picoliters_per_mililiterResult.Convert(units.VolumeConcentrationPicolitersPerMililiter)
+    converted = picoliters_per_milliliterResult.Convert(units.VolumeConcentrationPicoliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for PicolitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for PicoliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test JSON with NanolitersPerMililiter unit
-    nanoliters_per_mililiterJSON := []byte(`{"value": 100, "unit": "NanolitersPerMililiter"}`)
-    nanoliters_per_mililiterResult, err := factory.FromDtoJSON(nanoliters_per_mililiterJSON)
+    // Test JSON with NanoliterPerMilliliter unit
+    nanoliters_per_milliliterJSON := []byte(`{"value": 100, "unit": "NanoliterPerMilliliter"}`)
+    nanoliters_per_milliliterResult, err := factory.FromDtoJSON(nanoliters_per_milliliterJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with NanolitersPerMililiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with NanoliterPerMilliliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = nanoliters_per_mililiterResult.Convert(units.VolumeConcentrationNanolitersPerMililiter)
+    converted = nanoliters_per_milliliterResult.Convert(units.VolumeConcentrationNanoliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for NanolitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for NanoliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test JSON with MicrolitersPerMililiter unit
-    microliters_per_mililiterJSON := []byte(`{"value": 100, "unit": "MicrolitersPerMililiter"}`)
-    microliters_per_mililiterResult, err := factory.FromDtoJSON(microliters_per_mililiterJSON)
+    // Test JSON with MicroliterPerMilliliter unit
+    microliters_per_milliliterJSON := []byte(`{"value": 100, "unit": "MicroliterPerMilliliter"}`)
+    microliters_per_milliliterResult, err := factory.FromDtoJSON(microliters_per_milliliterJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with MicrolitersPerMililiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with MicroliterPerMilliliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = microliters_per_mililiterResult.Convert(units.VolumeConcentrationMicrolitersPerMililiter)
+    converted = microliters_per_milliliterResult.Convert(units.VolumeConcentrationMicroliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MicrolitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MicroliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test JSON with MillilitersPerMililiter unit
-    milliliters_per_mililiterJSON := []byte(`{"value": 100, "unit": "MillilitersPerMililiter"}`)
-    milliliters_per_mililiterResult, err := factory.FromDtoJSON(milliliters_per_mililiterJSON)
+    // Test JSON with MilliliterPerMilliliter unit
+    milliliters_per_milliliterJSON := []byte(`{"value": 100, "unit": "MilliliterPerMilliliter"}`)
+    milliliters_per_milliliterResult, err := factory.FromDtoJSON(milliliters_per_milliliterJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with MillilitersPerMililiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with MilliliterPerMilliliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = milliliters_per_mililiterResult.Convert(units.VolumeConcentrationMillilitersPerMililiter)
+    converted = milliliters_per_milliliterResult.Convert(units.VolumeConcentrationMilliliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MillilitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MilliliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test JSON with CentilitersPerMililiter unit
-    centiliters_per_mililiterJSON := []byte(`{"value": 100, "unit": "CentilitersPerMililiter"}`)
-    centiliters_per_mililiterResult, err := factory.FromDtoJSON(centiliters_per_mililiterJSON)
+    // Test JSON with CentiliterPerMilliliter unit
+    centiliters_per_milliliterJSON := []byte(`{"value": 100, "unit": "CentiliterPerMilliliter"}`)
+    centiliters_per_milliliterResult, err := factory.FromDtoJSON(centiliters_per_milliliterJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with CentilitersPerMililiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with CentiliterPerMilliliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = centiliters_per_mililiterResult.Convert(units.VolumeConcentrationCentilitersPerMililiter)
+    converted = centiliters_per_milliliterResult.Convert(units.VolumeConcentrationCentiliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for CentilitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for CentiliterPerMilliliter = %v, want %v", converted, 100)
     }
-    // Test JSON with DecilitersPerMililiter unit
-    deciliters_per_mililiterJSON := []byte(`{"value": 100, "unit": "DecilitersPerMililiter"}`)
-    deciliters_per_mililiterResult, err := factory.FromDtoJSON(deciliters_per_mililiterJSON)
+    // Test JSON with DeciliterPerMilliliter unit
+    deciliters_per_milliliterJSON := []byte(`{"value": 100, "unit": "DeciliterPerMilliliter"}`)
+    deciliters_per_milliliterResult, err := factory.FromDtoJSON(deciliters_per_milliliterJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with DecilitersPerMililiter unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with DeciliterPerMilliliter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = deciliters_per_mililiterResult.Convert(units.VolumeConcentrationDecilitersPerMililiter)
+    converted = deciliters_per_milliliterResult.Convert(units.VolumeConcentrationDeciliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for DecilitersPerMililiter = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for DeciliterPerMilliliter = %v, want %v", converted, 100)
     }
 
     // Test zero value JSON
@@ -1036,7 +1036,7 @@ func TestVolumeConcentrationFactory_FromLitersPerLiter(t *testing.T) {
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationLitersPerLiter)
+    converted := result.Convert(units.VolumeConcentrationLiterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("FromLitersPerLiter() round-trip = %v, want %v", converted, 100)
     }
@@ -1062,52 +1062,52 @@ func TestVolumeConcentrationFactory_FromLitersPerLiter(t *testing.T) {
     if err != nil {
         t.Errorf("FromLitersPerLiter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationLitersPerLiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationLiterPerLiter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromLitersPerLiter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromLitersPerMililiter function
-func TestVolumeConcentrationFactory_FromLitersPerMililiter(t *testing.T) {
+// Test FromLitersPerMilliliter function
+func TestVolumeConcentrationFactory_FromLitersPerMilliliter(t *testing.T) {
     factory := units.VolumeConcentrationFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromLitersPerMililiter(100)
+    result, err := factory.FromLitersPerMilliliter(100)
     if err != nil {
-        t.Errorf("FromLitersPerMililiter() returned error: %v", err)
+        t.Errorf("FromLitersPerMilliliter() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationLitersPerMililiter)
+    converted := result.Convert(units.VolumeConcentrationLiterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromLitersPerMililiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromLitersPerMilliliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromLitersPerMililiter(math.NaN())
+    _, err = factory.FromLitersPerMilliliter(math.NaN())
     if err == nil {
-        t.Error("FromLitersPerMililiter() with NaN value should return error")
+        t.Error("FromLitersPerMilliliter() with NaN value should return error")
     }
 
-    _, err = factory.FromLitersPerMililiter(math.Inf(1))
+    _, err = factory.FromLitersPerMilliliter(math.Inf(1))
     if err == nil {
-        t.Error("FromLitersPerMililiter() with +Inf value should return error")
+        t.Error("FromLitersPerMilliliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromLitersPerMililiter(math.Inf(-1))
+    _, err = factory.FromLitersPerMilliliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromLitersPerMililiter() with -Inf value should return error")
+        t.Error("FromLitersPerMilliliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromLitersPerMililiter(0)
+    zeroResult, err := factory.FromLitersPerMilliliter(0)
     if err != nil {
-        t.Errorf("FromLitersPerMililiter() with zero value returned error: %v", err)
+        t.Errorf("FromLitersPerMilliliter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationLitersPerMililiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationLiterPerMilliliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromLitersPerMililiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromLitersPerMilliliter() with zero value = %v, want 0", converted)
     }
 }
 // Test FromPercent function
@@ -1337,7 +1337,7 @@ func TestVolumeConcentrationFactory_FromPicolitersPerLiter(t *testing.T) {
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationPicolitersPerLiter)
+    converted := result.Convert(units.VolumeConcentrationPicoliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("FromPicolitersPerLiter() round-trip = %v, want %v", converted, 100)
     }
@@ -1363,7 +1363,7 @@ func TestVolumeConcentrationFactory_FromPicolitersPerLiter(t *testing.T) {
     if err != nil {
         t.Errorf("FromPicolitersPerLiter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationPicolitersPerLiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationPicoliterPerLiter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromPicolitersPerLiter() with zero value = %v, want 0", converted)
     }
@@ -1380,7 +1380,7 @@ func TestVolumeConcentrationFactory_FromNanolitersPerLiter(t *testing.T) {
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationNanolitersPerLiter)
+    converted := result.Convert(units.VolumeConcentrationNanoliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("FromNanolitersPerLiter() round-trip = %v, want %v", converted, 100)
     }
@@ -1406,7 +1406,7 @@ func TestVolumeConcentrationFactory_FromNanolitersPerLiter(t *testing.T) {
     if err != nil {
         t.Errorf("FromNanolitersPerLiter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationNanolitersPerLiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationNanoliterPerLiter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromNanolitersPerLiter() with zero value = %v, want 0", converted)
     }
@@ -1423,7 +1423,7 @@ func TestVolumeConcentrationFactory_FromMicrolitersPerLiter(t *testing.T) {
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationMicrolitersPerLiter)
+    converted := result.Convert(units.VolumeConcentrationMicroliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("FromMicrolitersPerLiter() round-trip = %v, want %v", converted, 100)
     }
@@ -1449,7 +1449,7 @@ func TestVolumeConcentrationFactory_FromMicrolitersPerLiter(t *testing.T) {
     if err != nil {
         t.Errorf("FromMicrolitersPerLiter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationMicrolitersPerLiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationMicroliterPerLiter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromMicrolitersPerLiter() with zero value = %v, want 0", converted)
     }
@@ -1466,7 +1466,7 @@ func TestVolumeConcentrationFactory_FromMillilitersPerLiter(t *testing.T) {
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationMillilitersPerLiter)
+    converted := result.Convert(units.VolumeConcentrationMilliliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("FromMillilitersPerLiter() round-trip = %v, want %v", converted, 100)
     }
@@ -1492,7 +1492,7 @@ func TestVolumeConcentrationFactory_FromMillilitersPerLiter(t *testing.T) {
     if err != nil {
         t.Errorf("FromMillilitersPerLiter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationMillilitersPerLiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationMilliliterPerLiter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromMillilitersPerLiter() with zero value = %v, want 0", converted)
     }
@@ -1509,7 +1509,7 @@ func TestVolumeConcentrationFactory_FromCentilitersPerLiter(t *testing.T) {
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationCentilitersPerLiter)
+    converted := result.Convert(units.VolumeConcentrationCentiliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("FromCentilitersPerLiter() round-trip = %v, want %v", converted, 100)
     }
@@ -1535,7 +1535,7 @@ func TestVolumeConcentrationFactory_FromCentilitersPerLiter(t *testing.T) {
     if err != nil {
         t.Errorf("FromCentilitersPerLiter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationCentilitersPerLiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationCentiliterPerLiter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromCentilitersPerLiter() with zero value = %v, want 0", converted)
     }
@@ -1552,7 +1552,7 @@ func TestVolumeConcentrationFactory_FromDecilitersPerLiter(t *testing.T) {
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationDecilitersPerLiter)
+    converted := result.Convert(units.VolumeConcentrationDeciliterPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("FromDecilitersPerLiter() round-trip = %v, want %v", converted, 100)
     }
@@ -1578,267 +1578,267 @@ func TestVolumeConcentrationFactory_FromDecilitersPerLiter(t *testing.T) {
     if err != nil {
         t.Errorf("FromDecilitersPerLiter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationDecilitersPerLiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationDeciliterPerLiter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromDecilitersPerLiter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromPicolitersPerMililiter function
-func TestVolumeConcentrationFactory_FromPicolitersPerMililiter(t *testing.T) {
+// Test FromPicolitersPerMilliliter function
+func TestVolumeConcentrationFactory_FromPicolitersPerMilliliter(t *testing.T) {
     factory := units.VolumeConcentrationFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromPicolitersPerMililiter(100)
+    result, err := factory.FromPicolitersPerMilliliter(100)
     if err != nil {
-        t.Errorf("FromPicolitersPerMililiter() returned error: %v", err)
+        t.Errorf("FromPicolitersPerMilliliter() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationPicolitersPerMililiter)
+    converted := result.Convert(units.VolumeConcentrationPicoliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromPicolitersPerMililiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromPicolitersPerMilliliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromPicolitersPerMililiter(math.NaN())
+    _, err = factory.FromPicolitersPerMilliliter(math.NaN())
     if err == nil {
-        t.Error("FromPicolitersPerMililiter() with NaN value should return error")
+        t.Error("FromPicolitersPerMilliliter() with NaN value should return error")
     }
 
-    _, err = factory.FromPicolitersPerMililiter(math.Inf(1))
+    _, err = factory.FromPicolitersPerMilliliter(math.Inf(1))
     if err == nil {
-        t.Error("FromPicolitersPerMililiter() with +Inf value should return error")
+        t.Error("FromPicolitersPerMilliliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromPicolitersPerMililiter(math.Inf(-1))
+    _, err = factory.FromPicolitersPerMilliliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromPicolitersPerMililiter() with -Inf value should return error")
+        t.Error("FromPicolitersPerMilliliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromPicolitersPerMililiter(0)
+    zeroResult, err := factory.FromPicolitersPerMilliliter(0)
     if err != nil {
-        t.Errorf("FromPicolitersPerMililiter() with zero value returned error: %v", err)
+        t.Errorf("FromPicolitersPerMilliliter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationPicolitersPerMililiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationPicoliterPerMilliliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromPicolitersPerMililiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromPicolitersPerMilliliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromNanolitersPerMililiter function
-func TestVolumeConcentrationFactory_FromNanolitersPerMililiter(t *testing.T) {
+// Test FromNanolitersPerMilliliter function
+func TestVolumeConcentrationFactory_FromNanolitersPerMilliliter(t *testing.T) {
     factory := units.VolumeConcentrationFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromNanolitersPerMililiter(100)
+    result, err := factory.FromNanolitersPerMilliliter(100)
     if err != nil {
-        t.Errorf("FromNanolitersPerMililiter() returned error: %v", err)
+        t.Errorf("FromNanolitersPerMilliliter() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationNanolitersPerMililiter)
+    converted := result.Convert(units.VolumeConcentrationNanoliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromNanolitersPerMililiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromNanolitersPerMilliliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromNanolitersPerMililiter(math.NaN())
+    _, err = factory.FromNanolitersPerMilliliter(math.NaN())
     if err == nil {
-        t.Error("FromNanolitersPerMililiter() with NaN value should return error")
+        t.Error("FromNanolitersPerMilliliter() with NaN value should return error")
     }
 
-    _, err = factory.FromNanolitersPerMililiter(math.Inf(1))
+    _, err = factory.FromNanolitersPerMilliliter(math.Inf(1))
     if err == nil {
-        t.Error("FromNanolitersPerMililiter() with +Inf value should return error")
+        t.Error("FromNanolitersPerMilliliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromNanolitersPerMililiter(math.Inf(-1))
+    _, err = factory.FromNanolitersPerMilliliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromNanolitersPerMililiter() with -Inf value should return error")
+        t.Error("FromNanolitersPerMilliliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromNanolitersPerMililiter(0)
+    zeroResult, err := factory.FromNanolitersPerMilliliter(0)
     if err != nil {
-        t.Errorf("FromNanolitersPerMililiter() with zero value returned error: %v", err)
+        t.Errorf("FromNanolitersPerMilliliter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationNanolitersPerMililiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationNanoliterPerMilliliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromNanolitersPerMililiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromNanolitersPerMilliliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMicrolitersPerMililiter function
-func TestVolumeConcentrationFactory_FromMicrolitersPerMililiter(t *testing.T) {
+// Test FromMicrolitersPerMilliliter function
+func TestVolumeConcentrationFactory_FromMicrolitersPerMilliliter(t *testing.T) {
     factory := units.VolumeConcentrationFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMicrolitersPerMililiter(100)
+    result, err := factory.FromMicrolitersPerMilliliter(100)
     if err != nil {
-        t.Errorf("FromMicrolitersPerMililiter() returned error: %v", err)
+        t.Errorf("FromMicrolitersPerMilliliter() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationMicrolitersPerMililiter)
+    converted := result.Convert(units.VolumeConcentrationMicroliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMicrolitersPerMililiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMicrolitersPerMilliliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMicrolitersPerMililiter(math.NaN())
+    _, err = factory.FromMicrolitersPerMilliliter(math.NaN())
     if err == nil {
-        t.Error("FromMicrolitersPerMililiter() with NaN value should return error")
+        t.Error("FromMicrolitersPerMilliliter() with NaN value should return error")
     }
 
-    _, err = factory.FromMicrolitersPerMililiter(math.Inf(1))
+    _, err = factory.FromMicrolitersPerMilliliter(math.Inf(1))
     if err == nil {
-        t.Error("FromMicrolitersPerMililiter() with +Inf value should return error")
+        t.Error("FromMicrolitersPerMilliliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromMicrolitersPerMililiter(math.Inf(-1))
+    _, err = factory.FromMicrolitersPerMilliliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromMicrolitersPerMililiter() with -Inf value should return error")
+        t.Error("FromMicrolitersPerMilliliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMicrolitersPerMililiter(0)
+    zeroResult, err := factory.FromMicrolitersPerMilliliter(0)
     if err != nil {
-        t.Errorf("FromMicrolitersPerMililiter() with zero value returned error: %v", err)
+        t.Errorf("FromMicrolitersPerMilliliter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationMicrolitersPerMililiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationMicroliterPerMilliliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMicrolitersPerMililiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromMicrolitersPerMilliliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMillilitersPerMililiter function
-func TestVolumeConcentrationFactory_FromMillilitersPerMililiter(t *testing.T) {
+// Test FromMillilitersPerMilliliter function
+func TestVolumeConcentrationFactory_FromMillilitersPerMilliliter(t *testing.T) {
     factory := units.VolumeConcentrationFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMillilitersPerMililiter(100)
+    result, err := factory.FromMillilitersPerMilliliter(100)
     if err != nil {
-        t.Errorf("FromMillilitersPerMililiter() returned error: %v", err)
+        t.Errorf("FromMillilitersPerMilliliter() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationMillilitersPerMililiter)
+    converted := result.Convert(units.VolumeConcentrationMilliliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMillilitersPerMililiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMillilitersPerMilliliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMillilitersPerMililiter(math.NaN())
+    _, err = factory.FromMillilitersPerMilliliter(math.NaN())
     if err == nil {
-        t.Error("FromMillilitersPerMililiter() with NaN value should return error")
+        t.Error("FromMillilitersPerMilliliter() with NaN value should return error")
     }
 
-    _, err = factory.FromMillilitersPerMililiter(math.Inf(1))
+    _, err = factory.FromMillilitersPerMilliliter(math.Inf(1))
     if err == nil {
-        t.Error("FromMillilitersPerMililiter() with +Inf value should return error")
+        t.Error("FromMillilitersPerMilliliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromMillilitersPerMililiter(math.Inf(-1))
+    _, err = factory.FromMillilitersPerMilliliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromMillilitersPerMililiter() with -Inf value should return error")
+        t.Error("FromMillilitersPerMilliliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMillilitersPerMililiter(0)
+    zeroResult, err := factory.FromMillilitersPerMilliliter(0)
     if err != nil {
-        t.Errorf("FromMillilitersPerMililiter() with zero value returned error: %v", err)
+        t.Errorf("FromMillilitersPerMilliliter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationMillilitersPerMililiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationMilliliterPerMilliliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMillilitersPerMililiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromMillilitersPerMilliliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromCentilitersPerMililiter function
-func TestVolumeConcentrationFactory_FromCentilitersPerMililiter(t *testing.T) {
+// Test FromCentilitersPerMilliliter function
+func TestVolumeConcentrationFactory_FromCentilitersPerMilliliter(t *testing.T) {
     factory := units.VolumeConcentrationFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromCentilitersPerMililiter(100)
+    result, err := factory.FromCentilitersPerMilliliter(100)
     if err != nil {
-        t.Errorf("FromCentilitersPerMililiter() returned error: %v", err)
+        t.Errorf("FromCentilitersPerMilliliter() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationCentilitersPerMililiter)
+    converted := result.Convert(units.VolumeConcentrationCentiliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromCentilitersPerMililiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromCentilitersPerMilliliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromCentilitersPerMililiter(math.NaN())
+    _, err = factory.FromCentilitersPerMilliliter(math.NaN())
     if err == nil {
-        t.Error("FromCentilitersPerMililiter() with NaN value should return error")
+        t.Error("FromCentilitersPerMilliliter() with NaN value should return error")
     }
 
-    _, err = factory.FromCentilitersPerMililiter(math.Inf(1))
+    _, err = factory.FromCentilitersPerMilliliter(math.Inf(1))
     if err == nil {
-        t.Error("FromCentilitersPerMililiter() with +Inf value should return error")
+        t.Error("FromCentilitersPerMilliliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromCentilitersPerMililiter(math.Inf(-1))
+    _, err = factory.FromCentilitersPerMilliliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromCentilitersPerMililiter() with -Inf value should return error")
+        t.Error("FromCentilitersPerMilliliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromCentilitersPerMililiter(0)
+    zeroResult, err := factory.FromCentilitersPerMilliliter(0)
     if err != nil {
-        t.Errorf("FromCentilitersPerMililiter() with zero value returned error: %v", err)
+        t.Errorf("FromCentilitersPerMilliliter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationCentilitersPerMililiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationCentiliterPerMilliliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromCentilitersPerMililiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromCentilitersPerMilliliter() with zero value = %v, want 0", converted)
     }
 }
-// Test FromDecilitersPerMililiter function
-func TestVolumeConcentrationFactory_FromDecilitersPerMililiter(t *testing.T) {
+// Test FromDecilitersPerMilliliter function
+func TestVolumeConcentrationFactory_FromDecilitersPerMilliliter(t *testing.T) {
     factory := units.VolumeConcentrationFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromDecilitersPerMililiter(100)
+    result, err := factory.FromDecilitersPerMilliliter(100)
     if err != nil {
-        t.Errorf("FromDecilitersPerMililiter() returned error: %v", err)
+        t.Errorf("FromDecilitersPerMilliliter() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.VolumeConcentrationDecilitersPerMililiter)
+    converted := result.Convert(units.VolumeConcentrationDeciliterPerMilliliter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromDecilitersPerMililiter() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromDecilitersPerMilliliter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromDecilitersPerMililiter(math.NaN())
+    _, err = factory.FromDecilitersPerMilliliter(math.NaN())
     if err == nil {
-        t.Error("FromDecilitersPerMililiter() with NaN value should return error")
+        t.Error("FromDecilitersPerMilliliter() with NaN value should return error")
     }
 
-    _, err = factory.FromDecilitersPerMililiter(math.Inf(1))
+    _, err = factory.FromDecilitersPerMilliliter(math.Inf(1))
     if err == nil {
-        t.Error("FromDecilitersPerMililiter() with +Inf value should return error")
+        t.Error("FromDecilitersPerMilliliter() with +Inf value should return error")
     }
 
-    _, err = factory.FromDecilitersPerMililiter(math.Inf(-1))
+    _, err = factory.FromDecilitersPerMilliliter(math.Inf(-1))
     if err == nil {
-        t.Error("FromDecilitersPerMililiter() with -Inf value should return error")
+        t.Error("FromDecilitersPerMilliliter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromDecilitersPerMililiter(0)
+    zeroResult, err := factory.FromDecilitersPerMilliliter(0)
     if err != nil {
-        t.Errorf("FromDecilitersPerMililiter() with zero value returned error: %v", err)
+        t.Errorf("FromDecilitersPerMilliliter() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.VolumeConcentrationDecilitersPerMililiter)
+    converted = zeroResult.Convert(units.VolumeConcentrationDeciliterPerMilliliter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromDecilitersPerMililiter() with zero value = %v, want 0", converted)
+        t.Errorf("FromDecilitersPerMilliliter() with zero value = %v, want 0", converted)
     }
 }
 
@@ -1922,14 +1922,14 @@ func TestGetVolumeConcentrationAbbreviation(t *testing.T) {
             want: "",
         },
         {
-            name: "LitersPerLiter abbreviation",
-            unit: units.VolumeConcentrationLitersPerLiter,
-            want: "L/L",
+            name: "LiterPerLiter abbreviation",
+            unit: units.VolumeConcentrationLiterPerLiter,
+            want: "l/l",
         },
         {
-            name: "LitersPerMililiter abbreviation",
-            unit: units.VolumeConcentrationLitersPerMililiter,
-            want: "L/mL",
+            name: "LiterPerMilliliter abbreviation",
+            unit: units.VolumeConcentrationLiterPerMilliliter,
+            want: "l/ml",
         },
         {
             name: "Percent abbreviation",
@@ -1957,64 +1957,64 @@ func TestGetVolumeConcentrationAbbreviation(t *testing.T) {
             want: "ppt",
         },
         {
-            name: "PicolitersPerLiter abbreviation",
-            unit: units.VolumeConcentrationPicolitersPerLiter,
-            want: "pL/L",
+            name: "PicoliterPerLiter abbreviation",
+            unit: units.VolumeConcentrationPicoliterPerLiter,
+            want: "pl/l",
         },
         {
-            name: "NanolitersPerLiter abbreviation",
-            unit: units.VolumeConcentrationNanolitersPerLiter,
-            want: "nL/L",
+            name: "NanoliterPerLiter abbreviation",
+            unit: units.VolumeConcentrationNanoliterPerLiter,
+            want: "nl/l",
         },
         {
-            name: "MicrolitersPerLiter abbreviation",
-            unit: units.VolumeConcentrationMicrolitersPerLiter,
-            want: "μL/L",
+            name: "MicroliterPerLiter abbreviation",
+            unit: units.VolumeConcentrationMicroliterPerLiter,
+            want: "μl/l",
         },
         {
-            name: "MillilitersPerLiter abbreviation",
-            unit: units.VolumeConcentrationMillilitersPerLiter,
-            want: "mL/L",
+            name: "MilliliterPerLiter abbreviation",
+            unit: units.VolumeConcentrationMilliliterPerLiter,
+            want: "ml/l",
         },
         {
-            name: "CentilitersPerLiter abbreviation",
-            unit: units.VolumeConcentrationCentilitersPerLiter,
-            want: "cL/L",
+            name: "CentiliterPerLiter abbreviation",
+            unit: units.VolumeConcentrationCentiliterPerLiter,
+            want: "cl/l",
         },
         {
-            name: "DecilitersPerLiter abbreviation",
-            unit: units.VolumeConcentrationDecilitersPerLiter,
-            want: "dL/L",
+            name: "DeciliterPerLiter abbreviation",
+            unit: units.VolumeConcentrationDeciliterPerLiter,
+            want: "dl/l",
         },
         {
-            name: "PicolitersPerMililiter abbreviation",
-            unit: units.VolumeConcentrationPicolitersPerMililiter,
-            want: "pL/mL",
+            name: "PicoliterPerMilliliter abbreviation",
+            unit: units.VolumeConcentrationPicoliterPerMilliliter,
+            want: "pl/ml",
         },
         {
-            name: "NanolitersPerMililiter abbreviation",
-            unit: units.VolumeConcentrationNanolitersPerMililiter,
-            want: "nL/mL",
+            name: "NanoliterPerMilliliter abbreviation",
+            unit: units.VolumeConcentrationNanoliterPerMilliliter,
+            want: "nl/ml",
         },
         {
-            name: "MicrolitersPerMililiter abbreviation",
-            unit: units.VolumeConcentrationMicrolitersPerMililiter,
-            want: "μL/mL",
+            name: "MicroliterPerMilliliter abbreviation",
+            unit: units.VolumeConcentrationMicroliterPerMilliliter,
+            want: "μl/ml",
         },
         {
-            name: "MillilitersPerMililiter abbreviation",
-            unit: units.VolumeConcentrationMillilitersPerMililiter,
-            want: "mL/mL",
+            name: "MilliliterPerMilliliter abbreviation",
+            unit: units.VolumeConcentrationMilliliterPerMilliliter,
+            want: "ml/ml",
         },
         {
-            name: "CentilitersPerMililiter abbreviation",
-            unit: units.VolumeConcentrationCentilitersPerMililiter,
-            want: "cL/mL",
+            name: "CentiliterPerMilliliter abbreviation",
+            unit: units.VolumeConcentrationCentiliterPerMilliliter,
+            want: "cl/ml",
         },
         {
-            name: "DecilitersPerMililiter abbreviation",
-            unit: units.VolumeConcentrationDecilitersPerMililiter,
-            want: "dL/mL",
+            name: "DeciliterPerMilliliter abbreviation",
+            unit: units.VolumeConcentrationDeciliterPerMilliliter,
+            want: "dl/ml",
         },
         {
             name: "invalid unit",

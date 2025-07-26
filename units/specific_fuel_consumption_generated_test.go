@@ -13,7 +13,7 @@ import (
 )
 
 func TestSpecificFuelConsumptionDtoFactory_FromJSON(t *testing.T) {
-	validJSON := `{"value": 90, "unit": "GramPerKiloNewtonSecond"}`
+	validJSON := `{"value": 90, "unit": "GramPerKilonewtonSecond"}`
 	
 	factory := units.SpecificFuelConsumptionDtoFactory{}
 	dto, err := factory.FromJSON([]byte(validJSON))
@@ -23,11 +23,11 @@ func TestSpecificFuelConsumptionDtoFactory_FromJSON(t *testing.T) {
 	if dto.Value != 90 {
 		t.Errorf("expected value 90, got %v", dto.Value)
 	}
-	if dto.Unit != units.SpecificFuelConsumptionGramPerKiloNewtonSecond {
-		t.Errorf("expected unit %v, got %v", units.SpecificFuelConsumptionGramPerKiloNewtonSecond, dto.Unit)
+	if dto.Unit != units.SpecificFuelConsumptionGramPerKilonewtonSecond {
+		t.Errorf("expected unit %v, got %v", units.SpecificFuelConsumptionGramPerKilonewtonSecond, dto.Unit)
 	}
 
-	invalidJSON := `{"value": "ninety", "unit": "GramPerKiloNewtonSecond"}`
+	invalidJSON := `{"value": "ninety", "unit": "GramPerKilonewtonSecond"}`
 
 	_, err = factory.FromJSON([]byte(invalidJSON))
 	if err == nil {
@@ -38,7 +38,7 @@ func TestSpecificFuelConsumptionDtoFactory_FromJSON(t *testing.T) {
 func TestSpecificFuelConsumptionDto_ToJSON(t *testing.T) {
 	dto := units.SpecificFuelConsumptionDto{
 		Value: 45,
-		Unit:  units.SpecificFuelConsumptionGramPerKiloNewtonSecond,
+		Unit:  units.SpecificFuelConsumptionGramPerKilonewtonSecond,
 	}
 	data, err := dto.ToJSON()
 	if err != nil {
@@ -51,20 +51,20 @@ func TestSpecificFuelConsumptionDto_ToJSON(t *testing.T) {
 	if result["value"].(float64) != 45 {
 		t.Errorf("expected value 45, got %v", result["value"])
 	}
-	if result["unit"].(string) != string(units.SpecificFuelConsumptionGramPerKiloNewtonSecond) {
-		t.Errorf("expected unit %s, got %v", units.SpecificFuelConsumptionGramPerKiloNewtonSecond, result["unit"])
+	if result["unit"].(string) != string(units.SpecificFuelConsumptionGramPerKilonewtonSecond) {
+		t.Errorf("expected unit %s, got %v", units.SpecificFuelConsumptionGramPerKilonewtonSecond, result["unit"])
 	}
 }
 
 func TestNewSpecificFuelConsumption_InvalidValue(t *testing.T) {
 	factory := units.SpecificFuelConsumptionFactory{}
 	// NaN value should return an error.
-	_, err := factory.CreateSpecificFuelConsumption(math.NaN(), units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+	_, err := factory.CreateSpecificFuelConsumption(math.NaN(), units.SpecificFuelConsumptionGramPerKilonewtonSecond)
 	if err == nil {
 		t.Error("expected error for NaN value")
 	}
 	// Inf value should return an error.
-	_, err = factory.CreateSpecificFuelConsumption(math.Inf(1), units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+	_, err = factory.CreateSpecificFuelConsumption(math.Inf(1), units.SpecificFuelConsumptionGramPerKilonewtonSecond)
 	if err == nil {
 		t.Error("expected error for Inf value")
 	}
@@ -73,7 +73,7 @@ func TestNewSpecificFuelConsumption_InvalidValue(t *testing.T) {
 func TestSpecificFuelConsumptionConversions(t *testing.T) {
 	factory := units.SpecificFuelConsumptionFactory{}
 	// Creating a value of 180 in the base unit.
-	a, err := factory.CreateSpecificFuelConsumption(180, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+	a, err := factory.CreateSpecificFuelConsumption(180, units.SpecificFuelConsumptionGramPerKilonewtonSecond)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -96,36 +96,36 @@ func TestSpecificFuelConsumptionConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to GramsPerKiloNewtonSecond.
-		// No expected conversion value provided for GramsPerKiloNewtonSecond, verifying result is not NaN.
-		result := a.GramsPerKiloNewtonSecond()
-		cacheResult := a.GramsPerKiloNewtonSecond()
+		// Test conversion to GramsPerKilonewtonSecond.
+		// No expected conversion value provided for GramsPerKilonewtonSecond, verifying result is not NaN.
+		result := a.GramsPerKilonewtonSecond()
+		cacheResult := a.GramsPerKilonewtonSecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to GramsPerKiloNewtonSecond returned NaN")
+			t.Errorf("conversion to GramsPerKilonewtonSecond returned NaN")
 		}
 	}
 	{
-		// Test conversion to KilogramsPerKiloNewtonSecond.
-		// No expected conversion value provided for KilogramsPerKiloNewtonSecond, verifying result is not NaN.
-		result := a.KilogramsPerKiloNewtonSecond()
-		cacheResult := a.KilogramsPerKiloNewtonSecond()
+		// Test conversion to KilogramsPerKilonewtonSecond.
+		// No expected conversion value provided for KilogramsPerKilonewtonSecond, verifying result is not NaN.
+		result := a.KilogramsPerKilonewtonSecond()
+		cacheResult := a.KilogramsPerKilonewtonSecond()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to KilogramsPerKiloNewtonSecond returned NaN")
+			t.Errorf("conversion to KilogramsPerKilonewtonSecond returned NaN")
 		}
 	}
 }
 
 func TestSpecificFuelConsumption_ToDtoAndToDtoJSON(t *testing.T) {
 	factory := units.SpecificFuelConsumptionFactory{}
-	a, err := factory.CreateSpecificFuelConsumption(90, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+	a, err := factory.CreateSpecificFuelConsumption(90, units.SpecificFuelConsumptionGramPerKilonewtonSecond)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
 	// Test default conversion (nil unit parameter should use base unit).
 	dto := a.ToDto(nil)
-	if dto.Unit != units.SpecificFuelConsumptionGramPerKiloNewtonSecond {
-		t.Errorf("expected default unit GramPerKiloNewtonSecond, got %v", dto.Unit)
+	if dto.Unit != units.SpecificFuelConsumptionGramPerKilonewtonSecond {
+		t.Errorf("expected default unit GramPerKilonewtonSecond, got %v", dto.Unit)
 	}
 	if math.Abs(dto.Value-90) > 1e-9 {
 		t.Errorf("expected value 90, got %v", dto.Value)
@@ -144,8 +144,8 @@ func TestSpecificFuelConsumption_ToDtoAndToDtoJSON(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed unmarshalling JSON: %v", err)
 	}
-	if result.Unit != units.SpecificFuelConsumptionGramPerKiloNewtonSecond {
-		t.Errorf("expected unit GramPerKiloNewtonSecond, got %v", result.Unit)
+	if result.Unit != units.SpecificFuelConsumptionGramPerKilonewtonSecond {
+		t.Errorf("expected unit GramPerKilonewtonSecond, got %v", result.Unit)
 	}
 	if math.Abs(result.Value-90) > 1e-9 {
 		t.Errorf("expected value 90, got %v", result.Value)
@@ -159,7 +159,7 @@ func TestSpecificFuelConsumptionFactory_FromDto(t *testing.T) {
     // Test valid base unit conversion
     baseDto := units.SpecificFuelConsumptionDto{
         Value: 100,
-        Unit:  units.SpecificFuelConsumptionGramPerKiloNewtonSecond,
+        Unit:  units.SpecificFuelConsumptionGramPerKilonewtonSecond,
     }
     
     baseResult, err := factory.FromDto(baseDto)
@@ -173,7 +173,7 @@ func TestSpecificFuelConsumptionFactory_FromDto(t *testing.T) {
     // Test invalid values
     invalidDto := units.SpecificFuelConsumptionDto{
         Value: math.NaN(),
-        Unit:  units.SpecificFuelConsumptionGramPerKiloNewtonSecond,
+        Unit:  units.SpecificFuelConsumptionGramPerKilonewtonSecond,
     }
     
     _, err = factory.FromDto(invalidDto)
@@ -216,45 +216,45 @@ func TestSpecificFuelConsumptionFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilogramPerKilogramForceHour = %v, want %v", converted, 100)
     }
-    // Test GramPerKiloNewtonSecond conversion
-    grams_per_kilo_newton_secondDto := units.SpecificFuelConsumptionDto{
+    // Test GramPerKilonewtonSecond conversion
+    grams_per_kilonewton_secondDto := units.SpecificFuelConsumptionDto{
         Value: 100,
-        Unit:  units.SpecificFuelConsumptionGramPerKiloNewtonSecond,
+        Unit:  units.SpecificFuelConsumptionGramPerKilonewtonSecond,
     }
     
-    var grams_per_kilo_newton_secondResult *units.SpecificFuelConsumption
-    grams_per_kilo_newton_secondResult, err = factory.FromDto(grams_per_kilo_newton_secondDto)
+    var grams_per_kilonewton_secondResult *units.SpecificFuelConsumption
+    grams_per_kilonewton_secondResult, err = factory.FromDto(grams_per_kilonewton_secondDto)
     if err != nil {
-        t.Errorf("FromDto() with GramPerKiloNewtonSecond returned error: %v", err)
+        t.Errorf("FromDto() with GramPerKilonewtonSecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = grams_per_kilo_newton_secondResult.Convert(units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+    converted = grams_per_kilonewton_secondResult.Convert(units.SpecificFuelConsumptionGramPerKilonewtonSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for GramPerKiloNewtonSecond = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for GramPerKilonewtonSecond = %v, want %v", converted, 100)
     }
-    // Test KilogramPerKiloNewtonSecond conversion
-    kilograms_per_kilo_newton_secondDto := units.SpecificFuelConsumptionDto{
+    // Test KilogramPerKilonewtonSecond conversion
+    kilograms_per_kilonewton_secondDto := units.SpecificFuelConsumptionDto{
         Value: 100,
-        Unit:  units.SpecificFuelConsumptionKilogramPerKiloNewtonSecond,
+        Unit:  units.SpecificFuelConsumptionKilogramPerKilonewtonSecond,
     }
     
-    var kilograms_per_kilo_newton_secondResult *units.SpecificFuelConsumption
-    kilograms_per_kilo_newton_secondResult, err = factory.FromDto(kilograms_per_kilo_newton_secondDto)
+    var kilograms_per_kilonewton_secondResult *units.SpecificFuelConsumption
+    kilograms_per_kilonewton_secondResult, err = factory.FromDto(kilograms_per_kilonewton_secondDto)
     if err != nil {
-        t.Errorf("FromDto() with KilogramPerKiloNewtonSecond returned error: %v", err)
+        t.Errorf("FromDto() with KilogramPerKilonewtonSecond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilograms_per_kilo_newton_secondResult.Convert(units.SpecificFuelConsumptionKilogramPerKiloNewtonSecond)
+    converted = kilograms_per_kilonewton_secondResult.Convert(units.SpecificFuelConsumptionKilogramPerKilonewtonSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for KilogramPerKiloNewtonSecond = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for KilogramPerKilonewtonSecond = %v, want %v", converted, 100)
     }
 
     // Test zero value
     zeroDto := units.SpecificFuelConsumptionDto{
         Value: 0,
-        Unit:  units.SpecificFuelConsumptionGramPerKiloNewtonSecond,
+        Unit:  units.SpecificFuelConsumptionGramPerKilonewtonSecond,
     }
     
     var zeroResult *units.SpecificFuelConsumption
@@ -274,7 +274,7 @@ func TestSpecificFuelConsumptionFactory_FromDtoJSON(t *testing.T) {
 	var converted float64
 
     // Test valid JSON with base unit
-    validJSON := []byte(`{"value": 100, "unit": "GramPerKiloNewtonSecond"}`)
+    validJSON := []byte(`{"value": 100, "unit": "GramPerKilonewtonSecond"}`)
     baseResult, err := factory.FromDtoJSON(validJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
@@ -284,7 +284,7 @@ func TestSpecificFuelConsumptionFactory_FromDtoJSON(t *testing.T) {
     }
 
     // Test invalid JSON format
-    invalidJSON := []byte(`{"value": "not a number", "unit": "GramPerKiloNewtonSecond"}`)
+    invalidJSON := []byte(`{"value": "not a number", "unit": "GramPerKilonewtonSecond"}`)
     _, err = factory.FromDtoJSON(invalidJSON)
     if err == nil {
         t.Error("FromDtoJSON() with invalid JSON should return error")
@@ -308,7 +308,7 @@ func TestSpecificFuelConsumptionFactory_FromDtoJSON(t *testing.T) {
     nanValue := math.NaN()
     nanJSON, _ := json.Marshal(units.SpecificFuelConsumptionDto{
         Value: nanValue,
-        Unit:  units.SpecificFuelConsumptionGramPerKiloNewtonSecond,
+        Unit:  units.SpecificFuelConsumptionGramPerKilonewtonSecond,
     })
     _, err = factory.FromDtoJSON(nanJSON)
     if err == nil {
@@ -338,33 +338,33 @@ func TestSpecificFuelConsumptionFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilogramPerKilogramForceHour = %v, want %v", converted, 100)
     }
-    // Test JSON with GramPerKiloNewtonSecond unit
-    grams_per_kilo_newton_secondJSON := []byte(`{"value": 100, "unit": "GramPerKiloNewtonSecond"}`)
-    grams_per_kilo_newton_secondResult, err := factory.FromDtoJSON(grams_per_kilo_newton_secondJSON)
+    // Test JSON with GramPerKilonewtonSecond unit
+    grams_per_kilonewton_secondJSON := []byte(`{"value": 100, "unit": "GramPerKilonewtonSecond"}`)
+    grams_per_kilonewton_secondResult, err := factory.FromDtoJSON(grams_per_kilonewton_secondJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with GramPerKiloNewtonSecond unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with GramPerKilonewtonSecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = grams_per_kilo_newton_secondResult.Convert(units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+    converted = grams_per_kilonewton_secondResult.Convert(units.SpecificFuelConsumptionGramPerKilonewtonSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for GramPerKiloNewtonSecond = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for GramPerKilonewtonSecond = %v, want %v", converted, 100)
     }
-    // Test JSON with KilogramPerKiloNewtonSecond unit
-    kilograms_per_kilo_newton_secondJSON := []byte(`{"value": 100, "unit": "KilogramPerKiloNewtonSecond"}`)
-    kilograms_per_kilo_newton_secondResult, err := factory.FromDtoJSON(kilograms_per_kilo_newton_secondJSON)
+    // Test JSON with KilogramPerKilonewtonSecond unit
+    kilograms_per_kilonewton_secondJSON := []byte(`{"value": 100, "unit": "KilogramPerKilonewtonSecond"}`)
+    kilograms_per_kilonewton_secondResult, err := factory.FromDtoJSON(kilograms_per_kilonewton_secondJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with KilogramPerKiloNewtonSecond unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with KilogramPerKilonewtonSecond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilograms_per_kilo_newton_secondResult.Convert(units.SpecificFuelConsumptionKilogramPerKiloNewtonSecond)
+    converted = kilograms_per_kilonewton_secondResult.Convert(units.SpecificFuelConsumptionKilogramPerKilonewtonSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for KilogramPerKiloNewtonSecond = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for KilogramPerKilonewtonSecond = %v, want %v", converted, 100)
     }
 
     // Test zero value JSON
-    zeroJSON := []byte(`{"value": 0, "unit": "GramPerKiloNewtonSecond"}`)
+    zeroJSON := []byte(`{"value": 0, "unit": "GramPerKilonewtonSecond"}`)
     zeroResult, err := factory.FromDtoJSON(zeroJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
@@ -459,106 +459,106 @@ func TestSpecificFuelConsumptionFactory_FromKilogramsPerKilogramForceHour(t *tes
         t.Errorf("FromKilogramsPerKilogramForceHour() with zero value = %v, want 0", converted)
     }
 }
-// Test FromGramsPerKiloNewtonSecond function
-func TestSpecificFuelConsumptionFactory_FromGramsPerKiloNewtonSecond(t *testing.T) {
+// Test FromGramsPerKilonewtonSecond function
+func TestSpecificFuelConsumptionFactory_FromGramsPerKilonewtonSecond(t *testing.T) {
     factory := units.SpecificFuelConsumptionFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromGramsPerKiloNewtonSecond(100)
+    result, err := factory.FromGramsPerKilonewtonSecond(100)
     if err != nil {
-        t.Errorf("FromGramsPerKiloNewtonSecond() returned error: %v", err)
+        t.Errorf("FromGramsPerKilonewtonSecond() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+    converted := result.Convert(units.SpecificFuelConsumptionGramPerKilonewtonSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromGramsPerKiloNewtonSecond() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromGramsPerKilonewtonSecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromGramsPerKiloNewtonSecond(math.NaN())
+    _, err = factory.FromGramsPerKilonewtonSecond(math.NaN())
     if err == nil {
-        t.Error("FromGramsPerKiloNewtonSecond() with NaN value should return error")
+        t.Error("FromGramsPerKilonewtonSecond() with NaN value should return error")
     }
 
-    _, err = factory.FromGramsPerKiloNewtonSecond(math.Inf(1))
+    _, err = factory.FromGramsPerKilonewtonSecond(math.Inf(1))
     if err == nil {
-        t.Error("FromGramsPerKiloNewtonSecond() with +Inf value should return error")
+        t.Error("FromGramsPerKilonewtonSecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromGramsPerKiloNewtonSecond(math.Inf(-1))
+    _, err = factory.FromGramsPerKilonewtonSecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromGramsPerKiloNewtonSecond() with -Inf value should return error")
+        t.Error("FromGramsPerKilonewtonSecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromGramsPerKiloNewtonSecond(0)
+    zeroResult, err := factory.FromGramsPerKilonewtonSecond(0)
     if err != nil {
-        t.Errorf("FromGramsPerKiloNewtonSecond() with zero value returned error: %v", err)
+        t.Errorf("FromGramsPerKilonewtonSecond() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+    converted = zeroResult.Convert(units.SpecificFuelConsumptionGramPerKilonewtonSecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromGramsPerKiloNewtonSecond() with zero value = %v, want 0", converted)
+        t.Errorf("FromGramsPerKilonewtonSecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromKilogramsPerKiloNewtonSecond function
-func TestSpecificFuelConsumptionFactory_FromKilogramsPerKiloNewtonSecond(t *testing.T) {
+// Test FromKilogramsPerKilonewtonSecond function
+func TestSpecificFuelConsumptionFactory_FromKilogramsPerKilonewtonSecond(t *testing.T) {
     factory := units.SpecificFuelConsumptionFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromKilogramsPerKiloNewtonSecond(100)
+    result, err := factory.FromKilogramsPerKilonewtonSecond(100)
     if err != nil {
-        t.Errorf("FromKilogramsPerKiloNewtonSecond() returned error: %v", err)
+        t.Errorf("FromKilogramsPerKilonewtonSecond() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.SpecificFuelConsumptionKilogramPerKiloNewtonSecond)
+    converted := result.Convert(units.SpecificFuelConsumptionKilogramPerKilonewtonSecond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromKilogramsPerKiloNewtonSecond() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromKilogramsPerKilonewtonSecond() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromKilogramsPerKiloNewtonSecond(math.NaN())
+    _, err = factory.FromKilogramsPerKilonewtonSecond(math.NaN())
     if err == nil {
-        t.Error("FromKilogramsPerKiloNewtonSecond() with NaN value should return error")
+        t.Error("FromKilogramsPerKilonewtonSecond() with NaN value should return error")
     }
 
-    _, err = factory.FromKilogramsPerKiloNewtonSecond(math.Inf(1))
+    _, err = factory.FromKilogramsPerKilonewtonSecond(math.Inf(1))
     if err == nil {
-        t.Error("FromKilogramsPerKiloNewtonSecond() with +Inf value should return error")
+        t.Error("FromKilogramsPerKilonewtonSecond() with +Inf value should return error")
     }
 
-    _, err = factory.FromKilogramsPerKiloNewtonSecond(math.Inf(-1))
+    _, err = factory.FromKilogramsPerKilonewtonSecond(math.Inf(-1))
     if err == nil {
-        t.Error("FromKilogramsPerKiloNewtonSecond() with -Inf value should return error")
+        t.Error("FromKilogramsPerKilonewtonSecond() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromKilogramsPerKiloNewtonSecond(0)
+    zeroResult, err := factory.FromKilogramsPerKilonewtonSecond(0)
     if err != nil {
-        t.Errorf("FromKilogramsPerKiloNewtonSecond() with zero value returned error: %v", err)
+        t.Errorf("FromKilogramsPerKilonewtonSecond() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.SpecificFuelConsumptionKilogramPerKiloNewtonSecond)
+    converted = zeroResult.Convert(units.SpecificFuelConsumptionKilogramPerKilonewtonSecond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromKilogramsPerKiloNewtonSecond() with zero value = %v, want 0", converted)
+        t.Errorf("FromKilogramsPerKilonewtonSecond() with zero value = %v, want 0", converted)
     }
 }
 
 func TestSpecificFuelConsumptionToString(t *testing.T) {
 	factory := units.SpecificFuelConsumptionFactory{}
-	a, err := factory.CreateSpecificFuelConsumption(45, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+	a, err := factory.CreateSpecificFuelConsumption(45, units.SpecificFuelConsumptionGramPerKilonewtonSecond)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	formatted := a.ToString(units.SpecificFuelConsumptionGramPerKiloNewtonSecond, 2)
-	expected := "45.00 " + units.GetSpecificFuelConsumptionAbbreviation(units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+	formatted := a.ToString(units.SpecificFuelConsumptionGramPerKilonewtonSecond, 2)
+	expected := "45.00 " + units.GetSpecificFuelConsumptionAbbreviation(units.SpecificFuelConsumptionGramPerKilonewtonSecond)
 	if formatted != expected {
 		t.Errorf("expected '%s', got '%s'", expected, formatted)
 	}
-	formatted = a.ToString(units.SpecificFuelConsumptionGramPerKiloNewtonSecond, -1)
-	expected = "45 " + units.GetSpecificFuelConsumptionAbbreviation(units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+	formatted = a.ToString(units.SpecificFuelConsumptionGramPerKilonewtonSecond, -1)
+	expected = "45 " + units.GetSpecificFuelConsumptionAbbreviation(units.SpecificFuelConsumptionGramPerKilonewtonSecond)
 	if formatted != expected {
 		t.Errorf("expected '%s', got '%s'", expected, formatted)
 	}
@@ -566,9 +566,9 @@ func TestSpecificFuelConsumptionToString(t *testing.T) {
 
 func TestSpecificFuelConsumption_EqualityAndComparison(t *testing.T) {
 	factory := units.SpecificFuelConsumptionFactory{}
-	a1, _ := factory.CreateSpecificFuelConsumption(60, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
-	a2, _ := factory.CreateSpecificFuelConsumption(60, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
-	a3, _ := factory.CreateSpecificFuelConsumption(120, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+	a1, _ := factory.CreateSpecificFuelConsumption(60, units.SpecificFuelConsumptionGramPerKilonewtonSecond)
+	a2, _ := factory.CreateSpecificFuelConsumption(60, units.SpecificFuelConsumptionGramPerKilonewtonSecond)
+	a3, _ := factory.CreateSpecificFuelConsumption(120, units.SpecificFuelConsumptionGramPerKilonewtonSecond)
 
 	if !a1.Equals(a2) {
 		t.Error("expected a1 and a2 to be equal")
@@ -589,8 +589,8 @@ func TestSpecificFuelConsumption_EqualityAndComparison(t *testing.T) {
 
 func TestSpecificFuelConsumption_Arithmetic(t *testing.T) {
 	factory := units.SpecificFuelConsumptionFactory{}
-	a1, _ := factory.CreateSpecificFuelConsumption(30, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
-	a2, _ := factory.CreateSpecificFuelConsumption(45, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+	a1, _ := factory.CreateSpecificFuelConsumption(30, units.SpecificFuelConsumptionGramPerKilonewtonSecond)
+	a2, _ := factory.CreateSpecificFuelConsumption(45, units.SpecificFuelConsumptionGramPerKilonewtonSecond)
 
 	added := a1.Add(a2)
 	if math.Abs(added.BaseValue()-75) > 1e-9 {
@@ -631,13 +631,13 @@ func TestGetSpecificFuelConsumptionAbbreviation(t *testing.T) {
             want: "kg/(kgf·h)",
         },
         {
-            name: "GramPerKiloNewtonSecond abbreviation",
-            unit: units.SpecificFuelConsumptionGramPerKiloNewtonSecond,
+            name: "GramPerKilonewtonSecond abbreviation",
+            unit: units.SpecificFuelConsumptionGramPerKilonewtonSecond,
             want: "g/(kN·s)",
         },
         {
-            name: "KilogramPerKiloNewtonSecond abbreviation",
-            unit: units.SpecificFuelConsumptionKilogramPerKiloNewtonSecond,
+            name: "KilogramPerKilonewtonSecond abbreviation",
+            unit: units.SpecificFuelConsumptionKilogramPerKilonewtonSecond,
             want: "kg/(kN·s)",
         },
         {
@@ -705,7 +705,7 @@ func TestSpecificFuelConsumption_String(t *testing.T) {
 
     for _, tt := range tests {
         t.Run(tt.name, func(t *testing.T) {
-            unit, err := factory.CreateSpecificFuelConsumption(tt.value, units.SpecificFuelConsumptionGramPerKiloNewtonSecond)
+            unit, err := factory.CreateSpecificFuelConsumption(tt.value, units.SpecificFuelConsumptionGramPerKilonewtonSecond)
             if err != nil {
                 t.Errorf("Failed to create test unit: %v", err)
                 return

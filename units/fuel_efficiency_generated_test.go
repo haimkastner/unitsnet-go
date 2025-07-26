@@ -13,7 +13,7 @@ import (
 )
 
 func TestFuelEfficiencyDtoFactory_FromJSON(t *testing.T) {
-	validJSON := `{"value": 90, "unit": "LiterPer100Kilometers"}`
+	validJSON := `{"value": 90, "unit": "KilometerPerLiter"}`
 	
 	factory := units.FuelEfficiencyDtoFactory{}
 	dto, err := factory.FromJSON([]byte(validJSON))
@@ -23,11 +23,11 @@ func TestFuelEfficiencyDtoFactory_FromJSON(t *testing.T) {
 	if dto.Value != 90 {
 		t.Errorf("expected value 90, got %v", dto.Value)
 	}
-	if dto.Unit != units.FuelEfficiencyLiterPer100Kilometers {
-		t.Errorf("expected unit %v, got %v", units.FuelEfficiencyLiterPer100Kilometers, dto.Unit)
+	if dto.Unit != units.FuelEfficiencyKilometerPerLiter {
+		t.Errorf("expected unit %v, got %v", units.FuelEfficiencyKilometerPerLiter, dto.Unit)
 	}
 
-	invalidJSON := `{"value": "ninety", "unit": "LiterPer100Kilometers"}`
+	invalidJSON := `{"value": "ninety", "unit": "KilometerPerLiter"}`
 
 	_, err = factory.FromJSON([]byte(invalidJSON))
 	if err == nil {
@@ -38,7 +38,7 @@ func TestFuelEfficiencyDtoFactory_FromJSON(t *testing.T) {
 func TestFuelEfficiencyDto_ToJSON(t *testing.T) {
 	dto := units.FuelEfficiencyDto{
 		Value: 45,
-		Unit:  units.FuelEfficiencyLiterPer100Kilometers,
+		Unit:  units.FuelEfficiencyKilometerPerLiter,
 	}
 	data, err := dto.ToJSON()
 	if err != nil {
@@ -51,20 +51,20 @@ func TestFuelEfficiencyDto_ToJSON(t *testing.T) {
 	if result["value"].(float64) != 45 {
 		t.Errorf("expected value 45, got %v", result["value"])
 	}
-	if result["unit"].(string) != string(units.FuelEfficiencyLiterPer100Kilometers) {
-		t.Errorf("expected unit %s, got %v", units.FuelEfficiencyLiterPer100Kilometers, result["unit"])
+	if result["unit"].(string) != string(units.FuelEfficiencyKilometerPerLiter) {
+		t.Errorf("expected unit %s, got %v", units.FuelEfficiencyKilometerPerLiter, result["unit"])
 	}
 }
 
 func TestNewFuelEfficiency_InvalidValue(t *testing.T) {
 	factory := units.FuelEfficiencyFactory{}
 	// NaN value should return an error.
-	_, err := factory.CreateFuelEfficiency(math.NaN(), units.FuelEfficiencyLiterPer100Kilometers)
+	_, err := factory.CreateFuelEfficiency(math.NaN(), units.FuelEfficiencyKilometerPerLiter)
 	if err == nil {
 		t.Error("expected error for NaN value")
 	}
 	// Inf value should return an error.
-	_, err = factory.CreateFuelEfficiency(math.Inf(1), units.FuelEfficiencyLiterPer100Kilometers)
+	_, err = factory.CreateFuelEfficiency(math.Inf(1), units.FuelEfficiencyKilometerPerLiter)
 	if err == nil {
 		t.Error("expected error for Inf value")
 	}
@@ -73,7 +73,7 @@ func TestNewFuelEfficiency_InvalidValue(t *testing.T) {
 func TestFuelEfficiencyConversions(t *testing.T) {
 	factory := units.FuelEfficiencyFactory{}
 	// Creating a value of 180 in the base unit.
-	a, err := factory.CreateFuelEfficiency(180, units.FuelEfficiencyLiterPer100Kilometers)
+	a, err := factory.CreateFuelEfficiency(180, units.FuelEfficiencyKilometerPerLiter)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -105,27 +105,27 @@ func TestFuelEfficiencyConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to KilometersPerLiters.
-		// No expected conversion value provided for KilometersPerLiters, verifying result is not NaN.
-		result := a.KilometersPerLiters()
-		cacheResult := a.KilometersPerLiters()
+		// Test conversion to KilometersPerLiter.
+		// No expected conversion value provided for KilometersPerLiter, verifying result is not NaN.
+		result := a.KilometersPerLiter()
+		cacheResult := a.KilometersPerLiter()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to KilometersPerLiters returned NaN")
+			t.Errorf("conversion to KilometersPerLiter returned NaN")
 		}
 	}
 }
 
 func TestFuelEfficiency_ToDtoAndToDtoJSON(t *testing.T) {
 	factory := units.FuelEfficiencyFactory{}
-	a, err := factory.CreateFuelEfficiency(90, units.FuelEfficiencyLiterPer100Kilometers)
+	a, err := factory.CreateFuelEfficiency(90, units.FuelEfficiencyKilometerPerLiter)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
 	// Test default conversion (nil unit parameter should use base unit).
 	dto := a.ToDto(nil)
-	if dto.Unit != units.FuelEfficiencyLiterPer100Kilometers {
-		t.Errorf("expected default unit LiterPer100Kilometers, got %v", dto.Unit)
+	if dto.Unit != units.FuelEfficiencyKilometerPerLiter {
+		t.Errorf("expected default unit KilometerPerLiter, got %v", dto.Unit)
 	}
 	if math.Abs(dto.Value-90) > 1e-9 {
 		t.Errorf("expected value 90, got %v", dto.Value)
@@ -144,8 +144,8 @@ func TestFuelEfficiency_ToDtoAndToDtoJSON(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed unmarshalling JSON: %v", err)
 	}
-	if result.Unit != units.FuelEfficiencyLiterPer100Kilometers {
-		t.Errorf("expected unit LiterPer100Kilometers, got %v", result.Unit)
+	if result.Unit != units.FuelEfficiencyKilometerPerLiter {
+		t.Errorf("expected unit KilometerPerLiter, got %v", result.Unit)
 	}
 	if math.Abs(result.Value-90) > 1e-9 {
 		t.Errorf("expected value 90, got %v", result.Value)
@@ -159,7 +159,7 @@ func TestFuelEfficiencyFactory_FromDto(t *testing.T) {
     // Test valid base unit conversion
     baseDto := units.FuelEfficiencyDto{
         Value: 100,
-        Unit:  units.FuelEfficiencyLiterPer100Kilometers,
+        Unit:  units.FuelEfficiencyKilometerPerLiter,
     }
     
     baseResult, err := factory.FromDto(baseDto)
@@ -173,7 +173,7 @@ func TestFuelEfficiencyFactory_FromDto(t *testing.T) {
     // Test invalid values
     invalidDto := units.FuelEfficiencyDto{
         Value: math.NaN(),
-        Unit:  units.FuelEfficiencyLiterPer100Kilometers,
+        Unit:  units.FuelEfficiencyKilometerPerLiter,
     }
     
     _, err = factory.FromDto(invalidDto)
@@ -234,19 +234,19 @@ func TestFuelEfficiencyFactory_FromDto(t *testing.T) {
         t.Errorf("Round-trip conversion for MilePerUkGallon = %v, want %v", converted, 100)
     }
     // Test KilometerPerLiter conversion
-    kilometers_per_litersDto := units.FuelEfficiencyDto{
+    kilometers_per_literDto := units.FuelEfficiencyDto{
         Value: 100,
         Unit:  units.FuelEfficiencyKilometerPerLiter,
     }
     
-    var kilometers_per_litersResult *units.FuelEfficiency
-    kilometers_per_litersResult, err = factory.FromDto(kilometers_per_litersDto)
+    var kilometers_per_literResult *units.FuelEfficiency
+    kilometers_per_literResult, err = factory.FromDto(kilometers_per_literDto)
     if err != nil {
         t.Errorf("FromDto() with KilometerPerLiter returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilometers_per_litersResult.Convert(units.FuelEfficiencyKilometerPerLiter)
+    converted = kilometers_per_literResult.Convert(units.FuelEfficiencyKilometerPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilometerPerLiter = %v, want %v", converted, 100)
     }
@@ -254,7 +254,7 @@ func TestFuelEfficiencyFactory_FromDto(t *testing.T) {
     // Test zero value
     zeroDto := units.FuelEfficiencyDto{
         Value: 0,
-        Unit:  units.FuelEfficiencyLiterPer100Kilometers,
+        Unit:  units.FuelEfficiencyKilometerPerLiter,
     }
     
     var zeroResult *units.FuelEfficiency
@@ -274,7 +274,7 @@ func TestFuelEfficiencyFactory_FromDtoJSON(t *testing.T) {
 	var converted float64
 
     // Test valid JSON with base unit
-    validJSON := []byte(`{"value": 100, "unit": "LiterPer100Kilometers"}`)
+    validJSON := []byte(`{"value": 100, "unit": "KilometerPerLiter"}`)
     baseResult, err := factory.FromDtoJSON(validJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with valid JSON returned error: %v", err)
@@ -284,7 +284,7 @@ func TestFuelEfficiencyFactory_FromDtoJSON(t *testing.T) {
     }
 
     // Test invalid JSON format
-    invalidJSON := []byte(`{"value": "not a number", "unit": "LiterPer100Kilometers"}`)
+    invalidJSON := []byte(`{"value": "not a number", "unit": "KilometerPerLiter"}`)
     _, err = factory.FromDtoJSON(invalidJSON)
     if err == nil {
         t.Error("FromDtoJSON() with invalid JSON should return error")
@@ -308,7 +308,7 @@ func TestFuelEfficiencyFactory_FromDtoJSON(t *testing.T) {
     nanValue := math.NaN()
     nanJSON, _ := json.Marshal(units.FuelEfficiencyDto{
         Value: nanValue,
-        Unit:  units.FuelEfficiencyLiterPer100Kilometers,
+        Unit:  units.FuelEfficiencyKilometerPerLiter,
     })
     _, err = factory.FromDtoJSON(nanJSON)
     if err == nil {
@@ -351,20 +351,20 @@ func TestFuelEfficiencyFactory_FromDtoJSON(t *testing.T) {
         t.Errorf("Round-trip conversion for MilePerUkGallon = %v, want %v", converted, 100)
     }
     // Test JSON with KilometerPerLiter unit
-    kilometers_per_litersJSON := []byte(`{"value": 100, "unit": "KilometerPerLiter"}`)
-    kilometers_per_litersResult, err := factory.FromDtoJSON(kilometers_per_litersJSON)
+    kilometers_per_literJSON := []byte(`{"value": 100, "unit": "KilometerPerLiter"}`)
+    kilometers_per_literResult, err := factory.FromDtoJSON(kilometers_per_literJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with KilometerPerLiter unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilometers_per_litersResult.Convert(units.FuelEfficiencyKilometerPerLiter)
+    converted = kilometers_per_literResult.Convert(units.FuelEfficiencyKilometerPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilometerPerLiter = %v, want %v", converted, 100)
     }
 
     // Test zero value JSON
-    zeroJSON := []byte(`{"value": 0, "unit": "LiterPer100Kilometers"}`)
+    zeroJSON := []byte(`{"value": 0, "unit": "KilometerPerLiter"}`)
     zeroResult, err := factory.FromDtoJSON(zeroJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with zero value returned error: %v", err)
@@ -502,63 +502,63 @@ func TestFuelEfficiencyFactory_FromMilesPerUkGallon(t *testing.T) {
         t.Errorf("FromMilesPerUkGallon() with zero value = %v, want 0", converted)
     }
 }
-// Test FromKilometersPerLiters function
-func TestFuelEfficiencyFactory_FromKilometersPerLiters(t *testing.T) {
+// Test FromKilometersPerLiter function
+func TestFuelEfficiencyFactory_FromKilometersPerLiter(t *testing.T) {
     factory := units.FuelEfficiencyFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromKilometersPerLiters(100)
+    result, err := factory.FromKilometersPerLiter(100)
     if err != nil {
-        t.Errorf("FromKilometersPerLiters() returned error: %v", err)
+        t.Errorf("FromKilometersPerLiter() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.FuelEfficiencyKilometerPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromKilometersPerLiters() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromKilometersPerLiter() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromKilometersPerLiters(math.NaN())
+    _, err = factory.FromKilometersPerLiter(math.NaN())
     if err == nil {
-        t.Error("FromKilometersPerLiters() with NaN value should return error")
+        t.Error("FromKilometersPerLiter() with NaN value should return error")
     }
 
-    _, err = factory.FromKilometersPerLiters(math.Inf(1))
+    _, err = factory.FromKilometersPerLiter(math.Inf(1))
     if err == nil {
-        t.Error("FromKilometersPerLiters() with +Inf value should return error")
+        t.Error("FromKilometersPerLiter() with +Inf value should return error")
     }
 
-    _, err = factory.FromKilometersPerLiters(math.Inf(-1))
+    _, err = factory.FromKilometersPerLiter(math.Inf(-1))
     if err == nil {
-        t.Error("FromKilometersPerLiters() with -Inf value should return error")
+        t.Error("FromKilometersPerLiter() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromKilometersPerLiters(0)
+    zeroResult, err := factory.FromKilometersPerLiter(0)
     if err != nil {
-        t.Errorf("FromKilometersPerLiters() with zero value returned error: %v", err)
+        t.Errorf("FromKilometersPerLiter() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.FuelEfficiencyKilometerPerLiter)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromKilometersPerLiters() with zero value = %v, want 0", converted)
+        t.Errorf("FromKilometersPerLiter() with zero value = %v, want 0", converted)
     }
 }
 
 func TestFuelEfficiencyToString(t *testing.T) {
 	factory := units.FuelEfficiencyFactory{}
-	a, err := factory.CreateFuelEfficiency(45, units.FuelEfficiencyLiterPer100Kilometers)
+	a, err := factory.CreateFuelEfficiency(45, units.FuelEfficiencyKilometerPerLiter)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	formatted := a.ToString(units.FuelEfficiencyLiterPer100Kilometers, 2)
-	expected := "45.00 " + units.GetFuelEfficiencyAbbreviation(units.FuelEfficiencyLiterPer100Kilometers)
+	formatted := a.ToString(units.FuelEfficiencyKilometerPerLiter, 2)
+	expected := "45.00 " + units.GetFuelEfficiencyAbbreviation(units.FuelEfficiencyKilometerPerLiter)
 	if formatted != expected {
 		t.Errorf("expected '%s', got '%s'", expected, formatted)
 	}
-	formatted = a.ToString(units.FuelEfficiencyLiterPer100Kilometers, -1)
-	expected = "45 " + units.GetFuelEfficiencyAbbreviation(units.FuelEfficiencyLiterPer100Kilometers)
+	formatted = a.ToString(units.FuelEfficiencyKilometerPerLiter, -1)
+	expected = "45 " + units.GetFuelEfficiencyAbbreviation(units.FuelEfficiencyKilometerPerLiter)
 	if formatted != expected {
 		t.Errorf("expected '%s', got '%s'", expected, formatted)
 	}
@@ -566,9 +566,9 @@ func TestFuelEfficiencyToString(t *testing.T) {
 
 func TestFuelEfficiency_EqualityAndComparison(t *testing.T) {
 	factory := units.FuelEfficiencyFactory{}
-	a1, _ := factory.CreateFuelEfficiency(60, units.FuelEfficiencyLiterPer100Kilometers)
-	a2, _ := factory.CreateFuelEfficiency(60, units.FuelEfficiencyLiterPer100Kilometers)
-	a3, _ := factory.CreateFuelEfficiency(120, units.FuelEfficiencyLiterPer100Kilometers)
+	a1, _ := factory.CreateFuelEfficiency(60, units.FuelEfficiencyKilometerPerLiter)
+	a2, _ := factory.CreateFuelEfficiency(60, units.FuelEfficiencyKilometerPerLiter)
+	a3, _ := factory.CreateFuelEfficiency(120, units.FuelEfficiencyKilometerPerLiter)
 
 	if !a1.Equals(a2) {
 		t.Error("expected a1 and a2 to be equal")
@@ -589,8 +589,8 @@ func TestFuelEfficiency_EqualityAndComparison(t *testing.T) {
 
 func TestFuelEfficiency_Arithmetic(t *testing.T) {
 	factory := units.FuelEfficiencyFactory{}
-	a1, _ := factory.CreateFuelEfficiency(30, units.FuelEfficiencyLiterPer100Kilometers)
-	a2, _ := factory.CreateFuelEfficiency(45, units.FuelEfficiencyLiterPer100Kilometers)
+	a1, _ := factory.CreateFuelEfficiency(30, units.FuelEfficiencyKilometerPerLiter)
+	a2, _ := factory.CreateFuelEfficiency(45, units.FuelEfficiencyKilometerPerLiter)
 
 	added := a1.Add(a2)
 	if math.Abs(added.BaseValue()-75) > 1e-9 {
@@ -623,7 +623,7 @@ func TestGetFuelEfficiencyAbbreviation(t *testing.T) {
         {
             name: "LiterPer100Kilometers abbreviation",
             unit: units.FuelEfficiencyLiterPer100Kilometers,
-            want: "L/100km",
+            want: "l/100km",
         },
         {
             name: "MilePerUsGallon abbreviation",
@@ -638,7 +638,7 @@ func TestGetFuelEfficiencyAbbreviation(t *testing.T) {
         {
             name: "KilometerPerLiter abbreviation",
             unit: units.FuelEfficiencyKilometerPerLiter,
-            want: "km/L",
+            want: "km/l",
         },
         {
             name: "invalid unit",
@@ -705,7 +705,7 @@ func TestFuelEfficiency_String(t *testing.T) {
 
     for _, tt := range tests {
         t.Run(tt.name, func(t *testing.T) {
-            unit, err := factory.CreateFuelEfficiency(tt.value, units.FuelEfficiencyLiterPer100Kilometers)
+            unit, err := factory.CreateFuelEfficiency(tt.value, units.FuelEfficiencyKilometerPerLiter)
             if err != nil {
                 t.Errorf("Failed to create test unit: %v", err)
                 return

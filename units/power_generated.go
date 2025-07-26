@@ -19,15 +19,15 @@ const (
     
         // 
         PowerWatt PowerUnits = "Watt"
-        // 
+        // Assuming the third CGPM (1901, CR 70) definition of standard gravity, gn = 9.80665 m/s2, is used to define the pound-force as well as the kilogram force, and the international avoirdupois pound (1959), one imperial horsepower is: 76.0402249 × 9.80665 kg⋅m2/s3
         PowerMechanicalHorsepower PowerUnits = "MechanicalHorsepower"
-        // 
+        // DIN 66036 defines one metric horsepower as the power to raise a mass of 75 kilograms against the Earth's gravitational force over a distance of one metre in one second:[18] 75 kg × 9.80665 m/s2 × 1 m / 1 s = 75 kgf⋅m/s = 1 PS. This is equivalent to 735.49875 W, or 98.6% of an imperial horsepower.
         PowerMetricHorsepower PowerUnits = "MetricHorsepower"
-        // 
+        // Nameplates on electrical motors show their power output, not the power input (the power delivered at the shaft, not the power consumed to drive the motor). This power output is ordinarily stated in watts or kilowatts. In the United States, the power output is stated in horsepower, which for this purpose is defined as exactly 746 W.
         PowerElectricalHorsepower PowerUnits = "ElectricalHorsepower"
-        // 
+        // Boiler horsepower is a boiler's capacity to deliver steam to a steam engine and is not the same unit of power as the 550 ft lb/s definition. One boiler horsepower is equal to the thermal energy rate required to evaporate 34.5 pounds (15.6 kg) of fresh water at 212 °F (100 °C) in one hour.
         PowerBoilerHorsepower PowerUnits = "BoilerHorsepower"
-        // 
+        // Hydraulic horsepower can represent the power available within hydraulic machinery, power through the down-hole nozzle of a drilling rig, or can be used to estimate the mechanical power needed to generate a known hydraulic flow rate.
         PowerHydraulicHorsepower PowerUnits = "HydraulicHorsepower"
         // 
         PowerBritishThermalUnitPerHour PowerUnits = "BritishThermalUnitPerHour"
@@ -369,7 +369,7 @@ func (a *Power) Watts() float64 {
 
 // MechanicalHorsepower returns the Power value in MechanicalHorsepower.
 //
-// 
+// Assuming the third CGPM (1901, CR 70) definition of standard gravity, gn = 9.80665 m/s2, is used to define the pound-force as well as the kilogram force, and the international avoirdupois pound (1959), one imperial horsepower is: 76.0402249 × 9.80665 kg⋅m2/s3
 func (a *Power) MechanicalHorsepower() float64 {
 	if a.mechanical_horsepowerLazy != nil {
 		return *a.mechanical_horsepowerLazy
@@ -381,7 +381,7 @@ func (a *Power) MechanicalHorsepower() float64 {
 
 // MetricHorsepower returns the Power value in MetricHorsepower.
 //
-// 
+// DIN 66036 defines one metric horsepower as the power to raise a mass of 75 kilograms against the Earth's gravitational force over a distance of one metre in one second:[18] 75 kg × 9.80665 m/s2 × 1 m / 1 s = 75 kgf⋅m/s = 1 PS. This is equivalent to 735.49875 W, or 98.6% of an imperial horsepower.
 func (a *Power) MetricHorsepower() float64 {
 	if a.metric_horsepowerLazy != nil {
 		return *a.metric_horsepowerLazy
@@ -393,7 +393,7 @@ func (a *Power) MetricHorsepower() float64 {
 
 // ElectricalHorsepower returns the Power value in ElectricalHorsepower.
 //
-// 
+// Nameplates on electrical motors show their power output, not the power input (the power delivered at the shaft, not the power consumed to drive the motor). This power output is ordinarily stated in watts or kilowatts. In the United States, the power output is stated in horsepower, which for this purpose is defined as exactly 746 W.
 func (a *Power) ElectricalHorsepower() float64 {
 	if a.electrical_horsepowerLazy != nil {
 		return *a.electrical_horsepowerLazy
@@ -405,7 +405,7 @@ func (a *Power) ElectricalHorsepower() float64 {
 
 // BoilerHorsepower returns the Power value in BoilerHorsepower.
 //
-// 
+// Boiler horsepower is a boiler's capacity to deliver steam to a steam engine and is not the same unit of power as the 550 ft lb/s definition. One boiler horsepower is equal to the thermal energy rate required to evaporate 34.5 pounds (15.6 kg) of fresh water at 212 °F (100 °C) in one hour.
 func (a *Power) BoilerHorsepower() float64 {
 	if a.boiler_horsepowerLazy != nil {
 		return *a.boiler_horsepowerLazy
@@ -417,7 +417,7 @@ func (a *Power) BoilerHorsepower() float64 {
 
 // HydraulicHorsepower returns the Power value in HydraulicHorsepower.
 //
-// 
+// Hydraulic horsepower can represent the power available within hydraulic machinery, power through the down-hole nozzle of a drilling rig, or can be used to estimate the mechanical power needed to generate a known hydraulic flow rate.
 func (a *Power) HydraulicHorsepower() float64 {
 	if a.hydraulic_horsepowerLazy != nil {
 		return *a.hydraulic_horsepowerLazy
@@ -775,17 +775,17 @@ func (a *Power) convertFromBase(toUnit PowerUnits) float64 {
 	case PowerWatt:
 		return (value) 
 	case PowerMechanicalHorsepower:
-		return (value / 745.69) 
+		return (value / (76.0402249 * 9.80665)) 
 	case PowerMetricHorsepower:
-		return (value / 735.49875) 
+		return (value / (75 * 9.80665)) 
 	case PowerElectricalHorsepower:
 		return (value / 746) 
 	case PowerBoilerHorsepower:
 		return (value / 9812.5) 
 	case PowerHydraulicHorsepower:
-		return (value / 745.69988145) 
+		return (value / 745.69987158227022) 
 	case PowerBritishThermalUnitPerHour:
-		return (value / 0.29307107017) 
+		return (value * 3600 / 1055.05585262) 
 	case PowerJoulePerHour:
 		return (value * 3600) 
 	case PowerTonOfRefrigeration:
@@ -815,9 +815,9 @@ func (a *Power) convertFromBase(toUnit PowerUnits) float64 {
 	case PowerPetawatt:
 		return ((value) / 1000000000000000.0) 
 	case PowerKilobritishThermalUnitPerHour:
-		return ((value / 0.29307107017) / 1000.0) 
+		return ((value * 3600 / 1055.05585262) / 1000.0) 
 	case PowerMegabritishThermalUnitPerHour:
-		return ((value / 0.29307107017) / 1000000.0) 
+		return ((value * 3600 / 1055.05585262) / 1000000.0) 
 	case PowerMillijoulePerHour:
 		return ((value * 3600) / 0.001) 
 	case PowerKilojoulePerHour:
@@ -836,17 +836,17 @@ func (a *Power) convertToBase(value float64, fromUnit PowerUnits) float64 {
 	case PowerWatt:
 		return (value) 
 	case PowerMechanicalHorsepower:
-		return (value * 745.69) 
+		return (value * 76.0402249 * 9.80665) 
 	case PowerMetricHorsepower:
-		return (value * 735.49875) 
+		return (value * 75 * 9.80665) 
 	case PowerElectricalHorsepower:
 		return (value * 746) 
 	case PowerBoilerHorsepower:
 		return (value * 9812.5) 
 	case PowerHydraulicHorsepower:
-		return (value * 745.69988145) 
+		return (value * 745.69987158227022) 
 	case PowerBritishThermalUnitPerHour:
-		return (value * 0.29307107017) 
+		return (value * 1055.05585262 / 3600) 
 	case PowerJoulePerHour:
 		return (value / 3600) 
 	case PowerTonOfRefrigeration:
@@ -876,9 +876,9 @@ func (a *Power) convertToBase(value float64, fromUnit PowerUnits) float64 {
 	case PowerPetawatt:
 		return ((value) * 1000000000000000.0) 
 	case PowerKilobritishThermalUnitPerHour:
-		return ((value * 0.29307107017) * 1000.0) 
+		return ((value * 1055.05585262 / 3600) * 1000.0) 
 	case PowerMegabritishThermalUnitPerHour:
-		return ((value * 0.29307107017) * 1000000.0) 
+		return ((value * 1055.05585262 / 3600) * 1000000.0) 
 	case PowerMillijoulePerHour:
 		return ((value / 3600) * 0.001) 
 	case PowerKilojoulePerHour:

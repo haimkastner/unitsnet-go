@@ -384,9 +384,9 @@ func (a *Luminance) convertFromBase(toUnit LuminanceUnits) float64 {
 	case LuminanceCandelaPerSquareMeter:
 		return (value) 
 	case LuminanceCandelaPerSquareFoot:
-		return (value/ 1.07639e1) 
+		return (value * 9.290304e-2) 
 	case LuminanceCandelaPerSquareInch:
-		return (value/ 1.5500031e3) 
+		return (value * 0.00064516) 
 	case LuminanceNit:
 		return (value) 
 	case LuminanceNanocandelaPerSquareMeter:
@@ -411,9 +411,9 @@ func (a *Luminance) convertToBase(value float64, fromUnit LuminanceUnits) float6
 	case LuminanceCandelaPerSquareMeter:
 		return (value) 
 	case LuminanceCandelaPerSquareFoot:
-		return (value* 1.07639e1) 
+		return (value / 9.290304e-2) 
 	case LuminanceCandelaPerSquareInch:
-		return (value* 1.5500031e3) 
+		return (value / 0.00064516) 
 	case LuminanceNit:
 		return (value) 
 	case LuminanceNanocandelaPerSquareMeter:

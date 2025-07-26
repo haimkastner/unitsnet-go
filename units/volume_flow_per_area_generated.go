@@ -200,7 +200,7 @@ func (a *VolumeFlowPerArea) convertFromBase(toUnit VolumeFlowPerAreaUnits) float
 	case VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter:
 		return (value) 
 	case VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot:
-		return (value * 196.850394) 
+		return (value * 9.290304e-2 / (0.028316846592 / 60)) 
 	default:
 		return math.NaN()
 	}
@@ -211,7 +211,7 @@ func (a *VolumeFlowPerArea) convertToBase(value float64, fromUnit VolumeFlowPerA
 	case VolumeFlowPerAreaCubicMeterPerSecondPerSquareMeter:
 		return (value) 
 	case VolumeFlowPerAreaCubicFootPerMinutePerSquareFoot:
-		return (value / 196.850394) 
+		return (value * (0.028316846592 / 60) / 9.290304e-2) 
 	default:
 		return math.NaN()
 	}

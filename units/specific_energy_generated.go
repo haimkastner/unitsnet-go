@@ -858,7 +858,7 @@ func (a *SpecificEnergy) convertFromBase(toUnit SpecificEnergyUnits) float64 {
 	case SpecificEnergyWattHourPerPound:
 		return (value / 7.93664e3) 
 	case SpecificEnergyBtuPerPound:
-		return (value / 2326.000075362) 
+		return (value * 0.45359237 / 1055.05585262) 
 	case SpecificEnergyKilojoulePerKilogram:
 		return ((value) / 1000.0) 
 	case SpecificEnergyMegajoulePerKilogram:
@@ -925,7 +925,7 @@ func (a *SpecificEnergy) convertToBase(value float64, fromUnit SpecificEnergyUni
 	case SpecificEnergyWattHourPerPound:
 		return (value * 7.93664e3) 
 	case SpecificEnergyBtuPerPound:
-		return (value * 2326.000075362) 
+		return (value * 1055.05585262 / 0.45359237) 
 	case SpecificEnergyKilojoulePerKilogram:
 		return ((value) * 1000.0) 
 	case SpecificEnergyMegajoulePerKilogram:

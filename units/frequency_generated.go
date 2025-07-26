@@ -19,7 +19,7 @@ const (
     
         // 
         FrequencyHertz FrequencyUnits = "Hertz"
-        // 
+        // In SI units, angular frequency is normally presented with the unit radian per second, and need not express a rotational value. The unit hertz (Hz) is dimensionally equivalent, but by convention it is only used for frequency f, never for angular frequency ω. This convention is used to help avoid the confusion that arises when dealing with quantities such as frequency and angular quantities because the units of measure (such as cycle or radian) are considered to be one and hence may be omitted when expressing quantities in terms of SI units.
         FrequencyRadianPerSecond FrequencyUnits = "RadianPerSecond"
         // 
         FrequencyCyclePerMinute FrequencyUnits = "CyclePerMinute"
@@ -29,8 +29,6 @@ const (
         FrequencyBeatPerMinute FrequencyUnits = "BeatPerMinute"
         // 
         FrequencyPerSecond FrequencyUnits = "PerSecond"
-        // 
-        FrequencyBUnit FrequencyUnits = "BUnit"
         // 
         FrequencyMicrohertz FrequencyUnits = "Microhertz"
         // 
@@ -53,7 +51,6 @@ var internalFrequencyUnitsMap = map[FrequencyUnits]bool{
 	FrequencyCyclePerHour: true,
 	FrequencyBeatPerMinute: true,
 	FrequencyPerSecond: true,
-	FrequencyBUnit: true,
 	FrequencyMicrohertz: true,
 	FrequencyMillihertz: true,
 	FrequencyKilohertz: true,
@@ -67,7 +64,7 @@ type FrequencyDto struct {
     // Value is the numerical representation of the Frequency.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Frequency, as defined in the FrequencyUnits enumeration.
-	Unit  FrequencyUnits `json:"unit" validate:"required,oneof=Hertz RadianPerSecond CyclePerMinute CyclePerHour BeatPerMinute PerSecond BUnit Microhertz Millihertz Kilohertz Megahertz Gigahertz Terahertz"`
+	Unit  FrequencyUnits `json:"unit" validate:"required,oneof=Hertz RadianPerSecond CyclePerMinute CyclePerHour BeatPerMinute PerSecond Microhertz Millihertz Kilohertz Megahertz Gigahertz Terahertz"`
 }
 
 // FrequencyDtoFactory groups methods for creating and serializing FrequencyDto objects.
@@ -112,7 +109,6 @@ type Frequency struct {
     cycles_per_hourLazy *float64 
     beats_per_minuteLazy *float64 
     per_secondLazy *float64 
-    b_unitsLazy *float64 
     microhertzLazy *float64 
     millihertzLazy *float64 
     kilohertzLazy *float64 
@@ -172,11 +168,6 @@ func (uf FrequencyFactory) FromBeatsPerMinute(value float64) (*Frequency, error)
 // FromPerSecond creates a new Frequency instance from a value in PerSecond.
 func (uf FrequencyFactory) FromPerSecond(value float64) (*Frequency, error) {
 	return newFrequency(value, FrequencyPerSecond)
-}
-
-// FromBUnits creates a new Frequency instance from a value in BUnits.
-func (uf FrequencyFactory) FromBUnits(value float64) (*Frequency, error) {
-	return newFrequency(value, FrequencyBUnit)
 }
 
 // FromMicrohertz creates a new Frequency instance from a value in Microhertz.
@@ -243,7 +234,7 @@ func (a *Frequency) Hertz() float64 {
 
 // RadiansPerSecond returns the Frequency value in RadiansPerSecond.
 //
-// 
+// In SI units, angular frequency is normally presented with the unit radian per second, and need not express a rotational value. The unit hertz (Hz) is dimensionally equivalent, but by convention it is only used for frequency f, never for angular frequency ω. This convention is used to help avoid the confusion that arises when dealing with quantities such as frequency and angular quantities because the units of measure (such as cycle or radian) are considered to be one and hence may be omitted when expressing quantities in terms of SI units.
 func (a *Frequency) RadiansPerSecond() float64 {
 	if a.radians_per_secondLazy != nil {
 		return *a.radians_per_secondLazy
@@ -299,18 +290,6 @@ func (a *Frequency) PerSecond() float64 {
 	per_second := a.convertFromBase(FrequencyPerSecond)
 	a.per_secondLazy = &per_second
 	return per_second
-}
-
-// BUnits returns the Frequency value in BUnits.
-//
-// 
-func (a *Frequency) BUnits() float64 {
-	if a.b_unitsLazy != nil {
-		return *a.b_unitsLazy
-	}
-	b_units := a.convertFromBase(FrequencyBUnit)
-	a.b_unitsLazy = &b_units
-	return b_units
 }
 
 // Microhertz returns the Frequency value in Microhertz.
@@ -428,8 +407,6 @@ func (a *Frequency) Convert(toUnit FrequencyUnits) float64 {
 		return a.BeatsPerMinute()
     case FrequencyPerSecond:
 		return a.PerSecond()
-    case FrequencyBUnit:
-		return a.BUnits()
     case FrequencyMicrohertz:
 		return a.Microhertz()
     case FrequencyMillihertz:
@@ -453,7 +430,7 @@ func (a *Frequency) convertFromBase(toUnit FrequencyUnits) float64 {
 	case FrequencyHertz:
 		return (value) 
 	case FrequencyRadianPerSecond:
-		return (value * 6.2831853072) 
+		return (value * (2 * math.Pi)) 
 	case FrequencyCyclePerMinute:
 		return (value * 60) 
 	case FrequencyCyclePerHour:
@@ -462,8 +439,6 @@ func (a *Frequency) convertFromBase(toUnit FrequencyUnits) float64 {
 		return (value * 60) 
 	case FrequencyPerSecond:
 		return (value) 
-	case FrequencyBUnit:
-		return (value * value * 1e-3) 
 	case FrequencyMicrohertz:
 		return ((value) / 1e-06) 
 	case FrequencyMillihertz:
@@ -486,7 +461,7 @@ func (a *Frequency) convertToBase(value float64, fromUnit FrequencyUnits) float6
 	case FrequencyHertz:
 		return (value) 
 	case FrequencyRadianPerSecond:
-		return (value / 6.2831853072) 
+		return (value / (2 * math.Pi)) 
 	case FrequencyCyclePerMinute:
 		return (value / 60) 
 	case FrequencyCyclePerHour:
@@ -495,8 +470,6 @@ func (a *Frequency) convertToBase(value float64, fromUnit FrequencyUnits) float6
 		return (value / 60) 
 	case FrequencyPerSecond:
 		return (value) 
-	case FrequencyBUnit:
-		return (math.Sqrt(value * 1e3)) 
 	case FrequencyMicrohertz:
 		return ((value) * 1e-06) 
 	case FrequencyMillihertz:
@@ -634,8 +607,6 @@ func GetFrequencyAbbreviation(unit FrequencyUnits) string {
 		return "bpm" 
 	case FrequencyPerSecond:
 		return "s⁻¹" 
-	case FrequencyBUnit:
-		return "B Units" 
 	case FrequencyMicrohertz:
 		return "μHz" 
 	case FrequencyMillihertz:

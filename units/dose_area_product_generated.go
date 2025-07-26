@@ -26,6 +26,8 @@ const (
         // 
         DoseAreaProductGraySquareMillimeter DoseAreaProductUnits = "GraySquareMillimeter"
         // 
+        DoseAreaProductGraySquareMicrometer DoseAreaProductUnits = "GraySquareMicrometer"
+        // 
         DoseAreaProductMicrograySquareMeter DoseAreaProductUnits = "MicrograySquareMeter"
         // 
         DoseAreaProductMilligraySquareMeter DoseAreaProductUnits = "MilligraySquareMeter"
@@ -57,6 +59,14 @@ const (
         DoseAreaProductCentigraySquareMillimeter DoseAreaProductUnits = "CentigraySquareMillimeter"
         // 
         DoseAreaProductDecigraySquareMillimeter DoseAreaProductUnits = "DecigraySquareMillimeter"
+        // 
+        DoseAreaProductMicrograySquareMicrometer DoseAreaProductUnits = "MicrograySquareMicrometer"
+        // 
+        DoseAreaProductMilligraySquareMicrometer DoseAreaProductUnits = "MilligraySquareMicrometer"
+        // 
+        DoseAreaProductCentigraySquareMicrometer DoseAreaProductUnits = "CentigraySquareMicrometer"
+        // 
+        DoseAreaProductDecigraySquareMicrometer DoseAreaProductUnits = "DecigraySquareMicrometer"
 )
 
 var internalDoseAreaProductUnitsMap = map[DoseAreaProductUnits]bool{
@@ -65,6 +75,7 @@ var internalDoseAreaProductUnitsMap = map[DoseAreaProductUnits]bool{
 	DoseAreaProductGraySquareDecimeter: true,
 	DoseAreaProductGraySquareCentimeter: true,
 	DoseAreaProductGraySquareMillimeter: true,
+	DoseAreaProductGraySquareMicrometer: true,
 	DoseAreaProductMicrograySquareMeter: true,
 	DoseAreaProductMilligraySquareMeter: true,
 	DoseAreaProductCentigraySquareMeter: true,
@@ -81,6 +92,10 @@ var internalDoseAreaProductUnitsMap = map[DoseAreaProductUnits]bool{
 	DoseAreaProductMilligraySquareMillimeter: true,
 	DoseAreaProductCentigraySquareMillimeter: true,
 	DoseAreaProductDecigraySquareMillimeter: true,
+	DoseAreaProductMicrograySquareMicrometer: true,
+	DoseAreaProductMilligraySquareMicrometer: true,
+	DoseAreaProductCentigraySquareMicrometer: true,
+	DoseAreaProductDecigraySquareMicrometer: true,
 }
 
 // DoseAreaProductDto represents a DoseAreaProduct measurement with a numerical value and its corresponding unit.
@@ -88,7 +103,7 @@ type DoseAreaProductDto struct {
     // Value is the numerical representation of the DoseAreaProduct.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the DoseAreaProduct, as defined in the DoseAreaProductUnits enumeration.
-	Unit  DoseAreaProductUnits `json:"unit" validate:"required,oneof=GraySquareMeter GraySquareDecimeter GraySquareCentimeter GraySquareMillimeter MicrograySquareMeter MilligraySquareMeter CentigraySquareMeter DecigraySquareMeter MicrograySquareDecimeter MilligraySquareDecimeter CentigraySquareDecimeter DecigraySquareDecimeter MicrograySquareCentimeter MilligraySquareCentimeter CentigraySquareCentimeter DecigraySquareCentimeter MicrograySquareMillimeter MilligraySquareMillimeter CentigraySquareMillimeter DecigraySquareMillimeter"`
+	Unit  DoseAreaProductUnits `json:"unit" validate:"required,oneof=GraySquareMeter GraySquareDecimeter GraySquareCentimeter GraySquareMillimeter GraySquareMicrometer MicrograySquareMeter MilligraySquareMeter CentigraySquareMeter DecigraySquareMeter MicrograySquareDecimeter MilligraySquareDecimeter CentigraySquareDecimeter DecigraySquareDecimeter MicrograySquareCentimeter MilligraySquareCentimeter CentigraySquareCentimeter DecigraySquareCentimeter MicrograySquareMillimeter MilligraySquareMillimeter CentigraySquareMillimeter DecigraySquareMillimeter MicrograySquareMicrometer MilligraySquareMicrometer CentigraySquareMicrometer DecigraySquareMicrometer"`
 }
 
 // DoseAreaProductDtoFactory groups methods for creating and serializing DoseAreaProductDto objects.
@@ -131,6 +146,7 @@ type DoseAreaProduct struct {
     gray_square_decimetersLazy *float64 
     gray_square_centimetersLazy *float64 
     gray_square_millimetersLazy *float64 
+    gray_square_micrometersLazy *float64 
     microgray_square_metersLazy *float64 
     milligray_square_metersLazy *float64 
     centigray_square_metersLazy *float64 
@@ -147,6 +163,10 @@ type DoseAreaProduct struct {
     milligray_square_millimetersLazy *float64 
     centigray_square_millimetersLazy *float64 
     decigray_square_millimetersLazy *float64 
+    microgray_square_micrometersLazy *float64 
+    milligray_square_micrometersLazy *float64 
+    centigray_square_micrometersLazy *float64 
+    decigray_square_micrometersLazy *float64 
 }
 
 // DoseAreaProductFactory groups methods for creating DoseAreaProduct instances.
@@ -190,6 +210,11 @@ func (uf DoseAreaProductFactory) FromGraySquareCentimeters(value float64) (*Dose
 // FromGraySquareMillimeters creates a new DoseAreaProduct instance from a value in GraySquareMillimeters.
 func (uf DoseAreaProductFactory) FromGraySquareMillimeters(value float64) (*DoseAreaProduct, error) {
 	return newDoseAreaProduct(value, DoseAreaProductGraySquareMillimeter)
+}
+
+// FromGraySquareMicrometers creates a new DoseAreaProduct instance from a value in GraySquareMicrometers.
+func (uf DoseAreaProductFactory) FromGraySquareMicrometers(value float64) (*DoseAreaProduct, error) {
+	return newDoseAreaProduct(value, DoseAreaProductGraySquareMicrometer)
 }
 
 // FromMicrograySquareMeters creates a new DoseAreaProduct instance from a value in MicrograySquareMeters.
@@ -272,6 +297,26 @@ func (uf DoseAreaProductFactory) FromDecigraySquareMillimeters(value float64) (*
 	return newDoseAreaProduct(value, DoseAreaProductDecigraySquareMillimeter)
 }
 
+// FromMicrograySquareMicrometers creates a new DoseAreaProduct instance from a value in MicrograySquareMicrometers.
+func (uf DoseAreaProductFactory) FromMicrograySquareMicrometers(value float64) (*DoseAreaProduct, error) {
+	return newDoseAreaProduct(value, DoseAreaProductMicrograySquareMicrometer)
+}
+
+// FromMilligraySquareMicrometers creates a new DoseAreaProduct instance from a value in MilligraySquareMicrometers.
+func (uf DoseAreaProductFactory) FromMilligraySquareMicrometers(value float64) (*DoseAreaProduct, error) {
+	return newDoseAreaProduct(value, DoseAreaProductMilligraySquareMicrometer)
+}
+
+// FromCentigraySquareMicrometers creates a new DoseAreaProduct instance from a value in CentigraySquareMicrometers.
+func (uf DoseAreaProductFactory) FromCentigraySquareMicrometers(value float64) (*DoseAreaProduct, error) {
+	return newDoseAreaProduct(value, DoseAreaProductCentigraySquareMicrometer)
+}
+
+// FromDecigraySquareMicrometers creates a new DoseAreaProduct instance from a value in DecigraySquareMicrometers.
+func (uf DoseAreaProductFactory) FromDecigraySquareMicrometers(value float64) (*DoseAreaProduct, error) {
+	return newDoseAreaProduct(value, DoseAreaProductDecigraySquareMicrometer)
+}
+
 
 // newDoseAreaProduct creates a new DoseAreaProduct.
 func newDoseAreaProduct(value float64, fromUnit DoseAreaProductUnits) (*DoseAreaProduct, error) {
@@ -338,6 +383,18 @@ func (a *DoseAreaProduct) GraySquareMillimeters() float64 {
 	gray_square_millimeters := a.convertFromBase(DoseAreaProductGraySquareMillimeter)
 	a.gray_square_millimetersLazy = &gray_square_millimeters
 	return gray_square_millimeters
+}
+
+// GraySquareMicrometers returns the DoseAreaProduct value in GraySquareMicrometers.
+//
+// 
+func (a *DoseAreaProduct) GraySquareMicrometers() float64 {
+	if a.gray_square_micrometersLazy != nil {
+		return *a.gray_square_micrometersLazy
+	}
+	gray_square_micrometers := a.convertFromBase(DoseAreaProductGraySquareMicrometer)
+	a.gray_square_micrometersLazy = &gray_square_micrometers
+	return gray_square_micrometers
 }
 
 // MicrograySquareMeters returns the DoseAreaProduct value in MicrograySquareMeters.
@@ -532,6 +589,54 @@ func (a *DoseAreaProduct) DecigraySquareMillimeters() float64 {
 	return decigray_square_millimeters
 }
 
+// MicrograySquareMicrometers returns the DoseAreaProduct value in MicrograySquareMicrometers.
+//
+// 
+func (a *DoseAreaProduct) MicrograySquareMicrometers() float64 {
+	if a.microgray_square_micrometersLazy != nil {
+		return *a.microgray_square_micrometersLazy
+	}
+	microgray_square_micrometers := a.convertFromBase(DoseAreaProductMicrograySquareMicrometer)
+	a.microgray_square_micrometersLazy = &microgray_square_micrometers
+	return microgray_square_micrometers
+}
+
+// MilligraySquareMicrometers returns the DoseAreaProduct value in MilligraySquareMicrometers.
+//
+// 
+func (a *DoseAreaProduct) MilligraySquareMicrometers() float64 {
+	if a.milligray_square_micrometersLazy != nil {
+		return *a.milligray_square_micrometersLazy
+	}
+	milligray_square_micrometers := a.convertFromBase(DoseAreaProductMilligraySquareMicrometer)
+	a.milligray_square_micrometersLazy = &milligray_square_micrometers
+	return milligray_square_micrometers
+}
+
+// CentigraySquareMicrometers returns the DoseAreaProduct value in CentigraySquareMicrometers.
+//
+// 
+func (a *DoseAreaProduct) CentigraySquareMicrometers() float64 {
+	if a.centigray_square_micrometersLazy != nil {
+		return *a.centigray_square_micrometersLazy
+	}
+	centigray_square_micrometers := a.convertFromBase(DoseAreaProductCentigraySquareMicrometer)
+	a.centigray_square_micrometersLazy = &centigray_square_micrometers
+	return centigray_square_micrometers
+}
+
+// DecigraySquareMicrometers returns the DoseAreaProduct value in DecigraySquareMicrometers.
+//
+// 
+func (a *DoseAreaProduct) DecigraySquareMicrometers() float64 {
+	if a.decigray_square_micrometersLazy != nil {
+		return *a.decigray_square_micrometersLazy
+	}
+	decigray_square_micrometers := a.convertFromBase(DoseAreaProductDecigraySquareMicrometer)
+	a.decigray_square_micrometersLazy = &decigray_square_micrometers
+	return decigray_square_micrometers
+}
+
 
 // ToDto creates a DoseAreaProductDto representation from the DoseAreaProduct instance.
 //
@@ -571,6 +676,8 @@ func (a *DoseAreaProduct) Convert(toUnit DoseAreaProductUnits) float64 {
 		return a.GraySquareCentimeters()
     case DoseAreaProductGraySquareMillimeter:
 		return a.GraySquareMillimeters()
+    case DoseAreaProductGraySquareMicrometer:
+		return a.GraySquareMicrometers()
     case DoseAreaProductMicrograySquareMeter:
 		return a.MicrograySquareMeters()
     case DoseAreaProductMilligraySquareMeter:
@@ -603,6 +710,14 @@ func (a *DoseAreaProduct) Convert(toUnit DoseAreaProductUnits) float64 {
 		return a.CentigraySquareMillimeters()
     case DoseAreaProductDecigraySquareMillimeter:
 		return a.DecigraySquareMillimeters()
+    case DoseAreaProductMicrograySquareMicrometer:
+		return a.MicrograySquareMicrometers()
+    case DoseAreaProductMilligraySquareMicrometer:
+		return a.MilligraySquareMicrometers()
+    case DoseAreaProductCentigraySquareMicrometer:
+		return a.CentigraySquareMicrometers()
+    case DoseAreaProductDecigraySquareMicrometer:
+		return a.DecigraySquareMicrometers()
 	default:
 		return math.NaN()
 	}
@@ -619,6 +734,8 @@ func (a *DoseAreaProduct) convertFromBase(toUnit DoseAreaProductUnits) float64 {
 		return (value * 10000) 
 	case DoseAreaProductGraySquareMillimeter:
 		return (value * 1000000) 
+	case DoseAreaProductGraySquareMicrometer:
+		return (value * 1000000000000) 
 	case DoseAreaProductMicrograySquareMeter:
 		return ((value) / 1e-06) 
 	case DoseAreaProductMilligraySquareMeter:
@@ -651,6 +768,14 @@ func (a *DoseAreaProduct) convertFromBase(toUnit DoseAreaProductUnits) float64 {
 		return ((value * 1000000) / 0.01) 
 	case DoseAreaProductDecigraySquareMillimeter:
 		return ((value * 1000000) / 0.1) 
+	case DoseAreaProductMicrograySquareMicrometer:
+		return ((value * 1000000000000) / 1e-06) 
+	case DoseAreaProductMilligraySquareMicrometer:
+		return ((value * 1000000000000) / 0.001) 
+	case DoseAreaProductCentigraySquareMicrometer:
+		return ((value * 1000000000000) / 0.01) 
+	case DoseAreaProductDecigraySquareMicrometer:
+		return ((value * 1000000000000) / 0.1) 
 	default:
 		return math.NaN()
 	}
@@ -666,6 +791,8 @@ func (a *DoseAreaProduct) convertToBase(value float64, fromUnit DoseAreaProductU
 		return (value / 10000) 
 	case DoseAreaProductGraySquareMillimeter:
 		return (value / 1000000) 
+	case DoseAreaProductGraySquareMicrometer:
+		return (value / 1000000000000) 
 	case DoseAreaProductMicrograySquareMeter:
 		return ((value) * 1e-06) 
 	case DoseAreaProductMilligraySquareMeter:
@@ -698,6 +825,14 @@ func (a *DoseAreaProduct) convertToBase(value float64, fromUnit DoseAreaProductU
 		return ((value / 1000000) * 0.01) 
 	case DoseAreaProductDecigraySquareMillimeter:
 		return ((value / 1000000) * 0.1) 
+	case DoseAreaProductMicrograySquareMicrometer:
+		return ((value / 1000000000000) * 1e-06) 
+	case DoseAreaProductMilligraySquareMicrometer:
+		return ((value / 1000000000000) * 0.001) 
+	case DoseAreaProductCentigraySquareMicrometer:
+		return ((value / 1000000000000) * 0.01) 
+	case DoseAreaProductDecigraySquareMicrometer:
+		return ((value / 1000000000000) * 0.1) 
 	default:
 		return math.NaN()
 	}
@@ -819,6 +954,8 @@ func GetDoseAreaProductAbbreviation(unit DoseAreaProductUnits) string {
 		return "Gy·cm²" 
 	case DoseAreaProductGraySquareMillimeter:
 		return "Gy·mm²" 
+	case DoseAreaProductGraySquareMicrometer:
+		return "Gy·μm²" 
 	case DoseAreaProductMicrograySquareMeter:
 		return "μGy·m²" 
 	case DoseAreaProductMilligraySquareMeter:
@@ -851,6 +988,14 @@ func GetDoseAreaProductAbbreviation(unit DoseAreaProductUnits) string {
 		return "cGy·mm²" 
 	case DoseAreaProductDecigraySquareMillimeter:
 		return "dGy·mm²" 
+	case DoseAreaProductMicrograySquareMicrometer:
+		return "μGy·μm²" 
+	case DoseAreaProductMilligraySquareMicrometer:
+		return "mGy·μm²" 
+	case DoseAreaProductCentigraySquareMicrometer:
+		return "cGy·μm²" 
+	case DoseAreaProductDecigraySquareMicrometer:
+		return "dGy·μm²" 
 	default:
 		return ""
 	}

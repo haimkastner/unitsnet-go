@@ -1139,7 +1139,7 @@ func TestGetDynamicViscosityAbbreviation(t *testing.T) {
         {
             name: "PoundPerFootSecond abbreviation",
             unit: units.DynamicViscosityPoundPerFootSecond,
-            want: "lb/ft·s",
+            want: "lb/(ft·s)",
         },
         {
             name: "MillipascalSecond abbreviation",

@@ -1299,19 +1299,19 @@ func (a *MassConcentration) convertFromBase(toUnit MassConcentrationUnits) float
 	case MassConcentrationTonnePerCubicMeter:
 		return (value * 0.001) 
 	case MassConcentrationPoundPerCubicInch:
-		return (value * 3.6127298147753e-5) 
+		return (value * 1.6387064e-5 / 0.45359237) 
 	case MassConcentrationPoundPerCubicFoot:
-		return (value * 0.062427961) 
+		return (value * 0.028316846592 / 0.45359237) 
 	case MassConcentrationSlugPerCubicFoot:
-		return (value * 0.00194032033) 
+		return (value * (0.3048 * 0.028316846592) / (0.45359237 * 9.80665)) 
 	case MassConcentrationPoundPerUSGallon:
-		return (value / 1.19826427e2) 
+		return (value * 0.003785411784 / 0.45359237) 
 	case MassConcentrationOuncePerUSGallon:
-		return (value * 0.1335264711843) 
+		return (value * 0.003785411784 / 0.028349523125) 
 	case MassConcentrationOuncePerImperialGallon:
-		return (value * 0.1603586720609) 
+		return (value * 0.00454609 / 0.028349523125) 
 	case MassConcentrationPoundPerImperialGallon:
-		return (value / 9.9776398e1) 
+		return (value * 0.00454609 / 0.45359237) 
 	case MassConcentrationKilogramPerCubicMillimeter:
 		return ((value * 1e-6) / 1000.0) 
 	case MassConcentrationKilogramPerCubicCentimeter:
@@ -1373,9 +1373,9 @@ func (a *MassConcentration) convertFromBase(toUnit MassConcentrationUnits) float
 	case MassConcentrationKilogramPerLiter:
 		return ((value) / 1000.0) 
 	case MassConcentrationKilopoundPerCubicInch:
-		return ((value * 3.6127298147753e-5) / 1000.0) 
+		return ((value * 1.6387064e-5 / 0.45359237) / 1000.0) 
 	case MassConcentrationKilopoundPerCubicFoot:
-		return ((value * 0.062427961) / 1000.0) 
+		return ((value * 0.028316846592 / 0.45359237) / 1000.0) 
 	default:
 		return math.NaN()
 	}
@@ -1404,19 +1404,19 @@ func (a *MassConcentration) convertToBase(value float64, fromUnit MassConcentrat
 	case MassConcentrationTonnePerCubicMeter:
 		return (value / 0.001) 
 	case MassConcentrationPoundPerCubicInch:
-		return (value / 3.6127298147753e-5) 
+		return (value * 0.45359237 / 1.6387064e-5) 
 	case MassConcentrationPoundPerCubicFoot:
-		return (value / 0.062427961) 
+		return (value * 0.45359237 / 0.028316846592) 
 	case MassConcentrationSlugPerCubicFoot:
-		return (value * 515.378818) 
+		return (value * (0.45359237 * 9.80665) / (0.3048 * 0.028316846592)) 
 	case MassConcentrationPoundPerUSGallon:
-		return (value * 1.19826427e2) 
+		return (value * 0.45359237 / 0.003785411784) 
 	case MassConcentrationOuncePerUSGallon:
-		return ( value / 0.1335264711843) 
+		return (value * 0.028349523125 / 0.003785411784) 
 	case MassConcentrationOuncePerImperialGallon:
-		return ( value / 0.1603586720609) 
+		return (value * 0.028349523125 / 0.00454609) 
 	case MassConcentrationPoundPerImperialGallon:
-		return (value * 9.9776398e1) 
+		return (value * 0.45359237 / 0.00454609) 
 	case MassConcentrationKilogramPerCubicMillimeter:
 		return ((value / 1e-6) * 1000.0) 
 	case MassConcentrationKilogramPerCubicCentimeter:
@@ -1478,9 +1478,9 @@ func (a *MassConcentration) convertToBase(value float64, fromUnit MassConcentrat
 	case MassConcentrationKilogramPerLiter:
 		return ((value) * 1000.0) 
 	case MassConcentrationKilopoundPerCubicInch:
-		return ((value / 3.6127298147753e-5) * 1000.0) 
+		return ((value * 0.45359237 / 1.6387064e-5) * 1000.0) 
 	case MassConcentrationKilopoundPerCubicFoot:
-		return ((value / 0.062427961) * 1000.0) 
+		return ((value * 0.45359237 / 0.028316846592) * 1000.0) 
 	default:
 		return math.NaN()
 	}
@@ -1601,13 +1601,13 @@ func GetMassConcentrationAbbreviation(unit MassConcentrationUnits) string {
 	case MassConcentrationGramPerCubicMeter:
 		return "g/m³" 
 	case MassConcentrationGramPerMicroliter:
-		return "g/μL" 
+		return "g/μl" 
 	case MassConcentrationGramPerMilliliter:
-		return "g/mL" 
+		return "g/ml" 
 	case MassConcentrationGramPerDeciliter:
-		return "g/dL" 
+		return "g/dl" 
 	case MassConcentrationGramPerLiter:
-		return "g/L" 
+		return "g/l" 
 	case MassConcentrationTonnePerCubicMillimeter:
 		return "t/mm³" 
 	case MassConcentrationTonnePerCubicCentimeter:
@@ -1639,55 +1639,55 @@ func GetMassConcentrationAbbreviation(unit MassConcentrationUnits) string {
 	case MassConcentrationMicrogramPerCubicMeter:
 		return "μg/m³" 
 	case MassConcentrationPicogramPerMicroliter:
-		return "pg/μL" 
+		return "pg/μl" 
 	case MassConcentrationNanogramPerMicroliter:
-		return "ng/μL" 
+		return "ng/μl" 
 	case MassConcentrationMicrogramPerMicroliter:
-		return "μg/μL" 
+		return "μg/μl" 
 	case MassConcentrationMilligramPerMicroliter:
-		return "mg/μL" 
+		return "mg/μl" 
 	case MassConcentrationCentigramPerMicroliter:
-		return "cg/μL" 
+		return "cg/μl" 
 	case MassConcentrationDecigramPerMicroliter:
-		return "dg/μL" 
+		return "dg/μl" 
 	case MassConcentrationPicogramPerMilliliter:
-		return "pg/mL" 
+		return "pg/ml" 
 	case MassConcentrationNanogramPerMilliliter:
-		return "ng/mL" 
+		return "ng/ml" 
 	case MassConcentrationMicrogramPerMilliliter:
-		return "μg/mL" 
+		return "μg/ml" 
 	case MassConcentrationMilligramPerMilliliter:
-		return "mg/mL" 
+		return "mg/ml" 
 	case MassConcentrationCentigramPerMilliliter:
-		return "cg/mL" 
+		return "cg/ml" 
 	case MassConcentrationDecigramPerMilliliter:
-		return "dg/mL" 
+		return "dg/ml" 
 	case MassConcentrationPicogramPerDeciliter:
-		return "pg/dL" 
+		return "pg/dl" 
 	case MassConcentrationNanogramPerDeciliter:
-		return "ng/dL" 
+		return "ng/dl" 
 	case MassConcentrationMicrogramPerDeciliter:
-		return "μg/dL" 
+		return "μg/dl" 
 	case MassConcentrationMilligramPerDeciliter:
-		return "mg/dL" 
+		return "mg/dl" 
 	case MassConcentrationCentigramPerDeciliter:
-		return "cg/dL" 
+		return "cg/dl" 
 	case MassConcentrationDecigramPerDeciliter:
-		return "dg/dL" 
+		return "dg/dl" 
 	case MassConcentrationPicogramPerLiter:
-		return "pg/L" 
+		return "pg/l" 
 	case MassConcentrationNanogramPerLiter:
-		return "ng/L" 
+		return "ng/l" 
 	case MassConcentrationMicrogramPerLiter:
-		return "μg/L" 
+		return "μg/l" 
 	case MassConcentrationMilligramPerLiter:
-		return "mg/L" 
+		return "mg/l" 
 	case MassConcentrationCentigramPerLiter:
-		return "cg/L" 
+		return "cg/l" 
 	case MassConcentrationDecigramPerLiter:
-		return "dg/L" 
+		return "dg/l" 
 	case MassConcentrationKilogramPerLiter:
-		return "kg/L" 
+		return "kg/l" 
 	case MassConcentrationKilopoundPerCubicInch:
 		return "klb/in³" 
 	case MassConcentrationKilopoundPerCubicFoot:

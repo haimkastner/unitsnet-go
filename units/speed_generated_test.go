@@ -87,12 +87,12 @@ func TestSpeedConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to MetersPerMinutes.
-		// No expected conversion value provided for MetersPerMinutes, verifying result is not NaN.
-		result := a.MetersPerMinutes()
-		cacheResult := a.MetersPerMinutes()
+		// Test conversion to MetersPerMinute.
+		// No expected conversion value provided for MetersPerMinute, verifying result is not NaN.
+		result := a.MetersPerMinute()
+		cacheResult := a.MetersPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MetersPerMinutes returned NaN")
+			t.Errorf("conversion to MetersPerMinute returned NaN")
 		}
 	}
 	{
@@ -294,57 +294,57 @@ func TestSpeedConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to NanometersPerMinutes.
-		// No expected conversion value provided for NanometersPerMinutes, verifying result is not NaN.
-		result := a.NanometersPerMinutes()
-		cacheResult := a.NanometersPerMinutes()
+		// Test conversion to NanometersPerMinute.
+		// No expected conversion value provided for NanometersPerMinute, verifying result is not NaN.
+		result := a.NanometersPerMinute()
+		cacheResult := a.NanometersPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to NanometersPerMinutes returned NaN")
+			t.Errorf("conversion to NanometersPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to MicrometersPerMinutes.
-		// No expected conversion value provided for MicrometersPerMinutes, verifying result is not NaN.
-		result := a.MicrometersPerMinutes()
-		cacheResult := a.MicrometersPerMinutes()
+		// Test conversion to MicrometersPerMinute.
+		// No expected conversion value provided for MicrometersPerMinute, verifying result is not NaN.
+		result := a.MicrometersPerMinute()
+		cacheResult := a.MicrometersPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MicrometersPerMinutes returned NaN")
+			t.Errorf("conversion to MicrometersPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to MillimetersPerMinutes.
-		// No expected conversion value provided for MillimetersPerMinutes, verifying result is not NaN.
-		result := a.MillimetersPerMinutes()
-		cacheResult := a.MillimetersPerMinutes()
+		// Test conversion to MillimetersPerMinute.
+		// No expected conversion value provided for MillimetersPerMinute, verifying result is not NaN.
+		result := a.MillimetersPerMinute()
+		cacheResult := a.MillimetersPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MillimetersPerMinutes returned NaN")
+			t.Errorf("conversion to MillimetersPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to CentimetersPerMinutes.
-		// No expected conversion value provided for CentimetersPerMinutes, verifying result is not NaN.
-		result := a.CentimetersPerMinutes()
-		cacheResult := a.CentimetersPerMinutes()
+		// Test conversion to CentimetersPerMinute.
+		// No expected conversion value provided for CentimetersPerMinute, verifying result is not NaN.
+		result := a.CentimetersPerMinute()
+		cacheResult := a.CentimetersPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to CentimetersPerMinutes returned NaN")
+			t.Errorf("conversion to CentimetersPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to DecimetersPerMinutes.
-		// No expected conversion value provided for DecimetersPerMinutes, verifying result is not NaN.
-		result := a.DecimetersPerMinutes()
-		cacheResult := a.DecimetersPerMinutes()
+		// Test conversion to DecimetersPerMinute.
+		// No expected conversion value provided for DecimetersPerMinute, verifying result is not NaN.
+		result := a.DecimetersPerMinute()
+		cacheResult := a.DecimetersPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to DecimetersPerMinutes returned NaN")
+			t.Errorf("conversion to DecimetersPerMinute returned NaN")
 		}
 	}
 	{
-		// Test conversion to KilometersPerMinutes.
-		// No expected conversion value provided for KilometersPerMinutes, verifying result is not NaN.
-		result := a.KilometersPerMinutes()
-		cacheResult := a.KilometersPerMinutes()
+		// Test conversion to KilometersPerMinute.
+		// No expected conversion value provided for KilometersPerMinute, verifying result is not NaN.
+		result := a.KilometersPerMinute()
+		cacheResult := a.KilometersPerMinute()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to KilometersPerMinutes returned NaN")
+			t.Errorf("conversion to KilometersPerMinute returned NaN")
 		}
 	}
 	{
@@ -461,19 +461,19 @@ func TestSpeedFactory_FromDto(t *testing.T) {
         t.Errorf("Round-trip conversion for MeterPerSecond = %v, want %v", converted, 100)
     }
     // Test MeterPerMinute conversion
-    meters_per_minutesDto := units.SpeedDto{
+    meters_per_minuteDto := units.SpeedDto{
         Value: 100,
         Unit:  units.SpeedMeterPerMinute,
     }
     
-    var meters_per_minutesResult *units.Speed
-    meters_per_minutesResult, err = factory.FromDto(meters_per_minutesDto)
+    var meters_per_minuteResult *units.Speed
+    meters_per_minuteResult, err = factory.FromDto(meters_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with MeterPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = meters_per_minutesResult.Convert(units.SpeedMeterPerMinute)
+    converted = meters_per_minuteResult.Convert(units.SpeedMeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MeterPerMinute = %v, want %v", converted, 100)
     }
@@ -852,104 +852,104 @@ func TestSpeedFactory_FromDto(t *testing.T) {
         t.Errorf("Round-trip conversion for KilometerPerSecond = %v, want %v", converted, 100)
     }
     // Test NanometerPerMinute conversion
-    nanometers_per_minutesDto := units.SpeedDto{
+    nanometers_per_minuteDto := units.SpeedDto{
         Value: 100,
         Unit:  units.SpeedNanometerPerMinute,
     }
     
-    var nanometers_per_minutesResult *units.Speed
-    nanometers_per_minutesResult, err = factory.FromDto(nanometers_per_minutesDto)
+    var nanometers_per_minuteResult *units.Speed
+    nanometers_per_minuteResult, err = factory.FromDto(nanometers_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with NanometerPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = nanometers_per_minutesResult.Convert(units.SpeedNanometerPerMinute)
+    converted = nanometers_per_minuteResult.Convert(units.SpeedNanometerPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for NanometerPerMinute = %v, want %v", converted, 100)
     }
     // Test MicrometerPerMinute conversion
-    micrometers_per_minutesDto := units.SpeedDto{
+    micrometers_per_minuteDto := units.SpeedDto{
         Value: 100,
         Unit:  units.SpeedMicrometerPerMinute,
     }
     
-    var micrometers_per_minutesResult *units.Speed
-    micrometers_per_minutesResult, err = factory.FromDto(micrometers_per_minutesDto)
+    var micrometers_per_minuteResult *units.Speed
+    micrometers_per_minuteResult, err = factory.FromDto(micrometers_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with MicrometerPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = micrometers_per_minutesResult.Convert(units.SpeedMicrometerPerMinute)
+    converted = micrometers_per_minuteResult.Convert(units.SpeedMicrometerPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrometerPerMinute = %v, want %v", converted, 100)
     }
     // Test MillimeterPerMinute conversion
-    millimeters_per_minutesDto := units.SpeedDto{
+    millimeters_per_minuteDto := units.SpeedDto{
         Value: 100,
         Unit:  units.SpeedMillimeterPerMinute,
     }
     
-    var millimeters_per_minutesResult *units.Speed
-    millimeters_per_minutesResult, err = factory.FromDto(millimeters_per_minutesDto)
+    var millimeters_per_minuteResult *units.Speed
+    millimeters_per_minuteResult, err = factory.FromDto(millimeters_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with MillimeterPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millimeters_per_minutesResult.Convert(units.SpeedMillimeterPerMinute)
+    converted = millimeters_per_minuteResult.Convert(units.SpeedMillimeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillimeterPerMinute = %v, want %v", converted, 100)
     }
     // Test CentimeterPerMinute conversion
-    centimeters_per_minutesDto := units.SpeedDto{
+    centimeters_per_minuteDto := units.SpeedDto{
         Value: 100,
         Unit:  units.SpeedCentimeterPerMinute,
     }
     
-    var centimeters_per_minutesResult *units.Speed
-    centimeters_per_minutesResult, err = factory.FromDto(centimeters_per_minutesDto)
+    var centimeters_per_minuteResult *units.Speed
+    centimeters_per_minuteResult, err = factory.FromDto(centimeters_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with CentimeterPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = centimeters_per_minutesResult.Convert(units.SpeedCentimeterPerMinute)
+    converted = centimeters_per_minuteResult.Convert(units.SpeedCentimeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for CentimeterPerMinute = %v, want %v", converted, 100)
     }
     // Test DecimeterPerMinute conversion
-    decimeters_per_minutesDto := units.SpeedDto{
+    decimeters_per_minuteDto := units.SpeedDto{
         Value: 100,
         Unit:  units.SpeedDecimeterPerMinute,
     }
     
-    var decimeters_per_minutesResult *units.Speed
-    decimeters_per_minutesResult, err = factory.FromDto(decimeters_per_minutesDto)
+    var decimeters_per_minuteResult *units.Speed
+    decimeters_per_minuteResult, err = factory.FromDto(decimeters_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with DecimeterPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = decimeters_per_minutesResult.Convert(units.SpeedDecimeterPerMinute)
+    converted = decimeters_per_minuteResult.Convert(units.SpeedDecimeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DecimeterPerMinute = %v, want %v", converted, 100)
     }
     // Test KilometerPerMinute conversion
-    kilometers_per_minutesDto := units.SpeedDto{
+    kilometers_per_minuteDto := units.SpeedDto{
         Value: 100,
         Unit:  units.SpeedKilometerPerMinute,
     }
     
-    var kilometers_per_minutesResult *units.Speed
-    kilometers_per_minutesResult, err = factory.FromDto(kilometers_per_minutesDto)
+    var kilometers_per_minuteResult *units.Speed
+    kilometers_per_minuteResult, err = factory.FromDto(kilometers_per_minuteDto)
     if err != nil {
         t.Errorf("FromDto() with KilometerPerMinute returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilometers_per_minutesResult.Convert(units.SpeedKilometerPerMinute)
+    converted = kilometers_per_minuteResult.Convert(units.SpeedKilometerPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilometerPerMinute = %v, want %v", converted, 100)
     }
@@ -1081,14 +1081,14 @@ func TestSpeedFactory_FromDtoJSON(t *testing.T) {
         t.Errorf("Round-trip conversion for MeterPerSecond = %v, want %v", converted, 100)
     }
     // Test JSON with MeterPerMinute unit
-    meters_per_minutesJSON := []byte(`{"value": 100, "unit": "MeterPerMinute"}`)
-    meters_per_minutesResult, err := factory.FromDtoJSON(meters_per_minutesJSON)
+    meters_per_minuteJSON := []byte(`{"value": 100, "unit": "MeterPerMinute"}`)
+    meters_per_minuteResult, err := factory.FromDtoJSON(meters_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MeterPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = meters_per_minutesResult.Convert(units.SpeedMeterPerMinute)
+    converted = meters_per_minuteResult.Convert(units.SpeedMeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MeterPerMinute = %v, want %v", converted, 100)
     }
@@ -1357,74 +1357,74 @@ func TestSpeedFactory_FromDtoJSON(t *testing.T) {
         t.Errorf("Round-trip conversion for KilometerPerSecond = %v, want %v", converted, 100)
     }
     // Test JSON with NanometerPerMinute unit
-    nanometers_per_minutesJSON := []byte(`{"value": 100, "unit": "NanometerPerMinute"}`)
-    nanometers_per_minutesResult, err := factory.FromDtoJSON(nanometers_per_minutesJSON)
+    nanometers_per_minuteJSON := []byte(`{"value": 100, "unit": "NanometerPerMinute"}`)
+    nanometers_per_minuteResult, err := factory.FromDtoJSON(nanometers_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with NanometerPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = nanometers_per_minutesResult.Convert(units.SpeedNanometerPerMinute)
+    converted = nanometers_per_minuteResult.Convert(units.SpeedNanometerPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for NanometerPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with MicrometerPerMinute unit
-    micrometers_per_minutesJSON := []byte(`{"value": 100, "unit": "MicrometerPerMinute"}`)
-    micrometers_per_minutesResult, err := factory.FromDtoJSON(micrometers_per_minutesJSON)
+    micrometers_per_minuteJSON := []byte(`{"value": 100, "unit": "MicrometerPerMinute"}`)
+    micrometers_per_minuteResult, err := factory.FromDtoJSON(micrometers_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MicrometerPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = micrometers_per_minutesResult.Convert(units.SpeedMicrometerPerMinute)
+    converted = micrometers_per_minuteResult.Convert(units.SpeedMicrometerPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MicrometerPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with MillimeterPerMinute unit
-    millimeters_per_minutesJSON := []byte(`{"value": 100, "unit": "MillimeterPerMinute"}`)
-    millimeters_per_minutesResult, err := factory.FromDtoJSON(millimeters_per_minutesJSON)
+    millimeters_per_minuteJSON := []byte(`{"value": 100, "unit": "MillimeterPerMinute"}`)
+    millimeters_per_minuteResult, err := factory.FromDtoJSON(millimeters_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with MillimeterPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = millimeters_per_minutesResult.Convert(units.SpeedMillimeterPerMinute)
+    converted = millimeters_per_minuteResult.Convert(units.SpeedMillimeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MillimeterPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with CentimeterPerMinute unit
-    centimeters_per_minutesJSON := []byte(`{"value": 100, "unit": "CentimeterPerMinute"}`)
-    centimeters_per_minutesResult, err := factory.FromDtoJSON(centimeters_per_minutesJSON)
+    centimeters_per_minuteJSON := []byte(`{"value": 100, "unit": "CentimeterPerMinute"}`)
+    centimeters_per_minuteResult, err := factory.FromDtoJSON(centimeters_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with CentimeterPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = centimeters_per_minutesResult.Convert(units.SpeedCentimeterPerMinute)
+    converted = centimeters_per_minuteResult.Convert(units.SpeedCentimeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for CentimeterPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with DecimeterPerMinute unit
-    decimeters_per_minutesJSON := []byte(`{"value": 100, "unit": "DecimeterPerMinute"}`)
-    decimeters_per_minutesResult, err := factory.FromDtoJSON(decimeters_per_minutesJSON)
+    decimeters_per_minuteJSON := []byte(`{"value": 100, "unit": "DecimeterPerMinute"}`)
+    decimeters_per_minuteResult, err := factory.FromDtoJSON(decimeters_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with DecimeterPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = decimeters_per_minutesResult.Convert(units.SpeedDecimeterPerMinute)
+    converted = decimeters_per_minuteResult.Convert(units.SpeedDecimeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for DecimeterPerMinute = %v, want %v", converted, 100)
     }
     // Test JSON with KilometerPerMinute unit
-    kilometers_per_minutesJSON := []byte(`{"value": 100, "unit": "KilometerPerMinute"}`)
-    kilometers_per_minutesResult, err := factory.FromDtoJSON(kilometers_per_minutesJSON)
+    kilometers_per_minuteJSON := []byte(`{"value": 100, "unit": "KilometerPerMinute"}`)
+    kilometers_per_minuteResult, err := factory.FromDtoJSON(kilometers_per_minuteJSON)
     if err != nil {
         t.Errorf("FromDtoJSON() with KilometerPerMinute unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilometers_per_minutesResult.Convert(units.SpeedKilometerPerMinute)
+    converted = kilometers_per_minuteResult.Convert(units.SpeedKilometerPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilometerPerMinute = %v, want %v", converted, 100)
     }
@@ -1518,47 +1518,47 @@ func TestSpeedFactory_FromMetersPerSecond(t *testing.T) {
         t.Errorf("FromMetersPerSecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMetersPerMinutes function
-func TestSpeedFactory_FromMetersPerMinutes(t *testing.T) {
+// Test FromMetersPerMinute function
+func TestSpeedFactory_FromMetersPerMinute(t *testing.T) {
     factory := units.SpeedFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMetersPerMinutes(100)
+    result, err := factory.FromMetersPerMinute(100)
     if err != nil {
-        t.Errorf("FromMetersPerMinutes() returned error: %v", err)
+        t.Errorf("FromMetersPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.SpeedMeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMetersPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMetersPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMetersPerMinutes(math.NaN())
+    _, err = factory.FromMetersPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromMetersPerMinutes() with NaN value should return error")
+        t.Error("FromMetersPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromMetersPerMinutes(math.Inf(1))
+    _, err = factory.FromMetersPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromMetersPerMinutes() with +Inf value should return error")
+        t.Error("FromMetersPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromMetersPerMinutes(math.Inf(-1))
+    _, err = factory.FromMetersPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromMetersPerMinutes() with -Inf value should return error")
+        t.Error("FromMetersPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMetersPerMinutes(0)
+    zeroResult, err := factory.FromMetersPerMinute(0)
     if err != nil {
-        t.Errorf("FromMetersPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromMetersPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.SpeedMeterPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMetersPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromMetersPerMinute() with zero value = %v, want 0", converted)
     }
 }
 // Test FromMetersPerHour function
@@ -2507,262 +2507,262 @@ func TestSpeedFactory_FromKilometersPerSecond(t *testing.T) {
         t.Errorf("FromKilometersPerSecond() with zero value = %v, want 0", converted)
     }
 }
-// Test FromNanometersPerMinutes function
-func TestSpeedFactory_FromNanometersPerMinutes(t *testing.T) {
+// Test FromNanometersPerMinute function
+func TestSpeedFactory_FromNanometersPerMinute(t *testing.T) {
     factory := units.SpeedFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromNanometersPerMinutes(100)
+    result, err := factory.FromNanometersPerMinute(100)
     if err != nil {
-        t.Errorf("FromNanometersPerMinutes() returned error: %v", err)
+        t.Errorf("FromNanometersPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.SpeedNanometerPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromNanometersPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromNanometersPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromNanometersPerMinutes(math.NaN())
+    _, err = factory.FromNanometersPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromNanometersPerMinutes() with NaN value should return error")
+        t.Error("FromNanometersPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromNanometersPerMinutes(math.Inf(1))
+    _, err = factory.FromNanometersPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromNanometersPerMinutes() with +Inf value should return error")
+        t.Error("FromNanometersPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromNanometersPerMinutes(math.Inf(-1))
+    _, err = factory.FromNanometersPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromNanometersPerMinutes() with -Inf value should return error")
+        t.Error("FromNanometersPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromNanometersPerMinutes(0)
+    zeroResult, err := factory.FromNanometersPerMinute(0)
     if err != nil {
-        t.Errorf("FromNanometersPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromNanometersPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.SpeedNanometerPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromNanometersPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromNanometersPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMicrometersPerMinutes function
-func TestSpeedFactory_FromMicrometersPerMinutes(t *testing.T) {
+// Test FromMicrometersPerMinute function
+func TestSpeedFactory_FromMicrometersPerMinute(t *testing.T) {
     factory := units.SpeedFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMicrometersPerMinutes(100)
+    result, err := factory.FromMicrometersPerMinute(100)
     if err != nil {
-        t.Errorf("FromMicrometersPerMinutes() returned error: %v", err)
+        t.Errorf("FromMicrometersPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.SpeedMicrometerPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMicrometersPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMicrometersPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMicrometersPerMinutes(math.NaN())
+    _, err = factory.FromMicrometersPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromMicrometersPerMinutes() with NaN value should return error")
+        t.Error("FromMicrometersPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromMicrometersPerMinutes(math.Inf(1))
+    _, err = factory.FromMicrometersPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromMicrometersPerMinutes() with +Inf value should return error")
+        t.Error("FromMicrometersPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromMicrometersPerMinutes(math.Inf(-1))
+    _, err = factory.FromMicrometersPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromMicrometersPerMinutes() with -Inf value should return error")
+        t.Error("FromMicrometersPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMicrometersPerMinutes(0)
+    zeroResult, err := factory.FromMicrometersPerMinute(0)
     if err != nil {
-        t.Errorf("FromMicrometersPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromMicrometersPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.SpeedMicrometerPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMicrometersPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromMicrometersPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMillimetersPerMinutes function
-func TestSpeedFactory_FromMillimetersPerMinutes(t *testing.T) {
+// Test FromMillimetersPerMinute function
+func TestSpeedFactory_FromMillimetersPerMinute(t *testing.T) {
     factory := units.SpeedFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMillimetersPerMinutes(100)
+    result, err := factory.FromMillimetersPerMinute(100)
     if err != nil {
-        t.Errorf("FromMillimetersPerMinutes() returned error: %v", err)
+        t.Errorf("FromMillimetersPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.SpeedMillimeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMillimetersPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMillimetersPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMillimetersPerMinutes(math.NaN())
+    _, err = factory.FromMillimetersPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromMillimetersPerMinutes() with NaN value should return error")
+        t.Error("FromMillimetersPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromMillimetersPerMinutes(math.Inf(1))
+    _, err = factory.FromMillimetersPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromMillimetersPerMinutes() with +Inf value should return error")
+        t.Error("FromMillimetersPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromMillimetersPerMinutes(math.Inf(-1))
+    _, err = factory.FromMillimetersPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromMillimetersPerMinutes() with -Inf value should return error")
+        t.Error("FromMillimetersPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMillimetersPerMinutes(0)
+    zeroResult, err := factory.FromMillimetersPerMinute(0)
     if err != nil {
-        t.Errorf("FromMillimetersPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromMillimetersPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.SpeedMillimeterPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMillimetersPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromMillimetersPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromCentimetersPerMinutes function
-func TestSpeedFactory_FromCentimetersPerMinutes(t *testing.T) {
+// Test FromCentimetersPerMinute function
+func TestSpeedFactory_FromCentimetersPerMinute(t *testing.T) {
     factory := units.SpeedFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromCentimetersPerMinutes(100)
+    result, err := factory.FromCentimetersPerMinute(100)
     if err != nil {
-        t.Errorf("FromCentimetersPerMinutes() returned error: %v", err)
+        t.Errorf("FromCentimetersPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.SpeedCentimeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromCentimetersPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromCentimetersPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromCentimetersPerMinutes(math.NaN())
+    _, err = factory.FromCentimetersPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromCentimetersPerMinutes() with NaN value should return error")
+        t.Error("FromCentimetersPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromCentimetersPerMinutes(math.Inf(1))
+    _, err = factory.FromCentimetersPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromCentimetersPerMinutes() with +Inf value should return error")
+        t.Error("FromCentimetersPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromCentimetersPerMinutes(math.Inf(-1))
+    _, err = factory.FromCentimetersPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromCentimetersPerMinutes() with -Inf value should return error")
+        t.Error("FromCentimetersPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromCentimetersPerMinutes(0)
+    zeroResult, err := factory.FromCentimetersPerMinute(0)
     if err != nil {
-        t.Errorf("FromCentimetersPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromCentimetersPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.SpeedCentimeterPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromCentimetersPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromCentimetersPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromDecimetersPerMinutes function
-func TestSpeedFactory_FromDecimetersPerMinutes(t *testing.T) {
+// Test FromDecimetersPerMinute function
+func TestSpeedFactory_FromDecimetersPerMinute(t *testing.T) {
     factory := units.SpeedFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromDecimetersPerMinutes(100)
+    result, err := factory.FromDecimetersPerMinute(100)
     if err != nil {
-        t.Errorf("FromDecimetersPerMinutes() returned error: %v", err)
+        t.Errorf("FromDecimetersPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.SpeedDecimeterPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromDecimetersPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromDecimetersPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromDecimetersPerMinutes(math.NaN())
+    _, err = factory.FromDecimetersPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromDecimetersPerMinutes() with NaN value should return error")
+        t.Error("FromDecimetersPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromDecimetersPerMinutes(math.Inf(1))
+    _, err = factory.FromDecimetersPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromDecimetersPerMinutes() with +Inf value should return error")
+        t.Error("FromDecimetersPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromDecimetersPerMinutes(math.Inf(-1))
+    _, err = factory.FromDecimetersPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromDecimetersPerMinutes() with -Inf value should return error")
+        t.Error("FromDecimetersPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromDecimetersPerMinutes(0)
+    zeroResult, err := factory.FromDecimetersPerMinute(0)
     if err != nil {
-        t.Errorf("FromDecimetersPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromDecimetersPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.SpeedDecimeterPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromDecimetersPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromDecimetersPerMinute() with zero value = %v, want 0", converted)
     }
 }
-// Test FromKilometersPerMinutes function
-func TestSpeedFactory_FromKilometersPerMinutes(t *testing.T) {
+// Test FromKilometersPerMinute function
+func TestSpeedFactory_FromKilometersPerMinute(t *testing.T) {
     factory := units.SpeedFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromKilometersPerMinutes(100)
+    result, err := factory.FromKilometersPerMinute(100)
     if err != nil {
-        t.Errorf("FromKilometersPerMinutes() returned error: %v", err)
+        t.Errorf("FromKilometersPerMinute() returned error: %v", err)
     }
     
     // Convert back and verify
     converted := result.Convert(units.SpeedKilometerPerMinute)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromKilometersPerMinutes() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromKilometersPerMinute() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromKilometersPerMinutes(math.NaN())
+    _, err = factory.FromKilometersPerMinute(math.NaN())
     if err == nil {
-        t.Error("FromKilometersPerMinutes() with NaN value should return error")
+        t.Error("FromKilometersPerMinute() with NaN value should return error")
     }
 
-    _, err = factory.FromKilometersPerMinutes(math.Inf(1))
+    _, err = factory.FromKilometersPerMinute(math.Inf(1))
     if err == nil {
-        t.Error("FromKilometersPerMinutes() with +Inf value should return error")
+        t.Error("FromKilometersPerMinute() with +Inf value should return error")
     }
 
-    _, err = factory.FromKilometersPerMinutes(math.Inf(-1))
+    _, err = factory.FromKilometersPerMinute(math.Inf(-1))
     if err == nil {
-        t.Error("FromKilometersPerMinutes() with -Inf value should return error")
+        t.Error("FromKilometersPerMinute() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromKilometersPerMinutes(0)
+    zeroResult, err := factory.FromKilometersPerMinute(0)
     if err != nil {
-        t.Errorf("FromKilometersPerMinutes() with zero value returned error: %v", err)
+        t.Errorf("FromKilometersPerMinute() with zero value returned error: %v", err)
     }
     converted = zeroResult.Convert(units.SpeedKilometerPerMinute)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromKilometersPerMinutes() with zero value = %v, want 0", converted)
+        t.Errorf("FromKilometersPerMinute() with zero value = %v, want 0", converted)
     }
 }
 // Test FromMillimetersPerHour function

@@ -568,23 +568,23 @@ func (a *HeatFlux) convertFromBase(toUnit HeatFluxUnits) float64 {
 	case HeatFluxWattPerSquareMeter:
 		return (value) 
 	case HeatFluxWattPerSquareInch:
-		return (value / 1.5500031e3) 
+		return (value * (2.54e-2 * 2.54e-2)) 
 	case HeatFluxWattPerSquareFoot:
-		return (value / 1.07639e1) 
+		return (value * (0.3048 * 0.3048)) 
 	case HeatFluxBtuPerSecondSquareInch:
-		return (value / 1.63533984e6) 
+		return (value * (2.54e-2 * 2.54e-2) / 1055.05585262) 
 	case HeatFluxBtuPerSecondSquareFoot:
-		return (value / 1.13565267e4) 
+		return (value * (0.3048 * 0.3048) / 1055.05585262) 
 	case HeatFluxBtuPerMinuteSquareFoot:
-		return (value / 1.89275445e2) 
+		return (value * (0.3048 * 0.3048 * 60) / 1055.05585262) 
 	case HeatFluxBtuPerHourSquareFoot:
-		return (value / 3.15459075) 
+		return (value * (0.3048 * 0.3048 * 3600) / 1055.05585262) 
 	case HeatFluxCaloriePerSecondSquareCentimeter:
-		return (value / 4.1868e4) 
+		return (value / 4.184e4) 
 	case HeatFluxKilocaloriePerHourSquareMeter:
-		return (value / 1.163) 
+		return (value * 3600 / 4.184e3) 
 	case HeatFluxPoundForcePerFootSecond:
-		return (value / 1.459390293720636e1) 
+		return (value * 9.290304e-2 / 1.3558179483314004) 
 	case HeatFluxPoundPerSecondCubed:
 		return (value / 4.5359237e-1) 
 	case HeatFluxNanowattPerSquareMeter:
@@ -600,7 +600,7 @@ func (a *HeatFlux) convertFromBase(toUnit HeatFluxUnits) float64 {
 	case HeatFluxKilowattPerSquareMeter:
 		return ((value) / 1000.0) 
 	case HeatFluxKilocaloriePerSecondSquareCentimeter:
-		return ((value / 4.1868e4) / 1000.0) 
+		return ((value / 4.184e4) / 1000.0) 
 	default:
 		return math.NaN()
 	}
@@ -611,23 +611,23 @@ func (a *HeatFlux) convertToBase(value float64, fromUnit HeatFluxUnits) float64 
 	case HeatFluxWattPerSquareMeter:
 		return (value) 
 	case HeatFluxWattPerSquareInch:
-		return (value * 1.5500031e3) 
+		return (value / (2.54e-2 * 2.54e-2)) 
 	case HeatFluxWattPerSquareFoot:
-		return (value * 1.07639e1) 
+		return (value / (0.3048 * 0.3048)) 
 	case HeatFluxBtuPerSecondSquareInch:
-		return (value * 1.63533984e6) 
+		return (value * 1055.05585262 / (2.54e-2 * 2.54e-2)) 
 	case HeatFluxBtuPerSecondSquareFoot:
-		return (value * 1.13565267e4) 
+		return (value * 1055.05585262 / (0.3048 * 0.3048)) 
 	case HeatFluxBtuPerMinuteSquareFoot:
-		return (value * 1.89275445e2) 
+		return (value * 1055.05585262 / (0.3048 * 0.3048 * 60)) 
 	case HeatFluxBtuPerHourSquareFoot:
-		return (value * 3.15459075) 
+		return (value * 1055.05585262 / (0.3048 * 0.3048 * 3600)) 
 	case HeatFluxCaloriePerSecondSquareCentimeter:
-		return (value * 4.1868e4) 
+		return (value * 4.184e4) 
 	case HeatFluxKilocaloriePerHourSquareMeter:
-		return (value * 1.163) 
+		return (value * 4.184e3 / 3600) 
 	case HeatFluxPoundForcePerFootSecond:
-		return (value * 1.459390293720636e1) 
+		return (value * 1.3558179483314004 / 9.290304e-2) 
 	case HeatFluxPoundPerSecondCubed:
 		return (value * 4.5359237e-1) 
 	case HeatFluxNanowattPerSquareMeter:
@@ -643,7 +643,7 @@ func (a *HeatFlux) convertToBase(value float64, fromUnit HeatFluxUnits) float64 
 	case HeatFluxKilowattPerSquareMeter:
 		return ((value) * 1000.0) 
 	case HeatFluxKilocaloriePerSecondSquareCentimeter:
-		return ((value * 4.1868e4) * 1000.0) 
+		return ((value * 4.184e4) * 1000.0) 
 	default:
 		return math.NaN()
 	}
@@ -764,17 +764,17 @@ func GetHeatFluxAbbreviation(unit HeatFluxUnits) string {
 	case HeatFluxWattPerSquareFoot:
 		return "W/ft²" 
 	case HeatFluxBtuPerSecondSquareInch:
-		return "BTU/s·in²" 
+		return "BTU/(s·in²)" 
 	case HeatFluxBtuPerSecondSquareFoot:
-		return "BTU/s·ft²" 
+		return "BTU/(s·ft²)" 
 	case HeatFluxBtuPerMinuteSquareFoot:
-		return "BTU/min·ft²" 
+		return "BTU/(min·ft²)" 
 	case HeatFluxBtuPerHourSquareFoot:
-		return "BTU/h·ft²" 
+		return "BTU/(h·ft²)" 
 	case HeatFluxCaloriePerSecondSquareCentimeter:
-		return "cal/s·cm²" 
+		return "cal/(s·cm²)" 
 	case HeatFluxKilocaloriePerHourSquareMeter:
-		return "kcal/h·m²" 
+		return "kcal/(h·m²)" 
 	case HeatFluxPoundForcePerFootSecond:
 		return "lbf/(ft·s)" 
 	case HeatFluxPoundPerSecondCubed:
@@ -792,7 +792,7 @@ func GetHeatFluxAbbreviation(unit HeatFluxUnits) string {
 	case HeatFluxKilowattPerSquareMeter:
 		return "kW/m²" 
 	case HeatFluxKilocaloriePerSecondSquareCentimeter:
-		return "kcal/s·cm²" 
+		return "kcal/(s·cm²)" 
 	default:
 		return ""
 	}

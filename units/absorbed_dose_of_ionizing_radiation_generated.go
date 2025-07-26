@@ -34,6 +34,8 @@ const (
         // 
         AbsorbedDoseOfIonizingRadiationCentigray AbsorbedDoseOfIonizingRadiationUnits = "Centigray"
         // 
+        AbsorbedDoseOfIonizingRadiationDecigray AbsorbedDoseOfIonizingRadiationUnits = "Decigray"
+        // 
         AbsorbedDoseOfIonizingRadiationKilogray AbsorbedDoseOfIonizingRadiationUnits = "Kilogray"
         // 
         AbsorbedDoseOfIonizingRadiationMegagray AbsorbedDoseOfIonizingRadiationUnits = "Megagray"
@@ -61,6 +63,7 @@ var internalAbsorbedDoseOfIonizingRadiationUnitsMap = map[AbsorbedDoseOfIonizing
 	AbsorbedDoseOfIonizingRadiationMicrogray: true,
 	AbsorbedDoseOfIonizingRadiationMilligray: true,
 	AbsorbedDoseOfIonizingRadiationCentigray: true,
+	AbsorbedDoseOfIonizingRadiationDecigray: true,
 	AbsorbedDoseOfIonizingRadiationKilogray: true,
 	AbsorbedDoseOfIonizingRadiationMegagray: true,
 	AbsorbedDoseOfIonizingRadiationGigagray: true,
@@ -76,7 +79,7 @@ type AbsorbedDoseOfIonizingRadiationDto struct {
     // Value is the numerical representation of the AbsorbedDoseOfIonizingRadiation.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AbsorbedDoseOfIonizingRadiation, as defined in the AbsorbedDoseOfIonizingRadiationUnits enumeration.
-	Unit  AbsorbedDoseOfIonizingRadiationUnits `json:"unit" validate:"required,oneof=Gray Rad Femtogray Picogray Nanogray Microgray Milligray Centigray Kilogray Megagray Gigagray Teragray Petagray Millirad Kilorad Megarad"`
+	Unit  AbsorbedDoseOfIonizingRadiationUnits `json:"unit" validate:"required,oneof=Gray Rad Femtogray Picogray Nanogray Microgray Milligray Centigray Decigray Kilogray Megagray Gigagray Teragray Petagray Millirad Kilorad Megarad"`
 }
 
 // AbsorbedDoseOfIonizingRadiationDtoFactory groups methods for creating and serializing AbsorbedDoseOfIonizingRadiationDto objects.
@@ -123,6 +126,7 @@ type AbsorbedDoseOfIonizingRadiation struct {
     micrograysLazy *float64 
     milligraysLazy *float64 
     centigraysLazy *float64 
+    decigraysLazy *float64 
     kilograysLazy *float64 
     megagraysLazy *float64 
     gigagraysLazy *float64 
@@ -194,6 +198,11 @@ func (uf AbsorbedDoseOfIonizingRadiationFactory) FromMilligrays(value float64) (
 // FromCentigrays creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Centigrays.
 func (uf AbsorbedDoseOfIonizingRadiationFactory) FromCentigrays(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
 	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationCentigray)
+}
+
+// FromDecigrays creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Decigrays.
+func (uf AbsorbedDoseOfIonizingRadiationFactory) FromDecigrays(value float64) (*AbsorbedDoseOfIonizingRadiation, error) {
+	return newAbsorbedDoseOfIonizingRadiation(value, AbsorbedDoseOfIonizingRadiationDecigray)
 }
 
 // FromKilograys creates a new AbsorbedDoseOfIonizingRadiation instance from a value in Kilograys.
@@ -352,6 +361,18 @@ func (a *AbsorbedDoseOfIonizingRadiation) Centigrays() float64 {
 	return centigrays
 }
 
+// Decigrays returns the AbsorbedDoseOfIonizingRadiation value in Decigrays.
+//
+// 
+func (a *AbsorbedDoseOfIonizingRadiation) Decigrays() float64 {
+	if a.decigraysLazy != nil {
+		return *a.decigraysLazy
+	}
+	decigrays := a.convertFromBase(AbsorbedDoseOfIonizingRadiationDecigray)
+	a.decigraysLazy = &decigrays
+	return decigrays
+}
+
 // Kilograys returns the AbsorbedDoseOfIonizingRadiation value in Kilograys.
 //
 // 
@@ -495,6 +516,8 @@ func (a *AbsorbedDoseOfIonizingRadiation) Convert(toUnit AbsorbedDoseOfIonizingR
 		return a.Milligrays()
     case AbsorbedDoseOfIonizingRadiationCentigray:
 		return a.Centigrays()
+    case AbsorbedDoseOfIonizingRadiationDecigray:
+		return a.Decigrays()
     case AbsorbedDoseOfIonizingRadiationKilogray:
 		return a.Kilograys()
     case AbsorbedDoseOfIonizingRadiationMegagray:
@@ -535,6 +558,8 @@ func (a *AbsorbedDoseOfIonizingRadiation) convertFromBase(toUnit AbsorbedDoseOfI
 		return ((value) / 0.001) 
 	case AbsorbedDoseOfIonizingRadiationCentigray:
 		return ((value) / 0.01) 
+	case AbsorbedDoseOfIonizingRadiationDecigray:
+		return ((value) / 0.1) 
 	case AbsorbedDoseOfIonizingRadiationKilogray:
 		return ((value) / 1000.0) 
 	case AbsorbedDoseOfIonizingRadiationMegagray:
@@ -574,6 +599,8 @@ func (a *AbsorbedDoseOfIonizingRadiation) convertToBase(value float64, fromUnit 
 		return ((value) * 0.001) 
 	case AbsorbedDoseOfIonizingRadiationCentigray:
 		return ((value) * 0.01) 
+	case AbsorbedDoseOfIonizingRadiationDecigray:
+		return ((value) * 0.1) 
 	case AbsorbedDoseOfIonizingRadiationKilogray:
 		return ((value) * 1000.0) 
 	case AbsorbedDoseOfIonizingRadiationMegagray:
@@ -719,6 +746,8 @@ func GetAbsorbedDoseOfIonizingRadiationAbbreviation(unit AbsorbedDoseOfIonizingR
 		return "mGy" 
 	case AbsorbedDoseOfIonizingRadiationCentigray:
 		return "cGy" 
+	case AbsorbedDoseOfIonizingRadiationDecigray:
+		return "dGy" 
 	case AbsorbedDoseOfIonizingRadiationKilogray:
 		return "kGy" 
 	case AbsorbedDoseOfIonizingRadiationMegagray:
