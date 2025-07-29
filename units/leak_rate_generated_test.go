@@ -104,6 +104,15 @@ func TestLeakRateConversions(t *testing.T) {
 			t.Errorf("conversion to TorrLitersPerSecond returned NaN")
 		}
 	}
+	{
+		// Test conversion to AtmCubicCentimetersPerSecond.
+		// No expected conversion value provided for AtmCubicCentimetersPerSecond, verifying result is not NaN.
+		result := a.AtmCubicCentimetersPerSecond()
+		cacheResult := a.AtmCubicCentimetersPerSecond()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to AtmCubicCentimetersPerSecond returned NaN")
+		}
+	}
 }
 
 func TestLeakRate_ToDtoAndToDtoJSON(t *testing.T) {
@@ -224,6 +233,23 @@ func TestLeakRateFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for TorrLiterPerSecond = %v, want %v", converted, 100)
     }
+    // Test AtmCubicCentimeterPerSecond conversion
+    atm_cubic_centimeters_per_secondDto := units.LeakRateDto{
+        Value: 100,
+        Unit:  units.LeakRateAtmCubicCentimeterPerSecond,
+    }
+    
+    var atm_cubic_centimeters_per_secondResult *units.LeakRate
+    atm_cubic_centimeters_per_secondResult, err = factory.FromDto(atm_cubic_centimeters_per_secondDto)
+    if err != nil {
+        t.Errorf("FromDto() with AtmCubicCentimeterPerSecond returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = atm_cubic_centimeters_per_secondResult.Convert(units.LeakRateAtmCubicCentimeterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AtmCubicCentimeterPerSecond = %v, want %v", converted, 100)
+    }
 
     // Test zero value
     zeroDto := units.LeakRateDto{
@@ -323,6 +349,18 @@ func TestLeakRateFactory_FromDtoJSON(t *testing.T) {
     converted = torr_liters_per_secondResult.Convert(units.LeakRateTorrLiterPerSecond)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for TorrLiterPerSecond = %v, want %v", converted, 100)
+    }
+    // Test JSON with AtmCubicCentimeterPerSecond unit
+    atm_cubic_centimeters_per_secondJSON := []byte(`{"value": 100, "unit": "AtmCubicCentimeterPerSecond"}`)
+    atm_cubic_centimeters_per_secondResult, err := factory.FromDtoJSON(atm_cubic_centimeters_per_secondJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with AtmCubicCentimeterPerSecond unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = atm_cubic_centimeters_per_secondResult.Convert(units.LeakRateAtmCubicCentimeterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for AtmCubicCentimeterPerSecond = %v, want %v", converted, 100)
     }
 
     // Test zero value JSON
@@ -464,6 +502,49 @@ func TestLeakRateFactory_FromTorrLitersPerSecond(t *testing.T) {
         t.Errorf("FromTorrLitersPerSecond() with zero value = %v, want 0", converted)
     }
 }
+// Test FromAtmCubicCentimetersPerSecond function
+func TestLeakRateFactory_FromAtmCubicCentimetersPerSecond(t *testing.T) {
+    factory := units.LeakRateFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromAtmCubicCentimetersPerSecond(100)
+    if err != nil {
+        t.Errorf("FromAtmCubicCentimetersPerSecond() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.LeakRateAtmCubicCentimeterPerSecond)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromAtmCubicCentimetersPerSecond() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromAtmCubicCentimetersPerSecond(math.NaN())
+    if err == nil {
+        t.Error("FromAtmCubicCentimetersPerSecond() with NaN value should return error")
+    }
+
+    _, err = factory.FromAtmCubicCentimetersPerSecond(math.Inf(1))
+    if err == nil {
+        t.Error("FromAtmCubicCentimetersPerSecond() with +Inf value should return error")
+    }
+
+    _, err = factory.FromAtmCubicCentimetersPerSecond(math.Inf(-1))
+    if err == nil {
+        t.Error("FromAtmCubicCentimetersPerSecond() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromAtmCubicCentimetersPerSecond(0)
+    if err != nil {
+        t.Errorf("FromAtmCubicCentimetersPerSecond() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.LeakRateAtmCubicCentimeterPerSecond)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromAtmCubicCentimetersPerSecond() with zero value = %v, want 0", converted)
+    }
+}
 
 func TestLeakRateToString(t *testing.T) {
 	factory := units.LeakRateFactory{}
@@ -553,6 +634,11 @@ func TestGetLeakRateAbbreviation(t *testing.T) {
             name: "TorrLiterPerSecond abbreviation",
             unit: units.LeakRateTorrLiterPerSecond,
             want: "Torr·l/s",
+        },
+        {
+            name: "AtmCubicCentimeterPerSecond abbreviation",
+            unit: units.LeakRateAtmCubicCentimeterPerSecond,
+            want: "atm·cm³/s",
         },
         {
             name: "invalid unit",

@@ -23,6 +23,8 @@ const (
         LeakRateMillibarLiterPerSecond LeakRateUnits = "MillibarLiterPerSecond"
         // 
         LeakRateTorrLiterPerSecond LeakRateUnits = "TorrLiterPerSecond"
+        // 
+        LeakRateAtmCubicCentimeterPerSecond LeakRateUnits = "AtmCubicCentimeterPerSecond"
 )
 
 var internalLeakRateUnitsMap = map[LeakRateUnits]bool{
@@ -30,6 +32,7 @@ var internalLeakRateUnitsMap = map[LeakRateUnits]bool{
 	LeakRatePascalCubicMeterPerSecond: true,
 	LeakRateMillibarLiterPerSecond: true,
 	LeakRateTorrLiterPerSecond: true,
+	LeakRateAtmCubicCentimeterPerSecond: true,
 }
 
 // LeakRateDto represents a LeakRate measurement with a numerical value and its corresponding unit.
@@ -37,7 +40,7 @@ type LeakRateDto struct {
     // Value is the numerical representation of the LeakRate.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the LeakRate, as defined in the LeakRateUnits enumeration.
-	Unit  LeakRateUnits `json:"unit" validate:"required,oneof=PascalCubicMeterPerSecond MillibarLiterPerSecond TorrLiterPerSecond"`
+	Unit  LeakRateUnits `json:"unit" validate:"required,oneof=PascalCubicMeterPerSecond MillibarLiterPerSecond TorrLiterPerSecond AtmCubicCentimeterPerSecond"`
 }
 
 // LeakRateDtoFactory groups methods for creating and serializing LeakRateDto objects.
@@ -79,6 +82,7 @@ type LeakRate struct {
     pascal_cubic_meters_per_secondLazy *float64 
     millibar_liters_per_secondLazy *float64 
     torr_liters_per_secondLazy *float64 
+    atm_cubic_centimeters_per_secondLazy *float64 
 }
 
 // LeakRateFactory groups methods for creating LeakRate instances.
@@ -117,6 +121,11 @@ func (uf LeakRateFactory) FromMillibarLitersPerSecond(value float64) (*LeakRate,
 // FromTorrLitersPerSecond creates a new LeakRate instance from a value in TorrLitersPerSecond.
 func (uf LeakRateFactory) FromTorrLitersPerSecond(value float64) (*LeakRate, error) {
 	return newLeakRate(value, LeakRateTorrLiterPerSecond)
+}
+
+// FromAtmCubicCentimetersPerSecond creates a new LeakRate instance from a value in AtmCubicCentimetersPerSecond.
+func (uf LeakRateFactory) FromAtmCubicCentimetersPerSecond(value float64) (*LeakRate, error) {
+	return newLeakRate(value, LeakRateAtmCubicCentimeterPerSecond)
 }
 
 
@@ -175,6 +184,18 @@ func (a *LeakRate) TorrLitersPerSecond() float64 {
 	return torr_liters_per_second
 }
 
+// AtmCubicCentimetersPerSecond returns the LeakRate value in AtmCubicCentimetersPerSecond.
+//
+// 
+func (a *LeakRate) AtmCubicCentimetersPerSecond() float64 {
+	if a.atm_cubic_centimeters_per_secondLazy != nil {
+		return *a.atm_cubic_centimeters_per_secondLazy
+	}
+	atm_cubic_centimeters_per_second := a.convertFromBase(LeakRateAtmCubicCentimeterPerSecond)
+	a.atm_cubic_centimeters_per_secondLazy = &atm_cubic_centimeters_per_second
+	return atm_cubic_centimeters_per_second
+}
+
 
 // ToDto creates a LeakRateDto representation from the LeakRate instance.
 //
@@ -212,6 +233,8 @@ func (a *LeakRate) Convert(toUnit LeakRateUnits) float64 {
 		return a.MillibarLitersPerSecond()
     case LeakRateTorrLiterPerSecond:
 		return a.TorrLitersPerSecond()
+    case LeakRateAtmCubicCentimeterPerSecond:
+		return a.AtmCubicCentimetersPerSecond()
 	default:
 		return math.NaN()
 	}
@@ -226,6 +249,8 @@ func (a *LeakRate) convertFromBase(toUnit LeakRateUnits) float64 {
 		return (value * 10) 
 	case LeakRateTorrLiterPerSecond:
 		return (value * 7.5) 
+	case LeakRateAtmCubicCentimeterPerSecond:
+		return (value * (1e6 / 101325)) 
 	default:
 		return math.NaN()
 	}
@@ -239,6 +264,8 @@ func (a *LeakRate) convertToBase(value float64, fromUnit LeakRateUnits) float64 
 		return (value / 10) 
 	case LeakRateTorrLiterPerSecond:
 		return (value / 7.5) 
+	case LeakRateAtmCubicCentimeterPerSecond:
+		return (value / (1e6 / 101325)) 
 	default:
 		return math.NaN()
 	}
@@ -358,6 +385,8 @@ func GetLeakRateAbbreviation(unit LeakRateUnits) string {
 		return "mbar·l/s" 
 	case LeakRateTorrLiterPerSecond:
 		return "Torr·l/s" 
+	case LeakRateAtmCubicCentimeterPerSecond:
+		return "atm·cm³/s" 
 	default:
 		return ""
 	}
