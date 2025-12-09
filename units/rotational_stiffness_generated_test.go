@@ -141,6 +141,15 @@ func TestRotationalStiffnessConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to KilopoundForceFeetPerRadian.
+		// No expected conversion value provided for KilopoundForceFeetPerRadian, verifying result is not NaN.
+		result := a.KilopoundForceFeetPerRadian()
+		cacheResult := a.KilopoundForceFeetPerRadian()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to KilopoundForceFeetPerRadian returned NaN")
+		}
+	}
+	{
 		// Test conversion to KilonewtonMetersPerRadian.
 		// No expected conversion value provided for KilonewtonMetersPerRadian, verifying result is not NaN.
 		result := a.KilonewtonMetersPerRadian()
@@ -561,6 +570,23 @@ func TestRotationalStiffnessFactory_FromDto(t *testing.T) {
     converted = pound_force_feet_per_radianResult.Convert(units.RotationalStiffnessPoundForceFeetPerRadian)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for PoundForceFeetPerRadian = %v, want %v", converted, 100)
+    }
+    // Test KilopoundForceFootPerRadian conversion
+    kilopound_force_feet_per_radianDto := units.RotationalStiffnessDto{
+        Value: 100,
+        Unit:  units.RotationalStiffnessKilopoundForceFootPerRadian,
+    }
+    
+    var kilopound_force_feet_per_radianResult *units.RotationalStiffness
+    kilopound_force_feet_per_radianResult, err = factory.FromDto(kilopound_force_feet_per_radianDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilopoundForceFootPerRadian returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilopound_force_feet_per_radianResult.Convert(units.RotationalStiffnessKilopoundForceFootPerRadian)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilopoundForceFootPerRadian = %v, want %v", converted, 100)
     }
     // Test KilonewtonMeterPerRadian conversion
     kilonewton_meters_per_radianDto := units.RotationalStiffnessDto{
@@ -1151,6 +1177,18 @@ func TestRotationalStiffnessFactory_FromDtoJSON(t *testing.T) {
     converted = pound_force_feet_per_radianResult.Convert(units.RotationalStiffnessPoundForceFeetPerRadian)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for PoundForceFeetPerRadian = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilopoundForceFootPerRadian unit
+    kilopound_force_feet_per_radianJSON := []byte(`{"value": 100, "unit": "KilopoundForceFootPerRadian"}`)
+    kilopound_force_feet_per_radianResult, err := factory.FromDtoJSON(kilopound_force_feet_per_radianJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilopoundForceFootPerRadian unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilopound_force_feet_per_radianResult.Convert(units.RotationalStiffnessKilopoundForceFootPerRadian)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilopoundForceFootPerRadian = %v, want %v", converted, 100)
     }
     // Test JSON with KilonewtonMeterPerRadian unit
     kilonewton_meters_per_radianJSON := []byte(`{"value": 100, "unit": "KilonewtonMeterPerRadian"}`)
@@ -1774,6 +1812,49 @@ func TestRotationalStiffnessFactory_FromPoundForceFeetPerRadian(t *testing.T) {
     converted = zeroResult.Convert(units.RotationalStiffnessPoundForceFeetPerRadian)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromPoundForceFeetPerRadian() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilopoundForceFeetPerRadian function
+func TestRotationalStiffnessFactory_FromKilopoundForceFeetPerRadian(t *testing.T) {
+    factory := units.RotationalStiffnessFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilopoundForceFeetPerRadian(100)
+    if err != nil {
+        t.Errorf("FromKilopoundForceFeetPerRadian() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.RotationalStiffnessKilopoundForceFootPerRadian)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilopoundForceFeetPerRadian() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilopoundForceFeetPerRadian(math.NaN())
+    if err == nil {
+        t.Error("FromKilopoundForceFeetPerRadian() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilopoundForceFeetPerRadian(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilopoundForceFeetPerRadian() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilopoundForceFeetPerRadian(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilopoundForceFeetPerRadian() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilopoundForceFeetPerRadian(0)
+    if err != nil {
+        t.Errorf("FromKilopoundForceFeetPerRadian() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.RotationalStiffnessKilopoundForceFootPerRadian)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilopoundForceFeetPerRadian() with zero value = %v, want 0", converted)
     }
 }
 // Test FromKilonewtonMetersPerRadian function
@@ -3003,6 +3084,11 @@ func TestGetRotationalStiffnessAbbreviation(t *testing.T) {
             name: "PoundForceFeetPerRadian abbreviation",
             unit: units.RotationalStiffnessPoundForceFeetPerRadian,
             want: "lbf·ft/rad",
+        },
+        {
+            name: "KilopoundForceFootPerRadian abbreviation",
+            unit: units.RotationalStiffnessKilopoundForceFootPerRadian,
+            want: "kipf·ft/rad",
         },
         {
             name: "KilonewtonMeterPerRadian abbreviation",

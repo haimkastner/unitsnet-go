@@ -87,12 +87,12 @@ func TestSpecificEnergyConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to MegaJoulesPerTonne.
-		// No expected conversion value provided for MegaJoulesPerTonne, verifying result is not NaN.
-		result := a.MegaJoulesPerTonne()
-		cacheResult := a.MegaJoulesPerTonne()
+		// Test conversion to MegajoulesPerTonne.
+		// No expected conversion value provided for MegajoulesPerTonne, verifying result is not NaN.
+		result := a.MegajoulesPerTonne()
+		cacheResult := a.MegajoulesPerTonne()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to MegaJoulesPerTonne returned NaN")
+			t.Errorf("conversion to MegajoulesPerTonne returned NaN")
 		}
 	}
 	{
@@ -433,22 +433,22 @@ func TestSpecificEnergyFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for JoulePerKilogram = %v, want %v", converted, 100)
     }
-    // Test MegaJoulePerTonne conversion
-    mega_joules_per_tonneDto := units.SpecificEnergyDto{
+    // Test MegajoulePerTonne conversion
+    megajoules_per_tonneDto := units.SpecificEnergyDto{
         Value: 100,
-        Unit:  units.SpecificEnergyMegaJoulePerTonne,
+        Unit:  units.SpecificEnergyMegajoulePerTonne,
     }
     
-    var mega_joules_per_tonneResult *units.SpecificEnergy
-    mega_joules_per_tonneResult, err = factory.FromDto(mega_joules_per_tonneDto)
+    var megajoules_per_tonneResult *units.SpecificEnergy
+    megajoules_per_tonneResult, err = factory.FromDto(megajoules_per_tonneDto)
     if err != nil {
-        t.Errorf("FromDto() with MegaJoulePerTonne returned error: %v", err)
+        t.Errorf("FromDto() with MegajoulePerTonne returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = mega_joules_per_tonneResult.Convert(units.SpecificEnergyMegaJoulePerTonne)
+    converted = megajoules_per_tonneResult.Convert(units.SpecificEnergyMegajoulePerTonne)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MegaJoulePerTonne = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MegajoulePerTonne = %v, want %v", converted, 100)
     }
     // Test CaloriePerGram conversion
     calories_per_gramDto := units.SpecificEnergyDto{
@@ -1002,17 +1002,17 @@ func TestSpecificEnergyFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for JoulePerKilogram = %v, want %v", converted, 100)
     }
-    // Test JSON with MegaJoulePerTonne unit
-    mega_joules_per_tonneJSON := []byte(`{"value": 100, "unit": "MegaJoulePerTonne"}`)
-    mega_joules_per_tonneResult, err := factory.FromDtoJSON(mega_joules_per_tonneJSON)
+    // Test JSON with MegajoulePerTonne unit
+    megajoules_per_tonneJSON := []byte(`{"value": 100, "unit": "MegajoulePerTonne"}`)
+    megajoules_per_tonneResult, err := factory.FromDtoJSON(megajoules_per_tonneJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with MegaJoulePerTonne unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with MegajoulePerTonne unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = mega_joules_per_tonneResult.Convert(units.SpecificEnergyMegaJoulePerTonne)
+    converted = megajoules_per_tonneResult.Convert(units.SpecificEnergyMegajoulePerTonne)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for MegaJoulePerTonne = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for MegajoulePerTonne = %v, want %v", converted, 100)
     }
     // Test JSON with CaloriePerGram unit
     calories_per_gramJSON := []byte(`{"value": 100, "unit": "CaloriePerGram"}`)
@@ -1404,47 +1404,47 @@ func TestSpecificEnergyFactory_FromJoulesPerKilogram(t *testing.T) {
         t.Errorf("FromJoulesPerKilogram() with zero value = %v, want 0", converted)
     }
 }
-// Test FromMegaJoulesPerTonne function
-func TestSpecificEnergyFactory_FromMegaJoulesPerTonne(t *testing.T) {
+// Test FromMegajoulesPerTonne function
+func TestSpecificEnergyFactory_FromMegajoulesPerTonne(t *testing.T) {
     factory := units.SpecificEnergyFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromMegaJoulesPerTonne(100)
+    result, err := factory.FromMegajoulesPerTonne(100)
     if err != nil {
-        t.Errorf("FromMegaJoulesPerTonne() returned error: %v", err)
+        t.Errorf("FromMegajoulesPerTonne() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.SpecificEnergyMegaJoulePerTonne)
+    converted := result.Convert(units.SpecificEnergyMegajoulePerTonne)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromMegaJoulesPerTonne() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromMegajoulesPerTonne() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromMegaJoulesPerTonne(math.NaN())
+    _, err = factory.FromMegajoulesPerTonne(math.NaN())
     if err == nil {
-        t.Error("FromMegaJoulesPerTonne() with NaN value should return error")
+        t.Error("FromMegajoulesPerTonne() with NaN value should return error")
     }
 
-    _, err = factory.FromMegaJoulesPerTonne(math.Inf(1))
+    _, err = factory.FromMegajoulesPerTonne(math.Inf(1))
     if err == nil {
-        t.Error("FromMegaJoulesPerTonne() with +Inf value should return error")
+        t.Error("FromMegajoulesPerTonne() with +Inf value should return error")
     }
 
-    _, err = factory.FromMegaJoulesPerTonne(math.Inf(-1))
+    _, err = factory.FromMegajoulesPerTonne(math.Inf(-1))
     if err == nil {
-        t.Error("FromMegaJoulesPerTonne() with -Inf value should return error")
+        t.Error("FromMegajoulesPerTonne() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromMegaJoulesPerTonne(0)
+    zeroResult, err := factory.FromMegajoulesPerTonne(0)
     if err != nil {
-        t.Errorf("FromMegaJoulesPerTonne() with zero value returned error: %v", err)
+        t.Errorf("FromMegajoulesPerTonne() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.SpecificEnergyMegaJoulePerTonne)
+    converted = zeroResult.Convert(units.SpecificEnergyMegajoulePerTonne)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromMegaJoulesPerTonne() with zero value = %v, want 0", converted)
+        t.Errorf("FromMegajoulesPerTonne() with zero value = %v, want 0", converted)
     }
 }
 // Test FromCaloriesPerGram function
@@ -2732,8 +2732,8 @@ func TestGetSpecificEnergyAbbreviation(t *testing.T) {
             want: "J/kg",
         },
         {
-            name: "MegaJoulePerTonne abbreviation",
-            unit: units.SpecificEnergyMegaJoulePerTonne,
+            name: "MegajoulePerTonne abbreviation",
+            unit: units.SpecificEnergyMegajoulePerTonne,
             want: "MJ/t",
         },
         {

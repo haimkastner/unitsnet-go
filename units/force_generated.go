@@ -26,7 +26,7 @@ const (
         // The newton (symbol: N) is the unit of force in the International System of Units (SI). It is defined as 1 kg⋅m/s2, the force which gives a mass of 1 kilogram an acceleration of 1 metre per second per second.
         ForceNewton ForceUnits = "Newton"
         // The kilogram-force, or kilopond, is equal to the magnitude of the force exerted on one kilogram of mass in a 9.80665 m/s2 gravitational field (standard gravity). Therefore, one kilogram-force is by definition equal to 9.80665 N.
-        ForceKiloPond ForceUnits = "KiloPond"
+        ForceKilopond ForceUnits = "Kilopond"
         // The poundal is defined as the force necessary to accelerate 1 pound-mass at 1 foot per second per second. 1 pdl = 0.138254954376 N exactly.
         ForcePoundal ForceUnits = "Poundal"
         // The standard values of acceleration of the standard gravitational field (gn) and the international avoirdupois pound (lb) result in a pound-force equal to 4.4482216152605 N.
@@ -55,7 +55,7 @@ var internalForceUnitsMap = map[ForceUnits]bool{
 	ForceKilogramForce: true,
 	ForceTonneForce: true,
 	ForceNewton: true,
-	ForceKiloPond: true,
+	ForceKilopond: true,
 	ForcePoundal: true,
 	ForcePoundForce: true,
 	ForceOunceForce: true,
@@ -73,7 +73,7 @@ type ForceDto struct {
     // Value is the numerical representation of the Force.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Force, as defined in the ForceUnits enumeration.
-	Unit  ForceUnits `json:"unit" validate:"required,oneof=Dyn KilogramForce TonneForce Newton KiloPond Poundal PoundForce OunceForce ShortTonForce Micronewton Millinewton Decanewton Kilonewton Meganewton KilopoundForce"`
+	Unit  ForceUnits `json:"unit" validate:"required,oneof=Dyn KilogramForce TonneForce Newton Kilopond Poundal PoundForce OunceForce ShortTonForce Micronewton Millinewton Decanewton Kilonewton Meganewton KilopoundForce"`
 }
 
 // ForceDtoFactory groups methods for creating and serializing ForceDto objects.
@@ -116,7 +116,7 @@ type Force struct {
     kilograms_forceLazy *float64 
     tonnes_forceLazy *float64 
     newtonsLazy *float64 
-    kilo_pondsLazy *float64 
+    kilopondsLazy *float64 
     poundalsLazy *float64 
     pounds_forceLazy *float64 
     ounce_forceLazy *float64 
@@ -172,9 +172,9 @@ func (uf ForceFactory) FromNewtons(value float64) (*Force, error) {
 	return newForce(value, ForceNewton)
 }
 
-// FromKiloPonds creates a new Force instance from a value in KiloPonds.
-func (uf ForceFactory) FromKiloPonds(value float64) (*Force, error) {
-	return newForce(value, ForceKiloPond)
+// FromKiloponds creates a new Force instance from a value in Kiloponds.
+func (uf ForceFactory) FromKiloponds(value float64) (*Force, error) {
+	return newForce(value, ForceKilopond)
 }
 
 // FromPoundals creates a new Force instance from a value in Poundals.
@@ -295,16 +295,16 @@ func (a *Force) Newtons() float64 {
 	return newtons
 }
 
-// KiloPonds returns the Force value in KiloPonds.
+// Kiloponds returns the Force value in Kiloponds.
 //
 // The kilogram-force, or kilopond, is equal to the magnitude of the force exerted on one kilogram of mass in a 9.80665 m/s2 gravitational field (standard gravity). Therefore, one kilogram-force is by definition equal to 9.80665 N.
-func (a *Force) KiloPonds() float64 {
-	if a.kilo_pondsLazy != nil {
-		return *a.kilo_pondsLazy
+func (a *Force) Kiloponds() float64 {
+	if a.kilopondsLazy != nil {
+		return *a.kilopondsLazy
 	}
-	kilo_ponds := a.convertFromBase(ForceKiloPond)
-	a.kilo_pondsLazy = &kilo_ponds
-	return kilo_ponds
+	kiloponds := a.convertFromBase(ForceKilopond)
+	a.kilopondsLazy = &kiloponds
+	return kiloponds
 }
 
 // Poundals returns the Force value in Poundals.
@@ -466,8 +466,8 @@ func (a *Force) Convert(toUnit ForceUnits) float64 {
 		return a.TonnesForce()
     case ForceNewton:
 		return a.Newtons()
-    case ForceKiloPond:
-		return a.KiloPonds()
+    case ForceKilopond:
+		return a.Kiloponds()
     case ForcePoundal:
 		return a.Poundals()
     case ForcePoundForce:
@@ -504,7 +504,7 @@ func (a *Force) convertFromBase(toUnit ForceUnits) float64 {
 		return (value / (9.80665 * 1000)) 
 	case ForceNewton:
 		return (value) 
-	case ForceKiloPond:
+	case ForceKilopond:
 		return (value / 9.80665) 
 	case ForcePoundal:
 		return (value / 0.138254954376) 
@@ -541,7 +541,7 @@ func (a *Force) convertToBase(value float64, fromUnit ForceUnits) float64 {
 		return (value * (9.80665 * 1000)) 
 	case ForceNewton:
 		return (value) 
-	case ForceKiloPond:
+	case ForceKilopond:
 		return (value * 9.80665) 
 	case ForcePoundal:
 		return (value * 0.138254954376) 
@@ -684,7 +684,7 @@ func GetForceAbbreviation(unit ForceUnits) string {
 		return "tf" 
 	case ForceNewton:
 		return "N" 
-	case ForceKiloPond:
+	case ForceKilopond:
 		return "kp" 
 	case ForcePoundal:
 		return "pdl" 

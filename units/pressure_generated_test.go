@@ -456,6 +456,15 @@ func TestPressureConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to Millitorrs.
+		// No expected conversion value provided for Millitorrs, verifying result is not NaN.
+		result := a.Millitorrs()
+		cacheResult := a.Millitorrs()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Millitorrs returned NaN")
+		}
+	}
+	{
 		// Test conversion to KilopoundsForcePerSquareInch.
 		// No expected conversion value provided for KilopoundsForcePerSquareInch, verifying result is not NaN.
 		result := a.KilopoundsForcePerSquareInch()
@@ -1283,6 +1292,23 @@ func TestPressureFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilonewtonPerSquareMillimeter = %v, want %v", converted, 100)
     }
+    // Test Millitorr conversion
+    millitorrsDto := units.PressureDto{
+        Value: 100,
+        Unit:  units.PressureMillitorr,
+    }
+    
+    var millitorrsResult *units.Pressure
+    millitorrsResult, err = factory.FromDto(millitorrsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Millitorr returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millitorrsResult.Convert(units.PressureMillitorr)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millitorr = %v, want %v", converted, 100)
+    }
     // Test KilopoundForcePerSquareInch conversion
     kilopounds_force_per_square_inchDto := units.PressureDto{
         Value: 100,
@@ -1935,6 +1961,18 @@ func TestPressureFactory_FromDtoJSON(t *testing.T) {
     converted = kilonewtons_per_square_millimeterResult.Convert(units.PressureKilonewtonPerSquareMillimeter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilonewtonPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with Millitorr unit
+    millitorrsJSON := []byte(`{"value": 100, "unit": "Millitorr"}`)
+    millitorrsResult, err := factory.FromDtoJSON(millitorrsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Millitorr unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = millitorrsResult.Convert(units.PressureMillitorr)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Millitorr = %v, want %v", converted, 100)
     }
     // Test JSON with KilopoundForcePerSquareInch unit
     kilopounds_force_per_square_inchJSON := []byte(`{"value": 100, "unit": "KilopoundForcePerSquareInch"}`)
@@ -3813,6 +3851,49 @@ func TestPressureFactory_FromKilonewtonsPerSquareMillimeter(t *testing.T) {
         t.Errorf("FromKilonewtonsPerSquareMillimeter() with zero value = %v, want 0", converted)
     }
 }
+// Test FromMillitorrs function
+func TestPressureFactory_FromMillitorrs(t *testing.T) {
+    factory := units.PressureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMillitorrs(100)
+    if err != nil {
+        t.Errorf("FromMillitorrs() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PressureMillitorr)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMillitorrs() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMillitorrs(math.NaN())
+    if err == nil {
+        t.Error("FromMillitorrs() with NaN value should return error")
+    }
+
+    _, err = factory.FromMillitorrs(math.Inf(1))
+    if err == nil {
+        t.Error("FromMillitorrs() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMillitorrs(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMillitorrs() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMillitorrs(0)
+    if err != nil {
+        t.Errorf("FromMillitorrs() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PressureMillitorr)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMillitorrs() with zero value = %v, want 0", converted)
+    }
+}
 // Test FromKilopoundsForcePerSquareInch function
 func TestPressureFactory_FromKilopoundsForcePerSquareInch(t *testing.T) {
     factory := units.PressureFactory{}
@@ -4312,6 +4393,11 @@ func TestGetPressureAbbreviation(t *testing.T) {
             name: "KilonewtonPerSquareMillimeter abbreviation",
             unit: units.PressureKilonewtonPerSquareMillimeter,
             want: "kN/mm²",
+        },
+        {
+            name: "Millitorr abbreviation",
+            unit: units.PressureMillitorr,
+            want: "mtorr",
         },
         {
             name: "KilopoundForcePerSquareInch abbreviation",

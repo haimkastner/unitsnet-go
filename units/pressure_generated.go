@@ -102,6 +102,8 @@ const (
         // 
         PressureKilonewtonPerSquareMillimeter PressureUnits = "KilonewtonPerSquareMillimeter"
         // 
+        PressureMillitorr PressureUnits = "Millitorr"
+        // 
         PressureKilopoundForcePerSquareInch PressureUnits = "KilopoundForcePerSquareInch"
         // 
         PressureKilopoundForcePerSquareMil PressureUnits = "KilopoundForcePerSquareMil"
@@ -157,6 +159,7 @@ var internalPressureUnitsMap = map[PressureUnits]bool{
 	PressureMeganewtonPerSquareMeter: true,
 	PressureKilonewtonPerSquareCentimeter: true,
 	PressureKilonewtonPerSquareMillimeter: true,
+	PressureMillitorr: true,
 	PressureKilopoundForcePerSquareInch: true,
 	PressureKilopoundForcePerSquareMil: true,
 	PressureKilopoundForcePerSquareFoot: true,
@@ -169,7 +172,7 @@ type PressureDto struct {
     // Value is the numerical representation of the Pressure.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Pressure, as defined in the PressureUnits enumeration.
-	Unit  PressureUnits `json:"unit" validate:"required,oneof=Pascal Atmosphere Bar KilogramForcePerSquareMeter KilogramForcePerSquareCentimeter KilogramForcePerSquareMillimeter NewtonPerSquareMeter NewtonPerSquareCentimeter NewtonPerSquareMillimeter TechnicalAtmosphere Torr PoundForcePerSquareInch PoundForcePerSquareMil PoundForcePerSquareFoot TonneForcePerSquareMillimeter TonneForcePerSquareMeter MeterOfHead TonneForcePerSquareCentimeter FootOfHead MillimeterOfMercury InchOfMercury DynePerSquareCentimeter PoundPerInchSecondSquared MeterOfWaterColumn InchOfWaterColumn Micropascal Millipascal Decapascal Hectopascal Kilopascal Megapascal Gigapascal Microbar Millibar Centibar Decibar Kilobar Megabar KilonewtonPerSquareMeter MeganewtonPerSquareMeter KilonewtonPerSquareCentimeter KilonewtonPerSquareMillimeter KilopoundForcePerSquareInch KilopoundForcePerSquareMil KilopoundForcePerSquareFoot MillimeterOfWaterColumn CentimeterOfWaterColumn"`
+	Unit  PressureUnits `json:"unit" validate:"required,oneof=Pascal Atmosphere Bar KilogramForcePerSquareMeter KilogramForcePerSquareCentimeter KilogramForcePerSquareMillimeter NewtonPerSquareMeter NewtonPerSquareCentimeter NewtonPerSquareMillimeter TechnicalAtmosphere Torr PoundForcePerSquareInch PoundForcePerSquareMil PoundForcePerSquareFoot TonneForcePerSquareMillimeter TonneForcePerSquareMeter MeterOfHead TonneForcePerSquareCentimeter FootOfHead MillimeterOfMercury InchOfMercury DynePerSquareCentimeter PoundPerInchSecondSquared MeterOfWaterColumn InchOfWaterColumn Micropascal Millipascal Decapascal Hectopascal Kilopascal Megapascal Gigapascal Microbar Millibar Centibar Decibar Kilobar Megabar KilonewtonPerSquareMeter MeganewtonPerSquareMeter KilonewtonPerSquareCentimeter KilonewtonPerSquareMillimeter Millitorr KilopoundForcePerSquareInch KilopoundForcePerSquareMil KilopoundForcePerSquareFoot MillimeterOfWaterColumn CentimeterOfWaterColumn"`
 }
 
 // PressureDtoFactory groups methods for creating and serializing PressureDto objects.
@@ -250,6 +253,7 @@ type Pressure struct {
     meganewtons_per_square_meterLazy *float64 
     kilonewtons_per_square_centimeterLazy *float64 
     kilonewtons_per_square_millimeterLazy *float64 
+    millitorrsLazy *float64 
     kilopounds_force_per_square_inchLazy *float64 
     kilopounds_force_per_square_milLazy *float64 
     kilopounds_force_per_square_footLazy *float64 
@@ -488,6 +492,11 @@ func (uf PressureFactory) FromKilonewtonsPerSquareCentimeter(value float64) (*Pr
 // FromKilonewtonsPerSquareMillimeter creates a new Pressure instance from a value in KilonewtonsPerSquareMillimeter.
 func (uf PressureFactory) FromKilonewtonsPerSquareMillimeter(value float64) (*Pressure, error) {
 	return newPressure(value, PressureKilonewtonPerSquareMillimeter)
+}
+
+// FromMillitorrs creates a new Pressure instance from a value in Millitorrs.
+func (uf PressureFactory) FromMillitorrs(value float64) (*Pressure, error) {
+	return newPressure(value, PressureMillitorr)
 }
 
 // FromKilopoundsForcePerSquareInch creates a new Pressure instance from a value in KilopoundsForcePerSquareInch.
@@ -1039,6 +1048,18 @@ func (a *Pressure) KilonewtonsPerSquareMillimeter() float64 {
 	return kilonewtons_per_square_millimeter
 }
 
+// Millitorrs returns the Pressure value in Millitorrs.
+//
+// 
+func (a *Pressure) Millitorrs() float64 {
+	if a.millitorrsLazy != nil {
+		return *a.millitorrsLazy
+	}
+	millitorrs := a.convertFromBase(PressureMillitorr)
+	a.millitorrsLazy = &millitorrs
+	return millitorrs
+}
+
 // KilopoundsForcePerSquareInch returns the Pressure value in KilopoundsForcePerSquareInch.
 //
 // 
@@ -1214,6 +1235,8 @@ func (a *Pressure) Convert(toUnit PressureUnits) float64 {
 		return a.KilonewtonsPerSquareCentimeter()
     case PressureKilonewtonPerSquareMillimeter:
 		return a.KilonewtonsPerSquareMillimeter()
+    case PressureMillitorr:
+		return a.Millitorrs()
     case PressureKilopoundForcePerSquareInch:
 		return a.KilopoundsForcePerSquareInch()
     case PressureKilopoundForcePerSquareMil:
@@ -1316,6 +1339,8 @@ func (a *Pressure) convertFromBase(toUnit PressureUnits) float64 {
 		return ((value / 1e4) / 1000.0) 
 	case PressureKilonewtonPerSquareMillimeter:
 		return ((value / 1e6) / 1000.0) 
+	case PressureMillitorr:
+		return ((value * 760 / 101325) / 0.001) 
 	case PressureKilopoundForcePerSquareInch:
 		return ((value * 0.00064516 / 4.4482216152605) / 1000.0) 
 	case PressureKilopoundForcePerSquareMil:
@@ -1417,6 +1442,8 @@ func (a *Pressure) convertToBase(value float64, fromUnit PressureUnits) float64 
 		return ((value * 1e4) * 1000.0) 
 	case PressureKilonewtonPerSquareMillimeter:
 		return ((value * 1e6) * 1000.0) 
+	case PressureMillitorr:
+		return ((value * 101325 / 760) * 0.001) 
 	case PressureKilopoundForcePerSquareInch:
 		return ((value * 4.4482216152605 / 0.00064516) * 1000.0) 
 	case PressureKilopoundForcePerSquareMil:
@@ -1624,6 +1651,8 @@ func GetPressureAbbreviation(unit PressureUnits) string {
 		return "kN/cm²" 
 	case PressureKilonewtonPerSquareMillimeter:
 		return "kN/mm²" 
+	case PressureMillitorr:
+		return "mtorr" 
 	case PressureKilopoundForcePerSquareInch:
 		return "kpsi" 
 	case PressureKilopoundForcePerSquareMil:

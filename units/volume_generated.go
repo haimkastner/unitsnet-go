@@ -53,6 +53,8 @@ const (
         VolumeUsTablespoon VolumeUnits = "UsTablespoon"
         // In Australia, the definition of the tablespoon is 20 ml (0.70 imp fl oz).
         VolumeAuTablespoon VolumeUnits = "AuTablespoon"
+        // An international metric tablespoon is exactly equal to 15 mL. It is the equivalence of 1⁠ 1/2 metric dessert spoons or 3 metric teaspoons.
+        VolumeMetricTablespoon VolumeUnits = "MetricTablespoon"
         // In nutrition labeling in the U.S. and the U.K., a tablespoon is defined as 15 ml (0.51 US fl oz). In Australia, the definition of the tablespoon is 20 ml (0.70 imp fl oz).
         VolumeUkTablespoon VolumeUnits = "UkTablespoon"
         // The metric teaspoon as a unit of culinary measure is 5 ml (0.18 imp fl oz; 0.17 US fl oz),[17] equal to 5 cm3, 1⁄3 UK/Canadian metric tablespoon, or 1⁄4 Australian metric tablespoon.
@@ -147,6 +149,7 @@ var internalVolumeUnitsMap = map[VolumeUnits]bool{
 	VolumeUsOunce: true,
 	VolumeUsTablespoon: true,
 	VolumeAuTablespoon: true,
+	VolumeMetricTablespoon: true,
 	VolumeUkTablespoon: true,
 	VolumeMetricTeaspoon: true,
 	VolumeUsTeaspoon: true,
@@ -190,7 +193,7 @@ type VolumeDto struct {
     // Value is the numerical representation of the Volume.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Volume, as defined in the VolumeUnits enumeration.
-	Unit  VolumeUnits `json:"unit" validate:"required,oneof=Liter CubicMeter CubicKilometer CubicHectometer CubicDecimeter CubicCentimeter CubicMillimeter CubicMicrometer CubicMile CubicYard CubicFoot CubicInch ImperialGallon ImperialOunce UsGallon UsOunce UsTablespoon AuTablespoon UkTablespoon MetricTeaspoon UsTeaspoon MetricCup UsCustomaryCup UsLegalCup OilBarrel UsBeerBarrel ImperialBeerBarrel UsQuart ImperialQuart UsPint AcreFoot ImperialPint BoardFoot Nanoliter Microliter Milliliter Centiliter Deciliter Decaliter Hectoliter Kiloliter Megaliter HectocubicMeter KilocubicMeter HectocubicFoot KilocubicFoot MegacubicFoot KiloimperialGallon MegaimperialGallon DecausGallon DeciusGallon HectousGallon KilousGallon MegausGallon"`
+	Unit  VolumeUnits `json:"unit" validate:"required,oneof=Liter CubicMeter CubicKilometer CubicHectometer CubicDecimeter CubicCentimeter CubicMillimeter CubicMicrometer CubicMile CubicYard CubicFoot CubicInch ImperialGallon ImperialOunce UsGallon UsOunce UsTablespoon AuTablespoon MetricTablespoon UkTablespoon MetricTeaspoon UsTeaspoon MetricCup UsCustomaryCup UsLegalCup OilBarrel UsBeerBarrel ImperialBeerBarrel UsQuart ImperialQuart UsPint AcreFoot ImperialPint BoardFoot Nanoliter Microliter Milliliter Centiliter Deciliter Decaliter Hectoliter Kiloliter Megaliter HectocubicMeter KilocubicMeter HectocubicFoot KilocubicFoot MegacubicFoot KiloimperialGallon MegaimperialGallon DecausGallon DeciusGallon HectousGallon KilousGallon MegausGallon"`
 }
 
 // VolumeDtoFactory groups methods for creating and serializing VolumeDto objects.
@@ -247,6 +250,7 @@ type Volume struct {
     us_ouncesLazy *float64 
     us_tablespoonsLazy *float64 
     au_tablespoonsLazy *float64 
+    metric_tablespoonsLazy *float64 
     uk_tablespoonsLazy *float64 
     metric_teaspoonsLazy *float64 
     us_teaspoonsLazy *float64 
@@ -396,6 +400,11 @@ func (uf VolumeFactory) FromUsTablespoons(value float64) (*Volume, error) {
 // FromAuTablespoons creates a new Volume instance from a value in AuTablespoons.
 func (uf VolumeFactory) FromAuTablespoons(value float64) (*Volume, error) {
 	return newVolume(value, VolumeAuTablespoon)
+}
+
+// FromMetricTablespoons creates a new Volume instance from a value in MetricTablespoons.
+func (uf VolumeFactory) FromMetricTablespoons(value float64) (*Volume, error) {
+	return newVolume(value, VolumeMetricTablespoon)
 }
 
 // FromUkTablespoons creates a new Volume instance from a value in UkTablespoons.
@@ -812,6 +821,18 @@ func (a *Volume) AuTablespoons() float64 {
 	au_tablespoons := a.convertFromBase(VolumeAuTablespoon)
 	a.au_tablespoonsLazy = &au_tablespoons
 	return au_tablespoons
+}
+
+// MetricTablespoons returns the Volume value in MetricTablespoons.
+//
+// An international metric tablespoon is exactly equal to 15 mL. It is the equivalence of 1⁠ 1/2 metric dessert spoons or 3 metric teaspoons.
+func (a *Volume) MetricTablespoons() float64 {
+	if a.metric_tablespoonsLazy != nil {
+		return *a.metric_tablespoonsLazy
+	}
+	metric_tablespoons := a.convertFromBase(VolumeMetricTablespoon)
+	a.metric_tablespoonsLazy = &metric_tablespoons
+	return metric_tablespoons
 }
 
 // UkTablespoons returns the Volume value in UkTablespoons.
@@ -1313,6 +1334,8 @@ func (a *Volume) Convert(toUnit VolumeUnits) float64 {
 		return a.UsTablespoons()
     case VolumeAuTablespoon:
 		return a.AuTablespoons()
+    case VolumeMetricTablespoon:
+		return a.MetricTablespoons()
     case VolumeUkTablespoon:
 		return a.UkTablespoons()
     case VolumeMetricTeaspoon:
@@ -1429,6 +1452,8 @@ func (a *Volume) convertFromBase(toUnit VolumeUnits) float64 {
 		return (value / 1.478676478125e-5) 
 	case VolumeAuTablespoon:
 		return (value / 2e-5) 
+	case VolumeMetricTablespoon:
+		return (value / 1.5e-5) 
 	case VolumeUkTablespoon:
 		return (value / 1.5e-5) 
 	case VolumeMetricTeaspoon:
@@ -1544,6 +1569,8 @@ func (a *Volume) convertToBase(value float64, fromUnit VolumeUnits) float64 {
 		return (value * 1.478676478125e-5) 
 	case VolumeAuTablespoon:
 		return (value * 2e-5) 
+	case VolumeMetricTablespoon:
+		return (value * 1.5e-5) 
 	case VolumeUkTablespoon:
 		return (value * 1.5e-5) 
 	case VolumeMetricTeaspoon:
@@ -1765,6 +1792,8 @@ func GetVolumeAbbreviation(unit VolumeUnits) string {
 		return "tablespoon (U.S.)" 
 	case VolumeAuTablespoon:
 		return "tablespoon (A.U.)" 
+	case VolumeMetricTablespoon:
+		return "tablespoon" 
 	case VolumeUkTablespoon:
 		return "tablespoon (U.K.)" 
 	case VolumeMetricTeaspoon:

@@ -195,6 +195,15 @@ func TestMassConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to Daltons.
+		// No expected conversion value provided for Daltons, verifying result is not NaN.
+		result := a.Daltons()
+		cacheResult := a.Daltons()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Daltons returned NaN")
+		}
+	}
+	{
 		// Test conversion to Femtograms.
 		// No expected conversion value provided for Femtograms, verifying result is not NaN.
 		result := a.Femtograms()
@@ -318,6 +327,33 @@ func TestMassConversions(t *testing.T) {
 		cacheResult := a.Megapounds()
 		if math.IsNaN(result) || cacheResult != result {
 			t.Errorf("conversion to Megapounds returned NaN")
+		}
+	}
+	{
+		// Test conversion to Kilodaltons.
+		// No expected conversion value provided for Kilodaltons, verifying result is not NaN.
+		result := a.Kilodaltons()
+		cacheResult := a.Kilodaltons()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Kilodaltons returned NaN")
+		}
+	}
+	{
+		// Test conversion to Megadaltons.
+		// No expected conversion value provided for Megadaltons, verifying result is not NaN.
+		result := a.Megadaltons()
+		cacheResult := a.Megadaltons()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Megadaltons returned NaN")
+		}
+	}
+	{
+		// Test conversion to Gigadaltons.
+		// No expected conversion value provided for Gigadaltons, verifying result is not NaN.
+		result := a.Gigadaltons()
+		cacheResult := a.Gigadaltons()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to Gigadaltons returned NaN")
 		}
 	}
 }
@@ -610,6 +646,23 @@ func TestMassFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for EarthMass = %v, want %v", converted, 100)
     }
+    // Test Dalton conversion
+    daltonsDto := units.MassDto{
+        Value: 100,
+        Unit:  units.MassDalton,
+    }
+    
+    var daltonsResult *units.Mass
+    daltonsResult, err = factory.FromDto(daltonsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Dalton returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = daltonsResult.Convert(units.MassDalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Dalton = %v, want %v", converted, 100)
+    }
     // Test Femtogram conversion
     femtogramsDto := units.MassDto{
         Value: 100,
@@ -848,6 +901,57 @@ func TestMassFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Megapound = %v, want %v", converted, 100)
     }
+    // Test Kilodalton conversion
+    kilodaltonsDto := units.MassDto{
+        Value: 100,
+        Unit:  units.MassKilodalton,
+    }
+    
+    var kilodaltonsResult *units.Mass
+    kilodaltonsResult, err = factory.FromDto(kilodaltonsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Kilodalton returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilodaltonsResult.Convert(units.MassKilodalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilodalton = %v, want %v", converted, 100)
+    }
+    // Test Megadalton conversion
+    megadaltonsDto := units.MassDto{
+        Value: 100,
+        Unit:  units.MassMegadalton,
+    }
+    
+    var megadaltonsResult *units.Mass
+    megadaltonsResult, err = factory.FromDto(megadaltonsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Megadalton returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megadaltonsResult.Convert(units.MassMegadalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megadalton = %v, want %v", converted, 100)
+    }
+    // Test Gigadalton conversion
+    gigadaltonsDto := units.MassDto{
+        Value: 100,
+        Unit:  units.MassGigadalton,
+    }
+    
+    var gigadaltonsResult *units.Mass
+    gigadaltonsResult, err = factory.FromDto(gigadaltonsDto)
+    if err != nil {
+        t.Errorf("FromDto() with Gigadalton returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigadaltonsResult.Convert(units.MassGigadalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gigadalton = %v, want %v", converted, 100)
+    }
 
     // Test zero value
     zeroDto := units.MassDto{
@@ -1068,6 +1172,18 @@ func TestMassFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for EarthMass = %v, want %v", converted, 100)
     }
+    // Test JSON with Dalton unit
+    daltonsJSON := []byte(`{"value": 100, "unit": "Dalton"}`)
+    daltonsResult, err := factory.FromDtoJSON(daltonsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Dalton unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = daltonsResult.Convert(units.MassDalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Dalton = %v, want %v", converted, 100)
+    }
     // Test JSON with Femtogram unit
     femtogramsJSON := []byte(`{"value": 100, "unit": "Femtogram"}`)
     femtogramsResult, err := factory.FromDtoJSON(femtogramsJSON)
@@ -1235,6 +1351,42 @@ func TestMassFactory_FromDtoJSON(t *testing.T) {
     converted = megapoundsResult.Convert(units.MassMegapound)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Megapound = %v, want %v", converted, 100)
+    }
+    // Test JSON with Kilodalton unit
+    kilodaltonsJSON := []byte(`{"value": 100, "unit": "Kilodalton"}`)
+    kilodaltonsResult, err := factory.FromDtoJSON(kilodaltonsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Kilodalton unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilodaltonsResult.Convert(units.MassKilodalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Kilodalton = %v, want %v", converted, 100)
+    }
+    // Test JSON with Megadalton unit
+    megadaltonsJSON := []byte(`{"value": 100, "unit": "Megadalton"}`)
+    megadaltonsResult, err := factory.FromDtoJSON(megadaltonsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Megadalton unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = megadaltonsResult.Convert(units.MassMegadalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Megadalton = %v, want %v", converted, 100)
+    }
+    // Test JSON with Gigadalton unit
+    gigadaltonsJSON := []byte(`{"value": 100, "unit": "Gigadalton"}`)
+    gigadaltonsResult, err := factory.FromDtoJSON(gigadaltonsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with Gigadalton unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = gigadaltonsResult.Convert(units.MassGigadalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for Gigadalton = %v, want %v", converted, 100)
     }
 
     // Test zero value JSON
@@ -1804,6 +1956,49 @@ func TestMassFactory_FromEarthMasses(t *testing.T) {
     converted = zeroResult.Convert(units.MassEarthMass)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromEarthMasses() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDaltons function
+func TestMassFactory_FromDaltons(t *testing.T) {
+    factory := units.MassFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDaltons(100)
+    if err != nil {
+        t.Errorf("FromDaltons() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassDalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDaltons() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDaltons(math.NaN())
+    if err == nil {
+        t.Error("FromDaltons() with NaN value should return error")
+    }
+
+    _, err = factory.FromDaltons(math.Inf(1))
+    if err == nil {
+        t.Error("FromDaltons() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDaltons(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDaltons() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDaltons(0)
+    if err != nil {
+        t.Errorf("FromDaltons() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassDalton)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDaltons() with zero value = %v, want 0", converted)
     }
 }
 // Test FromFemtograms function
@@ -2408,6 +2603,135 @@ func TestMassFactory_FromMegapounds(t *testing.T) {
         t.Errorf("FromMegapounds() with zero value = %v, want 0", converted)
     }
 }
+// Test FromKilodaltons function
+func TestMassFactory_FromKilodaltons(t *testing.T) {
+    factory := units.MassFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilodaltons(100)
+    if err != nil {
+        t.Errorf("FromKilodaltons() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassKilodalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilodaltons() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilodaltons(math.NaN())
+    if err == nil {
+        t.Error("FromKilodaltons() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilodaltons(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilodaltons() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilodaltons(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilodaltons() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilodaltons(0)
+    if err != nil {
+        t.Errorf("FromKilodaltons() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassKilodalton)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilodaltons() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMegadaltons function
+func TestMassFactory_FromMegadaltons(t *testing.T) {
+    factory := units.MassFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMegadaltons(100)
+    if err != nil {
+        t.Errorf("FromMegadaltons() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassMegadalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMegadaltons() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMegadaltons(math.NaN())
+    if err == nil {
+        t.Error("FromMegadaltons() with NaN value should return error")
+    }
+
+    _, err = factory.FromMegadaltons(math.Inf(1))
+    if err == nil {
+        t.Error("FromMegadaltons() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMegadaltons(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMegadaltons() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMegadaltons(0)
+    if err != nil {
+        t.Errorf("FromMegadaltons() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassMegadalton)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMegadaltons() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGigadaltons function
+func TestMassFactory_FromGigadaltons(t *testing.T) {
+    factory := units.MassFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGigadaltons(100)
+    if err != nil {
+        t.Errorf("FromGigadaltons() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.MassGigadalton)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGigadaltons() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGigadaltons(math.NaN())
+    if err == nil {
+        t.Error("FromGigadaltons() with NaN value should return error")
+    }
+
+    _, err = factory.FromGigadaltons(math.Inf(1))
+    if err == nil {
+        t.Error("FromGigadaltons() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGigadaltons(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGigadaltons() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGigadaltons(0)
+    if err != nil {
+        t.Errorf("FromGigadaltons() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.MassGigadalton)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGigadaltons() with zero value = %v, want 0", converted)
+    }
+}
 
 func TestMassToString(t *testing.T) {
 	factory := units.MassFactory{}
@@ -2549,6 +2873,11 @@ func TestGetMassAbbreviation(t *testing.T) {
             want: "em",
         },
         {
+            name: "Dalton abbreviation",
+            unit: units.MassDalton,
+            want: "Da",
+        },
+        {
             name: "Femtogram abbreviation",
             unit: units.MassFemtogram,
             want: "fg",
@@ -2617,6 +2946,21 @@ func TestGetMassAbbreviation(t *testing.T) {
             name: "Megapound abbreviation",
             unit: units.MassMegapound,
             want: "Mlb",
+        },
+        {
+            name: "Kilodalton abbreviation",
+            unit: units.MassKilodalton,
+            want: "kDa",
+        },
+        {
+            name: "Megadalton abbreviation",
+            unit: units.MassMegadalton,
+            want: "MDa",
+        },
+        {
+            name: "Gigadalton abbreviation",
+            unit: units.MassGigadalton,
+            want: "GDa",
         },
         {
             name: "invalid unit",

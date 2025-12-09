@@ -32,6 +32,8 @@ const (
         // 
         RotationalStiffnessPoundForceFeetPerRadian RotationalStiffnessUnits = "PoundForceFeetPerRadian"
         // 
+        RotationalStiffnessKilopoundForceFootPerRadian RotationalStiffnessUnits = "KilopoundForceFootPerRadian"
+        // 
         RotationalStiffnessKilonewtonMeterPerRadian RotationalStiffnessUnits = "KilonewtonMeterPerRadian"
         // 
         RotationalStiffnessMeganewtonMeterPerRadian RotationalStiffnessUnits = "MeganewtonMeterPerRadian"
@@ -94,6 +96,7 @@ var internalRotationalStiffnessUnitsMap = map[RotationalStiffnessUnits]bool{
 	RotationalStiffnessNewtonMeterPerDegree: true,
 	RotationalStiffnessNewtonMillimeterPerRadian: true,
 	RotationalStiffnessPoundForceFeetPerRadian: true,
+	RotationalStiffnessKilopoundForceFootPerRadian: true,
 	RotationalStiffnessKilonewtonMeterPerRadian: true,
 	RotationalStiffnessMeganewtonMeterPerRadian: true,
 	RotationalStiffnessNanonewtonMillimeterPerDegree: true,
@@ -127,7 +130,7 @@ type RotationalStiffnessDto struct {
     // Value is the numerical representation of the RotationalStiffness.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the RotationalStiffness, as defined in the RotationalStiffnessUnits enumeration.
-	Unit  RotationalStiffnessUnits `json:"unit" validate:"required,oneof=NewtonMeterPerRadian PoundForceFootPerDegrees KilopoundForceFootPerDegrees NewtonMillimeterPerDegree NewtonMeterPerDegree NewtonMillimeterPerRadian PoundForceFeetPerRadian KilonewtonMeterPerRadian MeganewtonMeterPerRadian NanonewtonMillimeterPerDegree MicronewtonMillimeterPerDegree MillinewtonMillimeterPerDegree CentinewtonMillimeterPerDegree DecinewtonMillimeterPerDegree DecanewtonMillimeterPerDegree KilonewtonMillimeterPerDegree MeganewtonMillimeterPerDegree NanonewtonMeterPerDegree MicronewtonMeterPerDegree MillinewtonMeterPerDegree CentinewtonMeterPerDegree DecinewtonMeterPerDegree DecanewtonMeterPerDegree KilonewtonMeterPerDegree MeganewtonMeterPerDegree NanonewtonMillimeterPerRadian MicronewtonMillimeterPerRadian MillinewtonMillimeterPerRadian CentinewtonMillimeterPerRadian DecinewtonMillimeterPerRadian DecanewtonMillimeterPerRadian KilonewtonMillimeterPerRadian MeganewtonMillimeterPerRadian"`
+	Unit  RotationalStiffnessUnits `json:"unit" validate:"required,oneof=NewtonMeterPerRadian PoundForceFootPerDegrees KilopoundForceFootPerDegrees NewtonMillimeterPerDegree NewtonMeterPerDegree NewtonMillimeterPerRadian PoundForceFeetPerRadian KilopoundForceFootPerRadian KilonewtonMeterPerRadian MeganewtonMeterPerRadian NanonewtonMillimeterPerDegree MicronewtonMillimeterPerDegree MillinewtonMillimeterPerDegree CentinewtonMillimeterPerDegree DecinewtonMillimeterPerDegree DecanewtonMillimeterPerDegree KilonewtonMillimeterPerDegree MeganewtonMillimeterPerDegree NanonewtonMeterPerDegree MicronewtonMeterPerDegree MillinewtonMeterPerDegree CentinewtonMeterPerDegree DecinewtonMeterPerDegree DecanewtonMeterPerDegree KilonewtonMeterPerDegree MeganewtonMeterPerDegree NanonewtonMillimeterPerRadian MicronewtonMillimeterPerRadian MillinewtonMillimeterPerRadian CentinewtonMillimeterPerRadian DecinewtonMillimeterPerRadian DecanewtonMillimeterPerRadian KilonewtonMillimeterPerRadian MeganewtonMillimeterPerRadian"`
 }
 
 // RotationalStiffnessDtoFactory groups methods for creating and serializing RotationalStiffnessDto objects.
@@ -173,6 +176,7 @@ type RotationalStiffness struct {
     newton_meters_per_degreeLazy *float64 
     newton_millimeters_per_radianLazy *float64 
     pound_force_feet_per_radianLazy *float64 
+    kilopound_force_feet_per_radianLazy *float64 
     kilonewton_meters_per_radianLazy *float64 
     meganewton_meters_per_radianLazy *float64 
     nanonewton_millimeters_per_degreeLazy *float64 
@@ -257,6 +261,11 @@ func (uf RotationalStiffnessFactory) FromNewtonMillimetersPerRadian(value float6
 // FromPoundForceFeetPerRadian creates a new RotationalStiffness instance from a value in PoundForceFeetPerRadian.
 func (uf RotationalStiffnessFactory) FromPoundForceFeetPerRadian(value float64) (*RotationalStiffness, error) {
 	return newRotationalStiffness(value, RotationalStiffnessPoundForceFeetPerRadian)
+}
+
+// FromKilopoundForceFeetPerRadian creates a new RotationalStiffness instance from a value in KilopoundForceFeetPerRadian.
+func (uf RotationalStiffnessFactory) FromKilopoundForceFeetPerRadian(value float64) (*RotationalStiffness, error) {
+	return newRotationalStiffness(value, RotationalStiffnessKilopoundForceFootPerRadian)
 }
 
 // FromKilonewtonMetersPerRadian creates a new RotationalStiffness instance from a value in KilonewtonMetersPerRadian.
@@ -491,6 +500,18 @@ func (a *RotationalStiffness) PoundForceFeetPerRadian() float64 {
 	pound_force_feet_per_radian := a.convertFromBase(RotationalStiffnessPoundForceFeetPerRadian)
 	a.pound_force_feet_per_radianLazy = &pound_force_feet_per_radian
 	return pound_force_feet_per_radian
+}
+
+// KilopoundForceFeetPerRadian returns the RotationalStiffness value in KilopoundForceFeetPerRadian.
+//
+// 
+func (a *RotationalStiffness) KilopoundForceFeetPerRadian() float64 {
+	if a.kilopound_force_feet_per_radianLazy != nil {
+		return *a.kilopound_force_feet_per_radianLazy
+	}
+	kilopound_force_feet_per_radian := a.convertFromBase(RotationalStiffnessKilopoundForceFootPerRadian)
+	a.kilopound_force_feet_per_radianLazy = &kilopound_force_feet_per_radian
+	return kilopound_force_feet_per_radian
 }
 
 // KilonewtonMetersPerRadian returns the RotationalStiffness value in KilonewtonMetersPerRadian.
@@ -850,6 +871,8 @@ func (a *RotationalStiffness) Convert(toUnit RotationalStiffnessUnits) float64 {
 		return a.NewtonMillimetersPerRadian()
     case RotationalStiffnessPoundForceFeetPerRadian:
 		return a.PoundForceFeetPerRadian()
+    case RotationalStiffnessKilopoundForceFootPerRadian:
+		return a.KilopoundForceFeetPerRadian()
     case RotationalStiffnessKilonewtonMeterPerRadian:
 		return a.KilonewtonMetersPerRadian()
     case RotationalStiffnessMeganewtonMeterPerRadian:
@@ -924,6 +947,8 @@ func (a *RotationalStiffness) convertFromBase(toUnit RotationalStiffnessUnits) f
 		return (value * 1000) 
 	case RotationalStiffnessPoundForceFeetPerRadian:
 		return (value / (4.4482216152605 * 0.3048)) 
+	case RotationalStiffnessKilopoundForceFootPerRadian:
+		return (value / (4.4482216152605e3 * 0.3048)) 
 	case RotationalStiffnessKilonewtonMeterPerRadian:
 		return ((value) / 1000.0) 
 	case RotationalStiffnessMeganewtonMeterPerRadian:
@@ -997,6 +1022,8 @@ func (a *RotationalStiffness) convertToBase(value float64, fromUnit RotationalSt
 		return (value * 0.001) 
 	case RotationalStiffnessPoundForceFeetPerRadian:
 		return (value * 4.4482216152605 * 0.3048) 
+	case RotationalStiffnessKilopoundForceFootPerRadian:
+		return (value * 4.4482216152605e3 * 0.3048) 
 	case RotationalStiffnessKilonewtonMeterPerRadian:
 		return ((value) * 1000.0) 
 	case RotationalStiffnessMeganewtonMeterPerRadian:
@@ -1176,6 +1203,8 @@ func GetRotationalStiffnessAbbreviation(unit RotationalStiffnessUnits) string {
 		return "N·mm/rad" 
 	case RotationalStiffnessPoundForceFeetPerRadian:
 		return "lbf·ft/rad" 
+	case RotationalStiffnessKilopoundForceFootPerRadian:
+		return "kipf·ft/rad" 
 	case RotationalStiffnessKilonewtonMeterPerRadian:
 		return "kN·m/rad" 
 	case RotationalStiffnessMeganewtonMeterPerRadian:

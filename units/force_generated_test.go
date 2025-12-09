@@ -114,12 +114,12 @@ func TestForceConversions(t *testing.T) {
 		}
 	}
 	{
-		// Test conversion to KiloPonds.
-		// No expected conversion value provided for KiloPonds, verifying result is not NaN.
-		result := a.KiloPonds()
-		cacheResult := a.KiloPonds()
+		// Test conversion to Kiloponds.
+		// No expected conversion value provided for Kiloponds, verifying result is not NaN.
+		result := a.Kiloponds()
+		cacheResult := a.Kiloponds()
 		if math.IsNaN(result) || cacheResult != result {
-			t.Errorf("conversion to KiloPonds returned NaN")
+			t.Errorf("conversion to Kiloponds returned NaN")
 		}
 	}
 	{
@@ -349,22 +349,22 @@ func TestForceFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Newton = %v, want %v", converted, 100)
     }
-    // Test KiloPond conversion
-    kilo_pondsDto := units.ForceDto{
+    // Test Kilopond conversion
+    kilopondsDto := units.ForceDto{
         Value: 100,
-        Unit:  units.ForceKiloPond,
+        Unit:  units.ForceKilopond,
     }
     
-    var kilo_pondsResult *units.Force
-    kilo_pondsResult, err = factory.FromDto(kilo_pondsDto)
+    var kilopondsResult *units.Force
+    kilopondsResult, err = factory.FromDto(kilopondsDto)
     if err != nil {
-        t.Errorf("FromDto() with KiloPond returned error: %v", err)
+        t.Errorf("FromDto() with Kilopond returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilo_pondsResult.Convert(units.ForceKiloPond)
+    converted = kilopondsResult.Convert(units.ForceKilopond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for KiloPond = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for Kilopond = %v, want %v", converted, 100)
     }
     // Test Poundal conversion
     poundalsDto := units.ForceDto{
@@ -648,17 +648,17 @@ func TestForceFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Newton = %v, want %v", converted, 100)
     }
-    // Test JSON with KiloPond unit
-    kilo_pondsJSON := []byte(`{"value": 100, "unit": "KiloPond"}`)
-    kilo_pondsResult, err := factory.FromDtoJSON(kilo_pondsJSON)
+    // Test JSON with Kilopond unit
+    kilopondsJSON := []byte(`{"value": 100, "unit": "Kilopond"}`)
+    kilopondsResult, err := factory.FromDtoJSON(kilopondsJSON)
     if err != nil {
-        t.Errorf("FromDtoJSON() with KiloPond unit returned error: %v", err)
+        t.Errorf("FromDtoJSON() with Kilopond unit returned error: %v", err)
     }
     
     // Convert back to original unit and compare
-    converted = kilo_pondsResult.Convert(units.ForceKiloPond)
+    converted = kilopondsResult.Convert(units.ForceKilopond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("Round-trip conversion for KiloPond = %v, want %v", converted, 100)
+        t.Errorf("Round-trip conversion for Kilopond = %v, want %v", converted, 100)
     }
     // Test JSON with Poundal unit
     poundalsJSON := []byte(`{"value": 100, "unit": "Poundal"}`)
@@ -963,47 +963,47 @@ func TestForceFactory_FromNewtons(t *testing.T) {
         t.Errorf("FromNewtons() with zero value = %v, want 0", converted)
     }
 }
-// Test FromKiloPonds function
-func TestForceFactory_FromKiloPonds(t *testing.T) {
+// Test FromKiloponds function
+func TestForceFactory_FromKiloponds(t *testing.T) {
     factory := units.ForceFactory{}
     var err error
 
     // Test valid value
-    result, err := factory.FromKiloPonds(100)
+    result, err := factory.FromKiloponds(100)
     if err != nil {
-        t.Errorf("FromKiloPonds() returned error: %v", err)
+        t.Errorf("FromKiloponds() returned error: %v", err)
     }
     
     // Convert back and verify
-    converted := result.Convert(units.ForceKiloPond)
+    converted := result.Convert(units.ForceKilopond)
     if math.Abs(converted - 100) > 1e-6 {
-        t.Errorf("FromKiloPonds() round-trip = %v, want %v", converted, 100)
+        t.Errorf("FromKiloponds() round-trip = %v, want %v", converted, 100)
     }
 
     // Test invalid values
-    _, err = factory.FromKiloPonds(math.NaN())
+    _, err = factory.FromKiloponds(math.NaN())
     if err == nil {
-        t.Error("FromKiloPonds() with NaN value should return error")
+        t.Error("FromKiloponds() with NaN value should return error")
     }
 
-    _, err = factory.FromKiloPonds(math.Inf(1))
+    _, err = factory.FromKiloponds(math.Inf(1))
     if err == nil {
-        t.Error("FromKiloPonds() with +Inf value should return error")
+        t.Error("FromKiloponds() with +Inf value should return error")
     }
 
-    _, err = factory.FromKiloPonds(math.Inf(-1))
+    _, err = factory.FromKiloponds(math.Inf(-1))
     if err == nil {
-        t.Error("FromKiloPonds() with -Inf value should return error")
+        t.Error("FromKiloponds() with -Inf value should return error")
     }
 
     // Test zero value
-    zeroResult, err := factory.FromKiloPonds(0)
+    zeroResult, err := factory.FromKiloponds(0)
     if err != nil {
-        t.Errorf("FromKiloPonds() with zero value returned error: %v", err)
+        t.Errorf("FromKiloponds() with zero value returned error: %v", err)
     }
-    converted = zeroResult.Convert(units.ForceKiloPond)
+    converted = zeroResult.Convert(units.ForceKilopond)
     if math.Abs(converted) > 1e-6 {
-        t.Errorf("FromKiloPonds() with zero value = %v, want 0", converted)
+        t.Errorf("FromKiloponds() with zero value = %v, want 0", converted)
     }
 }
 // Test FromPoundals function
@@ -1532,8 +1532,8 @@ func TestGetForceAbbreviation(t *testing.T) {
             want: "N",
         },
         {
-            name: "KiloPond abbreviation",
-            unit: units.ForceKiloPond,
+            name: "Kilopond abbreviation",
+            unit: units.ForceKilopond,
             want: "kp",
         },
         {

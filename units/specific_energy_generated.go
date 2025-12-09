@@ -20,7 +20,7 @@ const (
         // 
         SpecificEnergyJoulePerKilogram SpecificEnergyUnits = "JoulePerKilogram"
         // 
-        SpecificEnergyMegaJoulePerTonne SpecificEnergyUnits = "MegaJoulePerTonne"
+        SpecificEnergyMegajoulePerTonne SpecificEnergyUnits = "MegajoulePerTonne"
         // 
         SpecificEnergyCaloriePerGram SpecificEnergyUnits = "CaloriePerGram"
         // 
@@ -82,7 +82,7 @@ const (
 var internalSpecificEnergyUnitsMap = map[SpecificEnergyUnits]bool{
 	
 	SpecificEnergyJoulePerKilogram: true,
-	SpecificEnergyMegaJoulePerTonne: true,
+	SpecificEnergyMegajoulePerTonne: true,
 	SpecificEnergyCaloriePerGram: true,
 	SpecificEnergyWattHourPerKilogram: true,
 	SpecificEnergyWattDayPerKilogram: true,
@@ -118,7 +118,7 @@ type SpecificEnergyDto struct {
     // Value is the numerical representation of the SpecificEnergy.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the SpecificEnergy, as defined in the SpecificEnergyUnits enumeration.
-	Unit  SpecificEnergyUnits `json:"unit" validate:"required,oneof=JoulePerKilogram MegaJoulePerTonne CaloriePerGram WattHourPerKilogram WattDayPerKilogram WattDayPerTonne WattDayPerShortTon WattHourPerPound BtuPerPound KilojoulePerKilogram MegajoulePerKilogram KilocaloriePerGram KilowattHourPerKilogram MegawattHourPerKilogram GigawattHourPerKilogram KilowattDayPerKilogram MegawattDayPerKilogram GigawattDayPerKilogram TerawattDayPerKilogram KilowattDayPerTonne MegawattDayPerTonne GigawattDayPerTonne TerawattDayPerTonne KilowattDayPerShortTon MegawattDayPerShortTon GigawattDayPerShortTon TerawattDayPerShortTon KilowattHourPerPound MegawattHourPerPound GigawattHourPerPound"`
+	Unit  SpecificEnergyUnits `json:"unit" validate:"required,oneof=JoulePerKilogram MegajoulePerTonne CaloriePerGram WattHourPerKilogram WattDayPerKilogram WattDayPerTonne WattDayPerShortTon WattHourPerPound BtuPerPound KilojoulePerKilogram MegajoulePerKilogram KilocaloriePerGram KilowattHourPerKilogram MegawattHourPerKilogram GigawattHourPerKilogram KilowattDayPerKilogram MegawattDayPerKilogram GigawattDayPerKilogram TerawattDayPerKilogram KilowattDayPerTonne MegawattDayPerTonne GigawattDayPerTonne TerawattDayPerTonne KilowattDayPerShortTon MegawattDayPerShortTon GigawattDayPerShortTon TerawattDayPerShortTon KilowattHourPerPound MegawattHourPerPound GigawattHourPerPound"`
 }
 
 // SpecificEnergyDtoFactory groups methods for creating and serializing SpecificEnergyDto objects.
@@ -158,7 +158,7 @@ type SpecificEnergy struct {
 	value       float64
     
     joules_per_kilogramLazy *float64 
-    mega_joules_per_tonneLazy *float64 
+    megajoules_per_tonneLazy *float64 
     calories_per_gramLazy *float64 
     watt_hours_per_kilogramLazy *float64 
     watt_days_per_kilogramLazy *float64 
@@ -217,9 +217,9 @@ func (uf SpecificEnergyFactory) FromJoulesPerKilogram(value float64) (*SpecificE
 	return newSpecificEnergy(value, SpecificEnergyJoulePerKilogram)
 }
 
-// FromMegaJoulesPerTonne creates a new SpecificEnergy instance from a value in MegaJoulesPerTonne.
-func (uf SpecificEnergyFactory) FromMegaJoulesPerTonne(value float64) (*SpecificEnergy, error) {
-	return newSpecificEnergy(value, SpecificEnergyMegaJoulePerTonne)
+// FromMegajoulesPerTonne creates a new SpecificEnergy instance from a value in MegajoulesPerTonne.
+func (uf SpecificEnergyFactory) FromMegajoulesPerTonne(value float64) (*SpecificEnergy, error) {
+	return newSpecificEnergy(value, SpecificEnergyMegajoulePerTonne)
 }
 
 // FromCaloriesPerGram creates a new SpecificEnergy instance from a value in CaloriesPerGram.
@@ -394,16 +394,16 @@ func (a *SpecificEnergy) JoulesPerKilogram() float64 {
 	return joules_per_kilogram
 }
 
-// MegaJoulesPerTonne returns the SpecificEnergy value in MegaJoulesPerTonne.
+// MegajoulesPerTonne returns the SpecificEnergy value in MegajoulesPerTonne.
 //
 // 
-func (a *SpecificEnergy) MegaJoulesPerTonne() float64 {
-	if a.mega_joules_per_tonneLazy != nil {
-		return *a.mega_joules_per_tonneLazy
+func (a *SpecificEnergy) MegajoulesPerTonne() float64 {
+	if a.megajoules_per_tonneLazy != nil {
+		return *a.megajoules_per_tonneLazy
 	}
-	mega_joules_per_tonne := a.convertFromBase(SpecificEnergyMegaJoulePerTonne)
-	a.mega_joules_per_tonneLazy = &mega_joules_per_tonne
-	return mega_joules_per_tonne
+	megajoules_per_tonne := a.convertFromBase(SpecificEnergyMegajoulePerTonne)
+	a.megajoules_per_tonneLazy = &megajoules_per_tonne
+	return megajoules_per_tonne
 }
 
 // CaloriesPerGram returns the SpecificEnergy value in CaloriesPerGram.
@@ -775,8 +775,8 @@ func (a *SpecificEnergy) Convert(toUnit SpecificEnergyUnits) float64 {
 	switch toUnit { 
     case SpecificEnergyJoulePerKilogram:
 		return a.JoulesPerKilogram()
-    case SpecificEnergyMegaJoulePerTonne:
-		return a.MegaJoulesPerTonne()
+    case SpecificEnergyMegajoulePerTonne:
+		return a.MegajoulesPerTonne()
     case SpecificEnergyCaloriePerGram:
 		return a.CaloriesPerGram()
     case SpecificEnergyWattHourPerKilogram:
@@ -843,7 +843,7 @@ func (a *SpecificEnergy) convertFromBase(toUnit SpecificEnergyUnits) float64 {
 	switch toUnit { 
 	case SpecificEnergyJoulePerKilogram:
 		return (value) 
-	case SpecificEnergyMegaJoulePerTonne:
+	case SpecificEnergyMegajoulePerTonne:
 		return (value / 1e3) 
 	case SpecificEnergyCaloriePerGram:
 		return (value / 4.184e3) 
@@ -910,7 +910,7 @@ func (a *SpecificEnergy) convertToBase(value float64, fromUnit SpecificEnergyUni
 	switch fromUnit { 
 	case SpecificEnergyJoulePerKilogram:
 		return (value) 
-	case SpecificEnergyMegaJoulePerTonne:
+	case SpecificEnergyMegajoulePerTonne:
 		return (value * 1e3) 
 	case SpecificEnergyCaloriePerGram:
 		return (value * 4.184e3) 
@@ -1083,7 +1083,7 @@ func GetSpecificEnergyAbbreviation(unit SpecificEnergyUnits) string {
 	switch unit { 
 	case SpecificEnergyJoulePerKilogram:
 		return "J/kg" 
-	case SpecificEnergyMegaJoulePerTonne:
+	case SpecificEnergyMegajoulePerTonne:
 		return "MJ/t" 
 	case SpecificEnergyCaloriePerGram:
 		return "cal/g" 

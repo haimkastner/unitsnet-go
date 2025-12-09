@@ -240,6 +240,15 @@ func TestVolumeConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to MetricTablespoons.
+		// No expected conversion value provided for MetricTablespoons, verifying result is not NaN.
+		result := a.MetricTablespoons()
+		cacheResult := a.MetricTablespoons()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to MetricTablespoons returned NaN")
+		}
+	}
+	{
 		// Test conversion to UkTablespoons.
 		// No expected conversion value provided for UkTablespoons, verifying result is not NaN.
 		result := a.UkTablespoons()
@@ -937,6 +946,23 @@ func TestVolumeFactory_FromDto(t *testing.T) {
     converted = au_tablespoonsResult.Convert(units.VolumeAuTablespoon)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for AuTablespoon = %v, want %v", converted, 100)
+    }
+    // Test MetricTablespoon conversion
+    metric_tablespoonsDto := units.VolumeDto{
+        Value: 100,
+        Unit:  units.VolumeMetricTablespoon,
+    }
+    
+    var metric_tablespoonsResult *units.Volume
+    metric_tablespoonsResult, err = factory.FromDto(metric_tablespoonsDto)
+    if err != nil {
+        t.Errorf("FromDto() with MetricTablespoon returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = metric_tablespoonsResult.Convert(units.VolumeMetricTablespoon)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MetricTablespoon = %v, want %v", converted, 100)
     }
     // Test UkTablespoon conversion
     uk_tablespoonsDto := units.VolumeDto{
@@ -1829,6 +1855,18 @@ func TestVolumeFactory_FromDtoJSON(t *testing.T) {
     converted = au_tablespoonsResult.Convert(units.VolumeAuTablespoon)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for AuTablespoon = %v, want %v", converted, 100)
+    }
+    // Test JSON with MetricTablespoon unit
+    metric_tablespoonsJSON := []byte(`{"value": 100, "unit": "MetricTablespoon"}`)
+    metric_tablespoonsResult, err := factory.FromDtoJSON(metric_tablespoonsJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MetricTablespoon unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = metric_tablespoonsResult.Convert(units.VolumeMetricTablespoon)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MetricTablespoon = %v, want %v", converted, 100)
     }
     // Test JSON with UkTablespoon unit
     uk_tablespoonsJSON := []byte(`{"value": 100, "unit": "UkTablespoon"}`)
@@ -3045,6 +3083,49 @@ func TestVolumeFactory_FromAuTablespoons(t *testing.T) {
     converted = zeroResult.Convert(units.VolumeAuTablespoon)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromAuTablespoons() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMetricTablespoons function
+func TestVolumeFactory_FromMetricTablespoons(t *testing.T) {
+    factory := units.VolumeFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMetricTablespoons(100)
+    if err != nil {
+        t.Errorf("FromMetricTablespoons() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.VolumeMetricTablespoon)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMetricTablespoons() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMetricTablespoons(math.NaN())
+    if err == nil {
+        t.Error("FromMetricTablespoons() with NaN value should return error")
+    }
+
+    _, err = factory.FromMetricTablespoons(math.Inf(1))
+    if err == nil {
+        t.Error("FromMetricTablespoons() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMetricTablespoons(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMetricTablespoons() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMetricTablespoons(0)
+    if err != nil {
+        t.Errorf("FromMetricTablespoons() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.VolumeMetricTablespoon)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMetricTablespoons() with zero value = %v, want 0", converted)
     }
 }
 // Test FromUkTablespoons function
@@ -4759,6 +4840,11 @@ func TestGetVolumeAbbreviation(t *testing.T) {
             name: "AuTablespoon abbreviation",
             unit: units.VolumeAuTablespoon,
             want: "tablespoon (A.U.)",
+        },
+        {
+            name: "MetricTablespoon abbreviation",
+            unit: units.VolumeMetricTablespoon,
+            want: "tablespoon",
         },
         {
             name: "UkTablespoon abbreviation",

@@ -43,6 +43,8 @@ const (
         MassSolarMass MassUnits = "SolarMass"
         // Earth mass is a ratio unit to the mass of planet Earth.
         MassEarthMass MassUnits = "EarthMass"
+        // The Dalton or unified atomic mass unit (abbreviation Da or u) is a unit of mass defined as 1/12 of the mass of an unbound neutral atom of carbon-12 in its nuclear and electronic ground state and at rest.
+        MassDalton MassUnits = "Dalton"
         // 
         MassFemtogram MassUnits = "Femtogram"
         // 
@@ -71,6 +73,12 @@ const (
         MassKilopound MassUnits = "Kilopound"
         // 
         MassMegapound MassUnits = "Megapound"
+        // 
+        MassKilodalton MassUnits = "Kilodalton"
+        // 
+        MassMegadalton MassUnits = "Megadalton"
+        // 
+        MassGigadalton MassUnits = "Gigadalton"
 )
 
 var internalMassUnitsMap = map[MassUnits]bool{
@@ -88,6 +96,7 @@ var internalMassUnitsMap = map[MassUnits]bool{
 	MassGrain: true,
 	MassSolarMass: true,
 	MassEarthMass: true,
+	MassDalton: true,
 	MassFemtogram: true,
 	MassPicogram: true,
 	MassNanogram: true,
@@ -102,6 +111,9 @@ var internalMassUnitsMap = map[MassUnits]bool{
 	MassMegatonne: true,
 	MassKilopound: true,
 	MassMegapound: true,
+	MassKilodalton: true,
+	MassMegadalton: true,
+	MassGigadalton: true,
 }
 
 // MassDto represents a Mass measurement with a numerical value and its corresponding unit.
@@ -109,7 +121,7 @@ type MassDto struct {
     // Value is the numerical representation of the Mass.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Mass, as defined in the MassUnits enumeration.
-	Unit  MassUnits `json:"unit" validate:"required,oneof=Gram Tonne ShortTon LongTon Pound Ounce Slug Stone ShortHundredweight LongHundredweight Grain SolarMass EarthMass Femtogram Picogram Nanogram Microgram Milligram Centigram Decigram Decagram Hectogram Kilogram Kilotonne Megatonne Kilopound Megapound"`
+	Unit  MassUnits `json:"unit" validate:"required,oneof=Gram Tonne ShortTon LongTon Pound Ounce Slug Stone ShortHundredweight LongHundredweight Grain SolarMass EarthMass Dalton Femtogram Picogram Nanogram Microgram Milligram Centigram Decigram Decagram Hectogram Kilogram Kilotonne Megatonne Kilopound Megapound Kilodalton Megadalton Gigadalton"`
 }
 
 // MassDtoFactory groups methods for creating and serializing MassDto objects.
@@ -161,6 +173,7 @@ type Mass struct {
     grainsLazy *float64 
     solar_massesLazy *float64 
     earth_massesLazy *float64 
+    daltonsLazy *float64 
     femtogramsLazy *float64 
     picogramsLazy *float64 
     nanogramsLazy *float64 
@@ -175,6 +188,9 @@ type Mass struct {
     megatonnesLazy *float64 
     kilopoundsLazy *float64 
     megapoundsLazy *float64 
+    kilodaltonsLazy *float64 
+    megadaltonsLazy *float64 
+    gigadaltonsLazy *float64 
 }
 
 // MassFactory groups methods for creating Mass instances.
@@ -265,6 +281,11 @@ func (uf MassFactory) FromEarthMasses(value float64) (*Mass, error) {
 	return newMass(value, MassEarthMass)
 }
 
+// FromDaltons creates a new Mass instance from a value in Daltons.
+func (uf MassFactory) FromDaltons(value float64) (*Mass, error) {
+	return newMass(value, MassDalton)
+}
+
 // FromFemtograms creates a new Mass instance from a value in Femtograms.
 func (uf MassFactory) FromFemtograms(value float64) (*Mass, error) {
 	return newMass(value, MassFemtogram)
@@ -333,6 +354,21 @@ func (uf MassFactory) FromKilopounds(value float64) (*Mass, error) {
 // FromMegapounds creates a new Mass instance from a value in Megapounds.
 func (uf MassFactory) FromMegapounds(value float64) (*Mass, error) {
 	return newMass(value, MassMegapound)
+}
+
+// FromKilodaltons creates a new Mass instance from a value in Kilodaltons.
+func (uf MassFactory) FromKilodaltons(value float64) (*Mass, error) {
+	return newMass(value, MassKilodalton)
+}
+
+// FromMegadaltons creates a new Mass instance from a value in Megadaltons.
+func (uf MassFactory) FromMegadaltons(value float64) (*Mass, error) {
+	return newMass(value, MassMegadalton)
+}
+
+// FromGigadaltons creates a new Mass instance from a value in Gigadaltons.
+func (uf MassFactory) FromGigadaltons(value float64) (*Mass, error) {
+	return newMass(value, MassGigadalton)
 }
 
 
@@ -511,6 +547,18 @@ func (a *Mass) EarthMasses() float64 {
 	return earth_masses
 }
 
+// Daltons returns the Mass value in Daltons.
+//
+// The Dalton or unified atomic mass unit (abbreviation Da or u) is a unit of mass defined as 1/12 of the mass of an unbound neutral atom of carbon-12 in its nuclear and electronic ground state and at rest.
+func (a *Mass) Daltons() float64 {
+	if a.daltonsLazy != nil {
+		return *a.daltonsLazy
+	}
+	daltons := a.convertFromBase(MassDalton)
+	a.daltonsLazy = &daltons
+	return daltons
+}
+
 // Femtograms returns the Mass value in Femtograms.
 //
 // 
@@ -679,6 +727,42 @@ func (a *Mass) Megapounds() float64 {
 	return megapounds
 }
 
+// Kilodaltons returns the Mass value in Kilodaltons.
+//
+// 
+func (a *Mass) Kilodaltons() float64 {
+	if a.kilodaltonsLazy != nil {
+		return *a.kilodaltonsLazy
+	}
+	kilodaltons := a.convertFromBase(MassKilodalton)
+	a.kilodaltonsLazy = &kilodaltons
+	return kilodaltons
+}
+
+// Megadaltons returns the Mass value in Megadaltons.
+//
+// 
+func (a *Mass) Megadaltons() float64 {
+	if a.megadaltonsLazy != nil {
+		return *a.megadaltonsLazy
+	}
+	megadaltons := a.convertFromBase(MassMegadalton)
+	a.megadaltonsLazy = &megadaltons
+	return megadaltons
+}
+
+// Gigadaltons returns the Mass value in Gigadaltons.
+//
+// 
+func (a *Mass) Gigadaltons() float64 {
+	if a.gigadaltonsLazy != nil {
+		return *a.gigadaltonsLazy
+	}
+	gigadaltons := a.convertFromBase(MassGigadalton)
+	a.gigadaltonsLazy = &gigadaltons
+	return gigadaltons
+}
+
 
 // ToDto creates a MassDto representation from the Mass instance.
 //
@@ -736,6 +820,8 @@ func (a *Mass) Convert(toUnit MassUnits) float64 {
 		return a.SolarMasses()
     case MassEarthMass:
 		return a.EarthMasses()
+    case MassDalton:
+		return a.Daltons()
     case MassFemtogram:
 		return a.Femtograms()
     case MassPicogram:
@@ -764,6 +850,12 @@ func (a *Mass) Convert(toUnit MassUnits) float64 {
 		return a.Kilopounds()
     case MassMegapound:
 		return a.Megapounds()
+    case MassKilodalton:
+		return a.Kilodaltons()
+    case MassMegadalton:
+		return a.Megadaltons()
+    case MassGigadalton:
+		return a.Gigadaltons()
 	default:
 		return math.NaN()
 	}
@@ -798,6 +890,8 @@ func (a *Mass) convertFromBase(toUnit MassUnits) float64 {
 		return (value / 1.98947e30) 
 	case MassEarthMass:
 		return (value / 5.9722e+24) 
+	case MassDalton:
+		return (value /  1.66053906660e-27) 
 	case MassFemtogram:
 		return ((value * 1e3) / 1e-15) 
 	case MassPicogram:
@@ -826,6 +920,12 @@ func (a *Mass) convertFromBase(toUnit MassUnits) float64 {
 		return ((value / 0.45359237) / 1000.0) 
 	case MassMegapound:
 		return ((value / 0.45359237) / 1000000.0) 
+	case MassKilodalton:
+		return ((value /  1.66053906660e-27) / 1000.0) 
+	case MassMegadalton:
+		return ((value /  1.66053906660e-27) / 1000000.0) 
+	case MassGigadalton:
+		return ((value /  1.66053906660e-27) / 1000000000.0) 
 	default:
 		return math.NaN()
 	}
@@ -859,6 +959,8 @@ func (a *Mass) convertToBase(value float64, fromUnit MassUnits) float64 {
 		return (value * 1.98947e30) 
 	case MassEarthMass:
 		return (value * 5.9722e+24) 
+	case MassDalton:
+		return (value *  1.66053906660e-27) 
 	case MassFemtogram:
 		return ((value / 1e3) * 1e-15) 
 	case MassPicogram:
@@ -887,6 +989,12 @@ func (a *Mass) convertToBase(value float64, fromUnit MassUnits) float64 {
 		return ((value * 0.45359237) * 1000.0) 
 	case MassMegapound:
 		return ((value * 0.45359237) * 1000000.0) 
+	case MassKilodalton:
+		return ((value *  1.66053906660e-27) * 1000.0) 
+	case MassMegadalton:
+		return ((value *  1.66053906660e-27) * 1000000.0) 
+	case MassGigadalton:
+		return ((value *  1.66053906660e-27) * 1000000000.0) 
 	default:
 		return math.NaN()
 	}
@@ -1026,6 +1134,8 @@ func GetMassAbbreviation(unit MassUnits) string {
 		return "M☉" 
 	case MassEarthMass:
 		return "em" 
+	case MassDalton:
+		return "Da" 
 	case MassFemtogram:
 		return "fg" 
 	case MassPicogram:
@@ -1054,6 +1164,12 @@ func GetMassAbbreviation(unit MassUnits) string {
 		return "klb" 
 	case MassMegapound:
 		return "Mlb" 
+	case MassKilodalton:
+		return "kDa" 
+	case MassMegadalton:
+		return "MDa" 
+	case MassGigadalton:
+		return "GDa" 
 	default:
 		return ""
 	}
