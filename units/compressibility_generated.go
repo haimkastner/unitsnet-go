@@ -315,27 +315,6 @@ func (a *Compressibility) convertFromBase(toUnit CompressibilityUnits) float64 {
 	case CompressibilityInversePascal:
 		return (value) 
 	case CompressibilityInverseKilopascal:
-		return (value / 1e3) 
-	case CompressibilityInverseMegapascal:
-		return (value / 1e6) 
-	case CompressibilityInverseAtmosphere:
-		return (value / 101325) 
-	case CompressibilityInverseMillibar:
-		return (value / 100) 
-	case CompressibilityInverseBar:
-		return (value / 1e5) 
-	case CompressibilityInversePoundForcePerSquareInch:
-		return (value / 6.894757293168361e3) 
-	default:
-		return math.NaN()
-	}
-}
-
-func (a *Compressibility) convertToBase(value float64, fromUnit CompressibilityUnits) float64 {
-	switch fromUnit { 
-	case CompressibilityInversePascal:
-		return (value) 
-	case CompressibilityInverseKilopascal:
 		return (value * 1e3) 
 	case CompressibilityInverseMegapascal:
 		return (value * 1e6) 
@@ -347,6 +326,27 @@ func (a *Compressibility) convertToBase(value float64, fromUnit CompressibilityU
 		return (value * 1e5) 
 	case CompressibilityInversePoundForcePerSquareInch:
 		return (value * 6.894757293168361e3) 
+	default:
+		return math.NaN()
+	}
+}
+
+func (a *Compressibility) convertToBase(value float64, fromUnit CompressibilityUnits) float64 {
+	switch fromUnit { 
+	case CompressibilityInversePascal:
+		return (value) 
+	case CompressibilityInverseKilopascal:
+		return (value / 1e3) 
+	case CompressibilityInverseMegapascal:
+		return (value / 1e6) 
+	case CompressibilityInverseAtmosphere:
+		return (value / 101325) 
+	case CompressibilityInverseMillibar:
+		return (value / 100) 
+	case CompressibilityInverseBar:
+		return (value / 1e5) 
+	case CompressibilityInversePoundForcePerSquareInch:
+		return (value / 6.894757293168361e3) 
 	default:
 		return math.NaN()
 	}

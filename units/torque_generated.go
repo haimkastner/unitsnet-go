@@ -24,6 +24,10 @@ const (
         // 
         TorqueNewtonMeter TorqueUnits = "NewtonMeter"
         // 
+        TorqueOunceForceFoot TorqueUnits = "OunceForceFoot"
+        // 
+        TorqueOunceForceInch TorqueUnits = "OunceForceInch"
+        // 
         TorquePoundalFoot TorqueUnits = "PoundalFoot"
         // 
         TorquePoundForceInch TorqueUnits = "PoundForceInch"
@@ -74,6 +78,8 @@ var internalTorqueUnitsMap = map[TorqueUnits]bool{
 	TorqueNewtonMillimeter: true,
 	TorqueNewtonCentimeter: true,
 	TorqueNewtonMeter: true,
+	TorqueOunceForceFoot: true,
+	TorqueOunceForceInch: true,
 	TorquePoundalFoot: true,
 	TorquePoundForceInch: true,
 	TorquePoundForceFoot: true,
@@ -103,7 +109,7 @@ type TorqueDto struct {
     // Value is the numerical representation of the Torque.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Torque, as defined in the TorqueUnits enumeration.
-	Unit  TorqueUnits `json:"unit" validate:"required,oneof=NewtonMillimeter NewtonCentimeter NewtonMeter PoundalFoot PoundForceInch PoundForceFoot GramForceMillimeter GramForceCentimeter GramForceMeter KilogramForceMillimeter KilogramForceCentimeter KilogramForceMeter TonneForceMillimeter TonneForceCentimeter TonneForceMeter KilonewtonMillimeter MeganewtonMillimeter KilonewtonCentimeter MeganewtonCentimeter KilonewtonMeter MeganewtonMeter KilopoundForceInch MegapoundForceInch KilopoundForceFoot MegapoundForceFoot"`
+	Unit  TorqueUnits `json:"unit" validate:"required,oneof=NewtonMillimeter NewtonCentimeter NewtonMeter OunceForceFoot OunceForceInch PoundalFoot PoundForceInch PoundForceFoot GramForceMillimeter GramForceCentimeter GramForceMeter KilogramForceMillimeter KilogramForceCentimeter KilogramForceMeter TonneForceMillimeter TonneForceCentimeter TonneForceMeter KilonewtonMillimeter MeganewtonMillimeter KilonewtonCentimeter MeganewtonCentimeter KilonewtonMeter MeganewtonMeter KilopoundForceInch MegapoundForceInch KilopoundForceFoot MegapoundForceFoot"`
 }
 
 // TorqueDtoFactory groups methods for creating and serializing TorqueDto objects.
@@ -145,6 +151,8 @@ type Torque struct {
     newton_millimetersLazy *float64 
     newton_centimetersLazy *float64 
     newton_metersLazy *float64 
+    ounce_force_feetLazy *float64 
+    ounce_force_inchesLazy *float64 
     poundal_feetLazy *float64 
     pound_force_inchesLazy *float64 
     pound_force_feetLazy *float64 
@@ -205,6 +213,16 @@ func (uf TorqueFactory) FromNewtonCentimeters(value float64) (*Torque, error) {
 // FromNewtonMeters creates a new Torque instance from a value in NewtonMeters.
 func (uf TorqueFactory) FromNewtonMeters(value float64) (*Torque, error) {
 	return newTorque(value, TorqueNewtonMeter)
+}
+
+// FromOunceForceFeet creates a new Torque instance from a value in OunceForceFeet.
+func (uf TorqueFactory) FromOunceForceFeet(value float64) (*Torque, error) {
+	return newTorque(value, TorqueOunceForceFoot)
+}
+
+// FromOunceForceInches creates a new Torque instance from a value in OunceForceInches.
+func (uf TorqueFactory) FromOunceForceInches(value float64) (*Torque, error) {
+	return newTorque(value, TorqueOunceForceInch)
 }
 
 // FromPoundalFeet creates a new Torque instance from a value in PoundalFeet.
@@ -371,6 +389,30 @@ func (a *Torque) NewtonMeters() float64 {
 	newton_meters := a.convertFromBase(TorqueNewtonMeter)
 	a.newton_metersLazy = &newton_meters
 	return newton_meters
+}
+
+// OunceForceFeet returns the Torque value in OunceForceFeet.
+//
+// 
+func (a *Torque) OunceForceFeet() float64 {
+	if a.ounce_force_feetLazy != nil {
+		return *a.ounce_force_feetLazy
+	}
+	ounce_force_feet := a.convertFromBase(TorqueOunceForceFoot)
+	a.ounce_force_feetLazy = &ounce_force_feet
+	return ounce_force_feet
+}
+
+// OunceForceInches returns the Torque value in OunceForceInches.
+//
+// 
+func (a *Torque) OunceForceInches() float64 {
+	if a.ounce_force_inchesLazy != nil {
+		return *a.ounce_force_inchesLazy
+	}
+	ounce_force_inches := a.convertFromBase(TorqueOunceForceInch)
+	a.ounce_force_inchesLazy = &ounce_force_inches
+	return ounce_force_inches
 }
 
 // PoundalFeet returns the Torque value in PoundalFeet.
@@ -674,6 +716,10 @@ func (a *Torque) Convert(toUnit TorqueUnits) float64 {
 		return a.NewtonCentimeters()
     case TorqueNewtonMeter:
 		return a.NewtonMeters()
+    case TorqueOunceForceFoot:
+		return a.OunceForceFeet()
+    case TorqueOunceForceInch:
+		return a.OunceForceInches()
     case TorquePoundalFoot:
 		return a.PoundalFeet()
     case TorquePoundForceInch:
@@ -732,6 +778,10 @@ func (a *Torque) convertFromBase(toUnit TorqueUnits) float64 {
 		return (value * 100) 
 	case TorqueNewtonMeter:
 		return (value) 
+	case TorqueOunceForceFoot:
+		return (value / ((4.4482216152605 / 16) * 0.3048)) 
+	case TorqueOunceForceInch:
+		return (value / ((4.4482216152605 / 16) * 2.54e-2)) 
 	case TorquePoundalFoot:
 		return (value / (0.138254954376 * 0.3048)) 
 	case TorquePoundForceInch:
@@ -789,6 +839,10 @@ func (a *Torque) convertToBase(value float64, fromUnit TorqueUnits) float64 {
 		return (value * 0.01) 
 	case TorqueNewtonMeter:
 		return (value) 
+	case TorqueOunceForceFoot:
+		return (value * (4.4482216152605 / 16) * 0.3048) 
+	case TorqueOunceForceInch:
+		return (value * (4.4482216152605 / 16) * 2.54e-2) 
 	case TorquePoundalFoot:
 		return (value * 0.138254954376 * 0.3048) 
 	case TorquePoundForceInch:
@@ -952,6 +1006,10 @@ func GetTorqueAbbreviation(unit TorqueUnits) string {
 		return "N·cm" 
 	case TorqueNewtonMeter:
 		return "N·m" 
+	case TorqueOunceForceFoot:
+		return "ozf·ft" 
+	case TorqueOunceForceInch:
+		return "ozf·in" 
 	case TorquePoundalFoot:
 		return "pdl·ft" 
 	case TorquePoundForceInch:

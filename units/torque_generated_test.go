@@ -105,6 +105,24 @@ func TestTorqueConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to OunceForceFeet.
+		// No expected conversion value provided for OunceForceFeet, verifying result is not NaN.
+		result := a.OunceForceFeet()
+		cacheResult := a.OunceForceFeet()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to OunceForceFeet returned NaN")
+		}
+	}
+	{
+		// Test conversion to OunceForceInches.
+		// No expected conversion value provided for OunceForceInches, verifying result is not NaN.
+		result := a.OunceForceInches()
+		cacheResult := a.OunceForceInches()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to OunceForceInches returned NaN")
+		}
+	}
+	{
 		// Test conversion to PoundalFeet.
 		// No expected conversion value provided for PoundalFeet, verifying result is not NaN.
 		result := a.PoundalFeet()
@@ -421,6 +439,40 @@ func TestTorqueFactory_FromDto(t *testing.T) {
     converted = newton_metersResult.Convert(units.TorqueNewtonMeter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for NewtonMeter = %v, want %v", converted, 100)
+    }
+    // Test OunceForceFoot conversion
+    ounce_force_feetDto := units.TorqueDto{
+        Value: 100,
+        Unit:  units.TorqueOunceForceFoot,
+    }
+    
+    var ounce_force_feetResult *units.Torque
+    ounce_force_feetResult, err = factory.FromDto(ounce_force_feetDto)
+    if err != nil {
+        t.Errorf("FromDto() with OunceForceFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ounce_force_feetResult.Convert(units.TorqueOunceForceFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OunceForceFoot = %v, want %v", converted, 100)
+    }
+    // Test OunceForceInch conversion
+    ounce_force_inchesDto := units.TorqueDto{
+        Value: 100,
+        Unit:  units.TorqueOunceForceInch,
+    }
+    
+    var ounce_force_inchesResult *units.Torque
+    ounce_force_inchesResult, err = factory.FromDto(ounce_force_inchesDto)
+    if err != nil {
+        t.Errorf("FromDto() with OunceForceInch returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ounce_force_inchesResult.Convert(units.TorqueOunceForceInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OunceForceInch = %v, want %v", converted, 100)
     }
     // Test PoundalFoot conversion
     poundal_feetDto := units.TorqueDto{
@@ -896,6 +948,30 @@ func TestTorqueFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for NewtonMeter = %v, want %v", converted, 100)
     }
+    // Test JSON with OunceForceFoot unit
+    ounce_force_feetJSON := []byte(`{"value": 100, "unit": "OunceForceFoot"}`)
+    ounce_force_feetResult, err := factory.FromDtoJSON(ounce_force_feetJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with OunceForceFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ounce_force_feetResult.Convert(units.TorqueOunceForceFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OunceForceFoot = %v, want %v", converted, 100)
+    }
+    // Test JSON with OunceForceInch unit
+    ounce_force_inchesJSON := []byte(`{"value": 100, "unit": "OunceForceInch"}`)
+    ounce_force_inchesResult, err := factory.FromDtoJSON(ounce_force_inchesJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with OunceForceInch unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = ounce_force_inchesResult.Convert(units.TorqueOunceForceInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for OunceForceInch = %v, want %v", converted, 100)
+    }
     // Test JSON with PoundalFoot unit
     poundal_feetJSON := []byte(`{"value": 100, "unit": "PoundalFoot"}`)
     poundal_feetResult, err := factory.FromDtoJSON(poundal_feetJSON)
@@ -1298,6 +1374,92 @@ func TestTorqueFactory_FromNewtonMeters(t *testing.T) {
     converted = zeroResult.Convert(units.TorqueNewtonMeter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromNewtonMeters() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromOunceForceFeet function
+func TestTorqueFactory_FromOunceForceFeet(t *testing.T) {
+    factory := units.TorqueFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromOunceForceFeet(100)
+    if err != nil {
+        t.Errorf("FromOunceForceFeet() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TorqueOunceForceFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromOunceForceFeet() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromOunceForceFeet(math.NaN())
+    if err == nil {
+        t.Error("FromOunceForceFeet() with NaN value should return error")
+    }
+
+    _, err = factory.FromOunceForceFeet(math.Inf(1))
+    if err == nil {
+        t.Error("FromOunceForceFeet() with +Inf value should return error")
+    }
+
+    _, err = factory.FromOunceForceFeet(math.Inf(-1))
+    if err == nil {
+        t.Error("FromOunceForceFeet() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromOunceForceFeet(0)
+    if err != nil {
+        t.Errorf("FromOunceForceFeet() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TorqueOunceForceFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromOunceForceFeet() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromOunceForceInches function
+func TestTorqueFactory_FromOunceForceInches(t *testing.T) {
+    factory := units.TorqueFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromOunceForceInches(100)
+    if err != nil {
+        t.Errorf("FromOunceForceInches() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.TorqueOunceForceInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromOunceForceInches() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromOunceForceInches(math.NaN())
+    if err == nil {
+        t.Error("FromOunceForceInches() with NaN value should return error")
+    }
+
+    _, err = factory.FromOunceForceInches(math.Inf(1))
+    if err == nil {
+        t.Error("FromOunceForceInches() with +Inf value should return error")
+    }
+
+    _, err = factory.FromOunceForceInches(math.Inf(-1))
+    if err == nil {
+        t.Error("FromOunceForceInches() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromOunceForceInches(0)
+    if err != nil {
+        t.Errorf("FromOunceForceInches() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.TorqueOunceForceInch)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromOunceForceInches() with zero value = %v, want 0", converted)
     }
 }
 // Test FromPoundalFeet function
@@ -2335,6 +2497,16 @@ func TestGetTorqueAbbreviation(t *testing.T) {
             name: "NewtonMeter abbreviation",
             unit: units.TorqueNewtonMeter,
             want: "N·m",
+        },
+        {
+            name: "OunceForceFoot abbreviation",
+            unit: units.TorqueOunceForceFoot,
+            want: "ozf·ft",
+        },
+        {
+            name: "OunceForceInch abbreviation",
+            unit: units.TorqueOunceForceInch,
+            want: "ozf·in",
         },
         {
             name: "PoundalFoot abbreviation",

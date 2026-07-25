@@ -21,12 +21,15 @@ const (
         ThermalConductivityWattPerMeterKelvin ThermalConductivityUnits = "WattPerMeterKelvin"
         // 
         ThermalConductivityBtuPerHourFootFahrenheit ThermalConductivityUnits = "BtuPerHourFootFahrenheit"
+        // 
+        ThermalConductivityBtuPerSecondInchFahrenheit ThermalConductivityUnits = "BtuPerSecondInchFahrenheit"
 )
 
 var internalThermalConductivityUnitsMap = map[ThermalConductivityUnits]bool{
 	
 	ThermalConductivityWattPerMeterKelvin: true,
 	ThermalConductivityBtuPerHourFootFahrenheit: true,
+	ThermalConductivityBtuPerSecondInchFahrenheit: true,
 }
 
 // ThermalConductivityDto represents a ThermalConductivity measurement with a numerical value and its corresponding unit.
@@ -34,7 +37,7 @@ type ThermalConductivityDto struct {
     // Value is the numerical representation of the ThermalConductivity.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the ThermalConductivity, as defined in the ThermalConductivityUnits enumeration.
-	Unit  ThermalConductivityUnits `json:"unit" validate:"required,oneof=WattPerMeterKelvin BtuPerHourFootFahrenheit"`
+	Unit  ThermalConductivityUnits `json:"unit" validate:"required,oneof=WattPerMeterKelvin BtuPerHourFootFahrenheit BtuPerSecondInchFahrenheit"`
 }
 
 // ThermalConductivityDtoFactory groups methods for creating and serializing ThermalConductivityDto objects.
@@ -75,6 +78,7 @@ type ThermalConductivity struct {
     
     watts_per_meter_kelvinLazy *float64 
     btus_per_hour_foot_fahrenheitLazy *float64 
+    btus_per_second_inch_fahrenheitLazy *float64 
 }
 
 // ThermalConductivityFactory groups methods for creating ThermalConductivity instances.
@@ -108,6 +112,11 @@ func (uf ThermalConductivityFactory) FromWattsPerMeterKelvin(value float64) (*Th
 // FromBtusPerHourFootFahrenheit creates a new ThermalConductivity instance from a value in BtusPerHourFootFahrenheit.
 func (uf ThermalConductivityFactory) FromBtusPerHourFootFahrenheit(value float64) (*ThermalConductivity, error) {
 	return newThermalConductivity(value, ThermalConductivityBtuPerHourFootFahrenheit)
+}
+
+// FromBtusPerSecondInchFahrenheit creates a new ThermalConductivity instance from a value in BtusPerSecondInchFahrenheit.
+func (uf ThermalConductivityFactory) FromBtusPerSecondInchFahrenheit(value float64) (*ThermalConductivity, error) {
+	return newThermalConductivity(value, ThermalConductivityBtuPerSecondInchFahrenheit)
 }
 
 
@@ -154,6 +163,18 @@ func (a *ThermalConductivity) BtusPerHourFootFahrenheit() float64 {
 	return btus_per_hour_foot_fahrenheit
 }
 
+// BtusPerSecondInchFahrenheit returns the ThermalConductivity value in BtusPerSecondInchFahrenheit.
+//
+// 
+func (a *ThermalConductivity) BtusPerSecondInchFahrenheit() float64 {
+	if a.btus_per_second_inch_fahrenheitLazy != nil {
+		return *a.btus_per_second_inch_fahrenheitLazy
+	}
+	btus_per_second_inch_fahrenheit := a.convertFromBase(ThermalConductivityBtuPerSecondInchFahrenheit)
+	a.btus_per_second_inch_fahrenheitLazy = &btus_per_second_inch_fahrenheit
+	return btus_per_second_inch_fahrenheit
+}
+
 
 // ToDto creates a ThermalConductivityDto representation from the ThermalConductivity instance.
 //
@@ -189,6 +210,8 @@ func (a *ThermalConductivity) Convert(toUnit ThermalConductivityUnits) float64 {
 		return a.WattsPerMeterKelvin()
     case ThermalConductivityBtuPerHourFootFahrenheit:
 		return a.BtusPerHourFootFahrenheit()
+    case ThermalConductivityBtuPerSecondInchFahrenheit:
+		return a.BtusPerSecondInchFahrenheit()
 	default:
 		return math.NaN()
 	}
@@ -201,6 +224,8 @@ func (a *ThermalConductivity) convertFromBase(toUnit ThermalConductivityUnits) f
 		return (value) 
 	case ThermalConductivityBtuPerHourFootFahrenheit:
 		return (value / ((1055.05585262 / (0.3048 * 3600)) * 1.8)) 
+	case ThermalConductivityBtuPerSecondInchFahrenheit:
+		return (value / ((1055.05585262 / 2.54e-2) * 1.8)) 
 	default:
 		return math.NaN()
 	}
@@ -212,6 +237,8 @@ func (a *ThermalConductivity) convertToBase(value float64, fromUnit ThermalCondu
 		return (value) 
 	case ThermalConductivityBtuPerHourFootFahrenheit:
 		return (value * ((1055.05585262 / (0.3048 * 3600)) * 1.8)) 
+	case ThermalConductivityBtuPerSecondInchFahrenheit:
+		return (value * ((1055.05585262 / 2.54e-2) * 1.8)) 
 	default:
 		return math.NaN()
 	}
@@ -329,6 +356,8 @@ func GetThermalConductivityAbbreviation(unit ThermalConductivityUnits) string {
 		return "W/(m·K)" 
 	case ThermalConductivityBtuPerHourFootFahrenheit:
 		return "BTU/(h·ft·°F)" 
+	case ThermalConductivityBtuPerSecondInchFahrenheit:
+		return "BTU/(s·in·°F)" 
 	default:
 		return ""
 	}

@@ -95,6 +95,15 @@ func TestThermalConductivityConversions(t *testing.T) {
 			t.Errorf("conversion to BtusPerHourFootFahrenheit returned NaN")
 		}
 	}
+	{
+		// Test conversion to BtusPerSecondInchFahrenheit.
+		// No expected conversion value provided for BtusPerSecondInchFahrenheit, verifying result is not NaN.
+		result := a.BtusPerSecondInchFahrenheit()
+		cacheResult := a.BtusPerSecondInchFahrenheit()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to BtusPerSecondInchFahrenheit returned NaN")
+		}
+	}
 }
 
 func TestThermalConductivity_ToDtoAndToDtoJSON(t *testing.T) {
@@ -198,6 +207,23 @@ func TestThermalConductivityFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for BtuPerHourFootFahrenheit = %v, want %v", converted, 100)
     }
+    // Test BtuPerSecondInchFahrenheit conversion
+    btus_per_second_inch_fahrenheitDto := units.ThermalConductivityDto{
+        Value: 100,
+        Unit:  units.ThermalConductivityBtuPerSecondInchFahrenheit,
+    }
+    
+    var btus_per_second_inch_fahrenheitResult *units.ThermalConductivity
+    btus_per_second_inch_fahrenheitResult, err = factory.FromDto(btus_per_second_inch_fahrenheitDto)
+    if err != nil {
+        t.Errorf("FromDto() with BtuPerSecondInchFahrenheit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_second_inch_fahrenheitResult.Convert(units.ThermalConductivityBtuPerSecondInchFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerSecondInchFahrenheit = %v, want %v", converted, 100)
+    }
 
     // Test zero value
     zeroDto := units.ThermalConductivityDto{
@@ -285,6 +311,18 @@ func TestThermalConductivityFactory_FromDtoJSON(t *testing.T) {
     converted = btus_per_hour_foot_fahrenheitResult.Convert(units.ThermalConductivityBtuPerHourFootFahrenheit)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for BtuPerHourFootFahrenheit = %v, want %v", converted, 100)
+    }
+    // Test JSON with BtuPerSecondInchFahrenheit unit
+    btus_per_second_inch_fahrenheitJSON := []byte(`{"value": 100, "unit": "BtuPerSecondInchFahrenheit"}`)
+    btus_per_second_inch_fahrenheitResult, err := factory.FromDtoJSON(btus_per_second_inch_fahrenheitJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with BtuPerSecondInchFahrenheit unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_second_inch_fahrenheitResult.Convert(units.ThermalConductivityBtuPerSecondInchFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerSecondInchFahrenheit = %v, want %v", converted, 100)
     }
 
     // Test zero value JSON
@@ -383,6 +421,49 @@ func TestThermalConductivityFactory_FromBtusPerHourFootFahrenheit(t *testing.T) 
         t.Errorf("FromBtusPerHourFootFahrenheit() with zero value = %v, want 0", converted)
     }
 }
+// Test FromBtusPerSecondInchFahrenheit function
+func TestThermalConductivityFactory_FromBtusPerSecondInchFahrenheit(t *testing.T) {
+    factory := units.ThermalConductivityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromBtusPerSecondInchFahrenheit(100)
+    if err != nil {
+        t.Errorf("FromBtusPerSecondInchFahrenheit() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ThermalConductivityBtuPerSecondInchFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromBtusPerSecondInchFahrenheit() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromBtusPerSecondInchFahrenheit(math.NaN())
+    if err == nil {
+        t.Error("FromBtusPerSecondInchFahrenheit() with NaN value should return error")
+    }
+
+    _, err = factory.FromBtusPerSecondInchFahrenheit(math.Inf(1))
+    if err == nil {
+        t.Error("FromBtusPerSecondInchFahrenheit() with +Inf value should return error")
+    }
+
+    _, err = factory.FromBtusPerSecondInchFahrenheit(math.Inf(-1))
+    if err == nil {
+        t.Error("FromBtusPerSecondInchFahrenheit() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromBtusPerSecondInchFahrenheit(0)
+    if err != nil {
+        t.Errorf("FromBtusPerSecondInchFahrenheit() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ThermalConductivityBtuPerSecondInchFahrenheit)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromBtusPerSecondInchFahrenheit() with zero value = %v, want 0", converted)
+    }
+}
 
 func TestThermalConductivityToString(t *testing.T) {
 	factory := units.ThermalConductivityFactory{}
@@ -467,6 +548,11 @@ func TestGetThermalConductivityAbbreviation(t *testing.T) {
             name: "BtuPerHourFootFahrenheit abbreviation",
             unit: units.ThermalConductivityBtuPerHourFootFahrenheit,
             want: "BTU/(h·ft·°F)",
+        },
+        {
+            name: "BtuPerSecondInchFahrenheit abbreviation",
+            unit: units.ThermalConductivityBtuPerSecondInchFahrenheit,
+            want: "BTU/(s·in·°F)",
         },
         {
             name: "invalid unit",

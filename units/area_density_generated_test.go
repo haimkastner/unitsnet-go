@@ -104,6 +104,24 @@ func TestAreaDensityConversions(t *testing.T) {
 			t.Errorf("conversion to MilligramsPerSquareMeter returned NaN")
 		}
 	}
+	{
+		// Test conversion to PoundsPerSquareFoot.
+		// No expected conversion value provided for PoundsPerSquareFoot, verifying result is not NaN.
+		result := a.PoundsPerSquareFoot()
+		cacheResult := a.PoundsPerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to PoundsPerSquareFoot returned NaN")
+		}
+	}
+	{
+		// Test conversion to PoundsPerThousandSquareFeet.
+		// No expected conversion value provided for PoundsPerThousandSquareFeet, verifying result is not NaN.
+		result := a.PoundsPerThousandSquareFeet()
+		cacheResult := a.PoundsPerThousandSquareFeet()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to PoundsPerThousandSquareFeet returned NaN")
+		}
+	}
 }
 
 func TestAreaDensity_ToDtoAndToDtoJSON(t *testing.T) {
@@ -224,6 +242,40 @@ func TestAreaDensityFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MilligramPerSquareMeter = %v, want %v", converted, 100)
     }
+    // Test PoundPerSquareFoot conversion
+    pounds_per_square_footDto := units.AreaDensityDto{
+        Value: 100,
+        Unit:  units.AreaDensityPoundPerSquareFoot,
+    }
+    
+    var pounds_per_square_footResult *units.AreaDensity
+    pounds_per_square_footResult, err = factory.FromDto(pounds_per_square_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with PoundPerSquareFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pounds_per_square_footResult.Convert(units.AreaDensityPoundPerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PoundPerSquareFoot = %v, want %v", converted, 100)
+    }
+    // Test PoundPerThousandSquareFeet conversion
+    pounds_per_thousand_square_feetDto := units.AreaDensityDto{
+        Value: 100,
+        Unit:  units.AreaDensityPoundPerThousandSquareFeet,
+    }
+    
+    var pounds_per_thousand_square_feetResult *units.AreaDensity
+    pounds_per_thousand_square_feetResult, err = factory.FromDto(pounds_per_thousand_square_feetDto)
+    if err != nil {
+        t.Errorf("FromDto() with PoundPerThousandSquareFeet returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pounds_per_thousand_square_feetResult.Convert(units.AreaDensityPoundPerThousandSquareFeet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PoundPerThousandSquareFeet = %v, want %v", converted, 100)
+    }
 
     // Test zero value
     zeroDto := units.AreaDensityDto{
@@ -323,6 +375,30 @@ func TestAreaDensityFactory_FromDtoJSON(t *testing.T) {
     converted = milligrams_per_square_meterResult.Convert(units.AreaDensityMilligramPerSquareMeter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for MilligramPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with PoundPerSquareFoot unit
+    pounds_per_square_footJSON := []byte(`{"value": 100, "unit": "PoundPerSquareFoot"}`)
+    pounds_per_square_footResult, err := factory.FromDtoJSON(pounds_per_square_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PoundPerSquareFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pounds_per_square_footResult.Convert(units.AreaDensityPoundPerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PoundPerSquareFoot = %v, want %v", converted, 100)
+    }
+    // Test JSON with PoundPerThousandSquareFeet unit
+    pounds_per_thousand_square_feetJSON := []byte(`{"value": 100, "unit": "PoundPerThousandSquareFeet"}`)
+    pounds_per_thousand_square_feetResult, err := factory.FromDtoJSON(pounds_per_thousand_square_feetJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with PoundPerThousandSquareFeet unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = pounds_per_thousand_square_feetResult.Convert(units.AreaDensityPoundPerThousandSquareFeet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for PoundPerThousandSquareFeet = %v, want %v", converted, 100)
     }
 
     // Test zero value JSON
@@ -464,6 +540,92 @@ func TestAreaDensityFactory_FromMilligramsPerSquareMeter(t *testing.T) {
         t.Errorf("FromMilligramsPerSquareMeter() with zero value = %v, want 0", converted)
     }
 }
+// Test FromPoundsPerSquareFoot function
+func TestAreaDensityFactory_FromPoundsPerSquareFoot(t *testing.T) {
+    factory := units.AreaDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPoundsPerSquareFoot(100)
+    if err != nil {
+        t.Errorf("FromPoundsPerSquareFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaDensityPoundPerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPoundsPerSquareFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPoundsPerSquareFoot(math.NaN())
+    if err == nil {
+        t.Error("FromPoundsPerSquareFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromPoundsPerSquareFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromPoundsPerSquareFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPoundsPerSquareFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPoundsPerSquareFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPoundsPerSquareFoot(0)
+    if err != nil {
+        t.Errorf("FromPoundsPerSquareFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaDensityPoundPerSquareFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPoundsPerSquareFoot() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromPoundsPerThousandSquareFeet function
+func TestAreaDensityFactory_FromPoundsPerThousandSquareFeet(t *testing.T) {
+    factory := units.AreaDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromPoundsPerThousandSquareFeet(100)
+    if err != nil {
+        t.Errorf("FromPoundsPerThousandSquareFeet() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.AreaDensityPoundPerThousandSquareFeet)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromPoundsPerThousandSquareFeet() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromPoundsPerThousandSquareFeet(math.NaN())
+    if err == nil {
+        t.Error("FromPoundsPerThousandSquareFeet() with NaN value should return error")
+    }
+
+    _, err = factory.FromPoundsPerThousandSquareFeet(math.Inf(1))
+    if err == nil {
+        t.Error("FromPoundsPerThousandSquareFeet() with +Inf value should return error")
+    }
+
+    _, err = factory.FromPoundsPerThousandSquareFeet(math.Inf(-1))
+    if err == nil {
+        t.Error("FromPoundsPerThousandSquareFeet() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromPoundsPerThousandSquareFeet(0)
+    if err != nil {
+        t.Errorf("FromPoundsPerThousandSquareFeet() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.AreaDensityPoundPerThousandSquareFeet)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromPoundsPerThousandSquareFeet() with zero value = %v, want 0", converted)
+    }
+}
 
 func TestAreaDensityToString(t *testing.T) {
 	factory := units.AreaDensityFactory{}
@@ -553,6 +715,16 @@ func TestGetAreaDensityAbbreviation(t *testing.T) {
             name: "MilligramPerSquareMeter abbreviation",
             unit: units.AreaDensityMilligramPerSquareMeter,
             want: "mg/m²",
+        },
+        {
+            name: "PoundPerSquareFoot abbreviation",
+            unit: units.AreaDensityPoundPerSquareFoot,
+            want: "lb/ft²",
+        },
+        {
+            name: "PoundPerThousandSquareFeet abbreviation",
+            unit: units.AreaDensityPoundPerThousandSquareFeet,
+            want: "lb/MSF",
         },
         {
             name: "invalid unit",

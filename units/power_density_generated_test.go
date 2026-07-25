@@ -114,6 +114,24 @@ func TestPowerDensityConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to BtusPerSecondCubicInch.
+		// No expected conversion value provided for BtusPerSecondCubicInch, verifying result is not NaN.
+		result := a.BtusPerSecondCubicInch()
+		cacheResult := a.BtusPerSecondCubicInch()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to BtusPerSecondCubicInch returned NaN")
+		}
+	}
+	{
+		// Test conversion to BtusPerSecondCubicFoot.
+		// No expected conversion value provided for BtusPerSecondCubicFoot, verifying result is not NaN.
+		result := a.BtusPerSecondCubicFoot()
+		cacheResult := a.BtusPerSecondCubicFoot()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to BtusPerSecondCubicFoot returned NaN")
+		}
+	}
+	{
 		// Test conversion to PicowattsPerCubicMeter.
 		// No expected conversion value provided for PicowattsPerCubicMeter, verifying result is not NaN.
 		result := a.PicowattsPerCubicMeter()
@@ -609,6 +627,40 @@ func TestPowerDensityFactory_FromDto(t *testing.T) {
     converted = watts_per_literResult.Convert(units.PowerDensityWattPerLiter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for WattPerLiter = %v, want %v", converted, 100)
+    }
+    // Test BtuPerSecondCubicInch conversion
+    btus_per_second_cubic_inchDto := units.PowerDensityDto{
+        Value: 100,
+        Unit:  units.PowerDensityBtuPerSecondCubicInch,
+    }
+    
+    var btus_per_second_cubic_inchResult *units.PowerDensity
+    btus_per_second_cubic_inchResult, err = factory.FromDto(btus_per_second_cubic_inchDto)
+    if err != nil {
+        t.Errorf("FromDto() with BtuPerSecondCubicInch returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_second_cubic_inchResult.Convert(units.PowerDensityBtuPerSecondCubicInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerSecondCubicInch = %v, want %v", converted, 100)
+    }
+    // Test BtuPerSecondCubicFoot conversion
+    btus_per_second_cubic_footDto := units.PowerDensityDto{
+        Value: 100,
+        Unit:  units.PowerDensityBtuPerSecondCubicFoot,
+    }
+    
+    var btus_per_second_cubic_footResult *units.PowerDensity
+    btus_per_second_cubic_footResult, err = factory.FromDto(btus_per_second_cubic_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with BtuPerSecondCubicFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_second_cubic_footResult.Convert(units.PowerDensityBtuPerSecondCubicFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerSecondCubicFoot = %v, want %v", converted, 100)
     }
     // Test PicowattPerCubicMeter conversion
     picowatts_per_cubic_meterDto := units.PowerDensityDto{
@@ -1402,6 +1454,30 @@ func TestPowerDensityFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for WattPerLiter = %v, want %v", converted, 100)
     }
+    // Test JSON with BtuPerSecondCubicInch unit
+    btus_per_second_cubic_inchJSON := []byte(`{"value": 100, "unit": "BtuPerSecondCubicInch"}`)
+    btus_per_second_cubic_inchResult, err := factory.FromDtoJSON(btus_per_second_cubic_inchJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with BtuPerSecondCubicInch unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_second_cubic_inchResult.Convert(units.PowerDensityBtuPerSecondCubicInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerSecondCubicInch = %v, want %v", converted, 100)
+    }
+    // Test JSON with BtuPerSecondCubicFoot unit
+    btus_per_second_cubic_footJSON := []byte(`{"value": 100, "unit": "BtuPerSecondCubicFoot"}`)
+    btus_per_second_cubic_footResult, err := factory.FromDtoJSON(btus_per_second_cubic_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with BtuPerSecondCubicFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_second_cubic_footResult.Convert(units.PowerDensityBtuPerSecondCubicFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerSecondCubicFoot = %v, want %v", converted, 100)
+    }
     // Test JSON with PicowattPerCubicMeter unit
     picowatts_per_cubic_meterJSON := []byte(`{"value": 100, "unit": "PicowattPerCubicMeter"}`)
     picowatts_per_cubic_meterResult, err := factory.FromDtoJSON(picowatts_per_cubic_meterJSON)
@@ -2063,6 +2139,92 @@ func TestPowerDensityFactory_FromWattsPerLiter(t *testing.T) {
     converted = zeroResult.Convert(units.PowerDensityWattPerLiter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromWattsPerLiter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromBtusPerSecondCubicInch function
+func TestPowerDensityFactory_FromBtusPerSecondCubicInch(t *testing.T) {
+    factory := units.PowerDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromBtusPerSecondCubicInch(100)
+    if err != nil {
+        t.Errorf("FromBtusPerSecondCubicInch() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PowerDensityBtuPerSecondCubicInch)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromBtusPerSecondCubicInch() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromBtusPerSecondCubicInch(math.NaN())
+    if err == nil {
+        t.Error("FromBtusPerSecondCubicInch() with NaN value should return error")
+    }
+
+    _, err = factory.FromBtusPerSecondCubicInch(math.Inf(1))
+    if err == nil {
+        t.Error("FromBtusPerSecondCubicInch() with +Inf value should return error")
+    }
+
+    _, err = factory.FromBtusPerSecondCubicInch(math.Inf(-1))
+    if err == nil {
+        t.Error("FromBtusPerSecondCubicInch() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromBtusPerSecondCubicInch(0)
+    if err != nil {
+        t.Errorf("FromBtusPerSecondCubicInch() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PowerDensityBtuPerSecondCubicInch)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromBtusPerSecondCubicInch() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromBtusPerSecondCubicFoot function
+func TestPowerDensityFactory_FromBtusPerSecondCubicFoot(t *testing.T) {
+    factory := units.PowerDensityFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromBtusPerSecondCubicFoot(100)
+    if err != nil {
+        t.Errorf("FromBtusPerSecondCubicFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PowerDensityBtuPerSecondCubicFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromBtusPerSecondCubicFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromBtusPerSecondCubicFoot(math.NaN())
+    if err == nil {
+        t.Error("FromBtusPerSecondCubicFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromBtusPerSecondCubicFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromBtusPerSecondCubicFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromBtusPerSecondCubicFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromBtusPerSecondCubicFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromBtusPerSecondCubicFoot(0)
+    if err != nil {
+        t.Errorf("FromBtusPerSecondCubicFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PowerDensityBtuPerSecondCubicFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromBtusPerSecondCubicFoot() with zero value = %v, want 0", converted)
     }
 }
 // Test FromPicowattsPerCubicMeter function
@@ -3879,6 +4041,16 @@ func TestGetPowerDensityAbbreviation(t *testing.T) {
             name: "WattPerLiter abbreviation",
             unit: units.PowerDensityWattPerLiter,
             want: "W/l",
+        },
+        {
+            name: "BtuPerSecondCubicInch abbreviation",
+            unit: units.PowerDensityBtuPerSecondCubicInch,
+            want: "BTU/(s·in³)",
+        },
+        {
+            name: "BtuPerSecondCubicFoot abbreviation",
+            unit: units.PowerDensityBtuPerSecondCubicFoot,
+            want: "BTU/(s·ft³)",
         },
         {
             name: "PicowattPerCubicMeter abbreviation",

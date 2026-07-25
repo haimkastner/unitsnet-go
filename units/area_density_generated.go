@@ -23,6 +23,10 @@ const (
         AreaDensityGramPerSquareMeter AreaDensityUnits = "GramPerSquareMeter"
         // 
         AreaDensityMilligramPerSquareMeter AreaDensityUnits = "MilligramPerSquareMeter"
+        // 
+        AreaDensityPoundPerSquareFoot AreaDensityUnits = "PoundPerSquareFoot"
+        // 
+        AreaDensityPoundPerThousandSquareFeet AreaDensityUnits = "PoundPerThousandSquareFeet"
 )
 
 var internalAreaDensityUnitsMap = map[AreaDensityUnits]bool{
@@ -30,6 +34,8 @@ var internalAreaDensityUnitsMap = map[AreaDensityUnits]bool{
 	AreaDensityKilogramPerSquareMeter: true,
 	AreaDensityGramPerSquareMeter: true,
 	AreaDensityMilligramPerSquareMeter: true,
+	AreaDensityPoundPerSquareFoot: true,
+	AreaDensityPoundPerThousandSquareFeet: true,
 }
 
 // AreaDensityDto represents a AreaDensity measurement with a numerical value and its corresponding unit.
@@ -37,7 +43,7 @@ type AreaDensityDto struct {
     // Value is the numerical representation of the AreaDensity.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the AreaDensity, as defined in the AreaDensityUnits enumeration.
-	Unit  AreaDensityUnits `json:"unit" validate:"required,oneof=KilogramPerSquareMeter GramPerSquareMeter MilligramPerSquareMeter"`
+	Unit  AreaDensityUnits `json:"unit" validate:"required,oneof=KilogramPerSquareMeter GramPerSquareMeter MilligramPerSquareMeter PoundPerSquareFoot PoundPerThousandSquareFeet"`
 }
 
 // AreaDensityDtoFactory groups methods for creating and serializing AreaDensityDto objects.
@@ -79,6 +85,8 @@ type AreaDensity struct {
     kilograms_per_square_meterLazy *float64 
     grams_per_square_meterLazy *float64 
     milligrams_per_square_meterLazy *float64 
+    pounds_per_square_footLazy *float64 
+    pounds_per_thousand_square_feetLazy *float64 
 }
 
 // AreaDensityFactory groups methods for creating AreaDensity instances.
@@ -117,6 +125,16 @@ func (uf AreaDensityFactory) FromGramsPerSquareMeter(value float64) (*AreaDensit
 // FromMilligramsPerSquareMeter creates a new AreaDensity instance from a value in MilligramsPerSquareMeter.
 func (uf AreaDensityFactory) FromMilligramsPerSquareMeter(value float64) (*AreaDensity, error) {
 	return newAreaDensity(value, AreaDensityMilligramPerSquareMeter)
+}
+
+// FromPoundsPerSquareFoot creates a new AreaDensity instance from a value in PoundsPerSquareFoot.
+func (uf AreaDensityFactory) FromPoundsPerSquareFoot(value float64) (*AreaDensity, error) {
+	return newAreaDensity(value, AreaDensityPoundPerSquareFoot)
+}
+
+// FromPoundsPerThousandSquareFeet creates a new AreaDensity instance from a value in PoundsPerThousandSquareFeet.
+func (uf AreaDensityFactory) FromPoundsPerThousandSquareFeet(value float64) (*AreaDensity, error) {
+	return newAreaDensity(value, AreaDensityPoundPerThousandSquareFeet)
 }
 
 
@@ -175,6 +193,30 @@ func (a *AreaDensity) MilligramsPerSquareMeter() float64 {
 	return milligrams_per_square_meter
 }
 
+// PoundsPerSquareFoot returns the AreaDensity value in PoundsPerSquareFoot.
+//
+// 
+func (a *AreaDensity) PoundsPerSquareFoot() float64 {
+	if a.pounds_per_square_footLazy != nil {
+		return *a.pounds_per_square_footLazy
+	}
+	pounds_per_square_foot := a.convertFromBase(AreaDensityPoundPerSquareFoot)
+	a.pounds_per_square_footLazy = &pounds_per_square_foot
+	return pounds_per_square_foot
+}
+
+// PoundsPerThousandSquareFeet returns the AreaDensity value in PoundsPerThousandSquareFeet.
+//
+// 
+func (a *AreaDensity) PoundsPerThousandSquareFeet() float64 {
+	if a.pounds_per_thousand_square_feetLazy != nil {
+		return *a.pounds_per_thousand_square_feetLazy
+	}
+	pounds_per_thousand_square_feet := a.convertFromBase(AreaDensityPoundPerThousandSquareFeet)
+	a.pounds_per_thousand_square_feetLazy = &pounds_per_thousand_square_feet
+	return pounds_per_thousand_square_feet
+}
+
 
 // ToDto creates a AreaDensityDto representation from the AreaDensity instance.
 //
@@ -212,6 +254,10 @@ func (a *AreaDensity) Convert(toUnit AreaDensityUnits) float64 {
 		return a.GramsPerSquareMeter()
     case AreaDensityMilligramPerSquareMeter:
 		return a.MilligramsPerSquareMeter()
+    case AreaDensityPoundPerSquareFoot:
+		return a.PoundsPerSquareFoot()
+    case AreaDensityPoundPerThousandSquareFeet:
+		return a.PoundsPerThousandSquareFeet()
 	default:
 		return math.NaN()
 	}
@@ -226,6 +272,10 @@ func (a *AreaDensity) convertFromBase(toUnit AreaDensityUnits) float64 {
 		return (value * 1000) 
 	case AreaDensityMilligramPerSquareMeter:
 		return (value * 1000000) 
+	case AreaDensityPoundPerSquareFoot:
+		return (value / (0.45359237 / 0.09290304)) 
+	case AreaDensityPoundPerThousandSquareFeet:
+		return (value / (0.45359237 / 0.09290304) * 1000) 
 	default:
 		return math.NaN()
 	}
@@ -239,6 +289,10 @@ func (a *AreaDensity) convertToBase(value float64, fromUnit AreaDensityUnits) fl
 		return (value / 1000) 
 	case AreaDensityMilligramPerSquareMeter:
 		return (value / 1000000) 
+	case AreaDensityPoundPerSquareFoot:
+		return (value * (0.45359237 / 0.09290304)) 
+	case AreaDensityPoundPerThousandSquareFeet:
+		return (value * (0.45359237 / 0.09290304) / 1000) 
 	default:
 		return math.NaN()
 	}
@@ -358,6 +412,10 @@ func GetAreaDensityAbbreviation(unit AreaDensityUnits) string {
 		return "g/m²" 
 	case AreaDensityMilligramPerSquareMeter:
 		return "mg/m²" 
+	case AreaDensityPoundPerSquareFoot:
+		return "lb/ft²" 
+	case AreaDensityPoundPerThousandSquareFeet:
+		return "lb/MSF" 
 	default:
 		return ""
 	}

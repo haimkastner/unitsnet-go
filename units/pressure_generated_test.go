@@ -303,6 +303,24 @@ func TestPressureConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to MilligramsForcePerSquareMeter.
+		// No expected conversion value provided for MilligramsForcePerSquareMeter, verifying result is not NaN.
+		result := a.MilligramsForcePerSquareMeter()
+		cacheResult := a.MilligramsForcePerSquareMeter()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to MilligramsForcePerSquareMeter returned NaN")
+		}
+	}
+	{
+		// Test conversion to MilligramsForcePerSquareFoot.
+		// No expected conversion value provided for MilligramsForcePerSquareFoot, verifying result is not NaN.
+		result := a.MilligramsForcePerSquareFoot()
+		cacheResult := a.MilligramsForcePerSquareFoot()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to MilligramsForcePerSquareFoot returned NaN")
+		}
+	}
+	{
 		// Test conversion to Micropascals.
 		// No expected conversion value provided for Micropascals, verifying result is not NaN.
 		result := a.Micropascals()
@@ -1002,6 +1020,40 @@ func TestPressureFactory_FromDto(t *testing.T) {
     converted = inches_of_water_columnResult.Convert(units.PressureInchOfWaterColumn)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for InchOfWaterColumn = %v, want %v", converted, 100)
+    }
+    // Test MilligramForcePerSquareMeter conversion
+    milligrams_force_per_square_meterDto := units.PressureDto{
+        Value: 100,
+        Unit:  units.PressureMilligramForcePerSquareMeter,
+    }
+    
+    var milligrams_force_per_square_meterResult *units.Pressure
+    milligrams_force_per_square_meterResult, err = factory.FromDto(milligrams_force_per_square_meterDto)
+    if err != nil {
+        t.Errorf("FromDto() with MilligramForcePerSquareMeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligrams_force_per_square_meterResult.Convert(units.PressureMilligramForcePerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilligramForcePerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test MilligramForcePerSquareFoot conversion
+    milligrams_force_per_square_footDto := units.PressureDto{
+        Value: 100,
+        Unit:  units.PressureMilligramForcePerSquareFoot,
+    }
+    
+    var milligrams_force_per_square_footResult *units.Pressure
+    milligrams_force_per_square_footResult, err = factory.FromDto(milligrams_force_per_square_footDto)
+    if err != nil {
+        t.Errorf("FromDto() with MilligramForcePerSquareFoot returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligrams_force_per_square_footResult.Convert(units.PressureMilligramForcePerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilligramForcePerSquareFoot = %v, want %v", converted, 100)
     }
     // Test Micropascal conversion
     micropascalsDto := units.PressureDto{
@@ -1757,6 +1809,30 @@ func TestPressureFactory_FromDtoJSON(t *testing.T) {
     converted = inches_of_water_columnResult.Convert(units.PressureInchOfWaterColumn)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for InchOfWaterColumn = %v, want %v", converted, 100)
+    }
+    // Test JSON with MilligramForcePerSquareMeter unit
+    milligrams_force_per_square_meterJSON := []byte(`{"value": 100, "unit": "MilligramForcePerSquareMeter"}`)
+    milligrams_force_per_square_meterResult, err := factory.FromDtoJSON(milligrams_force_per_square_meterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MilligramForcePerSquareMeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligrams_force_per_square_meterResult.Convert(units.PressureMilligramForcePerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilligramForcePerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MilligramForcePerSquareFoot unit
+    milligrams_force_per_square_footJSON := []byte(`{"value": 100, "unit": "MilligramForcePerSquareFoot"}`)
+    milligrams_force_per_square_footResult, err := factory.FromDtoJSON(milligrams_force_per_square_footJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MilligramForcePerSquareFoot unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milligrams_force_per_square_footResult.Convert(units.PressureMilligramForcePerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilligramForcePerSquareFoot = %v, want %v", converted, 100)
     }
     // Test JSON with Micropascal unit
     micropascalsJSON := []byte(`{"value": 100, "unit": "Micropascal"}`)
@@ -3120,6 +3196,92 @@ func TestPressureFactory_FromInchesOfWaterColumn(t *testing.T) {
         t.Errorf("FromInchesOfWaterColumn() with zero value = %v, want 0", converted)
     }
 }
+// Test FromMilligramsForcePerSquareMeter function
+func TestPressureFactory_FromMilligramsForcePerSquareMeter(t *testing.T) {
+    factory := units.PressureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilligramsForcePerSquareMeter(100)
+    if err != nil {
+        t.Errorf("FromMilligramsForcePerSquareMeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PressureMilligramForcePerSquareMeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilligramsForcePerSquareMeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilligramsForcePerSquareMeter(math.NaN())
+    if err == nil {
+        t.Error("FromMilligramsForcePerSquareMeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilligramsForcePerSquareMeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilligramsForcePerSquareMeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilligramsForcePerSquareMeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilligramsForcePerSquareMeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilligramsForcePerSquareMeter(0)
+    if err != nil {
+        t.Errorf("FromMilligramsForcePerSquareMeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PressureMilligramForcePerSquareMeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilligramsForcePerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilligramsForcePerSquareFoot function
+func TestPressureFactory_FromMilligramsForcePerSquareFoot(t *testing.T) {
+    factory := units.PressureFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilligramsForcePerSquareFoot(100)
+    if err != nil {
+        t.Errorf("FromMilligramsForcePerSquareFoot() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.PressureMilligramForcePerSquareFoot)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilligramsForcePerSquareFoot() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilligramsForcePerSquareFoot(math.NaN())
+    if err == nil {
+        t.Error("FromMilligramsForcePerSquareFoot() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilligramsForcePerSquareFoot(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilligramsForcePerSquareFoot() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilligramsForcePerSquareFoot(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilligramsForcePerSquareFoot() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilligramsForcePerSquareFoot(0)
+    if err != nil {
+        t.Errorf("FromMilligramsForcePerSquareFoot() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.PressureMilligramForcePerSquareFoot)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilligramsForcePerSquareFoot() with zero value = %v, want 0", converted)
+    }
+}
 // Test FromMicropascals function
 func TestPressureFactory_FromMicropascals(t *testing.T) {
     factory := units.PressureFactory{}
@@ -4308,6 +4470,16 @@ func TestGetPressureAbbreviation(t *testing.T) {
             name: "InchOfWaterColumn abbreviation",
             unit: units.PressureInchOfWaterColumn,
             want: "inH2O",
+        },
+        {
+            name: "MilligramForcePerSquareMeter abbreviation",
+            unit: units.PressureMilligramForcePerSquareMeter,
+            want: "mgf/m²",
+        },
+        {
+            name: "MilligramForcePerSquareFoot abbreviation",
+            unit: units.PressureMilligramForcePerSquareFoot,
+            want: "mgf/ft²",
         },
         {
             name: "Micropascal abbreviation",

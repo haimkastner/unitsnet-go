@@ -519,7 +519,7 @@ func GetMolarFlowAbbreviation(unit MolarFlowUnits) string {
 	case MolarFlowMolePerMinute:
 		return "mol/min" 
 	case MolarFlowMolePerHour:
-		return "kmol/h" 
+		return "mol/h" 
 	case MolarFlowPoundMolePerSecond:
 		return "lbmol/s" 
 	case MolarFlowPoundMolePerMinute:
@@ -531,7 +531,7 @@ func GetMolarFlowAbbreviation(unit MolarFlowUnits) string {
 	case MolarFlowKilomolePerMinute:
 		return "kmol/min" 
 	case MolarFlowKilomolePerHour:
-		return "kkmol/h" 
+		return "kmol/h" 
 	default:
 		return ""
 	}

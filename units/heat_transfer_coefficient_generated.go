@@ -24,6 +24,8 @@ const (
         // 
         HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit HeatTransferCoefficientUnits = "BtuPerHourSquareFootDegreeFahrenheit"
         // 
+        HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit HeatTransferCoefficientUnits = "BtuPerSecondSquareInchDegreeFahrenheit"
+        // 
         HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius HeatTransferCoefficientUnits = "CaloriePerHourSquareMeterDegreeCelsius"
         // 
         HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius HeatTransferCoefficientUnits = "KilocaloriePerHourSquareMeterDegreeCelsius"
@@ -34,6 +36,7 @@ var internalHeatTransferCoefficientUnitsMap = map[HeatTransferCoefficientUnits]b
 	HeatTransferCoefficientWattPerSquareMeterKelvin: true,
 	HeatTransferCoefficientWattPerSquareMeterCelsius: true,
 	HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit: true,
+	HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit: true,
 	HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius: true,
 	HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius: true,
 }
@@ -43,7 +46,7 @@ type HeatTransferCoefficientDto struct {
     // Value is the numerical representation of the HeatTransferCoefficient.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the HeatTransferCoefficient, as defined in the HeatTransferCoefficientUnits enumeration.
-	Unit  HeatTransferCoefficientUnits `json:"unit" validate:"required,oneof=WattPerSquareMeterKelvin WattPerSquareMeterCelsius BtuPerHourSquareFootDegreeFahrenheit CaloriePerHourSquareMeterDegreeCelsius KilocaloriePerHourSquareMeterDegreeCelsius"`
+	Unit  HeatTransferCoefficientUnits `json:"unit" validate:"required,oneof=WattPerSquareMeterKelvin WattPerSquareMeterCelsius BtuPerHourSquareFootDegreeFahrenheit BtuPerSecondSquareInchDegreeFahrenheit CaloriePerHourSquareMeterDegreeCelsius KilocaloriePerHourSquareMeterDegreeCelsius"`
 }
 
 // HeatTransferCoefficientDtoFactory groups methods for creating and serializing HeatTransferCoefficientDto objects.
@@ -85,6 +88,7 @@ type HeatTransferCoefficient struct {
     watts_per_square_meter_kelvinLazy *float64 
     watts_per_square_meter_celsiusLazy *float64 
     btus_per_hour_square_foot_degree_fahrenheitLazy *float64 
+    btus_per_second_square_inch_degree_fahrenheitLazy *float64 
     calories_per_hour_square_meter_degree_celsiusLazy *float64 
     kilocalories_per_hour_square_meter_degree_celsiusLazy *float64 
 }
@@ -125,6 +129,11 @@ func (uf HeatTransferCoefficientFactory) FromWattsPerSquareMeterCelsius(value fl
 // FromBtusPerHourSquareFootDegreeFahrenheit creates a new HeatTransferCoefficient instance from a value in BtusPerHourSquareFootDegreeFahrenheit.
 func (uf HeatTransferCoefficientFactory) FromBtusPerHourSquareFootDegreeFahrenheit(value float64) (*HeatTransferCoefficient, error) {
 	return newHeatTransferCoefficient(value, HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit)
+}
+
+// FromBtusPerSecondSquareInchDegreeFahrenheit creates a new HeatTransferCoefficient instance from a value in BtusPerSecondSquareInchDegreeFahrenheit.
+func (uf HeatTransferCoefficientFactory) FromBtusPerSecondSquareInchDegreeFahrenheit(value float64) (*HeatTransferCoefficient, error) {
+	return newHeatTransferCoefficient(value, HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit)
 }
 
 // FromCaloriesPerHourSquareMeterDegreeCelsius creates a new HeatTransferCoefficient instance from a value in CaloriesPerHourSquareMeterDegreeCelsius.
@@ -193,6 +202,18 @@ func (a *HeatTransferCoefficient) BtusPerHourSquareFootDegreeFahrenheit() float6
 	return btus_per_hour_square_foot_degree_fahrenheit
 }
 
+// BtusPerSecondSquareInchDegreeFahrenheit returns the HeatTransferCoefficient value in BtusPerSecondSquareInchDegreeFahrenheit.
+//
+// 
+func (a *HeatTransferCoefficient) BtusPerSecondSquareInchDegreeFahrenheit() float64 {
+	if a.btus_per_second_square_inch_degree_fahrenheitLazy != nil {
+		return *a.btus_per_second_square_inch_degree_fahrenheitLazy
+	}
+	btus_per_second_square_inch_degree_fahrenheit := a.convertFromBase(HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit)
+	a.btus_per_second_square_inch_degree_fahrenheitLazy = &btus_per_second_square_inch_degree_fahrenheit
+	return btus_per_second_square_inch_degree_fahrenheit
+}
+
 // CaloriesPerHourSquareMeterDegreeCelsius returns the HeatTransferCoefficient value in CaloriesPerHourSquareMeterDegreeCelsius.
 //
 // 
@@ -254,6 +275,8 @@ func (a *HeatTransferCoefficient) Convert(toUnit HeatTransferCoefficientUnits) f
 		return a.WattsPerSquareMeterCelsius()
     case HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit:
 		return a.BtusPerHourSquareFootDegreeFahrenheit()
+    case HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit:
+		return a.BtusPerSecondSquareInchDegreeFahrenheit()
     case HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius:
 		return a.CaloriesPerHourSquareMeterDegreeCelsius()
     case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:
@@ -272,6 +295,8 @@ func (a *HeatTransferCoefficient) convertFromBase(toUnit HeatTransferCoefficient
 		return (value) 
 	case HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit:
 		return (value / ((1055.05585262 / (0.3048 * 0.3048 * 3600)) * 1.8)) 
+	case HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit:
+		return (value / ((1055.05585262 / (2.54e-2 * 2.54e-2)) * 1.8)) 
 	case HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius:
 		return ((value / 4.184) * 3600) 
 	case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:
@@ -289,6 +314,8 @@ func (a *HeatTransferCoefficient) convertToBase(value float64, fromUnit HeatTran
 		return (value) 
 	case HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit:
 		return (value * ((1055.05585262 / (0.3048 * 0.3048 * 3600)) * 1.8)) 
+	case HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit:
+		return (value * ((1055.05585262 / (2.54e-2 * 2.54e-2)) * 1.8)) 
 	case HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius:
 		return ((value * 4.184) / 3600) 
 	case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:
@@ -412,6 +439,8 @@ func GetHeatTransferCoefficientAbbreviation(unit HeatTransferCoefficientUnits) s
 		return "W/(m²·°C)" 
 	case HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit:
 		return "Btu/(h·ft²·°F)" 
+	case HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit:
+		return "Btu/(s·in²·°F)" 
 	case HeatTransferCoefficientCaloriePerHourSquareMeterDegreeCelsius:
 		return "kcal/(h·m²·°C)" 
 	case HeatTransferCoefficientKilocaloriePerHourSquareMeterDegreeCelsius:

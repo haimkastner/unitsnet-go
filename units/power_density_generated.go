@@ -26,6 +26,10 @@ const (
         // 
         PowerDensityWattPerLiter PowerDensityUnits = "WattPerLiter"
         // 
+        PowerDensityBtuPerSecondCubicInch PowerDensityUnits = "BtuPerSecondCubicInch"
+        // 
+        PowerDensityBtuPerSecondCubicFoot PowerDensityUnits = "BtuPerSecondCubicFoot"
+        // 
         PowerDensityPicowattPerCubicMeter PowerDensityUnits = "PicowattPerCubicMeter"
         // 
         PowerDensityNanowattPerCubicMeter PowerDensityUnits = "NanowattPerCubicMeter"
@@ -113,6 +117,8 @@ var internalPowerDensityUnitsMap = map[PowerDensityUnits]bool{
 	PowerDensityWattPerCubicInch: true,
 	PowerDensityWattPerCubicFoot: true,
 	PowerDensityWattPerLiter: true,
+	PowerDensityBtuPerSecondCubicInch: true,
+	PowerDensityBtuPerSecondCubicFoot: true,
 	PowerDensityPicowattPerCubicMeter: true,
 	PowerDensityNanowattPerCubicMeter: true,
 	PowerDensityMicrowattPerCubicMeter: true,
@@ -160,7 +166,7 @@ type PowerDensityDto struct {
     // Value is the numerical representation of the PowerDensity.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the PowerDensity, as defined in the PowerDensityUnits enumeration.
-	Unit  PowerDensityUnits `json:"unit" validate:"required,oneof=WattPerCubicMeter WattPerCubicInch WattPerCubicFoot WattPerLiter PicowattPerCubicMeter NanowattPerCubicMeter MicrowattPerCubicMeter MilliwattPerCubicMeter DeciwattPerCubicMeter DecawattPerCubicMeter KilowattPerCubicMeter MegawattPerCubicMeter GigawattPerCubicMeter TerawattPerCubicMeter PicowattPerCubicInch NanowattPerCubicInch MicrowattPerCubicInch MilliwattPerCubicInch DeciwattPerCubicInch DecawattPerCubicInch KilowattPerCubicInch MegawattPerCubicInch GigawattPerCubicInch TerawattPerCubicInch PicowattPerCubicFoot NanowattPerCubicFoot MicrowattPerCubicFoot MilliwattPerCubicFoot DeciwattPerCubicFoot DecawattPerCubicFoot KilowattPerCubicFoot MegawattPerCubicFoot GigawattPerCubicFoot TerawattPerCubicFoot PicowattPerLiter NanowattPerLiter MicrowattPerLiter MilliwattPerLiter DeciwattPerLiter DecawattPerLiter KilowattPerLiter MegawattPerLiter GigawattPerLiter TerawattPerLiter"`
+	Unit  PowerDensityUnits `json:"unit" validate:"required,oneof=WattPerCubicMeter WattPerCubicInch WattPerCubicFoot WattPerLiter BtuPerSecondCubicInch BtuPerSecondCubicFoot PicowattPerCubicMeter NanowattPerCubicMeter MicrowattPerCubicMeter MilliwattPerCubicMeter DeciwattPerCubicMeter DecawattPerCubicMeter KilowattPerCubicMeter MegawattPerCubicMeter GigawattPerCubicMeter TerawattPerCubicMeter PicowattPerCubicInch NanowattPerCubicInch MicrowattPerCubicInch MilliwattPerCubicInch DeciwattPerCubicInch DecawattPerCubicInch KilowattPerCubicInch MegawattPerCubicInch GigawattPerCubicInch TerawattPerCubicInch PicowattPerCubicFoot NanowattPerCubicFoot MicrowattPerCubicFoot MilliwattPerCubicFoot DeciwattPerCubicFoot DecawattPerCubicFoot KilowattPerCubicFoot MegawattPerCubicFoot GigawattPerCubicFoot TerawattPerCubicFoot PicowattPerLiter NanowattPerLiter MicrowattPerLiter MilliwattPerLiter DeciwattPerLiter DecawattPerLiter KilowattPerLiter MegawattPerLiter GigawattPerLiter TerawattPerLiter"`
 }
 
 // PowerDensityDtoFactory groups methods for creating and serializing PowerDensityDto objects.
@@ -203,6 +209,8 @@ type PowerDensity struct {
     watts_per_cubic_inchLazy *float64 
     watts_per_cubic_footLazy *float64 
     watts_per_literLazy *float64 
+    btus_per_second_cubic_inchLazy *float64 
+    btus_per_second_cubic_footLazy *float64 
     picowatts_per_cubic_meterLazy *float64 
     nanowatts_per_cubic_meterLazy *float64 
     microwatts_per_cubic_meterLazy *float64 
@@ -286,6 +294,16 @@ func (uf PowerDensityFactory) FromWattsPerCubicFoot(value float64) (*PowerDensit
 // FromWattsPerLiter creates a new PowerDensity instance from a value in WattsPerLiter.
 func (uf PowerDensityFactory) FromWattsPerLiter(value float64) (*PowerDensity, error) {
 	return newPowerDensity(value, PowerDensityWattPerLiter)
+}
+
+// FromBtusPerSecondCubicInch creates a new PowerDensity instance from a value in BtusPerSecondCubicInch.
+func (uf PowerDensityFactory) FromBtusPerSecondCubicInch(value float64) (*PowerDensity, error) {
+	return newPowerDensity(value, PowerDensityBtuPerSecondCubicInch)
+}
+
+// FromBtusPerSecondCubicFoot creates a new PowerDensity instance from a value in BtusPerSecondCubicFoot.
+func (uf PowerDensityFactory) FromBtusPerSecondCubicFoot(value float64) (*PowerDensity, error) {
+	return newPowerDensity(value, PowerDensityBtuPerSecondCubicFoot)
 }
 
 // FromPicowattsPerCubicMeter creates a new PowerDensity instance from a value in PicowattsPerCubicMeter.
@@ -554,6 +572,30 @@ func (a *PowerDensity) WattsPerLiter() float64 {
 	watts_per_liter := a.convertFromBase(PowerDensityWattPerLiter)
 	a.watts_per_literLazy = &watts_per_liter
 	return watts_per_liter
+}
+
+// BtusPerSecondCubicInch returns the PowerDensity value in BtusPerSecondCubicInch.
+//
+// 
+func (a *PowerDensity) BtusPerSecondCubicInch() float64 {
+	if a.btus_per_second_cubic_inchLazy != nil {
+		return *a.btus_per_second_cubic_inchLazy
+	}
+	btus_per_second_cubic_inch := a.convertFromBase(PowerDensityBtuPerSecondCubicInch)
+	a.btus_per_second_cubic_inchLazy = &btus_per_second_cubic_inch
+	return btus_per_second_cubic_inch
+}
+
+// BtusPerSecondCubicFoot returns the PowerDensity value in BtusPerSecondCubicFoot.
+//
+// 
+func (a *PowerDensity) BtusPerSecondCubicFoot() float64 {
+	if a.btus_per_second_cubic_footLazy != nil {
+		return *a.btus_per_second_cubic_footLazy
+	}
+	btus_per_second_cubic_foot := a.convertFromBase(PowerDensityBtuPerSecondCubicFoot)
+	a.btus_per_second_cubic_footLazy = &btus_per_second_cubic_foot
+	return btus_per_second_cubic_foot
 }
 
 // PicowattsPerCubicMeter returns the PowerDensity value in PicowattsPerCubicMeter.
@@ -1075,6 +1117,10 @@ func (a *PowerDensity) Convert(toUnit PowerDensityUnits) float64 {
 		return a.WattsPerCubicFoot()
     case PowerDensityWattPerLiter:
 		return a.WattsPerLiter()
+    case PowerDensityBtuPerSecondCubicInch:
+		return a.BtusPerSecondCubicInch()
+    case PowerDensityBtuPerSecondCubicFoot:
+		return a.BtusPerSecondCubicFoot()
     case PowerDensityPicowattPerCubicMeter:
 		return a.PicowattsPerCubicMeter()
     case PowerDensityNanowattPerCubicMeter:
@@ -1171,6 +1217,10 @@ func (a *PowerDensity) convertFromBase(toUnit PowerDensityUnits) float64 {
 		return (value * 0.028316846592) 
 	case PowerDensityWattPerLiter:
 		return (value / 1.0e3) 
+	case PowerDensityBtuPerSecondCubicInch:
+		return (value / 1055.05585262 * (2.54e-2 * 2.54e-2 * 2.54e-2)) 
+	case PowerDensityBtuPerSecondCubicFoot:
+		return (value / 1055.05585262 * (0.3048 * 0.3048 * 0.3048)) 
 	case PowerDensityPicowattPerCubicMeter:
 		return ((value) / 1e-12) 
 	case PowerDensityNanowattPerCubicMeter:
@@ -1266,6 +1316,10 @@ func (a *PowerDensity) convertToBase(value float64, fromUnit PowerDensityUnits) 
 		return (value / 0.028316846592) 
 	case PowerDensityWattPerLiter:
 		return (value * 1.0e3) 
+	case PowerDensityBtuPerSecondCubicInch:
+		return (value * 1055.05585262 / (2.54e-2 * 2.54e-2 * 2.54e-2)) 
+	case PowerDensityBtuPerSecondCubicFoot:
+		return (value * 1055.05585262 / (0.3048 * 0.3048 * 0.3048)) 
 	case PowerDensityPicowattPerCubicMeter:
 		return ((value) * 1e-12) 
 	case PowerDensityNanowattPerCubicMeter:
@@ -1467,6 +1521,10 @@ func GetPowerDensityAbbreviation(unit PowerDensityUnits) string {
 		return "W/ft³" 
 	case PowerDensityWattPerLiter:
 		return "W/l" 
+	case PowerDensityBtuPerSecondCubicInch:
+		return "BTU/(s·in³)" 
+	case PowerDensityBtuPerSecondCubicFoot:
+		return "BTU/(s·ft³)" 
 	case PowerDensityPicowattPerCubicMeter:
 		return "pW/m³" 
 	case PowerDensityNanowattPerCubicMeter:

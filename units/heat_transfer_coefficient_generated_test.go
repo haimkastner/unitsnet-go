@@ -105,6 +105,15 @@ func TestHeatTransferCoefficientConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to BtusPerSecondSquareInchDegreeFahrenheit.
+		// No expected conversion value provided for BtusPerSecondSquareInchDegreeFahrenheit, verifying result is not NaN.
+		result := a.BtusPerSecondSquareInchDegreeFahrenheit()
+		cacheResult := a.BtusPerSecondSquareInchDegreeFahrenheit()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to BtusPerSecondSquareInchDegreeFahrenheit returned NaN")
+		}
+	}
+	{
 		// Test conversion to CaloriesPerHourSquareMeterDegreeCelsius.
 		// No expected conversion value provided for CaloriesPerHourSquareMeterDegreeCelsius, verifying result is not NaN.
 		result := a.CaloriesPerHourSquareMeterDegreeCelsius()
@@ -242,6 +251,23 @@ func TestHeatTransferCoefficientFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for BtuPerHourSquareFootDegreeFahrenheit = %v, want %v", converted, 100)
     }
+    // Test BtuPerSecondSquareInchDegreeFahrenheit conversion
+    btus_per_second_square_inch_degree_fahrenheitDto := units.HeatTransferCoefficientDto{
+        Value: 100,
+        Unit:  units.HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit,
+    }
+    
+    var btus_per_second_square_inch_degree_fahrenheitResult *units.HeatTransferCoefficient
+    btus_per_second_square_inch_degree_fahrenheitResult, err = factory.FromDto(btus_per_second_square_inch_degree_fahrenheitDto)
+    if err != nil {
+        t.Errorf("FromDto() with BtuPerSecondSquareInchDegreeFahrenheit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_second_square_inch_degree_fahrenheitResult.Convert(units.HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerSecondSquareInchDegreeFahrenheit = %v, want %v", converted, 100)
+    }
     // Test CaloriePerHourSquareMeterDegreeCelsius conversion
     calories_per_hour_square_meter_degree_celsiusDto := units.HeatTransferCoefficientDto{
         Value: 100,
@@ -375,6 +401,18 @@ func TestHeatTransferCoefficientFactory_FromDtoJSON(t *testing.T) {
     converted = btus_per_hour_square_foot_degree_fahrenheitResult.Convert(units.HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for BtuPerHourSquareFootDegreeFahrenheit = %v, want %v", converted, 100)
+    }
+    // Test JSON with BtuPerSecondSquareInchDegreeFahrenheit unit
+    btus_per_second_square_inch_degree_fahrenheitJSON := []byte(`{"value": 100, "unit": "BtuPerSecondSquareInchDegreeFahrenheit"}`)
+    btus_per_second_square_inch_degree_fahrenheitResult, err := factory.FromDtoJSON(btus_per_second_square_inch_degree_fahrenheitJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with BtuPerSecondSquareInchDegreeFahrenheit unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = btus_per_second_square_inch_degree_fahrenheitResult.Convert(units.HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for BtuPerSecondSquareInchDegreeFahrenheit = %v, want %v", converted, 100)
     }
     // Test JSON with CaloriePerHourSquareMeterDegreeCelsius unit
     calories_per_hour_square_meter_degree_celsiusJSON := []byte(`{"value": 100, "unit": "CaloriePerHourSquareMeterDegreeCelsius"}`)
@@ -538,6 +576,49 @@ func TestHeatTransferCoefficientFactory_FromBtusPerHourSquareFootDegreeFahrenhei
     converted = zeroResult.Convert(units.HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromBtusPerHourSquareFootDegreeFahrenheit() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromBtusPerSecondSquareInchDegreeFahrenheit function
+func TestHeatTransferCoefficientFactory_FromBtusPerSecondSquareInchDegreeFahrenheit(t *testing.T) {
+    factory := units.HeatTransferCoefficientFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromBtusPerSecondSquareInchDegreeFahrenheit(100)
+    if err != nil {
+        t.Errorf("FromBtusPerSecondSquareInchDegreeFahrenheit() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromBtusPerSecondSquareInchDegreeFahrenheit() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromBtusPerSecondSquareInchDegreeFahrenheit(math.NaN())
+    if err == nil {
+        t.Error("FromBtusPerSecondSquareInchDegreeFahrenheit() with NaN value should return error")
+    }
+
+    _, err = factory.FromBtusPerSecondSquareInchDegreeFahrenheit(math.Inf(1))
+    if err == nil {
+        t.Error("FromBtusPerSecondSquareInchDegreeFahrenheit() with +Inf value should return error")
+    }
+
+    _, err = factory.FromBtusPerSecondSquareInchDegreeFahrenheit(math.Inf(-1))
+    if err == nil {
+        t.Error("FromBtusPerSecondSquareInchDegreeFahrenheit() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromBtusPerSecondSquareInchDegreeFahrenheit(0)
+    if err != nil {
+        t.Errorf("FromBtusPerSecondSquareInchDegreeFahrenheit() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromBtusPerSecondSquareInchDegreeFahrenheit() with zero value = %v, want 0", converted)
     }
 }
 // Test FromCaloriesPerHourSquareMeterDegreeCelsius function
@@ -715,6 +796,11 @@ func TestGetHeatTransferCoefficientAbbreviation(t *testing.T) {
             name: "BtuPerHourSquareFootDegreeFahrenheit abbreviation",
             unit: units.HeatTransferCoefficientBtuPerHourSquareFootDegreeFahrenheit,
             want: "Btu/(h·ft²·°F)",
+        },
+        {
+            name: "BtuPerSecondSquareInchDegreeFahrenheit abbreviation",
+            unit: units.HeatTransferCoefficientBtuPerSecondSquareInchDegreeFahrenheit,
+            want: "Btu/(s·in²·°F)",
         },
         {
             name: "CaloriePerHourSquareMeterDegreeCelsius abbreviation",

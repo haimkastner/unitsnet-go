@@ -68,6 +68,10 @@ const (
         // Inches of water is a non-SI unit for pressure. It is defined as the pressure exerted by a column of water of 1 inch in height at defined conditions. At a temperature of 4 °C (39.2 °F) pure water has its highest density (1000 kg/m3). At that temperature and assuming the standard acceleration of gravity, 1 inAq is approximately 249.082 pascals (0.0361263 psi).
         PressureInchOfWaterColumn PressureUnits = "InchOfWaterColumn"
         // 
+        PressureMilligramForcePerSquareMeter PressureUnits = "MilligramForcePerSquareMeter"
+        // 
+        PressureMilligramForcePerSquareFoot PressureUnits = "MilligramForcePerSquareFoot"
+        // 
         PressureMicropascal PressureUnits = "Micropascal"
         // 
         PressureMillipascal PressureUnits = "Millipascal"
@@ -142,6 +146,8 @@ var internalPressureUnitsMap = map[PressureUnits]bool{
 	PressurePoundPerInchSecondSquared: true,
 	PressureMeterOfWaterColumn: true,
 	PressureInchOfWaterColumn: true,
+	PressureMilligramForcePerSquareMeter: true,
+	PressureMilligramForcePerSquareFoot: true,
 	PressureMicropascal: true,
 	PressureMillipascal: true,
 	PressureDecapascal: true,
@@ -172,7 +178,7 @@ type PressureDto struct {
     // Value is the numerical representation of the Pressure.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Pressure, as defined in the PressureUnits enumeration.
-	Unit  PressureUnits `json:"unit" validate:"required,oneof=Pascal Atmosphere Bar KilogramForcePerSquareMeter KilogramForcePerSquareCentimeter KilogramForcePerSquareMillimeter NewtonPerSquareMeter NewtonPerSquareCentimeter NewtonPerSquareMillimeter TechnicalAtmosphere Torr PoundForcePerSquareInch PoundForcePerSquareMil PoundForcePerSquareFoot TonneForcePerSquareMillimeter TonneForcePerSquareMeter MeterOfHead TonneForcePerSquareCentimeter FootOfHead MillimeterOfMercury InchOfMercury DynePerSquareCentimeter PoundPerInchSecondSquared MeterOfWaterColumn InchOfWaterColumn Micropascal Millipascal Decapascal Hectopascal Kilopascal Megapascal Gigapascal Microbar Millibar Centibar Decibar Kilobar Megabar KilonewtonPerSquareMeter MeganewtonPerSquareMeter KilonewtonPerSquareCentimeter KilonewtonPerSquareMillimeter Millitorr KilopoundForcePerSquareInch KilopoundForcePerSquareMil KilopoundForcePerSquareFoot MillimeterOfWaterColumn CentimeterOfWaterColumn"`
+	Unit  PressureUnits `json:"unit" validate:"required,oneof=Pascal Atmosphere Bar KilogramForcePerSquareMeter KilogramForcePerSquareCentimeter KilogramForcePerSquareMillimeter NewtonPerSquareMeter NewtonPerSquareCentimeter NewtonPerSquareMillimeter TechnicalAtmosphere Torr PoundForcePerSquareInch PoundForcePerSquareMil PoundForcePerSquareFoot TonneForcePerSquareMillimeter TonneForcePerSquareMeter MeterOfHead TonneForcePerSquareCentimeter FootOfHead MillimeterOfMercury InchOfMercury DynePerSquareCentimeter PoundPerInchSecondSquared MeterOfWaterColumn InchOfWaterColumn MilligramForcePerSquareMeter MilligramForcePerSquareFoot Micropascal Millipascal Decapascal Hectopascal Kilopascal Megapascal Gigapascal Microbar Millibar Centibar Decibar Kilobar Megabar KilonewtonPerSquareMeter MeganewtonPerSquareMeter KilonewtonPerSquareCentimeter KilonewtonPerSquareMillimeter Millitorr KilopoundForcePerSquareInch KilopoundForcePerSquareMil KilopoundForcePerSquareFoot MillimeterOfWaterColumn CentimeterOfWaterColumn"`
 }
 
 // PressureDtoFactory groups methods for creating and serializing PressureDto objects.
@@ -236,6 +242,8 @@ type Pressure struct {
     pounds_per_inch_second_squaredLazy *float64 
     meters_of_water_columnLazy *float64 
     inches_of_water_columnLazy *float64 
+    milligrams_force_per_square_meterLazy *float64 
+    milligrams_force_per_square_footLazy *float64 
     micropascalsLazy *float64 
     millipascalsLazy *float64 
     decapascalsLazy *float64 
@@ -407,6 +415,16 @@ func (uf PressureFactory) FromMetersOfWaterColumn(value float64) (*Pressure, err
 // FromInchesOfWaterColumn creates a new Pressure instance from a value in InchesOfWaterColumn.
 func (uf PressureFactory) FromInchesOfWaterColumn(value float64) (*Pressure, error) {
 	return newPressure(value, PressureInchOfWaterColumn)
+}
+
+// FromMilligramsForcePerSquareMeter creates a new Pressure instance from a value in MilligramsForcePerSquareMeter.
+func (uf PressureFactory) FromMilligramsForcePerSquareMeter(value float64) (*Pressure, error) {
+	return newPressure(value, PressureMilligramForcePerSquareMeter)
+}
+
+// FromMilligramsForcePerSquareFoot creates a new Pressure instance from a value in MilligramsForcePerSquareFoot.
+func (uf PressureFactory) FromMilligramsForcePerSquareFoot(value float64) (*Pressure, error) {
+	return newPressure(value, PressureMilligramForcePerSquareFoot)
 }
 
 // FromMicropascals creates a new Pressure instance from a value in Micropascals.
@@ -844,6 +862,30 @@ func (a *Pressure) InchesOfWaterColumn() float64 {
 	return inches_of_water_column
 }
 
+// MilligramsForcePerSquareMeter returns the Pressure value in MilligramsForcePerSquareMeter.
+//
+// 
+func (a *Pressure) MilligramsForcePerSquareMeter() float64 {
+	if a.milligrams_force_per_square_meterLazy != nil {
+		return *a.milligrams_force_per_square_meterLazy
+	}
+	milligrams_force_per_square_meter := a.convertFromBase(PressureMilligramForcePerSquareMeter)
+	a.milligrams_force_per_square_meterLazy = &milligrams_force_per_square_meter
+	return milligrams_force_per_square_meter
+}
+
+// MilligramsForcePerSquareFoot returns the Pressure value in MilligramsForcePerSquareFoot.
+//
+// 
+func (a *Pressure) MilligramsForcePerSquareFoot() float64 {
+	if a.milligrams_force_per_square_footLazy != nil {
+		return *a.milligrams_force_per_square_footLazy
+	}
+	milligrams_force_per_square_foot := a.convertFromBase(PressureMilligramForcePerSquareFoot)
+	a.milligrams_force_per_square_footLazy = &milligrams_force_per_square_foot
+	return milligrams_force_per_square_foot
+}
+
 // Micropascals returns the Pressure value in Micropascals.
 //
 // 
@@ -1201,6 +1243,10 @@ func (a *Pressure) Convert(toUnit PressureUnits) float64 {
 		return a.MetersOfWaterColumn()
     case PressureInchOfWaterColumn:
 		return a.InchesOfWaterColumn()
+    case PressureMilligramForcePerSquareMeter:
+		return a.MilligramsForcePerSquareMeter()
+    case PressureMilligramForcePerSquareFoot:
+		return a.MilligramsForcePerSquareFoot()
     case PressureMicropascal:
 		return a.Micropascals()
     case PressureMillipascal:
@@ -1305,6 +1351,10 @@ func (a *Pressure) convertFromBase(toUnit PressureUnits) float64 {
 		return (value / 9.80665e3) 
 	case PressureInchOfWaterColumn:
 		return (value / (2.54e-2 * 9.80665e3)) 
+	case PressureMilligramForcePerSquareMeter:
+		return (value / 9.80665e-6) 
+	case PressureMilligramForcePerSquareFoot:
+		return (value / 9.80665e-6 * 9.290304e-2) 
 	case PressureMicropascal:
 		return ((value) / 1e-06) 
 	case PressureMillipascal:
@@ -1408,6 +1458,10 @@ func (a *Pressure) convertToBase(value float64, fromUnit PressureUnits) float64 
 		return (value * 9.80665e3) 
 	case PressureInchOfWaterColumn:
 		return (value * 2.54e-2 * 9.80665e3) 
+	case PressureMilligramForcePerSquareMeter:
+		return (value * 9.80665e-6) 
+	case PressureMilligramForcePerSquareFoot:
+		return (value * 9.80665e-6 / 9.290304e-2) 
 	case PressureMicropascal:
 		return ((value) * 1e-06) 
 	case PressureMillipascal:
@@ -1617,6 +1671,10 @@ func GetPressureAbbreviation(unit PressureUnits) string {
 		return "mH₂O" 
 	case PressureInchOfWaterColumn:
 		return "inH2O" 
+	case PressureMilligramForcePerSquareMeter:
+		return "mgf/m²" 
+	case PressureMilligramForcePerSquareFoot:
+		return "mgf/ft²" 
 	case PressureMicropascal:
 		return "μPa" 
 	case PressureMillipascal:

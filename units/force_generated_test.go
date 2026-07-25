@@ -87,6 +87,15 @@ func TestForceConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to GramsForce.
+		// No expected conversion value provided for GramsForce, verifying result is not NaN.
+		result := a.GramsForce()
+		cacheResult := a.GramsForce()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to GramsForce returned NaN")
+		}
+	}
+	{
 		// Test conversion to KilogramsForce.
 		// No expected conversion value provided for KilogramsForce, verifying result is not NaN.
 		result := a.KilogramsForce()
@@ -297,6 +306,23 @@ func TestForceFactory_FromDto(t *testing.T) {
     converted = dyneResult.Convert(units.ForceDyn)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Dyn = %v, want %v", converted, 100)
+    }
+    // Test GramForce conversion
+    grams_forceDto := units.ForceDto{
+        Value: 100,
+        Unit:  units.ForceGramForce,
+    }
+    
+    var grams_forceResult *units.Force
+    grams_forceResult, err = factory.FromDto(grams_forceDto)
+    if err != nil {
+        t.Errorf("FromDto() with GramForce returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_forceResult.Convert(units.ForceGramForce)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramForce = %v, want %v", converted, 100)
     }
     // Test KilogramForce conversion
     kilograms_forceDto := units.ForceDto{
@@ -612,6 +638,18 @@ func TestForceFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for Dyn = %v, want %v", converted, 100)
     }
+    // Test JSON with GramForce unit
+    grams_forceJSON := []byte(`{"value": 100, "unit": "GramForce"}`)
+    grams_forceResult, err := factory.FromDtoJSON(grams_forceJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with GramForce unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = grams_forceResult.Convert(units.ForceGramForce)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for GramForce = %v, want %v", converted, 100)
+    }
     // Test JSON with KilogramForce unit
     kilograms_forceJSON := []byte(`{"value": 100, "unit": "KilogramForce"}`)
     kilograms_forceResult, err := factory.FromDtoJSON(kilograms_forceJSON)
@@ -832,6 +870,49 @@ func TestForceFactory_FromDyne(t *testing.T) {
     converted = zeroResult.Convert(units.ForceDyn)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromDyne() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromGramsForce function
+func TestForceFactory_FromGramsForce(t *testing.T) {
+    factory := units.ForceFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromGramsForce(100)
+    if err != nil {
+        t.Errorf("FromGramsForce() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.ForceGramForce)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromGramsForce() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromGramsForce(math.NaN())
+    if err == nil {
+        t.Error("FromGramsForce() with NaN value should return error")
+    }
+
+    _, err = factory.FromGramsForce(math.Inf(1))
+    if err == nil {
+        t.Error("FromGramsForce() with +Inf value should return error")
+    }
+
+    _, err = factory.FromGramsForce(math.Inf(-1))
+    if err == nil {
+        t.Error("FromGramsForce() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromGramsForce(0)
+    if err != nil {
+        t.Errorf("FromGramsForce() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.ForceGramForce)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromGramsForce() with zero value = %v, want 0", converted)
     }
 }
 // Test FromKilogramsForce function
@@ -1515,6 +1596,11 @@ func TestGetForceAbbreviation(t *testing.T) {
             name: "Dyn abbreviation",
             unit: units.ForceDyn,
             want: "dyn",
+        },
+        {
+            name: "GramForce abbreviation",
+            unit: units.ForceGramForce,
+            want: "gf",
         },
         {
             name: "KilogramForce abbreviation",

@@ -1038,7 +1038,7 @@ func TestGetMolarFlowAbbreviation(t *testing.T) {
         {
             name: "MolePerHour abbreviation",
             unit: units.MolarFlowMolePerHour,
-            want: "kmol/h",
+            want: "mol/h",
         },
         {
             name: "PoundMolePerSecond abbreviation",
@@ -1068,7 +1068,7 @@ func TestGetMolarFlowAbbreviation(t *testing.T) {
         {
             name: "KilomolePerHour abbreviation",
             unit: units.MolarFlowKilomolePerHour,
-            want: "kkmol/h",
+            want: "kmol/h",
         },
         {
             name: "invalid unit",

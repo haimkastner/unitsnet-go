@@ -19,6 +19,8 @@ const (
     
         // One dyne is equal to 10 micronewtons, 10e−5 N or to 10 nsn (nanosthenes) in the old metre–tonne–second system of units.
         ForceDyn ForceUnits = "Dyn"
+        // The gram-force is a unit of force equal to the magnitude of force exerted by a gram of mass in standard gravity (9.80665 m/s²). It is equal to 9.80665 × 10⁻³ N.
+        ForceGramForce ForceUnits = "GramForce"
         // The kilogram-force, or kilopond, is equal to the magnitude of the force exerted on one kilogram of mass in a 9.80665 m/s2 gravitational field (standard gravity). Therefore, one kilogram-force is by definition equal to 9.80665 N.
         ForceKilogramForce ForceUnits = "KilogramForce"
         // The tonne-force, metric ton-force, megagram-force, and megapond (Mp) are each 1000 kilograms-force.
@@ -52,6 +54,7 @@ const (
 var internalForceUnitsMap = map[ForceUnits]bool{
 	
 	ForceDyn: true,
+	ForceGramForce: true,
 	ForceKilogramForce: true,
 	ForceTonneForce: true,
 	ForceNewton: true,
@@ -73,7 +76,7 @@ type ForceDto struct {
     // Value is the numerical representation of the Force.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the Force, as defined in the ForceUnits enumeration.
-	Unit  ForceUnits `json:"unit" validate:"required,oneof=Dyn KilogramForce TonneForce Newton Kilopond Poundal PoundForce OunceForce ShortTonForce Micronewton Millinewton Decanewton Kilonewton Meganewton KilopoundForce"`
+	Unit  ForceUnits `json:"unit" validate:"required,oneof=Dyn GramForce KilogramForce TonneForce Newton Kilopond Poundal PoundForce OunceForce ShortTonForce Micronewton Millinewton Decanewton Kilonewton Meganewton KilopoundForce"`
 }
 
 // ForceDtoFactory groups methods for creating and serializing ForceDto objects.
@@ -113,6 +116,7 @@ type Force struct {
 	value       float64
     
     dyneLazy *float64 
+    grams_forceLazy *float64 
     kilograms_forceLazy *float64 
     tonnes_forceLazy *float64 
     newtonsLazy *float64 
@@ -155,6 +159,11 @@ func (uf ForceFactory) FromDtoJSON(data []byte) (*Force, error) {
 // FromDyne creates a new Force instance from a value in Dyne.
 func (uf ForceFactory) FromDyne(value float64) (*Force, error) {
 	return newForce(value, ForceDyn)
+}
+
+// FromGramsForce creates a new Force instance from a value in GramsForce.
+func (uf ForceFactory) FromGramsForce(value float64) (*Force, error) {
+	return newForce(value, ForceGramForce)
 }
 
 // FromKilogramsForce creates a new Force instance from a value in KilogramsForce.
@@ -257,6 +266,18 @@ func (a *Force) Dyne() float64 {
 	dyne := a.convertFromBase(ForceDyn)
 	a.dyneLazy = &dyne
 	return dyne
+}
+
+// GramsForce returns the Force value in GramsForce.
+//
+// The gram-force is a unit of force equal to the magnitude of force exerted by a gram of mass in standard gravity (9.80665 m/s²). It is equal to 9.80665 × 10⁻³ N.
+func (a *Force) GramsForce() float64 {
+	if a.grams_forceLazy != nil {
+		return *a.grams_forceLazy
+	}
+	grams_force := a.convertFromBase(ForceGramForce)
+	a.grams_forceLazy = &grams_force
+	return grams_force
 }
 
 // KilogramsForce returns the Force value in KilogramsForce.
@@ -460,6 +481,8 @@ func (a *Force) Convert(toUnit ForceUnits) float64 {
 	switch toUnit { 
     case ForceDyn:
 		return a.Dyne()
+    case ForceGramForce:
+		return a.GramsForce()
     case ForceKilogramForce:
 		return a.KilogramsForce()
     case ForceTonneForce:
@@ -498,6 +521,8 @@ func (a *Force) convertFromBase(toUnit ForceUnits) float64 {
 	switch toUnit { 
 	case ForceDyn:
 		return (value * 1e5) 
+	case ForceGramForce:
+		return (value / 9.80665e-3) 
 	case ForceKilogramForce:
 		return (value / 9.80665) 
 	case ForceTonneForce:
@@ -535,6 +560,8 @@ func (a *Force) convertToBase(value float64, fromUnit ForceUnits) float64 {
 	switch fromUnit { 
 	case ForceDyn:
 		return (value / 1e5) 
+	case ForceGramForce:
+		return (value * 9.80665e-3) 
 	case ForceKilogramForce:
 		return (value * 9.80665) 
 	case ForceTonneForce:
@@ -678,6 +705,8 @@ func GetForceAbbreviation(unit ForceUnits) string {
 	switch unit { 
 	case ForceDyn:
 		return "dyn" 
+	case ForceGramForce:
+		return "gf" 
 	case ForceKilogramForce:
 		return "kgf" 
 	case ForceTonneForce:

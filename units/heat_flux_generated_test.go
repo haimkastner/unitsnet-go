@@ -87,6 +87,15 @@ func TestHeatFluxConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to WattsPerSquareMillimeter.
+		// No expected conversion value provided for WattsPerSquareMillimeter, verifying result is not NaN.
+		result := a.WattsPerSquareMillimeter()
+		cacheResult := a.WattsPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to WattsPerSquareMillimeter returned NaN")
+		}
+	}
+	{
 		// Test conversion to WattsPerSquareInch.
 		// No expected conversion value provided for WattsPerSquareInch, verifying result is not NaN.
 		result := a.WattsPerSquareInch()
@@ -231,6 +240,60 @@ func TestHeatFluxConversions(t *testing.T) {
 		}
 	}
 	{
+		// Test conversion to NanowattsPerSquareMillimeter.
+		// No expected conversion value provided for NanowattsPerSquareMillimeter, verifying result is not NaN.
+		result := a.NanowattsPerSquareMillimeter()
+		cacheResult := a.NanowattsPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to NanowattsPerSquareMillimeter returned NaN")
+		}
+	}
+	{
+		// Test conversion to MicrowattsPerSquareMillimeter.
+		// No expected conversion value provided for MicrowattsPerSquareMillimeter, verifying result is not NaN.
+		result := a.MicrowattsPerSquareMillimeter()
+		cacheResult := a.MicrowattsPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to MicrowattsPerSquareMillimeter returned NaN")
+		}
+	}
+	{
+		// Test conversion to MilliwattsPerSquareMillimeter.
+		// No expected conversion value provided for MilliwattsPerSquareMillimeter, verifying result is not NaN.
+		result := a.MilliwattsPerSquareMillimeter()
+		cacheResult := a.MilliwattsPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to MilliwattsPerSquareMillimeter returned NaN")
+		}
+	}
+	{
+		// Test conversion to CentiwattsPerSquareMillimeter.
+		// No expected conversion value provided for CentiwattsPerSquareMillimeter, verifying result is not NaN.
+		result := a.CentiwattsPerSquareMillimeter()
+		cacheResult := a.CentiwattsPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to CentiwattsPerSquareMillimeter returned NaN")
+		}
+	}
+	{
+		// Test conversion to DeciwattsPerSquareMillimeter.
+		// No expected conversion value provided for DeciwattsPerSquareMillimeter, verifying result is not NaN.
+		result := a.DeciwattsPerSquareMillimeter()
+		cacheResult := a.DeciwattsPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to DeciwattsPerSquareMillimeter returned NaN")
+		}
+	}
+	{
+		// Test conversion to KilowattsPerSquareMillimeter.
+		// No expected conversion value provided for KilowattsPerSquareMillimeter, verifying result is not NaN.
+		result := a.KilowattsPerSquareMillimeter()
+		cacheResult := a.KilowattsPerSquareMillimeter()
+		if math.IsNaN(result) || cacheResult != result {
+			t.Errorf("conversion to KilowattsPerSquareMillimeter returned NaN")
+		}
+	}
+	{
 		// Test conversion to KilocaloriesPerSecondSquareCentimeter.
 		// No expected conversion value provided for KilocaloriesPerSecondSquareCentimeter, verifying result is not NaN.
 		result := a.KilocaloriesPerSecondSquareCentimeter()
@@ -324,6 +387,23 @@ func TestHeatFluxFactory_FromDto(t *testing.T) {
     converted = watts_per_square_meterResult.Convert(units.HeatFluxWattPerSquareMeter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for WattPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test WattPerSquareMillimeter conversion
+    watts_per_square_millimeterDto := units.HeatFluxDto{
+        Value: 100,
+        Unit:  units.HeatFluxWattPerSquareMillimeter,
+    }
+    
+    var watts_per_square_millimeterResult *units.HeatFlux
+    watts_per_square_millimeterResult, err = factory.FromDto(watts_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with WattPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = watts_per_square_millimeterResult.Convert(units.HeatFluxWattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for WattPerSquareMillimeter = %v, want %v", converted, 100)
     }
     // Test WattPerSquareInch conversion
     watts_per_square_inchDto := units.HeatFluxDto{
@@ -597,6 +677,108 @@ func TestHeatFluxFactory_FromDto(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilowattPerSquareMeter = %v, want %v", converted, 100)
     }
+    // Test NanowattPerSquareMillimeter conversion
+    nanowatts_per_square_millimeterDto := units.HeatFluxDto{
+        Value: 100,
+        Unit:  units.HeatFluxNanowattPerSquareMillimeter,
+    }
+    
+    var nanowatts_per_square_millimeterResult *units.HeatFlux
+    nanowatts_per_square_millimeterResult, err = factory.FromDto(nanowatts_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with NanowattPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanowatts_per_square_millimeterResult.Convert(units.HeatFluxNanowattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanowattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test MicrowattPerSquareMillimeter conversion
+    microwatts_per_square_millimeterDto := units.HeatFluxDto{
+        Value: 100,
+        Unit:  units.HeatFluxMicrowattPerSquareMillimeter,
+    }
+    
+    var microwatts_per_square_millimeterResult *units.HeatFlux
+    microwatts_per_square_millimeterResult, err = factory.FromDto(microwatts_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with MicrowattPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microwatts_per_square_millimeterResult.Convert(units.HeatFluxMicrowattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrowattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test MilliwattPerSquareMillimeter conversion
+    milliwatts_per_square_millimeterDto := units.HeatFluxDto{
+        Value: 100,
+        Unit:  units.HeatFluxMilliwattPerSquareMillimeter,
+    }
+    
+    var milliwatts_per_square_millimeterResult *units.HeatFlux
+    milliwatts_per_square_millimeterResult, err = factory.FromDto(milliwatts_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with MilliwattPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliwatts_per_square_millimeterResult.Convert(units.HeatFluxMilliwattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliwattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test CentiwattPerSquareMillimeter conversion
+    centiwatts_per_square_millimeterDto := units.HeatFluxDto{
+        Value: 100,
+        Unit:  units.HeatFluxCentiwattPerSquareMillimeter,
+    }
+    
+    var centiwatts_per_square_millimeterResult *units.HeatFlux
+    centiwatts_per_square_millimeterResult, err = factory.FromDto(centiwatts_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with CentiwattPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centiwatts_per_square_millimeterResult.Convert(units.HeatFluxCentiwattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentiwattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test DeciwattPerSquareMillimeter conversion
+    deciwatts_per_square_millimeterDto := units.HeatFluxDto{
+        Value: 100,
+        Unit:  units.HeatFluxDeciwattPerSquareMillimeter,
+    }
+    
+    var deciwatts_per_square_millimeterResult *units.HeatFlux
+    deciwatts_per_square_millimeterResult, err = factory.FromDto(deciwatts_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with DeciwattPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = deciwatts_per_square_millimeterResult.Convert(units.HeatFluxDeciwattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DeciwattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test KilowattPerSquareMillimeter conversion
+    kilowatts_per_square_millimeterDto := units.HeatFluxDto{
+        Value: 100,
+        Unit:  units.HeatFluxKilowattPerSquareMillimeter,
+    }
+    
+    var kilowatts_per_square_millimeterResult *units.HeatFlux
+    kilowatts_per_square_millimeterResult, err = factory.FromDto(kilowatts_per_square_millimeterDto)
+    if err != nil {
+        t.Errorf("FromDto() with KilowattPerSquareMillimeter returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilowatts_per_square_millimeterResult.Convert(units.HeatFluxKilowattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilowattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
     // Test KilocaloriePerSecondSquareCentimeter conversion
     kilocalories_per_second_square_centimeterDto := units.HeatFluxDto{
         Value: 100,
@@ -689,6 +871,18 @@ func TestHeatFluxFactory_FromDtoJSON(t *testing.T) {
     converted = watts_per_square_meterResult.Convert(units.HeatFluxWattPerSquareMeter)
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for WattPerSquareMeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with WattPerSquareMillimeter unit
+    watts_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "WattPerSquareMillimeter"}`)
+    watts_per_square_millimeterResult, err := factory.FromDtoJSON(watts_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with WattPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = watts_per_square_millimeterResult.Convert(units.HeatFluxWattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for WattPerSquareMillimeter = %v, want %v", converted, 100)
     }
     // Test JSON with WattPerSquareInch unit
     watts_per_square_inchJSON := []byte(`{"value": 100, "unit": "WattPerSquareInch"}`)
@@ -882,6 +1076,78 @@ func TestHeatFluxFactory_FromDtoJSON(t *testing.T) {
     if math.Abs(converted - 100) > 1e-6 {
         t.Errorf("Round-trip conversion for KilowattPerSquareMeter = %v, want %v", converted, 100)
     }
+    // Test JSON with NanowattPerSquareMillimeter unit
+    nanowatts_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "NanowattPerSquareMillimeter"}`)
+    nanowatts_per_square_millimeterResult, err := factory.FromDtoJSON(nanowatts_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with NanowattPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = nanowatts_per_square_millimeterResult.Convert(units.HeatFluxNanowattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for NanowattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MicrowattPerSquareMillimeter unit
+    microwatts_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "MicrowattPerSquareMillimeter"}`)
+    microwatts_per_square_millimeterResult, err := factory.FromDtoJSON(microwatts_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MicrowattPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = microwatts_per_square_millimeterResult.Convert(units.HeatFluxMicrowattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MicrowattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with MilliwattPerSquareMillimeter unit
+    milliwatts_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "MilliwattPerSquareMillimeter"}`)
+    milliwatts_per_square_millimeterResult, err := factory.FromDtoJSON(milliwatts_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with MilliwattPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = milliwatts_per_square_millimeterResult.Convert(units.HeatFluxMilliwattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for MilliwattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with CentiwattPerSquareMillimeter unit
+    centiwatts_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "CentiwattPerSquareMillimeter"}`)
+    centiwatts_per_square_millimeterResult, err := factory.FromDtoJSON(centiwatts_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with CentiwattPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = centiwatts_per_square_millimeterResult.Convert(units.HeatFluxCentiwattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for CentiwattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with DeciwattPerSquareMillimeter unit
+    deciwatts_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "DeciwattPerSquareMillimeter"}`)
+    deciwatts_per_square_millimeterResult, err := factory.FromDtoJSON(deciwatts_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with DeciwattPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = deciwatts_per_square_millimeterResult.Convert(units.HeatFluxDeciwattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for DeciwattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
+    // Test JSON with KilowattPerSquareMillimeter unit
+    kilowatts_per_square_millimeterJSON := []byte(`{"value": 100, "unit": "KilowattPerSquareMillimeter"}`)
+    kilowatts_per_square_millimeterResult, err := factory.FromDtoJSON(kilowatts_per_square_millimeterJSON)
+    if err != nil {
+        t.Errorf("FromDtoJSON() with KilowattPerSquareMillimeter unit returned error: %v", err)
+    }
+    
+    // Convert back to original unit and compare
+    converted = kilowatts_per_square_millimeterResult.Convert(units.HeatFluxKilowattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("Round-trip conversion for KilowattPerSquareMillimeter = %v, want %v", converted, 100)
+    }
     // Test JSON with KilocaloriePerSecondSquareCentimeter unit
     kilocalories_per_second_square_centimeterJSON := []byte(`{"value": 100, "unit": "KilocaloriePerSecondSquareCentimeter"}`)
     kilocalories_per_second_square_centimeterResult, err := factory.FromDtoJSON(kilocalories_per_second_square_centimeterJSON)
@@ -946,6 +1212,49 @@ func TestHeatFluxFactory_FromWattsPerSquareMeter(t *testing.T) {
     converted = zeroResult.Convert(units.HeatFluxWattPerSquareMeter)
     if math.Abs(converted) > 1e-6 {
         t.Errorf("FromWattsPerSquareMeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromWattsPerSquareMillimeter function
+func TestHeatFluxFactory_FromWattsPerSquareMillimeter(t *testing.T) {
+    factory := units.HeatFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromWattsPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromWattsPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.HeatFluxWattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromWattsPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromWattsPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromWattsPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromWattsPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromWattsPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromWattsPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromWattsPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromWattsPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromWattsPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.HeatFluxWattPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromWattsPerSquareMillimeter() with zero value = %v, want 0", converted)
     }
 }
 // Test FromWattsPerSquareInch function
@@ -1636,6 +1945,264 @@ func TestHeatFluxFactory_FromKilowattsPerSquareMeter(t *testing.T) {
         t.Errorf("FromKilowattsPerSquareMeter() with zero value = %v, want 0", converted)
     }
 }
+// Test FromNanowattsPerSquareMillimeter function
+func TestHeatFluxFactory_FromNanowattsPerSquareMillimeter(t *testing.T) {
+    factory := units.HeatFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromNanowattsPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromNanowattsPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.HeatFluxNanowattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromNanowattsPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromNanowattsPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromNanowattsPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromNanowattsPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromNanowattsPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromNanowattsPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromNanowattsPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromNanowattsPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromNanowattsPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.HeatFluxNanowattPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromNanowattsPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMicrowattsPerSquareMillimeter function
+func TestHeatFluxFactory_FromMicrowattsPerSquareMillimeter(t *testing.T) {
+    factory := units.HeatFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMicrowattsPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromMicrowattsPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.HeatFluxMicrowattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMicrowattsPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMicrowattsPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromMicrowattsPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromMicrowattsPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromMicrowattsPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMicrowattsPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMicrowattsPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMicrowattsPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromMicrowattsPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.HeatFluxMicrowattPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMicrowattsPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromMilliwattsPerSquareMillimeter function
+func TestHeatFluxFactory_FromMilliwattsPerSquareMillimeter(t *testing.T) {
+    factory := units.HeatFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromMilliwattsPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromMilliwattsPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.HeatFluxMilliwattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromMilliwattsPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromMilliwattsPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromMilliwattsPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromMilliwattsPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromMilliwattsPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromMilliwattsPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromMilliwattsPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromMilliwattsPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromMilliwattsPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.HeatFluxMilliwattPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromMilliwattsPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromCentiwattsPerSquareMillimeter function
+func TestHeatFluxFactory_FromCentiwattsPerSquareMillimeter(t *testing.T) {
+    factory := units.HeatFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromCentiwattsPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromCentiwattsPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.HeatFluxCentiwattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromCentiwattsPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromCentiwattsPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromCentiwattsPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromCentiwattsPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromCentiwattsPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromCentiwattsPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromCentiwattsPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromCentiwattsPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromCentiwattsPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.HeatFluxCentiwattPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromCentiwattsPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromDeciwattsPerSquareMillimeter function
+func TestHeatFluxFactory_FromDeciwattsPerSquareMillimeter(t *testing.T) {
+    factory := units.HeatFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromDeciwattsPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromDeciwattsPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.HeatFluxDeciwattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromDeciwattsPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromDeciwattsPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromDeciwattsPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromDeciwattsPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromDeciwattsPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromDeciwattsPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromDeciwattsPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromDeciwattsPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromDeciwattsPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.HeatFluxDeciwattPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromDeciwattsPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
+// Test FromKilowattsPerSquareMillimeter function
+func TestHeatFluxFactory_FromKilowattsPerSquareMillimeter(t *testing.T) {
+    factory := units.HeatFluxFactory{}
+    var err error
+
+    // Test valid value
+    result, err := factory.FromKilowattsPerSquareMillimeter(100)
+    if err != nil {
+        t.Errorf("FromKilowattsPerSquareMillimeter() returned error: %v", err)
+    }
+    
+    // Convert back and verify
+    converted := result.Convert(units.HeatFluxKilowattPerSquareMillimeter)
+    if math.Abs(converted - 100) > 1e-6 {
+        t.Errorf("FromKilowattsPerSquareMillimeter() round-trip = %v, want %v", converted, 100)
+    }
+
+    // Test invalid values
+    _, err = factory.FromKilowattsPerSquareMillimeter(math.NaN())
+    if err == nil {
+        t.Error("FromKilowattsPerSquareMillimeter() with NaN value should return error")
+    }
+
+    _, err = factory.FromKilowattsPerSquareMillimeter(math.Inf(1))
+    if err == nil {
+        t.Error("FromKilowattsPerSquareMillimeter() with +Inf value should return error")
+    }
+
+    _, err = factory.FromKilowattsPerSquareMillimeter(math.Inf(-1))
+    if err == nil {
+        t.Error("FromKilowattsPerSquareMillimeter() with -Inf value should return error")
+    }
+
+    // Test zero value
+    zeroResult, err := factory.FromKilowattsPerSquareMillimeter(0)
+    if err != nil {
+        t.Errorf("FromKilowattsPerSquareMillimeter() with zero value returned error: %v", err)
+    }
+    converted = zeroResult.Convert(units.HeatFluxKilowattPerSquareMillimeter)
+    if math.Abs(converted) > 1e-6 {
+        t.Errorf("FromKilowattsPerSquareMillimeter() with zero value = %v, want 0", converted)
+    }
+}
 // Test FromKilocaloriesPerSecondSquareCentimeter function
 func TestHeatFluxFactory_FromKilocaloriesPerSecondSquareCentimeter(t *testing.T) {
     factory := units.HeatFluxFactory{}
@@ -1760,6 +2327,11 @@ func TestGetHeatFluxAbbreviation(t *testing.T) {
             want: "W/m²",
         },
         {
+            name: "WattPerSquareMillimeter abbreviation",
+            unit: units.HeatFluxWattPerSquareMillimeter,
+            want: "W/mm²",
+        },
+        {
             name: "WattPerSquareInch abbreviation",
             unit: units.HeatFluxWattPerSquareInch,
             want: "W/in²",
@@ -1838,6 +2410,36 @@ func TestGetHeatFluxAbbreviation(t *testing.T) {
             name: "KilowattPerSquareMeter abbreviation",
             unit: units.HeatFluxKilowattPerSquareMeter,
             want: "kW/m²",
+        },
+        {
+            name: "NanowattPerSquareMillimeter abbreviation",
+            unit: units.HeatFluxNanowattPerSquareMillimeter,
+            want: "nW/mm²",
+        },
+        {
+            name: "MicrowattPerSquareMillimeter abbreviation",
+            unit: units.HeatFluxMicrowattPerSquareMillimeter,
+            want: "μW/mm²",
+        },
+        {
+            name: "MilliwattPerSquareMillimeter abbreviation",
+            unit: units.HeatFluxMilliwattPerSquareMillimeter,
+            want: "mW/mm²",
+        },
+        {
+            name: "CentiwattPerSquareMillimeter abbreviation",
+            unit: units.HeatFluxCentiwattPerSquareMillimeter,
+            want: "cW/mm²",
+        },
+        {
+            name: "DeciwattPerSquareMillimeter abbreviation",
+            unit: units.HeatFluxDeciwattPerSquareMillimeter,
+            want: "dW/mm²",
+        },
+        {
+            name: "KilowattPerSquareMillimeter abbreviation",
+            unit: units.HeatFluxKilowattPerSquareMillimeter,
+            want: "kW/mm²",
         },
         {
             name: "KilocaloriePerSecondSquareCentimeter abbreviation",

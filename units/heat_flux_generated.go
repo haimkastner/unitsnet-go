@@ -20,6 +20,8 @@ const (
         // 
         HeatFluxWattPerSquareMeter HeatFluxUnits = "WattPerSquareMeter"
         // 
+        HeatFluxWattPerSquareMillimeter HeatFluxUnits = "WattPerSquareMillimeter"
+        // 
         HeatFluxWattPerSquareInch HeatFluxUnits = "WattPerSquareInch"
         // 
         HeatFluxWattPerSquareFoot HeatFluxUnits = "WattPerSquareFoot"
@@ -52,12 +54,25 @@ const (
         // 
         HeatFluxKilowattPerSquareMeter HeatFluxUnits = "KilowattPerSquareMeter"
         // 
+        HeatFluxNanowattPerSquareMillimeter HeatFluxUnits = "NanowattPerSquareMillimeter"
+        // 
+        HeatFluxMicrowattPerSquareMillimeter HeatFluxUnits = "MicrowattPerSquareMillimeter"
+        // 
+        HeatFluxMilliwattPerSquareMillimeter HeatFluxUnits = "MilliwattPerSquareMillimeter"
+        // 
+        HeatFluxCentiwattPerSquareMillimeter HeatFluxUnits = "CentiwattPerSquareMillimeter"
+        // 
+        HeatFluxDeciwattPerSquareMillimeter HeatFluxUnits = "DeciwattPerSquareMillimeter"
+        // 
+        HeatFluxKilowattPerSquareMillimeter HeatFluxUnits = "KilowattPerSquareMillimeter"
+        // 
         HeatFluxKilocaloriePerSecondSquareCentimeter HeatFluxUnits = "KilocaloriePerSecondSquareCentimeter"
 )
 
 var internalHeatFluxUnitsMap = map[HeatFluxUnits]bool{
 	
 	HeatFluxWattPerSquareMeter: true,
+	HeatFluxWattPerSquareMillimeter: true,
 	HeatFluxWattPerSquareInch: true,
 	HeatFluxWattPerSquareFoot: true,
 	HeatFluxBtuPerSecondSquareInch: true,
@@ -74,6 +89,12 @@ var internalHeatFluxUnitsMap = map[HeatFluxUnits]bool{
 	HeatFluxCentiwattPerSquareMeter: true,
 	HeatFluxDeciwattPerSquareMeter: true,
 	HeatFluxKilowattPerSquareMeter: true,
+	HeatFluxNanowattPerSquareMillimeter: true,
+	HeatFluxMicrowattPerSquareMillimeter: true,
+	HeatFluxMilliwattPerSquareMillimeter: true,
+	HeatFluxCentiwattPerSquareMillimeter: true,
+	HeatFluxDeciwattPerSquareMillimeter: true,
+	HeatFluxKilowattPerSquareMillimeter: true,
 	HeatFluxKilocaloriePerSecondSquareCentimeter: true,
 }
 
@@ -82,7 +103,7 @@ type HeatFluxDto struct {
     // Value is the numerical representation of the HeatFlux.
 	Value float64 `json:"value"`
     // Unit specifies the unit of measurement for the HeatFlux, as defined in the HeatFluxUnits enumeration.
-	Unit  HeatFluxUnits `json:"unit" validate:"required,oneof=WattPerSquareMeter WattPerSquareInch WattPerSquareFoot BtuPerSecondSquareInch BtuPerSecondSquareFoot BtuPerMinuteSquareFoot BtuPerHourSquareFoot CaloriePerSecondSquareCentimeter KilocaloriePerHourSquareMeter PoundForcePerFootSecond PoundPerSecondCubed NanowattPerSquareMeter MicrowattPerSquareMeter MilliwattPerSquareMeter CentiwattPerSquareMeter DeciwattPerSquareMeter KilowattPerSquareMeter KilocaloriePerSecondSquareCentimeter"`
+	Unit  HeatFluxUnits `json:"unit" validate:"required,oneof=WattPerSquareMeter WattPerSquareMillimeter WattPerSquareInch WattPerSquareFoot BtuPerSecondSquareInch BtuPerSecondSquareFoot BtuPerMinuteSquareFoot BtuPerHourSquareFoot CaloriePerSecondSquareCentimeter KilocaloriePerHourSquareMeter PoundForcePerFootSecond PoundPerSecondCubed NanowattPerSquareMeter MicrowattPerSquareMeter MilliwattPerSquareMeter CentiwattPerSquareMeter DeciwattPerSquareMeter KilowattPerSquareMeter NanowattPerSquareMillimeter MicrowattPerSquareMillimeter MilliwattPerSquareMillimeter CentiwattPerSquareMillimeter DeciwattPerSquareMillimeter KilowattPerSquareMillimeter KilocaloriePerSecondSquareCentimeter"`
 }
 
 // HeatFluxDtoFactory groups methods for creating and serializing HeatFluxDto objects.
@@ -122,6 +143,7 @@ type HeatFlux struct {
 	value       float64
     
     watts_per_square_meterLazy *float64 
+    watts_per_square_millimeterLazy *float64 
     watts_per_square_inchLazy *float64 
     watts_per_square_footLazy *float64 
     btus_per_second_square_inchLazy *float64 
@@ -138,6 +160,12 @@ type HeatFlux struct {
     centiwatts_per_square_meterLazy *float64 
     deciwatts_per_square_meterLazy *float64 
     kilowatts_per_square_meterLazy *float64 
+    nanowatts_per_square_millimeterLazy *float64 
+    microwatts_per_square_millimeterLazy *float64 
+    milliwatts_per_square_millimeterLazy *float64 
+    centiwatts_per_square_millimeterLazy *float64 
+    deciwatts_per_square_millimeterLazy *float64 
+    kilowatts_per_square_millimeterLazy *float64 
     kilocalories_per_second_square_centimeterLazy *float64 
 }
 
@@ -167,6 +195,11 @@ func (uf HeatFluxFactory) FromDtoJSON(data []byte) (*HeatFlux, error) {
 // FromWattsPerSquareMeter creates a new HeatFlux instance from a value in WattsPerSquareMeter.
 func (uf HeatFluxFactory) FromWattsPerSquareMeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxWattPerSquareMeter)
+}
+
+// FromWattsPerSquareMillimeter creates a new HeatFlux instance from a value in WattsPerSquareMillimeter.
+func (uf HeatFluxFactory) FromWattsPerSquareMillimeter(value float64) (*HeatFlux, error) {
+	return newHeatFlux(value, HeatFluxWattPerSquareMillimeter)
 }
 
 // FromWattsPerSquareInch creates a new HeatFlux instance from a value in WattsPerSquareInch.
@@ -249,6 +282,36 @@ func (uf HeatFluxFactory) FromKilowattsPerSquareMeter(value float64) (*HeatFlux,
 	return newHeatFlux(value, HeatFluxKilowattPerSquareMeter)
 }
 
+// FromNanowattsPerSquareMillimeter creates a new HeatFlux instance from a value in NanowattsPerSquareMillimeter.
+func (uf HeatFluxFactory) FromNanowattsPerSquareMillimeter(value float64) (*HeatFlux, error) {
+	return newHeatFlux(value, HeatFluxNanowattPerSquareMillimeter)
+}
+
+// FromMicrowattsPerSquareMillimeter creates a new HeatFlux instance from a value in MicrowattsPerSquareMillimeter.
+func (uf HeatFluxFactory) FromMicrowattsPerSquareMillimeter(value float64) (*HeatFlux, error) {
+	return newHeatFlux(value, HeatFluxMicrowattPerSquareMillimeter)
+}
+
+// FromMilliwattsPerSquareMillimeter creates a new HeatFlux instance from a value in MilliwattsPerSquareMillimeter.
+func (uf HeatFluxFactory) FromMilliwattsPerSquareMillimeter(value float64) (*HeatFlux, error) {
+	return newHeatFlux(value, HeatFluxMilliwattPerSquareMillimeter)
+}
+
+// FromCentiwattsPerSquareMillimeter creates a new HeatFlux instance from a value in CentiwattsPerSquareMillimeter.
+func (uf HeatFluxFactory) FromCentiwattsPerSquareMillimeter(value float64) (*HeatFlux, error) {
+	return newHeatFlux(value, HeatFluxCentiwattPerSquareMillimeter)
+}
+
+// FromDeciwattsPerSquareMillimeter creates a new HeatFlux instance from a value in DeciwattsPerSquareMillimeter.
+func (uf HeatFluxFactory) FromDeciwattsPerSquareMillimeter(value float64) (*HeatFlux, error) {
+	return newHeatFlux(value, HeatFluxDeciwattPerSquareMillimeter)
+}
+
+// FromKilowattsPerSquareMillimeter creates a new HeatFlux instance from a value in KilowattsPerSquareMillimeter.
+func (uf HeatFluxFactory) FromKilowattsPerSquareMillimeter(value float64) (*HeatFlux, error) {
+	return newHeatFlux(value, HeatFluxKilowattPerSquareMillimeter)
+}
+
 // FromKilocaloriesPerSecondSquareCentimeter creates a new HeatFlux instance from a value in KilocaloriesPerSecondSquareCentimeter.
 func (uf HeatFluxFactory) FromKilocaloriesPerSecondSquareCentimeter(value float64) (*HeatFlux, error) {
 	return newHeatFlux(value, HeatFluxKilocaloriePerSecondSquareCentimeter)
@@ -284,6 +347,18 @@ func (a *HeatFlux) WattsPerSquareMeter() float64 {
 	watts_per_square_meter := a.convertFromBase(HeatFluxWattPerSquareMeter)
 	a.watts_per_square_meterLazy = &watts_per_square_meter
 	return watts_per_square_meter
+}
+
+// WattsPerSquareMillimeter returns the HeatFlux value in WattsPerSquareMillimeter.
+//
+// 
+func (a *HeatFlux) WattsPerSquareMillimeter() float64 {
+	if a.watts_per_square_millimeterLazy != nil {
+		return *a.watts_per_square_millimeterLazy
+	}
+	watts_per_square_millimeter := a.convertFromBase(HeatFluxWattPerSquareMillimeter)
+	a.watts_per_square_millimeterLazy = &watts_per_square_millimeter
+	return watts_per_square_millimeter
 }
 
 // WattsPerSquareInch returns the HeatFlux value in WattsPerSquareInch.
@@ -478,6 +553,78 @@ func (a *HeatFlux) KilowattsPerSquareMeter() float64 {
 	return kilowatts_per_square_meter
 }
 
+// NanowattsPerSquareMillimeter returns the HeatFlux value in NanowattsPerSquareMillimeter.
+//
+// 
+func (a *HeatFlux) NanowattsPerSquareMillimeter() float64 {
+	if a.nanowatts_per_square_millimeterLazy != nil {
+		return *a.nanowatts_per_square_millimeterLazy
+	}
+	nanowatts_per_square_millimeter := a.convertFromBase(HeatFluxNanowattPerSquareMillimeter)
+	a.nanowatts_per_square_millimeterLazy = &nanowatts_per_square_millimeter
+	return nanowatts_per_square_millimeter
+}
+
+// MicrowattsPerSquareMillimeter returns the HeatFlux value in MicrowattsPerSquareMillimeter.
+//
+// 
+func (a *HeatFlux) MicrowattsPerSquareMillimeter() float64 {
+	if a.microwatts_per_square_millimeterLazy != nil {
+		return *a.microwatts_per_square_millimeterLazy
+	}
+	microwatts_per_square_millimeter := a.convertFromBase(HeatFluxMicrowattPerSquareMillimeter)
+	a.microwatts_per_square_millimeterLazy = &microwatts_per_square_millimeter
+	return microwatts_per_square_millimeter
+}
+
+// MilliwattsPerSquareMillimeter returns the HeatFlux value in MilliwattsPerSquareMillimeter.
+//
+// 
+func (a *HeatFlux) MilliwattsPerSquareMillimeter() float64 {
+	if a.milliwatts_per_square_millimeterLazy != nil {
+		return *a.milliwatts_per_square_millimeterLazy
+	}
+	milliwatts_per_square_millimeter := a.convertFromBase(HeatFluxMilliwattPerSquareMillimeter)
+	a.milliwatts_per_square_millimeterLazy = &milliwatts_per_square_millimeter
+	return milliwatts_per_square_millimeter
+}
+
+// CentiwattsPerSquareMillimeter returns the HeatFlux value in CentiwattsPerSquareMillimeter.
+//
+// 
+func (a *HeatFlux) CentiwattsPerSquareMillimeter() float64 {
+	if a.centiwatts_per_square_millimeterLazy != nil {
+		return *a.centiwatts_per_square_millimeterLazy
+	}
+	centiwatts_per_square_millimeter := a.convertFromBase(HeatFluxCentiwattPerSquareMillimeter)
+	a.centiwatts_per_square_millimeterLazy = &centiwatts_per_square_millimeter
+	return centiwatts_per_square_millimeter
+}
+
+// DeciwattsPerSquareMillimeter returns the HeatFlux value in DeciwattsPerSquareMillimeter.
+//
+// 
+func (a *HeatFlux) DeciwattsPerSquareMillimeter() float64 {
+	if a.deciwatts_per_square_millimeterLazy != nil {
+		return *a.deciwatts_per_square_millimeterLazy
+	}
+	deciwatts_per_square_millimeter := a.convertFromBase(HeatFluxDeciwattPerSquareMillimeter)
+	a.deciwatts_per_square_millimeterLazy = &deciwatts_per_square_millimeter
+	return deciwatts_per_square_millimeter
+}
+
+// KilowattsPerSquareMillimeter returns the HeatFlux value in KilowattsPerSquareMillimeter.
+//
+// 
+func (a *HeatFlux) KilowattsPerSquareMillimeter() float64 {
+	if a.kilowatts_per_square_millimeterLazy != nil {
+		return *a.kilowatts_per_square_millimeterLazy
+	}
+	kilowatts_per_square_millimeter := a.convertFromBase(HeatFluxKilowattPerSquareMillimeter)
+	a.kilowatts_per_square_millimeterLazy = &kilowatts_per_square_millimeter
+	return kilowatts_per_square_millimeter
+}
+
 // KilocaloriesPerSecondSquareCentimeter returns the HeatFlux value in KilocaloriesPerSecondSquareCentimeter.
 //
 // 
@@ -523,6 +670,8 @@ func (a *HeatFlux) Convert(toUnit HeatFluxUnits) float64 {
 	switch toUnit { 
     case HeatFluxWattPerSquareMeter:
 		return a.WattsPerSquareMeter()
+    case HeatFluxWattPerSquareMillimeter:
+		return a.WattsPerSquareMillimeter()
     case HeatFluxWattPerSquareInch:
 		return a.WattsPerSquareInch()
     case HeatFluxWattPerSquareFoot:
@@ -555,6 +704,18 @@ func (a *HeatFlux) Convert(toUnit HeatFluxUnits) float64 {
 		return a.DeciwattsPerSquareMeter()
     case HeatFluxKilowattPerSquareMeter:
 		return a.KilowattsPerSquareMeter()
+    case HeatFluxNanowattPerSquareMillimeter:
+		return a.NanowattsPerSquareMillimeter()
+    case HeatFluxMicrowattPerSquareMillimeter:
+		return a.MicrowattsPerSquareMillimeter()
+    case HeatFluxMilliwattPerSquareMillimeter:
+		return a.MilliwattsPerSquareMillimeter()
+    case HeatFluxCentiwattPerSquareMillimeter:
+		return a.CentiwattsPerSquareMillimeter()
+    case HeatFluxDeciwattPerSquareMillimeter:
+		return a.DeciwattsPerSquareMillimeter()
+    case HeatFluxKilowattPerSquareMillimeter:
+		return a.KilowattsPerSquareMillimeter()
     case HeatFluxKilocaloriePerSecondSquareCentimeter:
 		return a.KilocaloriesPerSecondSquareCentimeter()
 	default:
@@ -567,6 +728,8 @@ func (a *HeatFlux) convertFromBase(toUnit HeatFluxUnits) float64 {
 	switch toUnit { 
 	case HeatFluxWattPerSquareMeter:
 		return (value) 
+	case HeatFluxWattPerSquareMillimeter:
+		return (value * 1e-6) 
 	case HeatFluxWattPerSquareInch:
 		return (value * (2.54e-2 * 2.54e-2)) 
 	case HeatFluxWattPerSquareFoot:
@@ -599,6 +762,18 @@ func (a *HeatFlux) convertFromBase(toUnit HeatFluxUnits) float64 {
 		return ((value) / 0.1) 
 	case HeatFluxKilowattPerSquareMeter:
 		return ((value) / 1000.0) 
+	case HeatFluxNanowattPerSquareMillimeter:
+		return ((value * 1e-6) / 1e-09) 
+	case HeatFluxMicrowattPerSquareMillimeter:
+		return ((value * 1e-6) / 1e-06) 
+	case HeatFluxMilliwattPerSquareMillimeter:
+		return ((value * 1e-6) / 0.001) 
+	case HeatFluxCentiwattPerSquareMillimeter:
+		return ((value * 1e-6) / 0.01) 
+	case HeatFluxDeciwattPerSquareMillimeter:
+		return ((value * 1e-6) / 0.1) 
+	case HeatFluxKilowattPerSquareMillimeter:
+		return ((value * 1e-6) / 1000.0) 
 	case HeatFluxKilocaloriePerSecondSquareCentimeter:
 		return ((value / 4.184e4) / 1000.0) 
 	default:
@@ -610,6 +785,8 @@ func (a *HeatFlux) convertToBase(value float64, fromUnit HeatFluxUnits) float64 
 	switch fromUnit { 
 	case HeatFluxWattPerSquareMeter:
 		return (value) 
+	case HeatFluxWattPerSquareMillimeter:
+		return (value / 1e-6) 
 	case HeatFluxWattPerSquareInch:
 		return (value / (2.54e-2 * 2.54e-2)) 
 	case HeatFluxWattPerSquareFoot:
@@ -642,6 +819,18 @@ func (a *HeatFlux) convertToBase(value float64, fromUnit HeatFluxUnits) float64 
 		return ((value) * 0.1) 
 	case HeatFluxKilowattPerSquareMeter:
 		return ((value) * 1000.0) 
+	case HeatFluxNanowattPerSquareMillimeter:
+		return ((value / 1e-6) * 1e-09) 
+	case HeatFluxMicrowattPerSquareMillimeter:
+		return ((value / 1e-6) * 1e-06) 
+	case HeatFluxMilliwattPerSquareMillimeter:
+		return ((value / 1e-6) * 0.001) 
+	case HeatFluxCentiwattPerSquareMillimeter:
+		return ((value / 1e-6) * 0.01) 
+	case HeatFluxDeciwattPerSquareMillimeter:
+		return ((value / 1e-6) * 0.1) 
+	case HeatFluxKilowattPerSquareMillimeter:
+		return ((value / 1e-6) * 1000.0) 
 	case HeatFluxKilocaloriePerSecondSquareCentimeter:
 		return ((value * 4.184e4) * 1000.0) 
 	default:
@@ -759,6 +948,8 @@ func GetHeatFluxAbbreviation(unit HeatFluxUnits) string {
 	switch unit { 
 	case HeatFluxWattPerSquareMeter:
 		return "W/m²" 
+	case HeatFluxWattPerSquareMillimeter:
+		return "W/mm²" 
 	case HeatFluxWattPerSquareInch:
 		return "W/in²" 
 	case HeatFluxWattPerSquareFoot:
@@ -791,6 +982,18 @@ func GetHeatFluxAbbreviation(unit HeatFluxUnits) string {
 		return "dW/m²" 
 	case HeatFluxKilowattPerSquareMeter:
 		return "kW/m²" 
+	case HeatFluxNanowattPerSquareMillimeter:
+		return "nW/mm²" 
+	case HeatFluxMicrowattPerSquareMillimeter:
+		return "μW/mm²" 
+	case HeatFluxMilliwattPerSquareMillimeter:
+		return "mW/mm²" 
+	case HeatFluxCentiwattPerSquareMillimeter:
+		return "cW/mm²" 
+	case HeatFluxDeciwattPerSquareMillimeter:
+		return "dW/mm²" 
+	case HeatFluxKilowattPerSquareMillimeter:
+		return "kW/mm²" 
 	case HeatFluxKilocaloriePerSecondSquareCentimeter:
 		return "kcal/(s·cm²)" 
 	default:
